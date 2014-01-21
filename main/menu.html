@@ -1,0 +1,57 @@
+<ul class="menu">
+    <li class="has-menu">
+        <a href="#"><i class="icon-map-marker"></i> Plans<span class="arrow">&nbsp;</span></a>
+        <ul>
+            <li ng-repeat="menuItem in menuItems.maps.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+        </ul>
+    </li>
+
+    <li class="has-menu">
+        <a href="#"><i class="icon-list"></i> Collections<span class="arrow">&nbsp;</span></a>
+        <ul>
+            <li ng-repeat="menuItem in menuItems.collections.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+        </ul>
+    </li>
+
+    <li class="has-menu">
+        <a href="#"><i class="icon-folder-open"></i> Exploitations<span class="arrow">&nbsp;</span></a>
+        <ul>
+            <li ng-repeat="menuItem in menuItems.operations.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+        </ul>
+    </li>
+
+    <li class="has-menu">
+        <a href="#"><i class="icon-tasks"></i> Gestion<span class="arrow">&nbsp;</span></a>
+        <ul>
+            <li ng-repeat="menuItem in menuItems.management.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+        </ul>
+    </li>
+
+    <li class="has-menu">
+        <a href="#"><i class="icon-hdd"></i> Données<span class="arrow">&nbsp;</span></a>
+        <ul>
+            <li ng-repeat="menuItem in menuItems.data.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+        </ul>
+    </li>
+
+    <li class="has-menu">
+        <a href="#"><i class="icon-cogs"></i> Manager<span class="arrow">&nbsp;</span></a>
+        <ul>
+            <li ng-repeat="menuItem in menuItems.manager.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+        </ul>
+    </li>
+
+    <li class="has-menu">
+        <a href="#"><i class="icon-briefcase"></i> {{activeJob.IDENTIFIANT.NOM}}<span class="arrow">&nbsp;</span></a>
+        <ul>
+            <li ng-repeat="job in jobs" ><a ng-click="activateJob(job)" ><span class="icon" data-icon="G"></span>{{job.IDENTIFIANT.NOM}}</a></li>
+        </ul>
+    </li>
+
+    <li class="right col_3 search-wrapper">
+        <input class="search" type="text" placeholder="Recherche" />
+        <button class="blue small pill"><i class="icon-search"></i></button>
+        <button class="red small" ng-click="changeViewMode()"><i class="icon-desktop"></i></button>
+    </li>
+
+</ul>

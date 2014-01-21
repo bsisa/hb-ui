@@ -1,0 +1,349 @@
+{
+    "exist:result":{
+        "count":"1",
+        "start":"1",
+        "hits":"1",
+        "ELFIN":{
+            "NATURE":"Interface",
+            "TYPE":"DOCUMENT",
+            "GROUPE":"Electricité",
+            "CLASSE":"MENU",
+            "ID_G":"G20050101000012345",
+            "Id":"G20050306013753386",
+            "MUTATIONS":{
+                "UTILISATEUR":"",
+                "MOT_DE_PASSE":"hb4",
+                "ROLE":"",
+                "DATE":"20071205105530859"
+            },
+            "IDENTIFIANT":{
+                "AUT":"OG",
+                "GER":"GdP",
+                "RES":"PYS",
+                "NOM":"Données",
+                "QUALITE":"",
+                "MOTCLE":"SI-Lutry"
+            },
+            "CARACTERISTIQUE":{
+                "CAR1":"",
+                "CAR2":"",
+                "CAR3":"",
+                "CAR4":"",
+                "CAR5":"",
+                "CAR6":"",
+                "CALCUL":{
+                    "DIMENSION":[{
+                        "DIMENSION":"0",
+                        "TYPE":"GEOGRAPHIE",
+                        "NOM":"LONGUEUR"
+                    },{
+                        "DIMENSION":"0",
+                        "TYPE":"SCHEMATIQUE",
+                        "NOM":"LONGUEUR"
+                    }]
+                },
+                "FRACTION":{
+                    "L":[{
+                        "POS":"1",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "C":"Aide",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Objets/G20050101000012345/MENUG20050306013753386.xml', './stylesheets/Aide.xsl');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"2",
+                        "C":[{
+                            "C":"Barre de distribution",
+                            "POS":"2"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/BARRE_DE_DISTRIBUTION.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"3",
+                        "C":[{
+                            "C":"Bien",
+                            "POS":"1"
+                        },{
+                            "C":"Boîte électrique",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/BOITE_ELECTRIQUE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"4",
+                        "C":[{
+                            "C":"Bien",
+                            "POS":"1"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Câble communication",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/CABLE_COMMUNICATION.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        }]
+                    },{
+                        "POS":"5",
+                        "C":[{
+                            "C":"Câble électrique",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/CABLE_ELECTRIQUE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"6",
+                        "C":[{
+                            "C":"Chambre électrique",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/CHAMBRE_ELECTRIQUE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"7",
+                        "C":[{
+                            "C":"Coffret électrique",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/COFFRET_ELECTRIQUE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"8",
+                        "C":[{
+                            "C":"Eclairage public",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/ECLAIRAGE_PUBLIC.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"9",
+                        "C":[{
+                            "C":"Introduction électrique",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/INTRODUCTION_ELECTRIQUE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"10",
+                        "C":[{
+                            "C":"Ligne aérienne",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/LIGNE_AERIENNE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"11",
+                        "C":[{
+                            "C":"Mât",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/MAT.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"12",
+                        "C":[{
+                            "C":"Nappe électrique",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/NAPPE_ELECTRIQUE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"13",
+                        "C":[{
+                            "C":"Organe de coupure",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/ORGANE_DE_COUPURE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"14",
+                        "C":[{
+                            "C":"Point électrique",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/POINT_ELECTRIQUE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247001');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"15",
+                        "C":[{
+                            "C":"Poste de distribution",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/POSTE_DE_DISTRIBUTION.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"16",
+                        "C":[{
+                            "C":"Station transformatrice",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/STATION_TRANSFORMATRICE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"17",
+                        "C":[{
+                            "C":"Transformateur",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/TRANSFORMATEUR.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Bien",
+                            "POS":"1"
+                        }]
+                    },{
+                        "POS":"19",
+                        "C":[{
+                            "C":"Activité",
+                            "POS":"1"
+                        },{
+                            "C":"Constat",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/CONSTAT.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"20",
+                        "C":[{
+                            "C":"Activité",
+                            "POS":"1"
+                        },{
+                            "C":"Chantier",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/CHANTIER.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"18",
+                        "C":[{
+                            "C":"Document",
+                            "POS":"1"
+                        },{
+                            "C":"Légende",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/LEGENDE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"21",
+                        "C":[{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/COTE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20070830174858187');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"Document",
+                            "POS":"1"
+                        },{
+                            "C":"Cote permanente",
+                            "POS":"2"
+                        }]
+                    }]
+                }
+            },
+            "DIVERS":{
+                "REMARQUE":"Ce menu permet la création de nouveaux objets GeoXML à partir des modèles du catalogue. Un Nouvel identifiant est attribué par le serveur."
+            }
+        }
+    }
+}

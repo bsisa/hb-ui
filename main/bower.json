@@ -1,0 +1,37 @@
+{
+  "name": "hb5",
+  "version": "0.1",
+  "main": [
+    "dist/hb5-0.1.0.js",
+    "dist/hb5-0.1.0.css"
+  ],
+  "homepage": "https://github.com/bsisa/hb-ui",
+  "authors": [
+    "guy <guy@gadp.ch>"
+  ],
+  "description": "HyperBird 5 UI",
+  "keywords": [
+    "geoxml",
+    "hyperbird"
+  ],
+  "license": "GPL 2.0",
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "css",
+    "doc",
+    "generated",
+    "lib",
+    "node_modules",
+    "src",
+    "test"
+  ],
+  "dependencies": {
+    "angular": "1.2.9",
+    "angular-resource": "1.2.9",
+    "jquery": "1.9.1",
+    "ui-bootstrap": "0.7.0",
+    "leaflet": "0.7.1",
+    "restangular": "~1.2.2"
+  }
+}

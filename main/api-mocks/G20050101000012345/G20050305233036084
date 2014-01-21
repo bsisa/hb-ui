@@ -1,0 +1,171 @@
+{
+    "exist:result":{
+        "count":"1",
+        "start":"1",
+        "hits":"1",
+        "ELFIN":{
+            "NATURE":"Interface",
+            "TYPE":"DOCUMENT",
+            "GROUPE":"Eau",
+            "CLASSE":"MENU",
+            "ID_G":"G20050101000012345",
+            "Id":"G20050305233036084",
+            "MUTATIONS":{
+                "UTILISATEUR":"",
+                "MOT_DE_PASSE":"hb4",
+                "ROLE":"",
+                "DATE":"20071114171946265"
+            },
+            "IDENTIFIANT":{
+                "AUT":"OG",
+                "GER":"GdP",
+                "RES":"PYS",
+                "NOM":"Manager",
+                "MOTCLE":"SI-Lutry"
+            },
+            "CARACTERISTIQUE":{
+                "CAR1":"",
+                "CAR2":"",
+                "CAR3":"",
+                "CAR4":"",
+                "CAR5":"",
+                "CAR6":"",
+                "CALCUL":{
+                    "DIMENSION":[{
+                        "DIMENSION":"0",
+                        "TYPE":"GEOGRAPHIE",
+                        "NOM":"LONGUEUR"
+                    },{
+                        "DIMENSION":"0",
+                        "TYPE":"SCHEMATIQUE",
+                        "NOM":"LONGUEUR"
+                    }]
+                },
+                "FRACTION":{
+                    "L":[{
+                        "POS":"1",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "C":"Aide",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().displayHTMLFile('../Assistant/html/x.html');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"2",
+                        "C":[{
+                            "C":"Macro",
+                            "POS":"1"
+                        },{
+                            "C":"Légendage BH",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_MethodeManager().executeMacro('/HB4-Objets/G20050101000012345/MACROG20060920090811406.xml')",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Exectue la méthode HYDRANT sur tous les HYDRANTS",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"3",
+                        "C":[{
+                            "C":"Contrôle topologique",
+                            "POS":"1"
+                        },{
+                            "C":"Ligne Axe : fin sans début",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010601164035000')//ELFIN[(FORME/LIGNE[@FONCTION='AXE'])]//ELFIN[(FORME/LIGNE[@FONCTION='AXE']/PASSAGE[@FONCTION='FIN']) and not(FORME/LIGNE[@FONCTION='AXE']/PASSAGE[@FONCTION='DEBUT'])]\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"4",
+                        "C":[{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Ligne Axe : début sans fin",
+                            "POS":"2"
+                        },{
+                            "C":"Contrôle topologique",
+                            "POS":"1"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010601164035000')//ELFIN[(FORME/LIGNE[@FONCTION='AXE'])]//ELFIN[(FORME/LIGNE[@FONCTION='AXE']/PASSAGE[@FONCTION='DEBUT']) and not(FORME/LIGNE[@FONCTION='AXE']/PASSAGE[@FONCTION='FIN'])]\")",
+                            "POS":"3"
+                        }]
+                    },{
+                        "POS":"6",
+                        "C":[{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Contrôle pertinence",
+                            "POS":"1"
+                        },{
+                            "C":"Point base : coord Schem = 0",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010601164035000')//ELFIN[FORME/POINT[@FONCTION='BASE']/@XS=0 or FORME/POINT[@FONCTION='BASE']/@YS=0]\")",
+                            "POS":"3"
+                        }]
+                    },{
+                        "POS":"8",
+                        "C":[{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Intro topologique",
+                            "POS":"2"
+                        },{
+                            "C":"Contrôle topologique",
+                            "POS":"1"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010601164035000')//ELFIN[@CLASSE='INTRODUCTION_EAU']//ELFIN[(FORME/LIGNE[@FONCTION='AXE'])]//ELFIN[(FORME/LIGNE[@FONCTION='AXE']/PASSAGE[@FONCTION='DEBUT']) or (FORME/LIGNE[@FONCTION='AXE']/PASSAGE[@FONCTION='FIN'])]\")",
+                            "POS":"3"
+                        }]
+                    },{
+                        "POS":"5",
+                        "C":[{
+                            "C":"Contrôle pertinence",
+                            "POS":"1"
+                        },{
+                            "C":"Point base : coord Geo = 0",
+                            "POS":"2"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010601164035000')//ELFIN[FORME/POINT[@FONCTION='BASE']/@X=0 or FORME/POINT[@FONCTION='BASE']/@Y=0]\")",
+                            "POS":"3"
+                        }]
+                    },{
+                        "POS":"7",
+                        "C":[{
+                            "C":"Contrôle topologique",
+                            "POS":"1"
+                        },{
+                            "C":"Hydrant topologique",
+                            "POS":"2"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010601164035000')//ELFIN[@CLASSE='HYDRANT']//ELFIN[(FORME/LIGNE[@FONCTION='AXE'])]//ELFIN[(FORME/LIGNE[@FONCTION='AXE']/PASSAGE[@FONCTION='DEBUT']) or (FORME/LIGNE[@FONCTION='AXE']/PASSAGE[@FONCTION='FIN'])]\")",
+                            "POS":"3"
+                        }]
+                    }]
+                }
+            }
+        }
+    }
+}

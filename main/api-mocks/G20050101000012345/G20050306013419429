@@ -1,0 +1,108 @@
+{
+    "exist:result":{
+        "count":"1",
+        "start":"1",
+        "hits":"1",
+        "ELFIN":{
+            "NATURE":"Interface",
+            "TYPE":"DOCUMENT",
+            "GROUPE":"Electricité",
+            "CLASSE":"MENU",
+            "ID_G":"G20050101000012345",
+            "Id":"G20050306013419429",
+            "MUTATIONS":{
+                "UTILISATEUR":"",
+                "MOT_DE_PASSE":"",
+                "ROLE":"",
+                "DATE":""
+            },
+            "IDENTIFIANT":{
+                "AUT":"OG",
+                "GER":"GdP",
+                "RES":"PYS",
+                "NOM":"Exploitation",
+                "MOTCLE":"SI-Lutry"
+            },
+            "CARACTERISTIQUE":{
+                "CAR1":"",
+                "CAR2":"",
+                "CAR3":"",
+                "CAR4":"",
+                "CAR5":"",
+                "CAR6":"",
+                "CALCUL":{
+                    "DIMENSION":[{
+                        "DIMENSION":"0",
+                        "TYPE":"GEOGRAPHIE",
+                        "NOM":"LONGUEUR"
+                    },{
+                        "DIMENSION":"0",
+                        "TYPE":"SCHEMATIQUE",
+                        "NOM":"LONGUEUR"
+                    }]
+                },
+                "FRACTION":{
+                    "L":[{
+                        "POS":"1",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "C":"Aide",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Objets/G20050101000012345/MENUG20050306013419429.xml', './stylesheets/Aide.xsl');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"2",
+                        "C":[{
+                            "C":"Rapports",
+                            "POS":"1"
+                        },{
+                            "C":"Caractéristiques sous-stations MT",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().executeReport(\"G20061006083748658\", \"G20050101000012345\", \"Rapport_Caracteristiques_S_St_MT\",\"G20061003105952986\", \"G20050101000012345\")",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "C":"getHB_Collection.executeReport(\"G20061006083748658\", \"G20050101000012345\", \"Rapport_Caracteristiques_S_St_MT\",\"G20061003105952986\", \"G20050101000012345\")",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"3",
+                        "C":[{
+                            "C":"Rapports",
+                            "POS":"1"
+                        },{
+                            "C":"Postes de distribution",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().executeReport(\"G20061006083748658\", \"G20050101000012345\", \"Rapport_PostesDistribution\",\"G20061116080714925\", \"G20050101000012345\")",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"4",
+                        "C":[{
+                            "C":"Contrôle",
+                            "POS":"1"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20020412202247000')//ELFIN[./@CLASSE='POINT_ELECTRIQUE']//ELFIN[(./FORME/POINT/@XS) and not(./FORME/POINT/@XS=\"0\") and not(./FORME/POINT/@XS=\"\") ]//ELFIN[not(./FORME/POINT/@X) or ./FORME/POINT/@X=\"0\" or  FORME/POINT/@X=\"\" ]\",\"\",\"\",\"\")",
+                            "POS":"3"
+                        },{
+                            "C":"Points que Schem",
+                            "POS":"2"
+                        },{
+                            "POS":"4"
+                        }]
+                    }]
+                }
+            }
+        }
+    }
+}

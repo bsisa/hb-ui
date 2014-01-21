@@ -1,0 +1,47 @@
+{
+    "exist:result":{
+        "count":"1",
+        "start":"1",
+        "hits":"1",
+        "ELFIN":{
+            "NATURE":"Interface",
+            "TYPE":"DOCUMENT",
+            "GROUPE":"Electricité",
+            "CLASSE":"MENU",
+            "ID_G":"G20050101000012345",
+            "Id":"G20050306013705628",
+            "IDENTIFIANT":{
+                "AUT":"OG",
+                "GER":"GdP",
+                "RES":"PYS",
+                "NOM":"Gestion",
+                "MOTCLE":"SI-Lutry"
+            },
+            "CARACTERISTIQUE":{
+                "CAR1":"",
+                "CAR2":"",
+                "CAR3":"",
+                "CAR4":"",
+                "CAR5":"",
+                "CAR6":"",
+                "CALCUL":"",
+                "FRACTION":{
+                    "L":{
+                        "POS":"1",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "C":"Aide",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Objets/G20050101000012345/MENUG20050306013705628.xml', './stylesheets/Aide.xsl');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    }
+                }
+            }
+        }
+    }
+}

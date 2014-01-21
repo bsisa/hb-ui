@@ -1,0 +1,75 @@
+{
+    "exist:result":{
+        "count":"1",
+        "start":"1",
+        "hits":"1",
+        "ELFIN":{
+            "NATURE":"Interface",
+            "TYPE":"DOCUMENT",
+            "GROUPE":"Eau",
+            "CLASSE":"MENU",
+            "ID_G":"G20050101000012345",
+            "Id":"G20050305232203317",
+            "IDENTIFIANT":{
+                "AUT":"OG",
+                "GER":"GdP",
+                "RES":"PYS",
+                "NOM":"Exploitation",
+                "MOTCLE":"SI-Lutry"
+            },
+            "CARACTERISTIQUE":{
+                "CAR1":"",
+                "CAR2":"",
+                "CAR3":"",
+                "CAR4":"",
+                "CAR5":"",
+                "CAR6":"",
+                "CALCUL":"",
+                "FRACTION":{
+                    "L":[{
+                        "POS":"1",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "C":"Aide",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().displayHTMLFile('../Assistant/html/exploitation.html');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"2",
+                        "C":[{
+                            "C":"Rapports",
+                            "POS":"1"
+                        },{
+                            "C":"Rapport d'activité",
+                            "POS":"2"
+                        },{
+                            "C":"alert('Cette prestation n\\'est pas encore\n                        disponible !');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"3",
+                        "C":[{
+                            "C":"Rapports",
+                            "POS":"1"
+                        },{
+                            "C":"Rapport statistique",
+                            "POS":"2"
+                        },{
+                            "C":"alert('Cette prestation n\\'est pas encore\n                        disponible !');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    }]
+                }
+            }
+        }
+    }
+}

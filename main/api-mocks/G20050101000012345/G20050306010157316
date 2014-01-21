@@ -1,0 +1,414 @@
+{
+    "exist:result":{
+        "count":"1",
+        "start":"1",
+        "hits":"1",
+        "ELFIN":{
+            "NATURE":"Interface",
+            "TYPE":"DOCUMENT",
+            "GROUPE":"Electricité",
+            "CLASSE":"MENU",
+            "ID_G":"G20050101000012345",
+            "Id":"G20050306010157316",
+            "MUTATIONS":{
+                "UTILISATEUR":"",
+                "MOT_DE_PASSE":"hb4",
+                "ROLE":"",
+                "DATE":"20071018155423828"
+            },
+            "IDENTIFIANT":{
+                "AUT":"OG",
+                "GER":"GdP",
+                "RES":"PYS",
+                "NOM":"Plans",
+                "MOTCLE":"SI-Lutry"
+            },
+            "CARACTERISTIQUE":{
+                "CAR1":"",
+                "CAR2":"",
+                "CAR3":"",
+                "CAR4":"",
+                "CAR5":"",
+                "CAR6":"",
+                "CALCUL":{
+                    "DIMENSION":[{
+                        "DIMENSION":"0",
+                        "TYPE":"GEOGRAPHIE",
+                        "NOM":"LONGUEUR"
+                    },{
+                        "DIMENSION":"0",
+                        "TYPE":"SCHEMATIQUE",
+                        "NOM":"LONGUEUR"
+                    }]
+                },
+                "FRACTION":{
+                    "L":[{
+                        "POS":"1",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "C":"Aide",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Objets/G20050101000012345/MENUG20050306010157316.xml', './stylesheets/Aide.xsl');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"2",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "C":"Plan locaux de travail GEO",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN' and ./@GROUPE='Plan local de travail']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']\",\"\",\"\",\"listPlanLocauxTravail.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"getHB_Map().displayFile('PlanTravailElectricite', 'consulter');",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Affiche les plans de travail géographique en mode consultation",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"3",
+                        "C":[{
+                            "C":"Accès",
+                            "POS":"1"
+                        },{
+                            "C":"Plans schématiques",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']//ELFIN[contains(IDENTIFIANT/NOM,'Schematique')]\",\"\",\"\",\"ListPlan-consulter.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Affiche la liste des plans d'ensemble 1:5000 schématiques avec les liens permettant leur consultation",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"4",
+                        "C":[{
+                            "C":"Accès",
+                            "POS":"1"
+                        },{
+                            "C":"Plans Géo 1:500",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']//ELFIN[contains(IDENTIFIANT/NOM,'1:500')]\",\"\",\"\",\"ListPlan-consulter.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"5",
+                        "C":[{
+                            "C":"Accès",
+                            "POS":"1"
+                        },{
+                            "C":"Plan Géo global",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Map().displayFile('ElectricitePlanGeoGlobal','consulter');",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"6",
+                        "C":[{
+                            "C":"Mise à jour",
+                            "POS":"1"
+                        },{
+                            "C":"Plan Géo global",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Map().displayFile('ElectricitePlanGeoGlobal','maj');",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"7",
+                        "C":[{
+                            "C":"Accès",
+                            "POS":"1"
+                        },{
+                            "C":"Plans sectoriels",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[string-length(./IDENTIFIANT/A/text())=0 or not(boolean(./IDENTIFIANT/A))]//ELFIN[contains(IDENTIFIANT/NOM,'secteur BT')]\",\"\",\"\",\"ListPlan-consulter.xsl\",\"\",\"\",\"/IDENTIFIANT/ALIAS\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Affiche la liste des plans sectoriels schématiques avec les liens permettant leur consultation",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"8",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "POS":"2"
+                        },{
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"9",
+                        "C":[{
+                            "C":"Mise à jour",
+                            "POS":"1"
+                        },{
+                            "C":"Plans schématiques",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']//ELFIN[contains(IDENTIFIANT/NOM,'Schematique')]\",\"\",\"\",\"ListPlan-maj.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Affiche la liste des plans d'ensemble 1:5000 schématiques avec les liens permettant leur mise à jour",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"10",
+                        "C":[{
+                            "C":"Mise à jour",
+                            "POS":"1"
+                        },{
+                            "C":"Plans Géo 1:500",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']//ELFIN[contains(IDENTIFIANT/NOM,'1:500')]\",\"\",\"\",\"ListPlan-maj.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"11",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "POS":"2"
+                        },{
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"12",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "POS":"2"
+                        },{
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"13",
+                        "C":[{
+                            "C":"Mise à jour",
+                            "POS":"1"
+                        },{
+                            "C":"Plans sectoriels",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[string-length(./IDENTIFIANT/A/text())=0 or not(boolean(./IDENTIFIANT/A))]//ELFIN[contains(IDENTIFIANT/NOM,'secteur BT')]\",\"\",\"\",\"ListPlan-maj.xsl\",\"\",\"\",\"/IDENTIFIANT/ALIAS\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Affiche la liste des plans sectoriels schématiques avec lesliens permettant leur mise à jour",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"14",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "POS":"2"
+                        },{
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"15",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "POS":"2"
+                        },{
+                            "POS":"3"
+                        },{
+                            "C":"getHB_Map().displayFile('CommunPlanGeoGlobal','maj');",
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"16",
+                        "C":[{
+                            "C":"Impression",
+                            "POS":"1"
+                        },{
+                            "C":"Plans schématiques",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']//ELFIN[contains(IDENTIFIANT/NOM,'Schematique')]\",\"\",\"\",\"ListPlan-print.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Affiche la liste des plans d'ensemble 1:5000 schématiques avec les liens permettant leur impression PDF",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"17",
+                        "C":[{
+                            "C":"Impression",
+                            "POS":"1"
+                        },{
+                            "C":"Plans sectoriels",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[string-length(./IDENTIFIANT/A/text())=0 or not(boolean(./IDENTIFIANT/A))]//ELFIN[contains(IDENTIFIANT/NOM,'secteur') or contains(IDENTIFIANT/ALIAS,'secteur BT')]\",\"\",\"\",\"ListPlan-print.xsl\",\"\",\"\",\"/IDENTIFIANT/ALIAS\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Affiche la liste des plans sectoriels schématiques avec les liens permettant leur impression PDF",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"18",
+                        "C":[{
+                            "C":"Impression",
+                            "POS":"1"
+                        },{
+                            "C":"Plans Géo 1:500",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']//ELFIN[contains(IDENTIFIANT/NOM,'1:500')]\",\"\",\"\",\"ListPlan-print.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Affiche la liste des plans sectoriels schématiques avec les liens permettant leur impression PDF",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"19",
+                        "C":[{
+                            "POS":"1"
+                        },{
+                            "POS":"2"
+                        },{
+                            "POS":"3"
+                        },{
+                            "POS":"4"
+                        },{
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"20",
+                        "C":[{
+                            "C":"Accès",
+                            "POS":"1"
+                        },{
+                            "C":"Plans synoptiques",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[./@GROUPE='Plan synoptique']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']\",\"\",\"\",\"ListPlan-consulter.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        },{
+                            "C":"Affiche la liste des plans synoptiques avec les liens permettant leur consultation",
+                            "POS":"5"
+                        }]
+                    },{
+                        "POS":"21",
+                        "C":[{
+                            "C":"Mise à jour",
+                            "POS":"1"
+                        },{
+                            "C":"Plans synoptiques",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[./@GROUPE='Plan synoptique']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']\",\"\",\"\",\"ListPlan-maj.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"Affiche la liste des plans synoptiques avec les liens permettant leur mise à jour",
+                            "POS":"5"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"22",
+                        "C":[{
+                            "C":"Impression",
+                            "POS":"1"
+                        },{
+                            "C":"Plans synoptiques",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']//ELFIN[./@GROUPE='Plan synoptique']//ELFIN[IDENTIFIANT/OBJECTIF/text()='ELECTRICITE']\",\"\",\"\",\"ListPlan-print.xsl\")",
+                            "POS":"3"
+                        },{
+                            "C":"Affiche la liste des plans synoptiques avec les liens permettant leur impression PDF",
+                            "POS":"5"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        }]
+                    },{
+                        "POS":"23",
+                        "C":[{
+                            "C":"Accès",
+                            "POS":"1"
+                        },{
+                            "C":"Plan ...",
+                            "POS":"2"
+                        },{
+                            "C":"getHB_Collection().execAndDisplayXQuery(\"collection('/db/G20010620100346000')//ELFIN[./@CLASSE='PLAN']\",\"Chercher dans identifiant ...\",\"IDENTIFIANT/*\",\"ListPlan-consulter.xsl\",\"\",\"\",[\"/@GROUPE\",\"/IDENTIFIANT/NOM\"])",
+                            "POS":"3"
+                        },{
+                            "C":"Administrateur",
+                            "POS":"4"
+                        }]
+                    }]
+                }
+            },
+            "DIVERS":{
+                "REMARQUE":"Ce menu donne accès aux plans selon 3 modes- Consultation pour voir le dernier état d'un plan et éventuellement en modifier le contenu- Mise à jour pour synchroniser le plan avec le dernier état de la base de données des objets- Impression pour la conversion d'un plan au format PDF puis éventuellement son impression sur papier"
+            }
+        }
+    }
+}
