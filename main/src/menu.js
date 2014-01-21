@@ -14,6 +14,12 @@
             "management": {},
             "data": {},
             "manager": {}
+        };
+
+        var reorderElfinArray = function(array) {
+            array.sort(function(a, b) {
+                return parseInt(a.POS) - parseInt(b.POS);
+            });
         }
 
         /* Handler */
@@ -36,6 +42,8 @@
                 /* Load the different configurations */
                 var elfin = result['exist:result'].ELFIN;
                 var configs = elfin.CARACTERISTIQUE.FRACTION.L;
+                reorderElfinArray(configs);
+
                 var defaultConfigPos = elfin.CARACTERISTIQUE.VALEUR;
 
                 /* Loop through configs and fill the $$configurations array */
@@ -64,6 +72,7 @@
             }
 
             var jobReferences = newVal.CARACTERISTIQUE.FRACTION.L;
+            reorderElfinArray(jobReferences);
             angular.forEach(jobReferences, function(L) {
                 if (L.POS === "1") {
                     return;
@@ -86,18 +95,29 @@
 
             /* Load the menus */
             var menuReferences = $scope.activeJob.CARACTERISTIQUE.FRACTION.L;
+            reorderElfinArray(menuReferences);
+
             angular.forEach(menuReferences, function(L) {
                 /* Load the menus */
                 if (L.C[0].C === "MENU")  {
                     GeoxmlService.getElfin(L.C[2].C, L.C[1].C).get()
                         .then(function(result) {
+                            var elfin = result['exist:result'].ELFIN;
                             switch(L.POS) {
-                                case "3": $scope.menuItems.maps = result['exist:result'].ELFIN; break;
-                                case "4": $scope.menuItems.collections = result['exist:result'].ELFIN; break;
-                                case "5": $scope.menuItems.operations = result['exist:result'].ELFIN; break;
-                                case "6": $scope.menuItems.management = result['exist:result'].ELFIN; break;
-                                case "7": $scope.menuItems.data = result['exist:result'].ELFIN; break;
-                                case "8": $scope.menuItems.manager = result['exist:result'].ELFIN; break;
+                                case "3": $scope.menuItems.maps = elfin; break;
+                                case "4": $scope.menuItems.collections = elfin; break;
+                                case "5": $scope.menuItems.operations = elfin; break;
+                                case "6": $scope.menuItems.management = elfin; break;
+                                case "7": $scope.menuItems.data = elfin; break;
+                                case "8": $scope.menuItems.manager = elfin; break;
+                            }
+                            if (angular.isArray(elfin.CARACTERISTIQUE.FRACTION.L)) {
+                                reorderElfinArray(elfin.CARACTERISTIQUE.FRACTION.L);
+                                angular.forEach(elfin.CARACTERISTIQUE.FRACTION.L, function(l) {
+                                    if (angular.isArray(l.C)) {
+                                        reorderElfinArray(l.C);
+                                    }
+                                });
                             }
 
                     }, function(response) {
