@@ -1,9 +1,4 @@
 {
-    "exist:result":{
-        "count":"1",
-        "start":"1",
-        "hits":"1",
-        "ELFIN":{
             "NATURE":"Interface",
             "TYPE":"DOCUMENT",
             "GROUPE":"Assainissement",
@@ -75,5 +70,3 @@
                 }
             }
         }
-    }
-}

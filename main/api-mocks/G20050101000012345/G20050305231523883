@@ -1,9 +1,4 @@
 {
-    "exist:result":{
-        "count":"1",
-        "start":"1",
-        "hits":"1",
-        "ELFIN":{
             "NATURE":"Interface",
             "TYPE":"DOCUMENT",
             "GROUPE":"Eau",
@@ -489,5 +484,3 @@
                 "REMARQUE":"Ce menu donne accès aux- Fiches au moyen de requêtes pré-établies- Listes les plus couramment utilisées.Il s’agit de listes Excel construites à partir de la base de données. Elles offrent toutes les fonctionnalités d’Excel (tri, filtre, fonctions, graphiques) et peuvent être enregistrées sous un autre nom pour être diffusées, retravaillées ou archivées.- Mises en forme qui permettent de mettre en forme les données de l'objet pour son impression."
             }
         }
-    }
-}

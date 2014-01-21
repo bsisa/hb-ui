@@ -1,9 +1,4 @@
 {
-    "exist:result":{
-        "count":"1",
-        "start":"1",
-        "hits":"1",
-        "ELFIN":{
             "NATURE":"Interface",
             "TYPE":"DOCUMENT",
             "GROUPE":"Electricité",
@@ -410,5 +405,3 @@
                 "REMARQUE":"Ce menu donne accès aux plans selon 3 modes- Consultation pour voir le dernier état d'un plan et éventuellement en modifier le contenu- Mise à jour pour synchroniser le plan avec le dernier état de la base de données des objets- Impression pour la conversion d'un plan au format PDF puis éventuellement son impression sur papier"
             }
         }
-    }
-}
