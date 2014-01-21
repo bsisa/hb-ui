@@ -2,42 +2,84 @@
     <li class="has-menu">
         <a href="#"><i class="icon-map-marker"></i> Plans<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.maps.CARACTERISTIQUE.FRACTION.L" ><a ng-class="menuItem.C[1].C ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuItem.C[0].C}} - {{menuItem.C[1].C}}</span></a></li>
+            <li ng-repeat="menuItem in menuItems.maps" >
+                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
+                <ul ng-if="menuItem.subItems">
+                    <li ng-repeat="menuSubItem in menuItem.subItems" >
+                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-list"></i> Collections<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.collections.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
+            <li ng-repeat="menuItem in menuItems.collections" >
+                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
+                <ul ng-if="menuItem.subItems">
+                    <li ng-repeat="menuSubItem in menuItem.subItems" >
+                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-folder-open"></i> Exploitations<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.operations.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
+            <li ng-repeat="menuItem in menuItems.operations" >
+                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
+                <ul ng-if="menuItem.subItems">
+                    <li ng-repeat="menuSubItem in menuItem.subItems" >
+                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-tasks"></i> Gestion<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.management.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
+            <li ng-repeat="menuItem in menuItems.management" >
+                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
+                <ul ng-if="menuItem.subItems">
+                    <li ng-repeat="menuSubItem in menuItem.subItems" >
+                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-hdd"></i> Données<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.data.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
+            <li ng-repeat="menuItem in menuItems.data" >
+                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
+                <ul ng-if="menuItem.subItems">
+                    <li ng-repeat="menuSubItem in menuItem.subItems" >
+                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-cogs"></i> Manager<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.manager.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
+            <li ng-repeat="menuItem in menuItems.manager" >
+                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
+                <ul ng-if="menuItem.subItems">
+                    <li ng-repeat="menuSubItem in menuItem.subItems" >
+                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
 
