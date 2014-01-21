@@ -2,49 +2,49 @@
     <li class="has-menu">
         <a href="#"><i class="icon-map-marker"></i> Plans<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.maps.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+            <li ng-repeat="menuItem in menuItems.maps.CARACTERISTIQUE.FRACTION.L" ><a ng-class="menuItem.C[1].C ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuItem.C[0].C}} - {{menuItem.C[1].C}}</span></a></li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-list"></i> Collections<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.collections.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+            <li ng-repeat="menuItem in menuItems.collections.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-folder-open"></i> Exploitations<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.operations.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+            <li ng-repeat="menuItem in menuItems.operations.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-tasks"></i> Gestion<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.management.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+            <li ng-repeat="menuItem in menuItems.management.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-hdd"></i> Données<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.data.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+            <li ng-repeat="menuItem in menuItems.data.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-cogs"></i> Manager<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="menuItem in menuItems.manager.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span>{{menuItem.C[1].C}}</a></li>
+            <li ng-repeat="menuItem in menuItems.manager.CARACTERISTIQUE.FRACTION.L" ><a ><span class="icon" data-icon="G"></span><span>{{menuItem.C[1].C}}</span></a></li>
         </ul>
     </li>
 
     <li class="has-menu">
         <a href="#"><i class="icon-briefcase"></i> {{activeJob.IDENTIFIANT.NOM}}<span class="arrow">&nbsp;</span></a>
         <ul>
-            <li ng-repeat="job in jobs" ><a ng-click="activateJob(job)" ><span class="icon" data-icon="G"></span>{{job.IDENTIFIANT.NOM}}</a></li>
+            <li ng-repeat="job in jobs" ><a ng-click="activateJob(job)" ><span class="icon" data-icon="G"></span><span>{{job.IDENTIFIANT.NOM}}</span></a></li>
         </ul>
     </li>
 

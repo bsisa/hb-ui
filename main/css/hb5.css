@@ -4,6 +4,25 @@
     margin-top: 8px;
 }
 
+.menu ul {
+    max-width: 300%;
+    width:300px;
+}
+
+.menu li.has-menu ul li a {
+    padding: 10px 20px;
+}
+
+.menu li.has-menu ul li a.separator {
+    height: 0px;
+    padding: 0px 20px;
+    border-top: 1px dotted darkgray;
+}
+
+.menu li.has-menu ul li a.separator span {
+    display: none;
+}
+
 .search {
     width:70%;
 }

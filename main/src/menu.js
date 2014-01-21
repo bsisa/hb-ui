@@ -36,6 +36,7 @@
             );
         };
 
+
         /* Load global configuration */
         GeoxmlService.getElfin('G20050101000012345', 'G20050101000012345').get()
             .then(function(result) {
