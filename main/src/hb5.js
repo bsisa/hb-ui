@@ -3,7 +3,7 @@
  */
 
 (function() {
-    var hb5 = angular.module('hb5', ['geoxml']);
+    var hb5 = angular.module('hb5', ['geoxml', 'ui.bootstrap']);
 
 })();
 

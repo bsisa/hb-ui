@@ -1,5 +1,19 @@
 (function() {
-    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', function($scope, GeoxmlService) {
+
+    var ChooseConfigInstanceCtrl = function ($scope, $modalInstance, $$configurations) {
+
+        $scope.$$configurations = $$configurations;
+        $scope.selected = {item: $scope.$$configurations[0]};
+
+        $scope.ok = function () {
+            $modalInstance.close($scope.selected.item);
+        };
+
+
+    };
+
+
+    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', function($scope, GeoxmlService, $modal) {
 
         $scope.$$configurations = [];
         $scope.$$activeConfiguration = null;
@@ -15,6 +29,29 @@
             "data": {},
             "manager": {}
         };
+
+
+        $scope.chooseConfiguration = function () {
+
+            var modalInstance = $modal.open({
+                templateUrl: 'chooseConfiguration.html',
+                controller: ChooseConfigInstanceCtrl,
+                resolve: {
+                    $$configurations: function () {
+                        return $scope.$$configurations;
+                    }
+                },
+                backdrop: 'static'
+            });
+
+            modalInstance.result.then(function (selection) {
+                $scope.$$activeConfiguration = selection;
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
+        };
+
+
 
 
         var reorderElfinArray = function(array) {
@@ -60,6 +97,7 @@
 
                 var defaultConfigPos = elfin['CARACTERISTIQUE']['VALEUR'];
 
+                var configCountDown = configs.length;
                 /* Loop through configs and fill the $$configurations array */
                 angular.forEach(configs, function(L) {
                     GeoxmlService.getElfin(L.C[1].C, L.C[2].C).get()
@@ -68,8 +106,12 @@
                             if (L.POS === defaultConfigPos) {
                                 $scope.$$activeConfiguration = elfin;
                             }
+                            configCountDown--;
+                            if (configCountDown === 0) $scope.chooseConfiguration();
                         }, function(response) {
                             console.log("Error with status code", response.status);
+                            configCountDown--;
+                            if (configCountDown === 0) $scope.chooseConfiguration();
                         });
                 });
 
