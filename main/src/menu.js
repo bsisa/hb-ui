@@ -158,7 +158,7 @@
 
             var menuStructure = [];
             // Loop over all entries
-            angular.forEach(elfin.CARACTERISTIQUE.FRACTION.L, function(l) {
+            angular.forEach(elfin['CARACTERISTIQUE']['FRACTION']['L'], function(l) {
                 if (!l.C) return;
 
                 /* Extract group and entry names */
