@@ -32,6 +32,9 @@
     "jquery": "1.9.1",
     "ui-bootstrap": "0.7.0",
     "leaflet": "0.7.1",
-    "restangular": "~1.2.2"
+    "restangular": "~1.2.2",
+    "angular-route": "~1.2.10",
+    "chosen": "~1.0.0",
+    "angular-chosen-localytics": "~1.0.3"
   }
 }
