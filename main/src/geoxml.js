@@ -14,6 +14,12 @@
 
 
             return {
+                validateId: function(identifier) {
+                    return angular.isString(identifier) &&
+                        identifier.length == 18 &&
+                        (/G[0-9]{17}/).test(identifier);
+                },
+
                 getCollections: function() {
                     return _geoxmlService.getList();
                 },
