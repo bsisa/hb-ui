@@ -1,0 +1,69 @@
+<div class="card clearfix">
+    <!-- Error -->
+    <div ng-show="errorMessage" class="notice error"><i class="icon-remove-sign icon-large"></i> {{errorMessage}}</div>
+
+    <div ng-show="!elfin && !errorMessage">
+        <h3>Chargement des informations</h3>
+        <div class="loading"></div>
+    </div>
+
+    <div ng-show="elfin">
+        <div class="col_8">
+            <ul class="button-bar ">
+                <li><a href=""><i class="icon-save"></i></a></li>
+                <li><a href=""><i class="icon-copy"></i></a></li>
+                <li><a href=""><i class="icon-trash"></i></a></li>
+                <li><a href=""><i class="icon-paper-clip"></i></a></li>
+                <li><a href=""><i class="icon-map-marker"></i></a></li>
+                <li><a href=""><i class="icon-print"></i></a></li>
+                <li><a href=""><i class="icon-cogs"></i></a></li>
+                <li><a href=""><i class="icon-folder-open"></i></a></li>
+            </ul>
+        </div>
+
+        <div class="col_4 right">
+            <i class="icon-tag"></i> {{elfin.CLASSE}}<br/>
+            <i class="icon-folder-close"></i> {{elfin.ID_G}}<br/>
+            <i class="icon-file"></i> {{elfin.Id}}
+        </div>
+        <div class="clear"></div>
+
+        <tabset>
+            <tab heading="Attributs">
+                <div class="col_4">
+                    <h5>Attributs</h5>
+                    <form class="vertical">
+                        <label for="groupe">Groupe</label>
+                        <input id="groupe" type="text" ng-model="elfin.GROUPE">
+
+                        <label for="type">Type</label>
+                        <select id="type" chosen  data-placeholder="Choisir un type" ng-model="elfin.TYPE"
+                                ng-options="value as label for (value, label) in elfinTypes">
+
+                        </select>
+
+                        <label for="nature">Nature</label>
+                        <input id="nature" type="text" ng-model="elfin.NATURE">
+                        <label for="source">Source</label>
+                        <input id="source" type="text" ng-model="elfin.SOURCE">
+                    </form>
+                </div>
+            </tab>
+
+            <tab heading="Mutations">
+
+            </tab>
+            <tab heading="Géosélection"></tab>
+            <tab heading="Identifiant"></tab>
+            <tab heading="Caractéristiques"></tab>
+            <tab heading="Partenaires"></tab>
+            <tab heading="Activité"></tab>
+            <tab heading="Forme"></tab>
+            <tab heading="Annexe"></tab>
+            <tab heading="Divers"></tab>
+        </tabset>
+
+
+    </div>
+
+</div>

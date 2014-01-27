@@ -21,19 +21,6 @@ button:hover {
     background: none;
 }
 
-/*
-
-.menu li.has-menu ul li a.separator {
-    height: 0px;
-    padding: 0px 20px;
-    border-top: 1px dotted darkgray;
-}
-
-
-.menu li.has-menu ul li a.separator span {
-    display: none;
-}
-*/
 
 .search {
     width:70%;
@@ -233,4 +220,20 @@ form.vertical .form_datepicker input {
     left: 736px;
     margin: 10px;
     border: solid 1px whitesmoke;
+}
+
+.loading {
+    background: url(../images/loading.gif) transparent no-repeat 50% 0%/10%;
+    width: 100%;
+    height: 120px;
+}
+
+
+/* Disable kickstart padding in bootstrap */
+ul.nav-tabs li {
+    padding:0;
+}
+
+div.tabbable div.tab-content {
+    border: none;
 }
