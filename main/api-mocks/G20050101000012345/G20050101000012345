@@ -4,6 +4,20 @@
   "CLASSE":"CONFIGURATION",
   "ID_G":"G20050101000012345",
   "Id":"G20050101000012345",
+  "MUTATIONS":[{
+    {
+          "UTILISATEUR":"",
+          "MOT_DE_PASSE":"hb4",
+          "ROLE":"",
+          "DATE":"20121115112725309"
+    },
+    {
+          "UTILISATEUR":"",
+          "MOT_DE_PASSE":"hb4",
+          "ROLE":"",
+          "DATE":"20121115112725309"
+        }
+  }],
   "IDENTIFIANT":{
     "AUT":"GdP",
     "GER":"GdP",
