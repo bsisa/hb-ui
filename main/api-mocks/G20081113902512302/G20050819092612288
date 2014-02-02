@@ -1,5 +1,4 @@
 {
-    "ELFIN":{
         "NATURE":"Flux",
         "TYPE":"ACTIVITE",
         "GROUPE":"Fonctionnement",
@@ -7,15 +6,15 @@
         "ID_G":"G20081113902512302",
         "Id":"G20050819092612288",
         "MUTATIONS":[{
-                "UTILISATEUR":"",
+                "UTILISATEUR":"David",
                 "MOT_DE_PASSE":"hb4",
-                "ROLE":"",
+                "ROLE":"Administrateur",
                 "DATE":"20110127160459720"
             },
             {
-                "UTILISATEUR":"",
+                "UTILISATEUR":"Paul",
                 "MOT_DE_PASSE":"hb4",
-                "ROLE":"",
+                "ROLE":"Administrateur",
                 "DATE":"20110127160459720"
             }
         ],
@@ -113,4 +112,3 @@
             }
         }
     }
-}
