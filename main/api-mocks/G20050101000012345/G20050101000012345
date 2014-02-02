@@ -23,7 +23,8 @@
     "GER":"GdP",
     "RES":"PYS",
     "NOM":"hb_init.xml",
-    "ALIAS":"HB Configuration du démarrage"
+    "ALIAS":"HB Configuration du démarrage",
+    "MOTCLE":["Test", "de", "mots", "clés"]
   },
   "CARACTERISTIQUE":{
     "VALEUR":"1",
