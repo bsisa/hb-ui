@@ -70,6 +70,9 @@ form.vertical .form_datepicker input {
     width: auto;
 }
 
+ul.button-bar li a {
+    cursor: pointer;
+}
 
 .dropdown-menu {
     position: absolute;
