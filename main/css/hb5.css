@@ -70,9 +70,21 @@ form.vertical .form_datepicker input {
     width: auto;
 }
 
-ul.button-bar li a {
+ul.button-bar li a,
+ul.nav-tabs li
+{
     cursor: pointer;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /*
+      Introduced in IE 10.
+      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
 }
+
 
 .dropdown-menu {
     position: absolute;
