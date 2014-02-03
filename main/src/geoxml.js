@@ -14,6 +14,30 @@
 
 
             return {
+
+                addRow: function(elfin, path, row) {
+                    if (!angular.isString(path)) {
+                        return;
+                    }
+
+                    if (angular.isString(row)) {
+                        row += ' ' + Math.floor((1 + Math.random()) * 0x10000);
+                    }
+
+                    var pathComponents = path.split('.').reverse();
+                    var root = elfin;
+                    while (pathComponents.length) {
+                        var item = pathComponents.pop();
+                        if (!root[item] && pathComponents.length) {
+                            root[item] = {};
+                        } else if (!root[item] && !pathComponents.length) {
+                            root[item] = [];
+                        }
+                        root = root[item];
+                    }
+                    root.push(row);
+                },
+
                 validateId: function(identifier) {
                     return angular.isString(identifier) &&
                         identifier.length == 18 &&
