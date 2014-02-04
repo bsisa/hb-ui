@@ -71,7 +71,8 @@ form.vertical .form_datepicker input {
 }
 
 ul.button-bar li a,
-ul.nav-tabs li
+ul.nav-tabs li,
+a [class^="icon-"]
 {
     cursor: pointer;
     -moz-user-select: none;
