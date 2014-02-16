@@ -35,6 +35,7 @@
     "restangular": "~1.2.2",
     "angular-route": "~1.2.10",
     "chosen": "~1.0.0",
-    "angular-chosen-localytics": "~1.0.3"
+    "angular-chosen-localytics": "~1.0.3",
+    "ngUpload": "~0.5.8"
   }
 }
