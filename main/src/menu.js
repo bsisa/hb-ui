@@ -242,12 +242,12 @@
                         .then(function(elfin) {
                             var structure = createMenuStructure(elfin);
                             switch(L.POS) {
-                                case "3": $scope.menuItems.maps = structure; break;
-                                case "4": $scope.menuItems.collections = structure; break;
-                                case "5": $scope.menuItems.operations = structure; break;
-                                case "6": $scope.menuItems.management = structure; break;
-                                case "7": $scope.menuItems.data = structure; break;
-                                case "8": $scope.menuItems.manager = structure; break;
+                                case 3: $scope.menuItems.maps = structure; break;
+                                case 4: $scope.menuItems.collections = structure; break;
+                                case 5: $scope.menuItems.operations = structure; break;
+                                case 6: $scope.menuItems.management = structure; break;
+                                case 7: $scope.menuItems.data = structure; break;
+                                case 8: $scope.menuItems.manager = structure; break;
                             }
 
                             updateMenu();
