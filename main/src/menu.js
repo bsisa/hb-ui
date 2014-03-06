@@ -88,8 +88,12 @@
         };
 
 
-        /* Load global configuration */
-        GeoxmlService.getElfin('G20050101000012345', 'G20050101000012345').get()
+        /* Obtain global configuration references dynamically from GeoxmlService */
+        GeoxmlService.getConfig().get().then(function(config) {
+            var hbInitId = config['config']['hb_init_ref']['Id'];
+            var hbInitID_G = config['config']['hb_init_ref']['ID_G'];
+          /* Load global configuration */
+          GeoxmlService.getElfin(hbInitID_G, hbInitId).get()      
             .then(function(elfin) {
                 /* Load the different configurations */
                 var configs = elfin['CARACTERISTIQUE']['FRACTION']['L'];
@@ -119,6 +123,8 @@
             }, function(response) {
                 console.log("Error with status code", response.status);
             }
+          );
+        }
         );
 
         /* Activate current configuration */
