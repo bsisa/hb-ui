@@ -48,7 +48,9 @@
                         identifier.length == 18 &&
                         (/G[0-9]{17}/).test(identifier);
                 },
-
+                getConfig: function() {
+                    return _geoxmlService.one("config");
+                },
                 getCollections: function() {
                     return _geoxmlService.getList();
                 },
