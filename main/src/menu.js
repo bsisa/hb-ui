@@ -104,7 +104,7 @@
                 var configCountDown = configs.length;
                 /* Loop through configs and fill the $$configurations array */
                 angular.forEach(configs, function(L) {
-                    GeoxmlService.getElfin(L.C[1].C, L.C[2].C).get()
+                	GeoxmlService.getElfin(L.C[1].VALUE, L.C[2].VALUE).get()
                         .then(function(elfin) {
                             $scope.$$configurations.push(elfin);
                             if (L.POS === defaultConfigPos) {
@@ -133,16 +133,37 @@
                 return;
             }
 
+            /**
+             * Jobs (METIER) records structure are defined as a table. 
+             * The table is contained in an ELFIN as a list of lines resulting of:
+             * ELFIN['CARACTERISTIQUE']['FRACTION']['L']    
+             * The first line L[0] (if ordered by L.POS) or L.POS === 1 contains 
+             * the labels for each cell C[0] to C[5]  
+             * C[0] Classe
+             * C[1] Id
+             * C[2] ID_G (ID Groupe)
+             * C[3] Nom (Job name in the jobs menu)
+             * C[4] Groupe (Job group name in the jobs menu)
+             * C[5] Acces (Role/Group having access to this job) 
+             */            
             var jobReferences = newVal['CARACTERISTIQUE']['FRACTION']['L'];
             reorderElfinArray(jobReferences);
+            // Get default job position in jobReferences array
+            var defaultJobPos = parseInt(newVal['CARACTERISTIQUE']['CAR1']['VALEUR']);
             angular.forEach(jobReferences, function(L) {
-                if (L.POS === "1") {
+            	// Skip label line located at firt position
+                if (L.POS === 1) {
                     return;
                 }
-                GeoxmlService.getElfin(L.C[2].C, L.C[1].C).get()
+                /* Sort cells C by C.POS is mandatory to guarantee correct results. */
+                var jobCells = L.C
+                reorderElfinArray(jobCells)
+                
+                GeoxmlService.getElfin(jobCells[2].VALUE, jobCells[1].VALUE).get()
                     .then(function(elfin) {
                         $scope.jobs.push(elfin);
-                        if (L.POS === "2") {
+                        // Set active job using provided default job position
+                        if (L.POS === defaultJobPos) {
                             $scope.activateJob(elfin);
                         }
                     }, function(response) {
@@ -152,24 +173,28 @@
         });
 
         var createMenuStructure = function(elfin) {
-            // First reorder the elements
-            if (angular.isArray(elfin['CARACTERISTIQUE']['FRACTION']['L'])) {
-                reorderElfinArray(elfin['CARACTERISTIQUE']['FRACTION']['L']);
-                angular.forEach(elfin['CARACTERISTIQUE']['FRACTION']['L'], function(l) {
-                    if (angular.isArray(l.C)) {
-                        reorderElfinArray(l.C);
+        	
+        	var menuLines = elfin['CARACTERISTIQUE']['FRACTION']['L'];
+        	/* Sort menu lines by POS */
+            if (angular.isArray(menuLines)) {
+                reorderElfinArray(menuLines);
+                /* Sort cells of each menu line */
+                angular.forEach(menuLines, function(l) {
+                	var lineCells = l.C 
+                    if (angular.isArray(lineCells)) {
+                        reorderElfinArray(lineCells);
                     }
                 });
             }
 
             var menuStructure = [];
             // Loop over all entries
-            angular.forEach(elfin['CARACTERISTIQUE']['FRACTION']['L'], function(l) {
+            angular.forEach(menuLines, function(l) {
                 if (!l.C) return;
 
                 /* Extract group and entry names */
-                var groupName = l.C[0].C;
-                var entryName = l.C[1].C;
+                var groupName = l.C[0].VALUE;
+                var entryName = l.C[1].VALUE;
 
                 // Just ignore empty entries for now
                 if (!entryName || entryName === '') return;
@@ -209,9 +234,11 @@
             reorderElfinArray(menuReferences);
 
             angular.forEach(menuReferences, function(L) {
+            	// Sort menus cells
+            	reorderElfinArray(L.C)
                 /* Load the menus */
-                if (L.C[0].C === "MENU")  {
-                    GeoxmlService.getElfin(L.C[2].C, L.C[1].C).get()
+                if (L.C[0].VALUE === "MENU")  {
+                	GeoxmlService.getElfin(L.C[2].VALUE, L.C[1].VALUE).get()
                         .then(function(elfin) {
                             var structure = createMenuStructure(elfin);
                             switch(L.POS) {
