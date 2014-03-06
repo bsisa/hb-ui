@@ -191,7 +191,7 @@
             }
 
             var menuStructure = [];
-            // Loop over all entries
+            // Loop over all menu entries
             angular.forEach(menuLines, function(l) {
                 if (!l.C) return;
 
