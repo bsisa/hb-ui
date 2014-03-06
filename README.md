@@ -27,21 +27,22 @@ Please follow install instructions at http://nodejs.org/
 Example installation procedure tested on Ubuntu Linux 12.04, 
 for other environment please refer to install instructions 
 provided on the tools web sites.
+_Note the -g or --global option causes npm to install the package globally rather than locally._
 
-    sudo npm install grunt
-    sudo npm install grunt-cli
+    sudo npm install -g grunt
+    sudo npm install -g grunt-cli
 
 Additional project dependencies require installing further grunt plugins:
 
-    sudo npm install grunt-contrib-uglify
-    sudo npm install grunt-contrib-cssmin
-    sudo npm install grunt-html2js
-    sudo npm install grunt-karma
+    sudo npm install -g grunt-contrib-uglify
+    sudo npm install -g grunt-contrib-cssmin
+    sudo npm install -g grunt-html2js
+    sudo npm install -g grunt-karma
 
 
 #### Bower installation ####
 
-    sudo npm install bower
+    sudo npm install -g bower
 
 ##### Usage #####
 
