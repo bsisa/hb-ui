@@ -32,12 +32,13 @@ _Note the -g or --global option causes npm to install the package globally rathe
     sudo npm install -g grunt
     sudo npm install -g grunt-cli
 
-Additional project dependencies require installing further grunt plugins:
+Additional project dependencies require installing further grunt plugins in local:
 
-    sudo npm install -g grunt-contrib-uglify
-    sudo npm install -g grunt-contrib-cssmin
-    sudo npm install -g grunt-html2js
-    sudo npm install -g grunt-karma
+	sudo npm install grunt-contrib-concat
+	sudo npm install grunt-contrib-uglify
+	sudo npm install grunt-contrib-cssmin
+	sudo npm install grunt-html2js
+	sudo npm install grunt-karma
 
 
 #### Bower installation ####
