@@ -53,8 +53,11 @@
 
 
 
-
-        var reorderElfinArray = function(array) {
+        /**
+         * Sort any array by its elements POS property.
+         * Assumes the array elements possess POS property of Int type.  
+         */
+        var reorderArrayByPOS = function(array) {
             array.sort(function(a, b) {
                 return parseInt(a.POS) - parseInt(b.POS);
             });
@@ -97,7 +100,7 @@
             .then(function(elfin) {
                 /* Load the different configurations */
                 var configs = elfin['CARACTERISTIQUE']['FRACTION']['L'];
-                reorderElfinArray(configs);
+                reorderArrayByPOS(configs);
 
                 var defaultConfigPos = elfin['CARACTERISTIQUE']['VALEUR'];
 
@@ -147,17 +150,17 @@
              * C[5] Acces (Role/Group having access to this job) 
              */            
             var jobReferences = newVal['CARACTERISTIQUE']['FRACTION']['L'];
-            reorderElfinArray(jobReferences);
+            reorderArrayByPOS(jobReferences);
             // Get default job position in jobReferences array
             var defaultJobPos = parseInt(newVal['CARACTERISTIQUE']['CAR1']['VALEUR']);
             angular.forEach(jobReferences, function(L) {
-            	// Skip label line located at firt position
+            	// Skip label line located at first position
                 if (L.POS === 1) {
                     return;
                 }
                 /* Sort cells C by C.POS is mandatory to guarantee correct results. */
-                var jobCells = L.C
-                reorderElfinArray(jobCells)
+                var jobCells = L.C;
+                reorderArrayByPOS(jobCells);
                 
                 GeoxmlService.getElfin(jobCells[2].VALUE, jobCells[1].VALUE).get()
                     .then(function(elfin) {
@@ -177,12 +180,12 @@
         	var menuLines = elfin['CARACTERISTIQUE']['FRACTION']['L'];
         	/* Sort menu lines by POS */
             if (angular.isArray(menuLines)) {
-                reorderElfinArray(menuLines);
+                reorderArrayByPOS(menuLines);
                 /* Sort cells of each menu line */
                 angular.forEach(menuLines, function(l) {
-                	var lineCells = l.C 
+                	var lineCells = l.C;
                     if (angular.isArray(lineCells)) {
-                        reorderElfinArray(lineCells);
+                        reorderArrayByPOS(lineCells);
                     }
                 });
             }
@@ -200,7 +203,7 @@
                 if (!entryName || entryName === '') return;
 
                 if (groupName && groupName !== '') {
-                    var existingGroups = menuStructure.filter(function(menuItem) {return menuItem.label === groupName});
+                    var existingGroups = menuStructure.filter(function(menuItem) {return menuItem.label === groupName;});
 
                     if (existingGroups.length == 0) {
                         menuStructure.push( {
@@ -231,11 +234,11 @@
 
             /* Load the menus */
             var menuReferences = $scope.activeJob['CARACTERISTIQUE']['FRACTION']['L'];
-            reorderElfinArray(menuReferences);
+            reorderArrayByPOS(menuReferences);
 
             angular.forEach(menuReferences, function(L) {
             	// Sort menus cells
-            	reorderElfinArray(L.C)
+            	reorderArrayByPOS(L.C);
                 /* Load the menus */
                 if (L.C[0].VALUE === "MENU")  {
                 	GeoxmlService.getElfin(L.C[2].VALUE, L.C[1].VALUE).get()
@@ -255,7 +258,7 @@
                             console.log("Error with status code", response.status);
                     });
                 }
-            })
+            });
         };
     }]);
 
