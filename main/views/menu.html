@@ -17,10 +17,10 @@
         <a href="#"><i class="icon-list"></i> Collections<span class="arrow">&nbsp;</span></a>
         <ul>
             <li ng-repeat="menuItem in menuItems.collections" >
-                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
+                <a href="{{menuItem.action}}"><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
                 <ul ng-if="menuItem.subItems">
                     <li ng-repeat="menuSubItem in menuItem.subItems" >
-                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                        <a href="{{menuSubItem.action}}" ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
                     </li>
                 </ul>
             </li>

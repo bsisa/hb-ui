@@ -198,29 +198,35 @@
                 /* Extract group and entry names */
                 var groupName = l.C[0].VALUE;
                 var entryName = l.C[1].VALUE;
-
+                var actionValue = l.C[2].VALUE;
+                
                 // Just ignore empty entries for now
                 if (!entryName || entryName === '') return;
 
                 if (groupName && groupName !== '') {
                     var existingGroups = menuStructure.filter(function(menuItem) {return menuItem.label === groupName;});
 
+                    //TODO: double-check groups logic .
+                    // actionValue should not be there for group with subItems (post processing required?)
                     if (existingGroups.length == 0) {
                         menuStructure.push( {
                             label:groupName,
-                            subItems:[]
+                            action: actionValue,
+                            subItems:[]                        
                         });
                     }
 
                     existingGroups.forEach(function(group) {
                         group['subItems'].push({
-                            label:entryName
+                            label:entryName,
+                            action: actionValue
                         });
                     });
 
                 } else {
                     menuStructure.push({
-                        label:entryName
+                        label:entryName,
+                        action: actionValue
                     });
                 }
             });
