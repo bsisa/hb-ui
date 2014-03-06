@@ -2,3 +2,4 @@
 /.settings
 /main/dist/
 /main/node_modules/
+/main/bower_components/
