@@ -7,10 +7,15 @@
         'Restangular', function(Restangular) {
 
             var restGeoxml = Restangular.withConfig(function(Configurer) {
-                Configurer.setBaseUrl('api-mocks');
+            	/* TODO: Make baseUrl configurable. (Using grunt ?) */
+            	/* Local hb-ui only test base URL */
+            	var baseUrl = 'api-mocks';
+            	/* Local hb-ui and hb-api integration test base URL */
+            	//var baseUrl = 'http://localhost:9000/api/melfin'
+             	Configurer.setBaseUrl(baseUrl);
             });
 
-            var _geoxmlService = restGeoxml.all('')
+            var _geoxmlService = restGeoxml.all('');
 
 
             return {
