@@ -103,7 +103,6 @@
             } else {
             $scope.errorMessage = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
         }
-
     }]);
 
 

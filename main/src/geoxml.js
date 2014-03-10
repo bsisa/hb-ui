@@ -11,7 +11,7 @@
             	/* Local hb-ui only test base URL */
             	//var baseUrl = 'api-mocks';
             	/* Local hb-ui and hb-api integration test base URL */
-            	var baseUrl = 'http://localhost:9000/api/melfin'
+            	var baseUrl = 'http://localhost:9000/api/melfin';
              	Configurer.setBaseUrl(baseUrl);
             	// Default restangular behaviour assuming id field is id not suitable with ELFIN.Id
             	// Helpful reference: 
@@ -56,17 +56,20 @@
                     return _geoxmlService.one("config");
                 },
                 getCollections: function() {
+                	//TODO: To check, this should certainly be:
+                	// return _geoxmlService;
+                	// with later call to .getList()
                     return _geoxmlService.getList();
                 },
                 getCollection: function(collectionId) {
-                    return _geoxmlService.getList(collectionId);
+                	return _geoxmlService.all(collectionId);
                 },
                 getElfin: function(collectionId, elfinId) {
                     return _geoxmlService.one(collectionId, elfinId);
                 }
                 
-            }
+            };
         }
-    ])
+    ]);
 
 })();
