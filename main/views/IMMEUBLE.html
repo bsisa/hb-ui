@@ -3,8 +3,10 @@
 	<div ng-show="errorMessage" class="notice error">
 		<i class="icon-remove-sign icon-large"></i> {{errorMessage}}
 	</div>
-    <!-- Info TODO: should disappear after n seconds: built in with ngStrap alert. -->
-    <div ng-show="statusMessage" class="notice info"><i class="icon-info-sign icon-large"></i> {{statusMessage}}</div>
+	<!-- Info TODO: should disappear after n seconds: built in with ngStrap alert. -->
+	<div ng-show="statusMessage" class="notice info">
+		<i class="icon-info-sign icon-large"></i> {{statusMessage}}
+	</div>
 
 	<div ng-show="!elfins && !errorMessage">
 		<h3>Chargement des informations</h3>
@@ -12,11 +14,9 @@
 	</div>
 
 	<div ng-show="elfins">
-		LISTE OF IMMEUBLES HERE...
-			
-			<div ng-repeat="identifiant in elfins.IDENTIFIANT">
-			<span >{{identifiant.NOM}}</span>
-			</div>
-			
+		<div ng-repeat="elfin in elfins">
+			<span>{{elfin.IDENTIFIANT.NOM}}</span>
+		</div>
+
 	</div>
 </div>

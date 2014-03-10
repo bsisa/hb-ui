@@ -20,7 +20,7 @@
                 	} else {
                 		$scope.elfins = elfins;
                 		console.log("DefaultListsController elfins NOT NULL, " + elfins);
-                		$scope.statusMessage = elfins.length + "elfins returned";
+                		$scope.statusMessage = elfins.length + " immeubles.";
                 	}
 
                     //console.log("DefaultListsController obtained " + elfins.length + " results.");
