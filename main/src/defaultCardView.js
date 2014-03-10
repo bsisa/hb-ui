@@ -28,6 +28,7 @@
        		elfin.put().then( 
        			function() { 
        				console.log("All ok");
+       				$scope.statusMessage = "Mise à jour effectuée avec succès.";
        			}, 
        			function(response) { 
        				console.log("Error with status code", response.status);

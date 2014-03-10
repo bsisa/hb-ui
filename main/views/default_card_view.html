@@ -1,6 +1,8 @@
 <div class="card clearfix">
     <!-- Error -->
     <div ng-show="errorMessage" class="notice error"><i class="icon-remove-sign icon-large"></i> {{errorMessage}}</div>
+    <!-- Info TODO: should disappear after n seconds: built in with ngStrap alert. -->
+    <div ng-show="statusMessage" class="notice info"><i class="icon-info-sign icon-large"></i> {{statusMessage}}</div>
 
     <div ng-show="!elfin && !errorMessage">
         <h3>Chargement des informations</h3>
@@ -10,7 +12,7 @@
     <div ng-show="elfin">
         <div class="col_8">
             <ul class="button-bar ">            
-                <li><a ng-click="elfin.put()" href=""><i class="icon-save"></i></a></li>
+                <li><a ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></a></li>
                 <li><a href=""><i class="icon-copy"></i></a></li>
                 <li><a href=""><i class="icon-trash"></i></a></li>
                 <li><a href=""><i class="icon-paper-clip"></i></a></li>
