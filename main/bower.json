@@ -27,8 +27,8 @@
     "test"
   ],
   "dependencies": {
-    "angular": "1.2.9",
-    "angular-resource": "1.2.9",
+    "angular": "1.2.14",
+    "angular-resource": "1.2.14",
     "jquery": "1.9.1",
     "ui-bootstrap": "0.7.0",
     "leaflet": "0.7.1",
@@ -36,6 +36,10 @@
     "angular-route": "~1.2.10",
     "chosen": "~1.0.0",
     "angular-chosen-localytics": "~1.0.3",
-    "ngUpload": "~0.5.8"
+    "ngUpload": "~0.5.8",
+    "angular-strap": "~2.0.0",
+    "angular-motion": "~0.3.2",
+    "angular-sanitize": "~1.2.14",
+    "angular-animate": "~1.2.14"
   }
 }

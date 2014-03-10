@@ -10,15 +10,31 @@
 
 
     };
-
+    
+    
+        
+    // TODO: solve $alert requires ngStrap and conflicts on $modal with localytics.directives
+    //angular.module('hb5').controller('UploadController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$alert', function($scope, GeoxmlService, $modal, $routeParams, $alert) {
     angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', function($scope, GeoxmlService, $modal, $routeParams) {
-
-
+    
         $scope.elfinId = $routeParams.elfinId;
         $scope.collectionId = $routeParams.collectionId;
         $scope.elfin = null;
+        // TODO: once ngStrap can be used both error/status could be replaced by $alert usage.
         $scope.errorMessage = null;
+        $scope.statusMessage = null;
 
+        $scope.putElfin = function (elfin) {
+       		elfin.put().then( 
+       			function() { 
+       				console.log("All ok");
+       			}, 
+       			function(response) { 
+       				console.log("Error with status code", response.status);
+       			} 
+       		);
+        };
+        
         $scope.elfinTypes = {
             BIEN: "Bien",
             ACTIVITE: "Activité",
@@ -59,7 +75,7 @@
 
         $scope.uploadFile = function (renvoi) {
 
-            var modalInstance = $modal.open({
+        	var modalInstance = $modal.open({
                 templateUrl: 'defaultUploadFile.html',
                 controller: UploadFileCtrl,
                 resolve: {
@@ -74,7 +90,7 @@
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
-
+        
 
         if (GeoxmlService.validateId($scope.collectionId) && GeoxmlService.validateId($scope.elfinId)) {
             GeoxmlService.getElfin($scope.collectionId, $scope.elfinId).get()

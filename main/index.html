@@ -23,6 +23,9 @@
     <link rel="stylesheet" type="text/css" href="css/leaflet/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="css/leaflet/Leaflet.Coordinates-0.1.4.css" />
 
+	<!-- Angular motion: https://github.com/mgcrea/angular-motion -->
+	<link rel="stylesheet" type="text/css" href="css/angular-motion/angular-motion.min.css" />
+
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="css/leaflet/Leaflet.Coordinates-0.1.4.ie.css" />
     <![endif]-->
@@ -36,6 +39,15 @@
     <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
     <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+    <!-- Added for AngularStrap 
+    AngularStrap leverages AngularJS ngAnimate module to provide animations to the directives. 
+    Therefore, it requires to load custom CSS code as ngAnimate comes with a very specific markup.
+     -->
+    <script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+	<script type="text/javascript" src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+	<script type="text/javascript" src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+
 
     <script type="text/javascript" src="bower_components/lodash/dist/lodash.compat.min.js"></script>
     <script type="text/javascript" src="bower_components/restangular/dist/restangular.js"></script>
