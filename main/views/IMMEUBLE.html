@@ -13,10 +13,52 @@
 		<div class="loading"></div>
 	</div>
 
-	<div ng-show="elfins">
-		<div ng-repeat="elfin in elfins">
-			<span>{{elfin.IDENTIFIANT.NOM}}</span>
-		</div>
+	<!-- 	<div ng-show="elfins"> -->
+	<!-- 		<div ng-repeat="elfin in elfins"> -->
+	<!-- 			<span>{{elfin.IDENTIFIANT.NOM}}</span> -->
+	<!-- 		</div> -->
 
-	</div>
+	<!-- 	</div> -->
+	<!-- </div> -->
+
+
+	<table ng-show="elfins">
+		<tr>
+			<th colspan="6">RESULTAT DE LA REQUETE - {{elfinsCount}} TROUVES</th>
+		</tr>
+		<tr>
+			<th>Groupe
+			</td>
+			<th>Propriétaire</th>
+			<th>N° de gérance</th>
+			<th>Lieu-dit</th>
+			<th>N° de construction</th>
+			<th>Adresse</th>
+		</tr>
+		<tr ng-repeat="elfin in elfins">
+			<td>Détail... <!-- 
+				<input type="button" value="Détail">
+					<xsl:attribute name="onclick">
+						<xsl:text>javascript:top.getHB_Fiche().loadAndDisplayXML('../../HB4-Objets/</xsl:text>
+						<xsl:value-of select="./@ID_G"/>
+						<xsl:text>/</xsl:text>
+						<xsl:value-of select="./@CLASSE"/>
+						<xsl:value-of select="./@Id"/>
+<xsl:text>.xml','stylesheets/masque</xsl:text>
+												<xsl:value-of select="./@CLASSE"/>
+
+						<xsl:text>.xsl')</xsl:text>					</xsl:attribute>
+				</input>
+				 -->
+			</td>
+
+			<td>{{elfin.GROUPE}}</td>
+			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}</td>
+			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td>
+			<td>{{elfin.IDENTIFIANT.NOM}}</td>
+			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>
+		</tr>
+	</table>
 </div>
+

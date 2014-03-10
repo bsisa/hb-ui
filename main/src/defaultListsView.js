@@ -6,6 +6,7 @@
         $scope.collectionId = $routeParams.collectionId;
         console.log("DefaultListsController... collectionId = " + $scope.collectionId);
         $scope.elfins = null;
+        $scope.elfinsCount = null;
         $scope.errorMessage = null;  
         $scope.statusMessage = null;  
         
@@ -19,6 +20,7 @@
                 		$scope.statusMessage = "Empty list of elfins returned...";
                 	} else {
                 		$scope.elfins = elfins;
+                		$scope.elfinsCount = elfins.length;
                 		console.log("DefaultListsController elfins NOT NULL, " + elfins);
                 		$scope.statusMessage = elfins.length + " immeubles.";
                 	}
