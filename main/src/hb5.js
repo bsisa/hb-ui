@@ -34,6 +34,18 @@
         ;
 
     }]);
+    
+
+	hb5.filter('plural', function() {
+		return function(number) {
+			if (number > 1) {
+				return "s";
+			} else {
+				return "";
+			}
+		};
+	});
+    
 })();
 
 
