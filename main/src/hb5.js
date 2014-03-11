@@ -52,7 +52,7 @@
 	 */
 	hb5.service('sharedMessages', function () {
         var statusMessage = {
-            data: "First"
+            data: null
         };
 
         return {
