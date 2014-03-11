@@ -13,9 +13,11 @@
     };
 
 
-    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', function($scope, GeoxmlService, $modal) {
+    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'sharedMessages', function($scope, GeoxmlService, $modal, sharedMessages) {
 
-        $scope.$$configurations = [];
+    	$scope.sharedStatusMessage = sharedMessages.getStatusMessage();
+
+    	$scope.$$configurations = [];
         $scope.$$activeConfiguration = null;
 
         $scope.jobs = [];
