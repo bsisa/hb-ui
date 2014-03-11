@@ -14,7 +14,7 @@
             <ul class="button-bar ">            
                 <li><a ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></a></li>
                 <li><a href=""><i class="icon-copy"></i></a></li>
-                <li><a href=""><i class="icon-trash"></i></a></li>
+                <li><a ng-click="delElfin(elfin)" href=""><i class="icon-trash"></i></a></li>
                 <li><a href=""><i class="icon-paper-clip"></i></a></li>
                 <li><a href=""><i class="icon-map-marker"></i></a></li>
                 <li><a href=""><i class="icon-print"></i></a></li>
@@ -638,7 +638,7 @@
 </div>
 
 <div>
-    <script type="text/ng-template" id="defaultUploadFile.html">
+    <script type="text/ng-template" id="defaultUploadFileModalPanel.html">
         <div class="modal-header">
             <h3>Téléverser un document</h3>
         </div>
@@ -654,3 +654,26 @@
         </div>
     </script>
 </div>
+
+
+
+
+<div>
+    <script type="text/ng-template" id="deleteConfirmModalPanel.html">
+        <div class="modal-header">
+            <h3>Supprimer un objet</h3>
+        </div>
+        <div class="modal-body">
+			Voulez-vous vraiment supprimer définitivement l'objet {{elfin.CLASSE}} {{elfin.ID_G}}/{{elfin.Id}} ?
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
+        </div>
+    </script>
+</div>
+
+
+
+
+
