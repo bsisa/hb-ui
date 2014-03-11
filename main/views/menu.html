@@ -98,15 +98,11 @@
 </ul>
 
 <!-- TODO: notifications would better float on top of UI -->
-<div class="grid" ng-style="gridStyle">
+<div ng-show="sharedStatusMessage.data" class="grid" ng-style="gridStyle">
 	<div class="col_12">
 		<div class="notifications clearfix">
-			<!-- Error -->
-			<div ng-show="errorMessage" class="notice error">
-				<i class="icon-remove-sign icon-large"></i> {{errorMessage}}
-			</div>
 			<!-- Info TODO: should disappear after n seconds: built in with ngStrap alert. -->
-			<div ng-show="sharedStatusMessage.data" class="notice info">
+			<div class="notice info">
 				<i class="icon-info-sign icon-large"></i>
 				{{sharedStatusMessage.data}}
 			</div>
