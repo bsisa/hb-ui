@@ -23,15 +23,23 @@
         
     // TODO: solve $alert requires ngStrap and conflicts on $modal with localytics.directives
     //angular.module('hb5').controller('UploadController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$alert', function($scope, GeoxmlService, $modal, $routeParams, $alert) {
-    angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', function($scope, GeoxmlService, $modal, $routeParams, $location) {
+    angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages) {
     
+    	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
         $scope.collectionId = $routeParams.collectionId;
+        
+        // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
+        
         // TODO: once ngStrap can be used both error/status could be replaced by $alert usage.
+        // Local messages
         $scope.errorMessage = null;
         $scope.statusMessage = null;
-
+        // Shared messages (between controllers).
+    	$scope.setSharedStatusMessage = sharedMessages.setStatusMessage;
+        
+    	// Wrapper for ELFIN PUT (update) operation
         $scope.putElfin = function (elfin) {
        		elfin.put().then( 
        			function() { 
@@ -44,6 +52,7 @@
        		);
         };
         
+    	// Wrapper for ELFIN DELETE operation
         $scope.delElfin = function (elfin) {
         	
         	var modalInstance = $modal.open({
@@ -54,23 +63,26 @@
             });
 
             modalInstance.result.then(function () {
-            	console.log('Modal accepted deletion of elfin: ' + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id);
-   				$scope.statusMessage = "Suppression ACCEPTEE: PAS ENCORE implementée!!!";
-   				$location.path('/');
-//            	elfin.remove().then( 
-//               			function() { 
-//               				console.log("All ok");
-//               				$scope.statusMessage = "Suppression effectuée avec succès.";
-//               				// TODO: redirect to home page ?
-//               			}, 
-//               			function(response) { 
-//               				console.log("Error: card delete failure with status code", response.status);
-//               				$scope.errorMessage = "La suppression a échoué. Veuillez s.v.p. recommencer. Si le problème persiste contactez votre administrateur système.";
-//               			} 
-//               		);
+            	elfin.remove().then( 
+               			function() { 
+                        	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
+                        	// Set shared status message for use in next controller where redirection happens. 
+               				$scope.setSharedStatusMessage(message);
+               				$location.path('/');
+               			}, 
+               			function(response) { 
+               				var message = "La suppression a échoué. Veuillez s.v.p. recommencer. Si le problème persiste contactez votre administrateur système et lui communiquer le message suivant: " + response.status;
+               				// Set local error message
+               				$scope.errorMessage = message;
+               				// Reset local status
+               				$scope.statusMessage = null;
+               				console.log("Error: ELFIN delete failure with status code", response.status);
+               			} 
+               		);
             }, function () {
-                console.log('Modal dismissed at: ' + new Date());
-   				$scope.statusMessage = "Suppression ANNULEE...";
+            	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " annulée.";
+                // Local message
+   				$scope.statusMessage = message;
             });        	
         };        
         
