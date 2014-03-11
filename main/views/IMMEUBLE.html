@@ -3,32 +3,20 @@
 	<div ng-show="errorMessage" class="notice error">
 		<i class="icon-remove-sign icon-large"></i> {{errorMessage}}
 	</div>
-	<!-- Info TODO: should disappear after n seconds: built in with ngStrap alert. -->
-	<div ng-show="statusMessage" class="notice info">
-		<i class="icon-info-sign icon-large"></i> {{statusMessage}}
-	</div>
 
 	<div ng-show="!elfins && !errorMessage">
 		<h3>Chargement des informations</h3>
 		<div class="loading"></div>
 	</div>
 
-	<!-- 	<div ng-show="elfins"> -->
-	<!-- 		<div ng-repeat="elfin in elfins"> -->
-	<!-- 			<span>{{elfin.IDENTIFIANT.NOM}}</span> -->
-	<!-- 		</div> -->
-
-	<!-- 	</div> -->
-	<!-- </div> -->
-
-
 	<table ng-show="elfins">
 		<tr>
-			<th colspan="6">RESULTAT DE LA REQUETE - {{elfinsCount}} TROUVES</th>
+			<th colspan="6">Résulat de la requête - {{elfinsCount}} immeuble{{ elfinsCount | plural }} trouvé{{ elfinsCount | plural }}</th>
 		</tr>
 		<tr>
-			<th>Groupe
-			</td>
+			<th />
+			<!-- Remark: always empty on tested data -->
+			<!-- 			<th>Groupe</th> -->
 			<th>Propriétaire</th>
 			<th>N° de gérance</th>
 			<th>Lieu-dit</th>
@@ -36,7 +24,7 @@
 			<th>Adresse</th>
 		</tr>
 		<tr ng-repeat="elfin in elfins">
-			<td>Détail... <!-- 
+			<td><a href="/index.html#/elfin/{{elfin.ID_G}}/IMMEUBLE/{{elfin.Id}}" >Détail</a><!-- 
 				<input type="button" value="Détail">
 					<xsl:attribute name="onclick">
 						<xsl:text>javascript:top.getHB_Fiche().loadAndDisplayXML('../../HB4-Objets/</xsl:text>
@@ -52,8 +40,10 @@
 				 -->
 			</td>
 
-			<td>{{elfin.GROUPE}}</td>
-			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}</td>
+			<!-- Remark: always empty on tested data -->
+			<!-- <td>{{elfin.GROUPE}}</td>  -->
+			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
+			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.VALUE}}</td>
 			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
 			<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td>
 			<td>{{elfin.IDENTIFIANT.NOM}}</td>
