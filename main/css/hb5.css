@@ -49,6 +49,12 @@ button:hover {
     background: #fff;
 }
 
+.notifications {
+	border: 1px solid #ddd;
+    padding: 0px;
+    background: #fff;
+}
+
 .chosen-container-single .chosen-single {
     height: 29px;
     margin-bottom: 10px;
