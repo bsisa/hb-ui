@@ -2,31 +2,24 @@
 
     angular.module('hb5').controller('DefaultListsController', ['$scope', 'GeoxmlService', '$routeParams', function($scope, GeoxmlService, $routeParams) {
     
-    	console.log("DefaultListsController...");
+    	// Collection id parameter obtained from hb5.config $routeProvider
         $scope.collectionId = $routeParams.collectionId;
-        console.log("DefaultListsController... collectionId = " + $scope.collectionId);
+        // Contains a JSON Array of ELFINs resulting of the GeoxmlService query   
         $scope.elfins = null;
         $scope.elfinsCount = null;
-        $scope.errorMessage = null;  
-        $scope.statusMessage = null;  
+        // Displays error message feedback to the end user if not empty
+        $scope.errorMessage = null;
         
         if (GeoxmlService.validateId($scope.collectionId)) {
-        	console.log("DefaultListsController v0.6 calling get collection...");
             GeoxmlService.getCollection($scope.collectionId).getList()
                 .then(function(elfins) {
-                	console.log("DefaultListsController elfins promise obtained... ");
                 	if (elfins == null) {
-                		console.log("DefaultListsController elfins NULLLLL... ");
-                		$scope.statusMessage = "Empty list of elfins returned...";
+                		$scope.elfins = elfins;
+                		$scope.elfinsCount = 0;
                 	} else {
                 		$scope.elfins = elfins;
                 		$scope.elfinsCount = elfins.length;
-                		console.log("DefaultListsController elfins NOT NULL, " + elfins);
-                		$scope.statusMessage = elfins.length + " immeubles.";
                 	}
-
-                    //console.log("DefaultListsController obtained " + elfins.length + " results.");
-                    console.log("DefaultListsController $scope.elfins = elfins; performed... ");
                 }, function(response) {
                     $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
                 });
