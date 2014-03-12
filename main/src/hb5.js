@@ -27,6 +27,9 @@
         
         
     	/**
+    	 *  Please note that ResponseInterceptor is never called when ErrorInterceptor is called,
+    	 *  it should have been better named NonErrorResponseInterceptor (100 Infos, 200 Successes, 300 Redirects)
+    	 *  
     	 *  data: The data received got from the server
     		operation: The operation made. It'll be the HTTP method used except for a GET which returns a list of element which will return getList so that you can distinguish them.
     		what: The model that's being requested. It can be for example: accounts, buildings, etc.
@@ -38,17 +41,15 @@
     	// Configurer.addResponseInterceptor(
         Restangular.setResponseInterceptor(
     			function(data,operation,what,url,response,deferred) {
-    	        	// HTTP status lower than 400 are not strictly errors (100 infos, 200 successes,300 redirects).
-    				if (response.status < 400) {
-    					// Reset possible former error message to null
-    	        		sharedMessages.setErrorMessage(null);
-    	        	}
-    				//TODO: remove this log
-    	          console.log("Restangular response interceptor caught: status: " + response.status + 
-    	        		  ", operation: " + operation + 
-    	        		  ", what: " + what + 
-    	        		  ", url: " + url);
-    	          // The responseInterceptor must return the restangularized data element.
+    				// Reset possible former error message to null
+    	        	sharedMessages.setErrorMessage(null);
+    				//TODO: remove this debug log
+//    	          console.log("Restangular response interceptor caught: status: " + response.status + 
+//    	        		  ", operation: " + operation + 
+//    	        		  ", what: " + what + 
+//    	        		  ", url: " + url);
+    				
+    	          // Important: The responseInterceptor must return the restangularized data element.
     	          // https://github.com/mgonto/restangular#seterrorinterceptor
     	          return data; 
     		});        
