@@ -1,5 +1,22 @@
 /**
+ * 
+ * Managing REST API exceptions in a single place can be achieved by using 
+ * Restangular setErrorInterceptor method to hook up a dedicated function 
+ * to proceed with errors. This could be configured hereafter using:
+ * Configurer.setErrorInterceptor(...) 
+ * 
+ * A drawback to do this here is that it is not possible to benefit from
+ * the $location and $window services injection at this stage. 
+ * These services are necessary to be able to perform redirections upon errors. 
+ * 
+ * In order to achieve this it is possible and better suited to define the 
+ * setErrorInterceptor on the angular application itself using: 
+ * application.run(...) 
+ * In thsi method we can benefit from $window, $location services injections. 
+ * Please check hb5.js file for this.
+ * 
  * Created by guy on 19.01.14.
+ * 
  */
 
 (function() {
@@ -17,6 +34,7 @@
             	// Helpful reference: 
             	// https://github.com/mgonto/restangular#i-use-mongo-and-the-id-of-the-elements-is-_id-not-id-as-the-default-therefore-requests-are-sent-to-undefined-routes
             	Configurer.setRestangularFields({ id: "Id" });
+            	
             });
 
             var _geoxmlService = restGeoxml.all('');

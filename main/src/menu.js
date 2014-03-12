@@ -16,6 +16,7 @@
     angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'sharedMessages', function($scope, GeoxmlService, $modal, sharedMessages) {
 
     	$scope.sharedStatusMessage = sharedMessages.getStatusMessage();
+    	$scope.sharedErrorMessage = sharedMessages.getErrorMessage();
 
     	$scope.$$configurations = [];
         $scope.$$activeConfiguration = null;
@@ -118,7 +119,7 @@
                             configCountDown--;
                             if (configCountDown === 0) $scope.chooseConfiguration();
                         }, function(response) {
-                            console.log("Error with status code", response.status);
+                            console.log("Error with status code ", response.status, " while processing configs");
                             configCountDown--;
                             if (configCountDown === 0) $scope.chooseConfiguration();
                         });
@@ -126,7 +127,7 @@
 
 
             }, function(response) {
-                console.log("Error with status code", response.status);
+                console.log("Error with status code " + response.status + " while getting hb_init global configuration.");
             }
           );
         }
