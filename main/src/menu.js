@@ -105,9 +105,10 @@
                 var configs = elfin['CARACTERISTIQUE']['FRACTION']['L'];
                 reorderArrayByPOS(configs);
 
-                var defaultConfigPos = elfin['CARACTERISTIQUE']['VALEUR'];
-
+                // Type must be int to have === check work with L.POS
+                var defaultConfigPos = parseInt(elfin['CARACTERISTIQUE']['CAR1']['VALEUR']);
                 var configCountDown = configs.length;
+                
                 /* Loop through configs and fill the $$configurations array */
                 angular.forEach(configs, function(L) {
                 	GeoxmlService.getElfin(L.C[1].VALUE, L.C[2].VALUE).get()
@@ -117,11 +118,18 @@
                                 $scope.$$activeConfiguration = elfin;
                             }
                             configCountDown--;
-                            if (configCountDown === 0) $scope.chooseConfiguration();
+                            if (configCountDown === 0 && configs.length > 1) {
+                            	$scope.chooseConfiguration();
+                            }
                         }, function(response) {
                             console.log("Error with status code ", response.status, " while processing configs");
                             configCountDown--;
-                            if (configCountDown === 0) $scope.chooseConfiguration();
+                            //TODO: Check it is wise to prompt for configuration choice in the event of errors.
+                            // While we have setErrorInterceptor defined on Restangular we should anyway never 
+                            // get here.
+                            if (configCountDown === 0 && configs.length > 1) {
+                        		$scope.chooseConfiguration();
+                        	}
                         });
                 });
 
