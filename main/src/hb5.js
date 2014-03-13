@@ -63,6 +63,10 @@
                 templateUrl: 'views/welcome.html',
                 controller: function($scope) {}
             })
+            .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
+                templateUrl: 'views/IMMEUBLE_card_view.html',
+                controller: 'DefaultCardController'
+            })            
             .when('/elfin/:collectionId/:classe/:elfinId', {
                 templateUrl: 'views/default_card_view.html',
                 controller: 'DefaultCardController'
