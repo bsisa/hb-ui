@@ -127,6 +127,28 @@
             
         };
     });
+	
+	/**
+	 * Small service used intended to share functions not states between miscellaneous controllers
+	 * without duplicating code.
+	 */
+	hb5.service('hbUtil', function () {
+
+        /**
+         * Sort any array by its elements POS property.
+         * Assumes the array elements possess POS property of Int type.  
+         */
+        var reorderArrayByPOS = function(array) {
+            array.sort(function(a, b) {
+                return parseInt(a.POS) - parseInt(b.POS);
+            });
+        };		
+		
+        return {
+        	reorderArrayByPOS:reorderArrayByPOS
+            
+        };
+    });	
 
    
 })();

@@ -32,6 +32,113 @@
 
         <div class="col_12">
             <tabset>
+ 
+                <tab heading="Identification">
+                    <div class="col_4">
+                        <form class="vertical">
+                            <label for="goal">Numéro de gérance</label>
+                            <input id="goal" type="text" ng-model="elfin.IDENTIFIANT.OBJECTIF">
+
+                            <label for="author">Numéro ECAP</label>
+                            <input id="author" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR">
+
+                            <label for="name">N° de construction</label>
+                            <input id="name" type="text" ng-model="elfin.IDENTIFIANT.NOM">
+
+                            <label for="address">Adresse</label>
+                            <input id="address" type="text" ng-model="elfin.IDENTIFIANT.ALIAS">
+                            
+                            <label for="address">Numéro cadastral</label>
+                            <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR">
+                            
+							<label for="address">Lieu-dit</label>
+                            <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
+                            
+							<label for="address">Remarque</label>
+                            <input id="address" type="text" ng-model="elfin.DIVERS.REMARQUE">
+
+<!-- centreDeFrais = elfin.IDENTIFIANT.OBJECTIF = Numéro de gérance !? -->
+
+<!-- PARTENAIRE/PROPRIETAIRE/@NOM -->
+
+<!-- elfin.PARTENAIRE['PROPRIETAIRE'].NOM  -->
+
+<!--                             <label for="author">Auteur</label> -->
+<!--                             <input id="author" type="text" ng-model="elfin.IDENTIFIANT.AUT"> -->
+
+<!--                             <label for="from">De</label> -->
+<!--                             <input id="from" type="text" ng-model="elfin.IDENTIFIANT.DE"> -->
+
+<!--                             <label for="value_new">Valeur à neuf</label> -->
+<!--                             <input id="value_new" type="text" ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF"> -->
+                        </form>
+                    </div>
+
+                    <div class="col_4">
+                        <form class="vertical">
+                            <label for="manager">Gérant</label>
+                            <input id="manager" type="text" ng-model="elfin.IDENTIFIANT.GER">
+
+                            <label for="alias">Alias</label>
+                            <input id="alias" type="text" ng-model="elfin.IDENTIFIANT.ALIAS">
+
+                            <label for="quality">Qualité</label>
+                            <input id="quality" type="text" ng-model="elfin.IDENTIFIANT.QUALITE">
+
+                            <label for="to">A</label>
+                            <input id="to" type="text" ng-model="elfin.IDENTIFIANT.A">
+
+                            <label for="value">Valeur</label>
+                            <input id="value" type="text" ng-model="elfin.IDENTIFIANT.VALEUR">
+                        </form>
+                    </div>
+
+                    <div class="col_4">
+                        <form class="vertical">
+                            <label for="responsible">Responsable</label>
+                            <input id="responsible" type="text" ng-model="elfin.IDENTIFIANT.RES">
+
+                            <label for="origin">Origine</label>
+                            <input id="origin" type="text" ng-model="elfin.IDENTIFIANT.ORIGINE">
+
+                            <label for="account">Compte</label>
+                            <input id="account" type="text" ng-model="elfin.IDENTIFIANT.COMPTE">
+
+                            <label for="by">Par</label>
+                            <input id="by" type="text" ng-model="elfin.IDENTIFIANT.PAR">
+                        </form>
+                    </div>
+
+                    <div class="clear"></div>
+
+
+                    <div class="col_8">
+                        <h5>Mots clés</h5>
+                    </div>
+                    <div class="col_4 right">
+                        <ul class="button-bar">
+                            <li><a ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', 'Mot clé')"><i class="icon-plus-sign"></i> Nouveau</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col_12">
+                        <form class="vertical">
+                            <table class="striped tight sortable">
+                                <thead>
+                                <tr>
+                                    <th>Mot clé</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
+                                    <td><input type="text" ng-model="motcle"></td>
+                                    <td class="right"><a ng-click="elfin.IDENTIFIANT.MOTCLE.splice($index, 1)"><i class="icon-remove-sign"></i></a></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </tab> 
+ 
                 <!-- ATTRIBUTS -->
                 <tab heading="Attributs">
                     <div class="col_4">
@@ -100,93 +207,6 @@
                     </table>
 
                 </tab>
-
-
-                <tab heading="Identifiant">
-                    <div class="col_4">
-                        <form class="vertical">
-                            <label for="author">Auteur</label>
-                            <input id="author" type="text" ng-model="elfin.IDENTIFIANT.AUT">
-
-                            <label for="name">Nom</label>
-                            <input id="name" type="text" ng-model="elfin.IDENTIFIANT.NOM">
-
-                            <label for="goal">Objectif</label>
-                            <input id="goal" type="text" ng-model="elfin.IDENTIFIANT.OBJECTIF">
-
-                            <label for="from">De</label>
-                            <input id="from" type="text" ng-model="elfin.IDENTIFIANT.DE">
-
-                            <label for="value_new">Valeur à neuf</label>
-                            <input id="value_new" type="text" ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
-                        </form>
-                    </div>
-
-                    <div class="col_4">
-                        <form class="vertical">
-                            <label for="manager">Gérant</label>
-                            <input id="manager" type="text" ng-model="elfin.IDENTIFIANT.GER">
-
-                            <label for="alias">Alias</label>
-                            <input id="alias" type="text" ng-model="elfin.IDENTIFIANT.ALIAS">
-
-                            <label for="quality">Qualité</label>
-                            <input id="quality" type="text" ng-model="elfin.IDENTIFIANT.QUALITE">
-
-                            <label for="to">A</label>
-                            <input id="to" type="text" ng-model="elfin.IDENTIFIANT.A">
-
-                            <label for="value">Valeur</label>
-                            <input id="value" type="text" ng-model="elfin.IDENTIFIANT.VALEUR">
-                        </form>
-                    </div>
-
-                    <div class="col_4">
-                        <form class="vertical">
-                            <label for="responsible">Responsable</label>
-                            <input id="responsible" type="text" ng-model="elfin.IDENTIFIANT.RES">
-
-                            <label for="origin">Origine</label>
-                            <input id="origin" type="text" ng-model="elfin.IDENTIFIANT.ORIGINE">
-
-                            <label for="account">Compte</label>
-                            <input id="account" type="text" ng-model="elfin.IDENTIFIANT.COMPTE">
-
-                            <label for="by">Par</label>
-                            <input id="by" type="text" ng-model="elfin.IDENTIFIANT.PAR">
-                        </form>
-                    </div>
-
-                    <div class="clear"></div>
-
-
-                    <div class="col_8">
-                        <h5>Mots clés</h5>
-                    </div>
-                    <div class="col_4 right">
-                        <ul class="button-bar">
-                            <li><a ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', 'Mot clé')"><i class="icon-plus-sign"></i> Nouveau</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col_12">
-                        <form class="vertical">
-                            <table class="striped tight sortable">
-                                <thead>
-                                <tr>
-                                    <th>Mot clé</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
-                                    <td><input type="text" ng-model="motcle"></td>
-                                    <td class="right"><a ng-click="elfin.IDENTIFIANT.MOTCLE.splice($index, 1)"><i class="icon-remove-sign"></i></a></td>
-                                </tr>
-                            </table>
-                        </form>
-                    </div>
-                </tab>
-
 
                 <!-- CARACTERISTIQUE -->
 

@@ -23,7 +23,7 @@
         
     // TODO: solve $alert requires ngStrap and conflicts on $modal with localytics.directives
     //angular.module('hb5').controller('UploadController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$alert', function($scope, GeoxmlService, $modal, $routeParams, $alert) {
-    angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages) {
+    angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages, hbUtil) {
     
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
@@ -146,6 +146,9 @@
         if (GeoxmlService.validateId($scope.collectionId) && GeoxmlService.validateId($scope.elfinId)) {
             GeoxmlService.getElfin($scope.collectionId, $scope.elfinId).get()
                 .then(function(elfin) {
+                	// Force CAR array sorting by POS attribute
+                	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
+                	hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
                     $scope.elfin = elfin;
                 }, function(response) {
                     $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";

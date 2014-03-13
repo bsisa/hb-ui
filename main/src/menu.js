@@ -13,7 +13,7 @@
     };
 
 
-    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'sharedMessages', function($scope, GeoxmlService, $modal, sharedMessages) {
+    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'sharedMessages', 'hbUtil', function($scope, GeoxmlService, $modal, sharedMessages, hbUtil) {
 
     	$scope.sharedStatusMessage = sharedMessages.getStatusMessage();
     	$scope.sharedErrorMessage = sharedMessages.getErrorMessage();
@@ -60,11 +60,12 @@
          * Sort any array by its elements POS property.
          * Assumes the array elements possess POS property of Int type.  
          */
-        var reorderArrayByPOS = function(array) {
-            array.sort(function(a, b) {
-                return parseInt(a.POS) - parseInt(b.POS);
-            });
-        };
+        var reorderArrayByPOS = hbUtil.reorderArrayByPOS;
+//        var reorderArrayByPOS = function(array) {
+//            array.sort(function(a, b) {
+//                return parseInt(a.POS) - parseInt(b.POS);
+//            });
+//        };
 
         /* Handler */
         /* This comes directly from kickstart */
