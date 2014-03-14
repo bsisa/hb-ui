@@ -6,22 +6,28 @@
 	// TODO: solve functions naming clash between 'mgcrea.ngStrap' and 'ui.bootstrap' on $modal
 	//['ngAnimate', 'ngSanitize', 'mgcrea.ngStrap']
 	//  var hb5 = angular.module('hb5', ['geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);	
-    var hb5 = angular.module('hb5', ['ngAnimate', 'ngSanitize', 'geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);
+    var hb5 = angular.module('hb5', ['ngAnimate', 'geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);
 	
     hb5.run(['Restangular', 'sharedMessages', '$location', '$window', function(Restangular, sharedMessages, $location, $window){
         Restangular.setErrorInterceptor(
     	        function(response) {
-    	        	if (response.status == 500) {
-    	        		sharedMessages.setErrorMessage("Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. Note: Vérifiez que la base de donnée soit accessible.");
-    	        	} else if (response.status == 401) {
+    	        	if (response.status == 401) {
     	        		console.log("Login required... ");
     	        		$window.location.href='/login';
     	        		//TODO: we might use the following once we create an new custom AngularJS integrated login form 
     	        		//$location.path('/login'); 
-    	        	} else {
+    	        	} else if (response.status == 404) {
+    	        		sharedMessages.setErrorMessage("Ressource non disponible");
+    	        	} else if (response.status == 500) {
+    	        		sharedMessages.setErrorMessage("Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. Note: Vérifiez que la base de donnée soit accessible.");
+    	        	} // 566 - Custom code for connect exception 
+    	        	if (response.status == 566) {
+    	        		sharedMessages.setErrorMessage("La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur.");
+    	        	}       	
+    	        	else {
     	        		sharedMessages.setErrorMessage("Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status );
     	        	}
-    	          console.log("Restangular error interceptor caught: status: " + response.status + ", errors: " + response.data.errors + ", type: " + typeof response);
+    	          console.log("Restangular error interceptor caught: status: " + response.status);
     	          return false; // stop the promise chain
     	      });        		
         
