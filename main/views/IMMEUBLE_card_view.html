@@ -51,11 +51,11 @@
                             <label for="address">Numéro cadastral</label>
                             <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR">
                             
-							<label for="address">Lieu-dit</label>
-                            <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
+<!-- 							<label for="address">Lieu-dit</label> -->
+<!--                             <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"> -->
                             
-							<label for="address">Remarque</label>
-                            <input id="address" type="text" ng-model="elfin.DIVERS.REMARQUE">
+<!-- 							<label for="address">Remarque</label> -->
+<!--                             <input id="address" type="text" size="" ng-model="elfin.DIVERS.REMARQUE"> -->
 
 <!-- centreDeFrais = elfin.IDENTIFIANT.OBJECTIF = Numéro de gérance !? -->
 
@@ -76,41 +76,52 @@
 
                     <div class="col_4">
                         <form class="vertical">
-                            <label for="manager">Gérant</label>
-                            <input id="manager" type="text" ng-model="elfin.IDENTIFIANT.GER">
+                            <label for="manager">Propriétaire</label>
+                            <input id="manager" type="text" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
 
-                            <label for="alias">Alias</label>
-                            <input id="alias" type="text" ng-model="elfin.IDENTIFIANT.ALIAS">
+                            <label for="alias">Architecte</label>
+                            <input id="alias" type="text" ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE">
 
-                            <label for="quality">Qualité</label>
-                            <input id="quality" type="text" ng-model="elfin.IDENTIFIANT.QUALITE">
+<!--                             <label for="quality">Gérant ?</label> -->
+<!--                             <input id="quality" type="text" ng-model="elfin.PARTENAIRE.GERANT.VALUE"> -->
 
-                            <label for="to">A</label>
-                            <input id="to" type="text" ng-model="elfin.IDENTIFIANT.A">
+<!--                             <label for="to">A</label> -->
+<!--                             <input id="to" type="text" ng-model="elfin.IDENTIFIANT.A"> -->
 
-                            <label for="value">Valeur</label>
-                            <input id="value" type="text" ng-model="elfin.IDENTIFIANT.VALEUR">
+<!--                             <label for="value">Valeur</label> -->
+<!--                             <input id="value" type="text" ng-model="elfin.IDENTIFIANT.VALEUR"> -->
                         </form>
                     </div>
 
                     <div class="col_4">
                         <form class="vertical">
-                            <label for="responsible">Responsable</label>
-                            <input id="responsible" type="text" ng-model="elfin.IDENTIFIANT.RES">
+<!--                             <label for="responsible">Responsable</label> -->
+<!--                             <input id="responsible" type="text" ng-model="elfin.IDENTIFIANT.RES"> -->
 
-                            <label for="origin">Origine</label>
-                            <input id="origin" type="text" ng-model="elfin.IDENTIFIANT.ORIGINE">
+<!--                             <label for="origin">Origine</label> -->
+<!--                             <input id="origin" type="text" ng-model="elfin.IDENTIFIANT.ORIGINE"> -->
 
-                            <label for="account">Compte</label>
-                            <input id="account" type="text" ng-model="elfin.IDENTIFIANT.COMPTE">
+<!--                             <label for="account">Compte</label> -->
+<!--                             <input id="account" type="text" ng-model="elfin.IDENTIFIANT.COMPTE"> -->
 
-                            <label for="by">Par</label>
-                            <input id="by" type="text" ng-model="elfin.IDENTIFIANT.PAR">
+<!--                             <label for="by">Par</label> -->
+<!--                             <input id="by" type="text" ng-model="elfin.IDENTIFIANT.PAR"> -->
                         </form>
                     </div>
 
                     <div class="clear"></div>
 
+                    <div class="col_12">
+                        <form class="vertical">
+							<label for="address">Lieu-dit</label>
+                            <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
+                            
+							<label for="address">Remarque</label>
+                            <input id="address" type="text" ng-model="elfin.DIVERS.REMARQUE">
+                        </form>
+                    </div>
+
+                    <div class="clear"></div>
 
                     <div class="col_8">
                         <h5>Mots clés</h5>
