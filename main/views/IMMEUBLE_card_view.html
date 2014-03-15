@@ -74,7 +74,8 @@
                         </form>
                     </div>
 
-                    <div class="col_4">
+                    <div class="col_2">
+<!--                     	<h5>Partenaires</h5> -->
                         <form class="vertical">
                             <label for="manager">Propriétaire</label>
                             <input id="manager" type="text" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
@@ -92,6 +93,20 @@
 <!--                             <input id="value" type="text" ng-model="elfin.IDENTIFIANT.VALEUR"> -->
                         </form>
                     </div>
+                    
+                    <div class="col_2">
+	                    <div class="btn-group-xs btn-group-justified">
+							<a class="btn btn-default" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE)" ><span class="icon-plus-sign" ></span>Choix</a>
+	  						<a class="btn btn-default" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM)" ><span class="icon-plus-sign" ></span>Choix</a>	                    
+<!-- 							<button type="button" class="btn btn-default" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE')" ><span class="icon-plus-sign" ></span>Choix</button> -->
+<!-- 	  						<button type="button" class="btn btn-default" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM')" ><span class="icon-plus-sign" ></span>Choix</button> -->
+						</div>
+<!--                         <ul class="button-bar"> -->
+<!--                             <li><a ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE')"><i class="icon-plus-sign"></i> Choix</a></li> -->
+<!--                             <li>{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}</li> -->
+<!--                             <li><a ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM')"><i class="icon-plus-sign"></i> Choix</a></li> -->
+<!--                         </ul> -->
+                    </div>                    
 
                     <div class="col_4">
                         <form class="vertical">
@@ -145,6 +160,13 @@
                                     <td><input type="text" ng-model="motcle"></td>
                                     <td class="right"><a ng-click="elfin.IDENTIFIANT.MOTCLE.splice($index, 1)"><i class="icon-remove-sign"></i></a></td>
                                 </tr>
+                                <tr>
+                                    <th>Mot clé - bis</th>
+                                    <th></th>
+                                </tr>                                
+                                <tr ng-repeat="motcleObj in motcles">
+                                    <td>POS: {{motcleObj.POS}}<input type="text" ng-model="motcleObj.VALUE"></td>
+                                </tr>                                
                             </table>
                         </form>
                     </div>

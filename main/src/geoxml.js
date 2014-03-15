@@ -42,6 +42,7 @@
 
             return {
 
+            	// TODO: Review: angular does not detect model modifications performed using this function.
                 addRow: function(elfin, path, row) {
                     if (!angular.isString(path)) {
                         return;
