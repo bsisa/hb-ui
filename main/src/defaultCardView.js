@@ -27,13 +27,13 @@
     
     	$scope.$watch('elfin', function() { 
     		// TODO: show a notification ... data need save...
-    		console.log("elfin watch...")
+    		console.log("elfin watch...");
     	}, true);
     	
-//    	$scope.$watchCollection('elfin.IDENTIFIANT.MOTCLE', function() { 
-//    		// TODO: show a notification ... data need save...
-//    		console.log("elfin.IDENTIFIANT.MOTCLE watch...")
-//    	});    	
+    	$scope.removeKeyword = function ( index ) {
+    		console.log("removing MOCLE at index " + index);
+    	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
+    	};
     	
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
@@ -41,7 +41,6 @@
         
         // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
-        $scope.motcles = null; // angularjs array of primitive fix.
         
         // TODO: once ngStrap can be used both error/status could be replaced by $alert usage.
         // Local messages
@@ -52,14 +51,6 @@
         
     	// Wrapper for ELFIN PUT (update) operation
         $scope.putElfin = function (elfin) {
-        	var updatedMotcle = [];
-        	
-        	for (var i = 0, l = $scope.motcles.length; i < l; ++i) {
-                //div.innerHTML += input[i] + "<br />";
-        		updatedMotcle.push($scope.motcles[i].VALUE);
-            }        	
-
-        	elfin.IDENTIFIANT.MOTCLE = updatedMotcle;
        		elfin.put().then( 
        			function() { 
        				console.log("All ok");
@@ -169,19 +160,6 @@
                 	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
                 	hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
                     $scope.elfin = elfin;
-                    
-                    console.log("elfin.IDENTIFIANT.MOTCLE type: " + typeof elfin.IDENTIFIANT.MOTCLE);
-                    console.log("elfin.IDENTIFIANT.MOTCLE length: " + elfin.IDENTIFIANT.MOTCLE.length);
-                    var motcleArray = []
-                    for (var i = 0, l = elfin.IDENTIFIANT.MOTCLE.length; i < l; ++i) {
-                        //div.innerHTML += input[i] + "<br />";
-                        motcleArray.push({POS: i , VALUE: elfin.IDENTIFIANT.MOTCLE[i] });
-                    }
-//                    for ( motcle in elfin.IDENTIFIANT.MOTCLE) {
-//                    	
-//                    }
-                    
-                    $scope.motcles = motcleArray;
                 }, function(response) {
                     $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
                 });
