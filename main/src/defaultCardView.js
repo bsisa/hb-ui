@@ -27,7 +27,7 @@
     
     	$scope.$watch('elfin', function() { 
     		// TODO: show a notification ... data need save...
-    		console.log("elfin watch...");
+    		console.log("elfin watch");
     	}, true);
     	
     	$scope.removeKeyword = function ( index ) {
@@ -54,7 +54,12 @@
        		elfin.put().then( 
        			function() { 
        				console.log("All ok");
-       				$scope.statusMessage = "Mise à jour effectuée avec succès.";
+       				// Consider good practice to reload the actual db  
+       				// content unless server load is a concern.
+       				$scope.getElfin($scope.collectionId,$scope.elfinId);
+       				$scope.elfinForm.$setPristine();
+       				// Message feedback is removed in favour of dirty/pristine CSS 
+       				//$scope.statusMessage = "Mise à jour effectuée avec succès.";
        			}, 
        			function(response) { 
        				console.log("Error with status code", response.status);
@@ -151,21 +156,27 @@
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
-        
 
-        if (GeoxmlService.validateId($scope.collectionId) && GeoxmlService.validateId($scope.elfinId)) {
-            GeoxmlService.getElfin($scope.collectionId, $scope.elfinId).get()
-                .then(function(elfin) {
-                	// Force CAR array sorting by POS attribute
-                	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
-                	hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
-                    $scope.elfin = elfin;
-                }, function(response) {
-                    $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
-                });
-            } else {
-            $scope.errorMessage = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
-        }
+        $scope.getElfin = function (collectionId, elfinId) {
+        	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
+		        GeoxmlService.getElfin(collectionId, elfinId).get()
+		        .then(function(elfin) {
+		        	// Force CAR array sorting by POS attribute
+		        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
+		        	hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
+		            $scope.elfin = elfin;
+		        }, function(response) {
+		            $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+		        });
+            }
+            else {
+                $scope.errorMessage = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";        
+            };	        
+        };
+        
+        
+        $scope.getElfin($scope.collectionId,$scope.elfinId);
+
     }]);
 
 

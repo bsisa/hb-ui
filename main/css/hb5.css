@@ -250,6 +250,20 @@ a [class^="icon-"]
     height: 120px;
 }
 
+form.ng-dirty {
+    background-color: #FA5858;
+}
+form.ng-pristine {
+    background-color: #04B431;
+}
+
+input.ng-dirty {
+    background-color: #F5A9A9;
+}
+input.ng-pristine {
+    background-color: white;
+}
+
 
 /* Disable kickstart padding in bootstrap */
 ul.nav-tabs li {
