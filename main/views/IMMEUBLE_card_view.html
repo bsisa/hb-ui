@@ -157,16 +157,9 @@
                                 </tr>
                                 </thead>
                                 <tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
-                                    <td><input type="text" ng-model="motcle"></td>
-                                    <td class="right"><a ng-click="elfin.IDENTIFIANT.MOTCLE.splice($index, 1)"><i class="icon-remove-sign"></i></a></td>
+                                    <td><input type="text" ng-model="motcle.VALUE"></td>
+                                    <td class="right"><a ng-click="removeKeyword($index)"><i class="icon-remove-sign"></i></a></td>
                                 </tr>
-                                <tr>
-                                    <th>Mot clé - bis</th>
-                                    <th></th>
-                                </tr>                                
-                                <tr ng-repeat="motcleObj in motcles">
-                                    <td>POS: {{motcleObj.POS}}<input type="text" ng-model="motcleObj.VALUE"></td>
-                                </tr>                                
                             </table>
                         </form>
                     </div>
