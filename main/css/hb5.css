@@ -251,10 +251,14 @@ a [class^="icon-"]
 }
 
 form.ng-dirty {
-    background-color: #FA5858;
+	transition:1.5s linear all;
+#    background-color: #FA5858;
+    background-color: #F5A9A9;
 }
 form.ng-pristine {
-    background-color: #04B431;
+	transition:1.5s linear all;
+#    background-color: #04B431;
+    background-color: #A2FF7D;
 }
 
 input.ng-dirty {
