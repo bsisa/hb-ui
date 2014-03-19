@@ -1,3 +1,7 @@
+/* Make ui.bootstrap tooltip max-width wider */
+.tooltip-inner {
+    max-width: 450px;
+}
 
 .configuration-item {
     cursor: pointer;
