@@ -38,19 +38,19 @@
                     <div class="col_4">
 <!--                         <form class="vertical"> -->
                             <label for="goal">Numéro de gérance</label>
-                            <input id="goal" type="text" ng-model="elfin.IDENTIFIANT.OBJECTIF">
+                            <input id="goal" type="text" ng-model="elfin.IDENTIFIANT.OBJECTIF" tooltip="elfin.IDENTIFIANT.OBJECTIF">
 
                             <label for="author">Numéro ECAP</label>
-                            <input id="author" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR">
+                            <input id="author" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR">
 
                             <label for="name">N° de construction</label>
-                            <input id="name" type="text" ng-model="elfin.IDENTIFIANT.NOM">
+                            <input id="name" type="text" ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM">
 
                             <label for="address">Adresse</label>
-                            <input id="address" type="text" ng-model="elfin.IDENTIFIANT.ALIAS">
+                            <input id="address" type="text" ng-model="elfin.IDENTIFIANT.ALIAS" tooltip="elfin.IDENTIFIANT.ALIAS">
                             
                             <label for="address">Numéro cadastral</label>
-                            <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR">
+                            <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR" tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR">
                             
 <!-- 							<label for="address">Lieu-dit</label> -->
 <!--                             <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"> -->
@@ -75,14 +75,14 @@
 <!--                         </form> -->
                     </div>
 
-                    <div class="col_2">
-<!--                     	<h5>Partenaires</h5> -->
-<!--                         <form class="vertical"> -->
-                            <label for="manager">Propriétaire</label>
-                            <input id="manager" type="text" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
+                    <div class="col_6">
+                            <label for="manager" >Propriétaire</label>
+                            <input id="manager" type="text" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
+                            <label for="managerName">Nom du propriétaire</label>
+                            <input id="managerName" type="text" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM">
 
                             <label for="alias">Architecte</label>
-                            <input id="alias" type="text" ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE">
+                            <input id="alias" type="text" ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE">
 
 <!--                             <label for="quality">Gérant ?</label> -->
 <!--                             <input id="quality" type="text" ng-model="elfin.PARTENAIRE.GERANT.VALUE"> -->
@@ -109,7 +109,7 @@
 <!--                         </ul> -->
                     </div>                    
 
-                    <div class="col_4">
+<!--                     <div class="col_4"> -->
 <!--                         <form class="vertical"> -->
 <!--                             <label for="responsible">Responsable</label> -->
 <!--                             <input id="responsible" type="text" ng-model="elfin.IDENTIFIANT.RES"> -->
@@ -123,17 +123,17 @@
 <!--                             <label for="by">Par</label> -->
 <!--                             <input id="by" type="text" ng-model="elfin.IDENTIFIANT.PAR"> -->
 <!--                         </form> -->
-                    </div>
+<!--                     </div> -->
 
                     <div class="clear"></div>
 
                     <div class="col_12">
 <!--                         <form class="vertical"> -->
 							<label for="address">Lieu-dit</label>
-                            <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
+                            <input id="address" type="text" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
                             
 							<label for="address">Remarque</label>
-                            <input id="address" type="text" ng-model="elfin.DIVERS.REMARQUE">
+                            <input id="address" type="text" ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
 <!--                         </form> -->
                     </div>
 
@@ -158,7 +158,7 @@
                                 </tr>
                                 </thead>
                                 <tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
-                                    <td><input type="text" ng-model="motcle.VALUE"></td>
+                                    <td><input type="text" ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE"></td>
                                     <td class="right"><a ng-click="removeKeyword($index)"><i class="icon-remove-sign"></i></a></td>
                                 </tr>
                             </table>
