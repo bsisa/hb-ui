@@ -86,8 +86,11 @@
                 },
                 getElfin: function(collectionId, elfinId) {
                     return _geoxmlService.one(collectionId, elfinId);
+                },
+                getCollectionWithFilter: function(collectionId, xpathParam) {
+                    return _geoxmlService.all(collectionId, {xpath : xpathParam});
                 }
-                
+
             };
         }
     ]);

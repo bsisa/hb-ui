@@ -41,6 +41,7 @@
         
         // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
+        $scope.constats = null;
         
         // TODO: once ngStrap can be used both error/status could be replaced by $alert usage.
         // Local messages
@@ -157,6 +158,25 @@
             });
         };
 
+        
+        // TODO: test js syntax...
+        $scope.getElfinsWithFilter = function (collectionId, xpath) {
+        	console.log("$scope.getElfinsWithFilter called ... ");
+	        if (GeoxmlService.validateId(collectionId)) {
+	            GeoxmlService.getCollectionWithFilter(collectionId, xpath).getList()
+	                .then(function(elfins) {
+	                	return elfins;
+	                }, function(response) {
+	                    $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+	                    return null;
+	                });
+	        } else {
+	            $scope.errorMessage = "L'identifiants de collection (" + $scope.collectionId + " ) n'est pas correct.";
+                return null;
+	        }        
+        };
+        
+        
         $scope.getElfin = function (collectionId, elfinId) {
         	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
 		        GeoxmlService.getElfin(collectionId, elfinId).get()
@@ -172,6 +192,20 @@
 		        		console.log("No CARSET/CAR...");
 		        	}
 		            $scope.elfin = elfin;
+		            if (elfin != null) {
+			            console.log("Try getting CONSTAT related to this card...");
+			            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
+			            console.log("Try getting CONSTAT related to this card using xpath = " + xpathForConstats);
+			            
+			            $scope.constats = $scope.getElfinsWithFilter('G20060920171100001', xpathForConstats);
+			            if ($scope.constats != null) {
+			            	console.log("Obtained "+ $scope.constats.length + " CONSTAT!");
+			            } else {
+			            	console.log("No CONSTAT obtained.");
+			            }
+		            } else {
+		            	console.log("Skipped CONSTAT linking while elfin is null...");
+		            }
 		        }, function(response) {
 		            $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
 		        });
@@ -180,10 +214,9 @@
                 $scope.errorMessage = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";        
             };	        
         };
-        
-        
-        $scope.getElfin($scope.collectionId,$scope.elfinId);
 
+        $scope.getElfin($scope.collectionId,$scope.elfinId);
+        
     }]);
 
 
