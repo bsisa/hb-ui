@@ -11,6 +11,7 @@
 
 <!-- TODO: REFACTOR to a single form named 'elfinForm' -->
     <div ng-show="elfin">
+    <form name="elfinForm" class="vertical" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
         <div class="col_8">
             <ul class="button-bar ">            
                 <li><a ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></a></li>
@@ -37,7 +38,7 @@
                 <tab heading="Attributs">
                     <div class="col_4">
                         <h5>Attributs</h5>
-                        <form class="vertical">
+<!--                         <form class="vertical"> -->
                             <label for="groupe">Groupe</label>
                             <input id="groupe" type="text" ng-model="elfin.GROUPE">
 
@@ -50,7 +51,7 @@
                             <input id="nature" type="text" ng-model="elfin.NATURE">
                             <label for="source">Source</label>
                             <input id="source" type="text" ng-model="elfin.SOURCE">
-                        </form>
+<!--                         </form> -->
                     </div>
                 </tab>
 
@@ -105,7 +106,7 @@
 
                 <tab heading="Identifiant">
                     <div class="col_4">
-                        <form class="vertical">
+<!--                         <form class="vertical"> -->
                             <label for="author">Auteur</label>
                             <input id="author" type="text" ng-model="elfin.IDENTIFIANT.AUT">
 
@@ -120,11 +121,11 @@
 
                             <label for="value_new">Valeur à neuf</label>
                             <input id="value_new" type="text" ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
-                        </form>
+<!--                         </form> -->
                     </div>
 
                     <div class="col_4">
-                        <form class="vertical">
+<!--                         <form class="vertical"> -->
                             <label for="manager">Gérant</label>
                             <input id="manager" type="text" ng-model="elfin.IDENTIFIANT.GER">
 
@@ -139,11 +140,11 @@
 
                             <label for="value">Valeur</label>
                             <input id="value" type="text" ng-model="elfin.IDENTIFIANT.VALEUR">
-                        </form>
+<!--                         </form> -->
                     </div>
 
                     <div class="col_4">
-                        <form class="vertical">
+<!--                         <form class="vertical"> -->
                             <label for="responsible">Responsable</label>
                             <input id="responsible" type="text" ng-model="elfin.IDENTIFIANT.RES">
 
@@ -155,7 +156,7 @@
 
                             <label for="by">Par</label>
                             <input id="by" type="text" ng-model="elfin.IDENTIFIANT.PAR">
-                        </form>
+<!--                         </form> -->
                     </div>
 
                     <div class="clear"></div>
@@ -171,7 +172,7 @@
                     </div>
 
                     <div class="col_12">
-                        <form class="vertical">
+<!--                         <form class="vertical"> -->
                             <table class="striped tight sortable">
                                 <thead>
                                 <tr>
@@ -184,7 +185,7 @@
                                     <td class="right"><a ng-click="elfin.IDENTIFIANT.MOTCLE.splice($index, 1)"><i class="icon-remove-sign"></i></a></td>
                                 </tr>
                             </table>
-                        </form>
+<!--                         </form> -->
                     </div>
                 </tab>
 
@@ -193,7 +194,7 @@
 
                 <tab heading="Caractéristiques">
                     <h5>Caractéristiques</h5>
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable" ng-init="carIndexes = [1, 2, 3, 4, 5, 6]">
                             <thead>
                             <tr>
@@ -211,7 +212,7 @@
                                 <td><input type="text" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR"></td>
                             </tr>
                         </table>
-                    </form>
+<!--                     </form> -->
 
 
 
@@ -224,7 +225,7 @@
                         </ul>
                     </div>
 
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable" >
                             <thead>
                             <tr>
@@ -244,11 +245,11 @@
                             </tr>
 
                         </table>
-                    </form>
+<!--                     </form> -->
 
                     <h5>Etats</h5>
 
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable" ng-init="etatIndexes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
                             <thead>
                             <tr>
@@ -265,7 +266,7 @@
                                 <td><input type="text" ng-model="elfin.CARACTERISTIQUE['ETAT' + carIndex].C"></td>
                             </tr>
                         </table>
-                    </form>
+<!--                     </form> -->
 
 
 
@@ -278,7 +279,7 @@
                         </ul>
                     </div>
 
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable">
                             <thead>
                             <tr>
@@ -301,7 +302,7 @@
                                 <td class="right"><a ng-click="elfin.CARACTERISTIQUE.CALCUL.DIMENSION.splice($index, 1)"><i class="icon-remove-sign"></i></a></td>
                             </tr>
                         </table>
-                    </form>
+<!--                     </form> -->
 
                     <div class="col_8">
                         <h5>Calcul - Matrice</h5>
@@ -312,7 +313,7 @@
                         </ul>
                     </div>
 
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable">
                             <thead>
                             <tr>
@@ -340,14 +341,14 @@
                                 <td class="right"><a ng-click="elfin.CARACTERISTIQUE.CALCUL.L.splice($index, 1)"><i class="icon-remove-sign"></i></a></td>
                             </tr>
                         </table>
-                    </form>
+<!--                     </form> -->
                 </tab>
 
                 <!-- PARTENAIRES -->
 
 
                 <tab heading="Partenaires">
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable" ng-init="partenaires = ['GERANT', 'USAGER', 'FOURNISSEUR', 'PROPRIETAIRE']">
                             <thead>
                             <tr>
@@ -369,7 +370,7 @@
 
                             </tr>
                         </table>
-                    </form>
+<!--                     </form> -->
 
                 </tab>
 
@@ -386,7 +387,7 @@
                         </ul>
                     </div>
 
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable" >
                             <thead>
                             <tr>
@@ -419,7 +420,7 @@
 
                             </tr>
                         </table>
-                    </form>
+<!--                     </form> -->
 
                     <div class="col_8">
                         <h5>Gestion</h5>
@@ -430,7 +431,7 @@
                         </ul>
                     </div>
 
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable">
                             <thead>
                             <tr>
@@ -458,7 +459,7 @@
                                 <td class="right"><a ng-click="elfin.ACTIVITE.GESTION.L.splice($index, 1)"><i class="icon-remove-sign"></i></a></td>
                             </tr>
                         </table>
-                    </form>
+<!--                     </form> -->
 
 
                 </tab>
@@ -476,7 +477,7 @@
                         </ul>
                     </div>
 
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable" >
                             <thead>
                             <tr>
@@ -535,7 +536,7 @@
 
                             </tr>
                         </table>
-                    </form>
+<!--                     </form> -->
 
 
                     <div class="col_8">
@@ -549,16 +550,16 @@
 
                    <div class="col_12" ng-repeat="line in elfin.FORME.LIGNE" style="border: 1px dotted dimgrey">
                        <div class="col_4">
-                           <form class="vertical">
+<!--                            <form class="vertical"> -->
                                <label for="linePos">Auteur</label>
                                <input id="linePos" type="text" ng-model="line.POS">
 
                                <label for="lineId">Id</label>
                                <input id="lineId" type="text" ng-model="line.Id">
-                           </form>
+<!--                            </form> -->
                        </div>
                        <div class="col_4">
-                           <form class="vertical">
+<!--                            <form class="vertical"> -->
                                <label for="lineDirection">Direction</label>
                                <select id="lineDirection" chosen data-placeholder="Choisir une direction" ng-model="line.DIRECTION"
                                        ng-options="value as label for (value, label) in lineDirections">
@@ -566,10 +567,10 @@
 
                                <label for="lineIdG">ID_G</label>
                                <input id="lineIdG" type="text" ng-model="line.ID_G">
-                           </form>
+<!--                            </form> -->
                        </div>
                        <div class="col_4">
-                           <form class="vertical">
+<!--                            <form class="vertical"> -->
                                <label for="lineFunction">Auteur</label>
                                <select id="lineFunction" chosen data-placeholder="Choisir une direction" ng-model="line.FONCTION"
                                        ng-options="value as label for (value, label) in lineFunctions">
@@ -577,14 +578,14 @@
 
                                <label for="lineClasse">Classe</label>
                                <input id="lineClasse" type="text" ng-model="line.CLASSE">
-                           </form>
+<!--                            </form> -->
                        </div>
 
                        <div class="col_12">
-                           <form class="vertical">
+<!--                            <form class="vertical"> -->
                                <label for="lineRemark">Remarque</label>
                                <input id="lineRemark" type="text" ng-model="line.REMARQUE">
-                           </form>
+<!--                            </form> -->
                        </div>
                    </div>
 
@@ -605,7 +606,7 @@
                         </ul>
                     </div>
 
-                    <form class="vertical">
+<!--                     <form class="vertical"> -->
                         <table class="striped tight sortable">
                             <thead>
                             <tr>
@@ -624,7 +625,7 @@
                                 </td>
                             </tr>
                         </table>
-                    </form>
+<!--                     </form> -->
 
                 </tab>
 
@@ -633,8 +634,9 @@
                 <tab heading="Divers"></tab>
             </tabset>
         </div>
-
+	</form>
     </div>
+
 
 </div>
 
