@@ -163,7 +163,14 @@
 		        .then(function(elfin) {
 		        	// Force CAR array sorting by POS attribute
 		        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
-		        	hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
+		        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
+		        	//       Need review of other similar operations
+		        	if ( elfin['CARACTERISTIQUE'] != null && elfin['CARACTERISTIQUE']['CARSET'] != null && elfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+		        		console.log("Found CARSET/CAR...");
+		        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
+		        	} else {
+		        		console.log("No CARSET/CAR...");
+		        	}
 		            $scope.elfin = elfin;
 		        }, function(response) {
 		            $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
