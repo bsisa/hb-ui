@@ -28,6 +28,7 @@
             	/* Local hb-ui only test base URL */
             	//var baseUrl = 'api-mocks';
             	/* Local hb-ui and hb-api integration test base URL */
+            	console.log("conf.js: ")
             	var baseUrl = 'http://localhost:9000/api/melfin';
              	Configurer.setBaseUrl(baseUrl);
             	// Default restangular behaviour assuming id field is id not suitable with ELFIN.Id
