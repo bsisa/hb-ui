@@ -42,18 +42,20 @@
     	
     	// Watch related to CONSTAT list 
     	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
-    		console.log("elfin.IDENTIFIANT.NOM watch for CONSTAT");
-            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
-            // TODO: constatsCollectionId must come from server configuration resource.
-            var constatsCollectionId = 'G20060920171100001';
-            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstats})
-				.then(function(elfins) {
-					console.log(">>>> received " + elfins.length + " elfins.");
-						$scope.constats = elfins;
-					},
-					function(response) {
-						$scope.errorMessage = "Le chargement des CONSTATs a échoué (statut de retour: "+ response.status+ ")";
-					});
+    		if (elfin!=null) {
+	    		console.log("elfin.IDENTIFIANT.NOM watch for CONSTAT");
+	            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
+	            // TODO: constatsCollectionId must come from server configuration resource.
+	            var constatsCollectionId = 'G20060920171100001';
+	            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstats})
+					.then(function(elfins) {
+						console.log(">>>> received " + elfins.length + " elfins.");
+							$scope.constats = elfins;
+						},
+						function(response) {
+							$scope.errorMessage = "Le chargement des CONSTATs a échoué (statut de retour: "+ response.status+ ")";
+						});
+    		}
     	}, true);
     	
     	$scope.removeKeyword = function ( index ) {
