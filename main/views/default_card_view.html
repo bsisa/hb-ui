@@ -4,10 +4,9 @@
     <!-- Info TODO: should disappear after n seconds: built in with ngStrap alert. -->
     <div ng-show="statusMessage" class="notice info"><i class="icon-info-sign icon-large"></i> {{statusMessage}}</div>
 
-    <div ng-show="!elfin && !errorMessage">
-        <h3>Chargement des informations</h3>
-        <div class="loading"></div>
-    </div>
+	<div ng-show="!elfins && !errorMessage">
+		<h5><div class="loading"></div>Chargement des informations</h5>
+	</div>
 
 <!-- TODO: REFACTOR to a single form named 'elfinForm' -->
     <div ng-show="elfin">

@@ -249,9 +249,12 @@ a [class^="icon-"]
 }
 
 .loading {
-    background: url(../images/loading.gif) transparent no-repeat 50% 0%/10%;
-    width: 100%;
-    height: 120px;
+	clear:both;
+	float:left; 
+	border: none;
+    background: url(/images/ajax-loader.gif) transparent no-repeat;
+    height: 40px;
+    width: 40px;
 }
 
 form.ng-dirty {
