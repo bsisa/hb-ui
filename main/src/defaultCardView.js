@@ -42,7 +42,7 @@
     	
     	// Watch related to CONSTAT list 
     	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
-    		if (elfin!=null) {
+    		if ($scope.elfin!=null) {
 	    		console.log("elfin.IDENTIFIANT.NOM watch for CONSTAT");
 	            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
 	            // TODO: constatsCollectionId must come from server configuration resource.
