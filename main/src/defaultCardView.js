@@ -25,16 +25,6 @@
     //angular.module('hb5').controller('UploadController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$alert', function($scope, GeoxmlService, $modal, $routeParams, $alert) {
     angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages, hbUtil) {
     
-    	$scope.$watch('elfin', function() { 
-    		// TODO: show a notification ... data need save...
-    		console.log("elfin watch");
-    	}, true);
-    	
-    	$scope.removeKeyword = function ( index ) {
-    		console.log("removing MOCLE at index " + index);
-    	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
-    	};
-    	
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
         $scope.collectionId = $routeParams.collectionId;
@@ -48,8 +38,29 @@
         $scope.errorMessage = null;
         $scope.statusMessage = null;
         // Shared messages (between controllers).
-    	$scope.setSharedStatusMessage = sharedMessages.setStatusMessage;
-        
+    	$scope.setSharedStatusMessage = sharedMessages.setStatusMessage;    	
+    	
+    	// Watch related to CONSTAT list 
+    	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
+    		console.log("elfin.IDENTIFIANT.NOM watch for CONSTAT");
+            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
+            // TODO: constatsCollectionId must come from server configuration resource.
+            var constatsCollectionId = 'G20060920171100001';
+            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstats})
+				.then(function(elfins) {
+					console.log(">>>> received " + elfins.length + " elfins.");
+						$scope.constats = elfins;
+					},
+					function(response) {
+						$scope.errorMessage = "Le chargement des CONSTATs a échoué (statut de retour: "+ response.status+ ")";
+					});
+    	}, true);
+    	
+    	$scope.removeKeyword = function ( index ) {
+    		console.log("removing MOCLE at index " + index);
+    	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
+    	};
+    	
     	// Wrapper for ELFIN PUT (update) operation
         $scope.putElfin = function (elfin) {
        		elfin.put().then( 
@@ -159,24 +170,6 @@
         };
 
         
-        // TODO: test js syntax...
-        $scope.getElfinsWithFilter = function (collectionId, xpath) {
-        	console.log("$scope.getElfinsWithFilter called ... ");
-	        if (GeoxmlService.validateId(collectionId)) {
-	            GeoxmlService.getCollectionWithFilter(collectionId, xpath).getList()
-	                .then(function(elfins) {
-	                	return elfins;
-	                }, function(response) {
-	                    $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
-	                    return null;
-	                });
-	        } else {
-	            $scope.errorMessage = "L'identifiants de collection (" + $scope.collectionId + " ) n'est pas correct.";
-                return null;
-	        }        
-        };
-        
-        
         $scope.getElfin = function (collectionId, elfinId) {
         	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
 		        GeoxmlService.getElfin(collectionId, elfinId).get()
@@ -192,20 +185,6 @@
 		        		console.log("No CARSET/CAR...");
 		        	}
 		            $scope.elfin = elfin;
-		            if (elfin != null) {
-			            console.log("Try getting CONSTAT related to this card...");
-			            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
-			            console.log("Try getting CONSTAT related to this card using xpath = " + xpathForConstats);
-			            
-			            $scope.constats = $scope.getElfinsWithFilter('G20060920171100001', xpathForConstats);
-			            if ($scope.constats != null) {
-			            	console.log("Obtained "+ $scope.constats.length + " CONSTAT!");
-			            } else {
-			            	console.log("No CONSTAT obtained.");
-			            }
-		            } else {
-		            	console.log("Skipped CONSTAT linking while elfin is null...");
-		            }
 		        }, function(response) {
 		            $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
 		        });

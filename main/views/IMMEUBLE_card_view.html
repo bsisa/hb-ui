@@ -161,9 +161,31 @@
                                     <td><input type="text" ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE"></td>
                                     <td class="right"><a ng-click="removeKeyword($index)"><i class="icon-remove-sign"></i></a></td>
                                 </tr>
+                            </table>   
+</div>
+					<span ng-show="constats" >
+                    <div class="col_8">
+                        <h5>Constat{{ constats.length | plural }}</h5>
+                    </div>
+                    <div class="col_12">                                                         
+							<table class="striped tight sortable">
+                                <thead>                                
+                                <tr>
+                                    <th>Constat</th>
+                                    <th>Date</th>
+                                    <th>Nom</th>
+                                </tr>
+                                </thead>
+                                <tr ng-repeat="constat in constats">
+                                    <td><a href="/index.html#/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}" >Détail</a></td>
+                                    <td><span tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>
+                                    <td><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
+                                </tr>
+                                
                             </table>
 <!--                         </form> -->
                     </div>
+                    </span>
                 </tab> 
  
                  <!-- SURFACE -->
