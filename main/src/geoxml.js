@@ -24,14 +24,19 @@
         'Restangular', function(Restangular) {
 
             var restGeoxml = Restangular.withConfig(function(Configurer) {
-            	/* TODO: Make baseUrl configurable. (Using grunt ?) */
+            	/*
+            	   To allow single configuration point on the server side 
+            	   apiBaseUrl variable is contained in conf.js file dynamically 
+            	   created by the server.
+            	*/
+            	if (apiBaseUrl==null) {
+            		console.error("GeoxmlService required apiBaseUrl information missing. This information is served dynamically by the HyperBird server, please make sure it is running.");
+            	}
             	/* Local hb-ui only test base URL */
-            	//var baseUrl = 'api-mocks';
-            	/* Local hb-ui and hb-api integration test base URL */
-            	console.log("conf.js: ")
-            	var baseUrl = 'http://localhost:9000/api/melfin';
-             	Configurer.setBaseUrl(baseUrl);
-            	// Default restangular behaviour assuming id field is id not suitable with ELFIN.Id
+            	//var apiBaseUrl = 'api-mocks';
+             	Configurer.setBaseUrl(apiBaseUrl);
+             	
+             	// Default restangular behaviour assuming id field is id not suitable with ELFIN.Id
             	// Helpful reference: 
             	// https://github.com/mgonto/restangular#i-use-mongo-and-the-id-of-the-elements-is-_id-not-id-as-the-default-therefore-requests-are-sent-to-undefined-routes
             	Configurer.setRestangularFields({ id: "Id" });
