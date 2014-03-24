@@ -61,12 +61,8 @@
          * Assumes the array elements possess POS property of Int type.  
          */
         var reorderArrayByPOS = hbUtil.reorderArrayByPOS;
-//        var reorderArrayByPOS = function(array) {
-//            array.sort(function(a, b) {
-//                return parseInt(a.POS) - parseInt(b.POS);
-//            });
-//        };
 
+        
         /* Handler */
         /* This comes directly from kickstart */
         var updateMenu = function() {
@@ -81,8 +77,10 @@
             });
 
             var menuItems =  $('ul.menu li');
+            //console.log(">>>>> DROPDOWN MENUS - HOVER OR NOT HOVER !!!");
             menuItems.off( "mouseenter mouseleave" );
 
+            // TODO: evaluate kickstart vs ui.bootstrap for menu related to hover or not hover behaviour.
             menuItems.hover(function(){
                     $(this).find('ul:first').stop(true, true).fadeIn('fast');
                     $(this).addClass('hover');
@@ -144,48 +142,73 @@
 
         /* Activate current configuration */
         $scope.$watch('$$activeConfiguration', function(newVal /*, oldVal, scope */) {
+        	console.log("active configuration watched! Reset jobs array");
+      	
             if (!newVal) {
+            	// No change detected
                 return;
-            }
+            } else {
+            	// Reset jobs list
+            	$scope.jobs = new Array();
 
-            /**
-             * Jobs (METIER) records structure are defined as a table. 
-             * The table is contained in an ELFIN as a list of lines resulting of:
-             * ELFIN['CARACTERISTIQUE']['FRACTION']['L']    
-             * The first line L[0] (if ordered by L.POS) or L.POS === 1 contains 
-             * the labels for each cell C[0] to C[5]  
-             * C[0] Classe
-             * C[1] Id
-             * C[2] ID_G (ID Groupe)
-             * C[3] Nom (Job name in the jobs menu)
-             * C[4] Groupe (Job group name in the jobs menu)
-             * C[5] Acces (Role/Group having access to this job) 
-             */            
-            var jobReferences = newVal['CARACTERISTIQUE']['FRACTION']['L'];
-            reorderArrayByPOS(jobReferences);
-            // Get default job position in jobReferences array
-            var defaultJobPos = parseInt(newVal['CARACTERISTIQUE']['CAR1']['VALEUR']);
-            angular.forEach(jobReferences, function(L) {
-            	// Skip label line located at first position
-                if (L.POS === 1) {
-                    return;
-                }
-                /* Sort cells C by C.POS is mandatory to guarantee correct results. */
-                var jobCells = L.C;
-                reorderArrayByPOS(jobCells);
-                
-                GeoxmlService.getElfin(jobCells[2].VALUE, jobCells[1].VALUE).get()
-                    .then(function(elfin) {
-                        $scope.jobs.push(elfin);
-                        // Set active job using provided default job position
-                        if (L.POS === defaultJobPos) {
-                            $scope.activateJob(elfin);
-                        }
-                    }, function(response) {
-                        console.log("Error with status code", response.status);
-                    });
-            });
+	            /**
+	             * Jobs (METIER) records structure are defined as a table. 
+	             * The table is contained in an ELFIN as a list of lines resulting of:
+	             * ELFIN['CARACTERISTIQUE']['FRACTION']['L']    
+	             * The first line L[0] (if ordered by L.POS) or L.POS === 1 contains 
+	             * the labels for each cell C[0] to C[5]  
+	             * C[0] Classe
+	             * C[1] Id
+	             * C[2] ID_G (ID Groupe)
+	             * C[3] Nom (Job name in the jobs menu)
+	             * C[4] Groupe (Job group name in the jobs menu)
+	             * C[5] Acces (Role/Group having access to this job) 
+	             */            
+	            var jobReferences = newVal['CARACTERISTIQUE']['FRACTION']['L'];
+	            // Guarantees jobReferences ordering by POS attribute
+	            reorderArrayByPOS(jobReferences);
+	           
+	            // Get default job position in jobReferences array
+	            var defaultJobPos = parseInt(newVal['CARACTERISTIQUE']['CAR1']['VALEUR']);
+	            
+	            angular.forEach(jobReferences, function(job) {
+	
+	                /* Sort cells C by C.POS is mandatory to guarantee correct results. */
+	                var jobCells = job.C;
+	                reorderArrayByPOS(jobCells);            	
+	            	
+	            	// Skip label (titles) line located at first position
+	                if (job.POS === 1) {
+	                    return;
+	                } else {
+		                
+	            		// Initialise the jobs array with METIER elfin.Id as index lookup value
+	                	// solving asynchronous response processing while preserving METIER menu ordering.
+	                	// POS are 1 based while jobs array is 0 based.
+	            		$scope.jobs[job.POS-2] = job.C[1].VALUE; 	
+		                
+		                //console.log(">>>>>> REQUESTING elfin job Id: " + jobCells[1].VALUE + " / name: "+jobCells[4].VALUE );
+		                GeoxmlService.getElfin(jobCells[2].VALUE, jobCells[1].VALUE).get()
+		                    .then(function(elfin) {
+		                    	//console.log("<<<<<< OBTAINED elfin job Id:   " + elfin.Id + " / name: " + elfin.IDENTIFIANT.NOM);
+		                    	
+		                    	// Solves unsorted asynchronous responses pushed to sorted METIER menu. 
+		                    	var jobPosition = $scope.jobs.indexOf(elfin.Id);
+		                    	$scope.jobs[jobPosition] = elfin;
+		                    	
+		                        // Set active job using provided default job position
+		                        if (job.POS === defaultJobPos) {
+		                            $scope.activateJob(elfin);
+		                        }
+		                    }, function(response) {
+		                        console.log("Error with status code", response.status);
+		                    });
+	                }
+	            });
+	            // At this time jobs are only promises upon above GeoxmlService.getElfin call completion.
+            }
         });
+        
 
         var createMenuStructure = function(elfin) {
         	
