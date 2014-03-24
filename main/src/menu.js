@@ -142,7 +142,6 @@
 
         /* Activate current configuration */
         $scope.$watch('$$activeConfiguration', function(newVal /*, oldVal, scope */) {
-        	console.log("active configuration watched! Reset jobs array");
       	
             if (!newVal) {
             	// No change detected
