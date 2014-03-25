@@ -1,10 +1,41 @@
 <ul class="menu">
-    <li class="has-menu">
-        <a href="#"><i class="icon-map-marker"></i> Plans<span class="arrow">&nbsp;</span></a>
-        <ul>
-            <li ng-repeat="menuItem in menuItems.maps" >
+<!--     <li class="dropdown has-menu"> -->
+<!-- 	   	<a class="dropdown-toggle" href="#"><span class="icon" data-icon="Y"></span> Test Menu<span class="arrow">&nbsp;</span></a> -->
+<!-- 		<ul class="dropdown-menu"> -->
+<!-- 	        <li> -->
+<!-- 		        <a><span class="icon" data-icon="G"></span><span>Item 1</span></a> -->
+<!-- 	        </li> -->
+<!-- 	        <li> -->
+<!-- 	            <a><span class="icon" data-icon="G"></span><span>Item 2</span></a> -->
+<!-- 	        </li> -->
+<!-- 	        <li class="dropdown onhoveropen has-menu"> -->
+<!-- 	            <a class="dropdown-toggle" href="#"><span class="icon" data-icon="G"></span><span>Sub-menu item</span><span class="arrow">&nbsp;</span></a> -->
+<!-- 				<ul class="dropdown-menu"> -->
+<!-- 	                <li  > -->
+<!-- 	                    <a ><span class="icon" data-icon="G"></span><span>Sub item 1</span></a> -->
+<!-- 	                </li> -->
+<!-- 	                <li  > -->
+<!-- 	                    <a ><span class="icon" data-icon="G"></span><span>Sub item 2</span></a> -->
+<!-- 	                </li> -->
+<!-- 	                <li  > -->
+<!-- 	                    <a ><span class="icon" data-icon="G"></span><span>Sub item 3</span></a> -->
+<!-- 	                </li> -->
+<!-- 	            </ul> -->
+<!-- 	        </li> -->
+<!--         </ul> -->
+<!--     </li> -->
+    <!-- 
+    ui.bootstrap: dropdown, dropdown-toggle, dropdown-menu
+    htmlkickstart: has-menu, arrow
+    custom: onhoveropen
+    -->
+    <li class="dropdown has-menu">
+        <a class="dropdown-toggle" href="#"><i class="icon-map-marker"></i> Plans<span class="arrow">&nbsp;</span></a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="menuItem in menuItems.maps" ng-class="{true: 'dropdown onhoveropen'}[menuItem.subItems!=null]">
                 <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
-                <ul ng-if="menuItem.subItems">
+<!--                 <span class="arrow" >&nbsp;</span> -->
+                <ul class="dropdown-menu" ng-if="menuItem.subItems">
                     <li ng-repeat="menuSubItem in menuItem.subItems" >
                         <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
                     </li>
@@ -13,12 +44,14 @@
         </ul>
     </li>
 
-    <li class="has-menu">
-        <a href="#"><i class="icon-list"></i> Collections<span class="arrow">&nbsp;</span></a>
-        <ul>
-            <li ng-repeat="menuItem in menuItems.collections" >
-                <a href="{{menuItem.action}}"><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
-                <ul ng-if="menuItem.subItems">
+    <li class="dropdown has-menu">
+        <a class="dropdown-toggle" href="#"><i class="icon-list"></i> Collections<span class="arrow">&nbsp;</span></a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="menuItem in menuItems.collections" ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
+                
+                <a ng-if="menuItem.subItems" href="#" class="dropdown-toggle" ><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span><span class="arrow">&nbsp;</span></a>
+                <a ng-if="!menuItem.subItems" href="{{menuItem.action}}"><span class="icon" data-icon="G"></span><span>{{menuItem.label}} - no dd</span></a>
+                <ul class="dropdown-menu" ng-if="menuItem.subItems">
                     <li ng-repeat="menuSubItem in menuItem.subItems" >
                         <a href="{{menuSubItem.action}}" ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
                     </li>
@@ -27,65 +60,93 @@
         </ul>
     </li>
 
-    <li class="has-menu">
-        <a href="#"><i class="icon-folder-open"></i> Exploitations<span class="arrow">&nbsp;</span></a>
-        <ul>
-            <li ng-repeat="menuItem in menuItems.operations" >
-                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
-                <ul ng-if="menuItem.subItems">
+    <li class="dropdown has-menu">
+        <a class="dropdown-toggle" href="#"><i class="icon-folder-open"></i> Exploitations<span class="arrow">&nbsp;</span></a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="menuItem in menuItems.operations"  ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
+<!--                 <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a> -->
+<!--                 <ul class="dropdown-menu" ng-if="menuItem.subItems"> -->
+<!--                     <li ng-repeat="menuSubItem in menuItem.subItems" > -->
+<!--                         <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a> -->
+<!--                     </li> -->
+<!--                 </ul> -->
+                <a ng-if="menuItem.subItems" href="#" class="dropdown-toggle" ><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span><span class="arrow">&nbsp;</span></a>
+                <a ng-if="!menuItem.subItems" href="{{menuItem.action}}"><span class="icon" data-icon="G"></span><span>{{menuItem.label}} - no dd</span></a>                
+                <ul class="dropdown-menu" ng-if="menuItem.subItems">
                     <li ng-repeat="menuSubItem in menuItem.subItems" >
-                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                        <a href="{{menuSubItem.action}}" ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                    </li>
+                </ul>                
+            </li>
+        </ul>
+    </li>
+
+    <li class="dropdown has-menu">
+        <a class="dropdown-toggle" href="#"><i class="icon-tasks"></i> Gestion<span class="arrow">&nbsp;</span></a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="menuItem in menuItems.management"  ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
+<!--                 <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a> -->
+<!--                 <ul class="dropdown-menu" ng-if="menuItem.subItems"> -->
+<!--                     <li ng-repeat="menuSubItem in menuItem.subItems" > -->
+<!--                         <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a> -->
+<!--                     </li> -->
+<!--                 </ul> -->
+                <a ng-if="menuItem.subItems" href="#" class="dropdown-toggle" ><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span><span class="arrow">&nbsp;</span></a>
+                <a ng-if="!menuItem.subItems" href="{{menuItem.action}}"><span class="icon" data-icon="G"></span><span>{{menuItem.label}} - no dd</span></a>                
+                <ul class="dropdown-menu" ng-if="menuItem.subItems">
+                    <li ng-repeat="menuSubItem in menuItem.subItems" >
+                        <a href="{{menuSubItem.action}}" ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                    </li>
+                </ul>                
+            </li>
+        </ul>
+    </li>
+
+    <li class="dropdown has-menu">
+        <a class="dropdown-toggle" href="#"><i class="icon-hdd"></i> Données<span class="arrow">&nbsp;</span></a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="menuItem in menuItems.data"  ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
+<!--                 <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a> -->
+<!--                 <ul class="dropdown-menu" ng-if="menuItem.subItems"> -->
+<!--                     <li ng-repeat="menuSubItem in menuItem.subItems" > -->
+<!--                         <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a> -->
+<!--                     </li> -->
+<!--                 </ul> -->
+                <a ng-if="menuItem.subItems" href="#" class="dropdown-toggle" ><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span><span class="arrow">&nbsp;</span></a>
+                <a ng-if="!menuItem.subItems" href="{{menuItem.action}}"><span class="icon" data-icon="G"></span><span>{{menuItem.label}} - no dd</span></a>                
+                <ul class="dropdown-menu" ng-if="menuItem.subItems">
+                    <li ng-repeat="menuSubItem in menuItem.subItems" >
+                        <a href="{{menuSubItem.action}}" ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
                     </li>
                 </ul>
             </li>
         </ul>
     </li>
 
-    <li class="has-menu">
-        <a href="#"><i class="icon-tasks"></i> Gestion<span class="arrow">&nbsp;</span></a>
-        <ul>
-            <li ng-repeat="menuItem in menuItems.management" >
-                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
-                <ul ng-if="menuItem.subItems">
+    <li class="dropdown has-menu">
+        <a class="dropdown-toggle" href="#"><i class="icon-cogs"></i> Manager<span class="arrow">&nbsp;</span></a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="menuItem in menuItems.manager"  ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
+<!--                 <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a> -->
+<!--                 <ul class="dropdown-menu" ng-if="menuItem.subItems"> -->
+<!--                     <li ng-repeat="menuSubItem in menuItem.subItems" > -->
+<!--                         <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a> -->
+<!--                     </li> -->
+<!--                 </ul> -->
+                <a ng-if="menuItem.subItems" href="#" class="dropdown-toggle" ><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span><span class="arrow">&nbsp;</span></a>
+                <a ng-if="!menuItem.subItems" href="{{menuItem.action}}"><span class="icon" data-icon="G"></span><span>{{menuItem.label}} - no dd</span></a>                
+                <ul class="dropdown-menu" ng-if="menuItem.subItems">
                     <li ng-repeat="menuSubItem in menuItem.subItems" >
-                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                        <a href="{{menuSubItem.action}}" ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
                     </li>
                 </ul>
             </li>
         </ul>
     </li>
 
-    <li class="has-menu">
-        <a href="#"><i class="icon-hdd"></i> Données<span class="arrow">&nbsp;</span></a>
-        <ul>
-            <li ng-repeat="menuItem in menuItems.data" >
-                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
-                <ul ng-if="menuItem.subItems">
-                    <li ng-repeat="menuSubItem in menuItem.subItems" >
-                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-
-    <li class="has-menu">
-        <a href="#"><i class="icon-cogs"></i> Manager<span class="arrow">&nbsp;</span></a>
-        <ul>
-            <li ng-repeat="menuItem in menuItems.manager" >
-                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
-                <ul ng-if="menuItem.subItems">
-                    <li ng-repeat="menuSubItem in menuItem.subItems" >
-                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-
-    <li class="has-menu">
-        <a href="#"><i class="icon-briefcase"></i> {{activeJob.IDENTIFIANT.NOM}}<span class="arrow">&nbsp;</span></a>
-        <ul>
+    <li class="dropdown has-menu">
+        <a class="dropdown-toggle" href="#"><i class="icon-briefcase"></i> {{activeJob.IDENTIFIANT.NOM}}<span class="arrow">&nbsp;</span></a>
+        <ul class="dropdown-menu">
             <li ng-repeat="job in jobs" ><a ng-click="activateJob(job)" ><span class="icon" data-icon="G"></span><span>{{job.IDENTIFIANT.NOM}}</span></a></li>
         </ul>
     </li>

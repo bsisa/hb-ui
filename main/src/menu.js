@@ -63,33 +63,34 @@
         var reorderArrayByPOS = hbUtil.reorderArrayByPOS;
 
         
-        /* Handler */
-        /* This comes directly from kickstart */
+        /**
+         * First came from kickstart but is now unrelated.
+         * htmlkick start has-menu, arrow and other related 
+         * classes are now directly declared in menu.html
+         * 
+         * The current updateMenu task is to make ui.bootstrap 
+         * dropdown menu with onhoveropen class display on hover
+         * adding/removing the boostrap 'open' class.
+         * This is used for Hyperbird sub-menus.
+         * 
+         * fadeIn/fadeOut is dealt with to improve UX while 
+         * navigating menus and sub-menus.
+         */
         var updateMenu = function() {
 
-            $('ul.menu').each(function(){
-                // add the menu toggle
-                $(this).prepend('<li class="menu-toggle"><a href="#"><span class="icon" data-icon="Y"></span> Menu</a></li>');
-
-                // find menu items with children.
-                $(this).find('li').has('ul').addClass('has-menu')
-                    .find('a:first').append('<span class="arrow">&nbsp;</span>');
-            });
-
-            var menuItems =  $('ul.menu li');
-            //console.log(">>>>> DROPDOWN MENUS - HOVER OR NOT HOVER !!!");
-            menuItems.off( "mouseenter mouseleave" );
-
-            // TODO: evaluate kickstart vs ui.bootstrap for menu related to hover or not hover behaviour.
-            menuItems.hover(function(){
-                    $(this).find('ul:first').stop(true, true).fadeIn('fast');
-                    $(this).addClass('hover');
-                },
-                function(){
-                    $(this).find('ul').stop(true, true).fadeOut('slow');
-                    $(this).removeClass('hover');
-                }
-            );
+        	// Searching for custom class onhoveropen
+        	var menuItems =  $('li.onhoveropen');
+        	//console.log(">>>>> li.onhoveropen = " + menuItems.length);
+        	menuItems.hover(
+        		function(){
+		          $(this).find('ul:first').stop(true, true).fadeIn('fast');
+		          $(this).addClass('open');
+	          	},
+	          	function(){
+		          $(this).find('ul').stop(true, true).fadeOut('slow');
+		          $(this).removeClass('open');
+	          	}
+	        );
         };
 
 
@@ -216,8 +217,8 @@
             if (angular.isArray(menuLines)) {
                 reorderArrayByPOS(menuLines);
                 /* Sort cells of each menu line */
-                angular.forEach(menuLines, function(l) {
-                	var lineCells = l.C;
+                angular.forEach(menuLines, function(L) {
+                	var lineCells = L.C;
                     if (angular.isArray(lineCells)) {
                         reorderArrayByPOS(lineCells);
                     }
@@ -226,13 +227,13 @@
 
             var menuStructure = [];
             // Loop over all menu entries
-            angular.forEach(menuLines, function(l) {
-                if (!l.C) return;
+            angular.forEach(menuLines, function(L) {
+                if (!L.C) return;
 
                 /* Extract group and entry names */
-                var groupName = l.C[0].VALUE;
-                var entryName = l.C[1].VALUE;
-                var actionValue = l.C[2].VALUE;
+                var groupName = L.C[0].VALUE;
+                var entryName = L.C[1].VALUE;
+                var actionValue = L.C[2].VALUE;
                 
                 // Just ignore empty entries for now
                 if (!entryName || entryName === '') return;
@@ -240,8 +241,22 @@
                 if (groupName && groupName !== '') {
                     var existingGroups = menuStructure.filter(function(menuItem) {return menuItem.label === groupName;});
 
-                    //TODO: double-check groups logic .
-                    // actionValue should not be there for group with subItems (post processing required?)
+                    if (existingGroups.length == 0) {
+                    	console.log("CREATE GROUP             = " + groupName);
+                    } else if (existingGroups.length == 1) {
+                    	console.log("GROUP EXISTS = " + groupName);
+                    	if (existingGroups[0].subItems.length == 0) {
+                    		console.log("No sub item yet !");
+                    	} else {
+                    		console.log( existingGroups[0].subItems.length + " sub items already!");
+                    	}
+                    } else {
+                    	console.log("NEVER HAPPEN!!!!");
+                    }
+                    
+                    // No group already exist for this groupName in the current menuStructure, create one
+                    // The action linked to this group is the one of the first entry action found for this
+                    // group. TODO: confirm this behaviour is correct in all situations (with and without sub items)
                     if (existingGroups.length == 0) {
                         menuStructure.push( {
                             label:groupName,
@@ -250,6 +265,7 @@
                         });
                     }
 
+                    
                     existingGroups.forEach(function(group) {
                         group['subItems'].push({
                             label:entryName,
@@ -258,6 +274,7 @@
                     });
 
                 } else {
+                	console.log("No groupName for entry  = " + entryName);
                     menuStructure.push({
                         label:entryName,
                         action: actionValue
@@ -292,7 +309,7 @@
                                 case 7: $scope.menuItems.data = structure; break;
                                 case 8: $scope.menuItems.manager = structure; break;
                             }
-
+                            //console.log("Calling menu update for swith case = " + L.POS);
                             updateMenu();
                         }, function(response) {
                             console.log("Error with status code", response.status);
