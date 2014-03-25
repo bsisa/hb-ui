@@ -258,6 +258,7 @@
                     // The action linked to this group is the one of the first entry action found for this
                     // group. TODO: confirm this behaviour is correct in all situations (with and without sub items)
                     if (existingGroups.length == 0) {
+                    	
                         menuStructure.push( {
                             label:groupName,
                             action: actionValue,
@@ -267,6 +268,7 @@
 
                     
                     existingGroups.forEach(function(group) {
+                    	
                         group['subItems'].push({
                             label:entryName,
                             action: actionValue
@@ -282,6 +284,8 @@
                 }
             });
 
+            //TODO: post process menuStructure for single element groups
+            
             return menuStructure;
         };
 
