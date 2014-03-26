@@ -285,6 +285,22 @@
             });
 
             //TODO: post process menuStructure for single element groups
+            console.log(">>>>>>>>>>>>>>>> POST-PROCESSING START v3 <<<<<<<<<<<<<<<<<<<");
+            menuStructure.forEach(function(group) {
+            	console.log("Group: " + group.label);
+            	console.log("  act: " + group.action);
+            	if (group.subItems != null) {
+            		console.log("  sub: " + group.subItems.length);
+            		if (group.subItems.length == 0) {
+            			group.subItems = null;
+            		}
+            		console.log("  sub: NULLIFIED!!!");
+            	} else {
+            		console.log("  sub: NONE");
+            	}
+            });
+            console.log(">>>>>>>>>>>>>>>> POST-PROCESSING END   <<<<<<<<<<<<<<<<<<<");
+            
             
             return menuStructure;
         };
