@@ -261,12 +261,15 @@
                     	
                         menuStructure.push( {
                             label:groupName,
-                            action: actionValue,
-                            subItems:[]                        
+                            action: "no action for group",
+                            subItems:[{
+                                label:entryName,
+                                action: actionValue
+                            }]              
                         });
                     }
 
-                    
+                    // We do not enter here if the group was just created above, before existingGroups filtering.
                     existingGroups.forEach(function(group) {
                     	
                         group['subItems'].push({
@@ -285,16 +288,24 @@
             });
 
             //TODO: post process menuStructure for single element groups
-            console.log(">>>>>>>>>>>>>>>> POST-PROCESSING START v3 <<<<<<<<<<<<<<<<<<<");
+            console.log(">>>>>>>>>>>>>>>> POST-PROCESSING START v7 <<<<<<<<<<<<<<<<<<<");
             menuStructure.forEach(function(group) {
             	console.log("Group: " + group.label);
             	console.log("  act: " + group.action);
             	if (group.subItems != null) {
             		console.log("  sub: " + group.subItems.length);
             		if (group.subItems.length == 0) {
+            			console.log("UNEXPECTED ZERO LENGTH GROUP...");
+            			//group.subItems = null;
+            		} else if (group.subItems.length == 1) {
+            			console.log("SINGLE ITEM GROUP => TRANSFORM BACK TO ITEM...");
+            			console.log("SINGLE ITEM is: " + group.subItems[0].label +"::"+group.subItems[0].action);
+            			group.label = group.subItems[0].label;
+            			group.action = group.subItems[0].action;
             			group.subItems = null;
+            		} else {
+            			console.log(group.subItems.length + " ITEMS GROUP => LET IT BE...");
             		}
-            		console.log("  sub: NULLIFIED!!!");
             	} else {
             		console.log("  sub: NONE");
             	}
