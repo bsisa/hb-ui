@@ -342,11 +342,11 @@
                         // Only call updateMenu once and enclosed in $timeout service to 
                         // fix function applied before DOM update completion.
                         if (actualMenuRefProcessedCount == actualMenuRef.length) {
-                        	console.log("ALL menus ("+actualMenuRef.length+") created! Invoke updateMenu in 0 seconds v3!!!");
+                        	//console.log("ALL menus ("+actualMenuRef.length+") created! Invoke updateMenu in 0 seconds v3!!!");
                         	$timeout(updateMenu, 0, false);
                         	//updateMenu(); Reproduces former bug (function applied before DOM update completion)
                         } else {
-                        	console.log("Creating menu nb " + actualMenuRefProcessedCount + "/" + actualMenuRef.length);                            	
+                        	//console.log("Creating menu nb " + actualMenuRefProcessedCount + "/" + actualMenuRef.length);                            	
                         }
                     }, function(response) {
                         console.log("Error with status code", response.status);
