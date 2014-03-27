@@ -32,14 +32,16 @@
     <li class="dropdown has-menu">
         <a class="dropdown-toggle" href="#"><i class="icon-map-marker"></i> Plans<span class="arrow">&nbsp;</span></a>
         <ul class="dropdown-menu">
-            <li ng-repeat="menuItem in menuItems.maps" ng-class="{true: 'dropdown onhoveropen'}[menuItem.subItems!=null]">
-                <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
-<!--                 <span class="arrow" >&nbsp;</span> -->
+            <li ng-repeat="menuItem in menuItems.maps" ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
+
+                <a ng-if="menuItem.subItems" href="#" class="dropdown-toggle" ><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span><span class="arrow">&nbsp;</span></a>
+                <a ng-if="!menuItem.subItems" href="{{menuItem.action}}"><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
                 <ul class="dropdown-menu" ng-if="menuItem.subItems">
                     <li ng-repeat="menuSubItem in menuItem.subItems" >
-                        <a ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+                        <a href="{{menuSubItem.action}}" ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
                     </li>
                 </ul>
+
             </li>
         </ul>
     </li>
