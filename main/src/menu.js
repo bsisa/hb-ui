@@ -13,7 +13,7 @@
     };
 
 
-    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'sharedMessages', 'hbUtil', function($scope, GeoxmlService, $modal, sharedMessages, hbUtil) {
+    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'sharedMessages', 'hbUtil', '$timeout', function($scope, GeoxmlService, $modal, sharedMessages, hbUtil, $timeout) {
 
     	$scope.sharedStatusMessage = sharedMessages.getStatusMessage();
     	$scope.sharedErrorMessage = sharedMessages.getErrorMessage();
@@ -211,7 +211,7 @@
         
 
         var createMenuStructure = function(elfin) {
-        	
+
         	var menuLines = elfin['CARACTERISTIQUE']['FRACTION']['L'];
         	/* Sort menu lines by POS */
             if (angular.isArray(menuLines)) {
@@ -299,7 +299,7 @@
         			// No sub-item, regular menu item: do nothing
             	}
             });
-            
+
             return menuStructure;
         };
 
@@ -311,28 +311,46 @@
             var menuReferences = $scope.activeJob['CARACTERISTIQUE']['FRACTION']['L'];
             reorderArrayByPOS(menuReferences);
 
-            angular.forEach(menuReferences, function(L) {
-            	// Sort menus cells
-            	reorderArrayByPOS(L.C);
+            /* Deal with MENU only */
+            var actualMenuRef = menuReferences.filter(function(L) {
+	            	// Sort menus cells
+	            	reorderArrayByPOS(L.C);
+            		return L.C[0].VALUE === "MENU";
+            	});
+            
+            // Allow calling updateMenu function only once for all menus.
+            var actualMenuRefProcessedCount = 0;
+
+            // Load each menu configurations in turn
+            angular.forEach(actualMenuRef, function(L) {
+
                 /* Load the menus */
-                if (L.C[0].VALUE === "MENU")  {
-                	GeoxmlService.getElfin(L.C[2].VALUE, L.C[1].VALUE).get()
-                        .then(function(elfin) {
-                            var structure = createMenuStructure(elfin);
-                            switch(L.POS) {
-                                case 3: $scope.menuItems.maps = structure; break;
-                                case 4: $scope.menuItems.collections = structure; break;
-                                case 5: $scope.menuItems.operations = structure; break;
-                                case 6: $scope.menuItems.management = structure; break;
-                                case 7: $scope.menuItems.data = structure; break;
-                                case 8: $scope.menuItems.manager = structure; break;
-                            }
-                            //console.log("Calling menu update for swith case = " + L.POS);
-                            updateMenu();
-                        }, function(response) {
-                            console.log("Error with status code", response.status);
-                    });
-                }
+            	GeoxmlService.getElfin(L.C[2].VALUE, L.C[1].VALUE).get()
+                    .then(function(elfin) {
+                        var structure = createMenuStructure(elfin);
+                        switch(L.POS) {
+                            case 3: $scope.menuItems.maps = structure; break;
+                            case 4: $scope.menuItems.collections = structure; break;
+                            case 5: $scope.menuItems.operations = structure; break;
+                            case 6: $scope.menuItems.management = structure; break;
+                            case 7: $scope.menuItems.data = structure; break;
+                            case 8: $scope.menuItems.manager = structure; break;
+                        }
+                        
+                        actualMenuRefProcessedCount += 1;
+                        
+                        // Only call updateMenu once and enclosed in $timeout service to 
+                        // fix function applied before DOM update completion.
+                        if (actualMenuRefProcessedCount == actualMenuRef.length) {
+                        	console.log("ALL menus ("+actualMenuRef.length+") created! Invoke updateMenu in 0 seconds v3!!!");
+                        	$timeout(updateMenu, 0, false);
+                        	//updateMenu(); Reproduces former bug (function applied before DOM update completion)
+                        } else {
+                        	console.log("Creating menu nb " + actualMenuRefProcessedCount + "/" + actualMenuRef.length);                            	
+                        }
+                    }, function(response) {
+                        console.log("Error with status code", response.status);
+                });
             });
         };
     }]);
