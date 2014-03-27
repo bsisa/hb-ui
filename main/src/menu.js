@@ -239,29 +239,16 @@
                 if (!entryName || entryName === '') return;
 
                 if (groupName && groupName !== '') {
+                	
                     var existingGroups = menuStructure.filter(function(menuItem) {return menuItem.label === groupName;});
-
-                    if (existingGroups.length == 0) {
-                    	console.log("CREATE GROUP             = " + groupName);
-                    } else if (existingGroups.length == 1) {
-                    	console.log("GROUP EXISTS = " + groupName);
-                    	if (existingGroups[0].subItems.length == 0) {
-                    		console.log("No sub item yet !");
-                    	} else {
-                    		console.log( existingGroups[0].subItems.length + " sub items already!");
-                    	}
-                    } else {
-                    	console.log("NEVER HAPPEN!!!!");
-                    }
                     
-                    // No group already exist for this groupName in the current menuStructure, create one
-                    // The action linked to this group is the one of the first entry action found for this
-                    // group. TODO: confirm this behaviour is correct in all situations (with and without sub items)
+                    // No group already exist for this groupName in the current menuStructure.
+                    // Create a new group with a first sub-item corresponding to entryName, actionValue.
+                    // Groups shall not have action.
                     if (existingGroups.length == 0) {
                     	
                         menuStructure.push( {
                             label:groupName,
-                            action: "no action for group",
                             subItems:[{
                                 label:entryName,
                                 action: actionValue
@@ -269,7 +256,9 @@
                         });
                     }
 
-                    // We do not enter here if the group was just created above, before existingGroups filtering.
+                    // Add sub items to existing group. In case of new group creation 
+                    // the existingGroups object does not include the new group as 
+                    // filtering happened before group creation.
                     existingGroups.forEach(function(group) {
                     	
                         group['subItems'].push({
@@ -279,7 +268,7 @@
                     });
 
                 } else {
-                	console.log("No groupName for entry  = " + entryName);
+                	// Regular single menu item without group name specified
                     menuStructure.push({
                         label:entryName,
                         action: actionValue
@@ -287,31 +276,29 @@
                 }
             });
 
-            //TODO: post process menuStructure for single element groups
-            console.log(">>>>>>>>>>>>>>>> POST-PROCESSING START v7 <<<<<<<<<<<<<<<<<<<");
+            // Post process menuStructure to convert single element groups to regular 
+            // single menu item.
             menuStructure.forEach(function(group) {
-            	console.log("Group: " + group.label);
-            	console.log("  act: " + group.action);
             	if (group.subItems != null) {
-            		console.log("  sub: " + group.subItems.length);
             		if (group.subItems.length == 0) {
-            			console.log("UNEXPECTED ZERO LENGTH GROUP...");
-            			//group.subItems = null;
+            			// This is unlikely but nullify subItems array for consistent 
+            			// view rendering in case subItems appears in tests.
+            			group.subItems = null;
             		} else if (group.subItems.length == 1) {
-            			console.log("SINGLE ITEM GROUP => TRANSFORM BACK TO ITEM...");
-            			console.log("SINGLE ITEM is: " + group.subItems[0].label +"::"+group.subItems[0].action);
+            			// Single sub-item group: Transform back to regular menu item.
+            			// Make sub-item label regular menu item
             			group.label = group.subItems[0].label;
+            			// Create regular menu item action and make it as sub-item action
             			group.action = group.subItems[0].action;
+            			// Remove/nullify group subItems to make it a regular menu item.
             			group.subItems = null;
             		} else {
-            			console.log(group.subItems.length + " ITEMS GROUP => LET IT BE...");
+            			// More than one sub-item: do nothing
             		}
             	} else {
-            		console.log("  sub: NONE");
+        			// No sub-item, regular menu item: do nothing
             	}
             });
-            console.log(">>>>>>>>>>>>>>>> POST-PROCESSING END   <<<<<<<<<<<<<<<<<<<");
-            
             
             return menuStructure;
         };
