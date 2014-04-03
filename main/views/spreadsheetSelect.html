@@ -1,0 +1,53 @@
+<div class="card clearfix">
+	<!-- Error -->
+	<div ng-show="errorMessage" class="notice error">
+		<i class="icon-remove-sign icon-large"></i> {{errorMessage}}
+	</div>
+
+	<div ng-show="!elfins && !errorMessage">
+		<h5><div class="loading"></div>Chargement des informations</h5>
+	</div>
+
+	<table ng-show="elfins">
+		<tr>
+			<th colspan="6">Résulat de la requête - {{elfinsCount}} immeuble{{ elfinsCount | plural }} trouvé{{ elfinsCount | plural }}</th>
+		</tr>
+		<tr>
+			<th />
+			<!-- Remark: always empty on tested data -->
+			<!-- 			<th>Groupe</th> -->
+			<th>Propriétaire</th>
+			<th>N° de gérance</th>
+			<th>Lieu-dit</th>
+			<th>N° de construction</th>
+			<th>Adresse</th>
+		</tr>
+		<tr ng-repeat="elfin in elfins">
+			<td><a href="/index.html#/elfin/{{elfin.ID_G}}/IMMEUBLE/{{elfin.Id}}" >Détail</a><!-- 
+				<input type="button" value="Détail">
+					<xsl:attribute name="onclick">
+						<xsl:text>javascript:top.getHB_Fiche().loadAndDisplayXML('../../HB4-Objets/</xsl:text>
+						<xsl:value-of select="./@ID_G"/>
+						<xsl:text>/</xsl:text>
+						<xsl:value-of select="./@CLASSE"/>
+						<xsl:value-of select="./@Id"/>
+<xsl:text>.xml','stylesheets/masque</xsl:text>
+												<xsl:value-of select="./@CLASSE"/>
+
+						<xsl:text>.xsl')</xsl:text>					</xsl:attribute>
+				</input>
+				 -->
+			</td>
+
+			<!-- Remark: always empty on tested data -->
+			<!-- <td>{{elfin.GROUPE}}</td>  -->
+			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
+			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.VALUE}}</td>
+			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td>
+			<td>{{elfin.IDENTIFIANT.NOM}}</td>
+			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>
+		</tr>
+	</table>
+</div>
+

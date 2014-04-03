@@ -77,9 +77,13 @@
                 templateUrl: 'views/default_card_view.html',
                 controller: 'DefaultCardController'
             })
-            .when('/elfin/:collectionId/IMMEUBLE', {
+            .when('/elfin/:collectionId/:classe', {
                 templateUrl: 'views/IMMEUBLE.html',
                 controller: 'DefaultListsController'
+            })
+            .when('/report/xls', {
+                templateUrl: 'views/spreadsheetSelect.html',
+                controller: 'SelectConstatController'
             })
             .otherwise({
                 redirectTo: '/'
