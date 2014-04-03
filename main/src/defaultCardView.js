@@ -40,9 +40,11 @@
         // Shared messages (between controllers).
     	$scope.setSharedStatusMessage = sharedMessages.setStatusMessage;    	
     	
-    	// Watch related to CONSTAT list 
+    	// Watch related to CONSTAT list
+    	// Note: this is only valid in the context of elfin of CLASSE IMMEUBLE
+    	// TODO: make this controller IMMEUBLE specific.
     	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
-    		if ($scope.elfin!=null) {
+    		if ($scope.elfin!=null && $scope.elfin.CLASSE === 'IMMEUBLE') {
 	    		console.log("elfin.IDENTIFIANT.NOM watch for CONSTAT");
 	            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
 	            // TODO: constatsCollectionId must come from server configuration resource.
