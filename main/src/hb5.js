@@ -71,7 +71,7 @@
             })
             .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
                 templateUrl: 'views/IMMEUBLE_card_view.html',
-                controller: 'DefaultCardController'
+                controller: 'ImmeubleCardController'
             })            
             .when('/elfin/:collectionId/:classe/:elfinId', {
                 templateUrl: 'views/default_card_view.html',
