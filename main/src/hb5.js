@@ -62,27 +62,36 @@
         
     }]);
     
+    /**
+     * Benefit from HTML5 history API, provides nicer RESTful URLs.
+     * Supported by all browsers (with IE only from version 10).
+     * Fallback to hashbang mode if necessary. 
+     */
+    hb5.config(['$locationProvider', function($locationProvider) {
+    	$locationProvider.html5Mode(true);
+    }]);
+
     
     hb5.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'views/welcome.html',
+                templateUrl: '/assets/views/welcome.html',
                 controller: function($scope) {}
             })
             .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
-                templateUrl: 'views/IMMEUBLE_card_view.html',
+                templateUrl: '/assets/views/IMMEUBLE_card_view.html',
                 controller: 'ImmeubleCardController'
             })            
             .when('/elfin/:collectionId/:classe/:elfinId', {
-                templateUrl: 'views/default_card_view.html',
+                templateUrl: '/assets/views/default_card_view.html',
                 controller: 'DefaultCardController'
             })
             .when('/elfin/:collectionId/:classe', {
-                templateUrl: 'views/IMMEUBLE.html',
+                templateUrl: '/assets/views/IMMEUBLE.html',
                 controller: 'DefaultListsController'
             })
             .when('/report/xls', {
-                templateUrl: 'views/spreadsheetSelect.html',
+                templateUrl: '/assets/views/spreadsheetSelect.html',
                 controller: 'SelectConstatController'
             })
             .otherwise({
