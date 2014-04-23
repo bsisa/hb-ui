@@ -297,19 +297,26 @@
 }
                  * */
                 var actionValue = L.C[2].VALUE;
-                console.log(">>>>>>>>>>>> NO JSON PARSING <<<<<<<<<<<<<<<< ");
-//                try {
-//                	actionValue = angular.fromJson(L.C[2].VALUE);
-//                	if (actionValue.functionName) {
-//                		console.log("Refer to function: " + functionName);
-//                		actionValue.functionRef = $scope[actionValue.functionName];
-//                	} else {
-//                		console.log("No function name.");
-//                	}
-//                } catch (e) {
-//                	console.log("JSON parse exception with entryName: " + entryName + ", group: " + groupName);
-//                	actionValue = L.C[2].VALUE;
-//                }
+
+                if (elfin.IDENTIFIANT.NOM === 'Exploitation') {
+                  console.log(">>>>>>>>>>>> /!\ JSON PARSING /!\ <<<<<<<<<<<<<<<< ");
+                  try {
+                	actionValue = angular.fromJson(L.C[2].VALUE);
+                	if (actionValue.functionName) {
+                		console.log("Refer to function: " + actionValue.functionName);
+                		actionValue.functionRef = $scope[actionValue.functionName];
+                	} else {
+                		console.log("No function name.");
+                	}
+                  } catch (e) {
+                	console.log("JSON parse exception with entryName: " + entryName + ", group: " + groupName);
+                	console.error("JSON parse exception: " + e);
+                	actionValue = L.C[2].VALUE;
+                  }
+                } else {
+                    console.log(">>>>>>>>>>>>  NO JSON PARSING     <<<<<<<<<<<<<<<< ");                	
+                }
+
                 
                 // Just ignore empty entries for now
                 if (!entryName || entryName === '') return;

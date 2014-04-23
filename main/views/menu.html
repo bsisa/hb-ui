@@ -63,7 +63,7 @@
     </li>
 
     <li class="dropdown has-menu">
-        <a class="dropdown-toggle" href="#"><i class="icon-folder-open"></i> Exploitation<span class="arrow">&nbsp;</span></a>
+        <a class="dropdown-toggle" href="#"><i class="icon-folder-open"></i>(25) Exploitation<span class="arrow">&nbsp;</span></a>
         <ul class="dropdown-menu">
             <li ng-repeat="menuItem in menuItems.operations"  ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
 <!--                 <a><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a> -->
@@ -73,10 +73,22 @@
 <!--                     </li> -->
 <!--                 </ul> -->
                 <a ng-if="menuItem.subItems" href="#" class="dropdown-toggle" ><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span><span class="arrow">&nbsp;</span></a>
-                <a ng-if="!menuItem.subItems" href="{{menuItem.action}}"><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>                
+                <a ng-if="!menuItem.subItems && menuItem.action.type == 'link'" ng-href="{{menuItem.action.url}}" href=""><span class="icon" data-icon="G"></span><span>LINK : {{menuItem.label}}</span></a>
+                <a ng-if="!menuItem.subItems && menuItem.action.type == 'modal'" ng-click="menuItem.action.functionRef(menuItem.action)" href=""><span class="icon" data-icon="G"></span><span>MODAL : {{menuItem.label}}</span></a>
                 <ul class="dropdown-menu" ng-if="menuItem.subItems">
                     <li ng-repeat="menuSubItem in menuItem.subItems" >
-                        <a href="{{menuSubItem.action}}" ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+<!--                         <a  -->
+<!--                         ng-href="{{menuSubItem.action}}"  -->
+<!--                         ng-class="menuSubItem.label ? '' : 'separator'" ><span class="icon" data-icon="G"></span><span>Cool Rasta 2 : {{menuSubItem.label}}</span></a> -->
+		                <a 
+		                ng-if="menuSubItem.action.type == 'link'"  
+		                ng-href="{{menuSubItem.action.url}}"                                 
+		                ng-class="menuSubItem.label ? '' : 'separator'">
+		                <span class="icon" data-icon="G"></span><span>LINK : {{menuSubItem.label}}</span></a>
+        		        <a 
+        		        ng-if="menuSubItem.action.type == 'modal'" 
+        		        ng-click="menuSubItem.action.functionRef(menuSubItem.action)" 
+        		        ng-class="menuSubItem.label ? '' : 'separator'"><span class="icon" data-icon="G"></span><span>MODAL : function: {{menuSubItem.action.functionName}} :: {{menuSubItem.label}}</span></a>                        
                     </li>
                 </ul>                
             </li>
@@ -195,4 +207,17 @@
         </div>
     </script>
 </div>
-
+<div>
+    <script type="text/ng-template" id="chooseParams.html">
+        <div class="modal-header">
+            <h3>Choisir le paramètre</h3>
+        </div>
+        <div class="modal-body" ng-repeat="field in itemDefinition.parameters">
+        	<label for="field{{$index}}">The label {{$index}}: {{field.label}}</label>
+            <input id="field{{$index}}" type="text" ng-model="field.value" />
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+        </div>
+    </script>
+</div>
