@@ -13,6 +13,15 @@
     };
 
 
+    angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', 'itemDefinition', function($scope, $modalInstance, itemDefinition) {
+    	console.log("ChooseParamsCtrl: start (20)");
+    	console.log("ChooseParamsCtrl: itemDefinition.url = " + itemDefinition.url);
+    	$scope.itemDefinition = itemDefinition;
+        $scope.ok = function () {
+            $modalInstance.close($scope.itemDefinition);
+        };    	
+    }]);
+    
     angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'sharedMessages', 'hbUtil', '$timeout', function($scope, GeoxmlService, $modal, sharedMessages, hbUtil, $timeout) {
 
     	$scope.sharedStatusMessage = sharedMessages.getStatusMessage();
@@ -53,6 +62,41 @@
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
+        
+
+        // TODO: dynamically load from selected / clicked menu item
+//    	$scope.selectedReportParam = {
+//    			label: "No gérance",
+//    			value: "",
+//    			url: "/api/melfin/spreadsheet/syntheseContrats.xls?OBJECTIF="
+//    	};
+        
+        $scope.chooseReportParam = function (itemDefinition) {
+        	console.log("chooseParams: 1");
+            var modalInstance = $modal.open({
+                templateUrl: 'chooseParams.html',
+                scope: $scope,
+                controller: 'ChooseParamsCtrl',
+                resolve: {
+                	itemDefinition: function () {
+                    	console.log("chooseParams: resolving itemDefinition...");
+                    	return itemDefinition;
+                    }               
+                },                
+                backdrop: 'static'
+            });
+
+            modalInstance.result.then(function (result) {
+            	console.log("=======================================================");
+                console.log("itemDefinition.url = " + result.url);
+                for (field in result.parameters) {
+                	console.log("field.value = " + field.value);	
+                }
+            	console.log("=======================================================");                
+            }, function () {
+                console.log('Choose params modal dismissed at: ' + new Date());
+            });
+        };        
 
 
 
@@ -233,7 +277,39 @@
                 /* Extract group and entry names */
                 var groupName = L.C[0].VALUE;
                 var entryName = L.C[1].VALUE;
+                /* actionValue is expected to be JSON menu item format as: 
+{
+    "type": "modal",
+    "functionName": "chooseReportParam()",
+    "url":"/api/melfin/spreadsheet/syntheseContrats.xls",
+    "parameters": [
+        {
+            "label": "No gérance",
+            "name": "OBJECTIF",
+            "value": ""
+        },
+        {
+            "label": "Autre",
+            "name": "OTHER",
+            "value": ""
+        }
+    ]
+}
+                 * */
                 var actionValue = L.C[2].VALUE;
+                console.log(">>>>>>>>>>>> NO JSON PARSING <<<<<<<<<<<<<<<< ");
+//                try {
+//                	actionValue = angular.fromJson(L.C[2].VALUE);
+//                	if (actionValue.functionName) {
+//                		console.log("Refer to function: " + functionName);
+//                		actionValue.functionRef = $scope[actionValue.functionName];
+//                	} else {
+//                		console.log("No function name.");
+//                	}
+//                } catch (e) {
+//                	console.log("JSON parse exception with entryName: " + entryName + ", group: " + groupName);
+//                	actionValue = L.C[2].VALUE;
+//                }
                 
                 // Just ignore empty entries for now
                 if (!entryName || entryName === '') return;
@@ -251,7 +327,7 @@
                             label:groupName,
                             subItems:[{
                                 label:entryName,
-                                action: actionValue
+                                action: actionValue 
                             }]              
                         });
                     }
@@ -260,11 +336,20 @@
                     // the existingGroups object does not include the new group as 
                     // filtering happened before group creation.
                     existingGroups.forEach(function(group) {
+                    	console.log("Adding sub item " + entryName + " to group " + group.label);
+//                        if (entryName === "(2)Immeubles de la ville par compte") {
+//                        	console.log(">>>>>>>>> TESTING JSON IN XML ELEMENT (2) <<<<<<<<<");
+//                        	console.log("actionValue = " + actionValue);
+//                        	console.log("actionValue.type = " + actionValue.type);
+//                        	var actionJs = angular.fromJson(actionValue);
+//                        	console.log("actionJs.type = " + actionJs.type);
+//                        } else {
                     	
                         group['subItems'].push({
                             label:entryName,
                             action: actionValue
                         });
+                        //}
                     });
 
                 } else {
