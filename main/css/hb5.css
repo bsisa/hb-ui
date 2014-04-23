@@ -268,9 +268,16 @@ form.ng-pristine {
     background-color: #A2FF7D;
 }
 
+/* Do not change modal input background while entering data */
+div.modal-body input.ng-dirty {
+    background-color: white;
+}
+
+/* Change modal input background while entering data */
 input.ng-dirty {
     background-color: #F5A9A9;
 }
+
 input.ng-pristine {
     background-color: white;
 }
