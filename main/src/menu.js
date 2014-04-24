@@ -23,6 +23,26 @@
         };
     }]);
     
+    angular.module('hb5').directive('hbDropdownMenu', function () {
+
+		return {
+		    restrict: 'A',
+			templateUrl : "/assets/views/hbDropdownMenu.html",
+			replace : true,
+			scope : {
+				'hbDropdownMenuIconClass' : '@hbDropdownMenuIconClass',
+				'hbDropdownMenuLabel' : '@hbDropdownMenuLabel',
+				'hbDropdownMenuItems' : '=hbDropdownMenuItems'
+			},
+			link : function ($scope, $element, $attrs) {
+				$scope.$watch('hbDropdownMenuItems', function(value){
+					console.log("hbDropdownMenuItems VALUE changed, size = " + $scope.hbDropdownMenuItems.length);
+				});
+			}
+		};
+	
+    });
+    
     angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'sharedMessages', 'hbUtil', '$timeout', '$location', '$window', function($scope, GeoxmlService, $modal, sharedMessages, hbUtil, $timeout, $location, $window) {
 
     	$scope.sharedStatusMessage = sharedMessages.getStatusMessage();
