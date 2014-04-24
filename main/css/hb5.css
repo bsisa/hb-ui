@@ -252,7 +252,7 @@ a [class^="icon-"]
 	clear:both;
 	float:left; 
 	border: none;
-    background: url(/images/ajax-loader.gif) transparent no-repeat;
+    background: url(/assets/images/ajax-loader.gif) transparent no-repeat;
     height: 40px;
     width: 40px;
 }
