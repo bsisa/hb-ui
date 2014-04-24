@@ -163,9 +163,28 @@
             });
         };		
 		
+        
+        /**
+         * Builds a URL query string such as "?FIRST_PARAM=test&SECOND_PARAM=xxx"
+         * where parameters is expected to be an array of objects with 
+         * name and value properties.
+         */
+        var buildUrlQueryString = function(parameters) {
+	        var queryString = "";
+	    	for (var i=0; i < parameters.length; i++) {
+	    		var field = parameters[i];
+	    		if (i===0) {
+	    			queryString += "?" + field.name + "=" + field.value;
+	    		} else {
+	    			queryString += "&" + field.name + "=" + field.value;
+	    		}
+	    	}
+	    	return queryString;
+        };
+        
         return {
-        	reorderArrayByPOS:reorderArrayByPOS
-            
+        	reorderArrayByPOS:reorderArrayByPOS,
+        	buildUrlQueryString:buildUrlQueryString
         };
     });	
 
