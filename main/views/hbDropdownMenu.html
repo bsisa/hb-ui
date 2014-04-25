@@ -4,9 +4,9 @@
 	htmlkickstart: has-menu, arrow
 	custom: onhoveropen
 	-->
-    <a class="dropdown-toggle" href="#"><i class="{{hbDropdownMenuIconClass}}"></i> {{hbDropdownMenuLabel}}<span class="arrow">&nbsp;</span></a>
+    <a class="dropdown-toggle" href="#"><i class="{{menuIconClass}}"></i> {{menuLabel}}<span class="arrow">&nbsp;</span></a>
     <ul class="dropdown-menu">
-        <li ng-repeat="menuItem in hbDropdownMenuItems" ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
+        <li ng-repeat="menuItem in menuItems" ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
             
             <a ng-if="menuItem.subItems" href="#" class="dropdown-toggle" ><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span><span class="arrow">&nbsp;</span></a>
             <a ng-if="!menuItem.subItems && menuItem.action.type == 'link'" ng-href="{{menuItem.action.url}}" href=""><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>

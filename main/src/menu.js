@@ -23,6 +23,14 @@
         };
     }]);
     
+    /**
+     * Directive for dynamic drop down menus.
+     * 
+     * Note: When hbDropdownMenuLabel and hbDropdownMenuItems are scoped as read only using @
+     * they fail to be bound as properties references but are considered pure strings instead.
+     * This behaviour is likely due to the "relatively" long time necessary for menu properties 
+     * to be dynamically initialised (menus structure being loaded from database).
+     */
     angular.module('hb5').directive('hbDropdownMenu', function () {
 
 		return {
@@ -30,14 +38,18 @@
 			templateUrl : "/assets/views/hbDropdownMenu.html",
 			replace : true,
 			scope : {
-				'hbDropdownMenuIconClass' : '@hbDropdownMenuIconClass',
-				'hbDropdownMenuLabel' : '@hbDropdownMenuLabel',
-				'hbDropdownMenuItems' : '=hbDropdownMenuItems'
+				'menuIconClass' : '@hbDropdownMenuIconClass',
+				'menuLabel' : '=hbDropdownMenuLabel',  
+				'menuItems' : '=hbDropdownMenuItems'   
 			},
 			link : function ($scope, $element, $attrs) {
-				$scope.$watch('hbDropdownMenuItems', function(value){
-					console.log("hbDropdownMenuItems VALUE changed, size = " + $scope.hbDropdownMenuItems.length);
-				});
+//				$scope.$watch('menuLabel', function(value){
+//					console.log("menuLabel VALUE changed to " + value );
+//				});
+//				$scope.$watch('menuItems', function(value){
+//					console.log("menuItems VALUE changed to " + value );
+//					
+//				});
 			}
 		};
 	
@@ -286,7 +298,10 @@
                 });
             }
 
-            var menuStructure = [];
+            var menuStructure = {
+            		"label" : elfin['IDENTIFIANT']['NOM'],
+            		"elements" : []
+            };
             // Loop over all menu entries
             angular.forEach(menuLines, function(L) {
                 if (!L.C) return;
@@ -351,14 +366,14 @@
 
                 if (groupName && groupName !== '') {
                 	
-                    var existingGroups = menuStructure.filter(function(menuItem) {return menuItem.label === groupName;});
+                    var existingGroups = menuStructure.elements.filter(function(menuItem) {return menuItem.label === groupName;});
                     
-                    // No group already exist for this groupName in the current menuStructure.
+                    // No group already exist for this groupName in the current menuStructure.elements.
                     // Create a new group with a first sub-item corresponding to entryName, actionValue.
                     // Groups shall not have action.
                     if (existingGroups.length == 0) {
                     	
-                        menuStructure.push( {
+                        menuStructure.elements.push( {
                             label:groupName,
                             subItems:[{
                                 label:entryName,
@@ -379,16 +394,16 @@
 
                 } else {
                 	// Regular single menu item without group name specified
-                    menuStructure.push({
+                    menuStructure.elements.push({
                         label:entryName,
                         action: actionValue
                     });
                 }
             });
 
-            // Post process menuStructure to convert single element groups to regular 
+            // Post process menuStructure.elements to convert single element groups to regular 
             // single menu item.
-            menuStructure.forEach(function(group) {
+            menuStructure.elements.forEach(function(group) {
             	if (group.subItems != null) {
             		if (group.subItems.length == 0) {
             			// This is unlikely but nullify subItems array for consistent 
