@@ -67,7 +67,7 @@
         $scope.chooseConfiguration = function () {
 
             var modalInstance = $modal.open({
-                templateUrl: 'chooseConfiguration.html',
+            	templateUrl: '/assets/views/chooseConfiguration.html',
                 controller: ChooseConfigInstanceCtrl,
                 resolve: {
                     $$configurations: function () {

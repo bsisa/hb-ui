@@ -1,0 +1,15 @@
+<div>
+	<div class="modal-header">
+		<h3>Choisir la configuration</h3>
+	</div>
+	<div class="modal-body">
+		<ul>
+			<li ng-repeat="item in $$configurations"><a
+				class="configuration-item" ng-click="selected.item = item">{{item.IDENTIFIANT.NOM }}</a></li>
+		</ul>
+		Configuration sélectionnée: <b>{{ selected.item.IDENTIFIANT.NOM }}</b>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="ok()">OK</button>
+	</div>
+</div>
