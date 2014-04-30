@@ -23,7 +23,7 @@
 			<th>Adresse</th>
 		</tr>
 		<tr ng-repeat="elfin in elfins">
-			<td><a href="/elfin/{{elfin.ID_G}}/IMMEUBLE/{{elfin.Id}}" >Détail</a><!-- 
+			<td><a href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" >Détail</a><!-- 
 				<input type="button" value="Détail">
 					<xsl:attribute name="onclick">
 						<xsl:text>javascript:top.getHB_Fiche().loadAndDisplayXML('../../HB4-Objets/</xsl:text>
