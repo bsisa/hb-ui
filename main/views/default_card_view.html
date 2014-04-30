@@ -10,8 +10,9 @@
 
 <!-- TODO: REFACTOR to a single form named 'elfinForm' -->
     <div ng-show="elfin">
-    <form name="elfinForm" class="form" role="form" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
-        <div class="col_8">
+    <form name="elfinForm" class="vertical" role="form" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
+        <div class="row" >
+        <div class="col-xs-8">
             <ul class="button-bar ">            
                 <li><a ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></a></li>
                 <li><a href=""><i class="icon-copy"></i></a></li>
@@ -24,14 +25,15 @@
             </ul>
         </div>
 
-        <div class="col_4 right">
+        <div class="col-xs-4">
             <i class="icon-tag"></i> {{elfin.CLASSE}}<br/>
             <i class="icon-folder-close"></i> {{elfin.ID_G}}<br/>
             <i class="icon-file"></i> {{elfin.Id}} clearfix !!!
         </div>
-        <div class="clearfix"></div>
-
-        <div class="col_12">
+        </div>
+<!--         <div class="clearfix"></div> -->
+		<div class="row" >
+        <div class="col-xs-12">
             <tabset>
                 <!-- ATTRIBUTS -->
                 <tab heading="Attributs (horiz :: 8)" >
@@ -644,6 +646,7 @@
                 <tab heading="Divers"></tab>
             </tabset>
         </div>
+        </div> <!-- row end -->
 	</form>
     </div>
 
