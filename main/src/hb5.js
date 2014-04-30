@@ -87,7 +87,7 @@
                 controller: 'DefaultCardController'
             })
             .when('/elfin/:collectionId/:classe', {
-                templateUrl: '/assets/views/IMMEUBLE.html',
+                templateUrl: '/assets/views/IMMEUBLE_list_view.html',
                 controller: 'DefaultListsController'
             })
             .when('/report/xls', {
