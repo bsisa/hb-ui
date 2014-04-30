@@ -1,0 +1,33 @@
+<div class="card clearfix">
+	<!-- Error -->
+	<div ng-show="errorMessage" class="notice error">
+		<i class="icon-remove-sign icon-large"></i> {{errorMessage}}
+	</div>
+
+	<div ng-show="!elfins && !errorMessage">
+		<h5><div class="loading"></div>Chargement des informations</h5>
+	</div>
+
+	<table ng-show="elfins">
+		<tr>
+			<th colspan="6">Résulat de la requête - {{elfinsCount}} objet{{ elfinsCount | plural }} trouvé{{ elfinsCount | plural }}</th>
+		</tr>
+		<tr>
+			<th />
+			<th>Propriétaire</th>
+			<th>N° de gérance</th>
+			<th>N° de construction</th>
+			<th>Adresse</th>
+			<th>Remarque</th>			
+		</tr>
+		<tr ng-repeat="elfin in elfins">
+			<td><a href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" >Détail</a></td>
+			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.VALUE}}</td>
+			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<td>{{elfin.IDENTIFIANT.NOM}}</td>
+			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>
+			<td>{{elfin.DIVERS.REMARQUE}}</td>			
+		</tr>
+	</table>
+</div>
+
