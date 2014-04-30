@@ -17,7 +17,16 @@
     <!--<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />-->
 
     <!-- Kickstart -->
+    <!-- 
+    TODO: try removing dependency on HTMLKickstart in favour of Bootstrap only 
+    to avoid CSS conflicts and benefit from AngularJS tigther integration. 
+    Nice icons could be kept by preserving font-awesome. -->
+    <!-- TODO: To remove -->
     <link rel="stylesheet" type="text/css" href="/assets/css/kickstart/kickstart.css" media="all"/>
+    <!-- TODO: Evaluate if worth keeping for menus only (currently imported by above kickstart.css) -->
+<!-- 	<link rel="stylesheet" type="text/css" href="/assets/css/kickstart/kickstart-menus.css" media="all"/> -->
+	<!-- TODO: Migrate fontawesome to its own bower location -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/kickstart/fonts/fontawesome/css/font-awesome.min.css" media="all"/>
 
     <!-- Leaflet -->
     <link rel="stylesheet" type="text/css" href="/assets/css/leaflet/leaflet.css" />
@@ -45,6 +54,12 @@
     <script type="text/javascript" src="/assets/bower_components/lodash/dist/lodash.compat.min.js"></script>
     <script type="text/javascript" src="/assets/bower_components/restangular/dist/restangular.js"></script>
     <script type="text/javascript" src="/assets/lib/ui-bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+    
+    <!-- TEST -->
+    <script type="text/javascript" src="/assets/bower_components/ui-bootstrap/src/transition/transition.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/ui-bootstrap/src/collapse/collapse.js"></script>
+    
+    
     <!-- Chosen -->
     <script type="text/javascript" src="/assets/lib/chosen/chosen.jquery.js"></script>
     <script type="text/javascript" src="/assets/lib/chosen/chosen.js"></script>
@@ -54,7 +69,7 @@
     <script type="text/javascript" src="/assets/bower_components/ngUpload/ng-upload.js"></script>
 
     <!-- Kickstart -->
-    <script type="text/javascript" src="/assets/lib/kickstart/kickstart.js"></script>
+<!--     <script type="text/javascript" src="/assets/lib/kickstart/kickstart.js"></script> -->
 
     <!-- Leaflet -->
     <script type="text/javascript" src="/assets/lib/leaflet/lefalet-0.7.1.js"></script>
@@ -75,8 +90,8 @@
 
 <body>
     <div ng-include="'/assets/views/menu.html'" ng-controller="MenuController"></div>
-
-    <div class="content">
+<!-- 	<div class="container-fluid"> -->
+	<div class="container">
         <div class="grid" ng-style="gridStyle">
             <div class="col_12" ng-view></div>
         </div>
