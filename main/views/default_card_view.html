@@ -10,62 +10,56 @@
 
 <!-- TODO: REFACTOR to a single form named 'elfinForm' -->
     <div ng-show="elfin">
-    <form name="elfinForm" class="vertical" role="form" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
-        <div class="row" >
-        <div class="col-xs-8">
-            <ul class="button-bar ">            
-                <li><a ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></a></li>
-                <li><a href=""><i class="icon-copy"></i></a></li>
-                <li><a ng-click="delElfin(elfin)" href=""><i class="icon-trash"></i></a></li>
-                <li><a href=""><i class="icon-paper-clip"></i></a></li>
-                <li><a href=""><i class="icon-map-marker"></i></a></li>
-                <li><a href=""><i class="icon-print"></i></a></li>
-                <li><a href=""><i class="icon-cogs"></i></a></li>
-                <li><a href=""><i class="icon-folder-open"></i></a></li>
-            </ul>
+    <form name="elfinForm" role="form" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
+        <div class="row" style="padding:10px">
+	        <div class="col-xs-8">
+	       		<div class="btn-group">
+	        		<button class="btn btn-default" ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></button>
+	        		<button class="btn btn-default" ng-click=""><i class="icon-copy"></i></button>
+	        		<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="icon-trash"></i></button>
+	        		<button class="btn btn-default" ng-click=""><i class="icon-paper-clip"></i></button>
+	        	    <button class="btn btn-default" ng-click=""><i class="icon-map-marker"></i></button>
+	        	    <button class="btn btn-default" ng-click=""><i class="icon-print"></i></button>
+	        	    <button class="btn btn-default" ng-click=""><i class="icon-cogs"></i></button>
+	        	    <button class="btn btn-default" ng-click=""><i class="icon-folder-open"></i></button>
+	       		</div>
+	        </div>
+	        <div class="col-xs-4 text-right">
+	            <i class="icon-tag"></i> {{elfin.CLASSE}}<br/>
+	            <i class="icon-folder-close"></i> {{elfin.ID_G}}<br/>
+	            <i class="icon-file"></i> {{elfin.Id}}
+	        </div>
         </div>
-
-        <div class="col-xs-4">
-            <i class="icon-tag"></i> {{elfin.CLASSE}}<br/>
-            <i class="icon-folder-close"></i> {{elfin.ID_G}}<br/>
-            <i class="icon-file"></i> {{elfin.Id}} clearfix !!!
-        </div>
-        </div>
-<!--         <div class="clearfix"></div> -->
 		<div class="row" >
         <div class="col-xs-12">
             <tabset>
                 <!-- ATTRIBUTS -->
-                <tab heading="Attributs (horiz :: 8)" >
-                    <div class="row">
-                        <h5>Attributs (form-horizontal...)</h5>
-                        <form name="attributs" role="form" novalidate>
-                        
-                            <div class="row">
-	                            <div class="col_6">
-		                            <label for="groupe">Groupe</label>
-		                            <input id="groupe" type="text" ng-model="elfin.GROUPE">
-		                        </div>
-								<div class="col_6">
-		                            <label for="type">Type</label>
-		                            <select id="type" chosen  data-placeholder="Choisir un type" ng-model="elfin.TYPE"
-		                                    ng-options="value as label for (value, label) in elfinTypes">
-		                            </select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col_6">
-		                            <label for="nature">Nature</label>
-		                            <input id="nature" type="text" ng-model="elfin.NATURE">
-	                            </div>
-	                            <div class="col_6">
-		                            <label for="source">Source</label>
-		                            <input id="source" type="text" ng-model="elfin.SOURCE">
-	                            </div>
-                            </div>
-                        </form>
-                    </div>
-                </tab>
+                <tab heading="Attributs (hz :: 9)" >
+					<h5>Attributs</h5>
+					<form name="attributs" class="form-horizontal" role="form"
+						novalidate>
+						<div class="form-group">
+							<label for="groupe">Groupe</label> 
+							<input id="groupe" type="text" ng-model="elfin.GROUPE">
+						</div>
+						<div class="form-group">
+							<label for="type">Type</label> 
+							<select id="type" 
+								chosen	data-placeholder="Choisir un type" 
+								ng-model="elfin.TYPE"
+								ng-options="value as label for (value, label) in elfinTypes">
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="nature">Nature</label> <input id="nature" type="text"
+								ng-model="elfin.NATURE">
+						</div>
+						<div class="form-group">
+							<label for="source">Source</label> <input id="source" type="text"
+								ng-model="elfin.SOURCE">
+						</div>
+					</form>
+				</tab>
 
                 <!-- MUTATIONS -->
                 <tab heading="Mutations">
@@ -645,7 +639,7 @@
 
                 <tab heading="Divers"></tab>
             </tabset>
-        </div>
+<!--         </div> -->
         </div> <!-- row end -->
 	</form>
     </div>
