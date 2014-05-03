@@ -10,7 +10,7 @@
 
 <!-- TODO: REFACTOR to a single form named 'elfinForm' -->
     <div ng-show="elfin">
-    <form name="elfinForm" role="form" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
+    <form name="elfinForm" class="form-horizontal" role="form" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
         <div class="row" style="padding:10px">
 	        <div class="col-xs-8">
 	       		<div class="btn-group">
@@ -34,31 +34,34 @@
         <div class="col-xs-12">
             <tabset>
                 <!-- ATTRIBUTS -->
-                <tab heading="Attributs (hz :: 9)" >
+                <tab heading="Attributs" >
 					<h5>Attributs</h5>
-					<form name="attributs" class="form-horizontal" role="form"
-						novalidate>
 						<div class="form-group">
-							<label for="groupe">Groupe</label> 
-							<input id="groupe" type="text" ng-model="elfin.GROUPE">
+							<label for="groupe" class="col-sm-1 control-label">Groupe</label> 
+							<div class="col-sm-5">
+								<input id="groupe" type="text" class="form-control" ng-model="elfin.GROUPE">
+							</div>
+							<label for="type" class="col-sm-1 control-label">Type</label> 
+							<!-- angular-chosen-localytics -->
+							<div class="col-sm-5">
+								<select id="type" class="form-control"
+									chosen	
+									data-placeholder="Choisir un type"
+									ng-model="elfin.TYPE"
+									ng-options="value as label for (value, label) in elfinTypes">
+								</select>
+							</div>
+							<label for="nature" class="col-sm-1 control-label">Nature</label>
+							<div class="col-sm-5">
+								<input id="nature" type="text" class="form-control"
+									ng-model="elfin.NATURE">
+							</div>
+							<label for="source" class="col-sm-1 control-label">Source</label>
+							<div class="col-sm-5">
+								<input id="source" type="text" class="form-control"
+									ng-model="elfin.SOURCE">
+							</div>
 						</div>
-						<div class="form-group">
-							<label for="type">Type</label> 
-							<select id="type" 
-								chosen	data-placeholder="Choisir un type" 
-								ng-model="elfin.TYPE"
-								ng-options="value as label for (value, label) in elfinTypes">
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="nature">Nature</label> <input id="nature" type="text"
-								ng-model="elfin.NATURE">
-						</div>
-						<div class="form-group">
-							<label for="source">Source</label> <input id="source" type="text"
-								ng-model="elfin.SOURCE">
-						</div>
-					</form>
 				</tab>
 
                 <!-- MUTATIONS -->
