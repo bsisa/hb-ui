@@ -54,26 +54,28 @@
 		<tab-heading><b>Géosélection</b></tab-heading>
 		<h5>Centroïdes</h5>
 
-		<table class="striped tight sortable">
+		<table class="table table-condensed table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>Type</th>
+					<th style="padding-right:4em;">Type</th>
 					<th>Xm</th>
 					<th>Ym</th>
 					<th>Zm</th>
 					<th>Rm</th>
 				</tr>
 			</thead>
+			<tbody>
 			<tr ng-repeat="centroide in elfin.GEOSELECTION.CENTROIDE">
-				<td><select chosen data-placeholder="Choisir un type"
+				<td><select chosen class="form-control" data-placeholder="Choisir un type"
 					ng-model="centroide.TYPE"
 					ng-options="value as label for (value, label) in typeTypes">
 				</select></td>
-				<td><input type="text" ng-model="centroide.XM"></td>
-				<td><input type="text" ng-model="centroide.YM"></td>
-				<td><input type="text" ng-model="centroide.ZM"></td>
-				<td><input type="text" ng-model="centroide.RM"></td>
+				<td><input type="text" class="form-control" ng-model="centroide.XM"></td>
+				<td><input type="text" class="form-control" ng-model="centroide.YM"></td>
+				<td><input type="text" class="form-control" ng-model="centroide.ZM"></td>
+				<td><input type="text" class="form-control" ng-model="centroide.RM"></td>
 			</tr>
+			</tbody>
 		</table>
 
 		</tab> <tab heading="Identifiant">
