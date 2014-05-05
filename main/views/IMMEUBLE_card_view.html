@@ -112,7 +112,7 @@
                     </div>
                     <div class="col_4 right">
                         <ul class="button-bar">
-                            <li><a ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: 'Nouveau mot clé...' })"><i class="icon-plus-sign"></i> Nouveau</a></li>
+                            <li><a ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: '' })"><i class="icon-plus-sign"></i> Nouveau</a></li>
                         </ul>
                     </div>
 
@@ -126,7 +126,7 @@
                                 </tr>
                                 </thead>
                                 <tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
-                                    <td><input type="text" ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE"></td>
+                                    <td><input type="text" ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE" placeholder="Saisissez un nouveau mot clé"></td>
                                     <td class="right"><a ng-click="removeKeyword($index)"><i class="icon-remove-sign"></i></a></td>
                                 </tr>
                             </table>   
