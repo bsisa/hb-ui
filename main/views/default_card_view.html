@@ -1,6 +1,7 @@
 <div hb-card-container>
 	<div class="col-xs-12">
-		<tabset><!-- ui.bootstrap AngularJS UI tabset --> <!-- ATTRIBUTS -->
+		<tabset><!-- ui.bootstrap AngularJS UI tabset --> 
+		<!-- ATTRIBUTS tab -->
 		<tab> <tab-heading>Attributs <!-- <i class="icon-tag"></i> <b>Attributs</b> -->
 		</tab-heading>
 		<h5>Attributs</h5>
@@ -29,8 +30,11 @@
 					ng-model="elfin.SOURCE">
 			</div>
 		</div>
-		</tab> <!-- MUTATIONS --> <tab heading="Mutations">
-		<table class="striped tight sortable">
+		</tab> 
+		<!-- MUTATIONS tab --> 
+		<tab>
+		<tab-heading>Mutations</tab-heading>
+		<table class="table table-condensed table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>Date</th>
@@ -44,7 +48,10 @@
 				<td>{{mutation.ROLE}}</td>
 			</tr>
 		</table>
-		</tab> <!-- GEOSELECTION --> <tab heading="Géosélection">
+		</tab> 
+		<!-- GEOSELECTION tab --> 
+		<tab>
+		<tab-heading><b>Géosélection</b></tab-heading>
 		<h5>Centroïdes</h5>
 
 		<table class="striped tight sortable">
