@@ -1,37 +1,4 @@
-<div class="card clearfix">
-    <!-- Error -->
-    <div ng-show="errorMessage" class="notice error"><i class="icon-remove-sign icon-large"></i> {{errorMessage}}</div>
-    <!-- Info TODO: should disappear after n seconds: built in with ngStrap alert. -->
-    <div ng-show="statusMessage" class="notice info"><i class="icon-info-sign icon-large"></i> {{statusMessage}}</div>
-
-	<div ng-show="!elfin && !errorMessage">
-		<h5><div class="loading"></div>Chargement des informations</h5>
-	</div>
-
-<!-- TODO: REFACTOR to a single form named 'elfinForm' -->
-    <div ng-show="elfin">
-    <form name="elfinForm" class="form-horizontal" role="form" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
-        <div class="row card-header">
-	        <div class="col-xs-8">
-	       		<div class="btn-group">
-	        		<button class="btn btn-default" ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></button>
-	        		<button class="btn btn-default" ng-click=""><i class="icon-copy"></i></button>
-	        		<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="icon-trash"></i></button>
-	        		<button class="btn btn-default" ng-click=""><i class="icon-paper-clip"></i></button>
-	        	    <button class="btn btn-default" ng-click=""><i class="icon-map-marker"></i></button>
-	        	    <button class="btn btn-default" ng-click=""><i class="icon-print"></i></button>
-	        	    <button class="btn btn-default" ng-click=""><i class="icon-cogs"></i></button>
-	        	    <button class="btn btn-default" ng-click=""><i class="icon-folder-open"></i></button>
-	       		</div>
-	        </div>
-	        <div class="col-xs-4 text-right">
-	            <i class="icon-tag"></i> {{elfin.CLASSE}}<br/>
-	            <i class="icon-folder-close"></i> {{elfin.ID_G}}<br/>
-	            <i class="icon-file"></i> {{elfin.Id}}
-	        </div>
-        </div>
-<!--         ng-include="'/assets/views/menu.html'" -->
-		<div class="row card-row" >
+<div hb-card-container>
         <div class="col-xs-12">
             <tabset ><!-- ui.bootstrap AngularJS UI tabset -->
                 <!-- ATTRIBUTS -->
@@ -647,50 +614,4 @@
                 <tab heading="Divers"></tab>
             </tabset>
         	</div>
-        </div> <!-- row end -->
-	</form>
-    </div>
-
-
 </div>
-
-<div>
-    <script type="text/ng-template" id="defaultUploadFileModalPanel.html">
-        <div class="modal-header">
-            <h3>Téléverser un document</h3>
-        </div>
-        <div class="modal-body">
-            <form action="/uploads" ng-upload="complete(content)">
-                <input type="file" name="attachment"></input>
-                <input type="submit" value="Téléverser" ng-disabled="$isLoading"></input>
-            </form>
-
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">Fermer</button>
-        </div>
-    </script>
-</div>
-
-
-
-
-<div>
-    <script type="text/ng-template" id="deleteConfirmModalPanel.html">
-        <div class="modal-header">
-            <h3>Supprimer un objet</h3>
-        </div>
-        <div class="modal-body">
-			Voulez-vous vraiment supprimer définitivement l'objet {{elfin.CLASSE}} {{elfin.ID_G}}/{{elfin.Id}} ?
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
-        </div>
-    </script>
-</div>
-
-
-
-
-
