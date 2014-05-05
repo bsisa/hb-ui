@@ -1,29 +1,37 @@
 <ul class="menu" >
-	<!--
-		ui.bootstrap: dropdown, dropdown-toggle, dropdown-menu 
-		htmlkickstart: kickstart-menus.css: menu, has-menu
-		htmlkickstart: font-awesome.min.css: icon-*
-	 -->
-	<li hb-dropdown-menu-items="menuItems.maps.elements" hb-dropdown-menu-label="menuItems.maps.label" hb-dropdown-menu-icon-class="icon-map-marker" hb-dropdown-menu />
-	<li hb-dropdown-menu-items="menuItems.collections.elements" hb-dropdown-menu-label="menuItems.collections.label" hb-dropdown-menu-icon-class="icon-list" hb-dropdown-menu />
-    <li hb-dropdown-menu-items="menuItems.operations.elements" hb-dropdown-menu-label="menuItems.operations.label" hb-dropdown-menu-icon-class="icon-folder-open" hb-dropdown-menu />
-    <li hb-dropdown-menu-items="menuItems.management.elements" hb-dropdown-menu-label="menuItems.management.label" hb-dropdown-menu-icon-class="icon-tasks" hb-dropdown-menu />
-    <li hb-dropdown-menu-items="menuItems.data.elements" hb-dropdown-menu-label="menuItems.data.label" hb-dropdown-menu-icon-class="icon-hdd" hb-dropdown-menu />
-    <li hb-dropdown-menu-items="menuItems.manager.elements" hb-dropdown-menu-label="menuItems.manager.label" hb-dropdown-menu-icon-class="icon-cogs" hb-dropdown-menu />
-
-    <li class="dropdown has-menu">
-        <a class="dropdown-toggle" href="#"><i class="icon-briefcase"></i> {{activeJob.IDENTIFIANT.NOM}}<span class="arrow">&nbsp;</span></a>
-        <ul class="dropdown-menu">
-            <li ng-repeat="job in jobs" ><a ng-click="activateJob(job)" ><span class="icon" data-icon="G"></span><span>{{job.IDENTIFIANT.NOM}}</span></a></li>
-        </ul>
-    </li>
-
-    <li class="right col_3 search-wrapper">
-        <input class="search" type="text" placeholder="Recherche" />
-        <button class="btn btn-primary btn-xs"><i class="icon-search"></i></button>
-        <!-- Note: btn-danger not used semantically but only to get red color -->
-        <button class="btn btn-danger btn-xs" ng-click="changeViewMode()"><i class="icon-desktop"></i></button>
-    </li>
+<!-- <nav class="navbar navbar-default navbar-fixed-top"  role="navigation"> -->
+<!-- 	<div class="container-fluid" > -->
+		<!--
+			ui.bootstrap: dropdown, dropdown-toggle, dropdown-menu 
+			htmlkickstart: kickstart-menus.css: menu, has-menu
+			htmlkickstart: font-awesome.min.css: icon-*
+		 -->
+<!-- 		<ul class="nav navbar-nav navbar-left" > -->
+		<li hb-dropdown-menu-items="menuItems.maps.elements" hb-dropdown-menu-label="menuItems.maps.label" hb-dropdown-menu-icon-class="icon-map-marker" hb-dropdown-menu />
+		<li hb-dropdown-menu-items="menuItems.collections.elements" hb-dropdown-menu-label="menuItems.collections.label" hb-dropdown-menu-icon-class="icon-list" hb-dropdown-menu />
+	    <li hb-dropdown-menu-items="menuItems.operations.elements" hb-dropdown-menu-label="menuItems.operations.label" hb-dropdown-menu-icon-class="icon-folder-open" hb-dropdown-menu />
+	    <li hb-dropdown-menu-items="menuItems.management.elements" hb-dropdown-menu-label="menuItems.management.label" hb-dropdown-menu-icon-class="icon-tasks" hb-dropdown-menu />
+	    <li hb-dropdown-menu-items="menuItems.data.elements" hb-dropdown-menu-label="menuItems.data.label" hb-dropdown-menu-icon-class="icon-hdd" hb-dropdown-menu />
+	    <li hb-dropdown-menu-items="menuItems.manager.elements" hb-dropdown-menu-label="menuItems.manager.label" hb-dropdown-menu-icon-class="icon-cogs" hb-dropdown-menu />
+<!-- 		</ul> -->
+	
+<!-- 		<ul class="nav navbar-nav navbar-right" > -->
+	    <li class="dropdown has-menu">
+	        <a class="dropdown-toggle" href="#"><i class="icon-briefcase"></i> {{activeJob.IDENTIFIANT.NOM}}<span class="arrow">&nbsp;</span></a>
+	        <ul class="dropdown-menu">
+	            <li ng-repeat="job in jobs" ><a ng-click="activateJob(job)" ><span class="icon" data-icon="G"></span><span>{{job.IDENTIFIANT.NOM}}</span></a></li>
+	        </ul>
+	    </li>
+	
+	    <li class="right col_3 search-wrapper">
+	        <input class="search" type="text" placeholder="Recherche" />
+	        <button class="btn btn-primary btn-xs"><i class="icon-search"></i></button>
+	        <!-- Note: btn-danger not used semantically but only to get red color -->
+	        <button class="btn btn-danger btn-xs" ng-click="changeViewMode()"><i class="icon-desktop"></i></button>
+	    </li>
+<!-- 	    </ul> -->
+    </div>
+<!-- </nav> -->
 </ul>
 
 <!-- TODO: notifications would better float on top of UI -->
