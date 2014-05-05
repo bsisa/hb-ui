@@ -160,12 +160,12 @@
 			<h5>Mots clés</h5>
 		</div>
 		<div class="col-sm-6 text-right">
-			<a class="btn btn-default" ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', 'Mot clé')">
+			<a class="btn btn-default" ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: 'Nouveau motclé ...' })">
 				<i class="icon-plus-sign"></i> Nouveau
 			</a>
 		</div>
 
-		<div class="col-sm-12">
+		<div ng-show="elfin.IDENTIFIANT.MOTCLE.length > 0" class="col-sm-12">
 			<table class="table table-condensed table-bordered table-striped">
 				<thead>
 					<tr>
@@ -175,10 +175,10 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
-						<td><input type="text" class="form-control" ng-model="motcle"></td>
+						<td><input type="text" class="form-control" ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE"></td>
 						<td class="text-right">
-							<a class="btn btn-default" ng-click="elfin.IDENTIFIANT.MOTCLE.splice($index, 1)">
-								<i class="icon-remove-sign"></i> Supprimer
+							<a class="btn btn-default" ng-click="removeKeyword($index)">
+								<i class="icon-remove-sign" ></i> Supprimer
 							</a>
 						</td>
 					</tr>
