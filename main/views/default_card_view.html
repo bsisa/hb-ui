@@ -11,7 +11,7 @@
 <!-- TODO: REFACTOR to a single form named 'elfinForm' -->
     <div ng-show="elfin">
     <form name="elfinForm" class="form-horizontal" role="form" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
-        <div class="row" style="padding:10px">
+        <div class="row card-header">
 	        <div class="col-xs-8">
 	       		<div class="btn-group">
 	        		<button class="btn btn-default" ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></button>
@@ -30,11 +30,15 @@
 	            <i class="icon-file"></i> {{elfin.Id}}
 	        </div>
         </div>
-		<div class="row" >
+<!--         ng-include="'/assets/views/menu.html'" -->
+		<div class="row card-row" >
         <div class="col-xs-12">
-            <tabset>
+            <tabset ><!-- ui.bootstrap AngularJS UI tabset -->
                 <!-- ATTRIBUTS -->
-                <tab heading="Attributs" >
+                <tab>
+	                <tab-heading>Attributs
+					<!-- <i class="icon-tag"></i> <b>Attributs</b> -->
+	      			</tab-heading>
 					<h5>Attributs</h5>
 						<div class="form-group">
 							<label for="groupe" class="col-sm-1 control-label">Groupe</label> 
@@ -642,7 +646,7 @@
 
                 <tab heading="Divers"></tab>
             </tabset>
-<!--         </div> -->
+        	</div>
         </div> <!-- row end -->
 	</form>
     </div>

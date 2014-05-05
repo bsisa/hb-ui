@@ -53,6 +53,14 @@ button:hover {
     background: #fff;
 }
 
+div.card-header {
+	padding: 10px;
+}
+div.card-row {
+	background-color: white;
+	padding: 10px;
+}
+
 .notifications {
 	border: 1px solid #ddd;
     padding: 0px;
