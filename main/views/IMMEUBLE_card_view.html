@@ -150,31 +150,33 @@
 		<!-- CONTRAT tab --> 
 		<tab>
 			<tab-heading>Contrats</tab-heading>
-			<div class="hb-tab">		
-				<label for="groupe" class="col-sm-2 control-label">Groupe</label> 
-				<div class="col-sm-4" >
-					<input id="groupe" type="text" class="form-label" ng-model="elfin.GROUPE">
-				</div> 
+			<div class="hb-tab">	
+				<div class="form-group">	
+					<label for="groupe" class="col-sm-2 control-label">Groupe</label> 
+					<div class="col-sm-4" >
+						<input id="groupe" type="text" class="form-control" ng-model="elfin.GROUPE">
+					</div> 
+						
+					<label for="type" class="col-sm-2 control-label">Type</label>
+					<div class="col-sm-4" > 
+						<select
+							id="type" 
+							chosen 
+							class="form-control"
+							ng-model="elfin.TYPE"
+							ng-options="value as label for (value, label) in elfinTypes">
+						</select> 
+					</div>
 					
-				<label for="type" class="col-sm-2 control-label">Type</label>
-				<div class="col-sm-4" > 
-					<select
-						id="type" 
-						chosen 
-						class="form-control"
-						ng-model="elfin.TYPE"
-						ng-options="value as label for (value, label) in elfinTypes">
-					</select> 
-				</div>
-				
-				<label for="nature" class="col-sm-2 control-label">Nature</label> 
-				<div class="col-sm-4" >
-					<input id="nature" type="text" class="form-label" ng-model="elfin.NATURE"> 
-				</div>
-				
-				<label for="source" class="col-sm-2 control-label">Source</label>
-				<div class="col-sm-4" >
-					<input id="source" type="text" class="form-label"  ng-model="elfin.SOURCE">
+					<label for="nature" class="col-sm-2 control-label">Nature</label> 
+					<div class="col-sm-4" >
+						<input id="nature" type="text" class="form-control" ng-model="elfin.NATURE"> 
+					</div>
+					
+					<label for="source" class="col-sm-2 control-label">Source</label>
+					<div class="col-sm-4" >
+						<input id="source" type="text" class="form-control"  ng-model="elfin.SOURCE">
+					</div>
 				</div>
 			</div>
 		</tab> 
