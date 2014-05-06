@@ -3,10 +3,29 @@
 		<tabset>
 		<!-- CONSTAT tab --> 
 		<tab>
-			<tab-heading>Constat</tab-heading>
+			<tab-heading>Identifications</tab-heading>
 			<div class="hb-tab">
 				<div class="form-group">
-					<label for="goal" class="col-sm-2 control-label">Numéro de gérance</label> 
+					<label for="statut" class="col-sm-2 control-label">Statut</label> 
+					<div class="col-sm-4">
+						<input id="statut" type="text" class="form-control" 
+						tooltip="elfin.???"> 
+<!-- 						ng-model="elfin.IDENTIFIANT.OBJECTIF"  -->
+					</div>
+					
+					<label for="date_constat" class="col-sm-2 control-label">Date de constat</label> 
+					<div class="col-sm-4">
+						<input id="date_constat" type="text" class="form-control" 
+						tooltip="elfin.???">
+<!-- 						ng-model="elfin.IDENTIFIANT.OBJECTIF" -->
+					</div> 									
+
+					<label for="name" class="col-sm-2 control-label">N° de construction</label>
+					<div class="col-sm-4">
+						<input id="name" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM">
+					</div>
+					 				
+					<label for="goal" class="col-sm-2 control-label">No SAI (?)</label> 
 					<div class="col-sm-4">
 						<input id="goal" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF" tooltip="elfin.IDENTIFIANT.OBJECTIF">
 					</div> 
@@ -14,12 +33,7 @@
 					<label for="author" class="col-sm-2 control-label">Numéro ECAP</label>
 					<div class="col-sm-4"> 
 							<input id="author" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR">
-						</div> 
-	
-					<label for="name" class="col-sm-2 control-label">N° de construction</label>
-					<div class="col-sm-4">
-						<input id="name" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM">
-					</div>
+					</div> 
 	
 					<label for="address" class="col-sm-2 control-label">Adresse</label>
 					<div class="col-sm-4"> 
@@ -65,7 +79,7 @@
 					</div>
 					<label for="address" class="col-sm-2 control-label">Remarque</label>
 					<div class="col-sm-10">
-						<input id="address" type="text" class="form-control" ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
+						<textarea id="address" class="form-control" ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
 					</div>
 				</div>
 	
