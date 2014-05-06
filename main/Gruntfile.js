@@ -21,7 +21,7 @@ module.exports = function(grunt) {
             },
 
             dist: {
-                src: ['src/geoxml.js', 'src/hb5.js', 'src/menu.js', 'src/defaultCardView.js', 'src/defaultListsView.js', 'src/immeubleCardView.js', 'src/spreadsheetSelect.js'],
+                src: ['src/geoxml.js', 'src/hb5.js', 'src/menu.js','src/constatCardView.js', 'src/defaultCardView.js', 'src/defaultListsView.js', 'src/immeubleCardView.js', 'src/spreadsheetSelect.js'],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },

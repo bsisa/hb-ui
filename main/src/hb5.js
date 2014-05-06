@@ -81,7 +81,11 @@
             .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
                 templateUrl: '/assets/views/IMMEUBLE_card_view.html',
                 controller: 'ImmeubleCardController'
-            })            
+            })
+            .when('/elfin/:collectionId/CONSTAT/:elfinId', {
+                templateUrl: '/assets/views/CONSTAT_card_view.html',
+                controller: 'ConstatCardController'
+            })                        
             .when('/elfin/:collectionId/:classe/:elfinId', {
                 templateUrl: '/assets/views/default_card_view.html',
                 controller: 'DefaultCardController'
