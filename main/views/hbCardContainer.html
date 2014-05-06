@@ -1,4 +1,4 @@
-<div class="card clearfix">
+<div class="hb-card clearfix" >
     <!-- Error -->
     <div ng-show="errorMessage" class="notice error"><i class="icon-remove-sign icon-large"></i> {{errorMessage}}</div>
     <!-- Info TODO: should disappear after n seconds: built in with ngStrap alert. -->
@@ -9,10 +9,10 @@
 	</div>
 
 <!-- TODO: REFACTOR to a single form named 'elfinForm' -->
-    <div ng-show="elfin">
-    <form name="elfinForm" class="form-horizontal" role="form" novalidate> <!--  novalidate prevents HTML5 automated validation  -->
-        <div class="row card-header">
-	        <div class="col-xs-8">
+    <div ng-show="elfin" >
+    <form name="elfinForm" class="form-horizontal" role="form" novalidate > <!--  novalidate prevents HTML5 automated validation  -->
+        <div class="row hb-card-header">
+	        <div class="col-xs-8" >
 	       		<div class="btn-group">
 	        		<button class="btn btn-default" ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></button>
 	        		<button class="btn btn-default" ng-click=""><i class="icon-copy"></i></button>
@@ -31,7 +31,7 @@
 	        </div>
         </div>
 		<!-- ng-transclude is the placeholder where translation/inclusion will take place -->
-		<div class="row card-row" ng-transclude>
+		<div class="row hb-card-row" ng-transclude>
 
         </div> <!-- row end -->
 	</form>

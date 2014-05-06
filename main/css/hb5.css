@@ -46,17 +46,22 @@ button:hover {
     padding: 10px 0;
 }
 
-
-.card {
-    border: 1px solid #ddd;
-    padding: 20px;
+.hb-tab {
+	padding: 10px;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;	
+}
+.hb-card {
+	border: 1px solid #ddd;
+    padding: 15px;
     background: #fff;
 }
 
-div.card-header {
+div.hb-card-header {
 	padding: 10px;
 }
-div.card-row {
+div.hb-card-row {
 	background-color: white;
 	padding: 10px;
 }
