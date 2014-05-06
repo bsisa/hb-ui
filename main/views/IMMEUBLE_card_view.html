@@ -120,12 +120,14 @@
 			</div>
 		</tab> 
 		<!-- SURFACE tab --> 
-		<tab heading="Surfaces locatives">
+		<tab>
+			<tab-heading>Surfaces locatives</tab-heading>
 			<div class="hb-tab">
 			</div>
 		</tab> 
 		<!-- PRESTATION tab -->
-		<tab heading="Prestations">
+		<tab>
+			<tab-heading>Prestations</tab-heading>
 			<div class="hb-tab">
 				<table class="table table-condensed table-bordered table-striped">
 					<thead>
@@ -146,21 +148,37 @@
 			</div>
 		</tab> 
 		<!-- CONTRAT tab --> 
-		<tab heading="Contrats">
-		<div class="col_4">
-			<h5>Attributs</h5>
-			<!--                         <form class="vertical"> -->
-			<label for="groupe">Groupe</label> <input id="groupe" type="text"
-				ng-model="elfin.GROUPE"> <label for="type">Type</label> <select
-				id="type" chosen data-placeholder="Choisir un type"
-				ng-model="elfin.TYPE"
-				ng-options="value as label for (value, label) in elfinTypes">
-			</select> <label for="nature">Nature</label> <input id="nature" type="text"
-				ng-model="elfin.NATURE"> <label for="source">Source</label>
-			<input id="source" type="text" ng-model="elfin.SOURCE">
-			<!--                         </form> -->
-		</div>
-		</tab> <!-- EQUIPEMENT --> <tab heading="Equipement">
+		<tab>
+			<tab-heading>Contrats</tab-heading>
+			<div class="hb-tab">		
+				<label for="groupe" class="col-sm-2 control-label">Groupe</label> 
+				<div class="col-sm-4" >
+					<input id="groupe" type="text" class="form-label" ng-model="elfin.GROUPE">
+				</div> 
+					
+				<label for="type" class="col-sm-2 control-label">Type</label>
+				<div class="col-sm-4" > 
+					<select
+						id="type" 
+						chosen 
+						class="form-control"
+						ng-model="elfin.TYPE"
+						ng-options="value as label for (value, label) in elfinTypes">
+					</select> 
+				</div>
+				
+				<label for="nature" class="col-sm-2 control-label">Nature</label> 
+				<div class="col-sm-4" >
+					<input id="nature" type="text" class="form-label" ng-model="elfin.NATURE"> 
+				</div>
+				
+				<label for="source" class="col-sm-2 control-label">Source</label>
+				<div class="col-sm-4" >
+					<input id="source" type="text" class="form-label"  ng-model="elfin.SOURCE">
+				</div>
+			</div>
+		</tab> 
+		<!-- EQUIPEMENT tab --> <tab heading="Equipement">
 		<h5>Centroïdes</h5>
 
 		<table class="striped tight sortable">
