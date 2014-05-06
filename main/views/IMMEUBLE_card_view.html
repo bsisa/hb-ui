@@ -180,31 +180,40 @@
 				</div>
 			</div>
 		</tab> 
-		<!-- EQUIPEMENT tab --> <tab heading="Equipement">
-		<h5>Centroïdes</h5>
+		<!-- EQUIPEMENT tab --> 
+		<tab heading="Equipement">
+			<tab-heading>Equipement</tab-heading>
+			<div class="hb-tab">	
+				<div class="form-group">		
+					<h5>Centroïdes</h5>
 
-		<table class="striped tight sortable">
-			<thead>
-				<tr>
-					<th>Type</th>
-					<th>Xm</th>
-					<th>Ym</th>
-					<th>Zm</th>
-					<th>Rm</th>
-				</tr>
-			</thead>
-			<tr ng-repeat="centroide in elfin.GEOSELECTION.CENTROIDE">
-				<td><select chosen data-placeholder="Choisir un type"
-					ng-model="centroide.TYPE"
-					ng-options="value as label for (value, label) in typeTypes">
-				</select></td>
-				<td><input type="text" ng-model="centroide.XM"></td>
-				<td><input type="text" ng-model="centroide.YM"></td>
-				<td><input type="text" ng-model="centroide.ZM"></td>
-				<td><input type="text" ng-model="centroide.RM"></td>
-			</tr>
-		</table>
-
-		</tab> </tabset>
+					<table class="table table-condensed table-bordered table-striped">
+						<thead>
+							<tr>
+								<th style="padding-right:5em;">Type</th>
+								<th>Xm</th>
+								<th>Ym</th>
+								<th>Zm</th>
+								<th>Rm</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="centroide in elfin.GEOSELECTION.CENTROIDE">
+								<td><select chosen data-placeholder="Choisir un type" 
+									class="form-control"
+									ng-model="centroide.TYPE"
+									ng-options="value as label for (value, label) in typeTypes">
+								</select></td>
+								<td><input type="text" class="form-control" ng-model="centroide.XM"></td>
+								<td><input type="text" class="form-control" ng-model="centroide.YM"></td>
+								<td><input type="text" class="form-control" ng-model="centroide.ZM"></td>
+								<td><input type="text" class="form-control" ng-model="centroide.RM"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</tab> 
+	</tabset>
 	</div>
 </div>
