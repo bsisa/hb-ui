@@ -35,20 +35,12 @@
 </ul>
 
 <!-- TODO: notifications would better float on top of UI -->
-<div ng-show="sharedStatusMessage.data || sharedErrorMessage.data" class="container" >
+<div ng-show="getAlerts.length > 0" class="container" >
 	<div class="grid">
 		<div class="hb-card col-sm-12">
-			<div class="notifications clearfix">
-				<div ng-show="sharedErrorMessage.data" class="notice error">
-					<i class="icon-error-sign icon-large"></i>
-					{{sharedErrorMessage.data}}
-				</div>		
-				<!-- Info TODO: should disappear after n seconds: built in with ngStrap alert. -->
-				<div ng-show="sharedStatusMessage.data" class="notice info">
-					<i class="icon-info-sign icon-large"></i>
-					{{sharedStatusMessage.data}}
-				</div>
-			</div>
+			<div>
+				<alert ng-repeat="alert in getAlerts" type="{{alert.type}}" close="removeAlert($index)">{{alert.message}}</alert>
+			</div>				
 		</div>
 	</div>
 </div>

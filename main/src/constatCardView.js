@@ -101,7 +101,7 @@
                			function() { 
                         	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
                         	// Set shared status message for use in next controller where redirection happens. 
-               				$scope.setSharedStatusMessage(message);
+               				$scope.setSharedStatusMessage("success",message);
                				$location.path('/');
                			}, 
                			function(response) { 

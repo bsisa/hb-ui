@@ -55,10 +55,32 @@
 	
     });
     
-    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'sharedMessages', 'hbUtil', '$timeout', '$location', '$window', function($scope, GeoxmlService, $modal, sharedMessages, hbUtil, $timeout, $location, $window) {
+    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$window', function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $window) {
 
-    	$scope.sharedStatusMessage = sharedMessages.getStatusMessage();
-    	$scope.sharedErrorMessage = sharedMessages.getErrorMessage();
+    	
+    	// TESTS 
+    	console.log("Menu controller...");
+    	
+    	$scope.getAlerts = hbAlertMessages.getAlerts();
+    	$scope.removeAlert = hbAlertMessages.removeAlert;
+    	console.log("Menu controller... nb of getAlerts: " + $scope.getAlerts.length);
+    	
+//    	$scope.alerts = [ { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
+//    	                  { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
+//    	                ];
+//
+//    	console.log("Menu controller... nb of alerts: " + $scope.alerts.length);
+//    	
+//        $scope.addAlert = function() {
+//          $scope.alerts.push({type: 'success', msg: 'Another alert!'});
+//        };
+//
+//        $scope.closeAlert = function(index) {
+//          $scope.alerts.splice(index, 1);
+//        };    	
+    	
+    	// TESTS 
+    	
 
     	$scope.$$configurations = [];
         $scope.$$activeConfiguration = null;

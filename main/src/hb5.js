@@ -8,7 +8,7 @@
 	//  var hb5 = angular.module('hb5', ['geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);	
     var hb5 = angular.module('hb5', ['ngAnimate', 'geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);
 	
-    hb5.run(['Restangular', 'sharedMessages', '$location', '$window', function(Restangular, sharedMessages, $location, $window){
+    hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', function(Restangular, hbAlertMessages, $location, $window){
         Restangular.setErrorInterceptor(
     	        function(response) {
     	        	if (response.status == 401) {
@@ -17,15 +17,13 @@
     	        		//TODO: we might use the following once we create an new custom AngularJS integrated login form 
     	        		//$location.path('/login'); 
     	        	} else if (response.status == 404) {
-    	        		sharedMessages.setErrorMessage("Ressource non disponible");
+    	        		hbAlertMessages.addAlert("danger","Ressource non disponible");
     	        	} else if (response.status == 500) {
-    	        		sharedMessages.setErrorMessage("Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. Note: Vérifiez que la base de donnée soit accessible.");
-    	        	} // 566 - Custom code for connect exception 
-    	        	if (response.status == 566) {
-    	        		sharedMessages.setErrorMessage("La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur.");
-    	        	}       	
-    	        	else {
-    	        		sharedMessages.setErrorMessage("Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status );
+    	        		hbAlertMessages.addAlert("danger","Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. Note: Vérifiez que la base de donnée soit accessible.");
+    	        	} else if (response.status == 566) { // 566 - Custom code for connect exception
+    	        		hbAlertMessages.addAlert("danger","La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur.");    	        		
+    	        	} else {
+    	        		hbAlertMessages.addAlert("danger","Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status );    	        		
     	        	}
     	          console.log("Restangular error interceptor caught: status: " + response.status);
     	          return false; // stop the promise chain
@@ -47,8 +45,6 @@
     	// Configurer.addResponseInterceptor(
         Restangular.setResponseInterceptor(
     			function(data,operation,what,url,response,deferred) {
-    				// Reset possible former error message to null
-    	        	sharedMessages.setErrorMessage(null);
     				//TODO: remove this debug log
 //    	          console.log("Restangular response interceptor caught: status: " + response.status + 
 //    	        		  ", operation: " + operation + 
@@ -126,9 +122,7 @@
 	
 	
 	/**
-	 * Small service used to exchange messages data between miscellaneous controllers.
-	 * For instance when deleting a card the success message must be displayed on the
-	 * redirect to page within redirect page controller scope.
+	 * OBSOLETE: use hbAlertMessages INSTEAD
 	 */
 	hb5.service('sharedMessages', function () {
         var statusMessage = {
@@ -154,6 +148,34 @@
             
         };
     });
+	
+	
+	/**
+	 * Small service used to exchange alert messages data between miscellaneous controllers.
+	 * For instance when deleting a card the success message must be displayed on the
+	 * redirect to page within redirect page controller scope.
+	 */
+	hb5.service('hbAlertMessages', function () {
+		
+		console.log("hbAlertMessages service initialised...");
+		
+		var alerts = [ ];
+
+		console.log("hbAlertMessages service contains " + alerts.length + " alerts!");
+		
+        return {
+            getAlerts:function () {
+            	console.log("hbAlertMessages service getAlerts for " + alerts.length + " alerts!");
+                return alerts;
+            },
+            addAlert:function (typeValue,messageValue) {
+            	alerts.push({type: typeValue, message: messageValue});
+            },
+            removeAlert:function(index) {
+                alerts.splice(index, 1);
+            }
+        };
+    });	
 	
 	/**
 	 * Small service used intended to share functions not states between miscellaneous controllers

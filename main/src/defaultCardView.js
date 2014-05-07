@@ -23,7 +23,7 @@
         
     // TODO: solve $alert requires ngStrap and conflicts on $modal with localytics.directives
     //angular.module('hb5').controller('UploadController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$alert', function($scope, GeoxmlService, $modal, $routeParams, $alert) {
-    angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages, hbUtil) {
+    angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages, hbAlertMessages, hbUtil) {
     
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
@@ -35,10 +35,10 @@
         
         // TODO: once ngStrap can be used both error/status could be replaced by $alert usage.
         // Local messages
-        $scope.errorMessage = null;
-        $scope.statusMessage = null;
+        //$scope.errorMessage = null;
+        //$scope.statusMessage = null;
         // Shared messages (between controllers).
-    	$scope.setSharedStatusMessage = sharedMessages.setStatusMessage;    	
+    	//$scope.setSharedStatusMessage = sharedMessages.setStatusMessage;    	
     	
     	// Watch related to CONSTAT list
     	// Note: this is only valid in the context of elfin of CLASSE IMMEUBLE
@@ -55,7 +55,8 @@
 							$scope.constats = elfins;
 						},
 						function(response) {
-							$scope.errorMessage = "Le chargement des CONSTATs a échoué (statut de retour: "+ response.status+ ")";
+							var message = "Le chargement des CONSTATs a échoué (statut de retour: "+ response.status+ ")";
+							hbAlertMessages.addAlert("danger",message);
 						});
     		}
     	}, true);
@@ -79,6 +80,8 @@
        			}, 
        			function(response) { 
        				console.log("Error with status code", response.status);
+       				var message = "La mise à jour a échoué (statut de retour: "+ response.status+ ")";
+					hbAlertMessages.addAlert("danger",message);
        			} 
        		);
         };
@@ -98,22 +101,25 @@
                			function() { 
                         	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
                         	// Set shared status message for use in next controller where redirection happens. 
-               				$scope.setSharedStatusMessage(message);
+               				//$scope.setSharedStatusMessage(message);
+               				hbAlertMessages.addAlert("success",message);
                				$location.path('/');
                			}, 
                			function(response) { 
                				var message = "La suppression a échoué. Veuillez s.v.p. recommencer. Si le problème persiste contactez votre administrateur système et lui communiquer le message suivant: " + response.status;
                				// Set local error message
-               				$scope.errorMessage = message;
-               				// Reset local status
-               				$scope.statusMessage = null;
+//               				$scope.errorMessage = message;
+//               				// Reset local status
+//               				$scope.statusMessage = null;
+               				hbAlertMessages.addAlert("danger",message);
                				console.log("Error: ELFIN delete failure with status code", response.status);
                			} 
                		);
             }, function () {
             	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " annulée.";
                 // Local message
-   				$scope.statusMessage = message;
+   				//$scope.statusMessage = message;
+   				hbAlertMessages.addAlert("warning",message);
             });        	
         };        
         
