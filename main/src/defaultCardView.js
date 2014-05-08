@@ -196,12 +196,15 @@
 		        	}
 		            $scope.elfin = elfin;
 		        }, function(response) {
-		            $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+		            //$scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+		        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+		            hbAlertMessages.addAlert("danger",message);
 		        });
             }
             else {
-                $scope.errorMessage = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";        
-            };	        
+                var message = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
+                hbAlertMessages.addAlert("warning",message);
+            };
         };
 
         $scope.getElfin($scope.collectionId,$scope.elfinId);
