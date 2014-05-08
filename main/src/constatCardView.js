@@ -23,9 +23,13 @@
     };    
         
 
-    angular.module('hb5').controller('ConstatCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages, hbUtil) {
+    angular.module('hb5').controller('ConstatCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages, hbAlertMessages, hbUtil) {
     
     	console.log("    >>>> Using ConstatCardController");
+    	
+    	// ====================================================================
+    	// Global logic to move to hb-card-container directive controller.
+    	// ====================================================================    	
     	
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
@@ -33,15 +37,7 @@
         
         // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
-        $scope.constats = null;
-        
-        // TODO: once ngStrap can be used both error/status could be replaced by $alert usage.
-        // Local messages
-        $scope.errorMessage = null;
-        $scope.statusMessage = null;
-        // Shared messages (between controllers).
-    	$scope.setSharedStatusMessage = sharedMessages.setStatusMessage;    	
-    	
+   	
     	$scope.removeKeyword = function ( index ) {
     		console.log("removing MOCLE at index " + index);
     	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
@@ -57,10 +53,13 @@
        				$scope.getElfin($scope.collectionId,$scope.elfinId);
        				$scope.elfinForm.$setPristine();
        				// Message feedback is removed in favour of dirty/pristine CSS 
-       				//$scope.statusMessage = "Mise à jour effectuée avec succès.";
+       				//var message = "Mise à jour effectuée avec succès.";
+       				//hbAlertMessages.addAlert("success",message);
        			}, 
        			function(response) { 
        				console.log("Error with status code", response.status);
+       				var message = "La mise à jour a échoué (statut de retour: "+ response.status+ ")";
+					hbAlertMessages.addAlert("danger",message);
        			} 
        		);
         };
@@ -79,23 +78,18 @@
             	elfin.remove().then( 
                			function() { 
                         	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
-                        	// Set shared status message for use in next controller where redirection happens. 
-               				$scope.setSharedStatusMessage("success",message);
+               				hbAlertMessages.addAlert("success",message);
                				$location.path('/');
                			}, 
                			function(response) { 
                				var message = "La suppression a échoué. Veuillez s.v.p. recommencer. Si le problème persiste contactez votre administrateur système et lui communiquer le message suivant: " + response.status;
-               				// Set local error message
-               				$scope.errorMessage = message;
-               				// Reset local status
-               				$scope.statusMessage = null;
+               				hbAlertMessages.addAlert("danger",message);
                				console.log("Error: ELFIN delete failure with status code", response.status);
                			} 
                		);
             }, function () {
             	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " annulée.";
-                // Local message
-   				$scope.statusMessage = message;
+   				hbAlertMessages.addAlert("warning",message);
             });        	
         };        
         
@@ -173,12 +167,15 @@
 		        	}
 		            $scope.elfin = elfin;
 		        }, function(response) {
-		            $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+		            //$scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+		        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+		            hbAlertMessages.addAlert("danger",message);
 		        });
             }
             else {
-                $scope.errorMessage = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";        
-            };	        
+                var message = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
+                hbAlertMessages.addAlert("warning",message);
+            };
         };
 
         $scope.getElfin($scope.collectionId,$scope.elfinId);

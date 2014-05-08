@@ -25,42 +25,17 @@
     //angular.module('hb5').controller('UploadController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$alert', function($scope, GeoxmlService, $modal, $routeParams, $alert) {
     angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages, hbAlertMessages, hbUtil) {
     
+    	// ====================================================================
+    	// Global logic to move to hb-card-container directive controller.
+    	// ====================================================================    	
+    	
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
         $scope.collectionId = $routeParams.collectionId;
         
         // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
-        $scope.constats = null;
         
-        // TODO: once ngStrap can be used both error/status could be replaced by $alert usage.
-        // Local messages
-        //$scope.errorMessage = null;
-        //$scope.statusMessage = null;
-        // Shared messages (between controllers).
-    	//$scope.setSharedStatusMessage = sharedMessages.setStatusMessage;    	
-    	
-    	// Watch related to CONSTAT list
-    	// Note: this is only valid in the context of elfin of CLASSE IMMEUBLE
-    	// TODO: make this controller IMMEUBLE specific.
-    	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
-    		if ($scope.elfin!=null && $scope.elfin.CLASSE === 'IMMEUBLE') {
-	    		console.log("elfin.IDENTIFIANT.NOM watch for CONSTAT");
-	            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
-	            // TODO: constatsCollectionId must come from server configuration resource.
-	            var constatsCollectionId = 'G20060920171100001';
-	            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstats})
-					.then(function(elfins) {
-						console.log(">>>> received " + elfins.length + " elfins.");
-							$scope.constats = elfins;
-						},
-						function(response) {
-							var message = "Le chargement des CONSTATs a échoué (statut de retour: "+ response.status+ ")";
-							hbAlertMessages.addAlert("danger",message);
-						});
-    		}
-    	}, true);
-    	
     	$scope.removeKeyword = function ( index ) {
     		console.log("removing MOCLE at index " + index);
     	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
@@ -76,7 +51,8 @@
        				$scope.getElfin($scope.collectionId,$scope.elfinId);
        				$scope.elfinForm.$setPristine();
        				// Message feedback is removed in favour of dirty/pristine CSS 
-       				//$scope.statusMessage = "Mise à jour effectuée avec succès.";
+       				//var message = "Mise à jour effectuée avec succès.";
+       				//hbAlertMessages.addAlert("success",message);
        			}, 
        			function(response) { 
        				console.log("Error with status code", response.status);
@@ -100,25 +76,17 @@
             	elfin.remove().then( 
                			function() { 
                         	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
-                        	// Set shared status message for use in next controller where redirection happens. 
-               				//$scope.setSharedStatusMessage(message);
                				hbAlertMessages.addAlert("success",message);
                				$location.path('/');
                			}, 
                			function(response) { 
                				var message = "La suppression a échoué. Veuillez s.v.p. recommencer. Si le problème persiste contactez votre administrateur système et lui communiquer le message suivant: " + response.status;
-               				// Set local error message
-//               				$scope.errorMessage = message;
-//               				// Reset local status
-//               				$scope.statusMessage = null;
                				hbAlertMessages.addAlert("danger",message);
                				console.log("Error: ELFIN delete failure with status code", response.status);
                			} 
                		);
             }, function () {
             	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " annulée.";
-                // Local message
-   				//$scope.statusMessage = message;
    				hbAlertMessages.addAlert("warning",message);
             });        	
         };        
@@ -161,6 +129,7 @@
             GeoxmlService.addRow(elfin, path, rowObject);
         };
 
+        //TODO: upload should become a directive reused by all cards.
         $scope.uploadFile = function (renvoi) {
 
         	var modalInstance = $modal.open({
