@@ -94,10 +94,6 @@
                 templateUrl: '/assets/views/default_list_view.html',
                 controller: 'DefaultListsController'
             })
-            .when('/report/xls', {
-                templateUrl: '/assets/views/spreadsheetSelect.html',
-                controller: 'SelectConstatController'
-            })
             .otherwise({
                 redirectTo: '/'
             })
@@ -119,36 +115,7 @@
 			}
 		};
 	});
-	
-	
-	/**
-	 * OBSOLETE: use hbAlertMessages INSTEAD
-	 */
-	hb5.service('sharedMessages', function () {
-        var statusMessage = {
-            data: null
-        };
-        var errorMessage = {
-            data: null
-        };        
 
-        return {
-            getStatusMessage:function () {
-                return statusMessage;
-            },
-            setStatusMessage:function (value) {
-            	statusMessage.data = value;
-            },
-            getErrorMessage:function () {
-                return errorMessage;
-            },
-            setErrorMessage:function (value) {
-            	errorMessage.data = value;
-            }
-            
-        };
-    });
-	
 	
 	/**
 	 * Small service used to exchange alert messages data between miscellaneous controllers.

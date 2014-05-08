@@ -23,7 +23,7 @@
     };    
         
 
-    angular.module('hb5').controller('ImmeubleCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'sharedMessages', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, sharedMessages, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('ImmeubleCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, hbAlertMessages, hbUtil) {
     
     	console.log("    >>>> Using ImmeubleCardController");
     	
