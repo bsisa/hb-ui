@@ -178,6 +178,10 @@
 
         $scope.getElfin($scope.collectionId,$scope.elfinId);
         
+    	// ====================================================================
+    	// END OF Global logic to move to hb-card-container directive controller.
+    	// ====================================================================        
+        
     }]);
 
 
