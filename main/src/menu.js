@@ -57,31 +57,11 @@
     
     angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$window', function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $window) {
 
-    	
-    	// TESTS 
-    	console.log("Menu controller...");
-    	
+    	// Functions used in alert ui.bootstrap component found in menu.html
     	$scope.getAlerts = hbAlertMessages.getAlerts();
     	$scope.removeAlert = hbAlertMessages.removeAlert;
-    	console.log("Menu controller... nb of getAlerts: " + $scope.getAlerts.length);
-    	
-//    	$scope.alerts = [ { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
-//    	                  { type: 'success', msg: 'Well done! You successfully read this important alert message.' }
-//    	                ];
-//
-//    	console.log("Menu controller... nb of alerts: " + $scope.alerts.length);
-//    	
-//        $scope.addAlert = function() {
-//          $scope.alerts.push({type: 'success', msg: 'Another alert!'});
-//        };
-//
-//        $scope.closeAlert = function(index) {
-//          $scope.alerts.splice(index, 1);
-//        };    	
-    	
-    	// TESTS 
-    	
 
+    	// HB configurations management used when more than a single config is available.
     	$scope.$$configurations = [];
         $scope.$$activeConfiguration = null;
 
