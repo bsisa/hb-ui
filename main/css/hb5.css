@@ -282,7 +282,11 @@ form.ng-pristine {
 }
 
 /* Do not change modal input background while entering data */
-div.modal-body input.ng-dirty {
+div.modal-body .ng-dirty {
+    background-color: white;
+}
+/* Do not set modal input background to green when pristine */
+div.modal-body .ng-pristine {
     background-color: white;
 }
 
