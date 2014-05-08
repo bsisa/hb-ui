@@ -42,27 +42,6 @@
         // Shared messages (between controllers).
     	$scope.setSharedStatusMessage = sharedMessages.setStatusMessage;    	
     	
-    	// Watch related to CONSTAT list
-    	// Note: this is only valid in the context of elfin of CLASSE IMMEUBLE
-    	// TODO: make this controller IMMEUBLE specific.
-    	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
-    		// TODO: Remove CLASSE condition now that we have a dedicated controller.
-    		if ($scope.elfin!=null && $scope.elfin.CLASSE === 'IMMEUBLE') {
-	    		console.log("elfin.IDENTIFIANT.NOM watch for CONSTAT");
-	            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
-	            // TODO: constatsCollectionId must come from server configuration resource.
-	            var constatsCollectionId = 'G20060920171100001';
-	            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstats})
-					.then(function(elfins) {
-						console.log(">>>> received " + elfins.length + " elfins.");
-							$scope.constats = elfins;
-						},
-						function(response) {
-							$scope.errorMessage = "Le chargement des CONSTATs a échoué (statut de retour: "+ response.status+ ")";
-						});
-    		}
-    	}, true);
-    	
     	$scope.removeKeyword = function ( index ) {
     		console.log("removing MOCLE at index " + index);
     	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
