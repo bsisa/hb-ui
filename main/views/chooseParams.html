@@ -4,12 +4,14 @@
 			paramètre{{ itemDefinition.parameters.length | plural }}</h3>
 	</div>
 	<div class="modal-body">
-	<table class="table table-striped">
-		<div class="row" ng-repeat="field in itemDefinition.parameters">
-			<div class="col_4"><label for="field{{$index}}">{{field.label}} : </label></div>
-			<div class="col_4"><input id="field{{$index}}" type="text" ng-model="field.value" /></div>
-		</div>
-		</table>
+		<form name="chooseParamForm" class="form-horizontal" role="form" novalidate > <!--  novalidate prevents HTML5 automated validation  -->
+			<div class="form-group" ng-repeat="field in itemDefinition.parameters">
+					<label for="field{{$index}}" class="col-sm-4 control-label">{{field.label}} : </label>
+					<div class="col-sm-8">
+						<input id="field{{$index}}" type="text" class="form-control" ng-model="field.value" />
+					</div>
+			</div>
+		</form>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-primary" ng-click="ok()">OK</button>
