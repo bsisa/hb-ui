@@ -193,12 +193,22 @@
      * to more specific logic of the transcluded element logic.
      * 
      */
+	
+	/*
+	 * 
+	 * create an immeubleCard directive with 		    
+		    scope : {
+				'getElfin' : '=getElfin'  
+			},
+	 * 
+	 */
     angular.module('hb5').directive('hbCardContainer', function () {
 
 		return {
 		    restrict: 'A',
 		    transclude: true,
-			templateUrl : "/assets/views/hbCardContainer.html"
+			templateUrl : "/assets/views/hbCardContainer.html",
+			controller: 'DefaultCardController'
 		};
 	
     });	
