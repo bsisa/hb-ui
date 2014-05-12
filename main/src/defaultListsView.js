@@ -2,6 +2,8 @@
 
     angular.module('hb5').controller('DefaultListsController', ['$scope', 'GeoxmlService', '$routeParams', function($scope, GeoxmlService, $routeParams) {
     
+    	console.log("DefaultListsController called...");
+    	
     	// Collection id parameter obtained from hb5.config $routeProvider
         $scope.collectionId = $routeParams.collectionId;
         // Contains a JSON Array of ELFINs resulting of the GeoxmlService query   
