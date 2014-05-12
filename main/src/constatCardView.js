@@ -27,6 +27,13 @@
     
     	console.log("    >>>> Using ConstatCardController");
     	
+        $scope.statusTypes = {
+                Vu: "Vu",
+                SUIVRE: "SUIVRE"
+        }; 	
+    	
+    	
+    	
     	// ====================================================================
     	// Global logic to move to hb-card-container directive controller.
     	// ====================================================================    	

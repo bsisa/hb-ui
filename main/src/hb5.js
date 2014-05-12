@@ -81,6 +81,10 @@
             .when('/elfin/:collectionId/CONSTAT/:elfinId', {
                 templateUrl: '/assets/views/CONSTAT_card_view.html',
                 controller: 'ConstatCardController'
+            })
+            .when('/elfin/:collectionId/ACTEUR/:elfinId', {
+                templateUrl: '/assets/views/ACTEUR_card_view.html',
+                controller: 'ActeurCardController'
             })                        
             .when('/elfin/:collectionId/:classe/:elfinId', {
                 templateUrl: '/assets/views/default_card_view.html',
@@ -88,6 +92,10 @@
             })
             .when('/elfin/:collectionId/IMMEUBLE', {
                 templateUrl: '/assets/views/IMMEUBLE_list_view.html',
+                controller: 'DefaultListsController'
+            })
+            .when('/elfin/:collectionId/ACTEUR', {
+                templateUrl: '/assets/views/ACTEUR_list_view.html',
                 controller: 'DefaultListsController'
             })            
             .when('/elfin/:collectionId/:classe', {
