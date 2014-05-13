@@ -21,8 +21,7 @@
         
     };    
         
-    // TODO: solve $alert requires ngStrap and conflicts on $modal with localytics.directives
-    //angular.module('hb5').controller('UploadController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$alert', function($scope, GeoxmlService, $modal, $routeParams, $alert) {
+    // TODO: Rename to HbCardContainerController
     angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, hbAlertMessages, hbUtil) {
     
     	console.log("DefaultCardController called at " + new Date());
@@ -134,7 +133,6 @@
             GeoxmlService.addRow(elfin, path, rowObject);
         };
 
-        //TODO: upload should become a directive reused by all cards.
         $scope.uploadFile = function (renvoi) {
 
         	var modalInstance = $modal.open({
@@ -173,7 +171,6 @@
 		        	}
 		            $scope.elfin = elfin;
 		        }, function(response) {
-		            //$scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
 		        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
 		            hbAlertMessages.addAlert("danger",message);
 		        });
