@@ -210,6 +210,7 @@
 
 
             }, function(response) {
+            	//TODO: add alert
                 console.log("Error with status code " + response.status + " while getting hb_init global configuration.");
             }
           );
@@ -476,6 +477,7 @@
                         	//console.log("Creating menu nb " + actualMenuRefProcessedCount + "/" + actualMenuRef.length);                            	
                         }
                     }, function(response) {
+                    	//TODO: Add alert
                         console.log("Error with status code", response.status);
                 });
             });
