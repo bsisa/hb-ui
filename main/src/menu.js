@@ -121,12 +121,14 @@
              * Process modalInstance.close action
              */
             modalInstance.result.then(function (result) {
-                var queryString = hbUtil.buildUrlQueryString(result.parameters);
-            	var urlWithQuery = result.url + queryString;
+                
             	if (result.newWindow && result.newWindow === 'true') {
+            		var queryString = hbUtil.buildUrlQueryString(result.parameters);
+            		var urlWithQuery = result.url + queryString;
             		$window.open(urlWithQuery);
             	} else {
-            		$location.path(urlWithQuery); 
+            		var searchObject = hbUtil.buildKeyValueObject(result.parameters);
+            		$location.search(searchObject).path(result.url); 
             	}
             }, function () {
                 console.log('Choose params modal dismissed at: ' + new Date());

@@ -182,9 +182,24 @@
 	    	return queryString;
         };
         
+        /**
+         * Transforms parameters array of objects with properties {label,name,value}
+         * to a single object with {key1:value1, key2:value2, key3,value3} 
+         * where names are mapped to keys and values to values.
+         */
+        var buildKeyValueObject = function(parameters) {
+	        var keyValueObj = {};
+	    	for (var i=0; i < parameters.length; i++) {
+	    		var field = parameters[i];
+	    		keyValueObj[field.name] = field.value;
+	    	}
+	    	return keyValueObj;
+        };        
+        
         return {
         	reorderArrayByPOS:reorderArrayByPOS,
-        	buildUrlQueryString:buildUrlQueryString
+        	buildUrlQueryString:buildUrlQueryString,
+        	buildKeyValueObject:buildKeyValueObject
         };
     });	
 
