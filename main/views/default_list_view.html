@@ -1,42 +1,31 @@
-<div class="hb-card clearfix">
-
-	<div ng-show="!elfins">
-		<h5>
-			<div class="loading"></div>
-			Chargement des informations
-		</h5>
-	</div>
-
-	<div class="table-responsive">
-		<!-- make table scroll horizontally up to small devices (under 768px) -->
-		<table class="table table-condensed table-bordered table-striped"
-			ng-show="elfins">
-			<thead>
-				<tr>
-					<th colspan="6"><span class="badge">{{elfinsCount}}</span> objet{{ elfinsCount | plural }} trouvé{{
-						elfinsCount | plural }}</th>
-				</tr>
-				<tr>
-					<th />
-					<th>Propriétaire</th>
-					<th>N° de gérance</th>
-					<th>N° de construction</th>
-					<th>Adresse</th>
-					<th>Remarque</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="elfin in elfins">
-					<td><a
-						href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td>
-					<td>{{elfin.PARTENAIRE.PROPRIETAIRE.VALUE}}</td>
-					<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
-					<td>{{elfin.IDENTIFIANT.NOM}}</td>
-					<td>{{elfin.IDENTIFIANT.ALIAS}}</td>
-					<td>{{elfin.DIVERS.REMARQUE}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+<div hb-list-container>
+	<table class="table table-condensed table-bordered table-striped"
+		ng-show="elfins">
+		<thead>
+			<tr>
+				<th colspan="6"><span class="badge">{{elfinsCount}}</span> objet{{ elfinsCount | plural }} trouvé{{
+					elfinsCount | plural }}</th>
+			</tr>
+			<tr>
+				<th />
+				<th>Propriétaire</th>
+				<th>N° de gérance</th>
+				<th>N° de construction</th>
+				<th>Adresse</th>
+				<th>Remarque</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="elfin in elfins">
+				<td><a
+					href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td>
+				<td>{{elfin.PARTENAIRE.PROPRIETAIRE.VALUE}}</td>
+				<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+				<td>{{elfin.IDENTIFIANT.NOM}}</td>
+				<td>{{elfin.IDENTIFIANT.ALIAS}}</td>
+				<td>{{elfin.DIVERS.REMARQUE}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 

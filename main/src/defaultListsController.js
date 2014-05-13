@@ -1,8 +1,8 @@
 (function() {
 
-    angular.module('hb5').controller('DefaultListsController', ['$scope', 'GeoxmlService', '$routeParams', 'hbAlertMessages', function($scope, GeoxmlService, $routeParams, hbAlertMessages) {
+    angular.module('hb5').controller('HbListContainerController', ['$scope', 'GeoxmlService', '$routeParams', 'hbAlertMessages', function($scope, GeoxmlService, $routeParams, hbAlertMessages) {
     
-    	console.log("DefaultListsController called...");
+    	console.log("HbListContainerController called...");
     	
     	// Collection id parameter obtained from hb5.config $routeProvider
         $scope.collectionId = $routeParams.collectionId;
