@@ -3,9 +3,7 @@
  */
 
 (function() {
-	// TODO: solve functions naming clash between 'mgcrea.ngStrap' and 'ui.bootstrap' on $modal
-	//['ngAnimate', 'ngSanitize', 'mgcrea.ngStrap']
-	//  var hb5 = angular.module('hb5', ['geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);	
+	
     var hb5 = angular.module('hb5', ['ngAnimate', 'geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);
 	
     hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', function(Restangular, hbAlertMessages, $location, $window){
@@ -67,7 +65,9 @@
     	$locationProvider.html5Mode(true);
     }]);
 
-    
+    /**
+     * Client side routes configuration
+     */
     hb5.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', {
@@ -129,14 +129,13 @@
 	 * Small service used to exchange alert messages data between miscellaneous controllers.
 	 * For instance when deleting a card the success message must be displayed on the
 	 * redirect to page within redirect page controller scope.
+	 * 
+	 * Could not find the exhaustive list of alert types but they seem to fit with 
+	 * Bootstrap following styles: {primary, info, success, warning, danger, inverse}
 	 */
 	hb5.service('hbAlertMessages', function () {
 		
-		console.log("hbAlertMessages service initialised...");
-		
 		var alerts = [ ];
-
-		console.log("hbAlertMessages service contains " + alerts.length + " alerts!");
 		
         return {
             getAlerts:function () {
