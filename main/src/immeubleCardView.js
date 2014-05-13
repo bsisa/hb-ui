@@ -23,7 +23,7 @@
 							    	// Watch related to CONSTAT list in the context of elfin of CLASSE IMMEUBLE 
 							        // hence the dedicated controller.
 							    	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
-							    		// TODO: Remove CLASSE condition now that we have a dedicated controller.
+
 							    		if ($scope.elfin!=null) {
 								            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
