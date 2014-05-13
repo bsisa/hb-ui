@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('DefaultListsController', ['$scope', 'GeoxmlService', '$routeParams', function($scope, GeoxmlService, $routeParams) {
+    angular.module('hb5').controller('DefaultListsController', ['$scope', 'GeoxmlService', '$routeParams', 'hbAlertMessages', function($scope, GeoxmlService, $routeParams, hbAlertMessages) {
     
     	console.log("DefaultListsController called...");
     	
@@ -9,8 +9,6 @@
         // Contains a JSON Array of ELFINs resulting of the GeoxmlService query   
         $scope.elfins = null;
         $scope.elfinsCount = null;
-        // Displays error message feedback to the end user if not empty
-        $scope.errorMessage = null;
         
         if (GeoxmlService.validateId($scope.collectionId)) {
             GeoxmlService.getCollection($scope.collectionId).getList()
@@ -23,10 +21,12 @@
                 		$scope.elfinsCount = elfins.length;
                 	}
                 }, function(response) {
-                    $scope.errorMessage = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+                    var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+                    hbAlertMessages.addAlert("danger",message);
                 });
         } else {
-            $scope.errorMessage = "L'identifiants de collection (" + $scope.collectionId + " ) n'est pas correct.";
+            var message = "L'identifiants de collection (" + $scope.collectionId + " ) n'est pas correct.";
+            hbAlertMessages.addAlert("warning",message);
         }
     }]);
 
