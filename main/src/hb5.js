@@ -87,8 +87,7 @@
                 controller: 'ActeurCardController'
             })                        
             .when('/elfin/:collectionId/:classe/:elfinId', {
-                templateUrl: '/assets/views/default_card_view.html',
-                controller: 'DefaultCardController'
+                templateUrl: '/assets/views/default_card_view.html'
             })
             .when('/elfin/:collectionId/IMMEUBLE', {
                 templateUrl: '/assets/views/IMMEUBLE_list_view.html',
@@ -195,27 +194,16 @@
 	
 	
     /**
-     * Directive allowing card buttons group and head properties layout reuse (template).
-     * Note: TODO: manage controller reusable logic to be included with a parent scope 
-     * to more specific logic of the transcluded element logic.
-     * 
+     * Directive allowing card buttons group and head properties layout reuse (template)
+     * as well as related card buttons logic.
      */
-	
-	/*
-	 * 
-	 * create an immeubleCard directive with 		    
-		    scope : {
-				'getElfin' : '=getElfin'  
-			},
-	 * 
-	 */
     angular.module('hb5').directive('hbCardContainer', function () {
 
 		return {
 		    restrict: 'A',
 		    transclude: true,
 			templateUrl : "/assets/views/hbCardContainer.html",
-			controller: 'DefaultCardController'
+			controller: 'HbCardContainerController'
 		};
 	
     });	
