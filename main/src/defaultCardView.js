@@ -22,9 +22,9 @@
     };    
         
     // TODO: Rename to HbCardContainerController
-    angular.module('hb5').controller('DefaultCardController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbCardContainerController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, hbAlertMessages, hbUtil) {
     
-    	console.log("DefaultCardController called at " + new Date());
+    	console.log("HbCardContainerController called at " + new Date());
     	
     	// ====================================================================
     	// Global logic to move to hb-card-container directive controller.
@@ -44,7 +44,7 @@
     	
     	// Wrapper for ELFIN PUT (update) operation
         $scope.putElfin = function (elfin) {
-        	console.log("DefaultCardController putElfin called at " + new Date());
+        	console.log("HbCardContainerController putElfin called at " + new Date());
        		elfin.put().then( 
        			function() { 
        				console.log("All ok");
@@ -67,7 +67,7 @@
     	// Wrapper for ELFIN DELETE operation
         $scope.delElfin = function (elfin) {
         	
-        	console.log("DefaultCardController delElfin called at " + new Date());
+        	console.log("HbCardContainerController delElfin called at " + new Date());
         	
         	var modalInstance = $modal.open({
                 templateUrl: 'deleteConfirmModalPanel.html',
@@ -154,7 +154,7 @@
         
         $scope.getElfin = function (collectionId, elfinId) {
         	
-        	console.log("DefaultCardController getElfin called at " + new Date());
+        	console.log("HbCardContainerController getElfin called at " + new Date());
         	
         	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
 		        GeoxmlService.getElfin(collectionId, elfinId).get()
