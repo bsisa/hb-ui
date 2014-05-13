@@ -123,7 +123,11 @@
             modalInstance.result.then(function (result) {
                 var queryString = hbUtil.buildUrlQueryString(result.parameters);
             	var urlWithQuery = result.url + queryString;
-            	$window.open(urlWithQuery);
+            	if (result.newWindow && result.newWindow === 'true') {
+            		$window.open(urlWithQuery);
+            	} else {
+            		$location.path(urlWithQuery); 
+            	}
             }, function () {
                 console.log('Choose params modal dismissed at: ' + new Date());
             });
@@ -324,11 +328,16 @@
 				
 				Modal panel requesting parameters and querying the provided URL with these parameters
 				The javascript function must be available in menu.js scope
+				if newWindow equals true the result of calling the URL will be opened in a new Window 
+				(or Tab depending on browser's configuration)
+				if newWindow equals false or is not present the result of calling the URL will be 
+				opened in the same window or tab.
 				
 				{
 				    "type": "modal",
 				    "functionName": "myFunctionName",
 				    "url": "/the/URL/to/query/to",
+				    "newWindow": "true",
 				    "parameters": [
 				        {
 				            "label": "First parameter",
