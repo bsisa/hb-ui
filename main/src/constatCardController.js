@@ -46,7 +46,7 @@
 				             * Process modalInstance.close action
 				             */
 				            modalInstance.result.then(function (selectedActors) {
-				            	if (selectedActors) {
+				            	if (selectedActors && selectedActors.length > 0) {
 				            		console.log("Selected actor GROUPE is: " + selectedActors[0].GROUPE);
 				            	} else {
 				            		console.log("No selected actor returned!!!");				            		
@@ -85,6 +85,8 @@
     	$scope.actors = actors;
     	$scope.selectedActors = [];    	
     	
+    	
+    	
     	$scope.gridOptions = {
  		        data: 'actors',
  		        columnDefs: [
@@ -92,7 +94,9 @@
  		   		            { field:"IDENTIFIANT.QUALITE", displayName: "Rôle"}
  		   		],
    		        multiSelect: false,
-   		        selectedItems: $scope.selectedActors
+   		        selectedItems: $scope.selectedActors,
+   		        showFilter: true,
+   		        filterOptions : { filterText: '', useExternalFilter: false }
    		    };    	
     	
         $scope.ok = function () {
