@@ -4,14 +4,29 @@
 	</div>
 	<div class="modal-body">
 	<!-- TODO: try ng-grid -->
-		<form name="chooseActorForm" class="form-horizontal" role="form" novalidate > <!--  novalidate prevents HTML5 automated validation  -->
-			<div class="form-group" ng-repeat="field in itemDefinition.parameters">
-					<label for="field{{$index}}" class="col-sm-4 control-label">{{field.label}} : </label>
-					<div class="col-sm-8">
-						<input id="field{{$index}}" type="text" class="form-control" ng-model="field.value" />
-					</div>
-			</div>
-		</form>
+	
+	<div class="gridStyle" ng-grid="gridOptions"></div>
+	
+<!-- 		<table class="table table-condensed table-bordered table-striped" -->
+<!-- 			ng-show="actors"> -->
+<!-- 			<thead> -->
+<!-- 				<tr> -->
+<!-- 					<th /> -->
+<!-- 					<th>Groupe</th> -->
+<!-- 					<th>Rôle</th> -->
+<!-- 					<th>N° de téléphone</th> -->
+<!-- 				</tr> -->
+<!-- 			</thead> -->
+<!-- 			<tbody> -->
+<!-- 				<tr ng-repeat="elfin in actors"> -->
+<!-- 					<td><a -->
+<!-- 						href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td> -->
+<!-- 					<td>{{elfin.GROUPE}}</td> -->
+<!-- 					<td>{{elfin.IDENTIFIANT.QUALITE}}</td> -->
+<!-- 					<td>{{elfin.CARACTERISTIQUE.CAR4.VALEUR}}</td> -->
+<!-- 				</tr> -->
+<!-- 			</tbody> -->
+<!-- 		</table> -->
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-warning" ng-click="cancel()">Annuler</button>

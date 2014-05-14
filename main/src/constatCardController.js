@@ -21,21 +21,22 @@
 							SUIVRE : "SUIVRE"
 						};
 
+						$scope.actors = null;
 						
 // ===
 		
 				        /**
 				         * Modal panel to select an actor.
 				         */
-				        $scope.chooseActor = function (itemDefinition) {
+				        $scope.chooseActor = function (actors) {
 				        	
 				            var modalInstance = $modal.open({
 				                templateUrl: '/assets/views/chooseActor.html',
 				                scope: $scope,
 				                controller: 'ChooseActorCtroller',
 				                resolve: {
-				                	itemDefinition: function () {
-				                    	return itemDefinition;
+				                	actors: function () {
+				                    	return actors;
 				                    }               
 				                },                
 				                backdrop: 'static'
@@ -44,14 +45,13 @@
 				            /**
 				             * Process modalInstance.close action
 				             */
-				            modalInstance.result.then(function (result) {
-				                var queryString = hbUtil.buildUrlQueryString(result.parameters);
-				            	var urlWithQuery = result.url + queryString;
-				            	if (result.newWindow && result.newWindow === 'true') {
-				            		$window.open(urlWithQuery);
+				            modalInstance.result.then(function (selectedActors) {
+				            	if (selectedActors) {
+				            		console.log("Selected actor GROUPE is: " + selectedActors[0].GROUPE);
 				            	} else {
-				            		$location.path(urlWithQuery); 
+				            		console.log("No selected actor returned!!!");				            		
 				            	}
+				            	
 				            }, function () {
 				                console.log('Choose params modal dismissed at: ' + new Date());
 				            });
@@ -59,16 +59,44 @@
 						
 // ===
 						
+				        
+//				        /api/melfin/G20060401225530100?xpath=//ELFIN[IDENTIFIANT/QUALITE='Entreprise']
 						
-						
+				        
+			            var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
+			            // TODO: actorsCollectionId must come from server configuration resource.
+			            console.log("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
+			            var actorsCollectionId = 'G20060401225530100';
+			            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForEntreprises})
+							.then(function(actors) {
+									$scope.actors = actors;
+								},
+								function(response) {
+									var message = "Le chargement des ACTEURS a échoué (statut de retour: "+ response.status+ ")";
+						            hbAlertMessages.addAlert("danger",message);
+								});				        
 						
 					} ]);
 	
 	
-    angular.module('hb5').controller('ChooseActorCtroller', ['$scope', '$modalInstance', 'itemDefinition', function($scope, $modalInstance, itemDefinition) {
-    	$scope.itemDefinition = itemDefinition;
+    angular.module('hb5').controller('ChooseActorCtroller', ['$scope', '$modalInstance', 'actors', function($scope, $modalInstance, actors) {
+
+
+    	$scope.actors = actors;
+    	$scope.selectedActors = [];    	
+    	
+    	$scope.gridOptions = {
+ 		        data: 'actors',
+ 		        columnDefs: [
+ 		   		            { field:"GROUPE", displayName: "Groupe"},
+ 		   		            { field:"IDENTIFIANT.QUALITE", displayName: "Rôle"}
+ 		   		],
+   		        multiSelect: false,
+   		        selectedItems: $scope.selectedActors
+   		    };    	
+    	
         $scope.ok = function () {
-            $modalInstance.close($scope.itemDefinition);
+            $modalInstance.close($scope.selectedActors);
         };
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');

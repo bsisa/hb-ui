@@ -4,7 +4,7 @@
 
 (function() {
 	
-    var hb5 = angular.module('hb5', ['ngAnimate', 'geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);
+    var hb5 = angular.module('hb5', ['ngGrid','ngAnimate', 'geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);
 	
     hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', function(Restangular, hbAlertMessages, $location, $window){
         Restangular.setErrorInterceptor(
