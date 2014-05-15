@@ -47,7 +47,7 @@
 					<div class="col-sm-4">
 						<div class="input-group">
 							<input id="alias" type="text" class="form-control" 
-								typeahead="actor.GROUPE for actor in actors | filter:$viewValue | limitTo:8" 
+								typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8" 
 								ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
 								tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> 
 							<span class="input-group-btn" tooltip="Recherche d'entreprise">
@@ -61,7 +61,9 @@
 					<label for="author" class="col-sm-2 control-label">Saisi par</label>
 					<div class="col-sm-4"> 
 						<div class="input-group">
-							<input id="author" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.AUT" tooltip="elfin.IDENTIFIANT.AUT"> 
+							<input id="author" type="text" class="form-control" 
+							typeahead="actor.GROUPE for actor in collaboratorActors | filter:$viewValue | limitTo:8" 
+							ng-model="elfin.IDENTIFIANT.AUT" tooltip="elfin.IDENTIFIANT.AUT"> 
 							<span class="input-group-btn" tooltip="Recherche de collaborateur">
 								<button class="btn btn-default" type="button"
 									ng-click="chooseActor(elfin.IDENTIFIANT.AUT, collaboratorActors )"

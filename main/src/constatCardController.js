@@ -77,7 +77,8 @@
 
 				        //   /api/melfin/G20060401225530100?xpath=//ELFIN[IDENTIFIANT/QUALITE='Entreprise']
 			            var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
-			            var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
+			            //var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
+			            var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE!='Entreprise']";
 			            // TODO: actorsCollectionId must come from server configuration resource.
 			            console.log("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
 			            var actorsCollectionId = 'G20060401225530100';
@@ -131,7 +132,7 @@
  		   		],
    		        multiSelect: false,
    		        selectedItems: $scope.selectedActors,
-   		        showColumnMenu: true,
+   		        //showColumnMenu: true,
    		        showFilter: true,
    		        filterOptions : { filterText: '', useExternalFilter: false }
    		    };    	
