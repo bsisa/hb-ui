@@ -2,10 +2,9 @@
 /* ngGrid */
 .modalGridStyle {
     border: 1px solid rgb(212,212,212);
-    width: 500px; 
-    height: 300px
+    width: auto; 
+    height: 400px;
 }
-
 
 
 /* Make ui.bootstrap tooltip max-width wider */
