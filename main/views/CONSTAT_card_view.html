@@ -36,16 +36,24 @@
 					</div> 
 				</div>					
 	
+<!-- Dev. draft testing scope behaviour. TODO: Remove -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<div class="col-sm-12">searchText: {{myProp}}</div> -->
+<!-- 					<div class="col-sm-12" ><input id="searchTextInput" type="text" class="form-control" ng-model="myProp" ></div> -->
+<!-- 				</div> -->
+				
 				<div class="form-group">
 					<label for="alias" class="col-sm-2 control-label">Signalé par</label>
 					<div class="col-sm-4">
 						<div class="input-group">
-							<input id="alias" type="text" class="form-control"
+							<input id="alias" type="text" class="form-control" 
+								typeahead="actor.GROUPE for actor in actors | filter:$viewValue | limitTo:8" 
 								ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
 								tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> 
-							<span class="input-group-btn">
+							<span class="input-group-btn" tooltip="Recherche d'entreprise">
 								<button class="btn btn-default" type="button"
-									ng-click="chooseActor(actors)">Selection</button>
+									ng-click="chooseActor(elfin.PARTENAIRE.FOURNISSEUR.VALUE, entrepriseActors )"
+									><i class="icon-search" ></i></button>
 							</span>
 						</div>
 					</div>
@@ -54,9 +62,10 @@
 					<div class="col-sm-4"> 
 						<div class="input-group">
 							<input id="author" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.AUT" tooltip="elfin.IDENTIFIANT.AUT"> 
-							<span class="input-group-btn">
+							<span class="input-group-btn" tooltip="Recherche de collaborateur">
 								<button class="btn btn-default" type="button"
-									ng-click="choosePopup(elfin, elfin.CLASSE, elfin.IDENTIFIANT.AUT)">???</button>
+									ng-click="chooseActor(elfin.IDENTIFIANT.AUT, collaboratorActors )"
+									><i class="icon-search" ></i></button>
 							</span>
 						</div>							
 					</div> 

@@ -2,31 +2,16 @@
 	<div class="modal-header">
 		<h3 class="modal-title">Sélectionnez l'ACTEUR de votre choix</h3>
 	</div>
-	<div class="modal-body">
-	<!-- TODO: try ng-grid -->
-	
-	<div class="gridStyle" ng-grid="gridOptions"></div>
-	
-<!-- 		<table class="table table-condensed table-bordered table-striped" -->
-<!-- 			ng-show="actors"> -->
-<!-- 			<thead> -->
-<!-- 				<tr> -->
-<!-- 					<th /> -->
-<!-- 					<th>Groupe</th> -->
-<!-- 					<th>Rôle</th> -->
-<!-- 					<th>N° de téléphone</th> -->
-<!-- 				</tr> -->
-<!-- 			</thead> -->
-<!-- 			<tbody> -->
-<!-- 				<tr ng-repeat="elfin in actors"> -->
-<!-- 					<td><a -->
-<!-- 						href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td> -->
-<!-- 					<td>{{elfin.GROUPE}}</td> -->
-<!-- 					<td>{{elfin.IDENTIFIANT.QUALITE}}</td> -->
-<!-- 					<td>{{elfin.CARACTERISTIQUE.CAR4.VALEUR}}</td> -->
-<!-- 				</tr> -->
-<!-- 			</tbody> -->
-<!-- 		</table> -->
+	<div class="modal-body" style="height: 450px;">
+
+<!-- Dev. draft testing scope behaviour. TODO: Remove -->
+<!-- 		<form name="actorSearchForm" class="form-horizontal" role="form" novalidate >  novalidate prevents HTML5 automated validation  -->
+<!-- 			<div class="col-sm-12">searchText: {{searchText}}</div> -->
+<!-- 			<div class="col-sm-12" ><input id="searchTextInput" type="text" class="form-control" ng-model="searchText" ></div> -->
+		<div class="col-sm-12" ng-show="!selectedActors || selectedActors.length === 0">Aucune sélection effectuée</div>
+		<div ng-show="selectedActors && selectedActors.length > 0" class="col-sm-4">Sélection courrante: </div><div class="col-sm-8" ng-show="selectedActors && selectedActors.length > 0">{{selectedActors[0].GROUPE}}</div>
+		<div class="modalGridStyle col-sm-12" ng-grid="gridOptions"></div>
+<!-- 		</form> -->
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-warning" ng-click="cancel()">Annuler</button>
