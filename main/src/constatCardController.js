@@ -106,9 +106,8 @@
     	$scope.actors = $filter('filter')(actors, $scope.search.text , false);
 		
 		$scope.$watch('search.text', function() { 
-			console.log("search text = " + $scope.search.text);
 			$scope.gridOptions.filterOptions.filterText = $scope.search.text;
-			}, true);    	
+			}, true);
     	// ============================================================
     	
     	
