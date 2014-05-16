@@ -73,14 +73,17 @@
 			            console.log("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
 			            var actorsCollectionId = 'G20060401225530100';
 			            
+			            // Asychronous entrepriseActors preloading
 			            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForEntreprises})
-							.then(function(entrepriseActors) {
-									$scope.entrepriseActors = entrepriseActors;
-								},
-								function(response) {
-									var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "+ response.status+ ")";
-						            hbAlertMessages.addAlert("danger",message);
-								});
+						.then(function(entrepriseActors) {
+								$scope.entrepriseActors = entrepriseActors;
+							},
+							function(response) {
+								var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "+ response.status+ ")";
+					            hbAlertMessages.addAlert("danger",message);
+							});
+			            
+			            // Asychronous collaboratorActors preloading
 			            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForCollaborator})
 						.then(function(collaboratorActors) {
 								$scope.collaboratorActors = collaboratorActors;
