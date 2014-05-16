@@ -15,10 +15,6 @@
 
 						console.log("    >>>> Using ConstatCardController");
 
-						//$scope.parentElfin = $scope.$parent.elfin;
-						
-						//$scope.$parent.elfin.PARTENAIRE.FOURNISSEUR.VALUE
-						
 						// TODO: get this dynamically from HB5 catalogue
 						$scope.statusTypes = {
 							Vu : "Vu",
@@ -28,13 +24,6 @@
 						$scope.entrepriseActors = null;
 						$scope.collaboratorActors = null;
 						
-						$scope.myProp = "Hello dude 2";
-						
-						$scope.$watch('myProp', function() { console.log("myProp changed to: " + $scope.myProp); }, true);						
-				
-						
-// ===
-		
 				        /**
 				         * Modal panel to select an actor.
 				         */
@@ -63,6 +52,7 @@
 				            		console.log(">>>> BEFORE UPDATE :: target = : " + target);
 				            		target = selectedActors[0].GROUPE;
 				            		console.log(">>>> AFTER UPDATE  :: target = : " + target);
+				            		//TODO: solve scope access to elfin
 				            		//$scope.$parent.elfin.PARTENAIRE.FOURNISSEUR.VALUE = selectedActors[0].GROUPE;
 				            		//console.log(">>>> UGLY UPDATE HACK :: $scope.$parent.$parent.elfin.PARTENAIRE.FOURNISSEUR.VALUE = : " + $scope.$parent.elfin.PARTENAIRE.FOURNISSEUR.VALUE);
 				            	} else {
@@ -107,33 +97,41 @@
 	
     angular.module('hb5').controller('ChooseActorCtroller', ['$scope', '$modalInstance', '$filter', 'actors', function($scope, $modalInstance, $filter, actors) {
 
-
-    	//$scope.searchText = "";
-    	//$scope.entrepriseActors = $filter('filter')(actors, $scope.searchText , false);
-    	$scope.actors = actors;
+    	// ============================================================
+    	// Custom search field used to filter actors
+    	// ============================================================    	
+    	// Default ng-grid showFilter box requires an extra click 
+    	// to be accessed and is ugly. Let's define our own 
+		$scope.search = { text: ""};
+    	$scope.actors = $filter('filter')(actors, $scope.search.text , false);
+		
+		$scope.$watch('search.text', function() { 
+			console.log("search text = " + $scope.search.text);
+			$scope.gridOptions.filterOptions.filterText = $scope.search.text;
+			}, true);    	
+    	// ============================================================
     	
-//    	$scope.$watch('$scope.searchText', function() { 
-//    		console.log("$scope.searchText changed to " + $scope.searchText);
-//    		alert("$scope.searchText changed to " + $scope.searchText);
-//    	}, true);       	
-//    	
     	
-    	
+		// Contains the result of user selection. 
+		// While gridOptions multiSelect attribute equals false 
+		// the array will only be zero or one element. 
     	$scope.selectedActors = [];    	
     	
-    	// ,
-//            { field:"IDENTIFIANT.QUALITE", displayName: "Rôle"}
-    	//
-    	
+    	// ng-grid options. See ng-grid API Documentation for details.
     	$scope.gridOptions = {
  		        data: 'actors',
  		        columnDefs: [
  		   		            { field:"GROUPE", displayName: "Groupe"}
  		   		],
+ 		   	// Grid columns definition with roles
+ 		   	//  columnDefs: [
+            //              { field:"GROUPE", displayName: "Groupe"},
+            //              { field:"IDENTIFIANT.QUALITE", displayName: "Rôle"}
+ 		   	//  ],
    		        multiSelect: false,
    		        selectedItems: $scope.selectedActors,
-   		        //showColumnMenu: true,
-   		        showFilter: true,
+   		    //  showColumnMenu: true, // Useful for groupping 
+   		    //  showFilter: true, // Ugly look, redefine our own search field
    		        filterOptions : { filterText: '', useExternalFilter: false }
    		    };    	
     	
