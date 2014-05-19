@@ -14,7 +14,8 @@
 							$location, hbAlertMessages, hbUtil) {
 
 						console.log("    >>>> Using ConstatCardController");
-
+						
+					
 						// TODO: get this dynamically from HB5 catalogue
 						$scope.statusTypes = {
 							Vu : "Vu",
@@ -24,12 +25,35 @@
 						$scope.entrepriseActors = null;
 						$scope.collaboratorActors = null;
 						
+//						var elfinFormCtrl = null;
+//						$scope.elfinFormCtrlRef = elfinFormCtrl;
+						
+//						//TODO: check why setElfinFormRef is not visible as a function
+//						var setElfinFormRef = function (newElfinformRef) {
+//							console.log("Setting new elfinFormRef...");
+//							elfinFormCtrl = newElfinformRef;
+//						};						
+
+						
+						$scope.elfinFormCtrlRef = null; 
+						
+						//TODO: check why setElfinFormRef is not visible as a function
+						$scope.setElfinFormRef = function (newElfinformRef) {
+							console.log("Setting new elfinFormRef...");
+							$scope.elfinFormCtrlRef = newElfinformRef;
+						};
+						
+						$scope.setElfinFormDirty = function() {
+							console.log("Setting dirty through elfinFormRef...");
+							$scope.elfinFormCtrlRef.$setDirty();
+						};
+
 				        /**
 				         * Modal panel to select an actor.
 				         */
-				        $scope.chooseActor = function (target, actors) {
+				        $scope.chooseActor = function (elfin, target, actors) {
 				        	
-				        	console.log(">>>> ON CHOOSE :: target = : " + target);
+				        	console.log(">>>> ON CHOOSE :: elfin = : " + elfin.Id);
 				        	
 				            var modalInstance = $modal.open({
 				                templateUrl: '/assets/views/chooseActor.html',
@@ -48,13 +72,9 @@
 				             */
 				            modalInstance.result.then(function (selectedActors) {
 				            	if (selectedActors && selectedActors.length > 0) {
-				            		console.log("Selected actor GROUPE is: " + selectedActors[0].GROUPE);
-				            		console.log(">>>> BEFORE UPDATE :: target = : " + target);
-				            		target = selectedActors[0].GROUPE;
-				            		console.log(">>>> AFTER UPDATE  :: target = : " + target);
-				            		//TODO: solve scope access to elfin
-				            		//$scope.$parent.elfin.PARTENAIRE.FOURNISSEUR.VALUE = selectedActors[0].GROUPE;
-				            		//console.log(">>>> UGLY UPDATE HACK :: $scope.$parent.$parent.elfin.PARTENAIRE.FOURNISSEUR.VALUE = : " + $scope.$parent.elfin.PARTENAIRE.FOURNISSEUR.VALUE);
+				            		hbUtil.applyPath(elfin,target,selectedActors[0].GROUPE);
+				            		//$scope.elfinForm.$dirty = true;
+				            		//$scope.setElfinFormDirty();
 				            	} else {
 				            		console.log("No selected actor returned!!!");				            		
 				            	}
