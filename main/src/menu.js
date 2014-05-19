@@ -364,8 +364,9 @@
 						//console.log("No function name.");
 					}
 				} catch (e) {
+					//TODO: should not be active in production mode.
 					console
-							.log("JSON parse exception for entryName: "
+							.warn("JSON parse exception for entryName: "
 									+ entryName
 									+ ", group: "
 									+ groupName
