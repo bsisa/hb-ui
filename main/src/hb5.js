@@ -79,8 +79,8 @@
                 controller: 'ImmeubleCardController'
             })
             .when('/elfin/:collectionId/CONSTAT/:elfinId', {
-                templateUrl: '/assets/views/CONSTAT_card_view.html',
-                controller: 'ConstatCardController'
+                templateUrl: '/assets/views/CONSTAT_card_view.html'
+//                controller: 'ConstatCardController'
             })
             .when('/elfin/:collectionId/ACTEUR/:elfinId', {
                 templateUrl: '/assets/views/ACTEUR_card_view.html',
@@ -196,10 +196,40 @@
 	    	return keyValueObj;
         };        
         
+        /**
+         * Performs update of 'target' object property at 'path' with newValue 
+         * given a target object a path defined JSON path as string and a new 
+         * value to assign.
+         * 
+         * For instance: applyPath(elfin, 'IDENTIFIANT.NOM', 'Nouveau nom')
+         * 
+         */
+        var applyPath = function(target, path, newValue) {
+        	// The path is expected to be a string.
+        	if (!angular.isString(path)) {
+                  return;
+            }
+            var pathComponents = path.split('.');
+            var objectRef = target;
+            var index;
+            for (index = 0; index < pathComponents.length; ++index) {
+                var pathElement = pathComponents[index];
+                if (index == pathComponents.length - 1) {
+                	// Assign the new value
+                    objectRef[pathElement] = newValue;
+                } else {
+                    // Go up a level
+                    objectRef = objectRef[pathElement];
+                }
+            }
+        };
+        
+        
         return {
         	reorderArrayByPOS:reorderArrayByPOS,
         	buildUrlQueryString:buildUrlQueryString,
-        	buildKeyValueObject:buildKeyValueObject
+        	buildKeyValueObject:buildKeyValueObject,
+        	applyPath:applyPath
         };
     });	
 
@@ -219,6 +249,25 @@
 		};
 	
     });	
+    
+    
+    angular.module('hb5').directive('hbConstatCard', function () {
+
+    	// TODO: check why setElfinFormRef is not visible as a function
+    	return {
+		    require: ['hbConstatCard', '^form'],
+			restrict: 'A',
+		    templateUrl : "/assets/views/hbConstatCard.html",
+			controller: 'ConstatCardController',
+			link: function(scope,element,attr, ctrls) {
+				var constatCardController = ctrls[0];
+				var elfinFormController = ctrls[1];
+				console.log("NOT Linking elfinFormController to constatCardController... See TODO...");
+				//constatCardController.setElfinFormRef(elfinFormController);
+			}
+		};
+	
+    });    
 	
     /**
      * Directive allowing common lists layout and logic to be centralised 
