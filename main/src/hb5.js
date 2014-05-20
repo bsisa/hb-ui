@@ -218,7 +218,7 @@
                 	// Assign the new value
                     objectRef[pathElement] = newValue;
                 } else {
-                    // Go up a level
+                    // Go down a level
                     objectRef = objectRef[pathElement];
                 }
             }
