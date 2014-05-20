@@ -75,6 +75,7 @@
 				            		hbUtil.applyPath(elfin,target,selectedActors[0].GROUPE);
 				            		//$scope.elfinForm.$dirty = true;
 				            		//$scope.setElfinFormDirty();
+				            		$scope.elfinForm.$setDirty();
 				            	} else {
 				            		console.log("No selected actor returned!!!");				            		
 				            	}
@@ -125,6 +126,7 @@
     	// ============================================================    	
     	// Default ng-grid showFilter box requires an extra click 
     	// to be accessed and is ugly. Let's define our own 
+    	
 		$scope.search = { text: ""};
     	$scope.actors = $filter('filter')(actors, $scope.search.text , false);
 		
@@ -152,10 +154,13 @@
  		   	//  ],
    		        multiSelect: false,
    		        selectedItems: $scope.selectedActors,
-   		    //  showColumnMenu: true, // Useful for groupping 
-   		    //  showFilter: true, // Ugly look, redefine our own search field
+   		        showColumnMenu: true, // Useful for groupping 
+   		        showFilter: true, // Ugly look, redefine our own search field
    		        filterOptions : { filterText: '', useExternalFilter: false }
    		    };    	
+    	
+    	$('#searchTextInput').focus();
+    	
     	
         $scope.ok = function () {
             $modalInstance.close($scope.selectedActors);

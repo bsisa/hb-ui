@@ -38,14 +38,14 @@
         $scope.elfin = null;
         
         // TODO: check if listening to model change from controllers can be improved.
-        $scope.$watch('elfin', function(newValue, oldValue) {
-			// Only change form status if elfin was initialised.
-        	if (oldValue) {
-				$scope.elfinForm.$setDirty();
-				//Reminder: to restore form status to pristine.
-				//$scope.elfinForm.$setPristine();
-			}
-        }, true);
+//        $scope.$watch('elfin', function(newValue, oldValue) {
+//			// Only change form status if elfin was initialised.
+//        	if (oldValue) {
+//				$scope.elfinForm.$setDirty();
+//				//Reminder: to restore form status to pristine.
+//				//$scope.elfinForm.$setPristine();
+//			}
+//        }, true);
         
     	$scope.removeKeyword = function ( index ) {
     		console.log("removing MOCLE at index " + index);

@@ -255,16 +255,16 @@
 
     	// TODO: check why setElfinFormRef is not visible as a function
     	return {
-		    require: ['hbConstatCard', '^form'],
+		    require: '^hbCardContainer',
 			restrict: 'A',
 		    templateUrl : "/assets/views/hbConstatCard.html",
-			controller: 'ConstatCardController',
-			link: function(scope,element,attr, ctrls) {
-				var constatCardController = ctrls[0];
-				var elfinFormController = ctrls[1];
-				console.log("NOT Linking elfinFormController to constatCardController... See TODO...");
-				//constatCardController.setElfinFormRef(elfinFormController);
-			}
+			controller: 'ConstatCardController'
+//			link: function(scope,element,attr, ctrls) {
+//				var constatCardController = ctrls[0];
+//				var elfinFormController = ctrls[1];
+//				console.log("NOT Linking elfinFormController to constatCardController... See TODO...");
+//				//constatCardController.setElfinFormRef(elfinFormController);
+//			}
 		};
 	
     });    
