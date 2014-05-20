@@ -224,12 +224,65 @@
             }
         };
         
+        /**
+         * Internal helper to obtain an source object property value 
+         * defined at sourcePath.
+         * Example: getSourceValue(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE')
+         */
+        var getSourceValue = function (source, sourcePath) {
+            var sourcePathComponents = sourcePath.split('.');
+            var objectRef = source;
+            var value = null;
+            var index;
+            for (index = 0; index < sourcePathComponents.length; ++index) {
+                var pathElement = sourcePathComponents[index];
+                if (index == sourcePathComponents.length - 1) {
+                	// Get value at sourcePath
+                	value = objectRef[pathElement];
+                } else {
+                    // Go down a level
+                    objectRef = objectRef[pathElement];
+                }
+            }
+            return value;
+        }
+        
+        /**
+         * Performs update of 'target' elfin object property at 'targetPath' with new value 
+         * found at sourcePath of source elfin object.
+         * 
+         * For instance: applyPaths(elfin, 'IDENTIFIANT.NOM', 'Nouveau nom', elfinSource, 'GROUPE')
+         * 
+         */
+        var applyPaths = function(target, targetPath, source, sourcePath) {
+        	// The paths are expected to be a strings.
+        	if (!angular.isString(targetPath) && !angular.isString(sourcePath) ) {
+                  return;
+            }
+
+            var targetPathComponents = targetPath.split('.');
+            var objectRef = target;
+            var index;
+            
+            for (index = 0; index < targetPathComponents.length; ++index) {
+                var pathElement = targetPathComponents[index];
+                // Check for last level
+                if (index == targetPathComponents.length - 1) {
+                	// Assign the new value
+                    objectRef[pathElement] = getSourceValue(source, sourcePath);
+                } else {
+                    // Go down a level
+                    objectRef = objectRef[pathElement];
+                }
+            }
+        };
         
         return {
         	reorderArrayByPOS:reorderArrayByPOS,
         	buildUrlQueryString:buildUrlQueryString,
         	buildKeyValueObject:buildKeyValueObject,
-        	applyPath:applyPath
+        	applyPath:applyPath,
+        	applyPaths:applyPaths
         };
     });	
 

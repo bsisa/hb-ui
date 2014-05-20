@@ -30,17 +30,17 @@
 						/**
 				         * Modal panel to select an actor.
 				         */
-				        $scope.chooseActor = function (elfin, target, actors) {
+				        $scope.chooseActor = function (targetElfin, targetPath, elfins, sourcePath) {
 				        	
-				        	$log.debug(">>>> ON CHOOSE :: elfin = : " + elfin.Id);
+				        	$log.debug(">>>> ON CHOOSE :: targetElfin = : " + targetElfin.Id);
 				        	
 				            var modalInstance = $modal.open({
 				                templateUrl: '/assets/views/chooseActor.html',
 				                scope: $scope,
 				                controller: 'ChooseActorCtroller',
 				                resolve: {
-				                	actors: function () {
-				                    	return actors;
+				                	elfins: function () {
+				                    	return elfins;
 				                    }               				                    
 				                },                
 				                backdrop: 'static'
@@ -49,12 +49,14 @@
 				            /**
 				             * Process modalInstance.close action
 				             */
-				            modalInstance.result.then(function (selectedActors) {
-				            	if (selectedActors && selectedActors.length > 0) {
-				            		hbUtil.applyPath(elfin,target,selectedActors[0].GROUPE);
+				            modalInstance.result.then(function (selectedElfins) {
+				            	if (selectedElfins && selectedElfins.length > 0) {
+				            		//hbUtil.applyPath(targetElfin,targetPath,selectedElfins[0].GROUPE);
+				            		var sourceElfin = selectedElfins[0];
+				            		hbUtil.applyPaths(targetElfin, targetPath, sourceElfin, sourcePath);
 				            		$scope.elfinForm.$setDirty();
 				            	} else {
-				            		$log.debug("No selected actor returned!!!");				            		
+				            		$log.debug("No selection returned!!!");				            		
 				            	}
 				            	
 				            }, function () {
@@ -96,16 +98,16 @@
 					} ]);
 
 	
-    angular.module('hb5').controller('ChooseActorCtroller', ['$scope', '$modalInstance', '$filter', 'actors', function($scope, $modalInstance, $filter, actors) {
+    angular.module('hb5').controller('ChooseActorCtroller', ['$scope', '$modalInstance', '$filter', 'elfins', function($scope, $modalInstance, $filter, elfins) {
 
     	// ============================================================
-    	// Custom search field used to filter actors
+    	// Custom search field used to filter elfins
     	// ============================================================    	
     	// Default ng-grid showFilter box requires an extra click 
     	// to be accessed and is ugly. Let's define our own 
     	
 		$scope.search = { text: ""};
-    	$scope.actors = $filter('filter')(actors, $scope.search.text , false);
+    	$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);
 		
 		$scope.$watch('search.text', function() { 
 			$scope.gridOptions.filterOptions.filterText = $scope.search.text;
@@ -116,11 +118,11 @@
 		// Contains the result of user selection. 
 		// While gridOptions multiSelect attribute equals false 
 		// the array will only be zero or one element. 
-    	$scope.selectedActors = [];    	
+    	$scope.selectedElfins = [];    	
     	
     	// ng-grid options. See ng-grid API Documentation for details.
     	$scope.gridOptions = {
- 		        data: 'actors',
+ 		        data: 'elfins',
  		        columnDefs: [
  		   		            { field:"GROUPE", displayName: "Groupe"}
  		   		],
@@ -130,7 +132,7 @@
             //              { field:"IDENTIFIANT.QUALITE", displayName: "Rôle"}
  		   	//  ],
    		        multiSelect: false,
-   		        selectedItems: $scope.selectedActors,
+   		        selectedItems: $scope.selectedElfins,
    		        showColumnMenu: true, // Useful for groupping 
    		        showFilter: true, // Ugly look, redefine our own search field
    		        filterOptions : { filterText: '', useExternalFilter: false }
@@ -140,7 +142,7 @@
     	
     	
         $scope.ok = function () {
-            $modalInstance.close($scope.selectedActors);
+            $modalInstance.close($scope.selectedElfins);
         };
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');

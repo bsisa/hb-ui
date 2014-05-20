@@ -37,12 +37,6 @@
 					</div> 
 				</div>					
 	
-<!-- Dev. draft testing scope behaviour. TODO: Remove -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<div class="col-sm-12">searchText: {{myProp.name}}</div> -->
-<!-- 					<div class="col-sm-12" ><input id="searchTextInput" type="text" class="form-control" ng-model="myProp.name" placeholder="some prop text..."></div> -->
-<!-- 				</div> -->
-				
 				<div class="form-group">
 					<label for="alias" class="col-sm-2 control-label">Signalé par</label>
 					<div class="col-sm-4">
@@ -53,7 +47,7 @@
 								tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> 
 							<span class="input-group-btn" tooltip="Recherche d'entreprise">
 								<button class="btn btn-default" type="button"
-									ng-click="chooseActor(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors )"
+									ng-click="chooseActor(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE' )"
 									><i class="icon-search" ></i></button>
 							</span>
 						</div>
@@ -67,7 +61,7 @@
 							ng-model="elfin.IDENTIFIANT.AUT" tooltip="elfin.IDENTIFIANT.AUT"> 
 							<span class="input-group-btn" tooltip="Recherche de collaborateur">
 								<button class="btn btn-default" type="button"
-									ng-click="chooseActor(elfin, 'IDENTIFIANT.AUT', collaboratorActors )"
+									ng-click="chooseActor(elfin, 'IDENTIFIANT.AUT', collaboratorActors, 'GROUPE' )"
 									><i class="icon-search" ></i></button>
 							</span>
 						</div>							
