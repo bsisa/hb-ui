@@ -23,46 +23,10 @@
 							SUIVRE : "SUIVRE"
 						};
 
+			            // Parameter to hbChooseOne service function
 						$scope.entrepriseActors = null;
+			            // Parameter to hbChooseOne service function
 						$scope.collaboratorActors = null;
-						
-
-						/**
-				         * Modal panel to select an actor.
-				         */
-				        $scope.chooseActor = function (targetElfin, targetPath, elfins, sourcePath) {
-				        	
-				        	$log.debug(">>>> ON CHOOSE :: targetElfin = : " + targetElfin.Id);
-				        	
-				            var modalInstance = $modal.open({
-				                templateUrl: '/assets/views/chooseActor.html',
-				                scope: $scope,
-				                controller: 'ChooseActorCtroller',
-				                resolve: {
-				                	elfins: function () {
-				                    	return elfins;
-				                    }               				                    
-				                },                
-				                backdrop: 'static'
-				            });
-
-				            /**
-				             * Process modalInstance.close action
-				             */
-				            modalInstance.result.then(function (selectedElfins) {
-				            	if (selectedElfins && selectedElfins.length > 0) {
-				            		//hbUtil.applyPath(targetElfin,targetPath,selectedElfins[0].GROUPE);
-				            		var sourceElfin = selectedElfins[0];
-				            		hbUtil.applyPaths(targetElfin, targetPath, sourceElfin, sourcePath);
-				            		$scope.elfinForm.$setDirty();
-				            	} else {
-				            		$log.debug("No selection returned!!!");				            		
-				            	}
-				            	
-				            }, function () {
-				                $log.debug('Choose params modal dismissed at: ' + new Date());
-				            });
-				        };						
 						
 
 				        //   /api/melfin/G20060401225530100?xpath=//ELFIN[IDENTIFIANT/QUALITE='Entreprise']
@@ -94,11 +58,59 @@
 							});	
 			            
 			            
+			            // Parameter to hbChooseOne service function
+			            $scope.actorChooseOneColumnsDefinition = [
+			                        		   		            { field:"GROUPE", displayName: "Groupe"}
+			                        		   	 		   		];
+			            // Parameter to hbChooseOne service function
+			            $scope.actorChooseOneTemplate = '/assets/views/chooseActor.html';
+			            
+						/**
+				         * Modal panel to update a target elfin property 
+				         * with a source elfin property whose elfin has 
+				         * been selected from a list of elfins.
+				         */
+				        $scope.hbChooseOne = function (targetElfin, targetPath, elfins, sourcePath, columnsDefinition, template) {
+				        	
+				        	$log.debug(">>>> ON CHOOSE :: targetElfin = : " + targetElfin.Id);
+				        	
+				            var modalInstance = $modal.open({
+				                templateUrl: template,
+				                scope: $scope,
+				                controller: 'HbChooseOneController',
+				                resolve: {
+				                	elfins: function () {
+				                    	return elfins;
+				                    },
+				                    columnsDefinition: function() {
+				                    	return columnsDefinition;
+				                    }
+				                },                
+				                backdrop: 'static'
+				            });
+
+				            /**
+				             * Process modalInstance.close action
+				             */
+				            modalInstance.result.then(function (selectedElfins) {
+				            	if (selectedElfins && selectedElfins.length > 0) {
+				            		var sourceElfin = selectedElfins[0];
+				            		hbUtil.applyPaths(targetElfin, targetPath, sourceElfin, sourcePath);
+				            		$scope.elfinForm.$setDirty();
+				            	} else {
+				            		$log.debug("No selection returned!!!");				            		
+				            	}
+				            	
+				            }, function () {
+				                $log.debug('Choose params modal dismissed at: ' + new Date());
+				            });
+				        };			            
+			            
 						
 					} ]);
 
 	
-    angular.module('hb5').controller('ChooseActorCtroller', ['$scope', '$modalInstance', '$filter', 'elfins', function($scope, $modalInstance, $filter, elfins) {
+    angular.module('hb5').controller('HbChooseOneController', ['$scope', '$modalInstance', '$filter', 'elfins', 'columnsDefinition', function($scope, $modalInstance, $filter, elfins, columnsDefinition) {
 
     	// ============================================================
     	// Custom search field used to filter elfins
@@ -123,9 +135,7 @@
     	// ng-grid options. See ng-grid API Documentation for details.
     	$scope.gridOptions = {
  		        data: 'elfins',
- 		        columnDefs: [
- 		   		            { field:"GROUPE", displayName: "Groupe"}
- 		   		],
+ 		        columnDefs: columnsDefinition,
  		   	// Grid columns definition with roles
  		   	//  columnDefs: [
             //              { field:"GROUPE", displayName: "Groupe"},
@@ -133,8 +143,8 @@
  		   	//  ],
    		        multiSelect: false,
    		        selectedItems: $scope.selectedElfins,
-   		        showColumnMenu: true, // Useful for groupping 
-   		        showFilter: true, // Ugly look, redefine our own search field
+   		        showColumnMenu: false, // Useful for grouping 
+   		        showFilter: false, // Ugly look, redefine our own search field
    		        filterOptions : { filterText: '', useExternalFilter: false }
    		    };    	
     	

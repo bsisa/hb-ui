@@ -47,7 +47,7 @@
 								tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> 
 							<span class="input-group-btn" tooltip="Recherche d'entreprise">
 								<button class="btn btn-default" type="button"
-									ng-click="chooseActor(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE' )"
+									ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )"
 									><i class="icon-search" ></i></button>
 							</span>
 						</div>
@@ -61,7 +61,7 @@
 							ng-model="elfin.IDENTIFIANT.AUT" tooltip="elfin.IDENTIFIANT.AUT"> 
 							<span class="input-group-btn" tooltip="Recherche de collaborateur">
 								<button class="btn btn-default" type="button"
-									ng-click="chooseActor(elfin, 'IDENTIFIANT.AUT', collaboratorActors, 'GROUPE' )"
+									ng-click="hbChooseOne(elfin, 'IDENTIFIANT.AUT', collaboratorActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )"
 									><i class="icon-search" ></i></button>
 							</span>
 						</div>							
