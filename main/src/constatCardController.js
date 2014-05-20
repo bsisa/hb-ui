@@ -8,12 +8,13 @@
 					'$modal',
 					'$routeParams',
 					'$location',
+					'$log',
 					'hbAlertMessages',
 					'hbUtil',
 					function($scope, GeoxmlService, $modal, $routeParams,
-							$location, hbAlertMessages, hbUtil) {
+							$location, $log, hbAlertMessages, hbUtil) {
 
-						console.log("    >>>> Using ConstatCardController");
+						$log.debug("    >>>> Using ConstatCardController");
 						
 					
 						// TODO: get this dynamically from HB5 catalogue
@@ -25,35 +26,13 @@
 						$scope.entrepriseActors = null;
 						$scope.collaboratorActors = null;
 						
-//						var elfinFormCtrl = null;
-//						$scope.elfinFormCtrlRef = elfinFormCtrl;
-						
-//						//TODO: check why setElfinFormRef is not visible as a function
-//						var setElfinFormRef = function (newElfinformRef) {
-//							console.log("Setting new elfinFormRef...");
-//							elfinFormCtrl = newElfinformRef;
-//						};						
 
-						
-						$scope.elfinFormCtrlRef = null; 
-						
-						//TODO: check why setElfinFormRef is not visible as a function
-						$scope.setElfinFormRef = function (newElfinformRef) {
-							console.log("Setting new elfinFormRef...");
-							$scope.elfinFormCtrlRef = newElfinformRef;
-						};
-						
-						$scope.setElfinFormDirty = function() {
-							console.log("Setting dirty through elfinFormRef...");
-							$scope.elfinFormCtrlRef.$setDirty();
-						};
-
-				        /**
+						/**
 				         * Modal panel to select an actor.
 				         */
 				        $scope.chooseActor = function (elfin, target, actors) {
 				        	
-				        	console.log(">>>> ON CHOOSE :: elfin = : " + elfin.Id);
+				        	$log.debug(">>>> ON CHOOSE :: elfin = : " + elfin.Id);
 				        	
 				            var modalInstance = $modal.open({
 				                templateUrl: '/assets/views/chooseActor.html',
@@ -73,15 +52,13 @@
 				            modalInstance.result.then(function (selectedActors) {
 				            	if (selectedActors && selectedActors.length > 0) {
 				            		hbUtil.applyPath(elfin,target,selectedActors[0].GROUPE);
-				            		//$scope.elfinForm.$dirty = true;
-				            		//$scope.setElfinFormDirty();
 				            		$scope.elfinForm.$setDirty();
 				            	} else {
-				            		console.log("No selected actor returned!!!");				            		
+				            		$log.debug("No selected actor returned!!!");				            		
 				            	}
 				            	
 				            }, function () {
-				                console.log('Choose params modal dismissed at: ' + new Date());
+				                $log.debug('Choose params modal dismissed at: ' + new Date());
 				            });
 				        };						
 						
@@ -91,7 +68,7 @@
 			            //var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
 			            var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE!='Entreprise']";
 			            // TODO: actorsCollectionId must come from server configuration resource.
-			            console.log("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
+			            $log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
 			            var actorsCollectionId = 'G20060401225530100';
 			            
 			            // Asychronous entrepriseActors preloading
