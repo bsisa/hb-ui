@@ -287,24 +287,6 @@
     });	
 
 	
-    
-    angular.module('hb5').directive('hbConstatCard', function () {
-
-    	// TODO: check why setElfinFormRef is not visible as a function
-    	return {
-		    require: '^hbCardContainer',
-			restrict: 'A',
-		    templateUrl : "/assets/views/hbConstatCard.html",
-			controller: 'ConstatCardController'
-//			link: function(scope,element,attr, ctrls) {
-//				var constatCardController = ctrls[0];
-//				var elfinFormController = ctrls[1];
-//				console.log("NOT Linking elfinFormController to constatCardController... See TODO...");
-//				//constatCardController.setElfinFormRef(elfinFormController);
-//			}
-		};
-	
-    });    
 	
     /**
      * Directive allowing common lists layout and logic to be centralised 

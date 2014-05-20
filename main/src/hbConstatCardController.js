@@ -1,7 +1,7 @@
 (function() {
 
 	angular.module('hb5').controller(
-			'ConstatCardController',
+			'HbConstatCardController',
 			[
 					'$scope',
 					'GeoxmlService',
