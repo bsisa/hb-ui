@@ -10,7 +10,8 @@
 						<select
 							id="statut"  
 							class="form-control"
-							required
+							chosen
+							ngRequired
 							ng-model="elfin.IDENTIFIANT.QUALITE"
 							ng-options="value as label for (value, label) in statusTypes"
 							>
