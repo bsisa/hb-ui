@@ -12,10 +12,11 @@
  * In order to achieve this it is possible and better suited to define the 
  * setErrorInterceptor on the angular application itself using: 
  * application.run(...) 
- * In thsi method we can benefit from $window, $location services injections. 
- * Please check hb5.js file for this.
+ * At this stage, with run method, we can benefit from $window, $location 
+ * services injections. Please check hb5.js file for this.
  * 
- * Created by guy on 19.01.14.
+ * @author Guy de Pourtalès
+ * @author Patrick Refondini 
  * 
  */
 
