@@ -6,11 +6,12 @@
 	
     var hb5 = angular.module('hb5', ['ngGrid','ngAnimate', 'geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);
 	
-    hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', function(Restangular, hbAlertMessages, $location, $window){
+    hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', '$log', function(Restangular, hbAlertMessages, $location, $window, $log){
+    	
         Restangular.setErrorInterceptor(
     	        function(response) {
     	        	if (response.status == 401) {
-    	        		console.log("Login required... ");
+    	        		$log.debug("Login required... ");
     	        		$window.location.href='/login';
     	        		//TODO: we might use the following once we create an new custom AngularJS integrated login form 
     	        		//$location.path('/login'); 
@@ -23,8 +24,8 @@
     	        	} else {
     	        		hbAlertMessages.addAlert("danger","Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status );    	        		
     	        	}
-    	          console.log("Restangular error interceptor caught: status: " + response.status);
-    	          return false; // stop the promise chain
+    	          $log.debug("Restangular error interceptor caught: status: " + response.status);
+    	          return false; // stops the promise chain
     	      });        		
         
         
@@ -43,11 +44,10 @@
     	// Configurer.addResponseInterceptor(
         Restangular.setResponseInterceptor(
     			function(data,operation,what,url,response,deferred) {
-    				//TODO: remove this debug log
-//    	          console.log("Restangular response interceptor caught: status: " + response.status + 
-//    	        		  ", operation: " + operation + 
-//    	        		  ", what: " + what + 
-//    	        		  ", url: " + url);
+    	          $log.debug("Restangular response interceptor caught: status: " + response.status + 
+    	        		  ", operation: " + operation + 
+    	        		  ", what: " + what + 
+    	        		  ", url: " + url);
     				
     	          // Important: The responseInterceptor must return the restangularized data element.
     	          // https://github.com/mgonto/restangular#seterrorinterceptor
@@ -55,6 +55,15 @@
     		});        
         
     }]);
+    
+    
+	/**
+	 * Turns debug log level on and off
+	 */
+    hb5.config(['$logProvider', function($logProvider) {
+        $logProvider.debugEnabled(clientDebugEnabled);
+    }]);
+
     
     /**
      * Benefit from HTML5 history API, provides nicer RESTful URLs.
