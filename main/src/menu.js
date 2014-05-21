@@ -13,7 +13,7 @@
     };
 
 
-    angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', 'itemDefinition', function($scope, $modalInstance, itemDefinition) {
+    angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', '$timeout', 'itemDefinition', function($scope, $modalInstance, $timeout, itemDefinition) {
     	$scope.itemDefinition = itemDefinition;
         $scope.ok = function () {
             $modalInstance.close($scope.itemDefinition);
@@ -21,6 +21,14 @@
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
+        
+	    var focusOnFirstField = function() {
+			$('#field0').focus();	
+		};        
+
+		// TODO: FocusTimeout issue. Find a better solution ? 
+		$timeout(focusOnFirstField, 250, false);        
+        
     }]);
     
     /**

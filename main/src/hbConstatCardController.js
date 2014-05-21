@@ -228,8 +228,8 @@
 			$('#searchTextInput').focus();	
 		};        
 
-		// TODO: find a better solution ? 
-		$timeout(focusOnSearchField, 500, false);
+		// TODO: FocusTimeout issue. Find a better solution ? 
+		$timeout(focusOnSearchField, 250, false);
 		
         
     }]);	
