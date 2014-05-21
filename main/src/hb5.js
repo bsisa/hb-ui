@@ -1,11 +1,106 @@
 /**
- * Created by guy on 19.01.14.
+ * hb5 module definition file. Currently contains config, run and filter definitions.
+ * each of these might move to their own specific files depending on their 
+ * increasing complexity, verbosity.
+ *  
+ * @author Guy de Pourtalès
+ * @author Patrick Refondini 
  */
-
 (function() {
 	
     var hb5 = angular.module('hb5', ['ngGrid','ngAnimate', 'geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);
 	
+
+    // ================================================================
+    // ====                      Config                            ====
+    // ================================================================    
+    
+    /**
+     * Client side routes configuration
+     */
+    hb5.config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: '/assets/views/welcome.html',
+                controller: function($scope) {}
+            })
+            .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
+                templateUrl: '/assets/views/IMMEUBLE_card_view.html',
+                controller: 'ImmeubleCardController'
+            })
+            .when('/elfin/:collectionId/CONSTAT/:elfinId', {
+                templateUrl: '/assets/views/CONSTAT_card_view.html'
+            })
+            .when('/elfin/:collectionId/ACTEUR/:elfinId', {
+                templateUrl: '/assets/views/ACTEUR_card_view.html',
+                controller: 'ActeurCardController'
+            })                        
+            .when('/elfin/:collectionId/:classe/:elfinId', {
+                templateUrl: '/assets/views/default_card_view.html'
+            })
+            .when('/elfin/:collectionId/IMMEUBLE', {
+                templateUrl: '/assets/views/IMMEUBLE_list_view.html'
+            })
+            .when('/elfin/:collectionId/ACTEUR', {
+                templateUrl: '/assets/views/ACTEUR_list_view.html'
+            })            
+            .when('/elfin/:collectionId/:classe', {
+                templateUrl: '/assets/views/default_list_view.html'
+            })
+            .otherwise({
+                redirectTo: '/'
+            })
+        ;
+
+    }]);
+
+    
+	/**
+	 * Turns debug log level on and off
+	 */
+    hb5.config(['$logProvider', function($logProvider) {
+        $logProvider.debugEnabled(clientDebugEnabled);
+    }]);
+
+    
+    /**
+     * Benefit from HTML5 history API, provides nicer RESTful URLs.
+     * Supported by all browsers (with IE only from version 10).
+     * Fallback to hashbang mode if necessary. 
+     */
+    hb5.config(['$locationProvider', function($locationProvider) {
+    	$locationProvider.html5Mode(true);
+    }]);    
+    
+
+    
+    // ================================================================
+    // ====                     Filters                            ====
+    // ================================================================
+    
+    
+    /**
+     * Basic filter to add an "s" to result titles 
+     * depending on the number of entries returned. 
+     */
+	hb5.filter('plural', function() {
+		return function(number) {
+			if (number > 1) {
+				return "s";
+			} else {
+				return "";
+			}
+		};
+	});
+
+
+    // ================================================================
+    // ====                        Run                             ====
+	// ================================================================
+	// = This function is executed after injector creation and is the =
+	// = right place for application initialisation tasks             =
+    // ================================================================        
+    
     hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', '$log', function(Restangular, hbAlertMessages, $location, $window, $log){
     	
         Restangular.setErrorInterceptor(
@@ -54,80 +149,7 @@
     	          return data; 
     		});        
         
-    }]);
-    
-    
-	/**
-	 * Turns debug log level on and off
-	 */
-    hb5.config(['$logProvider', function($logProvider) {
-        $logProvider.debugEnabled(clientDebugEnabled);
-    }]);
-
-    
-    /**
-     * Benefit from HTML5 history API, provides nicer RESTful URLs.
-     * Supported by all browsers (with IE only from version 10).
-     * Fallback to hashbang mode if necessary. 
-     */
-    hb5.config(['$locationProvider', function($locationProvider) {
-    	$locationProvider.html5Mode(true);
-    }]);
-
-    /**
-     * Client side routes configuration
-     */
-    hb5.config(['$routeProvider', function($routeProvider) {
-        $routeProvider
-            .when('/', {
-                templateUrl: '/assets/views/welcome.html',
-                controller: function($scope) {}
-            })
-            .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
-                templateUrl: '/assets/views/IMMEUBLE_card_view.html',
-                controller: 'ImmeubleCardController'
-            })
-            .when('/elfin/:collectionId/CONSTAT/:elfinId', {
-                templateUrl: '/assets/views/CONSTAT_card_view.html'
-            })
-            .when('/elfin/:collectionId/ACTEUR/:elfinId', {
-                templateUrl: '/assets/views/ACTEUR_card_view.html',
-                controller: 'ActeurCardController'
-            })                        
-            .when('/elfin/:collectionId/:classe/:elfinId', {
-                templateUrl: '/assets/views/default_card_view.html'
-            })
-            .when('/elfin/:collectionId/IMMEUBLE', {
-                templateUrl: '/assets/views/IMMEUBLE_list_view.html'
-            })
-            .when('/elfin/:collectionId/ACTEUR', {
-                templateUrl: '/assets/views/ACTEUR_list_view.html'
-            })            
-            .when('/elfin/:collectionId/:classe', {
-                templateUrl: '/assets/views/default_list_view.html'
-            })
-            .otherwise({
-                redirectTo: '/'
-            })
-        ;
-
-    }]);
-    
-
-    /**
-     * Basic filter to add an "s" to result titles 
-     * depending on the number of entries returned. 
-     */
-	hb5.filter('plural', function() {
-		return function(number) {
-			if (number > 1) {
-				return "s";
-			} else {
-				return "";
-			}
-		};
-	});
-
+    }]);	
     
    
 })();
