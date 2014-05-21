@@ -48,6 +48,30 @@
 	    	}
 	    	return keyValueObj;
         };        
+
+
+        /**
+         * Reads a source object property value defined at sourcePath.
+         * Example: getValueAtPath(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE')
+         */
+        var getValueAtPath = function (source, sourcePath) {
+            var sourcePathComponents = sourcePath.split('.');
+            var objectRef = source;
+            var value = null;
+            var index;
+            for (index = 0; index < sourcePathComponents.length; ++index) {
+                var pathElement = sourcePathComponents[index];
+                if (index == sourcePathComponents.length - 1) {
+                	// Get value at sourcePath
+                	value = objectRef[pathElement];
+                } else {
+                    // Go down a level
+                    objectRef = objectRef[pathElement];
+                }
+            }
+            return value;
+        };        
+        
         
         /**
          * Performs update of 'target' object property at 'path' with newValue 
@@ -77,28 +101,6 @@
             }
         };
         
-        /**
-         * Internal helper to obtain an source object property value 
-         * defined at sourcePath.
-         * Example: getSourceValue(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE')
-         */
-        var getSourceValue = function (source, sourcePath) {
-            var sourcePathComponents = sourcePath.split('.');
-            var objectRef = source;
-            var value = null;
-            var index;
-            for (index = 0; index < sourcePathComponents.length; ++index) {
-                var pathElement = sourcePathComponents[index];
-                if (index == sourcePathComponents.length - 1) {
-                	// Get value at sourcePath
-                	value = objectRef[pathElement];
-                } else {
-                    // Go down a level
-                    objectRef = objectRef[pathElement];
-                }
-            }
-            return value;
-        }
         
         /**
          * Performs update of 'target' elfin object property at 'targetPath' with new value 
@@ -122,7 +124,7 @@
                 // Check for last level
                 if (index == targetPathComponents.length - 1) {
                 	// Assign the new value
-                    objectRef[pathElement] = getSourceValue(source, sourcePath);
+                    objectRef[pathElement] = getValueAtPath(source, sourcePath);
                 } else {
                     // Go down a level
                     objectRef = objectRef[pathElement];
@@ -135,7 +137,8 @@
         	buildUrlQueryString:buildUrlQueryString,
         	buildKeyValueObject:buildKeyValueObject,
         	applyPath:applyPath,
-        	applyPaths:applyPaths
+        	applyPaths:applyPaths,
+        	getValueAtPath:getValueAtPath
         };
     });
 	

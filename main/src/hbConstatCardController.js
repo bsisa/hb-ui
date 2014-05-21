@@ -84,6 +84,9 @@
 				                    },
 				                    columnsDefinition: function() {
 				                    	return columnsDefinition;
+				                    },
+				                    sourcePath: function() {
+				                    	return sourcePath;
 				                    }
 				                },                
 				                backdrop: 'static'
@@ -110,7 +113,7 @@
 					} ]);
 
 	
-    angular.module('hb5').controller('HbChooseOneController', ['$scope', '$modalInstance', '$filter', 'elfins', 'columnsDefinition', function($scope, $modalInstance, $filter, elfins, columnsDefinition) {
+    angular.module('hb5').controller('HbChooseOneController', ['$scope', '$modalInstance', '$filter', 'hbUtil', 'elfins', 'columnsDefinition', 'sourcePath', function($scope, $modalInstance, $filter, hbUtil, elfins, columnsDefinition, sourcePath) {
 
     	// ============================================================
     	// Custom search field used to filter elfins
@@ -119,7 +122,8 @@
     	// to be accessed and is ugly. Let's define our own 
     	
 		$scope.search = { text: ""};
-    	$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);
+    	
+		$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);
 		
 		$scope.$watch('search.text', function() { 
 			$scope.gridOptions.filterOptions.filterText = $scope.search.text;
@@ -130,7 +134,23 @@
 		// Contains the result of user selection. 
 		// While gridOptions multiSelect attribute equals false 
 		// the array will only be zero or one element. 
-    	$scope.selectedElfins = [];    	
+    	$scope.selectedElfins = [];
+
+    	// Used to display current selection value
+    	$scope.currentSelection = null;
+
+    	// Listener maintaining currentSelection value 
+    	$scope.$watchCollection('selectedElfins', function(newSelectedElfins , oldSelectedElfins) {
+    		// Reset current selection if no elfin selected
+    		if (!newSelectedElfins || newSelectedElfins.length === 0) {
+    			$scope.currentSelection = null;
+    		} else if (newSelectedElfins && newSelectedElfins.length > 0) {
+    			// Obtain configured sourcePath value on selected elfin dynamically
+    			$scope.currentSelection = hbUtil.getValueAtPath($scope.selectedElfins[0],sourcePath);
+    		}
+    	}, true);
+    	
+    	
     	
     	// ng-grid options. See ng-grid API Documentation for details.
     	$scope.gridOptions = {
