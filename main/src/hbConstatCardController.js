@@ -113,7 +113,7 @@
 					} ]);
 
 	
-    angular.module('hb5').controller('HbChooseOneController', ['$scope', '$modalInstance', '$filter', 'hbUtil', 'elfins', 'columnsDefinition', 'sourcePath', function($scope, $modalInstance, $filter, hbUtil, elfins, columnsDefinition, sourcePath) {
+    angular.module('hb5').controller('HbChooseOneController', ['$scope', '$modalInstance', '$filter', '$log', 'hbUtil', 'elfins', 'columnsDefinition', 'sourcePath', function($scope, $modalInstance, $filter, $log, hbUtil, elfins, columnsDefinition, sourcePath) {
 
     	// ============================================================
     	// Custom search field used to filter elfins
@@ -131,6 +131,10 @@
     	// ============================================================
     	
     	
+    	// ============================================================
+    	// Manage user selection
+    	// ============================================================
+		
 		// Contains the result of user selection. 
 		// While gridOptions multiSelect attribute equals false 
 		// the array will only be zero or one element. 
@@ -150,33 +154,77 @@
     		}
     	}, true);
     	
+        
+    	// ============================================================
+    	// Manage ng-grid row double click event using gridOptions plugin
+    	// ============================================================
+
+    	var ngGridDoubleClickPluginInstance = new ngGridDoubleClickPlugin();
     	
+        var selectionConfirmed = function() {
+        	$modalInstance.close($scope.selectedElfins);
+        };
+        
+        $scope.doubleClickListener = function(rowItem) {
+        	selectionConfirmed();
+        };
+
     	
     	// ng-grid options. See ng-grid API Documentation for details.
     	$scope.gridOptions = {
  		        data: 'elfins',
  		        columnDefs: columnsDefinition,
- 		   	// Grid columns definition with roles
- 		   	//  columnDefs: [
-            //              { field:"GROUPE", displayName: "Groupe"},
-            //              { field:"IDENTIFIANT.QUALITE", displayName: "Rôle"}
- 		   	//  ],
    		        multiSelect: false,
    		        selectedItems: $scope.selectedElfins,
    		        showColumnMenu: false, // Useful for grouping 
    		        showFilter: false, // Ugly look, redefine our own search field
-   		        filterOptions : { filterText: '', useExternalFilter: false }
+   		        filterOptions : { filterText: '', useExternalFilter: false },
+   		        doubleClickFunction: $scope.doubleClickListener,
+   	            plugins: [ngGridDoubleClickPluginInstance]
    		    };    	
-    	
-    	$('#searchTextInput').focus();
-    	
+
     	
         $scope.ok = function () {
-            $modalInstance.close($scope.selectedElfins);
+        	selectionConfirmed();
         };
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
+    	
+
+        /**
+         * ngGridDoubleClickPlugin definition - see http://angular-ui.github.io/ng-grid/ API documentation
+         * This plugin provides ng-grid with a new doubleClickFunction called when 
+         * a row is double clicked. The first element of of the selectedItems is 
+         * passed as single function parameter.
+         */
+        function ngGridDoubleClickPlugin() {
+
+        	var self = this;
+            self.$scope = null;
+            self.gridRef = null;
+         
+            // Called when ng-grid directive executes.
+            self.init = function(scope, grid, services) {
+                // Keep references of grid scope and grid object received from ng-grid directive
+                self.$scope = scope;
+                self.gridRef = grid;
+                // Trigger grid events assignment.
+                self.assignEvents();
+            };
+            self.assignEvents = function() {
+                // Set double click event handler to the header container.
+                self.gridRef.$viewport.on('dblclick', self.onDoubleClick);
+            };
+            // Double click function
+            self.onDoubleClick = function(event) {
+            	// Configure new function name and signature, here: doubleClickFunction
+                self.gridRef.config.doubleClickFunction(self.$scope.selectedItems[0]);
+            };
+        };
+               
+        
+        
     }]);	
 	
 
