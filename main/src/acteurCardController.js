@@ -8,12 +8,13 @@
 					'$modal',
 					'$routeParams',
 					'$location',
+					'$log',
 					'hbAlertMessages',
 					'hbUtil',
 					function($scope, GeoxmlService, $modal, $routeParams,
-							$location, hbAlertMessages, hbUtil) {
+							$location, $log, hbAlertMessages, hbUtil) {
 
-						console.log("    >>>> Using ActeurCardController");
+						$log.debug("    >>>> Using ActeurCardController");
 
 						// TODO: get this dynamically from HB5 catalogue
 						$scope.qualiteList = {

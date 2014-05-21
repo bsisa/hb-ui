@@ -41,21 +41,12 @@
 				'menuIconClass' : '@hbDropdownMenuIconClass',
 				'menuLabel' : '=hbDropdownMenuLabel',  
 				'menuItems' : '=hbDropdownMenuItems'   
-			},
-			link : function ($scope, $element, $attrs) {
-//				$scope.$watch('menuLabel', function(value){
-//					console.log("menuLabel VALUE changed to " + value );
-//				});
-//				$scope.$watch('menuItems', function(value){
-//					console.log("menuItems VALUE changed to " + value );
-//					
-//				});
 			}
 		};
 	
     });
     
-    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$window', function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $window) {
+    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window) {
 
     	// Functions used in alert ui.bootstrap component found in menu.html
     	$scope.getAlerts = hbAlertMessages.getAlerts();
@@ -94,7 +85,7 @@
             modalInstance.result.then(function (selection) {
                 $scope.$$activeConfiguration = selection;
             }, function () {
-                console.log('Modal dismissed at: ' + new Date());
+            	$log.debug('Modal dismissed at: ' + new Date());
             });
         };
         
@@ -131,7 +122,7 @@
             		$location.search(searchObject).path(result.url); 
             	}
             }, function () {
-                console.log('Choose params modal dismissed at: ' + new Date());
+            	$log.debug('Choose params modal dismissed at: ' + new Date());
             });
         };        
 
@@ -161,7 +152,7 @@
 
         	// Searching for custom class onhoveropen
         	var menuItems =  $('li.onhoveropen');
-        	//console.log(">>>>> li.onhoveropen = " + menuItems.length);
+
         	menuItems.hover(
         		function(){
 		          $(this).find('ul:first').stop(true, true).fadeIn('fast');
@@ -203,7 +194,7 @@
                             	$scope.chooseConfiguration();
                             }
                         }, function(response) {
-                            console.log("Error with status code ", response.status, " while processing configs");
+                        	$log.error("Error with status code ", response.status, " while processing configs");
                             configCountDown--;
                             //TODO: Check it is wise to prompt for configuration choice in the event of errors.
                             // While we have setErrorInterceptor defined on Restangular we should anyway never 
@@ -216,8 +207,9 @@
 
 
             }, function(response) {
-            	//TODO: add alert
-                console.log("Error with status code " + response.status + " while getting hb_init global configuration.");
+            	var errorMessage = "Error with status code " + response.status + " while getting hb_init global configuration.";
+            	$log.error(errorMessage);
+            	hbAlertMessages.addAlert("danger",errorMessage);
             }
           );
         }
@@ -283,7 +275,9 @@
 		                            $scope.activateJob(elfin);
 		                        }
 		                    }, function(response) {
-		                        console.log("Error with status code", response.status);
+		                    	var errorMessage = "Error with status code " +  response.status; 
+		                        $log.error(errorMessage);
+		                        hbAlertMessages.addAlert("danger",errorMessage);
 		                    });
 	                }
 	            });
@@ -358,15 +352,12 @@
 				try {
 					actionValue = angular.fromJson(L.C[2].VALUE);
 					if (actionValue.functionName) {
-						//console.log("Refer to function: " + actionValue.functionName);
 						actionValue.functionRef = $scope[actionValue.functionName];
 					} else {
-						//console.log("No function name.");
+						//$log.debug("No function name.");
 					}
 				} catch (e) {
-					//TODO: should not be active in production mode.
-					console
-							.warn("JSON parse exception for entryName: "
+					$log.debug("JSON parse exception for entryName: "
 									+ entryName
 									+ ", group: "
 									+ groupName
@@ -482,15 +473,16 @@
                         // Only call updateMenu once and enclosed in $timeout service to 
                         // fix function applied before DOM update completion.
                         if (actualMenuRefProcessedCount == actualMenuRef.length) {
-                        	//console.log("ALL menus ("+actualMenuRef.length+") created! Invoke updateMenu in 0 seconds v3!!!");
                         	$timeout(updateMenu, 0, false);
                         	//updateMenu(); Reproduces former bug (function applied before DOM update completion)
                         } else {
-                        	//console.log("Creating menu nb " + actualMenuRefProcessedCount + "/" + actualMenuRef.length);                            	
+                        	//$log.debug("Creating menu nb " + actualMenuRefProcessedCount + "/" + actualMenuRef.length);                            	
                         }
                     }, function(response) {
                     	//TODO: Add alert
-                        console.log("Error with status code", response.status);
+                    	var errorMessage = "Error with status code" + response.status + " while processing menus configurations.";
+                        $log.error(errorMessage);
+                        hbAlertMessages.addAlert("danger",errorMessage);
                 });
             });
         };

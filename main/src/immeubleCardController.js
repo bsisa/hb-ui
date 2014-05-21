@@ -10,13 +10,14 @@
 							'$modal',
 							'$routeParams',
 							'$location',
+							'$log',
 							'hbAlertMessages',
 							'hbUtil',
 							function($scope, GeoxmlService, $modal,
-									$routeParams, $location, hbAlertMessages,
+									$routeParams, $location, $log, hbAlertMessages,
 									hbUtil) {
     
-							    	console.log("    >>>> Using ImmeubleCardController");
+									$log.debug("    >>>> Using ImmeubleCardController");
 							        
 							        $scope.constats = null;
 							    	
@@ -27,7 +28,7 @@
 							    		if ($scope.elfin!=null) {
 								            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
-								            console.log("TODO: ImmeubleCardController: constatsCollectionId must come from server configuration resource.");
+								            $log.debug("TODO: ImmeubleCardController: constatsCollectionId must come from server configuration resource.");
 								            var constatsCollectionId = 'G20060920171100001';
 								            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstats})
 												.then(function(elfins) {

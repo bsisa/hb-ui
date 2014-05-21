@@ -22,7 +22,7 @@
 
 (function() {
     angular.module('geoxml', ['restangular']).factory('GeoxmlService', [
-        'Restangular', function(Restangular) {
+        'Restangular', '$log', function(Restangular, $log) {
 
             var restGeoxml = Restangular.withConfig(function(Configurer) {
             	/*
@@ -31,7 +31,7 @@
             	   created by the server.
             	*/
             	if (apiBaseUrl==null) {
-            		console.error("GeoxmlService required apiBaseUrl information missing. This information is served dynamically by the HyperBird server, please make sure it is running.");
+            		$log.error("GeoxmlService required apiBaseUrl information missing. This information is served dynamically by the HyperBird server, please make sure it is running.");
             	}
             	/* Local hb-ui only test base URL */
             	//var apiBaseUrl = 'api-mocks';

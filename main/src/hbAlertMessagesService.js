@@ -14,7 +14,6 @@
 		
         return {
             getAlerts:function () {
-            	console.log("hbAlertMessages service getAlerts for " + alerts.length + " alerts!");
                 return alerts;
             },
             addAlert:function (typeValue,messageValue) {
