@@ -113,7 +113,7 @@
 					} ]);
 
 	
-    angular.module('hb5').controller('HbChooseOneController', ['$scope', '$modalInstance', '$filter', '$log', 'hbUtil', 'elfins', 'columnsDefinition', 'sourcePath', function($scope, $modalInstance, $filter, $log, hbUtil, elfins, columnsDefinition, sourcePath) {
+    angular.module('hb5').controller('HbChooseOneController', ['$scope', '$modalInstance', '$filter', '$log', '$timeout', 'hbUtil', 'elfins', 'columnsDefinition', 'sourcePath', function($scope, $modalInstance, $filter, $log, $timeout, hbUtil, elfins, columnsDefinition, sourcePath) {
 
     	// ============================================================
     	// Custom search field used to filter elfins
@@ -222,8 +222,15 @@
                 self.gridRef.config.doubleClickFunction(self.$scope.selectedItems[0]);
             };
         };
-               
         
+        
+	    var focusOnSearchField = function() {
+			$('#searchTextInput').focus();	
+		};        
+
+		// TODO: find a better solution ? 
+		$timeout(focusOnSearchField, 500, false);
+		
         
     }]);	
 	
