@@ -11,6 +11,8 @@
 .tooltip-inner {
     max-width: 450px;
 }
+/* Solves style cursors issues with empty href attributes in ui.bootstrap compared to Bootstrap */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .configuration-item {
     cursor: pointer;
