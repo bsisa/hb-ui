@@ -310,6 +310,13 @@ input.ng-pristine {
     background-color: white;
 }
 
+textarea.ng-dirty {
+    background-color: #F5A9A9;
+}
+
+textarea.ng-pristine {
+    background-color: white;
+}
 
 /* Disable kickstart padding in bootstrap */
 ul.nav-tabs li {
