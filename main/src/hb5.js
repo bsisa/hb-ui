@@ -101,7 +101,11 @@
 	// = right place for application initialisation tasks             =
     // ================================================================        
     
-    hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', '$log', function(Restangular, hbAlertMessages, $location, $window, $log){
+    hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', '$log', '$locale', function(Restangular, hbAlertMessages, $location, $window, $log, $locale){
+    	
+    	//TODO: Manage locale - check why this does not seem to be effective
+    	$log.debug("Setting locale to swiss french: fr-ch");
+    	$locale.id = 'fr-ch';
     	
         Restangular.setErrorInterceptor(
     	        function(response) {
