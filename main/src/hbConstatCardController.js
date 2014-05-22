@@ -14,9 +14,8 @@
 					function($scope, GeoxmlService, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil) {
 
-						$log.debug("    >>>> Using ConstatCardController");
+						$log.debug("    >>>> Using ConstatCardController ");
 						
-					
 						// TODO: get this dynamically from HB5 catalogue
 						$scope.statusTypes = {
 							Vu : "Vu",
@@ -28,6 +27,32 @@
 			            // Parameter to hbChooseOne service function
 						$scope.collaboratorActors = null;
 						
+
+						// ============================================
+						// TODO: move to hbDate directive - START
+						// ============================================
+						$scope.fromDate = new Date();
+
+						// TODO: should be automatic with $locale providing the correct id i.e.: fr-ch, de-ch,...
+						$scope.dateFormat = 'dd.MM.yyyy';						
+						
+						// Only valid with ui.bootstrap 0.11.0 not 0.10.0						
+//						$scope.fromDateOpened = false;
+//						$scope.open = function($event) {
+//						    $event.preventDefault();
+//						    $event.stopPropagation();
+//						    if ($scope.fromDateOpened) {
+//						    	$log.debug("    >>>>  OPEN -> CLOSE  <<<<");
+//						    	$scope.fromDateOpened = false;
+//						    } else {
+//						    	$log.debug("    >>>>  CLOSE -> OPEN  <<<<");
+//						    	$scope.fromDateOpened = true;	
+//						    }
+//						  };
+						// ============================================
+						// TODO: move to hbDate directive - END
+						// ============================================
+
 
 				        //   /api/melfin/G20060401225530100?xpath=//ELFIN[IDENTIFIANT/QUALITE='Entreprise']
 			            var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";

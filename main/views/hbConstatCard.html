@@ -22,8 +22,30 @@
 					</div>
 					<label for="date_constat" class="col-sm-2 control-label">Date de constat</label> 
 					<div class="col-sm-4">
-						<input id="date_constat" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.DE" 
-						tooltip="elfin.IDENTIFIANT.DE">
+<!-- 						<div class="input-group"> -->
+							<input 
+								id="date_constat" 
+								type="text" 
+								class="form-control" 
+								datepicker-popup="{{dateFormat}}" 
+								starting-day="1"
+								show-button-bar="true"
+								show-weeks="true"
+	                            current-text="Aujourd'hui"
+	                            close-text="Fermer"
+	                            clear-text="Annuler"
+								ng-model="fromDate"
+								tooltip="elfin.IDENTIFIANT.DE"
+								>
+							<!-- ng-model="elfin.IDENTIFIANT.DE"  
+							-->
+							<!-- ui.bootstrap 0.11.0 -->
+<!-- 								is-open="fromDateOpened"							 -->
+<!-- 							<span class="input-group-btn"> -->
+<!-- 								<button class="btn btn-default" type="button"  -->
+<!-- 									ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button> -->
+<!-- 							</span>				 -->
+<!-- 						</div>		 -->
 					</div> 				
 				</div>					
 	
