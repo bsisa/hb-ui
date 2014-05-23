@@ -22,8 +22,10 @@
 				<label for="role" class="col-sm-2 control-label">Rôle</label>
 				<div class="col-sm-10">
 					<select id="role" type="text" class="form-control"
-						placeholder="Choisir un rôle..."
-						required
+						chosen
+						data-placeholder="Choisir un rôle..."
+						disable-search="true"
+						allow-single-deselect="true"						
 						ng-model="elfin.IDENTIFIANT.QUALITE"
 						tooltip="elfin.IDENTIFIANT.QUALITE"
 						ng-options="value as label for (value,label) in qualiteList">
