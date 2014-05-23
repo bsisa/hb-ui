@@ -9,86 +9,69 @@
 					'hbUtil',
 					function($scope, $log, $filter, hbUtil) {
 
-						// Initialisation
-						$scope.hbDateCtrl = null;
+						// TODO: should be automatic with $locale providing the correct id i.e.: fr-ch, de-ch,...
+						// UI date format
+						$scope.dateFormat = 'dd.MM.yyyy';												
+						// TODO: make use of this
+						// GeoXML date format (ISO)
+						var GEOXML_DATE_FORMAT = "yyyy-MM-dd";						
 
-						this.$setHbDateCtrl = function(ctrl) {
-							$log.debug("    >>>> $setHbDateCtrl <<<< ");
-							$scope.hbDateCtrl = ctrl;
-							// Specify how UI should be updated
-							$scope.hbDateCtrl.$viewChangeListeners.push( function() {
-								$log.debug("$viewChangeListeners called for hbDateCtrl: ");
-								$log.debug("hbDateCtrl.$modelValue = " + $scope.hbDateCtrl.$modelValue);
-								$log.debug("hbDateCtrl.$viewValue = " + $scope.hbDateCtrl.$viewValue);
-					        });
-							$scope.hbDateCtrl.$render( function() {
-								$log.debug("$render called for hbDateCtrl: ");
-								$log.debug("hbDateCtrl.$modelValue = " + $scope.hbDateCtrl.$modelValue);
-								$log.debug("hbDateCtrl.$viewValue = " + $scope.hbDateCtrl.$viewValue);
-					        });							
+						// Reference to hb-date ng-model sibling directive controller
+						$scope.hbDateNgModelCtrl = null;
+
+						this.setHbDateNgModelCtrl = function(ctrl) {
+							$scope.hbDateNgModelCtrl = ctrl;						
 						};
 						
 						$log.debug("    >>>> Using HbDateController");	
-	
-						// TODO: make use of this 
-						var GEOXML_DATE_FORMAT = "yyyy-MM-dd";
-						
-						// Quick and dirty test
-//						var splittedModel = $scope.$modelValue.split("-");
-//						$scope.date = new Date(splittedModel[2], splittedModel[1] - 1, splittedModel[0]);
+
+						// datepicke-popup ng-model date
 						$scope.date = null;
-//						
-//						$log.debug("$modelValue is : " + $scope.$modelValue + ", date is : " + $scope.date);
-//						
-						// Update ngModel on date change
+						
+						
+						// Update ngModel on user date change
 						$scope.$watch('date', function (newDate, oldDate) {
+
 							$log.debug("Date change from " + oldDate + " to " + newDate);
+							
 							if (newDate) {
+								// Convert $scope.date to GeoXML string format suitable for hbDateNgModelCtrl
 								var isoTextDate = $filter('date')($scope.date, GEOXML_DATE_FORMAT);
-								$log.debug("isoTextDate: " + isoTextDate);
-								// Simulate user entry...
-								$log.debug("Simulate user entry... ");
-								$scope.hbDateCtrl.$viewValue = isoTextDate;
-								$log.debug("$commitViewValue ... ");
-								$scope.hbDateCtrl.$commitViewValue();
-//
-//								$log.debug("Update the model ... ");
-//								$scope.hbDateCtrl.$modelValue = isoTextDate;
+							
+								//$log.debug(">>>> isoTextDate: " + isoTextDate);
+								
+								if (isoTextDate !== $scope.hbDateNgModelCtrl.$modelValue) {
+									// Simulate user entry...
+									$scope.hbDateNgModelCtrl.$viewValue = isoTextDate;
+									$scope.hbDateNgModelCtrl.$commitViewValue();									
+								} else {
+									//$log.debug(">>>> ALREADY IN SYNC: $date and hbDateNgModelCtrl.$modelValue ");
+								}
 							}
-							if ($scope.hbDateCtrl) {
-								$log.debug("hbDateCtrl.$modelValue = " + $scope.hbDateCtrl.$modelValue);
-								$log.debug("hbDateCtrl.$viewValue = " + $scope.hbDateCtrl.$viewValue);
-							}							
-//							$scope.$modelValue = ($scope.date.getFullYear() + '-' + $scope.date.getMonth() + 1) + '-' + $scope.date.getDate();
-//							$log.debug("$modelValue updated to : " + $scope.$modelValue + ", date is : " + $scope.date);
 						}, true);
  
-						// Listen to hbDateCtrl model value change. (reference to method is safe thanks angular.noop)
-						$scope.$watch('hbDateCtrl.$modelValue', function (newValue, oldValue) {
+
+						// Listen to hbDateNgModelCtrl model value change. (reference to method is safe thanks angular.noop)
+						$scope.$watch('hbDateNgModelCtrl.$modelValue', function (newValue, oldValue) {
 							
-							$log.debug("hbDateCtrl.$modelValue changed : " + oldValue + " => " + newValue);
+							$log.debug("hbDateNgModelCtrl.$modelValue changed : " + oldValue + " => " + newValue);
 							
-							if ($scope.hbDateCtrl) {
+							if ($scope.hbDateNgModelCtrl && (newValue !== oldValue)) {
 								// update datepicker date with hbDate
-								var milliseconds = Date.parse($scope.hbDateCtrl.$modelValue);
+								var milliseconds = Date.parse($scope.hbDateNgModelCtrl.$modelValue);
 					            if (!isNaN(milliseconds)) {
 					            	$scope.date = new Date(milliseconds);
+					            	//$log.debug(">>>> New $scope.hbDateNgModelCtrl.$modelValue assigned to $scope.date : " + $scope.date);
 					            } else {
-					            	if ($scope.myWidget) {
-					            		$log.debug("Found myWidget setting it to invalid...");
-					            		var validationErrorKey = "hbDateInvalid";
-					            		var isValid = false;
-					            		$scope.myWidget.$setValidity(validationErrorKey, isValid);
-					            	} else {
-					            		$log.debug("Could not find myWidget in scope");
-					            	}
+					            	//$log.debug(">>>> NaN for $scope.hbDateNgModelCtrl.$modelValue : " + $scope.hbDateNgModelCtrl.$modelValue);
+					            	// TODO: check if this is a good way to trigger date validation error.
+					            	$scope.date = NaN;
 					            }
-							}							
+							} else {
+								//$log.debug(">>>> DO NOTHING: hbDateNgModelCtrl.$modelValue new and old are identical.");
+							}
 						}, true);						
 						
-						
-						// TODO: should be automatic with $locale providing the correct id i.e.: fr-ch, de-ch,...
-						$scope.dateFormat = 'dd.MM.yyyy';						
 						
 						// Only valid with ui.bootstrap 0.11.0 not 0.10.0						
 //						$scope.fromDateOpened = false;
@@ -103,9 +86,6 @@
 //						    	$scope.fromDateOpened = true;	
 //						    }
 //						  };
-						// ============================================
-						// TODO: move to hbDate directive - END
-						// ============================================
 	
 					} ]);
 	
