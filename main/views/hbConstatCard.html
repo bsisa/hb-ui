@@ -144,7 +144,9 @@
 						<tr ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE  | filter:{E_STATUT:'!OK'}">
 
 							<td rowspan="2">{{currentEvent.POS}}</td>
-							<td><input id="currentEventDate" type="text" class="form-control" ng-model="currentEvent.DATE" tooltip="currentEvent.DATE (elfin.ACTIVITE.EVENEMENT.ECHEANCE)"></td>
+							<td>
+								<div hb-date ng-model="currentEvent.DATE" ></div>
+							</td>
 							<td>
 								<div class="input-group">
 									<input id="currentEventAction" type="text" class="form-control" ng-model="currentEvent.ACTION" tooltip="currentEvent.ACTION">
@@ -162,7 +164,9 @@
 								</div>
 							</td>
 								
-							<td><input id="currentEventEDate" type="text" class="form-control" ng-model="currentEvent.E_DATE" tooltip="currentEvent.E_DATE"></td>
+							<td>
+								<div hb-date ng-model="currentEvent.E_DATE" ></div>
+							</td>
 							<td>
 								
 								<div class="input-group">

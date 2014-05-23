@@ -14,6 +14,7 @@
 			priority: 1,
 			templateUrl : "/assets/views/hbDate.html",
 			controller: 'HbDateController',
+			scope: true,
 			link: function ($scope, $element, $attrs, ctrls) {
 				var hbDateController = ctrls[0];
 				var ngModelController = ctrls[1];
