@@ -40,6 +40,13 @@
         // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
         
+        // Button bar layout helpers 
+        $scope.canSave = function() {
+        	return $scope.elfinForm.$dirty && $scope.elfinForm.$valid;
+        };
+        
+        
+        
     	$scope.removeKeyword = function ( index ) {
     		$log.debug("removing MOCLE at index " + index);
     	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);

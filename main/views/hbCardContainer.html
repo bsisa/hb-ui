@@ -10,14 +10,14 @@
         <div class="row hb-card-header">
 	        <div class="col-xs-8" >
 	       		<div class="btn-group">
-	        		<button class="btn btn-default" ng-click="putElfin(elfin)" href=""><i class="icon-save"></i></button>
-	        		<button class="btn btn-default" ng-click=""><i class="icon-copy"></i></button>
+	        		<button class="btn btn-default" ng-click="putElfin(elfin)" ng-disabled="!canSave()"><i class="icon-save"></i></button>
+	        		<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-copy"></i></button>
 	        		<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="icon-trash"></i></button>
-	        		<button class="btn btn-default" ng-click=""><i class="icon-paper-clip"></i></button>
-	        	    <button class="btn btn-default" ng-click=""><i class="icon-map-marker"></i></button>
-	        	    <button class="btn btn-default" ng-click=""><i class="icon-print"></i></button>
-	        	    <button class="btn btn-default" ng-click=""><i class="icon-cogs"></i></button>
-	        	    <button class="btn btn-default" ng-click=""><i class="icon-folder-open"></i></button>
+	        		<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-paper-clip"></i></button>
+	        	    <button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-map-marker"></i></button>
+	        	    <button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-print"></i></button>
+	        	    <button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-cogs"></i></button>
+	        	    <button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-folder-open"></i></button>
 	       		</div>
 	        </div>
 	        <div class="col-xs-4 text-right">
