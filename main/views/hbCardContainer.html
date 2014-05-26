@@ -20,18 +20,7 @@
 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-folder-open"></i></button>
 	   		</div>    
 	    
-	        <div class="row hb-card-header">
-		        <div class="col-xs-2" tooltip="{{elfin.ID_G}}/{{elfin.Id}}">
-		            <i class="icon-tag"></i> {{elfin.CLASSE}}<br/>
-		        </div>
-		        <div class="col-xs-10" >
-		            Messages ...<br/>
-		        </div>        
-		    </div>
-	        <div class="row hb-card-row">	        
-				<!-- ng-transclude is the placeholder where translation/inclusion will take place -->
-				<div class="col-xs-12" ng-transclude>
-			    </div>	        
+	        <div class="hb-card-content" ng-transclude>
 	        </div>
 		</form>
     </div>
