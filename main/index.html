@@ -93,9 +93,13 @@
 
 <body>
     <div ng-include="'/assets/views/menu.html'" ng-controller="MenuController"></div>
-<!-- 	<div class="container-fluid"> -->
-	<div class="container" ng-view>
-    </div>
-
-</body>
+	<!-- container-fluid for full-width layout (otherwise: container) -->
+	<div class="container-fluid" >
+		<div class="row">
+			<div class="col-xs-1"></div>
+			<div class="col-xs-10" ng-view></div>
+			<div class="col-xs-1"></div>
+		</div>
+	</div>
+	</body>
 </html>
