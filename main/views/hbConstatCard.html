@@ -1,9 +1,11 @@
 	<div class="row" style="padding-top: 8px;">
 		<div class="col-xs-2"><div style="padding-left: 15px;" tooltip="{{elfin.ID_G}}/{{elfin.Id}}"><i class="icon-tag"></i> {{elfin.CLASSE}}</div></div>
 		<div class="col-xs-10">
-			<span ng-show="elfinForm.$invalid" class="text-danger"><i class="glyphicon glyphicon-warning-sign" ></i></span>
+			<span ng-show="elfinForm.$invalid && elfinForm.$dirty" class="text-danger"><i class="glyphicon glyphicon-warning-sign" ></i></span>
+			<span ng-show="elfinForm.$invalid && elfinForm.$pristine" class="text-warning"><i class="glyphicon glyphicon-warning-sign" ></i></span>
 			<span ng-show="elfinForm.name.$error.required" >Le champs <em>Descriptif</em> est obligatoire!</span>			
 			<span ng-show="elfinForm.group.$error.required" >Le champs <em>Type</em> est obligatoire!</span>
+			<span ng-show="elfinForm.status.$error.required" >Le champs <em>Statut</em> est obligatoire!</span>
 		</div>
 	</div>
 	<div class="row" style="padding-top: 8px;">
@@ -13,11 +15,12 @@
 			<tab>
 				<tab-heading>Identifications</tab-heading>
 				<div class="hb-tab">
-					<div class="form-group">
-						<label for="statut" class="col-sm-2 control-label" style="width: 20 px; ">Statut</label> 
+					<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.status)">	
+						<label for="status" class="col-sm-2 control-label" style="width: 20 px; ">Statut</label> 
 						<div class="col-sm-4">
 							<select
-								id="statut"  
+								id="status"
+								name="status"   
 								class="form-control"
 								chosen
 								data-placeholder="Choisir un statut"
@@ -25,6 +28,7 @@
 								allow-single-deselect="true"
 								ng-model="elfin.IDENTIFIANT.QUALITE"
 								ng-options="value as label for (value, label) in statusTypes"
+								required
 								>
 								<option value=''> </option>
 							</select>
