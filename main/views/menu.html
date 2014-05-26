@@ -35,8 +35,8 @@
 </ul>
 
 <!-- TODO: notifications should be displayed in a modal popup -->
-<div ng-show="getAlerts.length > 0" class="container" >
-	<div class="grid">
+<div ng-show="getAlerts.length > 0" class="container hb-alert-panel-fixed-top" >
+	<div class="hb-alert-panel-center">
 		<div class="hb-card col-sm-12">
 			<div>
 				<alert ng-repeat="alert in getAlerts" type="alert.type" close="removeAlert($index)">{{alert.message}}</alert>

@@ -36,6 +36,22 @@
 	width: 100%;
 }
 
+/* alert panels floating a fixed position under top menu bar*/
+.hb-alert-panel-fixed-top {
+	position: fixed;
+	top: 16px;
+	left: 0px;
+	right: 0px;
+	border: none;
+	z-index:50;
+}
+/* alert panels contained in hb-alert-panel-fixed-top providing centered position */
+.hb-alert-panel-center {
+	width: 60%;
+	margin: auto;
+}
+
+
 .menu li.search-wrapper {
     margin-right: 10px;
     margin-top: 8px;
