@@ -1,0 +1,65 @@
+	<div class="row" style="padding-top: 8px;">
+		<div class="col-xs-2"><div style="padding-left: 15px;" tooltip="{{elfin.ID_G}}/{{elfin.Id}}"><i class="icon-tag"></i> {{elfin.CLASSE}}</div></div>
+		<div class="col-xs-10">
+			<span ng-show="elfinForm.$invalid && elfinForm.$dirty" class="text-danger"><i class="glyphicon glyphicon-warning-sign" ></i></span>
+			<span ng-show="elfinForm.$invalid && elfinForm.$pristine" class="text-warning"><i class="glyphicon glyphicon-warning-sign" ></i></span>
+			<!-- Custom validation message to be defined here -->
+			<!-- 			<span ng-show="elfinForm.name.$error.required" >Le champs <em>Descriptif</em> est obligatoire!</span>			 -->
+			<!-- 			<span ng-show="elfinForm.group.$error.required" >Le champs <em>Type</em> est obligatoire!</span> -->
+			<!-- 			<span ng-show="elfinForm.status.$error.required" >Le champs <em>Statut</em> est obligatoire!</span> -->
+		</div>
+	</div>
+	<div class="row" style="padding-top: 8px;">
+		<div class="col-xs-12">
+			<tabset> <!-- CONSTAT tab --> <tab> <tab-heading>Identifications</tab-heading>
+			<div class="hb-tab">
+				<div class="form-group">
+					<label for="nom" class="col-sm-2 control-label">Nom de
+						famille</label>
+					<div class="col-sm-10">
+						<input id="nom" type="text" class="form-control"
+							ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="prenom" class="col-sm-2 control-label">Prénom</label>
+					<div class="col-sm-10">
+						<input id="prenom" type="text" class="form-control"
+							ng-model="elfin.IDENTIFIANT.ALIAS"
+							tooltip="elfin.IDENTIFIANT.ALIAS">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="role" class="col-sm-2 control-label">Rôle</label>
+					<div class="col-sm-10">
+						<select id="role" type="text" class="form-control"
+							chosen
+							data-placeholder="Choisir un rôle..."
+							disable-search="true"
+							allow-single-deselect="true"						
+							ng-model="elfin.IDENTIFIANT.QUALITE"
+							tooltip="elfin.IDENTIFIANT.QUALITE"
+							ng-options="value as label for (value,label) in qualiteList">
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="societe" class="col-sm-2 control-label">Société</label>
+					<div class="col-sm-10">
+						<input id="societe" type="text" class="form-control"
+							ng-model="elfin.GROUPE" tooltip="elfin.GROUPE">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tel" class="col-sm-2 control-label">Téléphone</label>
+					<div class="col-sm-10">
+						<input id="tel" type="text" class="form-control"
+							ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"
+							tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR">
+					</div>
+				</div>
+	
+			</div>
+			</tab> </tabset>
+		</div>
+	</div>

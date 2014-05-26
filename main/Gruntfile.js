@@ -21,7 +21,7 @@ module.exports = function(grunt) {
             },
 
             dist: {
-                src: ['src/geoxml.js', 'src/hb5.js', 'src/menu.js','src/acteurCardController.js', 'src/hbAlertMessagesService.js', 'src/hbDateDirective.js', 'src/hbDateController.js', 'src/hbDateParserDirective.js', 'src/hbCardContainerDirective.js', 'src/hbCardContainerController.js', 'src/hbChooseOneController.js', 'src/hbChooseOneDirective.js','src/hbConstatCardDirective.js','src/hbConstatCardController.js', 'src/hbDropdownMenuDirective.js', 'src/hbListContainerController.js', 'src/hbListContainerDirective.js' , 'src/immeubleCardController.js', 'src/spreadsheetSelect.js', 'src/hbUtilService.js'],
+                src: ['src/geoxml.js', 'src/hb5.js', 'src/menu.js', 'src/hbActeurCardDirective.js', 'src/hbActeurCardController.js', 'src/hbAlertMessagesService.js', 'src/hbDateDirective.js', 'src/hbDateController.js', 'src/hbDateParserDirective.js', 'src/hbCardContainerDirective.js', 'src/hbCardContainerController.js', 'src/hbChooseOneController.js', 'src/hbChooseOneDirective.js','src/hbConstatCardDirective.js','src/hbConstatCardController.js', 'src/hbDropdownMenuDirective.js', 'src/hbListContainerController.js', 'src/hbListContainerDirective.js' , 'src/immeubleCardController.js', 'src/spreadsheetSelect.js', 'src/hbUtilService.js'],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },

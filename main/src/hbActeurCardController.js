@@ -1,7 +1,7 @@
 (function() {
 
 	angular.module('hb5').controller(
-			'ActeurCardController',
+			'HbActeurCardController',
 			[
 					'$scope',
 					'GeoxmlService',
@@ -14,8 +14,8 @@
 					function($scope, GeoxmlService, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil) {
 
-						$log.debug("    >>>> Using ActeurCardController");
-
+						$log.debug("    >>>> Using HbActeurCardController ");
+						
 						// TODO: get this dynamically from HB5 catalogue
 						$scope.qualiteList = {
 							"Gérant" : "Gérant",
@@ -23,8 +23,9 @@
 							"Responsable chauffage" : "Responsable chauffage",
 							"Entreprise" : "Entreprise",
 							"Collaborateur" : "Collaborateur"
-						};
-
+						};						
+						
 					} ]);
+	
 
 })();

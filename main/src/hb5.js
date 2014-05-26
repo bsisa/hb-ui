@@ -32,8 +32,7 @@
                 templateUrl: '/assets/views/CONSTAT_card_view.html'
             })
             .when('/elfin/:collectionId/ACTEUR/:elfinId', {
-                templateUrl: '/assets/views/ACTEUR_card_view.html',
-                controller: 'ActeurCardController'
+                templateUrl: '/assets/views/ACTEUR_card_view.html'
             })                        
             .when('/elfin/:collectionId/:classe/:elfinId', {
                 templateUrl: '/assets/views/default_card_view.html'
