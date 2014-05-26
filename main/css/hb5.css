@@ -22,7 +22,7 @@
 /* card-container buttons bar*/
 .hb-btn-bar {
 	position: fixed;
-	top: 72px;
+	top: 104px;
 	left: 10px;
 	width: 36px;
 }
@@ -109,25 +109,25 @@ button:hover {
 	border-right: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;	
 }
+
 .hb-card {
 	border: 2px solid pink;
-	padding-top: 72px;
-/*	border: 1px solid #ddd; */
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 15px;
-    background: #fff;
+	padding-top: 62px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
 }
 
-div.hb-card-header {
-	border: 2px solid red;
-	background-color: lightblue;
-	padding: 10px;
-}
-div.hb-card-row {
-	border: 2px solid yellow;
+/* div.hb-card-header { */
+/* 	border: 2px solid red; */
+/* 	background-color: lightblue; */
+/* 	padding: 10px; */
+/* } */
+
+div.hb-card-content {
+	border: 1px solid #ddd;
 	background-color: white;
-	padding: 10px;
+	padding: 0px;
 }
 
 .notifications {
@@ -312,38 +312,66 @@ a [class^="icon-"]
 
 /* Change background depending on ng-form dirty / pristine state */
 form.ng-dirty {
-	transition:1.5s linear all;
-#    background-color: #FA5858;
-    background-color: #F5A9A9;
+	transition:0.5s linear all;
+    background-color: #FFCCCC;
 }
 form.ng-pristine {
-	transition:1.5s linear all;
-#    background-color: #04B431;
-    background-color: #A2FF7D;
-}
-
-input.ng-dirty {
-    background-color: #F5A9A9;
+	transition:0.5s linear all;
+    background-color: white;
 }
 
 input.ng-pristine {
     background-color: white;
+	transition:0.5s linear all;
 }
-
-textarea.ng-dirty {
-    background-color: #F5A9A9;
+input.ng-dirty.ng-invalid {
+    background-color: #FFCCCC ;
+    border: dotted red 1px;
+	transition:0.5s linear all;
+}
+input.ng-dirty.ng-valid {
+/*     background-color: #CCFFCC; */
+    border: dotted green 1px;
+	transition:0.5s linear all;
 }
 
 textarea.ng-pristine {
     background-color: white;
+    transition:0.5s linear all;
+}
+textarea.ng-dirty.ng-invalid {
+    background-color: #FFCCCC ;
+    border: dotted red 1px;
+	transition:0.5s linear all;
+}
+textarea.ng-dirty.ng-valid {
+/*     background-color: #CCFFCC; */
+    border: dotted green 1px;
+	transition:0.5s linear all;
 }
 
+select.ng-pristine {
+    background-color: white;
+    transition:0.5s linear all;
+}
+select.ng-dirty.ng-invalid {
+/*     background-color: #FFCCCC ; */
+    border: dotted red 1px;
+	transition:0.5s linear all;
+}
+select.ng-dirty.ng-valid {
+    background-color: #CCFFCC;
+    border: dotted green 1px;
+	transition:0.5s linear all;
+}
+
+
 /* Do not change modal input background while entering data */
-div.modal-body .ng-dirty {
+div.modal-body.ng-dirty {
     background-color: white;
 }
 /* Do not set modal input background to green when pristine */
-div.modal-body .ng-pristine {
+div.modal-body.ng-pristine {
     background-color: white;
 }
 
