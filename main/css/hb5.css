@@ -111,7 +111,7 @@ button:hover {
 }
 
 .hb-card {
-	border: 2px solid pink;
+/* 	border: 2px solid pink; */
 	padding-top: 62px;
     padding-left: 0px;
     padding-right: 0px;
@@ -308,6 +308,7 @@ a [class^="icon-"]
     background: url(/assets/images/ajax-loader.gif) transparent no-repeat;
     height: 40px;
     width: 40px;
+    vertical-align:middle;
 }
 
 /* Change background depending on ng-form dirty / pristine state */
