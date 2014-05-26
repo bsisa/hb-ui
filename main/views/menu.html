@@ -39,7 +39,7 @@
 	<div class="grid">
 		<div class="hb-card col-sm-12">
 			<div>
-				<alert ng-repeat="alert in getAlerts" type="{{alert.type}}" close="removeAlert($index)">{{alert.message}}</alert>
+				<alert ng-repeat="alert in getAlerts" type="alert.type" close="removeAlert($index)">{{alert.message}}</alert>
 			</div>				
 		</div>
 	</div>
