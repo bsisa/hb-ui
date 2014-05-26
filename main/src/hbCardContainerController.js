@@ -45,7 +45,14 @@
         	return $scope.elfinForm.$dirty && $scope.elfinForm.$valid;
         };
         
-        
+        $scope.getBtnClasses = function(ngFormContoller) {
+            return {
+            	"btn-default" : ngFormContoller.$pristine,
+            	"btn-danger" : ngFormContoller.$dirty && ngFormContoller.$invalid,
+            	"btn-primary": ngFormContoller.$dirty && ngFormContoller.$valid
+            };
+          };
+        //ng-class="getCssClasses(userInfoForm.email)"        
         
     	$scope.removeKeyword = function ( index ) {
     		$log.debug("removing MOCLE at index " + index);

@@ -6,31 +6,34 @@
 
 <!-- TODO: REFACTOR to a single form named 'elfinForm' -->
     <div ng-show="elfin" >
-    <form name="elfinForm" class="form-horizontal" role="form" novalidate > <!--  novalidate prevents HTML5 automated validation  -->
-        <div class="row hb-card-header">
-	        <div class="col-xs-8" >
-	       		<div class="btn-group-vertical">
-	        		<button class="btn btn-default" ng-click="putElfin(elfin)" ng-disabled="!canSave()"><i class="icon-save"></i></button>
-	        		<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-copy"></i></button>
-	        		<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="icon-trash"></i></button>
-	        		<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-paper-clip"></i></button>
-	        	    <button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-map-marker"></i></button>
-	        	    <button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-print"></i></button>
-	        	    <button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-cogs"></i></button>
-	        	    <button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-folder-open"></i></button>
-	       		</div>
+	    <form name="elfinForm" class="form-horizontal" role="form" novalidate > <!--  novalidate prevents HTML5 automated validation  -->
+	    
+			<!-- Fix position buttons bar -->
+			<div class="hb-btn-bar btn-group-vertical" >
+				<button class="btn btn-default" ng-class="getBtnClasses(elfinForm)" ng-click="putElfin(elfin)" ng-disabled="!canSave()"><i class="icon-save"></i></button>
+				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-copy"></i></button>
+				<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="icon-trash"></i></button>
+				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-paper-clip"></i></button>
+				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-map-marker"></i></button>
+				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-print"></i></button>
+				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-cogs"></i></button>
+				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-folder-open"></i></button>
+	   		</div>    
+	    
+	        <div class="row hb-card-header">
+		        <div class="col-xs-2" tooltip="{{elfin.ID_G}}/{{elfin.Id}}">
+		            <i class="icon-tag"></i> {{elfin.CLASSE}}<br/>
+		        </div>
+		        <div class="col-xs-10" >
+		            Messages ...<br/>
+		        </div>        
+		    </div>
+	        <div class="row hb-card-row">	        
+				<!-- ng-transclude is the placeholder where translation/inclusion will take place -->
+				<div class="col-xs-12" ng-transclude>
+			    </div>	        
 	        </div>
-	        <div class="col-xs-4 text-right">
-	            <i class="icon-tag"></i> {{elfin.CLASSE}}<br/>
-	            <i class="icon-folder-close"></i> {{elfin.ID_G}}<br/>
-	            <i class="icon-file"></i> {{elfin.Id}}
-	        </div>
-        </div>
-		<!-- ng-transclude is the placeholder where translation/inclusion will take place -->
-		<div class="row hb-card-row" ng-transclude>
-
-        </div> <!-- row end -->
-	</form>
+		</form>
     </div>
 
 
