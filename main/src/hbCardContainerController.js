@@ -40,11 +40,17 @@
         // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
         
-        // Button bar layout helpers 
+        // ============================================================
+        // Button bar layout helpers
+        // ============================================================
+        
+        // Manage enable/disable state 
         $scope.canSave = function() {
         	return $scope.elfinForm.$dirty && $scope.elfinForm.$valid;
         };
         
+        // Manage button class depending on pristine/dirty 
+        // valid/invalid status
         $scope.getBtnClasses = function(ngFormContoller) {
             return {
             	"btn-default" : ngFormContoller.$pristine,
@@ -52,8 +58,9 @@
             	"btn-primary": ngFormContoller.$dirty && ngFormContoller.$valid
             };
           };
-        //ng-class="getCssClasses(userInfoForm.email)"        
         
+        // ============================================================
+          
     	$scope.removeKeyword = function ( index ) {
     		$log.debug("removing MOCLE at index " + index);
     	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
