@@ -3,7 +3,7 @@
 	    angular
 			.module('hb5')
 			.controller(
-					'ImmeubleCardController',
+					'HbImmeubleCardController',
 					[
 							'$scope',
 							'GeoxmlService',
@@ -17,7 +17,7 @@
 									$routeParams, $location, $log, hbAlertMessages,
 									hbUtil) {
     
-									$log.debug("    >>>> Using ImmeubleCardController");
+									$log.debug("    >>>> Using HbImmeubleCardController");
 							        
 							        $scope.constats = null;
 							    	
@@ -28,7 +28,7 @@
 							    		if ($scope.elfin!=null) {
 								            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
-								            $log.debug("TODO: ImmeubleCardController: constatsCollectionId must come from server configuration resource.");
+								            $log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
 								            var constatsCollectionId = 'G20060920171100001';
 								            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstats})
 												.then(function(elfins) {

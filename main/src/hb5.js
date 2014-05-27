@@ -25,8 +25,7 @@
                 controller: function($scope) {}
             })
             .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
-                templateUrl: '/assets/views/IMMEUBLE_card_view.html',
-                controller: 'ImmeubleCardController'
+                templateUrl: '/assets/views/IMMEUBLE_card_view.html'
             })
             .when('/elfin/:collectionId/CONSTAT/:elfinId', {
                 templateUrl: '/assets/views/CONSTAT_card_view.html'

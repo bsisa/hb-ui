@@ -19,9 +19,30 @@ module.exports = function(grunt) {
             options: {
                 separator: ''
             },
-
             dist: {
-                src: ['src/geoxml.js', 'src/hb5.js', 'src/menu.js', 'src/hbActeurCardDirective.js', 'src/hbActeurCardController.js', 'src/hbAlertMessagesService.js', 'src/hbCardContainerDirective.js', 'src/hbCardContainerController.js', 'src/hbCardHeaderDirective.js', 'src/hbChooseOneController.js', 'src/hbChooseOneDirective.js','src/hbConstatCardDirective.js','src/hbConstatCardController.js', 'src/hbDateDirective.js', 'src/hbDateController.js', 'src/hbDateParserDirective.js', 'src/hbDefaultCardDirective.js', 'src/hbDefaultCardController.js', 'src/hbDropdownMenuDirective.js', 'src/hbListContainerController.js', 'src/hbListContainerDirective.js' , 'src/immeubleCardController.js', 'src/spreadsheetSelect.js', 'src/hbUtilService.js'],
+            	src : [ 'src/geoxml.js', 'src/hb5.js', 'src/menu.js',
+								'src/hbActeurCardDirective.js',
+								'src/hbActeurCardController.js',
+								'src/hbAlertMessagesService.js',
+								'src/hbCardContainerDirective.js',
+								'src/hbCardContainerController.js',
+								'src/hbCardHeaderDirective.js',
+								'src/hbChooseOneController.js',
+								'src/hbChooseOneDirective.js',
+								'src/hbConstatCardDirective.js',
+								'src/hbConstatCardController.js',
+								'src/hbDateDirective.js',
+								'src/hbDateController.js',
+								'src/hbDateParserDirective.js',
+								'src/hbDefaultCardDirective.js',
+								'src/hbDefaultCardController.js',
+								'src/hbDropdownMenuDirective.js',
+								'src/hbImmeubleCardDirective.js', 
+								'src/hbImmeubleCardController.js',								
+								'src/hbListContainerController.js',
+								'src/hbListContainerDirective.js',
+								'src/hbUtilService.js',
+								'src/spreadsheetSelect.js'],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
