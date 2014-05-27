@@ -347,7 +347,7 @@ input.ng-dirty.ng-invalid {
 	transition:0.5s linear all;
 }
 input.ng-dirty.ng-valid {
-/*     background-color: #CCFFCC; */
+    background-color: #CCFFCC;
     border: dotted green 1px;
 	transition:0.5s linear all;
 }
@@ -362,7 +362,7 @@ textarea.ng-dirty.ng-invalid {
 	transition:0.5s linear all;
 }
 textarea.ng-dirty.ng-valid {
-/*     background-color: #CCFFCC; */
+    background-color: #CCFFCC;
     border: dotted green 1px;
 	transition:0.5s linear all;
 }
@@ -372,7 +372,7 @@ select.ng-pristine {
     transition:0.5s linear all;
 }
 select.ng-dirty.ng-invalid {
-/*     background-color: #FFCCCC ; */
+    background-color: #FFCCCC ;
     border: dotted red 1px;
 	transition:0.5s linear all;
 }
