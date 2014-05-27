@@ -23,15 +23,16 @@
         
     /**
      * Controller for hb-card-container directive providing the global elfin card toolbox and 
-     * insert point (ng-transclude) for custom cards layout. 
+     * insert point (ng-transclude) for custom cards layout.
+     * 
+     * This controller logic is meant to be inherited by all hb-xxx-card directives 
+     * provided they declare: require: '^hbCardContainer'
+     * 
+     * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
     angular.module('hb5').controller('HbCardContainerController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil) {
     
     	$log.debug("HbCardContainerController called at " + new Date());
-    	
-    	// ====================================================================
-    	// Global logic to move to hb-card-container directive controller.
-    	// ====================================================================    	
     	
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
@@ -44,13 +45,17 @@
         // Button bar layout helpers
         // ============================================================
         
-        // Manage enable/disable state 
+        /**
+         * Help managing enable/disable state of ELFIN save button 
+         */
         $scope.canSave = function() {
         	return $scope.elfinForm.$dirty && $scope.elfinForm.$valid;
         };
         
-        // Manage button class depending on pristine/dirty 
-        // valid/invalid status
+        /** 
+         * Help manage button class depending on pristine/dirty
+         * valid/invalid status
+         */
         $scope.getBtnClasses = function(ngFormContoller) {
             return {
             	"btn-default" : ngFormContoller.$pristine,
@@ -61,7 +66,8 @@
         
 		// ============================================
 		// validation helpers
-		// ============================================						
+		// ============================================
+          
 		$scope.getCssLabelFeedback = function (formController) {
 			return {
 				"label-danger" : formController.$dirty && formController.$invalid,
@@ -92,24 +98,28 @@
 //				return ngModelController.$error[errorKey];
 //			};												
 		// ============================================          
-          
-          
-          
-        // ============================================================
-          
+
+
+        /**
+         * Manages elfin.IDENTIFIANT.MOTCLE array elements removal.
+         */
     	$scope.removeKeyword = function ( index ) {
 
-    		$scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
-    	    if ($scope.elfin.IDENTIFIANT.MOTCLE.VALUE && !$scope.elfin.IDENTIFIANT.MOTCLE.VALUE.trim() === '') {
+    		// Get the value of the MOTCLE to remove
+    		var keywordToRemoveValue = $scope.elfin.IDENTIFIANT.MOTCLE[index].VALUE;
+    		
+    		// Only set elfinForm to dirty status if it is not an empty string.
+    	    if (keywordToRemoveValue && keywordToRemoveValue.trim() !== '') {
         	    $scope.elfinForm.$setDirty();
-        	    $log.debug("Removing a MOCLE with non empty value " + $scope.elfin.IDENTIFIANT.MOTCLE.VALUE + " at index " + index + " makes the form dirty.");
     	    } else {
-    	    	$log.debug("Removing a MOCLE with empty value at index " + index + " does not make the form dirty.");
+    	    	// do nothing 
     	    }
-
+    		$scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
     	};
     	
-    	// Wrapper for ELFIN PUT (update) operation
+    	/**
+    	 * Wrapper for ELFIN PUT (update) operation
+    	 */
         $scope.putElfin = function (elfin) {
         	$log.debug("HbCardContainerController putElfin called at " + new Date());
        		elfin.put().then( 
