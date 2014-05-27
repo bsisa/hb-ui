@@ -8,72 +8,116 @@
 		<tab>
 			<tab-heading>Immeuble</tab-heading>
 			<div class="hb-tab">
-				<div class="form-group">
-					<label for="goal" class="col-sm-2 control-label">Numéro de gérance</label> 
-					<div class="col-sm-4">
-						<input id="goal" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF" tooltip="elfin.IDENTIFIANT.OBJECTIF">
-					</div> 
-	
-					<label for="author" class="col-sm-2 control-label">Numéro ECAP</label>
-					<div class="col-sm-4"> 
-							<input id="author" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR">
-						</div> 
-	
-					<label for="name" class="col-sm-2 control-label">N° de construction</label>
-					<div class="col-sm-4">
-						<input id="name" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM">
-					</div>
-	
-					<label for="address" class="col-sm-2 control-label">Adresse</label>
-					<div class="col-sm-4"> 
-						<input id="address" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS" tooltip="elfin.IDENTIFIANT.ALIAS">
-					</div>
-	
-					<label for="address" class="col-sm-2 control-label">Numéro cadastral</label>
-					<div class="col-sm-4"> 
-						<input id="address" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR" tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR">
-					</div>
-				</div>
-	
-				<div class="form-group">
-					<label for="manager" class="col-sm-2 control-label">Propriétaire</label>
-					<div class="col-sm-4">
-						<div class="input-group">
-							<input id="manager"	type="text" class="form-control" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
-					    	<span class="input-group-btn">
-	        					<button class="btn btn-default" type="button" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE)">Choix</button>
-	      					</span>						
+			
+				<div class="row" >
+					<div class="col-sm-6">	
+						<div class="form-group">
+							<label for="goal" class="col-sm-4 control-label">Numéro de gérance</label> 
+							<div class="col-sm-8">
+								<input id="goal" name="goal" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF" tooltip="elfin.IDENTIFIANT.OBJECTIF">
+							</div> 
 						</div>
 					</div>
-	
-					<label for="managerName" class="col-sm-2 control-label">Nom du propriétaire</label>
-					<div class="col-sm-4">
-						<div class="input-group">
-							<input id="managerName" type="text" class="form-control" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM">
-					    	<span class="input-group-btn">
-	        					<button class="btn btn-default" type="button" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM)">Choix</button>
-	      					</span>						
+					<div class="col-sm-6">	
+						<div class="form-group">
+							<label for="author" class="col-sm-4 control-label">Numéro ECAP</label>
+							<div class="col-sm-8"> 
+									<input id="author" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR">
+							</div> 
 						</div>
 					</div>
-					<label for="alias" class="col-sm-2 control-label">Architecte</label>
-					<div class="col-sm-4">
-						<input id="alias" type="text" class="form-control" ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE">
+				</div>
+				
+				<div class="row" >
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="name" class="col-sm-4 control-label">N° de construction</label>
+							<div class="col-sm-8">
+								<input id="name" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">		
+							<label for="address" class="col-sm-4 control-label">Adresse</label>
+							<div class="col-sm-8"> 
+								<input id="address" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS" tooltip="elfin.IDENTIFIANT.ALIAS">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" >
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="address" class="col-sm-2 control-label">Numéro cadastral</label>
+							<div class="col-sm-4"> 
+								<input id="address" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR" tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR">
+							</div>
+						</div>
+					</div>
+				</div>
+	
+				<div class="row" >
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<input id="manager"	type="text" class="form-control" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
+							    	<span class="input-group-btn">
+			        					<button class="btn btn-default" type="button" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE)">Choix</button>
+			      					</span>						
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">	
+							<label for="managerName" class="col-sm-4 control-label">Nom du propriétaire</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<input id="managerName" type="text" class="form-control" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM">
+							    	<span class="input-group-btn">
+			        					<button class="btn btn-default" type="button" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM)">Choix</button>
+			      					</span>						
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" >
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="alias" class="col-sm-2 control-label">Architecte</label>
+							<div class="col-sm-4">
+								<input id="alias" type="text" class="form-control" ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" >
+					<div class="col-sm-12">	
+						<div class="form-group">
+							<label for="address" class="col-sm-2 control-label">Lieu-dit</label>
+							<div class="col-sm-10">
+								<input id="address" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12">	
+						<div class="form-group">
+							<label for="address" class="col-sm-2 control-label">Remarque</label>
+							<div class="col-sm-10">
+								<input id="address" type="text" class="form-control" ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
+							</div>
+						</div>
 					</div>
 				</div>
 	
 				<div class="form-group">
-					<label for="address" class="col-sm-2 control-label">Lieu-dit</label>
-					<div class="col-sm-10">
-						<input id="address" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
-					</div>
-					<label for="address" class="col-sm-2 control-label">Remarque</label>
-					<div class="col-sm-10">
-						<input id="address" type="text" class="form-control" ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
-					</div>
-				</div>
-	
-				<div class="form-group">
-					<div ng-show="elfin.IDENTIFIANT.MOTCLE.length > 0" class="col-sm-12">
+					<div class="col-sm-12">
 						<table class="table table-condensed table-bordered table-striped">
 							<thead>
 								<tr>
@@ -87,7 +131,7 @@
 									</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody ng-show="elfin.IDENTIFIANT.MOTCLE.length > 0">
 								<tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
 									<td>
 										<div class="input-group">
