@@ -36,34 +36,6 @@
 						// TODO: should be automatic with $locale providing the correct id i.e.: fr-ch, de-ch,...
 						$scope.dateFormat = 'dd.MM.yyyy';						
 						
-
-						// ============================================
-						// validation helpers
-						// ============================================						
-						$scope.getCssHasFeedback = function (ngModelController) {
-							return {
-								"has-error" : ngModelController.$dirty && ngModelController.$invalid,
-								"has-success" : ngModelController.$dirty && ngModelController.$valid, 
-								"has-warning" : ngModelController.$pristine && ngModelController.$invalid, // unexpected situation  
-							};
-						};
-						
-						$scope.getCssGlyphFeedback = function (ngModelController) {
-							return {
-								"glyphicon-remove" : ngModelController.$dirty && ngModelController.$invalid,
-								"glyphicon-ok" : ngModelController.$dirty && ngModelController.$valid, 
-								"glyphicon-warning-sign" : ngModelController.$pristine && ngModelController.$invalid, // unexpected situation  
-							};
-						};
-
-//						$scope.hasError = function(ngModelController,
-//								errorkey) {
-//							return ngModelController.$error[errorKey];
-//						};												
-						// ============================================						
-						
-						
-
 						
 						// Only valid with ui.bootstrap 0.11.0 not 0.10.0						
 //						$scope.fromDateOpened = false;

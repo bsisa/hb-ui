@@ -1,5 +1,9 @@
 <div class="row" style="padding-top: 8px;">
-	<div class="col-xs-2"><div style="padding-left: 15px;" tooltip="{{elfin.ID_G}}/{{elfin.Id}}"><i class="icon-tag"></i> {{elfin.CLASSE}}</div></div>
+	<div class="col-xs-2">
+		<div style="padding-left: 15px;" tooltip="{{elfin.ID_G}}/{{elfin.Id}}">
+			<span class="h4"><span class="label label-primary" ng-class="getCssLabelFeedback(elfinForm)"><i class="icon-tag"></i> {{elfin.CLASSE}}</span></span>
+		</div>
+	</div>
 	<div class="col-xs-10">
 		<span ng-show="elfinForm.$invalid && elfinForm.$dirty" class="text-danger"><i class="glyphicon glyphicon-warning-sign" ></i></span>
 		<span ng-show="elfinForm.$invalid && elfinForm.$pristine" class="text-warning"><i class="glyphicon glyphicon-warning-sign" ></i></span>

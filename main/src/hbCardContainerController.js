@@ -59,6 +59,42 @@
             };
           };
         
+		// ============================================
+		// validation helpers
+		// ============================================						
+		$scope.getCssLabelFeedback = function (formController) {
+			return {
+				"label-danger" : formController.$dirty && formController.$invalid,
+				"label-success" : formController.$dirty && formController.$valid, 
+				"label-warning" : formController.$pristine && formController.$invalid, // Might happen if database data does not fulfill a client side validation rule.
+				"label-primary" : formController.$pristine && formController.$valid,
+			};
+		};
+		
+		$scope.getCssHasFeedback = function (ngModelController) {
+			return {
+				"has-error" : ngModelController.$dirty && ngModelController.$invalid,
+				"has-success" : ngModelController.$dirty && ngModelController.$valid, 
+				"has-warning" : ngModelController.$pristine && ngModelController.$invalid, // unexpected situation  
+			};
+		};						
+		
+		$scope.getCssGlyphFeedback = function (ngModelController) {
+			return {
+				"glyphicon-remove" : ngModelController.$dirty && ngModelController.$invalid,
+				"glyphicon-ok" : ngModelController.$dirty && ngModelController.$valid, 
+				"glyphicon-warning-sign" : ngModelController.$pristine && ngModelController.$invalid, // unexpected situation  
+			};
+		};
+
+//			$scope.hasError = function(ngModelController,
+//					errorkey) {
+//				return ngModelController.$error[errorKey];
+//			};												
+		// ============================================          
+          
+          
+          
         // ============================================================
           
     	$scope.removeKeyword = function ( index ) {
