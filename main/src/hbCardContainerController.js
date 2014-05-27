@@ -98,9 +98,15 @@
         // ============================================================
           
     	$scope.removeKeyword = function ( index ) {
-    		$log.debug("removing MOCLE at index " + index);
-    	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
-    	    $scope.elfinForm.$setDirty();
+
+    		$scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
+    	    if ($scope.elfin.IDENTIFIANT.MOTCLE.VALUE && !$scope.elfin.IDENTIFIANT.MOTCLE.VALUE.trim() === '') {
+        	    $scope.elfinForm.$setDirty();
+        	    $log.debug("Removing a MOCLE with non empty value " + $scope.elfin.IDENTIFIANT.MOTCLE.VALUE + " at index " + index + " makes the form dirty.");
+    	    } else {
+    	    	$log.debug("Removing a MOCLE with empty value at index " + index + " does not make the form dirty.");
+    	    }
+
     	};
     	
     	// Wrapper for ELFIN PUT (update) operation
