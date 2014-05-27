@@ -1,5 +1,13 @@
 <div hb-card-header >
 	<!-- Custom validation message to be defined here -->
+	<span ng-show="elfinForm.goal.$error.required" >Le champs <strong>Numéro de gérance</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.author.$error.required" >Le champs <strong>Numéro ECAP</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.name.$error.required" >Le champs <strong>N° de construction</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.address.$error.required" >Le champs <strong>Adresse</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.cadastralNb.$error.required" >Le champs <strong>Numéro cadastral</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.manager.$error.required" >Le champs <strong>Propriétaire</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.managerName.$error.required" >Le champs <strong>Nom du propriétaire</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.alias.$error.required" >Le champs <strong>Architecte</strong> est obligatoire!</span>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -11,18 +19,18 @@
 			
 				<div class="row" >
 					<div class="col-sm-6">	
-						<div class="form-group">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.goal)">
 							<label for="goal" class="col-sm-4 control-label">Numéro de gérance</label> 
 							<div class="col-sm-8">
-								<input id="goal" name="goal" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF" tooltip="elfin.IDENTIFIANT.OBJECTIF">
+								<input id="goal" name="goal" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF" tooltip="elfin.IDENTIFIANT.OBJECTIF" required>
 							</div> 
 						</div>
 					</div>
 					<div class="col-sm-6">	
-						<div class="form-group">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.author)">
 							<label for="author" class="col-sm-4 control-label">Numéro ECAP</label>
 							<div class="col-sm-8"> 
-									<input id="author" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR">
+									<input id="author" name="author" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" required>
 							</div> 
 						</div>
 					</div>
@@ -30,18 +38,18 @@
 				
 				<div class="row" >
 					<div class="col-sm-6">
-						<div class="form-group">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.name)">
 							<label for="name" class="col-sm-4 control-label">N° de construction</label>
 							<div class="col-sm-8">
-								<input id="name" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM">
+								<input id="name" name="name" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM" required>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6">
-						<div class="form-group">		
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.address)">		
 							<label for="address" class="col-sm-4 control-label">Adresse</label>
 							<div class="col-sm-8"> 
-								<input id="address" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS" tooltip="elfin.IDENTIFIANT.ALIAS">
+								<input id="address" name="address" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS" tooltip="elfin.IDENTIFIANT.ALIAS" required>
 							</div>
 						</div>
 					</div>
@@ -49,10 +57,10 @@
 				
 				<div class="row" >
 					<div class="col-sm-12">
-						<div class="form-group">
-							<label for="address" class="col-sm-2 control-label">Numéro cadastral</label>
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralNb)">
+							<label for="cadastralNb" class="col-sm-2 control-label">Numéro cadastral</label>
 							<div class="col-sm-4"> 
-								<input id="address" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR" tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR">
+								<input id="cadastralNb" name="cadastralNb" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR" tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR" required>
 							</div>
 						</div>
 					</div>
@@ -60,11 +68,11 @@
 	
 				<div class="row" >
 					<div class="col-sm-6">
-						<div class="form-group">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
 							<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
 							<div class="col-sm-8">
 								<div class="input-group">
-									<input id="manager"	type="text" class="form-control" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
+									<input id="manager"	name="manager" type="text" class="form-control" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" required>
 							    	<span class="input-group-btn">
 			        					<button class="btn btn-default" type="button" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE)">Choix</button>
 			      					</span>						
@@ -73,11 +81,11 @@
 						</div>
 					</div>
 					<div class="col-sm-6">
-						<div class="form-group">	
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.managerName)">
 							<label for="managerName" class="col-sm-4 control-label">Nom du propriétaire</label>
 							<div class="col-sm-8">
 								<div class="input-group">
-									<input id="managerName" type="text" class="form-control" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM">
+									<input id="managerName" name="managerName" type="text" class="form-control" ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM" tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM" required>
 							    	<span class="input-group-btn">
 			        					<button class="btn btn-default" type="button" ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM)">Choix</button>
 			      					</span>						
@@ -86,12 +94,13 @@
 						</div>
 					</div>
 				</div>
+				
 				<div class="row" >
 					<div class="col-sm-12">
-						<div class="form-group">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.alias)">
 							<label for="alias" class="col-sm-2 control-label">Architecte</label>
 							<div class="col-sm-4">
-								<input id="alias" type="text" class="form-control" ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE">
+								<input id="alias" name="alias" type="text" class="form-control" ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE" required>
 							</div>
 						</div>
 					</div>
@@ -99,24 +108,24 @@
 
 				<div class="row" >
 					<div class="col-sm-12">	
-						<div class="form-group">
-							<label for="address" class="col-sm-2 control-label">Lieu-dit</label>
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.locality)">
+							<label for="locality" class="col-sm-2 control-label">Lieu-dit</label>
 							<div class="col-sm-10">
-								<input id="address" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
+								<input id="locality" name="locality" type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-12">	
-						<div class="form-group">
-							<label for="address" class="col-sm-2 control-label">Remarque</label>
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.remark)">
+							<label for="remark" class="col-sm-2 control-label">Remarque</label>
 							<div class="col-sm-10">
-								<input id="address" type="text" class="form-control" ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
+								<input id="remark" name="remark" type="text" class="form-control" ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
 							</div>
 						</div>
 					</div>
 				</div>
 	
-				<div class="form-group">
+				<div class="row" >
 					<div class="col-sm-12">
 						<table class="table table-condensed table-bordered table-striped">
 							<thead>
@@ -135,7 +144,7 @@
 								<tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
 									<td>
 										<div class="input-group">
-											<input type="text" class="form-control" ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE" placeholder="Saisissez un nouveau mot clé">
+											<input type="text" name="keyword{$index}" class="form-control" ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE" placeholder="Saisissez un nouveau mot clé">
 											<span class="input-group-btn">
 												<button class="btn btn-default" ng-click="removeKeyword($index)"><i class="icon-remove-sign" ></i> Supprimer</button>
 											</span>
@@ -145,6 +154,9 @@
 							</tbody>
 						</table>
 					</div>
+				</div>
+				
+				<div class="row" >
 					<div ng-show="constats" class="col-sm-12">
 						<table class="table table-condensed table-bordered table-striped">
 							<thead>
@@ -163,7 +175,7 @@
 							</tbody>
 						</table>
 					</div>
-				</div>			
+				</div>
 			</div>
 		</tab> 
 		<!-- SURFACE tab --> 
