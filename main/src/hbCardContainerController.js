@@ -64,7 +64,7 @@
     	$scope.removeKeyword = function ( index ) {
     		$log.debug("removing MOCLE at index " + index);
     	    $scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
-    	    $scope.elfinForm.$dirty = true;
+    	    $scope.elfinForm.$setDirty();
     	};
     	
     	// Wrapper for ELFIN PUT (update) operation
