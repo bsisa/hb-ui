@@ -8,8 +8,6 @@
         $scope.ok = function () {
             $modalInstance.close($scope.selected.item);
         };
-
-
     };
 
 
@@ -32,7 +30,9 @@
     }]);
     
     
-    angular.module('hb5').controller('MenuController', ['$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window) {
+    angular.module('hb5').controller('MenuController', [
+        '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'LayoutService',
+        function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, LayoutService) {
 
     	// Functions used in alert ui.bootstrap component found in menu.html
     	$scope.getAlerts = hbAlertMessages.getAlerts();
@@ -54,6 +54,7 @@
             "manager": {}
         };
 
+        $scope.displayMap = false;
 
         $scope.chooseConfiguration = function () {
 
@@ -74,7 +75,11 @@
             	$log.debug('Modal dismissed at: ' + new Date());
             });
         };
-        
+
+        $scope.toggleMap = function() {
+            $scope.displayMap = LayoutService.toggleMap();
+            $scope.$emit("displayMapEvent", $scope.displayMap);
+        }
 
         /**
          * Generic modal panel to fill a list of parameters before requesting a resource (URL)

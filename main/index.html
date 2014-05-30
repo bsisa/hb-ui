@@ -29,7 +29,7 @@
 	<link rel="stylesheet" type="text/css" href="/assets/css/kickstart/fonts/fontawesome/css/font-awesome.min.css" media="all"/>
 
     <!-- Leaflet -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/leaflet/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/bower_components/leaflet-dist/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/leaflet/Leaflet.Coordinates-0.1.4.css" />
 
 	<!-- Angular motion: https://github.com/mgcrea/angular-motion -->
@@ -75,9 +75,10 @@
     <script type="text/javascript" src="/assets/bower_components/ngUpload/ng-upload.js"></script>
 
     <!-- Leaflet -->
-    <script type="text/javascript" src="/assets/lib/leaflet/lefalet-0.7.1.js"></script>
-    <script type="text/javascript" src="/assets/lib/leaflet/leaflet-providers.js"></script>
-    <script tbowype="text/javascript" src="/assets/lib/leaflet/Leaflet.Coordinates-0.1.4.src.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/leaflet-dist/leaflet.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/leaflet-providers/leaflet-providers.js"></script>
+    <script type="text/javascript" src="/assets/lib/leaflet/Leaflet.Coordinates-0.1.4.src.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
 
     <!-- HyperBird -->
     <!-- 
@@ -95,10 +96,11 @@
     <div ng-include="'/assets/views/menu.html'" ng-controller="MenuController"></div>
 	<!-- container-fluid for full-width layout (otherwise: container) -->
 	<div class="container-fluid" >
-		<div class="row">
-			<div class="col-xs-1"></div>
-			<div class="col-xs-10" ng-view></div>
-			<div class="col-xs-1"></div>
+		<div class="row" id="views-wrapper">
+			<div class="col-xs-1 margin"></div>
+			<div class="col-xs-10 card-view" ng-view></div>
+			<div style="display: none;" class="col-xs-10 map-view splitViewMargin" ng-include="'/assets/views/hbMap.html'"></div>
+			<div class="col-xs-1 margin"></div>
 		</div>
 	</div>
 	</body>

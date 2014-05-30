@@ -8,7 +8,8 @@
  */
 (function() {
 	
-    var hb5 = angular.module('hb5', ['ngGrid','ngAnimate', 'geoxml', 'ngRoute', 'ui.bootstrap', 'localytics.directives']);
+    var hb5 = angular.module('hb5',
+        ['ngGrid','ngAnimate', 'geoxml', 'hbLayout', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive']);
 	
 
     // ================================================================

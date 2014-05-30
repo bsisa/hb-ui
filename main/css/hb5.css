@@ -286,6 +286,7 @@ a [class^="icon-"]
     text-align: center;
 }
 
+/*
 
 #map {
     position: absolute;
@@ -316,6 +317,8 @@ a [class^="icon-"]
     margin: 10px;
     border: solid 1px whitesmoke;
 }
+
+*/
 
 .loading {
 	clear:both;
@@ -400,4 +403,18 @@ ul.nav-tabs li {
 
 div.tabbable div.tab-content {
     border: none;
+}
+
+
+div.col-xs-1.splitViewMargin {
+    width: 10px;
+}
+
+div.col-xs-10.card-view.splitViewMargin {
+    width: auto;
+}
+
+
+div.map-view-wrapper {
+    padding-top: 62px;
 }
