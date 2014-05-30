@@ -9,7 +9,7 @@
 (function() {
 	
     var hb5 = angular.module('hb5',
-        ['ngGrid','ngAnimate', 'geoxml', 'hbLayout', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive']);
+        ['ngGrid','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive']);
 	
 
     // ================================================================

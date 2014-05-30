@@ -4,7 +4,7 @@
  */
 
 (function() {
-    angular.module('hbLayout', []).factory('LayoutService', [
+    angular.module('hbMap', []).factory('MapService', [
        '$log', function($log) {
 
             return {
@@ -38,7 +38,12 @@
 
                 isMapDisplayed: function() {
                     return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
+                },
+
+                displayMap: function(mapDefinition) {
+                    $log.debug(mapDefinition);
                 }
+
             }
 
 
