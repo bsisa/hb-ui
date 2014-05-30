@@ -34,8 +34,13 @@
                     mainMarginsDiv.width('');
                     mainCardViewDiv.width('');
                     return false;
+                },
+
+                isMapDisplayed: function() {
+                    return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
                 }
             }
+
 
 
     }]);
