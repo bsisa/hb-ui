@@ -78,21 +78,21 @@
 
         $scope.toggleMap = function() {
             $scope.displayMap = MapService.toggleMap();
-            $scope.$emit("displayMapEvent", $scope.displayMap);
+            $scope.$emit("displayMapViewEvent", $scope.displayMap);
         }
 
             /**
              * Generic function to display maps
              * @param itemDefinition
              */
-        $scope.displayMap = function(itemDefinition) {
+        $scope.displayMapContent = function(itemDefinition) {
             if (!MapService.isMapDisplayed()) {
                 $scope.toggleMap();
             }
 
             GeoxmlService.getElfin(itemDefinition.parameters[0].idg, itemDefinition.parameters[0].id).get()
                 .then(function(elfin) {
-                    MapService.displayMap(elfin);
+                    $scope.$emit("displayMapContentEvent", elfin);
                 }
             );
 
