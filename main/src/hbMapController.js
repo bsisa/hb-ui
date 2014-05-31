@@ -11,11 +11,42 @@
 
             $scope.layers = {
                 baselayers: {
-                    xyz: {
-                        name: 'OpenStreetMap',
+                    standard: {
+                        name: 'Standard',
                         url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         type: 'xyz'
+                    },
+                    black_white: {
+                        name: 'Noir et Blanc',
+                        url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+                        type: 'xyz'
+                    },
+                    hot: {
+                        name: 'HOT',
+                        url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+                        type: 'xyz'
+                    },
+                    transport: {
+                        name: 'Transport',
+                        url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+                        type: 'xyz'
+                    },
+                    landscape: {
+                        name: 'Paysage',
+                        url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
+                        type: 'xyz'
+                    },
+                    grayscale: {
+                        name: 'Routes - Gris',
+                        url: 'http://openmapsurfer.uni-hd.de/tiles/roadsg/x={x}&y={y}&z={z}',
+                        type: 'xyz'
+                    },
+                    watercoloe: {
+                        name: 'Aquarelle',
+                        url: 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
+                        type: 'xyz'
                     }
+
                 },
                 overlays: {
 
