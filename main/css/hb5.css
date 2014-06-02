@@ -43,7 +43,7 @@
 	left: 0px;
 	right: 0px;
 	border: none;
-	z-index:50;
+	z-index: 1001;
 }
 /* alert panels contained in hb-alert-panel-fixed-top providing centered position */
 .hb-alert-panel-center {
