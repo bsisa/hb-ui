@@ -51,7 +51,7 @@
                 overlays: {
 
                 }
-            }
+            };
 
 
             $rootScope.$on("displayMapViewEvent", function (event, displayMap) {
