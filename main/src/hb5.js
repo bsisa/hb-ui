@@ -33,24 +33,27 @@
                 	};
                 }
             })
-            .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
-                templateUrl: '/assets/views/IMMEUBLE_card_view.html'
+            .when('/elfin/:collectionId/ACTEUR/:elfinId', {
+                templateUrl: '/assets/views/ACTEUR_card_view.html'
+            })
+            .when('/elfin/:collectionId/ACTEUR', {
+                templateUrl: '/assets/views/ACTEUR_list_view.html'
             })
             .when('/elfin/:collectionId/CONSTAT/:elfinId', {
                 templateUrl: '/assets/views/CONSTAT_card_view.html'
             })
-            .when('/elfin/:collectionId/ACTEUR/:elfinId', {
-                templateUrl: '/assets/views/ACTEUR_card_view.html'
-            })                        
-            .when('/elfin/:collectionId/:classe/:elfinId', {
-                templateUrl: '/assets/views/default_card_view.html'
+            .when('/elfin/:collectionId/FONTAINE/:elfinId', {
+                templateUrl: '/assets/views/FONTAINE_card_view.html'
+            })            
+            .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
+                templateUrl: '/assets/views/IMMEUBLE_card_view.html'
             })
             .when('/elfin/:collectionId/IMMEUBLE', {
                 templateUrl: '/assets/views/IMMEUBLE_list_view.html'
-            })
-            .when('/elfin/:collectionId/ACTEUR', {
-                templateUrl: '/assets/views/ACTEUR_list_view.html'
             })            
+            .when('/elfin/:collectionId/:classe/:elfinId', {
+                templateUrl: '/assets/views/default_card_view.html'
+            })
             .when('/elfin/:collectionId/:classe', {
                 templateUrl: '/assets/views/default_list_view.html'
             })
