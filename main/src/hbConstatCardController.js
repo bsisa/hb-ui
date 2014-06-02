@@ -9,10 +9,11 @@
 					'$routeParams',
 					'$location',
 					'$log',
+					'$filter',
 					'hbAlertMessages',
 					'hbUtil',
 					function($scope, GeoxmlService, $modal, $routeParams,
-							$location, $log, hbAlertMessages, hbUtil) {
+							$location, $log, $filter, hbAlertMessages, hbUtil) {
 
 						$log.debug("    >>>> Using ConstatCardController ");
 						
@@ -21,7 +22,10 @@
 							Vu : "Vu",
 							SUIVRE : "SUIVRE"
 						};
-
+						
+						// TODO: CURRENT get this dynamically from HB5 catalogue
+						//$scope.statusTypes = null;
+						
 			            // Parameter to hbChooseOne service function
 						$scope.entrepriseActors = null;
 			            // Parameter to hbChooseOne service function
@@ -82,6 +86,32 @@
 								var message = "Le chargement des ACTEURS Collaborateur a échoué (statut de retour: "+ response.status+ ")";
 					            hbAlertMessages.addAlert("danger",message);
 							});	
+
+			            // Asychronous CONSTAT template  preloading
+						// TODO: CURRENT get this dynamically from HB5 catalogue
+//			            GeoxmlService.getNewElfin("CONSTAT").get().then(
+//								function(constat) {
+//									var statusTypesArray = constat.IDENTIFIANT.QUALITE.split("|");
+//									var statusTypesJsonString = '{';
+//									for (var i = 0; i < statusTypesArray.length; i++) {
+//										statusTypesJsonString += '"' + statusTypesArray[i] + '"' + ':' + '"' + statusTypesArray[i] + '"';  
+//										if (i < (statusTypesArray.length - 1)) {
+//											statusTypesJsonString += ',';
+//										}
+//									};
+//									statusTypesJsonString += '}';
+//									
+//									$log.debug(">>>> CONSTAT: statusTypesJsonString (2) = " + statusTypesJsonString);
+//									
+//									//var statusTypesObj = $filter('json')(statusTypesJsonString);
+//									$scope.statusTypes = statusTypesJsonString;
+//								},
+//								function(response) {
+//									var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
+//									hbAlertMessages.addAlert("danger",message);
+//							});
+						//http://localhost:9000/api/melfin/catalogue/CONSTAT			            
+			            
 			            
 			            
 			            // Parameter to hbChooseOne service function
