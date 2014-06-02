@@ -131,7 +131,7 @@
                     };
 
                     angular.forEach(mapDef.CARACTERISTIQUE.FRACTION.L, function (layerDef) {
-                        displayLayer(map, mapDef.Id, layerDef)
+                        displayLayer(map, mapDef.Id, layerDef);
                     });
                 });
             });
