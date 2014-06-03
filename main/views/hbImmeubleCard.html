@@ -274,9 +274,12 @@
 		<tab heading="Forme">
 			<tab-heading>Forme</tab-heading>
 			<div class="hb-tab">
-				<div class="panel panel-primary">	
+				<div class="panel" ng-class="coordinateType.css">	
 				<div class="panel-heading">
-					<h5 class="panel-title">Géographie</h5>
+				     <div class="btn-group">
+				        <label hb-no-dirty-check class="btn btn-primary" ng-model="coordinateType" btn-radio="COORDINATE_TYPE.GEOGRAPHIC">{{COORDINATE_TYPE.GEOGRAPHIC.label}}</label>
+				        <label hb-no-dirty-check class="btn btn-success" ng-model="coordinateType" btn-radio="COORDINATE_TYPE.SCHEMATIC">{{COORDINATE_TYPE.SCHEMATIC.label}}</label>
+				    </div>
   				</div>
 				<div class="panel-body">
 					<h5>Point</h5>
