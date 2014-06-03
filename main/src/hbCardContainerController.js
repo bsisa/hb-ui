@@ -66,6 +66,7 @@
         
 		// ============================================
 		// validation helpers
+        // TODO: add null check for ngModelControllers...
 		// ============================================
           
 		$scope.getCssLabelFeedback = function (formController) {

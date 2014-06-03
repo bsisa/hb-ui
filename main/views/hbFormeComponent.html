@@ -1,0 +1,60 @@
+
+<div class="panel" ng-class="coordinateType.css">
+	<div class="panel-heading">
+		<div class="btn-group">
+			<label hb-no-dirty-check class="btn btn-primary"
+				ng-model="coordinateType" btn-radio="COORDINATE_TYPE.GEOGRAPHIC">{{COORDINATE_TYPE.GEOGRAPHIC.label}}</label>
+			<label hb-no-dirty-check class="btn btn-success"
+				ng-model="coordinateType" btn-radio="COORDINATE_TYPE.SCHEMATIC">{{COORDINATE_TYPE.SCHEMATIC.label}}</label>
+		</div>
+	</div>
+	<div class="panel-body">
+		<h5>Point</h5>
+		<table class="table table-condensed table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>POS</th>
+					<th>FONCTION</th>
+					<th ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">X</th>
+					<th ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">XS</th>
+					<th ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Y</th>
+					<th ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">YS</th>
+					<th ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Z</th>
+					<th ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">ZS</th>
+					<th>CLASSE</th>
+					<th>Id</th>
+					<th>ID_G</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="point in elfin.FORME.POINT">
+					<!-- 							<td><select chosen data-placeholder="Choisir un type"  -->
+					<!-- 								class="form-control" -->
+					<!-- 								ng-model="centroide.TYPE" -->
+					<!-- 								ng-options="value as label for (value, label) in typeTypes"> -->
+					<!-- 							</select></td> -->
+					<td><input type="text" class="form-control"
+						ng-model="point.POS"></td>
+					<td><input type="text" class="form-control"
+						ng-model="point.FONCTION"></td>
+					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC" ><input type="number" class="form-control" ng-model="point.X"></td>
+					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC"><input type="number" class="form-control" ng-model="point.Y"></td>
+					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC"><input type="number" class="form-control" ng-model="point.Z"></td>
+					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC" ><input type="number" class="form-control" ng-model="point.XS"></td>
+					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><input type="number" class="form-control" ng-model="point.YS"></td>
+					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><input type="number" class="form-control" ng-model="point.ZS"></td>
+					<td><input type="text" class="form-control"
+						ng-model="point.CLASSE"></td>
+					<td><input type="text" class="form-control"
+						ng-model="point.Id"></td>
+					<td><input type="text" class="form-control"
+						ng-model="point.ID_G"></td>
+					<td>Détail</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<div class="panel-footer">Panel footer</div>
+</div>

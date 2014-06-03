@@ -92,7 +92,10 @@
                 },
                 getElfin: function(collectionId, elfinId) {
                     return _geoxmlService.one(collectionId, elfinId);
-                }
+                },
+                getNewElfin: function(elfinClasse) {
+                    return _geoxmlService.one("catalogue", elfinClasse);
+                }                
             };
         }
     ]);

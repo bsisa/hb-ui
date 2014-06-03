@@ -11,14 +11,22 @@
 							'$routeParams',
 							'$location',
 							'$log',
+							'$timeout',
 							'hbAlertMessages',
 							'hbUtil',
 							function($scope, GeoxmlService, $modal,
-									$routeParams, $location, $log, hbAlertMessages,
+									$routeParams, $location, $log, $timeout, hbAlertMessages,
 									hbUtil) {
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
 							        
+									// Manage geographic or schematic mode.
+									$scope.COORDINATE_TYPE = {
+											GEOGRAPHIC : {label: "Géographique", css: "panel-primary"},
+											SCHEMATIC :  {label: "Schématique", css: "panel-success"}
+									};
+									$scope.coordinateType = $scope.COORDINATE_TYPE.GEOGRAPHIC;
+									
 							        $scope.constats = null;
 							    	
 							    	// Watch related to CONSTAT list in the context of elfin of CLASSE IMMEUBLE 

@@ -62,7 +62,7 @@
 
             var getElfinIdentifier = function(elfin) {
                 return elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id;
-            }
+            };
 
 
 
@@ -149,7 +149,7 @@
                     };
 
                     angular.forEach(mapDef.CARACTERISTIQUE.FRACTION.L, function (layerDef) {
-                        displayLayer(map, mapDef.Id, layerDef)
+                        displayLayer(map, mapDef.Id, layerDef);
                     });
                 });
             });
