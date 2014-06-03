@@ -128,7 +128,8 @@
        				// Considered good practice to reload the actual db  
        				// content unless server load is a concern.
        				$scope.getElfin($scope.collectionId,$scope.elfinId);
-       				$scope.elfinForm.$setPristine();
+                    $scope.elfinForm.$setPristine();
+                    $scope.$emit("elfinUpdatedEvent", elfin);
        			}, 
        			function(response) { 
        				$log.debug("Error with status code", response.status);

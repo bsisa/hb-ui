@@ -40,6 +40,14 @@
                     return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
                 },
 
+                getPopupContent: function(elfin) {
+                    var popup = '<b>' + elfin.IDENTIFIANT.NOM + ' ' + elfin.IDENTIFIANT.ALIAS + '</b><br>';
+                    popup += elfin.CLASSE + '<br>';
+                    popup += '<a href="/elfin/' + elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id + '">Détails</a>';
+
+                    return popup;
+                },
+
                 getObjectLayer: function(elfin, representation, style) {
                     var result = null;
 
@@ -50,28 +58,36 @@
                     }
 
                     if (result !== null) {
-                        var popup = '<b>' + elfin.IDENTIFIANT.NOM + ' ' + elfin.IDENTIFIANT.ALIAS + '</b><br>';
-                        popup += elfin.CLASSE + '<br>';
-                        popup += '<a href="/elfin/' + elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id + '">Détails</a>';
-                        result.bindPopup(popup);
+                        result.bindPopup(this.getPopupContent(elfin));
                     }
 
                     return result;
                 },
 
+                updateLayerPopupContent: function(elfin, layer) {
+                    if (angular.isDefined(layer.getPopup) && layer.getPopup()) {
+                        layer.getPopup().setContent(this.getPopupContent(elfin));
+                    }
+                },
+
                 /*
                 Returns points
                  */
-                getPointLayer: function(elfin, style) {
-                    if (!elfin.FORME) return null;
-
+                getElfinBasePoint: function(elfin) {
                     var point = null;
                     angular.forEach(elfin.FORME.POINT, function(p) {
                         if (p.FONCTION.toLowerCase() === 'base') {
                             point = p;
                         }
                     });
+                    return point;
+                },
 
+
+                getPointLayer: function(elfin, style) {
+                    if (!elfin.FORME) return null;
+
+                    var point = this.getElfinBasePoint(elfin);
                     if (!point) {
                         return null;
                     }
@@ -87,20 +103,24 @@
                 getMarkerLayer: function(elfin, style) {
                     if (!elfin.FORME) return null;
 
-                    var point = null;
-                    angular.forEach(elfin.FORME.POINT, function(p) {
-                        if (p.FONCTION.toLowerCase() === 'base') {
-                            point = p;
-                        }
-                    });
-
+                    var point = this.getElfinBasePoint(elfin);
                     if (!point) {
                         return null;
                     }
 
-
                     var coords = this.getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
                     return L.marker(coords, style);
+                },
+
+                updateLayerCoords: function(elfin, layer) {
+
+                    if (angular.isDefined(layer.setLatLng)) {
+                        var point = this.getElfinBasePoint(elfin);
+                        if (point) {
+                            var coords = this.getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
+                            layer.setLatLng(coords);
+                        }
+                    }
                 },
 
 
@@ -118,7 +138,7 @@
                 /*
                 Return polygons
                  */
-                getPolygonLayer: function(elfin, style) {
+                getPolygonCoords: function(elfin) {
                     if (!elfin.FORME) return null;
 
                     var zoneDef = this.findElementWithPos(elfin.FORME.ZONE, '1');
@@ -133,13 +153,33 @@
                         var lineDef = that.findElementWithPos(elfin.FORME.LIGNE, lPos);
 
                         angular.forEach(lineDef.PASSAGE, function(p) {
-                           var pPos = p.Id.split('#')[1];
-                           var pointDef = that.findElementWithPos(elfin.FORME.POINT, pPos);
-                           points.push(that.getLongitudeLatitudeCoordinates({X: parseFloat(pointDef.X), Y: parseFloat(pointDef.Y)}));
+                            var pPos = p.Id.split('#')[1];
+                            var pointDef = that.findElementWithPos(elfin.FORME.POINT, pPos);
+                            points.push(that.getLongitudeLatitudeCoordinates({X: parseFloat(pointDef.X), Y: parseFloat(pointDef.Y)}));
                         });
                     });
 
-                    return L.polygon(points, style);
+                    return points;
+                },
+
+
+                getPolygonLayer: function(elfin, style) {
+                    var coords = this.getPolygonCoords(elfin);
+                    if (coords && coords.length > 0) {
+                        return L.polygon(coords, style);
+                    }
+
+                    return null;
+                },
+
+                updatePolygonCoords: function(elfin, layer) {
+                    if (angular.isDefined(layer.setsetLatLngs)) {
+                        var coords = this.getPolygonCoords(elfin);
+                        if (coords && coords.length > 0) {
+                            layer.setLatLngs(coords);
+                        }
+                    }
+
                 },
 
 
@@ -194,12 +234,6 @@
 
                     return L.latLng(latitude, longitude);
                 }
-
-
-
             }
-
-
-
     }]);
 })();

@@ -51,7 +51,19 @@
                 overlays: {
 
                 }
+            };
+
+            /*
+            The objects dictionary holds for each idg/class/id combination as text, all layers in an array
+             */
+            $scope.layerDictionary = {
+
+            };
+
+            var getElfinIdentifier = function(elfin) {
+                return elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id;
             }
+
 
 
             $rootScope.$on("displayMapViewEvent", function (event, displayMap) {
@@ -61,6 +73,7 @@
                     });
                 }
             });
+
 
 
             var displayLayer = function (map, id, layerDef) {
@@ -92,17 +105,22 @@
 
                 $scope.layers.overlays[layerId] = layerGroup;
 
-
-
-
                 $http({method: 'GET', url: '/api/melfin/' + layer.idg, params: {xpath: layer.xpath}}).
                     success(function (data, status, headers, config) {
 
                         var objects = [];
+                        var identifier;
                         angular.forEach(data, function (elfin) {
                             var objectLayer = MapService.getObjectLayer(elfin, layer.representationType, layer.representationStyle);
                             if (objectLayer !== null) {
                                 objects.push(objectLayer);
+                                identifier = getElfinIdentifier(elfin);
+                                if (angular.isUndefined($scope.layerDictionary[identifier])) {
+                                    $scope.layerDictionary[identifier] = [objectLayer];
+                                } else {
+                                    $scope.layerDictionary[identifier].push(objectLayer);
+                                }
+
                             }
                         });
 
@@ -118,7 +136,7 @@
 
             };
 
-            $rootScope.$on("displayMapContentEvent", function (event, mapDef) {
+            $rootScope.$on("displayMapContentEvent", function(event, mapDef) {
 
                 leafletData.getMap().then(function (map) {
 
@@ -134,6 +152,17 @@
                         displayLayer(map, mapDef.Id, layerDef)
                     });
                 });
+            });
+
+            $rootScope.$on("elfinUpdatedEvent", function(event, elfin) {
+                var identifier = getElfinIdentifier(elfin);
+                if (angular.isDefined($scope.layerDictionary[identifier])) {
+                    angular.forEach($scope.layerDictionary[identifier], function(layer) {
+                        MapService.updateLayerCoords(elfin, layer);
+                        MapService.updatePolygonCoords(elfin, layer);
+                        MapService.updateLayerPopupContent(elfin, layer);
+                    });
+                }
             });
 
         }]);
