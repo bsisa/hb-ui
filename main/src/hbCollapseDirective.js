@@ -8,6 +8,7 @@
 
 		return {
 		    restrict: 'A',
+		    scope: true,
 		    transclude: true,
 			templateUrl : "/assets/views/hbCollapse.html",
 			controller: 'HbCollapseController'
