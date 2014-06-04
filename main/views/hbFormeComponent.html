@@ -75,65 +75,56 @@
 		</div>
 		</div>
 		<div class="well well-lg">
-		<h5>Point</h5>
+		<h5>Lignes</h5>
+		
+		<div hb-collapse >
 		<table class="table table-condensed table-bordered table-striped">
 			<thead>
 				<tr>
 					<th class="col-md-1">POS</th>
 					<th class="col-md-1">FONCTION</th>
-<!-- 					<th class="col-md-3 text-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">X</th> -->
-<!-- 					<th class="col-md-3 text-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">XS</th> -->
-<!-- 					<th class="col-md-3 text-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Y</th> -->
-<!-- 					<th class="col-md-3 text-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">YS</th> -->
-<!-- 					<th class="col-md-3 text-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Z</th> -->
-<!-- 					<th class="col-md-3 text-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">ZS</th> -->
-					
-					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC"><strong>X</strong></th>
-					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><strong>XS</strong></th>
-					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Y</th>
-					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">YS</th>
-					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Z</th>
-					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">ZS</th>					
-					
-					<th class="col-md-1" ></th>
-				</tr>
-				<tr>					
-					<th colspan="2" class="col-md-2" ></th>
-<!-- 					<th class="col-md-1" ></th> -->
-					<th class="col-md-3" >CLASSE</th>
-					<th class="col-md-3" >Id</th>
-					<th class="col-md-3" >ID_G</th>
-					<th class="col-md-1" ></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat-start="point in elfin.FORME.POINT">
-					<td rowspan="2"><input type="text" class="form-control"
-						ng-model="point.POS"></td>
-					<td rowspan="2"><input type="text" class="form-control"
-						ng-model="point.FONCTION"></td>
-					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC" ><input type="number" class="form-control" ng-model="point.X"></td>
-					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC"><input type="number" class="form-control" ng-model="point.Y"></td>
-					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC"><input type="number" class="form-control" ng-model="point.Z"></td>
-					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC" ><input type="number" class="form-control" ng-model="point.XS"></td>
-					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><input type="number" class="form-control" ng-model="point.YS"></td>
-					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><input type="number" class="form-control" ng-model="point.ZS"></td>
-
-					<td>Détail</td>
+				<tr ng-repeat-start="ligne in elfin.FORME.LIGNE">
+					<td ><input type="text" class="form-control"
+						ng-model="ligne.POS"></td>
+					<td ><input type="text" class="form-control"
+						ng-model="ligne.FONCTION"></td>
 				</tr>
 				<tr ng-repeat-end>
-<!-- 					<td ></td> -->
-<!-- 					<td ></td> -->
-					<td><input type="text" class="form-control"
-						ng-model="point.CLASSE"></td>
-					<td><input type="text" class="form-control"
-						ng-model="point.Id"></td>
-					<td><input type="text" class="form-control"
-						ng-model="point.ID_G"></td>
-					<td ></td>
-				<tr>
+					<td colspan="2">
+					<table class="table table-condensed table-bordered table-striped">
+						<thead>
+							<tr>
+								<th class="col-md-1">CLASSE</th>
+								<th class="col-md-1">FONCTION</th>
+								<th class="col-md-1">ID_G</th>
+								<th class="col-md-1">Id</th>
+								<th class="col-md-1">ANGLES</th>
+								<th class="col-md-1">KSIS</th>
+								<th class="col-md-1">ANGLE</th>
+								<th class="col-md-1">KSI</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="passage in ligne.PASSAGE">
+								<td><input type="text" class="form-control"	ng-model="passage.CLASSE"></td>
+								<td><input type="text" class="form-control"	ng-model="passage.FONCTION"></td>
+								<td><input type="text" class="form-control"	ng-model="passage.ID_G"></td>
+								<td><input type="text" class="form-control"	ng-model="passage.Id"></td>
+								<td><input type="text" class="form-control"	ng-model="passage.ANGLES"></td>
+								<td><input type="text" class="form-control"	ng-model="passage.KSIS"></td>
+								<td><input type="text" class="form-control"	ng-model="passage.ANGLE"></td>
+								<td><input type="text" class="form-control"	ng-model="passage.KSI"></td>
+							</tr>
+						</tbody>
+					</table>
+					</td>
+				</tr>
 			</tbody>
-		</table>		
+		</table>	
+		</div>	
 		</div>
 	</div>
 <!-- 	<div class="panel-footer">Panel footer</div> -->
