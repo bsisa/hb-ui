@@ -13,30 +13,38 @@
 		<table class="table table-condensed table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>POS</th>
-					<th>FONCTION</th>
-					<th ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">X</th>
-					<th ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">XS</th>
-					<th ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Y</th>
-					<th ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">YS</th>
-					<th ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Z</th>
-					<th ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">ZS</th>
-					<th>CLASSE</th>
-					<th>Id</th>
-					<th>ID_G</th>
-					<th></th>
+					<th rowspan="2" class="col-md-1">POS</th>
+					<th rowspan="2" class="col-md-1">FONCTION</th>
+<!-- 					<th class="col-md-3 text-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">X</th> -->
+<!-- 					<th class="col-md-3 text-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">XS</th> -->
+<!-- 					<th class="col-md-3 text-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Y</th> -->
+<!-- 					<th class="col-md-3 text-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">YS</th> -->
+<!-- 					<th class="col-md-3 text-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Z</th> -->
+<!-- 					<th class="col-md-3 text-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">ZS</th> -->
+					
+					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC"><strong>X</strong></th>
+					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><strong>XS</strong></th>
+					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Y</th>
+					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">YS</th>
+					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Z</th>
+					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">ZS</th>					
+					
+					<th class="col-md-1" ></th>
+				</tr>
+				<tr>					
+<!-- 					<th class="col-md-1" ></th> -->
+<!-- 					<th class="col-md-1" ></th> -->
+					<th class="col-md-3" >CLASSE</th>
+					<th class="col-md-3" >Id</th>
+					<th class="col-md-3" >ID_G</th>
+					<th class="col-md-1" ></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="point in elfin.FORME.POINT">
-					<!-- 							<td><select chosen data-placeholder="Choisir un type"  -->
-					<!-- 								class="form-control" -->
-					<!-- 								ng-model="centroide.TYPE" -->
-					<!-- 								ng-options="value as label for (value, label) in typeTypes"> -->
-					<!-- 							</select></td> -->
-					<td><input type="text" class="form-control"
+				<tr ng-repeat-start="point in elfin.FORME.POINT">
+					<td rowspan="2"><input type="text" class="form-control"
 						ng-model="point.POS"></td>
-					<td><input type="text" class="form-control"
+					<td rowspan="2"><input type="text" class="form-control"
 						ng-model="point.FONCTION"></td>
 					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC" ><input type="number" class="form-control" ng-model="point.X"></td>
 					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC"><input type="number" class="form-control" ng-model="point.Y"></td>
@@ -44,17 +52,23 @@
 					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC" ><input type="number" class="form-control" ng-model="point.XS"></td>
 					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><input type="number" class="form-control" ng-model="point.YS"></td>
 					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><input type="number" class="form-control" ng-model="point.ZS"></td>
+
+					<td>Détail</td>
+				</tr>
+				<tr ng-repeat-end>
+<!-- 					<td ></td> -->
+<!-- 					<td ></td> -->
 					<td><input type="text" class="form-control"
 						ng-model="point.CLASSE"></td>
 					<td><input type="text" class="form-control"
 						ng-model="point.Id"></td>
 					<td><input type="text" class="form-control"
 						ng-model="point.ID_G"></td>
-					<td>Détail</td>
-				</tr>
+					<td ></td>
+				<tr>
 			</tbody>
 		</table>
 
 	</div>
-	<div class="panel-footer">Panel footer</div>
+<!-- 	<div class="panel-footer">Panel footer</div> -->
 </div>
