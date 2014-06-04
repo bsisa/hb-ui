@@ -82,29 +82,14 @@
 							});	
 
 			            // Asychronous CONSTAT template preloading
-						// TODO: refactor conversion to a service.
-			            GeoxmlService.getNewElfin("CONSTAT").get().then(
-								function(constat) {
-									var statusTypesArray = constat.IDENTIFIANT.QUALITE.split("|");
-									var statusTypesJsonString = '{';
-									for (var i = 0; i < statusTypesArray.length; i++) {
-										statusTypesJsonString += '"' + statusTypesArray[i] + '"' + ':' + '"' + statusTypesArray[i] + '"';  
-										if (i < (statusTypesArray.length - 1)) {
-											statusTypesJsonString += ',';
-										}
-									};
-									statusTypesJsonString += '}';
-									
-									$log.debug(">>>> CONSTAT: statusTypesJsonString (4) = " + statusTypesJsonString);
-									
-									var statusTypesObj = angular.fromJson(statusTypesJsonString);
-									$scope.statusTypes = statusTypesObj;
-								},
-								function(response) {
-									var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
-									hbAlertMessages.addAlert("danger",message);
+			            GeoxmlService.getNewElfin("CONSTAT").get()
+			            .then(function(constat) {
+			            		$scope.statusTypes = hbUtil.buildArrayFromCatalogueDefault(constat.IDENTIFIANT.QUALITE);
+							},
+							function(response) {
+								var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
+								hbAlertMessages.addAlert("danger",message);
 							});
-			            
 			            
 			            // Parameter to hbChooseOne service function
 			            $scope.actorChooseOneColumnsDefinition = [

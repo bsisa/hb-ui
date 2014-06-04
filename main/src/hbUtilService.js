@@ -1,8 +1,8 @@
 (function() {
 
 	/**
-	 * Small service used intended to share functions not states between miscellaneous controllers
-	 * without duplicating code.
+	 * Small utility service intended to share functions not states between miscellaneous controllers
+	 * without code duplication.
 	 */
 	angular.module('hb5').service('hbUtil', function () {
 
@@ -132,13 +132,55 @@
             }
         };
         
+        
+        /**
+         * HyperBird catalogue default format is as follow: 
+         * value1|value2|value3
+         * The current function returns the above format as follow:
+         * 
+         * [
+         *   {
+         *     "name": "value1",
+         *     "value": "value1"
+         *   },
+         *   {
+         *     "name": "value2",
+         *     "value": "value2"
+         *   },
+         *   {
+         *     "name": "value3",
+         *     "value": "value3"
+         *   }   
+         *  ]
+         *  
+         *  Although name and value are strictly identical in the current
+         *  version the might differ if need arise, for instance for translating
+         *  labels. This should be possible to implement in the current function
+         *  without modifying code relying on name, value structure. 
+         *  
+         */
+        var buildArrayFromCatalogueDefault = function(catalogueDefaultString) {
+			var catalogueDefaultValuesArray = catalogueDefaultString.split("|");
+			var jsonString = '[';
+			for (var i = 0; i < catalogueDefaultValuesArray.length; i++) {
+				jsonString += '{"name" : "' + catalogueDefaultValuesArray[i] + '", "value":' + '"' + catalogueDefaultValuesArray[i] + '"}';  
+				if (i < (catalogueDefaultValuesArray.length - 1)) {
+					jsonString += ',';
+				}
+			};
+			jsonString += ']';
+			var catalogueDefaultNameValueArray = angular.fromJson(jsonString);    
+			return catalogueDefaultNameValueArray;
+        };
+        
         return {
         	reorderArrayByPOS:reorderArrayByPOS,
         	buildUrlQueryString:buildUrlQueryString,
         	buildKeyValueObject:buildKeyValueObject,
         	applyPath:applyPath,
         	applyPaths:applyPaths,
-        	getValueAtPath:getValueAtPath
+        	getValueAtPath:getValueAtPath,
+        	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault
         };
     });
 	
