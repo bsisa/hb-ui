@@ -70,8 +70,14 @@
                     }
                 },
 
-                /*
-                Returns points
+                /**
+                 * Returns BASE point. 
+                 * 
+                 * There should only be a single BASE point defined.
+                 *  
+                 * If more than one BASE point is defined the latest 
+                 * only will be considered (the one with the greatest
+                 * POS value). 
                  */
                 getElfinBasePoint: function(elfin) {
                     var point = null;
