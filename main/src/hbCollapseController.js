@@ -1,13 +1,16 @@
 (function() {
 
     angular.module('hb5').controller('HbCollapseController', ['$scope', '$log', function($scope, $log) {
-    
-    	$log.debug("    >>>> HbCollapseController called...");
 
-    	$scope.isCollapsed = false;
+    	$scope.isCollapsed = null;
+    	
+    	if ($scope.initCollapsed && $scope.initCollapsed === true) {
+    		$scope.isCollapsed = true;
+    	} else {
+    		$scope.isCollapsed = false;	
+    	}
     	
     }]);
-
 
 })();
 

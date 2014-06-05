@@ -1,8 +1,10 @@
 
 <div>
-	<button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">
-		<i class="icon-plus-sign"></i>
-<!-- 		<i class="icon-remove-sign"></i> -->
-	</button>
+	<p>
+		<button class="btn btn-default btn-sm" ng-click="isCollapsed = !isCollapsed">
+			<i ng-show="isCollapsed" class="icon-plus-sign"></i> 
+			<i ng-show="!isCollapsed" class="icon-minus-sign"></i> {{title}}
+		</button>
+	</p>
 	<div collapse="isCollapsed" ng-transclude></div>
 </div>
