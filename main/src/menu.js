@@ -31,8 +31,8 @@
     
     
     angular.module('hb5').controller('MenuController', [
-        '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService',
-        function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService) {
+        '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS',
+        function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS) {
 
     	// Functions used in alert ui.bootstrap component found in menu.html
     	$scope.getAlerts = hbAlertMessages.getAlerts();
@@ -78,8 +78,8 @@
 
         $scope.toggleMap = function() {
             $scope.displayMap = MapService.toggleMap();
-            $scope.$emit("displayMapViewEvent", $scope.displayMap);
-        }
+            $scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, $scope.displayMap);
+        };
 
             /**
              * Generic function to display maps
@@ -92,12 +92,13 @@
 
             GeoxmlService.getElfin(itemDefinition.parameters[0].idg, itemDefinition.parameters[0].id).get()
                 .then(function(elfin) {
-                    $scope.$emit("displayMapContentEvent", elfin);
+                	//"displayMapContentEvent"
+                    $scope.$emit(HB_EVENTS.DISPLAY_MAP_CONTENT, elfin);
                 }
             );
 
             $log.debug(itemDefinition);
-        }
+        };
 
         /**
          * Generic modal panel to fill a list of parameters before requesting a resource (URL)

@@ -30,7 +30,7 @@
      * 
      * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
-    angular.module('hb5').controller('HbCardContainerController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', function($scope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbCardContainerController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', function($scope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS) {
     
     	$log.debug("HbCardContainerController called at " + new Date());
     	
@@ -130,7 +130,8 @@
        				// content unless server load is a concern.
        				$scope.getElfin($scope.collectionId,$scope.elfinId);
                     $scope.elfinForm.$setPristine();
-                    $scope.$emit("elfinUpdatedEvent", elfin);
+                    //"elfinUpdatedEvent"
+                    $scope.$emit(HB_EVENTS.ELFIN_UPDATED, elfin);
        			}, 
        			function(response) { 
        				$log.debug("Error with status code", response.status);

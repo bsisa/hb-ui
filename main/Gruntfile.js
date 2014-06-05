@@ -23,6 +23,7 @@ module.exports = function(grunt) {
             	src : [         'src/geoxml.js',
                                 'src/hbMapService.js',
                                 'src/hb5.js',
+                                'src/hb5Constants.js',
                                 'src/menu.js',
 								'src/hbActeurCardDirective.js',
 								'src/hbActeurCardController.js',

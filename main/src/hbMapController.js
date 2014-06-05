@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', '$location', 'GeoxmlService',
-        function ($scope, $rootScope, $log, leafletData, MapService, $location, GeoxmlService) {
+    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', '$location', 'GeoxmlService', 'HB_EVENTS',
+        function ($scope, $rootScope, $log, leafletData, MapService, $location, GeoxmlService, HB_EVENTS) {
 
             $scope.center = {
                 lat: 0,
@@ -65,8 +65,7 @@
             };
 
 
-
-            $rootScope.$on("displayMapViewEvent", function (event, displayMap) {
+            $rootScope.$on(HB_EVENTS.DISPLAY_MAP_VIEW, function (event, displayMap) {
                 if (displayMap === true) {
                     leafletData.getMap().then(function (map) {
                         map.invalidateSize();
@@ -142,7 +141,7 @@
 
             };
 
-            $rootScope.$on("displayMapContentEvent", function(event, mapDef) {
+            $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, mapDef) {
 
                 leafletData.getMap().then(function (map) {
 
@@ -160,7 +159,8 @@
                 });
             });
 
-            $rootScope.$on("elfinUpdatedEvent", function(event, elfin) {
+            //"elfinUpdatedEvent"
+            $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
                 var identifier = getElfinIdentifier(elfin);
                 if (angular.isDefined($scope.layerDictionary[identifier])) {
                     angular.forEach($scope.layerDictionary[identifier], function(layer) {
