@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', '$http', '$location',
-        function ($scope, $rootScope, $log, leafletData, MapService, $http, $location) {
+    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', '$location', 'GeoxmlService',
+        function ($scope, $rootScope, $log, leafletData, MapService, $location, GeoxmlService) {
 
             $scope.center = {
                 lat: 0,
@@ -105,34 +105,40 @@
 
                 $scope.layers.overlays[layerId] = layerGroup;
 
-                $http({method: 'GET', url: '/api/melfin/' + layer.idg, params: {xpath: layer.xpath}}).
-                    success(function (data, status, headers, config) {
-
-                        var objects = [];
-                        var identifier;
-                        angular.forEach(data, function (elfin) {
-                            var objectLayer = MapService.getObjectLayer(elfin, layer.representationType, layer.representationStyle);
-                            if (objectLayer !== null) {
-                                objects.push(objectLayer);
-                                identifier = getElfinIdentifier(elfin);
-                                if (angular.isUndefined($scope.layerDictionary[identifier])) {
-                                    $scope.layerDictionary[identifier] = [objectLayer];
-                                } else {
-                                    $scope.layerDictionary[identifier].push(objectLayer);
-                                }
-
-                            }
-                        });
-
-                        leafletData.getLayers().then(function(layers) {
-                            angular.forEach(objects, function(objectLayer) {
-                                layers.overlays[layerId].addLayer(objectLayer);
-                            });
-                        });
-                    }).
-                    error(function (data, status, headers, config) {
-                        $log.error(data);
-                    });
+                // Using GeoxmlService to obtain layers objects
+                GeoxmlService.getCollection(layer.idg).getList({"xpath" : layer.xpath})
+				.then(
+						function(elfins) {
+            				$log.debug("Using GeoxmlService service (2), obtained " + elfins.length + " objects.");
+							var objects = [];
+							var identifier;
+		                    angular.forEach(elfins, function (elfin) {
+		                        var objectLayer = MapService.getObjectLayer(elfin, layer.representationType, layer.representationStyle);
+		                        if (objectLayer !== null) {
+		                            objects.push(objectLayer);
+		                            identifier = getElfinIdentifier(elfin);
+		                            if (angular.isUndefined($scope.layerDictionary[identifier])) {
+		                                $scope.layerDictionary[identifier] = [objectLayer];
+		                            } else {
+		                                $scope.layerDictionary[identifier].push(objectLayer);
+		                            }
+		
+		                        }
+		                    });
+		
+		                    leafletData.getLayers().then(function(layers) {
+		                        angular.forEach(objects, function(objectLayer) {
+		                            layers.overlays[layerId].addLayer(objectLayer);
+		                        });
+		                    });					
+							
+						},
+						function(response) {
+							var message = "Le chargement des objets du plan a échoué (statut de retour: "+ response.status+ ")";
+							$log.error(message);
+							hbAlertMessages.addAlert("danger",message);
+						}
+					);                
 
             };
 
