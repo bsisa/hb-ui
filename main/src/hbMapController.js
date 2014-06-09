@@ -10,7 +10,6 @@
                     lng: 0,
                     zoom: 10
                 },
-
                 defaults: {
                     drawControl: true
                 },
@@ -62,11 +61,18 @@
             /*
             Reference to current displayed object
              */
-           $scope.elfin = null;
+            $scope.elfin = null;
            /*
             The objects dictionary holds for each idg/class/id combination as text, all layers in an array
              */
             $scope.layerDictionary = {};
+
+            /*
+            Layer array that serve as guides
+             */
+            $scope.guideLayers = [];
+
+            $scope.snappedLayer = null;
 
             var getElfinIdentifier = function(elfin) {
                 return elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id;
@@ -126,7 +132,9 @@
 		                    leafletData.getLayers().then(function(layers) {
 		                        angular.forEach(objects, function(objectLayer) {
 		                            layers.overlays[layerId].addLayer(objectLayer);
-		                        });
+                                });
+                                // Handle snapping facilities
+                                $scope.guideLayers.push(layers.overlays[layerId]);
 		                    });
 							
 						},
@@ -148,6 +156,16 @@
                         MapService.updateLayerPopupContent(elfin, layer);
                     });
                 }
+            };
+
+
+
+            $scope.registerSnap = function(event) {
+                $scope.snappedLayer = event.layer;
+            };
+
+            $scope.unregisterSnap = function(event) {
+                $scope.snappedLayer = null;
             };
 
             /*
@@ -173,6 +191,8 @@
                         map.removeLayer(layer);
                     });
 
+                    $scope.guideLayers = [];
+
                     if ($scope.drawControl) {
                         map.removeControl($scope.drawControl);
                     }
@@ -193,6 +213,7 @@
                     // Once all layers are loaded, add the drawing layer and register all events
                     leafletData.getLayers().then(function(layers) {
                         var drawLayerId = "drawLayer";
+
                         // Initialise the FeatureGroup to store editable layers
                         layers.overlays[drawLayerId] = new L.FeatureGroup();
 
@@ -200,15 +221,23 @@
                         $scope.drawControl = new L.Control.Draw({
                             draw: {
                                 rectangle: false,
-                                circle: false
+                                circle: false,
+                                marker: { guideLayers: $scope.guideLayers },
+                                polyline: { guideLayers: $scope.guideLayers },
+                                polygon: { guideLayers: $scope.guideLayers }
                             },
                             edit: {
                                 featureGroup: layers.overlays[drawLayerId],
                                 edit: false,
                                 remove: false
                             }
-
                         });
+
+                        layers.overlays[drawLayerId].on({
+                            'snap': $scope.registerSnap,
+                            'unsnap': $scope.unregisterSnap
+                        });
+
                         map.addControl($scope.drawControl);
 
                         var emitDrawEvent = function(event) {
@@ -216,9 +245,13 @@
                         };
 
                         map.on({
+                            'snap': $scope.registerSnap,
+                            'unsnap': $scope.unregisterSnap,
                             'draw:created' : emitDrawEvent,
-                            'draw:edited' : emitDrawEvent,
-                            'draw:deleted' : emitDrawEvent
+                            'draw:drawstart': $scope.setDrawModeOn,
+                            'draw:drawstop': $scope.setDrawModeOff,
+                            'overlayadd': $scope.addLayerGuides,
+                            'overlayremove': $scope.removeLayerGuides
                         });
 
                     });
@@ -267,6 +300,35 @@
             /*
              Elfin Form Draw Events
              */
+            $scope.removeLayerGuides = function(event) {
+                // Do not change layer guides in draw mode
+                if ($scope.drawModeFlag) {return;}
+                var i = $scope.guideLayers.indexOf(event.layer);
+                $scope.guideLayers.splice(i, 1);
+            };
+
+            $scope.addLayerGuides = function(event) {
+                // Do not change layer guides in draw mode
+                if ($scope.drawModeFlag) {return;}
+                $scope.guideLayers.push(event.layer);
+            };
+
+
+            $scope.drawModeFlag = false;
+
+            $scope.toggleDrawMode = function() {
+                $scope.drawModeFlag = !$scope.drawModeFlag;
+            };
+
+            $scope.setDrawModeOn = function() {
+                $scope.drawModeFlag = true;
+            };
+
+            $scope.setDrawModeOff = function() {
+                $scope.drawModeFlag = false;
+            };
+
+
             $scope.$on(HB_EVENTS.ELFIN_FORM_DRAW_EVENT, function(e, mapEvent){
                 if (angular.isUndefined($scope.elfin) || $scope.elfin === null) {
                     return;
@@ -281,14 +343,35 @@
             });
 
             var updateBasePoint = function(marker, scope) {
-                var coords = MapService.getSwissFederalCoordinates(marker.getLatLng());
-                $log.debug(coords);
+                if (!scope.drawModeFlag) {
+                    return;
+                }
+
 
                 var basePoint = MapService.getElfinBasePoint(scope.elfin);
-                if (basePoint) {
+
+                if (basePoint &&
+                    scope.snappedLayer &&
+                    scope.snappedLayer.elfin.ID_G + scope.snappedLayer.elfin.Id !== scope.elfin.ID_G + scope.elfin.Id
+                ) {
+                    var externalBasePoint = MapService.getElfinBasePoint(scope.snappedLayer.elfin);
+                    basePoint.X = externalBasePoint.X;
+                    basePoint.Y = externalBasePoint.Y;
+                    basePoint.Id = scope.snappedLayer.elfin.Id + '#' + externalBasePoint.POS;
+                    basePoint.ID_G = scope.snappedLayer.elfin.ID_G;
+                    basePoint.CLASSE = scope.snappedLayer.elfin.CLASSE;
+
+                } else {
+                    var coords = MapService.getSwissFederalCoordinates(marker.getLatLng());
+
                     basePoint.X = coords.x;
                     basePoint.Y = coords.y;
+                    basePoint.Id = null;
+                    basePoint.ID_G = null;
+                    basePoint.CLASSE = null;
                 }
+
+
 
                 $scope.$emit(HB_EVENTS.ELFIN_UPDATED, scope.elfin);
             };
