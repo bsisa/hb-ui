@@ -61,6 +61,7 @@
 
                     if (result !== null) {
                         result.bindPopup(this.getPopupContent(elfin));
+                        angular.extend(result, {elfin:elfin});
                     }
 
                     return result;
