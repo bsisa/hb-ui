@@ -177,7 +177,12 @@
                         // Initialise the draw control and pass it the FeatureGroup of editable layers
                         var drawControl = new L.Control.Draw({
                             edit: {
-                                featureGroup: layers.overlays[drawLayerId]
+                                featureGroup: layers.overlays[drawLayerId],
+                                edit: false
+                            },
+                            draw: {
+                                rectangle: false,
+                                circle: false
                             }
                         });
                         map.addControl(drawControl);
@@ -201,15 +206,18 @@
              Elfin Card Events
              */
 
+            // Elfin has been loaded
             $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
                 $scope.elfin = elfin;
             });
 
-            $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
+            // Elfin has been unloaded, thus no more current elfin
+            $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function() {
                 $scope.elfin = null;
             });
 
-                //"elfinUpdatedEvent"
+
+            // Elfin has been updated, thus update eventually coords and popup
             $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
                 var identifier = getElfinIdentifier(elfin);
                 if (angular.isDefined($scope.layerDictionary[identifier])) {
@@ -221,6 +229,7 @@
                 }
             });
 
+            // Elfin has been deleted, thus remove it from the map
             $rootScope.$on(HB_EVENTS.ELFIN_DELETED, function(event, elfin) {
                 var identifier = getElfinIdentifier(elfin);
                 if (angular.isDefined($scope.layerDictionary[identifier])) {
@@ -236,12 +245,18 @@
 
 
             /*
-             Elfin Form Events
+             Elfin Form Draw Events
              */
-
             $scope.$on(HB_EVENTS.ELFIN_FORM_DRAW_EVENT, function(e, mapEvent){
-                if (mapEvent.layerType === 'marker') {
-                    $log.debug(mapEvent);
+                if (angular.isUndefined($scope.elfin) || $scope.elfin === null) {
+                    return;
+                }
+
+                switch (mapEvent.layerType) {
+                    case 'marker': break;
+                    case 'polyline': break;
+                    case 'polygon': break;
+
                 }
             });
 
