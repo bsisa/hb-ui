@@ -30,7 +30,9 @@
      * 
      * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
-    angular.module('hb5').controller('HbCardContainerController', ['$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', function($scope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS) {
+    angular.module('hb5').controller('HbCardContainerController', [
+        '$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS',
+        function($scope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS) {
     
     	$log.debug("HbCardContainerController called at " + new Date());
     	
@@ -74,7 +76,7 @@
 				"label-danger" : formController.$dirty && formController.$invalid,
 				"label-success" : formController.$dirty && formController.$valid, 
 				"label-warning" : formController.$pristine && formController.$invalid, // Might happen if database data does not fulfill a client side validation rule.
-				"label-primary" : formController.$pristine && formController.$valid,
+				"label-primary" : formController.$pristine && formController.$valid
 			};
 		};
 		
@@ -82,7 +84,7 @@
 			return {
 				"has-error" : ngModelController.$dirty && ngModelController.$invalid,
 				"has-success" : ngModelController.$dirty && ngModelController.$valid, 
-				"has-warning" : ngModelController.$pristine && ngModelController.$invalid, // unexpected situation  
+				"has-warning" : ngModelController.$pristine && ngModelController.$invalid // unexpected situation
 			};
 		};						
 		
@@ -90,7 +92,7 @@
 			return {
 				"glyphicon-remove" : ngModelController.$dirty && ngModelController.$invalid,
 				"glyphicon-ok" : ngModelController.$dirty && ngModelController.$valid, 
-				"glyphicon-warning-sign" : ngModelController.$pristine && ngModelController.$invalid, // unexpected situation  
+				"glyphicon-warning-sign" : ngModelController.$pristine && ngModelController.$invalid // unexpected situation
 			};
 		};
 
@@ -159,7 +161,9 @@
                         	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
                				hbAlertMessages.addAlert("success",message);
                				$location.path('/');
-               			}, 
+                            $scope.$emit(HB_EVENTS.ELFIN_DELETED, elfin);
+
+                        },
                			function(response) { 
                				var message = "La suppression a échoué. Veuillez s.v.p. recommencer. Si le problème persiste contactez votre administrateur système et lui communiquer le message suivant: " + response.status;
                				hbAlertMessages.addAlert("danger",message);
@@ -247,7 +251,9 @@
 		        		$log.debug("No CARSET/CAR...");
 		        	}
 		            $scope.elfin = elfin;
-		        }, function(response) {
+                    $scope.$emit(HB_EVENTS.ELFIN_LOADED, elfin);
+
+                    }, function(response) {
 		        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
 		            hbAlertMessages.addAlert("danger",message);
 		        });
@@ -255,12 +261,19 @@
             else {
                 var message = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
                 hbAlertMessages.addAlert("warning",message);
-            };
+            }
         };
 
-        $scope.getElfin($scope.collectionId,$scope.elfinId);
-                
-        
+        $scope.getElfin($scope.collectionId, $scope.elfinId);
+
+
+        // When the card scope is destroyed, signal potential observers
+        // That there is no more current elfin displayed
+        $scope.$on('$destroy', function() {
+            $log.debug('Current elfin card closed');
+            $scope.$emit(HB_EVENTS.ELFIN_UNLOADED);
+        });
+
     }]);
 
 
