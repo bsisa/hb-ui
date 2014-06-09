@@ -176,14 +176,16 @@
 
                         // Initialise the draw control and pass it the FeatureGroup of editable layers
                         var drawControl = new L.Control.Draw({
-                            edit: {
-                                featureGroup: layers.overlays[drawLayerId],
-                                edit: false
-                            },
                             draw: {
                                 rectangle: false,
                                 circle: false
+                            },
+                            edit: {
+                                featureGroup: layers.overlays[drawLayerId],
+                                edit: false,
+                                remove: false
                             }
+
                         });
                         map.addControl(drawControl);
 
