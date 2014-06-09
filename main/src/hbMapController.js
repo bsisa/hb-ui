@@ -139,6 +139,17 @@
 
             };
 
+            var updateElfinRepresentation = function(elfin) {
+                var identifier = getElfinIdentifier(elfin);
+                if (angular.isDefined($scope.layerDictionary[identifier])) {
+                    angular.forEach($scope.layerDictionary[identifier], function (layer) {
+                        MapService.updateLayerCoords(elfin, layer);
+                        MapService.updatePolygonCoords(elfin, layer);
+                        MapService.updateLayerPopupContent(elfin, layer);
+                    });
+                }
+            };
+
             /*
             Display Map Events
              */
@@ -151,9 +162,20 @@
                 }
             });
 
+
             $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, mapDef) {
 
                 leafletData.getMap().then(function (map) {
+
+                    // First clean all layers and controls
+                    angular.forEach($scope.layers.overlays, function(layer) {
+                        layer.clearLayers();
+                        map.removeLayer(layer);
+                    });
+
+                    if ($scope.drawControl) {
+                        map.removeControl($scope.drawControl);
+                    }
 
                     var center = mapDef.CARACTERISTIQUE.CAR2.VALEUR.split(' ');
 
@@ -175,7 +197,7 @@
                         layers.overlays[drawLayerId] = new L.FeatureGroup();
 
                         // Initialise the draw control and pass it the FeatureGroup of editable layers
-                        var drawControl = new L.Control.Draw({
+                        $scope.drawControl = new L.Control.Draw({
                             draw: {
                                 rectangle: false,
                                 circle: false
@@ -187,7 +209,7 @@
                             }
 
                         });
-                        map.addControl(drawControl);
+                        map.addControl($scope.drawControl);
 
                         var emitDrawEvent = function(event) {
                             $scope.$emit(HB_EVENTS.ELFIN_FORM_DRAW_EVENT, event);
@@ -214,21 +236,17 @@
             });
 
             // Elfin has been unloaded, thus no more current elfin
-            $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function() {
+            $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
+                if (elfin) {
+                    updateElfinRepresentation(elfin);
+                }
                 $scope.elfin = null;
             });
 
 
             // Elfin has been updated, thus update eventually coords and popup
             $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
-                var identifier = getElfinIdentifier(elfin);
-                if (angular.isDefined($scope.layerDictionary[identifier])) {
-                    angular.forEach($scope.layerDictionary[identifier], function(layer) {
-                        MapService.updateLayerCoords(elfin, layer);
-                        MapService.updatePolygonCoords(elfin, layer);
-                        MapService.updateLayerPopupContent(elfin, layer);
-                    });
-                }
+                updateElfinRepresentation(elfin);
             });
 
             // Elfin has been deleted, thus remove it from the map
@@ -255,15 +273,26 @@
                 }
 
                 switch (mapEvent.layerType) {
-                    case 'marker': break;
+                    case 'marker': updateBasePoint(mapEvent.layer, $scope); break;
                     case 'polyline': break;
                     case 'polygon': break;
 
                 }
             });
 
-        }]);
+            var updateBasePoint = function(marker, scope) {
+                var coords = MapService.getSwissFederalCoordinates(marker.getLatLng());
+                $log.debug(coords);
 
+                var basePoint = MapService.getElfinBasePoint(scope.elfin);
+                if (basePoint) {
+                    basePoint.X = coords.x;
+                    basePoint.Y = coords.y;
+                }
+
+                $scope.$emit(HB_EVENTS.ELFIN_UPDATED, scope.elfin);
+            };
+        }]);
 
 })();
 
