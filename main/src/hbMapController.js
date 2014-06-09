@@ -322,10 +322,12 @@
 
             $scope.setDrawModeOn = function() {
                 $scope.drawModeFlag = true;
+                $scope.snappedLayer = null;
             };
 
             $scope.setDrawModeOff = function() {
                 $scope.drawModeFlag = false;
+                $scope.snappedLayer = null;
             };
 
 
