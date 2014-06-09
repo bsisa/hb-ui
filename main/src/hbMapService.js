@@ -4,6 +4,8 @@
  */
 
 (function() {
+
+
     angular.module('hbMap', []).factory('MapService', [
        '$log', 'GeoxmlService', function($log, GeoxmlService) {
 
@@ -195,12 +197,12 @@
                  * @param point
                  */
                 getLongitudeLatitudeCoordinates: function(point) {
-                    var x = (point.Y - 200147) / 1000000;
+                    var x = (point.Y - Y_OFFSET_OBSERVED) / 1000000;
                     var x2 = x * x;
                     var x3 = x2 * x;
                     var x4 = x3 * x;
 
-                    var y = (point.X - 600067) / 1000000;
+                    var y = (point.X - X_OFFSET_OBSERVED) / 1000000;
                     var y2 = y * y;
                     var y3 = y2 * y;
                     var y4 = y3 * y;
@@ -239,7 +241,46 @@
                     var longitude = lonPrime * 100 / 36;
 
                     return L.latLng(latitude, longitude);
+                },
+
+                /**
+                 * See http://www.swisstopo.admin.ch/internet/swisstopo/fr/home/topics/survey/sys/refsys/switzerland.parsysrelated1.31216.downloadList.63873.DownloadFile.tmp/swissprojectionfr.pdf
+                 * and http://mapref.org/LinkedDocuments/swiss_projection_en.pdf section 4.1
+                 * @param latLong
+                 */
+                getSwissFederalCoordinates: function(latLng) {
+                    var latPrime = (latLng.lat * 36 / 100 - 169028.66 / 10000) ,
+                        latPrime2 = latPrime * latPrime,
+                        latPrime3 = latPrime2 * latPrime,
+                        lngPrime = (latLng.lng * 36 / 100 - 26782.5 / 10000) ,
+                        lngPrime2 = lngPrime * lngPrime,
+                        lngPrime3 = lngPrime2 * lngPrime;
+
+                    var y = X_OFFSET_OFFICIAL
+                        + 211455.93 * lngPrime
+                        - 10938.51 * lngPrime * latPrime
+                        - 0.36 * lngPrime * latPrime2
+                        - 44.54 * lngPrime3;
+
+                    var x = Y_OFFSET_OFFICIAL
+                        + 308807.95 * latPrime
+                        + 3745.25 * lngPrime2
+                        + 76.63 * latPrime2
+                        - 194.56 * lngPrime2 * latPrime
+                        + 119.79 * latPrime3;
+
+                    // It is inversed because the original formula gives result in a
+                    // transformed coordinate system.
+                    return {x: y, y : x};
+
                 }
             }
     }]);
+
+    var X_OFFSET_OFFICIAL = 600072.37; // Official
+    var X_OFFSET_OBSERVED = 600067; // Observed
+    var Y_OFFSET_OFFICIAL = 200147.07; // Official
+    var Y_OFFSET_OBSERVED = 200147.07; // Observed
+
+
 })();
