@@ -3,76 +3,74 @@
     angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', '$location', 'GeoxmlService', 'HB_EVENTS',
         function ($scope, $rootScope, $log, leafletData, MapService, $location, GeoxmlService, HB_EVENTS) {
 
-            $scope.center = {
-                lat: 0,
-                lng: 0,
-                zoom: 10
-            };
-
-            $scope.layers = {
-                baselayers: {
-                    standard: {
-                        name: 'Standard',
-                        url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        type: 'xyz'
-                    },
-                    black_white: {
-                        name: 'Noir et Blanc',
-                        url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
-                        type: 'xyz'
-                    },
-                    hot: {
-                        name: 'HOT',
-                        url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-                        type: 'xyz'
-                    },
-                    transport: {
-                        name: 'Transport',
-                        url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-                        type: 'xyz'
-                    },
-                    landscape: {
-                        name: 'Paysage',
-                        url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
-                        type: 'xyz'
-                    },
-                    grayscale: {
-                        name: 'Routes - Gris',
-                        url: 'http://openmapsurfer.uni-hd.de/tiles/roadsg/x={x}&y={y}&z={z}',
-                        type: 'xyz'
-                    },
-                    watercoloe: {
-                        name: 'Aquarelle',
-                        url: 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
-                        type: 'xyz'
-                    }
-
+            // Add Leaflet Directive scope extension
+            angular.extend($scope, {
+                center: {
+                    lat: 0,
+                    lng: 0,
+                    zoom: 10
                 },
-                overlays: {
 
+                defaults: {
+                    drawControl: true
+                },
+                layers: {
+                    baselayers: {
+                        standard: {
+                            name: 'Standard',
+                            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        },
+                        black_white: {
+                            name: 'Noir et Blanc',
+                            url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        },
+                        hot: {
+                            name: 'HOT',
+                            url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        },
+                        transport: {
+                            name: 'Transport',
+                            url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        },
+                        landscape: {
+                            name: 'Paysage',
+                            url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        },
+                        grayscale: {
+                            name: 'Routes - Gris',
+                            url: 'http://openmapsurfer.uni-hd.de/tiles/roadsg/x={x}&y={y}&z={z}',
+                            type: 'xyz'
+                        },
+                        watercoloe: {
+                            name: 'Aquarelle',
+                            url: 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
+                            type: 'xyz'
+                        }
+
+                    },
+                    overlays: {
+
+                    }
                 }
-            };
+            });
 
             /*
+            Reference to current displayed object
+             */
+           $scope.elfin = null;
+           /*
             The objects dictionary holds for each idg/class/id combination as text, all layers in an array
              */
-            $scope.layerDictionary = {
-
-            };
+            $scope.layerDictionary = {};
 
             var getElfinIdentifier = function(elfin) {
                 return elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id;
             };
-
-
-            $rootScope.$on(HB_EVENTS.DISPLAY_MAP_VIEW, function (event, displayMap) {
-                if (displayMap === true) {
-                    leafletData.getMap().then(function (map) {
-                        map.invalidateSize();
-                    });
-                }
-            });
-
 
 
             var displayLayer = function (map, id, layerDef) {
@@ -129,7 +127,7 @@
 		                        angular.forEach(objects, function(objectLayer) {
 		                            layers.overlays[layerId].addLayer(objectLayer);
 		                        });
-		                    });					
+		                    });
 							
 						},
 						function(response) {
@@ -140,6 +138,18 @@
 					);                
 
             };
+
+            /*
+            Display Map Events
+             */
+
+            $rootScope.$on(HB_EVENTS.DISPLAY_MAP_VIEW, function (event, displayMap) {
+                if (displayMap === true) {
+                    leafletData.getMap().then(function (map) {
+                        map.invalidateSize();
+                    });
+                }
+            });
 
             $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, mapDef) {
 
@@ -153,13 +163,53 @@
                         zoom: parseFloat(center[2])
                     };
 
+
                     angular.forEach(mapDef.CARACTERISTIQUE.FRACTION.L, function (layerDef) {
                         displayLayer(map, mapDef.Id, layerDef);
+                    });
+
+                    // Once all layers are loaded, add the drawing layer and register all events
+                    leafletData.getLayers().then(function(layers) {
+                        var drawLayerId = "drawLayer";
+                        // Initialise the FeatureGroup to store editable layers
+                        layers.overlays[drawLayerId] = new L.FeatureGroup();
+
+                        // Initialise the draw control and pass it the FeatureGroup of editable layers
+                        var drawControl = new L.Control.Draw({
+                            edit: {
+                                featureGroup: layers.overlays[drawLayerId]
+                            }
+                        });
+                        map.addControl(drawControl);
+
+                        var emitDrawEvent = function(event) {
+                            $scope.$emit(HB_EVENTS.ELFIN_FORM_DRAW_EVENT, event);
+                        };
+
+                        map.on({
+                            'draw:created' : emitDrawEvent,
+                            'draw:edited' : emitDrawEvent,
+                            'draw:deleted' : emitDrawEvent
+                        });
+
                     });
                 });
             });
 
-            //"elfinUpdatedEvent"
+
+            /*
+             Elfin Card Events
+             */
+
+            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
+                $scope.elfin = elfin;
+            });
+
+            $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
+                $scope.elfin = null;
+            });
+
+                //"elfinUpdatedEvent"
             $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
                 var identifier = getElfinIdentifier(elfin);
                 if (angular.isDefined($scope.layerDictionary[identifier])) {
@@ -168,6 +218,30 @@
                         MapService.updatePolygonCoords(elfin, layer);
                         MapService.updateLayerPopupContent(elfin, layer);
                     });
+                }
+            });
+
+            $rootScope.$on(HB_EVENTS.ELFIN_DELETED, function(event, elfin) {
+                var identifier = getElfinIdentifier(elfin);
+                if (angular.isDefined($scope.layerDictionary[identifier])) {
+
+                    leafletData.getMap().then(function (map) {
+                        angular.forEach($scope.layerDictionary[identifier], function(layer) {
+                            map.removeLayer(layer);
+                        });
+                        delete $scope.layerDictionary[identifier];
+                    });
+                }
+            });
+
+
+            /*
+             Elfin Form Events
+             */
+
+            $scope.$on(HB_EVENTS.ELFIN_FORM_DRAW_EVENT, function(e, mapEvent){
+                if (mapEvent.layerType === 'marker') {
+                    $log.debug(mapEvent);
                 }
             });
 
