@@ -242,6 +242,36 @@
 
                         map.addControl($scope.drawControl);
 
+
+
+
+                        var coordinatesPlugin = L.control.coordinates({
+                            position:"bottomright", //optional default "bootomright"
+                            decimals:2, //optional default 4
+                            decimalSeperator:".", //optional default "."
+                            labelTemplateLat:"X: {y}", //optional default "Lat: {y}"
+                            labelTemplateLng:"Y: {x}", //optional default "Lng: {x}"
+                            enableUserInput:false, //optional default true
+                            useDMS:false, //optional default false
+                            useLatLngOrder: false //ordering of labels, default false-> lng-lat
+                        });
+
+                        // Override update function to get swiss federal coordinates
+                        coordinatesPlugin._update = function (evt) {
+                            var pos = MapService.getSwissFederalCoordinates(evt.latlng),
+                                opts = this.options;
+                            if (pos) {
+                                // pos = pos.wrap();
+                                this._currentPos = pos;
+                                this._inputY.value = L.NumberFormatter.round(pos.x, opts.decimals, opts.decimalSeperator);
+                                this._inputX.value = L.NumberFormatter.round(pos.y, opts.decimals, opts.decimalSeperator);
+                                this._label.innerHTML = this._createCoordinateLabel({lng: pos.x, lat: pos.y});
+                            }
+                        };
+                        coordinatesPlugin.addTo(map);
+
+
+
                         var emitDrawEvent = function(event) {
                             $scope.$emit(HB_EVENTS.ELFIN_FORM_DRAW_EVENT, event);
                         };

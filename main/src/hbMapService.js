@@ -250,6 +250,8 @@
                  * @param latLong
                  */
                 getSwissFederalCoordinates: function(latLng) {
+                    if (!latLng) return {x: 0, y : 0};
+
                     var latPrime = (latLng.lat * 36 / 100 - 169028.66 / 10000) ,
                         latPrime2 = latPrime * latPrime,
                         latPrime3 = latPrime2 * latPrime,
