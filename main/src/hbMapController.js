@@ -249,8 +249,8 @@
                             position:"bottomright", //optional default "bootomright"
                             decimals:2, //optional default 4
                             decimalSeperator:".", //optional default "."
-                            labelTemplateLat:"X: {y}", //optional default "Lat: {y}"
-                            labelTemplateLng:"Y: {x}", //optional default "Lng: {x}"
+                            labelTemplateLat:"Y: {y}", //optional default "Lat: {y}"
+                            labelTemplateLng:"X: {x}", //optional default "Lng: {x}"
                             enableUserInput:false, //optional default true
                             useDMS:false, //optional default false
                             useLatLngOrder: false //ordering of labels, default false-> lng-lat
