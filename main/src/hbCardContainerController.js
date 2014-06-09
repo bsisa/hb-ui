@@ -31,8 +31,8 @@
      * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
     angular.module('hb5').controller('HbCardContainerController', [
-        '$scope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS',
-        function($scope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS) {
+        '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS',
+        function($scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS) {
     
     	$log.debug("HbCardContainerController called at " + new Date());
     	
@@ -271,7 +271,19 @@
         // That there is no more current elfin displayed
         $scope.$on('$destroy', function() {
             $log.debug('Current elfin card closed');
-            $scope.$emit(HB_EVENTS.ELFIN_UNLOADED);
+            // Reload the last saved state and propagate to give chance
+            // to any other observer to update eventually their scope
+            GeoxmlService.getElfin($scope.collectionId, $scope.elfinId).get().then(function(elfin) {
+                // We must call the root scope because the scope is already destroyed...
+                $rootScope.$emit(HB_EVENTS.ELFIN_UNLOADED, elfin);
+            }, function() {
+                $rootScope.$emit(HB_EVENTS.ELFIN_UNLOADED);
+            });
+        });
+
+        $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
+            $scope.elfin = elfin;
+            $scope.elfinForm.$setDirty();
         });
 
     }]);
