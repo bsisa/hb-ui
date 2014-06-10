@@ -12,6 +12,12 @@
 
 
     angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', '$timeout', 'itemDefinition', function($scope, $modalInstance, $timeout, itemDefinition) {
+    	
+    	// Reset parameters value upon modal opening
+    	for (var i = 0; i < itemDefinition.parameters.length; i++) {
+    		itemDefinition.parameters[i].value = "";
+		}
+    	
     	$scope.itemDefinition = itemDefinition;
         $scope.ok = function () {
             $modalInstance.close($scope.itemDefinition);
