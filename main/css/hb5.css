@@ -344,7 +344,10 @@ a [class^="icon-"]
     vertical-align:middle;
 }
 
-/* Change background depending on ng-form dirty / pristine state */
+
+/**********************************************************************
+	Change background depending on ng-form dirty / pristine state 
+/*********************************************************************/
 form.ng-dirty {
 	transition:0.5s linear all;
     background-color: #FFCCCC;
@@ -400,7 +403,9 @@ select.ng-dirty.ng-valid {
 }
 
 
-/* Do not change modal input background while entering data */
+/**********************************************************************
+    Preserve modal form, input background and borders 
+**********************************************************************/
 div.modal-body.ng-dirty {
     background-color: white;
 }
@@ -408,6 +413,27 @@ div.modal-body.ng-dirty {
 div.modal-body.ng-pristine {
     background-color: white;
 }
+
+.modal-body form.ng-dirty {
+    background-color: white;
+}
+.modal-body form.ng-pristine {
+    background-color: white;
+}
+
+.modal-body input.ng-pristine {
+    background-color: white;
+}
+.modal-body input.ng-dirty {
+    background-color: white;
+    border: 1px solid #CCC;
+}
+.modal-body input.ng-dirty.ng-valid {
+    background-color: white;
+    border: 1px solid #CCC;
+}
+
+/*********************************************************************/
 
 
 /* Disable kickstart padding in bootstrap */
