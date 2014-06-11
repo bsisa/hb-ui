@@ -129,7 +129,10 @@
     	        		$log.error(errMsg);
     	        		hbAlertMessages.addAlert("danger",errMsg);
     	        	} else if (response.status == 500) {
-    	        		var errMsg = "Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. ( " + response.data.DESCRIPTION +" )";
+    	        		var errMsg = "Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. " ;
+    	        		if (response.data.DESCRIPTION) {
+    	        			errMsg += "( " + response.data.DESCRIPTION +" )"; 
+    	        		} 
     	        		$log.error(errMsg);
     	        		hbAlertMessages.addAlert("danger",errMsg);
     	        	} else if (response.status == 566) { // 566 - Custom code for connect exception
