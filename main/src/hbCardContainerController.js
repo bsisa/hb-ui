@@ -282,7 +282,8 @@
         });
 
         $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
-            $scope.elfin = elfin;
+            //TODO: solve https://github.com/bsisa/hb-ui/issues/3 possibly issues/2 as well.
+        	$scope.elfin = elfin;
             $scope.elfinForm.$setDirty();
         });
 
