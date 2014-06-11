@@ -125,13 +125,25 @@
     	        		//TODO: we might use the following once we create an new custom AngularJS integrated login form 
     	        		//$location.path('/login'); 
     	        	} else if (response.status == 404) {
-    	        		hbAlertMessages.addAlert("danger","Ressource non disponible");
+    	        		var errMsg = "Ressource non disponible. ( " + response.data.DESCRIPTION +" )";
+    	        		$log.error(errMsg);
+    	        		hbAlertMessages.addAlert("danger",errMsg);
     	        	} else if (response.status == 500) {
-    	        		hbAlertMessages.addAlert("danger","Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. Note: Vérifiez que la base de donnée soit accessible.");
+    	        		var errMsg = "Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. ( " + response.data.DESCRIPTION +" )";
+    	        		$log.error(errMsg);
+    	        		hbAlertMessages.addAlert("danger",errMsg);
     	        	} else if (response.status == 566) { // 566 - Custom code for connect exception
-    	        		hbAlertMessages.addAlert("danger","La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur.");    	        		
+    	        		var errMsg = "La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur. ( " + response.data.DESCRIPTION +" )";
+    	        		$log.error(errMsg);
+    	        		hbAlertMessages.addAlert("danger",errMsg);    	        		
+    	        	} else if (response.status == 567) { // 567 - Custom code for ElfinFormatException
+    	        		var userErrMsg = "La conversion de l' objet ELFIN.Id = " + response.data.ELFIN_Id + ", ELFIN.ID_G = "+ response.data.ELFIN_ID_G +" a échoué. Veuillez s.v.p. prendre contact avec votre administrateur système.";
+    	        		$log.error("ElfinFormatException ("+response.status+"): ERROR = " + response.data.ERROR + ", DESCRIPTION = " + response.data.DESCRIPTION + ", User message = " + userErrMsg);
+    	        		hbAlertMessages.addAlert("danger",userErrMsg);
     	        	} else {
-    	        		hbAlertMessages.addAlert("danger","Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status );    	        		
+    	        		var errMsg = "Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status ;
+    	        		$log.error(errMsg);
+    	        		hbAlertMessages.addAlert("danger",errMsg);    	        		
     	        	}
     	          $log.debug("Restangular error interceptor caught: status: " + response.status);
     	          return false; // stops the promise chain
