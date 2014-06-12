@@ -39,6 +39,12 @@
             .when('/elfin/:collectionId/ACTEUR', {
                 templateUrl: '/assets/views/ACTEUR_list_view.html'
             })
+            .when('/elfin/:collectionId/USER', {
+                templateUrl: '/assets/views/USER_list_view.html'
+            })
+            .when('/elfin/:collectionId/USER/:elfinId', {
+                templateUrl: '/assets/views/USER_card_view.html'
+            })
             .when('/elfin/:collectionId/CONSTAT/:elfinId', {
                 templateUrl: '/assets/views/CONSTAT_card_view.html'
             })

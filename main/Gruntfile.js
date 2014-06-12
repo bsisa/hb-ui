@@ -54,6 +54,8 @@ module.exports = function(grunt) {
 								'src/hbMapController.js',
 								'src/hbNoDirtyCheckDirective.js', 
 								'src/hbUtilService.js',
+								'src/hbUserCardController.js',
+								'src/hbUserCardDirective.js',
 								'src/spreadsheetSelect.js'],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
