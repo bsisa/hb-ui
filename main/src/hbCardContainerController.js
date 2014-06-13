@@ -281,10 +281,22 @@
             });
         });
 
+
+        /**
+         * React to elfin update done elsewhere than through the current controller, 
+         * for instance via the map.
+         */
         $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
-            //TODO: solve https://github.com/bsisa/hb-ui/issues/3 possibly issues/2 as well.
-        	$scope.elfin = elfin;
-            $scope.elfinForm.$setDirty();
+
+            /**
+             * We must not update elfinForm state and elfin when the event was 
+             * emitted from the current controller.
+             * If condition fixes https://github.com/bsisa/hb-ui/issues/3
+             */
+        	if (! (event.targetScope === $scope) ) {
+	        	$scope.elfin = elfin;
+	            $scope.elfinForm.$setDirty();
+        	}
         });
 
     }]);

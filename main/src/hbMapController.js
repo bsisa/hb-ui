@@ -309,9 +309,14 @@
             });
 
 
-            // Elfin has been updated, thus update eventually coords and popup
+            /**
+             * Elfin has been updated, thus update eventually coords and popup.
+             * 
+             * Note: Unlike in hbCardContainerController we do always need to   
+             * update the ELFIN representation on the map.
+             */
             $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
-                updateElfinRepresentation(elfin);
+               	updateElfinRepresentation(elfin);            		
             });
 
             // Elfin has been deleted, thus remove it from the map
