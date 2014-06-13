@@ -114,14 +114,13 @@
                 GeoxmlService.getCollection(layer.idg).getList({"xpath" : layer.xpath})
 				.then(
 						function(elfins) {
-            				$log.debug("Using GeoxmlService service (2), obtained " + elfins.length + " objects.");
+            				$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " objects.");
 							var objects = [];
-							var identifier;
 		                    angular.forEach(elfins, function (elfin) {
 		                        var objectLayer = MapService.getObjectLayer(elfin, layer.representationType, layer.representationStyle);
 		                        if (objectLayer !== null) {
 		                            objects.push(objectLayer);
-		                            identifier = getElfinIdentifier(elfin);
+		                            var identifier = getElfinIdentifier(elfin);
 		                            if (angular.isUndefined($scope.layerDictionary[identifier])) {
 		                                $scope.layerDictionary[identifier] = [objectLayer];
 		                            } else {
