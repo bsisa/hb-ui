@@ -95,7 +95,10 @@
                 },
                 getNewElfin: function(elfinClasse) {
                     return _geoxmlService.one("catalogue", elfinClasse);
-                }                
+                }, 
+                getService: function() {
+                	return restGeoxml;
+                }
             };
         }
     ]);
