@@ -38,6 +38,15 @@
             })
             .when('/elfin/:collectionId/ACTEUR', {
                 templateUrl: '/assets/views/ACTEUR_list_view.html'
+            })
+            .when('/elfin/create/ROLE', {
+                templateUrl: '/assets/views/ROLE_card_new_view.html'
+            })
+            .when('/elfin/:collectionId/ROLE', {
+                templateUrl: '/assets/views/ROLE_list_view.html'
+            })
+            .when('/elfin/:collectionId/ROLE/:elfinId', {
+                templateUrl: '/assets/views/ROLE_card_view.html'
             })            
             .when('/elfin/create/USER', {
                 templateUrl: '/assets/views/USER_card_new_view.html'
@@ -47,7 +56,7 @@
             })
             .when('/elfin/:collectionId/USER/:elfinId', {
                 templateUrl: '/assets/views/USER_card_view.html'
-            })            
+            })
             .when('/elfin/:collectionId/CONSTAT/:elfinId', {
                 templateUrl: '/assets/views/CONSTAT_card_view.html'
             })

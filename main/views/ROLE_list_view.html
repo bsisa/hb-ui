@@ -1,0 +1,27 @@
+<div hb-list-container>
+	<table class="table table-condensed table-bordered table-striped"
+		ng-show="elfins">
+		<thead>
+			<tr>
+				<th colspan="6"><span class="badge">{{elfinsCount}}</span> rôle{{ elfinsCount | plural }} trouvé{{
+					elfinsCount | plural }}</th>
+			</tr>
+			<tr>
+				<th />
+				<th>Nom</th>
+<!-- 				<th>Rôle</th> -->
+<!-- 				<th>N° de téléphone</th> -->
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="elfin in elfins">
+				<td><a
+					href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td>
+				<td>{{elfin.IDENTIFIANT.NOM}}</td>
+<!-- 				<td>{{elfin.IDENTIFIANT.QUALITE}}</td> -->
+<!-- 				<td>{{elfin.CARACTERISTIQUE.CAR4.VALEUR}}</td> -->
+			</tr>
+		</tbody>
+	</table>
+</div>
+
