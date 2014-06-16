@@ -164,6 +164,10 @@
     	        		var userErrMsg = "La conversion de l' objet ELFIN.Id = " + response.data.ELFIN_Id + ", ELFIN.ID_G = "+ response.data.ELFIN_ID_G +" a échoué. Veuillez s.v.p. prendre contact avec votre administrateur système.";
     	        		$log.error("ElfinFormatException ("+response.status+"): ERROR = " + response.data.ERROR + ", DESCRIPTION = " + response.data.DESCRIPTION + ", User message = " + userErrMsg);
     	        		hbAlertMessages.addAlert("danger",userErrMsg);
+    	        	} else if (response.status == 568) { // 568 - Custom code for PasswordHashException
+    	        		var userErrMsg = "L'obtention du hachage encrypté du mot de passe a échoué. Veuillez s.v.p. prendre contact avec votre administrateur système.";
+    	        		$log.error("PasswordHashException ("+response.status+"): ERROR = " + response.data.ERROR + ", DESCRIPTION = " + response.data.DESCRIPTION + ", User message = " + userErrMsg);
+    	        		hbAlertMessages.addAlert("danger",userErrMsg);
     	        	} else {
     	        		var errMsg = "Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status ;
     	        		$log.error(errMsg);

@@ -98,6 +98,9 @@
                 }, 
                 getService: function() {
                 	return restGeoxml;
+                },
+                getHash: function(plainTxtPwd) {
+                	return _geoxmlService.one("security/hash", plainTxtPwd);
                 }
             };
         }

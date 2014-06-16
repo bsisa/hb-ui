@@ -23,7 +23,27 @@
 							"Responsable chauffage" : "Responsable chauffage",
 							"Entreprise" : "Entreprise",
 							"Collaborateur" : "Collaborateur"
-						};						
+						};		
+						
+						$scope.pwd1 = null;
+						$scope.pwd2 = null;
+						
+						$scope.hash = function(pwd) {
+							// Check pwd1 === pwd2 ?
+							GeoxmlService.getHash(pwd).get()
+					        .then(
+					        	function(pwdHash) {
+					        		$scope.elfin.IDENTIFIANT.ALIAS = pwdHash.hash;
+					        	}, 
+					        	function(response) {
+					        		var message = "La modification du mot de passe a échoué (statut de retour: " + response.status + ")";
+					        		hbAlertMessages.addAlert("danger",message);
+					        	}
+					        );
+							// Reset values at each submission.
+							$scope.pwd1 = null;
+							$scope.pwd2 = null;
+						};
 						
 					} ]);
 	
