@@ -38,13 +38,16 @@
             })
             .when('/elfin/:collectionId/ACTEUR', {
                 templateUrl: '/assets/views/ACTEUR_list_view.html'
+            })            
+            .when('/elfin/create/USER', {
+                templateUrl: '/assets/views/USER_card_new_view.html'
             })
             .when('/elfin/:collectionId/USER', {
                 templateUrl: '/assets/views/USER_list_view.html'
             })
             .when('/elfin/:collectionId/USER/:elfinId', {
                 templateUrl: '/assets/views/USER_card_view.html'
-            })
+            })            
             .when('/elfin/:collectionId/CONSTAT/:elfinId', {
                 templateUrl: '/assets/views/CONSTAT_card_view.html'
             })
@@ -131,6 +134,9 @@
     	        		//TODO: we might use the following once we create an new custom AngularJS integrated login form 
     	        		//$location.path('/login'); 
     	        	} else if (response.status == 404) {
+//    	        		for (var property in response) {
+//   	        			   console.log("Property name: " + property + ", value: " + response[property]);
+//    	        		}
     	        		var errMsg = "Ressource non disponible. ( " + response.data.DESCRIPTION +" )";
     	        		$log.error(errMsg);
     	        		hbAlertMessages.addAlert("danger",errMsg);

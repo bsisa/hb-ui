@@ -31,10 +31,25 @@
      * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
     angular.module('hb5').controller('HbCardContainerController', [
-        '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS',
-        function($scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS) {
+        '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', '$attrs',
+        function($scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS, $attrs) {
     
-    	$log.debug("HbCardContainerController called at " + new Date());
+    	$log.debug("HbCardContainerController called at " + new Date() + " with $routeParams.elfinId = " + $routeParams.elfinId + ", $routeParams.collectionId = " + $routeParams.collectionId);
+    	
+    	
+//		for (var property in $attrs) {
+//			$log.debug("Property name: " + property + ", value: " + $attrs[property]);
+//		}
+    	
+		if ($attrs.hbMode) {
+			$log.debug(">>>>>>>>>> HB MODE = " + $attrs.hbMode);
+		}
+		
+		if ($attrs.hbElfinClasse) {
+			$log.debug(">>>>>>>>>> HB ELFIN CLASSE = " + $attrs.hbElfinClasse);
+		}
+    	
+    	//$scope.operation = "";
     	
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
@@ -124,23 +139,54 @@
     	 * Wrapper for ELFIN PUT (update) operation
     	 */
         $scope.putElfin = function (elfin) {
-        	$log.debug("HbCardContainerController putElfin called at " + new Date());
-       		elfin.put().then( 
-       			function() { 
-       				$log.debug("All ok");
-       				// Considered good practice to reload the actual db  
-       				// content unless server load is a concern.
-       				$scope.getElfin($scope.collectionId,$scope.elfinId);
-                    $scope.elfinForm.$setPristine();
-                    //"elfinUpdatedEvent"
-                    $scope.$emit(HB_EVENTS.ELFIN_UPDATED, elfin);
-       			}, 
-       			function(response) { 
-       				$log.debug("Error with status code", response.status);
-       				var message = "La mise à jour a échoué (statut de retour: "+ response.status+ ")";
-					hbAlertMessages.addAlert("danger",message);
-       			} 
-       		);
+        	$log.debug(">>>>>>>>>> HbCardContainerController putElfin called at " + new Date());
+        	$log.debug(">>>>>>>>>> HbCardContainerController: putElfin: elfin.Id = "+elfin.Id+", elfin.ID_G = "+elfin.ID_G);
+        	
+        	// Perform POST in create mode
+        	if ($attrs.hbMode === "create" && $attrs.hbElfinClasse) {
+
+        		$log.debug(">>>>>>>>>> HbCardContainerController: POST elfin.ID_G: " + elfin.ID_G +", elfin.Id: " + elfin.Id);
+        		var restGeoxml = GeoxmlService.getService();
+        		restGeoxml.all(elfin.ID_G+ '/' + elfin.Id).post(elfin).then( 
+               			function() { 
+    	       				$scope.elfin = elfin;
+    	                    $scope.elfinForm.$setPristine();
+    	                    // TODO: might need to issue an ELFIN_CREATED. Only useful with elfin which are drawn on map
+    	                    //$scope.$emit(HB_EVENTS.ELFIN_UPDATED, elfin);
+    	                   	var redirUrl = '/elfin/'+elfin.ID_G+'/'+$attrs.hbElfinClasse+'/'+elfin.Id;
+    	                   	$log.debug(">>>>>>>>>> HbCardContainerController: redirUrl = " + redirUrl);
+    	                   	$location.path( redirUrl );
+    	       			}, 
+    	       			function(response) { 
+    	       				$log.debug("Error with status code", response.status);
+    	       				var message = "La création a échoué (statut de retour: "+ response.status+ ")";
+    						hbAlertMessages.addAlert("danger",message);
+    	       			}
+            		);        			
+       		
+        	} else { // Perform PUT when mode != create
+
+           		elfin.put().then( 
+               			function() { 
+               				$log.debug(">>>>>>>>>> HbCardContainerController: PUT elfin.ID_G: " + elfin.ID_G +", elfin.Id: " + elfin.Id);
+               				// Considered good practice to reload the actual db  
+               				// content unless server load is a concern.
+               				//$scope.getElfin($scope.collectionId,$scope.elfinId);
+               				$scope.getElfin(elfin.ID_G,elfin.Id);
+                            $scope.elfinForm.$setPristine();
+                            //$scope.operation = "";
+                            //"elfinUpdatedEvent"
+                            $scope.$emit(HB_EVENTS.ELFIN_UPDATED, elfin);
+               			}, 
+               			function(response) { 
+               				$log.debug("Error with status code", response.status);
+               				var message = "La mise à jour a échoué (statut de retour: "+ response.status+ ")";
+        					hbAlertMessages.addAlert("danger",message);
+               			} 
+               		);        		
+        		
+        	}
+
         };
         
     	// Wrapper for ELFIN DELETE operation
@@ -160,9 +206,10 @@
                			function() { 
                         	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
                				hbAlertMessages.addAlert("success",message);
-               				$location.path('/');
+               				// Flag information useful not to perform GET on deleted resource.
+               				$scope.elfinDeleted = true;
+               				$location.path("/elfin/" + elfin.ID_G + "/" + elfin.CLASSE);
                             $scope.$emit(HB_EVENTS.ELFIN_DELETED, elfin);
-
                         },
                			function(response) { 
                				var message = "La suppression a échoué. Veuillez s.v.p. recommencer. Si le problème persiste contactez votre administrateur système et lui communiquer le message suivant: " + response.status;
@@ -232,36 +279,78 @@
             });
         };
 
-        
+
+        /**
+         * Returns an elfin object. The elfin object is either obtained:
+         * 1) From database using collectionId, elfinId parameters with GET HTTP call
+         * 2) From HyperBird catalogue for the given ELFIN.CLASSE (without persistence to database yet).  
+         */
         $scope.getElfin = function (collectionId, elfinId) {
         	
-        	$log.debug("HbCardContainerController getElfin called at " + new Date());
-        	
-        	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
-		        GeoxmlService.getElfin(collectionId, elfinId).get()
-		        .then(function(elfin) {
-		        	// Force CAR array sorting by POS attribute
-		        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
-		        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
-		        	//       Need review of other similar operations
-		        	if ( elfin['CARACTERISTIQUE'] != null && elfin['CARACTERISTIQUE']['CARSET'] != null && elfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
-		        		$log.debug("Found CARSET/CAR...");
-		        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
-		        	} else {
-		        		$log.debug("No CARSET/CAR...");
-		        	}
-		            $scope.elfin = elfin;
-                    $scope.$emit(HB_EVENTS.ELFIN_LOADED, elfin);
+        	$log.debug(">>>>>>>>>> HbCardContainerController getElfin called at " + new Date());
 
-                    }, function(response) {
-		        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
-		            hbAlertMessages.addAlert("danger",message);
-		        });
-            }
-            else {
-                var message = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
-                hbAlertMessages.addAlert("warning",message);
-            }
+        	// hb-mode attribute is optionally set on hb-card-container directive
+        	//if ($attrs.hbMode === "create" && elfinId === "new") {
+        	if ($attrs.hbMode === "create") {
+
+        		$log.debug(">>>>>>>>>> HbCardContainerController: DETECTED NEW ELFIN CREATE OPERATION => GET from HB catalogue.");
+        		
+        		if ($attrs.hbElfinClasse) {
+        			// GET NEW ELFIN FROM CATALOGUE...
+        			GeoxmlService.getNewElfin($attrs.hbElfinClasse).get()
+    		        .then(function(elfin) {
+    		        	// Force CAR array sorting by POS attribute
+    		        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
+    		        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
+    		        	//       Need review of other similar operations
+    		        	if ( elfin['CARACTERISTIQUE'] != null && elfin['CARACTERISTIQUE']['CARSET'] != null && elfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+    		        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
+    		        	}
+    		            $scope.elfin = elfin;
+    		            
+    		            $log.debug(">>>>>>>>>> HbCardContainerController: NEW elfin.Id = "+elfin.Id+", elfin.ID_G = "+elfin.ID_G);
+    		            
+    		            $scope.elfinForm.$setDirty();
+
+                        //$scope.$emit(HB_EVENTS.ELFIN_LOADED, elfin);
+    		            hbAlertMessages.addAlert("info","Création du nouvel objet " + $scope.elfin.CLASSE);
+    		        	}, function(response) {
+    		        	var message = "Le chargement du nouvel objet de CLASSE = "+$attrs.hbElfinClasse+" a échoué (statut de retour: " + response.status + ")";
+    		            hbAlertMessages.addAlert("danger",message);
+    		        });  
+        			
+        			
+        		} else {
+        			hbAlertMessages.addAlert("danger","La création d'un nouvel objet nécessite l'information ELFIN.CLASSE");	
+        		}
+
+        	} else {
+
+        		$log.debug(">>>>>>>>>> STANDARD ELFIN LOAD PROCEDURE for collectionId: " + collectionId + ", elfinId: " + elfinId);
+        		
+	        	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
+			        GeoxmlService.getElfin(collectionId, elfinId).get()
+			        .then(function(elfin) {
+			        	// Force CAR array sorting by POS attribute
+			        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
+			        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
+			        	//       Need review of other similar operations
+			        	if ( elfin['CARACTERISTIQUE'] != null && elfin['CARACTERISTIQUE']['CARSET'] != null && elfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+			        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
+			        	}
+			            $scope.elfin = elfin;
+	                    $scope.$emit(HB_EVENTS.ELFIN_LOADED, elfin);
+			        	}, function(response) {
+			        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+			            hbAlertMessages.addAlert("danger",message);
+			        });
+	            }
+	            else {
+	                var message = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
+	                hbAlertMessages.addAlert("warning",message);
+	            }        		
+        		
+        	}
         };
 
         $scope.getElfin($scope.collectionId, $scope.elfinId);
@@ -271,14 +360,18 @@
         // That there is no more current elfin displayed
         $scope.$on('$destroy', function() {
             $log.debug('Current elfin card closed');
-            // Reload the last saved state and propagate to give chance
-            // to any other observer to update eventually their scope
-            GeoxmlService.getElfin($scope.collectionId, $scope.elfinId).get().then(function(elfin) {
-                // We must call the root scope because the scope is already destroyed...
-                $rootScope.$emit(HB_EVENTS.ELFIN_UNLOADED, elfin);
-            }, function() {
-                $rootScope.$emit(HB_EVENTS.ELFIN_UNLOADED);
-            });
+            // In create mode the elfin instance does not yet exist in the database.
+            // If elfin has been deleted the getElfin will failed.
+            if ( !($attrs.hbMode === "create") && !$scope.elfinDeleted ) {
+	            // Reload the last saved state and propagate to give chance
+	            // to any other observer to update eventually their scope
+	            GeoxmlService.getElfin($scope.collectionId, $scope.elfinId).get().then(function(elfin) {
+	                // We must call the root scope because the scope is already destroyed...
+	                $rootScope.$emit(HB_EVENTS.ELFIN_UNLOADED, elfin);
+	            }, function() {
+	                $rootScope.$emit(HB_EVENTS.ELFIN_UNLOADED);
+	            });
+            }            
         });
 
 
