@@ -33,61 +33,24 @@
 						</div>
 					</span>
 			</div>					
-			<div class="form-group">
-				<label for="author" class="col-sm-1 control-label">Acteur</label>
-				<div class="col-sm-3"> 
-					<div class="input-group">
-						<input id="author" type="text" class="form-control" autocomplete="off"
-						typeahead="actor.IDENTIFIANT.NOM for actor in collaboratorActors | filter:$viewValue | limitTo:8" 
-						ng-model="collaboratorActor.IDENTIFIANT.NOM" tooltip="collaboratorActor.IDENTIFIANT.NOM"> 
-						<span class="input-group-btn" tooltip="Recherche de collaborateur">
-							<button class="btn btn-default" type="button"
-								hb-choose-one
-								ng-click="hbChooseOne(collaboratorActor, 'IDENTIFIANT.NOM', collaboratorActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )"
-								><i class="icon-search" ></i></button>
-						</span>
-					</div>							
-				</div>
-				
-			<span class="has-feedback">
-				<label for="role" class="col-sm-1 control-label">Rôle</label>
-				<div class="col-sm-3">
 
-					<div class="btn-group">
-						<label uncheckable ng-repeat="statusType in qualiteList"
-							class="btn btn-default" ng-model="elfin.IDENTIFIANT.QUALITE"
-							btn-radio="statusType.value">{{statusType}}</label>
+			<div class="form-group" >				
+				<span class="has-feedback">
+					<label for="role" class="col-sm-1 control-label">Rôle</label>
+					<div class="col-sm-11">
+	
+						<div class="btn-group">
+							<label uncheckable ng-repeat="statusType in qualiteList"
+								class="btn btn-default" ng-model="elfin.IDENTIFIANT.QUALITE"
+								btn-radio="statusType.value">{{statusType}}</label>
+						</div>
+	
 					</div>
+				</span>				
+			</div>
+				
+				
 
-				</div>
-			</span>				
-				
-				
-<!-- Password change must be done in a popup and only upon user request. -->				 
-<!-- 			</div>					 -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="pwd1" class="col-sm-1 control-label">Mot de -->
-<!-- 						passe</label> -->
-<!-- 					<div class="col-sm-3"> -->
-<!-- 						<input id="pwd1" type="password" class="form-control" -->
-<!-- 							ng-model="pwd1" required> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="pwd2" class="col-sm-1 control-label">Répétez le -->
-<!-- 						mot de passe</label> -->
-<!-- 					<div class="col-sm-3"> -->
-<!-- 						<input id="pwd2" type="password" class="form-control" -->
-<!-- 							ng-model="pwd2" > -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<div class="col-sm-4"> -->
-<!-- 						<button class="btn btn-default" ng-click="hash(pwd1)"> -->
-<!-- 							<i class="icon-save"></i> -->
-<!-- 						</button> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 
 
 			<!-- 				<div class="form-group"> -->
@@ -107,6 +70,161 @@
 			<!-- 				</div> -->
 
 		</div>
-		</tab> </tabset>
+		</tab> 
+		<tab>
+			<tab-heading>Collaborateur</tab-heading>
+			<div class="hb-tab" >
+				<div class="form-group">
+					<label for="nom" class="col-sm-2 control-label">Nom de
+						famille</label>
+					<div class="col-sm-3">
+<!-- 						<input id="nom" type="text" class="form-control" -->
+<!-- 							ng-model="selected.collaborator.IDENTIFIANT.NOM" > -->
+						<div class="input-group">
+							<input id="collaborator_name" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.NOM" ng-readonly="true">
+							<span class="input-group-btn" tooltip="Recherche de collaborateur">
+								<button class="btn btn-default" type="button"
+									hb-choose-collaborator
+									ng-click="hbChooseCollaborator(selected, 'collaborator')"
+									><i class="icon-search" ></i></button>
+							</span>
+						</div>		
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="collaborator_surname" class="col-sm-2 control-label">Prénom</label>
+					<div class="col-sm-3">
+<!-- 						<input id="prenom" type="text" class="form-control" -->
+<!-- 							ng-model="selected.collaborator.IDENTIFIANT.ALIAS" -->
+<!-- 							> -->
+						<div class="input-group">
+							<input id="collaborator_surname" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.ALIAS" ng-readonly="true">
+							<span class="input-group-btn" tooltip="Recherche de collaborateur">
+								<button class="btn btn-default" type="button"
+									hb-choose-collaborator
+									ng-click="hbChooseCollaborator(selected, 'collaborator')"
+									><i class="icon-search" ></i></button>
+							</span>
+						</div>									
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="collaborator_group" class="col-sm-2 control-label">Abréviation</label>
+					<div class="col-sm-3">
+<!-- 						<input id="societe" type="text" class="form-control" -->
+<!-- 							ng-model="selected.collaborator.GROUPE" > -->
+						<div class="input-group">
+							<input id="collaborator_group" type="text" class="form-control" ng-model="selected.collaborator.GROUPE" ng-readonly="true">
+							<span class="input-group-btn" tooltip="Recherche de collaborateur">
+								<button class="btn btn-default" type="button"
+									hb-choose-collaborator
+									ng-click="hbChooseCollaborator(selected, 'collaborator')"
+									><i class="icon-search" ></i></button>
+							</span>
+						</div>		
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tel" class="col-sm-2 control-label">Téléphone</label>
+					<div class="col-sm-3">
+						<input id="tel" type="text" class="form-control"
+							ng-model="selected.collaborator.CARACTERISTIQUE.CAR4.VALEUR"
+							ng-readonly="true">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="email" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-3">
+						<input id="email" type="text" class="form-control"
+							ng-model="selected.collaborator.CARACTERISTIQUE.CAR5.VALEUR"
+							ng-readonly="true">
+					</div>
+				</div>			
+<!-- 			<div class="form-group"> -->
+<!-- 				<label class="col-sm-1 control-label">Collaborateur</label> -->
+<!-- 				<div class="col-sm-3"> -->
+<!-- 					<div class="input-group"> -->
+<!-- 						<input id="collaborator_name" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.NOM" ng-readonly="true"> -->
+<!-- 						<span class="input-group-btn" tooltip="Recherche de collaborateur"> -->
+<!-- 							<button class="btn btn-default" type="button" -->
+<!-- 								hb-choose-collaborator -->
+<!-- 								ng-click="hbChooseCollaborator(selected, 'collaborator')" -->
+<!-- 								><i class="icon-search" ></i></button> -->
+<!-- 						</span> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-sm-3"> -->
+<!-- 					<div class="input-group"> -->
+<!-- 						<input id="collaborator_alias" type="text" class="form-control col-sm-3" ng-model="selected.collaborator.IDENTIFIANT.ALIAS" ng-readonly="true"> -->
+<!-- 						<span class="input-group-btn" tooltip="Recherche de collaborateur"> -->
+<!-- 							<button class="btn btn-default" type="button" -->
+<!-- 								hb-choose-collaborator -->
+<!-- 								ng-click="hbChooseCollaborator(selected, 'collaborator')" -->
+<!-- 								><i class="icon-search" ></i></button> -->
+<!-- 						</span> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+				
+<!-- 				<div class="panel panel-default"> -->
+<!-- 				  <div class="panel-heading"> -->
+<!-- 				    <h3 class="panel-title">Collaborateur</h3> -->
+<!-- 				  </div> -->
+<!-- 				  <div class="panel-body"> -->
+				    
+				    
+<!-- 				    <label for="collaborator_alias" class="col-sm-1 control-label">Prénom</label> -->
+<!-- 				    <span id="collaborator_alias" class="col-sm-3">{{selected.collaborator.IDENTIFIANT.ALIAS}}</span> -->
+<!-- 				    							<button class="btn btn-default" type="button" -->
+<!-- 								hb-choose-collaborator -->
+<!-- 								ng-click="hbChooseCollaborator(selected, 'collaborator')" -->
+<!-- 								><i class="icon-search" ></i></button>				     -->
+<!-- 				  </div> -->
+<!-- 				</div> -->
+				
+<!-- 					<div class="input-group"> -->
+<!--  						<input id="collaborator_name" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.NOM" ng-readonly="true"> -->
+<!--  						<input id="collaborator_alias" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.ALIAS" ng-readonly="true"> -->
+<!--  						<input id="collaborator_group" type="text" class="form-control" ng-model="selected.collaborator.GROUPE" ng-readonly="true"> -->
+<!-- 						<span class="input-group-btn" tooltip="Recherche de collaborateur"> -->
+<!-- 							<button class="btn btn-default" type="button" -->
+<!-- 								hb-choose-collaborator -->
+<!-- 								ng-click="hbChooseCollaborator(selected, 'collaborator')" -->
+<!-- 								><i class="icon-search" ></i></button> -->
+<!-- 						</span> -->
+<!-- 					</div>							 -->
+<!-- 				</div>			 -->
+			</div>		
+		</tab>
+		<tab>
+			<tab-heading>Modifier le mot de passe</tab-heading>
+			<div class="hb-tab">
+			Password change must be done in a popup and only upon user request.				 
+			</div>					
+				<div class="form-group">
+					<label for="pwd1" class="col-sm-1 control-label">Mot de
+						passe</label>
+					<div class="col-sm-3">
+						<input id="pwd1" type="password" class="form-control"
+							ng-model="pwd1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="pwd2" class="col-sm-1 control-label">Répétez le
+						mot de passe</label>
+					<div class="col-sm-3">
+						<input id="pwd2" type="password" class="form-control"
+							ng-model="pwd2" >
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-4">
+						<button class="btn btn-default" ng-click="hash(pwd1)">
+							<i class="icon-save"></i>
+						</button>
+					</div>
+				</div>			
+			</div>		
+		</tab>		
+		</tabset>
 	</div>
 </div>

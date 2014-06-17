@@ -28,9 +28,9 @@
 						};		
 						
 						// Actor linked to the current user.
-						$scope.collaboratorActor = null;
+						$scope.selected = { "collaborator" : null };
 						// Actors selection list 
-						$scope.collaboratorActors = null;
+						//$scope.collaboratorActors = null;
 						
 						// Plain text passwords used to obtain the encrypted password signature. 
 						// Must never be persisted nor logged.
@@ -58,8 +58,6 @@
 
 				        $scope.getElfinActor = function (collectionId, elfinId) {
 				        	
-			        		$log.debug(">>>>>>>>>> Load actor linked to user...");
-			        		
 				        	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
 						        GeoxmlService.getElfin(collectionId, elfinId).get()
 						        .then(function(elfin) {
@@ -70,7 +68,8 @@
 						        	if ( elfin['CARACTERISTIQUE'] != null && elfin['CARACTERISTIQUE']['CARSET'] != null && elfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
 						        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
 						        	}
-						        	$scope.collaboratorActor = elfin;
+						        	$log.debug(">>>>>>>>>>>> collaboratorActor.Id = " + elfin.Id);
+						        	$scope.selected.collaborator = elfin;
 						        	}, function(response) {
 						        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
 						            hbAlertMessages.addAlert("danger",message);
@@ -83,9 +82,7 @@
 			        		
 			        	};
 
-			        	// Load elfin ACTOR if ids defined
-			        	
-			            // Elfin has been loaded
+			            // Load ELFIN collaborator ACTOR only once main elfin (here USER) has been loaded
 			            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
 			            	
 				        	if ($scope.elfin.PARTENAIRE.USAGER.Id && $scope.elfin.PARTENAIRE.USAGER.ID_G) {
@@ -94,30 +91,6 @@
 
 			            });			        	
 			        	
-
-			        	
-			            //var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
-			            var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE!='Entreprise']";
-			            // TODO: actorsCollectionId must come from server configuration resource.
-			            $log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
-			            var actorsCollectionId = 'G20060401225530100';			        	
-
-			            // Asychronous collaboratorActors preloading
-			            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForCollaborator})
-						.then(function(collaboratorActors) {
-								$scope.collaboratorActors = collaboratorActors;
-							},
-							function(response) {
-								var message = "Le chargement des ACTEURS Collaborateur a échoué (statut de retour: "+ response.status+ ")";
-					            hbAlertMessages.addAlert("danger",message);
-							});		
-			            
-			            // Parameter to hbChooseOne service function
-			            $scope.actorChooseOneColumnsDefinition = [ { field:"GROUPE", displayName: "Nom"} ];
-			            // Parameter to hbChooseOne service function
-			            $scope.actorChooseOneTemplate = '/assets/views/chooseActor.html';       
-			            
-						
 					} ]);
 	
 
