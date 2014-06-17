@@ -113,6 +113,40 @@
             $log.debug(itemDefinition);
         };
 
+        
+        /**
+         * Directs to itemDefinition.url link in a new window if required 
+         * processing parameters if any.
+         */
+        $scope.actionLink = function (itemDefinition) {
+        	$log.debug("    >>>> actionLink");
+        	if (itemDefinition.newWindow && itemDefinition.newWindow === 'true') {
+        		$log.debug("    >>>> actionLink - new window");
+        		if (itemDefinition.parameters) {
+	        		var queryString = hbUtil.buildUrlQueryString(itemDefinition.parameters);
+	        		var urlWithQuery = itemDefinition.url + queryString;
+	        		$log.debug("    >>>> actionLink - with parameters. URL: " + urlWithQuery);
+	        		$window.open(urlWithQuery);
+        		} else {
+        			$log.debug("    >>>> actionLink - without parameters. URL: " + itemDefinition.url);
+        			$window.open(itemDefinition.url);
+        		}
+        	} else {
+        		$log.debug("    >>>> actionLink - NO new window");
+        		if (itemDefinition.parameters) {
+        			var searchObject = hbUtil.buildKeyValueObject(itemDefinition.parameters);
+        			$log.debug("    >>>> actionLink - with parameters. URL: " + itemDefinition.url + ":: search: " + searchObject);
+        			$location.search(searchObject).path(itemDefinition.url);
+        		} else {
+        			$log.debug("    >>>> actionLink - without parameters. URL: " + itemDefinition.url);
+        			$location.path(itemDefinition.url);
+        		}
+        	}
+
+        };        
+        
+        
+        
         /**
          * Generic modal panel to fill a list of parameters before requesting a resource (URL)
          * It relies on itemDefinition JSON format. 
