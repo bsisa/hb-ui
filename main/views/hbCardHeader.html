@@ -4,11 +4,15 @@
 			<span class="h4"><span class="label label-primary" ng-class="getCssLabelFeedback(elfinForm)"><i class="icon-tag"></i> {{elfin.CLASSE}}</span></span>
 		</div>
 	</div>
-	<div class="col-xs-10">
-		<span ng-show="elfinForm.$invalid && elfinForm.$dirty" class="text-danger"><i class="glyphicon glyphicon-warning-sign" ></i></span>
-		<span ng-show="elfinForm.$invalid && elfinForm.$pristine" class="text-warning"><i class="glyphicon glyphicon-warning-sign" ></i></span>
-		<!-- Custom validation messages to be defined via transclusion. See: hbConstatCard.html for usage example. -->
-		<span ng-transclude ></span>
+	<div class="col-xs-1">
+		<span ng-show="elfinForm.$invalid && elfinForm.$dirty" class="text-danger"><i class="glyphicon glyphicon-warning-sign" style="font-size: 1.2em;"></i></span>
+		<span ng-show="elfinForm.$invalid && elfinForm.$pristine" class="text-warning"><i class="glyphicon glyphicon-warning-sign" style="font-size: 1.2em;"></i></span>
+	</div>
+	<div class="col-xs-9">
+<!-- 		<ul ng-show="elfinForm.$invalid"> -->
+			<!-- Custom validation messages to be defined via transclusion. See: hbConstatCard.html for usage example. -->
+			<span ng-transclude ></span>
+<!-- 		</ul> -->
 	</div>
 </div>
 	
