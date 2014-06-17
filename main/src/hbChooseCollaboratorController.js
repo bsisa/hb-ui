@@ -62,7 +62,6 @@
 				            	if (selectedElfins && selectedElfins.length > 0) {
 				            		var selectedElfin = selectedElfins[0];
 				            		selected[selectedPathElement] = selectedElfin;
-				            		//$scope.elfinForm.$setDirty();//???
 				            	} else {
 				            		$log.debug("No selection returned!!!");				            		
 				            	}
