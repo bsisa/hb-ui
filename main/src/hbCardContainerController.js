@@ -320,8 +320,8 @@
     		            
     		            $scope.elfinForm.$setDirty();
 
-                        //$scope.$emit(HB_EVENTS.ELFIN_LOADED, elfin);
-    		            hbAlertMessages.addAlert("info","Création du nouvel objet " + $scope.elfin.CLASSE);
+    		            // Annoying message. Keep it as reminder.
+    		            //hbAlertMessages.addAlert("info","Création du nouvel objet " + $scope.elfin.CLASSE);
     		        	}, function(response) {
     		        	var message = "Le chargement du nouvel objet de CLASSE = "+$attrs.hbElfinClasse+" a échoué (statut de retour: " + response.status + ")";
     		            hbAlertMessages.addAlert("danger",message);
