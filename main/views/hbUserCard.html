@@ -1,6 +1,7 @@
 
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
+	<span ng-show="elfinForm.username.$error.required" >Le champs <strong>Nom d'utilisateur</strong> est obligatoire!</span>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -9,9 +10,9 @@
 			<div class="form-group" >
 					<span class="has-feedback"
 							ng-class="getCssHasFeedback(elfinForm.nom)">
-						<label for="nom" class="col-sm-1 control-label">Nom</label>
+						<label for="username" class="col-sm-1 control-label">Nom d'utilisateur</label>
 						<div class="col-sm-3">
-							<input id="nom" name="nom" type="text" class="form-control"
+							<input id="username" name="username" type="text" class="form-control"
 								ng-model="elfin.IDENTIFIANT.NOM" required
 								tooltip="elfin.IDENTIFIANT.NOM">
 						</div>
