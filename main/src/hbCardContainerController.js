@@ -83,38 +83,46 @@
         
 		// ============================================
 		// validation helpers
-        // TODO: add null check for ngModelControllers...
 		// ============================================
           
 		$scope.getCssLabelFeedback = function (formController) {
-			return {
-				"label-danger" : formController.$dirty && formController.$invalid,
-				"label-success" : formController.$dirty && formController.$valid, 
-				"label-warning" : formController.$pristine && formController.$invalid, // Might happen if database data does not fulfill a client side validation rule.
-				"label-primary" : formController.$pristine && formController.$valid
-			};
+			if (formController) {
+				return {
+					"label-danger" : formController.$dirty && formController.$invalid,
+					"label-success" : formController.$dirty && formController.$valid, 
+					"label-warning" : formController.$pristine && formController.$invalid, // Might happen if database data does not fulfill a client side validation rule.
+					"label-primary" : formController.$pristine && formController.$valid
+				};				
+			} else {
+				return {};
+			}
+
 		};
 		
 		$scope.getCssHasFeedback = function (ngModelController) {
-			return {
-				"has-error" : ngModelController.$dirty && ngModelController.$invalid,
-				"has-success" : ngModelController.$dirty && ngModelController.$valid, 
-				"has-warning" : ngModelController.$pristine && ngModelController.$invalid // unexpected situation
-			};
+			if (ngModelController) {
+				return {
+					"has-error" : ngModelController.$dirty && ngModelController.$invalid,
+					"has-success" : ngModelController.$dirty && ngModelController.$valid, 
+					"has-warning" : ngModelController.$pristine && ngModelController.$invalid // unexpected situation
+				};
+			} else {
+				return {};
+			}
 		};						
 		
 		$scope.getCssGlyphFeedback = function (ngModelController) {
-			return {
-				"glyphicon-remove" : ngModelController.$dirty && ngModelController.$invalid,
-				"glyphicon-ok" : ngModelController.$dirty && ngModelController.$valid, 
-				"glyphicon-warning-sign" : ngModelController.$pristine && ngModelController.$invalid // unexpected situation
-			};
+			if (ngModelController) {
+				return {
+					"glyphicon-remove" : ngModelController.$dirty && ngModelController.$invalid,
+					"glyphicon-ok" : ngModelController.$dirty && ngModelController.$valid, 
+					"glyphicon-warning-sign" : ngModelController.$pristine && ngModelController.$invalid // unexpected situation
+				};
+			} else {
+				return {};
+			}
 		};
-
-//			$scope.hasError = function(ngModelController,
-//					errorkey) {
-//				return ngModelController.$error[errorKey];
-//			};												
+							
 		// ============================================          
 
 
