@@ -91,6 +91,23 @@
 
 			            });			        	
 			        	
+			            
+			            /**
+			             * Update current USER link to ACTOR upon new ACTOR selection
+			             */
+			            $scope.$watch('selected.collaborator.Id', function() { 
+			            	// Update the new ACTOR ids
+			            	$scope.elfin.PARTENAIRE.USAGER.ID_G = $scope.actor.collaborator.ID_G;
+			            	$scope.elfin.PARTENAIRE.USAGER.Id = $scope.actor.collaborator.Id;
+			            	// According to the GeoXML Schema GROUP and NOM are part of USAGER.
+			            	$scope.elfin.PARTENAIRE.USAGER.GROUPE = $scope.actor.collaborator.GROUPE;
+			            	$scope.elfin.PARTENAIRE.USAGER.NOM = $scope.actor.collaborator.IDENTIFIANT.NOM;
+			            	// Notify the user the data need saving.
+			            	$scope.elfinForm.$setDirty();
+			            });
+			            
+			            
+			            
 					} ]);
 	
 
