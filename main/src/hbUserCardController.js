@@ -97,9 +97,7 @@
 			             */
 			            $scope.$watch('selected.collaborator.Id', function(newId, oldId) {
 			            	
-			            	if (
-			            			newId && 
-			            			($scope.elfin.PARTENAIRE.USAGER.Id != $scope.selected.collaborator.Id) ) {
+			            	if ( newId && $scope.elfin && ($scope.elfin.PARTENAIRE.USAGER.Id != $scope.selected.collaborator.Id) ) {
 
 				            	// Update the new ACTOR ids
 				            	$scope.elfin.PARTENAIRE.USAGER.ID_G = $scope.selected.collaborator.ID_G;
