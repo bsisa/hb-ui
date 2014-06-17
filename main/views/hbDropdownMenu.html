@@ -13,16 +13,15 @@
             <a ng-if="!menuItem.subItems && menuItem.action.type == 'modal'" ng-click="menuItem.action.functionRef(menuItem.action)" href=""><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
             <ul class="dropdown-menu" ng-if="menuItem.subItems">
                 <li ng-repeat="menuSubItem in menuItem.subItems" >
-              <a 
-              ng-if="menuSubItem.action.type == 'link'"  
-              ng-href="{{menuSubItem.action.url}}"                                 
-              ng-class="menuSubItem.label ? '' : 'separator'">
-              <span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
-    		        <a 
-    		        ng-if="menuSubItem.action.type == 'modal'" 
-    		        ng-click="menuSubItem.action.functionRef(menuSubItem.action)" 
-    		        ng-class="menuSubItem.label ? '' : 'separator'"><span class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>                        
-                </li>
+                	<a ng-if="menuSubItem.action.type == 'link'"
+					ng-href="{{menuSubItem.action.url}}"
+					ng-class="menuSubItem.label ? '' : 'separator'"><span
+						class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+					<a ng-if="menuSubItem.action.type == 'modal'"
+					ng-click="menuSubItem.action.functionRef(menuSubItem.action)"
+					ng-class="menuSubItem.label ? '' : 'separator'"><span
+						class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
+				</li>
             </ul>    
         </li>
     </ul>
