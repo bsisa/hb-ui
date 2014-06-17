@@ -2,6 +2,10 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
 	<span ng-show="elfinForm.username.$error.required" >Le champs <strong>Nom d'utilisateur</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.collaborator_name.$error.required" >Un <strong>collaborateur</strong> doit obligatoirement être associé à un compte utilisateur</span>
+	<span ng-show="elfinForm.collaborator_email.$error.required" >Le <strong>collaborateur</strong> associé au compte utilisateur doit avoir un <strong>Email</strong> défini</span>
+	<span ng-show="elfinForm.collaborator_email.$error.email" >Le <strong>collaborateur</strong> associé au compte utilisateur doit avoir un <strong>Email</strong> valide</span>
+	
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -59,7 +63,7 @@
 						famille</label>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input id="collaborator_name" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.NOM" ng-readonly="true">
+							<input id="collaborator_name" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.NOM" ng-readonly="true" ng-required="true">
 							<span class="input-group-btn" tooltip="Recherche de collaborateur">
 								<button class="btn btn-default" type="button"
 									hb-choose-collaborator
@@ -98,19 +102,19 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="tel" class="col-sm-2 control-label">Téléphone</label>
+					<label for="collaborator_tel" class="col-sm-2 control-label">Téléphone</label>
 					<div class="col-sm-3">
-						<input id="tel" type="text" class="form-control"
+						<input id="collaborator_tel" type="text" class="form-control"
 							ng-model="selected.collaborator.CARACTERISTIQUE.CAR4.VALEUR"
 							ng-readonly="true">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="email" class="col-sm-2 control-label">Email</label>
+					<label for="collaborator_email" class="col-sm-2 control-label">Email</label>
 					<div class="col-sm-3">
-						<input id="email" type="text" class="form-control"
+						<input id="collaborator_email" name="collaborator_email" type="email" class="form-control"
 							ng-model="selected.collaborator.CARACTERISTIQUE.CAR5.VALEUR"
-							ng-readonly="true">
+							ng-readonly="true" ng-required="true">
 					</div>
 				</div>			
 			</div>		
