@@ -106,7 +106,7 @@
          * Performs update of 'target' elfin object property at 'targetPath' with new value 
          * found at sourcePath of source elfin object.
          * 
-         * For instance: applyPaths(elfin, 'IDENTIFIANT.NOM', 'Nouveau nom', elfinSource, 'GROUPE')
+         * For instance: applyPaths(elfin, 'IDENTIFIANT.NOM', elfinSource, 'GROUPE')
          * 
          */
         var applyPaths = function(target, targetPath, source, sourcePath) {
