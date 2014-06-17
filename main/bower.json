@@ -42,7 +42,8 @@
     "leaflet": "0.7.3",
     "leaflet-providers": "1.0.5",
     "leaflet.draw": "0.2.3",
-    "angular-leaflet-directive": "0.7.7"
+    "angular-leaflet-directive": "0.7.7",
+    "angular-ui-utils": "0.1.1"
   },
   "resolutions": {
     "angular": "1.2.16"
