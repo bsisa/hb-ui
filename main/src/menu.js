@@ -11,7 +11,7 @@
     };
 
 
-    angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', '$timeout', 'itemDefinition', function($scope, $modalInstance, $timeout, itemDefinition) {
+    angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', '$timeout', '$log', 'itemDefinition', function($scope, $modalInstance, $timeout, $log, itemDefinition) {
     	
     	// Reset parameters value upon modal opening
     	for (var i = 0; i < itemDefinition.parameters.length; i++) {
@@ -19,6 +19,13 @@
 		}
     	
     	$scope.itemDefinition = itemDefinition;
+    	
+    	// Manage submission with ENTER key
+    	$scope.keypressCallback = function($event) {
+    		$modalInstance.close($scope.itemDefinition);
+    		$event.preventDefault();
+    	};
+    	
         $scope.ok = function () {
             $modalInstance.close($scope.itemDefinition);
         };
