@@ -9,15 +9,25 @@
         <li ng-repeat="menuItem in menuItems" ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
             
             <a ng-if="menuItem.subItems" href="#" class="dropdown-toggle" ><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span><span class="arrow">&nbsp;</span></a>
-            <a ng-if="!menuItem.subItems && menuItem.action.type == 'link'" ng-href="{{menuItem.action.url}}" href=""><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
-            <a ng-if="!menuItem.subItems && menuItem.action.type == 'modal'" ng-click="menuItem.action.functionRef(menuItem.action)" href=""><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
+<!--             <a ng-if="!menuItem.subItems && menuItem.action.type == 'link'" ng-href="{{menuItem.action.url}}" href=""><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a> -->
+<!--             <a ng-if="!menuItem.subItems && menuItem.action.type == 'modal'" ng-click="menuItem.action.functionRef(menuItem.action)" href=""><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a> -->
+            <a ng-if="!menuItem.subItems && !menuItem.action.functionRef" ng-href="{{menuItem.action.url}}" href=""><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>
+            <a ng-if="!menuItem.subItems && menuItem.action.functionRef" ng-click="menuItem.action.functionRef(menuItem.action)" href=""><span class="icon" data-icon="G"></span><span>{{menuItem.label}}</span></a>            
             <ul class="dropdown-menu" ng-if="menuItem.subItems">
                 <li ng-repeat="menuSubItem in menuItem.subItems" >
-                	<a ng-if="menuSubItem.action.type == 'link'"
+<!--                 	<a ng-if="menuSubItem.action.type == 'link'" -->
+<!-- 					ng-href="{{menuSubItem.action.url}}" -->
+<!-- 					ng-class="menuSubItem.label ? '' : 'separator'"><span -->
+<!-- 						class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a> -->
+<!-- 					<a ng-if="menuSubItem.action.type == 'modal'" -->
+<!-- 					ng-click="menuSubItem.action.functionRef(menuSubItem.action)" -->
+<!-- 					ng-class="menuSubItem.label ? '' : 'separator'"><span -->
+<!-- 						class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a> -->
+                	<a ng-if="!menuSubItem.action.functionRef"
 					ng-href="{{menuSubItem.action.url}}"
 					ng-class="menuSubItem.label ? '' : 'separator'"><span
 						class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
-					<a ng-if="menuSubItem.action.type == 'modal'"
+					<a ng-if="menuSubItem.action.functionRef"
 					ng-click="menuSubItem.action.functionRef(menuSubItem.action)"
 					ng-class="menuSubItem.label ? '' : 'separator'"><span
 						class="icon" data-icon="G"></span><span>{{menuSubItem.label}}</span></a>
