@@ -2,7 +2,8 @@
 	ng-show="elfins">
 	<thead>
 		<tr>
-			<th colspan="6"><span class="badge">{{elfinsCount}}</span> <span ng-show="isCollaboratorOnly">collaborateur</span><span ng-show="!isCollaboratorOnly">acteur</span>{{ elfinsCount | plural }} trouvé{{
+			<th colspan="6"><span class="badge">{{elfinsCount}}</span> 
+			<span ng-show="!isMany">{{elfins[0].IDENTIFIANT.QUALITE}}</span><span ng-show="isMany">acteur</span>{{ elfinsCount | plural }} trouvé<span ng-show="isEntrepriseOnly">e</span>{{
 				elfinsCount | plural }}</th>
 		</tr>
 		<tr>
