@@ -1,0 +1,30 @@
+<table class="table table-condensed table-bordered table-striped"
+	ng-show="elfins">
+	<thead>
+		<tr>
+			<th colspan="6"><span class="badge">{{elfinsCount}}</span> <span ng-show="isCollaboratorOnly">collaborateur</span><span ng-show="!isCollaboratorOnly">acteur</span>{{ elfinsCount | plural }} trouvé{{
+				elfinsCount | plural }}</th>
+		</tr>
+		<tr>
+			<th />
+			<th>Groupe</th>
+			<th ng-show="isCollaboratorOnly">Nom de famille</th>
+			<th ng-show="isCollaboratorOnly">Prénom</th>
+			<th>Rôle</th>
+			<th>N° de téléphone</th>
+			<th ng-show="isCollaboratorOnly">Email</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="elfin in elfins">
+			<td><a
+				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td>
+			<td>{{elfin.GROUPE}}</td>
+			<td ng-show="isCollaboratorOnly">{{elfin.IDENTIFIANT.NOM}}</td>
+			<td ng-show="isCollaboratorOnly">{{elfin.IDENTIFIANT.ALIAS}}</td>
+			<td>{{elfin.IDENTIFIANT.QUALITE}}</td>
+			<td>{{elfin.CARACTERISTIQUE.CAR4.VALEUR}}</td>
+			<td ng-show="isCollaboratorOnly">{{elfin.CARACTERISTIQUE.CAR5.VALEUR}}</td>
+		</tr>
+	</tbody>
+</table>
