@@ -126,10 +126,24 @@
 	        		var queryString = hbUtil.buildUrlQueryString(itemDefinition.parameters);
 	        		var urlWithQuery = itemDefinition.url + queryString;
 	        		$log.debug("    >>>> actionLink - with parameters. URL: " + urlWithQuery);
-	        		$window.open(urlWithQuery);
+	        		if (itemDefinition.newWindowName) {
+	        			$log.debug("    >>>> actionLink - with new window name: " + itemDefinition.newWindowName);
+	        			$window.open(urlWithQuery, itemDefinition.newWindowName);
+	        		} else {
+	        			$log.debug("    >>>> actionLink - with NO new window name");
+	        			$window.open(urlWithQuery);	
+	        		}
+	        		
         		} else {
         			$log.debug("    >>>> actionLink - without parameters. URL: " + itemDefinition.url);
-        			$window.open(itemDefinition.url);
+        			if (itemDefinition.newWindowName) {
+        				$log.debug("    >>>> actionLink - with new window name: " + itemDefinition.newWindowName);
+        				$window.open(itemDefinition.url, itemDefinition.newWindowName);
+        			} else {
+        				$log.debug("    >>>> actionLink - with NO new window name");
+        				$window.open(itemDefinition.url);	
+        			}
+        			
         		}
         	} else {
         		$log.debug("    >>>> actionLink - NO new window");
@@ -173,7 +187,11 @@
             	if (result.newWindow && result.newWindow === 'true') {
             		var queryString = hbUtil.buildUrlQueryString(result.parameters);
             		var urlWithQuery = result.url + queryString;
-            		$window.open(urlWithQuery);
+            		if (result.newWindowName) {
+            			$window.open(urlWithQuery,result.newWindowName);
+            		} else {
+            			$window.open(urlWithQuery);	
+            		}
             	} else {
             		var searchObject = hbUtil.buildKeyValueObject(result.parameters);
             		$location.search(searchObject).path(result.url); 
