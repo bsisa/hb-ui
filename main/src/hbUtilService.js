@@ -4,7 +4,8 @@
 	 * Small utility service intended to share functions not states between miscellaneous controllers
 	 * without code duplication.
 	 */
-	angular.module('hb5').service('hbUtil', function () {
+	
+	angular.module('hb5').service('hbUtil', ['$window',function ($window) {
 
         /**
          * Sort any array by its elements POS property.
@@ -18,18 +19,32 @@
 		
         
         /**
+         * Encode a URL parameter with notable exception of single quote '.
+         * 
+         * Use encodeURIComponent to encode a URL parameter.
+         * Do not use this on a full URL it will break it escaping forward slashes,...
+         * encodeURI() can be used on URL instead.
+         */
+        var encodeUriParameter = function(uriParameter) {
+        	return $window.encodeURIComponent(uriParameter);
+        };
+        
+        /**
          * Builds a URL query string such as "?FIRST_PARAM=test&SECOND_PARAM=xxx"
          * where parameters is expected to be an array of objects with 
          * name and value properties.
+         * 
+         * The parameters are encoded. 
          */
         var buildUrlQueryString = function(parameters) {
+
 	        var queryString = "";
 	    	for (var i=0; i < parameters.length; i++) {
 	    		var field = parameters[i];
 	    		if (i===0) {
-	    			queryString += "?" + field.name + "=" + field.value;
+	    			queryString += "?" + field.name + "=" + encodeUriParameter(field.value);
 	    		} else {
-	    			queryString += "&" + field.name + "=" + field.value;
+	    			queryString += "&" + field.name + "=" + encodeUriParameter(field.value);
 	    		}
 	    	}
 	    	return queryString;
@@ -182,6 +197,6 @@
         	getValueAtPath:getValueAtPath,
         	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault
         };
-    });
+    }]);
 	
 })();
