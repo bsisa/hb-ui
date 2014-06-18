@@ -37,22 +37,105 @@
 								ng-model="elfin.IDENTIFIANT.A"></div>
 						</div>
 					</span>
-			</div>					
-
-			<div class="form-group" >				
-				<span class="has-feedback">
-					<label for="role" class="col-sm-1 control-label">Rôle</label>
-					<div class="col-sm-11">
-	
-						<div class="btn-group">
-							<label uncheckable ng-repeat="statusType in qualiteList"
-								class="btn btn-default" ng-model="elfin.IDENTIFIANT.QUALITE"
-								btn-radio="statusType.value">{{statusType}}</label>
-						</div>
-	
-					</div>
-				</span>				
 			</div>
+
+			<div class="form-group">
+				<span class="has-feedback">
+					<div class="col-sm-12">
+						<h4>Checkbox</h4>
+						<pre>{{checkModel}}</pre>
+						<div class="btn-group">
+							<label class="btn btn-primary" ng-model="checkModel.left"
+								btn-checkbox>Left</label> 
+							<label class="btn btn-primary"
+								ng-model="checkModel.middle" btn-checkbox>Middle</label>
+							<label class="btn btn-primary" ng-model="checkModel.right" btn-checkbox>Right</label>
+						</div>
+					</div>
+				</span>
+			</div>
+			
+			<div class="form-group">
+				<span class="has-feedback">
+					<div class="col-sm-12">
+						<h4>Checkbox</h4>
+						<pre>{{checkModel}}</pre>
+						<div class="btn-group">
+							<label class="btn btn-primary" ng-model="checkModel.left"
+								btn-checkbox>Left</label> 
+							<label class="btn btn-primary"
+								ng-model="checkModel.middle" btn-checkbox>Middle</label>
+							<label class="btn btn-primary" ng-model="checkModel.right" btn-checkbox>Right</label>
+						</div>
+					</div>
+				</span>
+			</div>
+			
+
+			<!-- 			<div class="form-group" >				 -->
+<!-- 				<span class="has-feedback"> -->
+<!-- 					<label for="role_t" class="col-sm-1 control-label">Rôle (not quite)</label> -->
+<!-- 					<div class="col-sm-11"> -->
+	
+<!-- 						<div class="btn-group"> -->
+<!-- 							<label uncheckable ng-repeat="statusType in qualiteList" -->
+<!-- 								class="btn btn-default" ng-model="elfin.IDENTIFIANT.QUALITE" -->
+<!-- 								btn-radio="statusType.value">{{statusType}}</label> -->
+<!-- 						</div> -->
+	
+<!-- 					</div> -->
+<!-- 				</span>				 -->
+<!-- 			</div> -->
+<!-- 			<div class="form-group" >				 -->
+<!-- 				<span class="has-feedback"> -->
+<!-- 					<label for="role" class="col-sm-1 control-label">Rôle</label> -->
+<!-- 					<div class="col-sm-11"> -->
+	
+<!-- 						<div class="btn-group"> -->
+<!-- 							<label uncheckable ng-repeat="userRole in elfin.CARACTERISTIQUE.FRACTION.L.C[2]" -->
+<!-- 								class="btn btn-default" ng-model="elfin.IDENTIFIANT.QUALITE" -->
+<!-- 								btn-radio="statusType.value">{{statusType}}</label> -->
+<!-- 						</div> -->
+	
+<!-- 					</div> -->
+<!-- 				</span>				 -->
+<!-- 			</div>			 -->
+			<div class="form-group">
+				<span class="has-feedback">
+					<div class="col-sm-6">
+						<table class="table table-condensed table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>
+										<div class="input-group">
+											<div>Roles</div>
+											<span class="input-group-btn">
+	        									<button class="btn btn-default" type="button" ><i class="icon-plus-sign"></i> Nouveau</button>
+<!-- 	        									<button class="btn btn-default" type="button" ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: '' })"><i class="icon-plus-sign"></i> Nouveau</button> -->
+	      									</span>
+										</div>								
+									</th>
+								</tr>
+							</thead>
+							<tbody ng-show="elfin.CARACTERISTIQUE.FRACTION.L.length > 0">
+								<tr ng-repeat="userRole in elfin.CARACTERISTIQUE.FRACTION.L">
+									<td>
+<!-- 										<div>{{userRole.C[0]}},{{userRole.C[1]}},{{userRole.C[2]}}</div> -->
+										<div class="input-group">
+											<input type="text" name="role{$index}" class="form-control" ng-model="userRole.C[2].VALUE" >
+											<span class="input-group-btn">
+												<button class="btn btn-default" ><i class="icon-remove-sign" ></i> Supprimer</button>
+<!-- 												<button class="btn btn-default" ng-click="removeKeyword($index)"><i class="icon-remove-sign" ></i> Supprimer</button> -->
+											</span>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>	
+					</div>		
+				</span>
+			</div>
+			
 		</div>
 		</tab> 
 		<tab>
@@ -130,7 +213,7 @@
 						passe</label>
 					<div class="col-sm-3">
 						<input id="pwd1" type="password" class="form-control"
-							ng-model="pwd1" >
+							ng-model="pwd1" hb-no-dirty-check>
 					</div>
 				</div>
 				<div class="form-group">
@@ -138,7 +221,7 @@
 						mot de passe</label>
 					<div class="col-sm-3">
 						<input id="pwd2" type="password" class="form-control"
-							ng-model="pwd2" >
+							ng-model="pwd2" hb-no-dirty-check>
 					</div>
 				</div>
 				<div class="form-group">

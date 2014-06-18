@@ -18,14 +18,13 @@
 
 						$log.debug("    >>>> Using HbUserCardController ");
 						
-						// TODO: get this dynamically from HB5 catalogue
-						$scope.qualiteList = {
-							"Gérant" : "Gérant",
-							"Concierge" : "Concierge",
-							"Responsable chauffage" : "Responsable chauffage",
-							"Entreprise" : "Entreprise",
-							"Collaborateur" : "Collaborateur"
-						};		
+						
+						
+						$scope.checkModel = {
+							    left: false,
+							    middle: true,
+							    right: false
+							  };
 						
 						// Actor linked to the current user.
 						$scope.selected = { "collaborator" : null };
@@ -44,6 +43,7 @@
 					        .then(
 					        	function(pwdHash) {
 					        		$scope.elfin.IDENTIFIANT.ALIAS = pwdHash.hash;
+					        		$scope.elfinForm.$setDirty();
 					        	}, 
 					        	function(response) {
 					        		var message = "La modification du mot de passe a échoué (statut de retour: " + response.status + ")";
@@ -55,7 +55,7 @@
 							$scope.pwd2 = null;
 						};
 						
-
+						// Link to user actor for personal information (name, email, phone...)
 				        $scope.getElfinActor = function (collectionId, elfinId) {
 				        	
 				        	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
@@ -80,6 +80,26 @@
 				                hbAlertMessages.addAlert("warning",message);
 				            }        		
 			        		
+			        	};
+			        	
+			        	// Load available roles
+				        $scope.getAvailableRoles = function () {
+				        	
+				            var xpathForRoles = "//ELFIN[@CLASSE='ROLE'";
+				            // TODO: rolesCollectionId must come from server configuration resource.
+				            var rolesCollectionId = 'G10000101010101000';			        	
+
+				            // Asychronous roles preloading
+				            GeoxmlService.getCollection(rolesCollectionId).getList({"xpath" : xpathForRoles})
+							.then(function(availableRoles) {
+									$log.debug("    >>>> HbUserCardController: loaded availableRoles.");
+									$scope.availableRoles = availableRoles;
+								},
+								function(response) {
+									var message = "Le chargement des roles a échoué (statut de retour: "+ response.status+ ")";
+						            hbAlertMessages.addAlert("danger",message);
+								});				
+
 			        	};
 
 			            // Load ELFIN collaborator ACTOR only once main elfin (here USER) has been loaded
