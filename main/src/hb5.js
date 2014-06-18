@@ -33,6 +33,9 @@
                 	};
                 }
             })
+            .when('/elfin/create/ACTEUR', {
+                templateUrl: '/assets/views/ACTEUR_card_new_view.html'
+            })
             .when('/elfin/:collectionId/ACTEUR/:elfinId', {
                 templateUrl: '/assets/views/ACTEUR_card_view.html'
             })
