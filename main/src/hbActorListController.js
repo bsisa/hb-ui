@@ -6,6 +6,7 @@
 
         $scope.$watch('elfins', function(newElfins, oldElfins) {
         	if (newElfins) {
+        		// Note: underscore syntax is provided by underscore.js library.
         		var uniqueRoles = _.chain($scope.elfins).pluck('IDENTIFIANT').pluck('QUALITE').unique().value(); 
         		$scope.isCollaboratorOnly = (uniqueRoles.length == 1 && uniqueRoles[0] == 'Collaborateur');
         		$scope.isConciergeOnly = (uniqueRoles.length == 1 && uniqueRoles[0] == 'Concierge');
