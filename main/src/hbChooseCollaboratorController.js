@@ -18,7 +18,7 @@
 						$log.debug("    >>>> Using HbChooseCollaboratorController");	
 	
 
-			            var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
+			            var xpathForCollaborator = "//ELFIN[@CLASSE='ACTEUR' and IDENTIFIANT/QUALITE='Collaborateur']";
 			            // TODO: actorsCollectionId must come from server configuration resource.
 			            $log.debug("TODO: HbChooseCollaboratorController: actorsCollectionId must come from server configuration resource.");
 			            var actorsCollectionId = 'G20060401225530100';			        	
