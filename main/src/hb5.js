@@ -142,7 +142,12 @@
     	        		$window.location.href='/login';
     	        		//TODO: we might use the following once we create an new custom AngularJS integrated login form 
     	        		//$location.path('/login'); 
-    	        	} else if (response.status == 404) {
+    	        	} else if (response.status == 403) {
+		        		var errMsg = "Droits d'accès insuffisants. ( " + response.data.DESCRIPTION +" )";
+		        		$log.error(errMsg);
+		        		hbAlertMessages.addAlert("danger",errMsg);
+    	        	} 
+    	        	else if (response.status == 404) {
 //    	        		for (var property in response) {
 //   	        			   console.log("Property name: " + property + ", value: " + response[property]);
 //    	        		}
