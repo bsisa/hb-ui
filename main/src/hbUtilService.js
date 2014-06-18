@@ -195,7 +195,8 @@
         	applyPath:applyPath,
         	applyPaths:applyPaths,
         	getValueAtPath:getValueAtPath,
-        	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault
+        	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault,
+        	encodeUriParameter:encodeUriParameter
         };
     }]);
 	
