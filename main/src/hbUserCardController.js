@@ -156,11 +156,26 @@
 			        	};
 			        	
 		        	
+			        	/**
+			        	 * Performs addition or deletion of role following user action. 
+			        	 * Save button need to be pressed to send updates to backend.
+			        	 */
 			        	$scope.updateUserRoles = function (role) {
+
 			        		$log.debug("      >>>>>>>>>>>> updateUserRoles for name / state "+ role.name +" / "+role.state+" called <<<<<<<<<<<<");
-			        		//var modelMatch = _.find($scope.availableRolesCheckboxModel, function(model){ return name == model.name; } );
 			        		if (role.state) {
 			        			$log.debug("      >>>>>>>>>>>> DELETE ROLE <<<<<<<<<<<<");
+			        			// Loop backward while deleting possibly more than a single element (should not happen)
+			        			for (var i = $scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].length-1; i >=0; i--) {
+									var L = $scope.elfin['CARACTERISTIQUE']['FRACTION']['L'][i];
+									var currRoleName = L.C[2].VALUE;
+									if (role.name == currRoleName) {
+										$log.debug("      >>>>>>>>>>>> DELETE ROLE at position "+i+" <<<<<<<<<<<<");
+										$scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].splice(i,1);
+									} else {
+										$log.debug("      >>>>>>>>>>>> NO DELETE at position "+i+" <<<<<<<<<<<<");	
+									}
+								}
 			        		} else {
 			        			$log.debug("      >>>>>>>>>>>> CREATE ROLE <<<<<<<<<<<<");
 			        			var roleDefinition = _.find($scope.availableRoles, function(roleDef){ return roleDef['IDENTIFIANT']['NOM'] == role.name; } );
