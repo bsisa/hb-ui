@@ -14,24 +14,28 @@
 			<div class="form-group" >
 					<span class="has-feedback"
 							ng-class="getCssHasFeedback(elfinForm.nom)">
-						<label for="username" class="col-sm-1 control-label">Nom d'utilisateur</label>
+						<label for="username" class="col-sm-2 control-label">Nom d'utilisateur</label>
 						<div class="col-sm-3">
 							<input id="username" name="username" type="text" class="form-control"
 								ng-model="elfin.IDENTIFIANT.NOM" required
 								tooltip="elfin.IDENTIFIANT.NOM">
 						</div>
 					</span>			
+			</div>
+			<div class="form-group" >					
 					<span class="has-feedback"
 						ng-class="getCssHasFeedback(elfinForm.dateFrom)">
-						<label for="date_valid_from" class="col-sm-1 control-label">Valide du</label>
+						<label for="date_valid_from" class="col-sm-2 control-label">Valide du</label>
 						<div class="col-sm-3">
 							<div hb-date id="date_valid_from" name="dateFrom"
 								ng-model="elfin.IDENTIFIANT.DE" ></div>
 						</div>
 					</span>
+			</div>
+			<div class="form-group" >
 					<span class="has-feedback"
 						ng-class="getCssHasFeedback(elfinForm.dateTo)">
-						<label for="date_valid_to" class="col-sm-1 control-label">au</label>
+						<label for="date_valid_to" class="col-sm-2 control-label">au</label>
 						<div class="col-sm-3">
 							<div hb-date id="date_valid_to" name="dateTo"
 								ng-model="elfin.IDENTIFIANT.A"></div>
@@ -41,8 +45,9 @@
 			<div class="form-group">
 				<span class="has-feedback">
 					<div class="col-sm-12">
-						<h4>Roles</h4>
-						<pre>{{availableRolesCheckboxModel}}</pre>
+<!-- 						<h4>Roles</h4> -->
+						<label class="col-sm-2 control-label">Roles</label>
+<!-- 						<pre>{{availableRolesCheckboxModel}}</pre> -->
 						<div class="btn-group">
 <!-- 							<label name="keyword{$index}" ng-repeat="availableRole in availableRolesCheckboxModel" class="btn btn-primary" ng-model="availableRole.state"  -->
 <!-- 								btn-checkbox >{{availableRole.name}}</label> -->
@@ -125,7 +130,7 @@
 			<div class="hb-tab">
 				<!-- Password change must be done in a popup and only upon user request.  -->				 
 				<div class="form-group">
-					<label for="pwd1" class="col-sm-1 control-label">Mot de
+					<label for="pwd1" class="col-sm-2 control-label">Mot de
 						passe</label>
 					<div class="col-sm-3">
 						<input id="pwd1" type="password" class="form-control"
@@ -133,7 +138,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="pwd2" class="col-sm-1 control-label">Répétez le
+					<label for="pwd2" class="col-sm-2 control-label">Répétez le
 						mot de passe</label>
 					<div class="col-sm-3">
 						<input id="pwd2" type="password" class="form-control"
