@@ -46,7 +46,7 @@
 						<div class="btn-group">
 <!-- 							<label name="keyword{$index}" ng-repeat="availableRole in availableRolesCheckboxModel" class="btn btn-primary" ng-model="availableRole.state"  -->
 <!-- 								btn-checkbox >{{availableRole.name}}</label> -->
-							<button ng-click="updateUserRoles()" name="keyword{$index}" ng-repeat="availableRole in availableRolesCheckboxModel" class="btn btn-primary" ng-model="availableRole.state" 
+							<button ng-click="updateUserRoles(availableRole)" name="keyword{$index}" ng-repeat="availableRole in availableRolesCheckboxModel" class="btn btn-primary" ng-model="availableRole.state" 
 								btn-checkbox>{{availableRole.name}}</button> 								 
 						</div>
 					</div>

@@ -156,10 +156,39 @@
 			        	};
 			        	
 		        	
-			        	$scope.updateUserRoles = function () {
-			        		$log.debug("      >>>>>>>>>>>> updateUserRoles called <<<<<<<<<<<<");
+			        	$scope.updateUserRoles = function (role) {
+			        		$log.debug("      >>>>>>>>>>>> updateUserRoles for name / state "+ role.name +" / "+role.state+" called <<<<<<<<<<<<");
+			        		//var modelMatch = _.find($scope.availableRolesCheckboxModel, function(model){ return name == model.name; } );
+			        		if (role.state) {
+			        			$log.debug("      >>>>>>>>>>>> DELETE ROLE <<<<<<<<<<<<");
+			        		} else {
+			        			$log.debug("      >>>>>>>>>>>> CREATE ROLE <<<<<<<<<<<<");
+			        			var roleDefinition = _.find($scope.availableRoles, function(roleDef){ return roleDef['IDENTIFIANT']['NOM'] == role.name; } );
+			        			var nbUserRole = $scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].length;
+			        			$scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].push($scope.createRole(roleDefinition['ID_G'],roleDefinition['Id'],role.name, nbUserRole+1));
+			        		}
 			        	};			        	
 			        	
+			        	$scope.createRole = function(ID_G,Id,name,pos) {
+			        		var newRole = {
+			                        "C": [
+			                              {
+			                                  "POS": 1,
+			                                  "VALUE": ID_G
+			                              },
+			                              {
+			                                  "POS": 2,
+			                                  "VALUE": Id
+			                              },
+			                              {
+			                                  "POS": 3,
+			                                  "VALUE": name
+			                              }
+			                          ],
+			                          "POS": pos
+			                      };
+			        		return newRole;
+			        	};
 			        	
 			            // Load ELFIN collaborator ACTOR only once main elfin (here USER) has been loaded
 			            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
