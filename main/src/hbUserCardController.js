@@ -18,14 +18,6 @@
 
 						$log.debug("    >>>> Using HbUserCardController ");
 						
-						
-						
-						$scope.checkModel = {
-							    left: false,
-							    middle: true,
-							    right: false
-							  };
-						
 						// Actor linked to the current user.
 						$scope.selected = { "collaborator" : null };
 						// Actors selection list 
@@ -82,10 +74,12 @@
 			        		
 			        	};
 			        	
+			        	$scope.availableRolesCheckboxModel = null;
+			        	
 			        	// Load available roles
 				        $scope.getAvailableRoles = function () {
 				        	
-				            var xpathForRoles = "//ELFIN[@CLASSE='ROLE'";
+				            var xpathForRoles = "//ELFIN[@CLASSE='ROLE']";
 				            // TODO: rolesCollectionId must come from server configuration resource.
 				            var rolesCollectionId = 'G10000101010101000';			        	
 
@@ -94,6 +88,36 @@
 							.then(function(availableRoles) {
 									$log.debug("    >>>> HbUserCardController: loaded availableRoles.");
 									$scope.availableRoles = availableRoles;
+
+									// Get available role name
+									var availableRoleNames = _.chain($scope.availableRoles).pluck('IDENTIFIANT').pluck('NOM').value();
+									// 
+									var roleNamesState = Array.apply(null, new Array(availableRoleNames.length)).map(Boolean.prototype.valueOf,false);
+									
+									$scope.availableRolesCheckboxModel = [];
+
+									for (var i = 0; i < availableRoleNames.length; i++) {
+										//$log.debug("availableRoleNames["+i+"] = " + availableRoleNames[i]);	
+										$scope.availableRolesCheckboxModel.push({"id":i,"name": availableRoleNames[i] , "state" : false});
+									}
+									
+//									for (var i = 0; i < roleNamesState.length; i++) {
+//										$log.debug("roleNamesState["+i+"] = " + roleNamesState[i]);	
+//									}							
+//									
+//									for (var i = 0; i < $scope.availableRolesCheckboxModel.length; i++) {
+//										$log.debug("availableRolesCheckboxModel["+i+"] = " + $scope.availableRolesCheckboxModel[i]);	
+//									}							
+									
+									   
+									//$scope.availableRolesCheckboxModel = _.object(availableRoleNames, roleNamesState);
+									
+//									for (property in $scope.availableRolesCheckboxModel) {
+//										$log.debug("property: "+property+" = " + $scope.availableRolesCheckboxModel[property]);	
+//									}
+									
+									$scope.initWithUserRoles();
+									
 								},
 								function(response) {
 									var message = "Le chargement des roles a échoué (statut de retour: "+ response.status+ ")";
@@ -102,10 +126,46 @@
 
 			        	};
 
+			        	$scope.initWithUserRoles = function () {
+			        		
+			        		//var userRoleNames = _.chain($scope.elfin).pluck('CARACTERISTIQUE').pluck('FRACTION').pluck('L').C[2].value();
+			        		//var userRoleNames = angular.toJson($scope.elfin['CARACTERISTIQUE']['FRACTION'], true);
+			        		var userRoleNames = [];
+			        		var userRolesRef = $scope.elfin['CARACTERISTIQUE']['FRACTION']['L'];
+			            	/* Sort menu lines by POS */
+			                if (angular.isArray(userRolesRef)) {
+			                	hbUtil.reorderArrayByPOS(userRolesRef);
+			                    /* Sort each role line cells */
+			                    angular.forEach(userRolesRef, function(L) {
+			                    	var lineCells = L.C;
+			                        if (angular.isArray(lineCells)) {
+			                        	hbUtil.reorderArrayByPOS(lineCells);
+			                        }
+			                        userRoleNames.push(L.C[2].VALUE);
+			                    });
+			                }			        		
+			        		
+			        		for (var i = 0; i < $scope.availableRolesCheckboxModel.length; i++) {
+								var roleModel = $scope.availableRolesCheckboxModel[i];
+								var matches = _.find(userRoleNames, function(name){ return name == roleModel.name; } );
+								//$log.debug("roleModel.name: " + roleModel.name + ", matches: " + matches);
+								if ( matches ) {
+									$scope.availableRolesCheckboxModel[i].state = true;
+								};
+							};
+			        	};
+			        	
+		        	
+			        	$scope.updateUserRoles = function () {
+			        		$log.debug("      >>>>>>>>>>>> updateUserRoles called <<<<<<<<<<<<");
+			        	};			        	
+			        	
+			        	
 			            // Load ELFIN collaborator ACTOR only once main elfin (here USER) has been loaded
 			            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
 			            	
-				        	if ($scope.elfin.PARTENAIRE.USAGER.Id && $scope.elfin.PARTENAIRE.USAGER.ID_G) {
+			            	// Make sure a collaborator reference exists before loading
+				        	if ($scope.elfin.PARTENAIRE && $scope.elfin.PARTENAIRE.USAGER && $scope.elfin.PARTENAIRE.USAGER.Id && $scope.elfin.PARTENAIRE.USAGER.ID_G) {
 				        		$scope.getElfinActor($scope.elfin.PARTENAIRE.USAGER.ID_G, $scope.elfin.PARTENAIRE.USAGER.Id);	
 				        	}			            	
 
@@ -131,7 +191,8 @@
 
 			            });
 			            
-			            
+			            // Load available roles
+			            $scope.getAvailableRoles();
 			            
 					} ]);
 	
