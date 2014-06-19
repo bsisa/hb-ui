@@ -60,6 +60,9 @@
             .when('/elfin/:collectionId/USER/:elfinId', {
                 templateUrl: '/assets/views/USER_card_view.html'
             })
+            .when('/elfin/create/CONSTAT', {
+                templateUrl: '/assets/views/CONSTAT_card_new_view.html'
+            })
             .when('/elfin/:collectionId/CONSTAT/:elfinId', {
                 templateUrl: '/assets/views/CONSTAT_card_view.html'
             })
