@@ -336,7 +336,7 @@
 
         		$log.debug(">>>>>>>>>> STANDARD ELFIN LOAD PROCEDURE for collectionId: " + collectionId + ", elfinId: " + elfinId);
         		
-	        	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
+	        	//if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
 			        GeoxmlService.getElfin(collectionId, elfinId).get()
 			        .then(function(elfin) {
 			        	// Force CAR array sorting by POS attribute
@@ -352,11 +352,11 @@
 			        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
 			            hbAlertMessages.addAlert("danger",message);
 			        });
-	            }
-	            else {
-	                var message = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
-	                hbAlertMessages.addAlert("warning",message);
-	            }        		
+//	            }
+//	            else {
+//	                var message = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
+//	                hbAlertMessages.addAlert("warning",message);
+//	            }        		
         		
         	}
         };
