@@ -34,23 +34,6 @@
         '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', '$attrs',
         function($scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS, $attrs) {
     
-    	$log.debug("HbCardContainerController called at " + new Date() + " with $routeParams.elfinId = " + $routeParams.elfinId + ", $routeParams.collectionId = " + $routeParams.collectionId);
-    	
-    	
-//		for (var property in $attrs) {
-//			$log.debug("Property name: " + property + ", value: " + $attrs[property]);
-//		}
-    	
-		if ($attrs.hbMode) {
-			$log.debug(">>>>>>>>>> HB MODE = " + $attrs.hbMode);
-		}
-		
-		if ($attrs.hbElfinClasse) {
-			$log.debug(">>>>>>>>>> HB ELFIN CLASSE = " + $attrs.hbElfinClasse);
-		}
-    	
-    	//$scope.operation = "";
-    	
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
         $scope.collectionId = $routeParams.collectionId;
@@ -144,29 +127,26 @@
     	};
     	
     	/**
-    	 * Wrapper for ELFIN PUT (update) operation
+    	 * Wrapper for ELFIN create or update (HTTP POST or HTTP PUT) operations.
     	 */
-        $scope.putElfin = function (elfin) {
-        	$log.debug(">>>>>>>>>> HbCardContainerController putElfin called at " + new Date());
-        	$log.debug(">>>>>>>>>> HbCardContainerController: putElfin: elfin.Id = "+elfin.Id+", elfin.ID_G = "+elfin.ID_G);
+        $scope.saveElfin = function (elfin) {
         	
         	// Perform POST in create mode
         	if ($attrs.hbMode === "create" && $attrs.hbElfinClasse) {
 
-        		$log.debug(">>>>>>>>>> HbCardContainerController: POST elfin.ID_G: " + elfin.ID_G +", elfin.Id: " + elfin.Id);
         		var restGeoxml = GeoxmlService.getService();
         		restGeoxml.all(elfin.ID_G+ '/' + elfin.Id).post(elfin).then( 
                			function() { 
     	       				$scope.elfin = elfin;
     	                    $scope.elfinForm.$setPristine();
-    	                    // TODO: might need to issue an ELFIN_CREATED. Only useful with elfin which are drawn on map
-    	                    //$scope.$emit(HB_EVENTS.ELFIN_UPDATED, elfin);
+    	                    // TODO: Review if we need to issue an ELFIN_CREATED. 
+    	                    // This would only be useful for elfins drawn on map.
+    	                    // $scope.$emit(HB_EVENTS.ELFIN_CREATED, elfin);
     	                   	var redirUrl = '/elfin/'+elfin.ID_G+'/'+$attrs.hbElfinClasse+'/'+elfin.Id;
-    	                   	$log.debug(">>>>>>>>>> HbCardContainerController: redirUrl = " + redirUrl);
     	                   	$location.path( redirUrl );
     	       			}, 
     	       			function(response) { 
-    	       				$log.debug("Error with status code", response.status);
+    	       				$log.debug("Error in saveElfin POST operation with status code", response.status);
     	       				var message = "La création a échoué (statut de retour: "+ response.status+ ")";
     						hbAlertMessages.addAlert("danger",message);
     	       			}
@@ -176,18 +156,14 @@
 
            		elfin.put().then( 
                			function() { 
-               				$log.debug(">>>>>>>>>> HbCardContainerController: PUT elfin.ID_G: " + elfin.ID_G +", elfin.Id: " + elfin.Id);
-               				// Considered good practice to reload the actual db  
-               				// content unless server load is a concern.
-               				//$scope.getElfin($scope.collectionId,$scope.elfinId);
+               				// Considered good practice to reload the actual elfin state from db after successful PUT unless server load is a concern.
                				$scope.getElfin(elfin.ID_G,elfin.Id);
                             $scope.elfinForm.$setPristine();
-                            //$scope.operation = "";
-                            //"elfinUpdatedEvent"
+                            // Notify other controllers this elfin has been updated (used by map)
                             $scope.$emit(HB_EVENTS.ELFIN_UPDATED, elfin);
                			}, 
                			function(response) { 
-               				$log.debug("Error with status code", response.status);
+               				$log.debug("Error in saveElfin PUT operation with status code", response.status);
                				var message = "La mise à jour a échoué (statut de retour: "+ response.status+ ")";
         					hbAlertMessages.addAlert("danger",message);
                			} 
@@ -199,8 +175,6 @@
         
     	// Wrapper for ELFIN DELETE operation
         $scope.delElfin = function (elfin) {
-        	
-        	$log.debug("HbCardContainerController delElfin called at " + new Date());
         	
         	var modalInstance = $modal.open({
                 templateUrl: 'deleteConfirmModalPanel.html',
@@ -216,7 +190,9 @@
                				hbAlertMessages.addAlert("success",message);
                				// Flag information useful not to perform GET on deleted resource.
                				$scope.elfinDeleted = true;
+               				// Go to the list corresponding to the deleted ELFIN collection filtered by CLASSE.
                				$location.path("/elfin/" + elfin.ID_G + "/" + elfin.CLASSE);
+               				// Notify other controllers this elfin has been deleted (used by map)
                             $scope.$emit(HB_EVENTS.ELFIN_DELETED, elfin);
                         },
                			function(response) { 
@@ -294,17 +270,12 @@
          * 2) From HyperBird catalogue for the given ELFIN.CLASSE (without persistence to database yet).  
          */
         $scope.getElfin = function (collectionId, elfinId) {
-        	
-        	$log.debug(">>>>>>>>>> HbCardContainerController getElfin called at " + new Date());
-
-        	// hb-mode attribute is optionally set on hb-card-container directive
-        	//if ($attrs.hbMode === "create" && elfinId === "new") {
+    		
+        	// hb-mode attribute is optionally set as hb-card-container directive (sibling) attribute
         	if ($attrs.hbMode === "create") {
 
-        		$log.debug(">>>>>>>>>> HbCardContainerController: DETECTED NEW ELFIN CREATE OPERATION => GET from HB catalogue.");
-        		
         		if ($attrs.hbElfinClasse) {
-        			// GET NEW ELFIN FROM CATALOGUE...
+        			// GET new ELFIN from HyperBird catalogue
         			GeoxmlService.getNewElfin($attrs.hbElfinClasse).get()
     		        .then(function(elfin) {
     		        	// Force CAR array sorting by POS attribute
@@ -315,12 +286,9 @@
     		        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
     		        	}
     		            $scope.elfin = elfin;
-    		            
-    		            $log.debug(">>>>>>>>>> HbCardContainerController: NEW elfin.Id = "+elfin.Id+", elfin.ID_G = "+elfin.ID_G);
-    		            
     		            $scope.elfinForm.$setDirty();
 
-    		            // Annoying message. Keep it as reminder.
+    		            // Annoying message, should at least fade out after a couple of seconds. Keep it as reminder.
     		            //hbAlertMessages.addAlert("info","Création du nouvel objet " + $scope.elfin.CLASSE);
     		        	}, function(response) {
     		        	var message = "Le chargement du nouvel objet de CLASSE = "+$attrs.hbElfinClasse+" a échoué (statut de retour: " + response.status + ")";
@@ -333,10 +301,9 @@
         		}
 
         	} else {
-
-        		$log.debug(">>>>>>>>>> STANDARD ELFIN LOAD PROCEDURE for collectionId: " + collectionId + ", elfinId: " + elfinId);
         		
-	        	//if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
+        		// Fails for considered valid values. TODO: review validation rules before reactivating or remove. 
+        		//if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
 			        GeoxmlService.getElfin(collectionId, elfinId).get()
 			        .then(function(elfin) {
 			        	// Force CAR array sorting by POS attribute
@@ -367,9 +334,9 @@
         // When the card scope is destroyed, signal potential observers
         // That there is no more current elfin displayed
         $scope.$on('$destroy', function() {
-            $log.debug('Current elfin card closed');
-            // In create mode the elfin instance does not yet exist in the database.
-            // If elfin has been deleted the getElfin will failed.
+            $log.debug('Current elfin card closed (controller $destroy)');
+            // In create mode the elfin instance does not yet exist in the database, getElfin will fail. 
+            // If elfin has been deleted getElfin will fail.
             if ( !($attrs.hbMode === "create") && !$scope.elfinDeleted ) {
 	            // Reload the last saved state and propagate to give chance
 	            // to any other observer to update eventually their scope
