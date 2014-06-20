@@ -23,11 +23,12 @@
 	        </ul>
 	    </li>
 	
-	    <li class="right col_3 search-wrapper">
-	        <input class="search" type="text" placeholder="Recherche" />
-	        <button class="btn btn-primary btn-xs"><i class="icon-search"></i></button>
+	    <li class="right col_4 search-wrapper">
+<!-- 	        <input class="search" type="text" placeholder="Recherche" /> -->
+<!-- 	        <button class="btn btn-primary btn-xs"><i class="icon-search"></i></button> -->
 	        <!-- Note: btn-danger not used semantically but only to get red color -->
-	        <button class="btn btn-danger btn-xs" ng-click="toggleMap()"><i class="icon-desktop"></i></button>
+	        <button class="btn btn-danger btn-xs" ng-click="toggleMap()"><i class="icon-desktop"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;
+	        <i class="glyphicon glyphicon-user" style="font-size: 1em;"></i>&nbsp;{{userDetails.username}} - {{userDetails.name}} {{userDetails.surname}}
 	    </li>
 <!-- 	    </ul> -->
     </div>
