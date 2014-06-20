@@ -152,8 +152,8 @@
     	        		//TODO: we might use the following once we create an new custom AngularJS integrated login form 
     	        		//$location.path('/login'); 
     	        	} else if (response.status == 403) {
-		        		var errMsg = "Droits d'accès insuffisants. ( " + response.data.DESCRIPTION +" )";
-		        		$log.error(errMsg);
+		        		var errMsg = "Droits d'accès insuffisants pour cette operation. ";
+		        		$log.error(errMsg +  " ( " + response.data.DESCRIPTION +" )");
 		        		hbAlertMessages.addAlert("danger",errMsg);
     	        	} 
     	        	else if (response.status == 404) {
