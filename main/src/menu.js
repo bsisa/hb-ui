@@ -56,6 +56,13 @@
         '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS',
         function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS) {
 
+        $scope.userDetails = userDetails;
+        	
+//    	for (cookie in $cookies) {
+//    		$log.debug("Cookie " + cookie + " = " + $cookies[cookie]);
+//    	}
+
+        	
     	// Functions used in alert ui.bootstrap component found in menu.html
     	$scope.getAlerts = hbAlertMessages.getAlerts();
     	$scope.removeAlert = hbAlertMessages.removeAlert;
