@@ -5,7 +5,6 @@
 	</div>
 	<div class="modal-body" ui-keypress="{13:'keypressCallback($event)'}">
 		<form name="chooseParamForm" class="form-horizontal" role="form" novalidate > <!--  novalidate prevents HTML5 automated validation  -->
-<!-- 			<div class="form-group" ng-repeat="field in itemDefinition.parameters"> -->
 				<div class="form-group" ng-repeat="field in modalModel">
 				<label for="field{{$index}}" class="col-sm-4 control-label">{{field.label}} : </label>
 				<div class="col-sm-8">
