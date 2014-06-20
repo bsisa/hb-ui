@@ -13,31 +13,40 @@
 
     angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', '$timeout', '$log', 'itemDefinition', function($scope, $modalInstance, $timeout, $log, itemDefinition) {
     	
-    	// Reset parameters value upon modal opening
+    	$scope.modalModel = [];
+    	// /!\ _.clone performs shallow copy, see: http://underscorejs.org/#clone
     	for (var i = 0; i < itemDefinition.parameters.length; i++) {
-    		itemDefinition.parameters[i].value = "";
+			var parameter = itemDefinition.parameters[i];
+			$scope.modalModel.push( _.clone(parameter));	
 		}
     	
-    	$scope.itemDefinition = itemDefinition;
+    	// Reset modalModel values to itemDefinition.parameters default value (upon modal opening)
+    	for (var i = 0; i < itemDefinition.parameters.length; i++) {
+    		$scope.modalModel[i].value = itemDefinition.parameters[i].value;
+		}    	
     	
-    	// Manage submission with ENTER key
-    	$scope.keypressCallback = function($event) {
-    		$modalInstance.close($scope.itemDefinition);
-    		$event.preventDefault();
-    	};
-    	
+    	// User ok submission
         $scope.ok = function () {
-            $modalInstance.close($scope.itemDefinition);
+        	$modalInstance.close($scope.modalModel);
         };
+        
+    	// Trigger ok submission upon ENTER keystroke
+    	$scope.keypressCallback = function($event) {
+    		$scope.ok();
+    		$event.preventDefault();
+    	};        
+        
+        // User cancel 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
         
+        // Force focus to first parameters list field
 	    var focusOnFirstField = function() {
 			$('#field0').focus();	
 		};        
 
-		// TODO: FocusTimeout issue. Find a better solution ? 
+		// TODO: FocusTimeout issue with 0 delay time. Any better solution ? 
 		$timeout(focusOnFirstField, 250, false);        
         
     }]);
@@ -182,19 +191,19 @@
             /**
              * Process modalInstance.close action
              */
-            modalInstance.result.then(function (result) {
+            modalInstance.result.then(function (modalModel) {
                 
-            	if (result.newWindow && result.newWindow === 'true') {
-            		var queryString = hbUtil.buildUrlQueryString(result.parameters);
-            		var urlWithQuery = result.url + queryString;
-            		if (result.newWindowName) {
-            			$window.open(urlWithQuery,result.newWindowName);
+            	if (itemDefinition.newWindow && itemDefinition.newWindow === 'true') {
+            		var queryString = hbUtil.buildUrlQueryString(modalModel);
+            		var urlWithQuery = itemDefinition.url + queryString;
+            		if (itemDefinition.newWindowName) {
+            			$window.open(urlWithQuery,itemDefinition.newWindowName);
             		} else {
             			$window.open(urlWithQuery);	
             		}
             	} else {
-            		var searchObject = hbUtil.buildKeyValueObject(result.parameters);
-            		$location.search(searchObject).path(result.url); 
+            		var searchObject = hbUtil.buildKeyValueObject(modalModel);
+            		$location.search(searchObject).path(itemDefinition.url); 
             	}
             }, function () {
             	$log.debug('Choose params modal dismissed at: ' + new Date());
