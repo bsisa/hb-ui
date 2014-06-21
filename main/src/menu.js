@@ -56,13 +56,6 @@
         '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS',
         function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS) {
 
-        $scope.userDetails = userDetails;
-        	
-//    	for (cookie in $cookies) {
-//    		$log.debug("Cookie " + cookie + " = " + $cookies[cookie]);
-//    	}
-
-        	
     	// Functions used in alert ui.bootstrap component found in menu.html
     	$scope.getAlerts = hbAlertMessages.getAlerts();
     	$scope.removeAlert = hbAlertMessages.removeAlert;
@@ -305,6 +298,16 @@
           );
         }
         );
+        
+        /* Obtain user details from GeoxmlService */
+        GeoxmlService.getWhoAmI().get().then(function(userDetails) {
+        	$scope.userDetails = userDetails;
+        }, function(response) {
+        	var errorMessage = "Error with status code " + response.status + " while getting user details information (whoami).";
+        	$log.error(errorMessage);
+        	hbAlertMessages.addAlert("danger","Les informations utilisateur n'ont pu être obtenues.");
+        }
+        );        
 
         /* Activate current configuration */
         $scope.$watch('$$activeConfiguration', function(newVal /*, oldVal, scope */) {

@@ -81,6 +81,9 @@
                 getConfig: function() {
                     return _geoxmlService.one("config");
                 },
+                getWhoAmI: function() {
+                    return _geoxmlService.one("whoami");
+                },
                 getCollections: function() {
                 	//TODO: To check, this should certainly be:
                 	// return _geoxmlService;
