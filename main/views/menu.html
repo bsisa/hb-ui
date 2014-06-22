@@ -22,16 +22,25 @@
 	            <li ng-repeat="job in jobs" ><a ng-click="activateJob(job)" ><span class="icon" data-icon="G"></span><span>{{job.IDENTIFIANT.NOM}}</span></a></li>
 	        </ul>
 	    </li>
+	    
+	    <li class="dropdown has-menu">
+			<a class="dropdown-toggle"  href="#" ><i class="glyphicon glyphicon-user" style="font-size: 1em;"></i>&nbsp;{{userDetails.username}} - {{userDetails.name}} {{userDetails.surname}}<span class="arrow">&nbsp;</span></a>
+	        <ul class="dropdown-menu">
+	        	<li ><a target="_self" href="/logout" >Logout</a></li>
+	        	<!-- TODO: implement own password update -->
+	        	<li ><a href="#" >Mettre à jour mon mot de passe</a></li>
+	        </ul>
+	    </li>	    
 	
 	    <li class="right col_4 search-wrapper">
 <!-- 	        <input class="search" type="text" placeholder="Recherche" /> -->
 <!-- 	        <button class="btn btn-primary btn-xs"><i class="icon-search"></i></button> -->
 	        <!-- Note: btn-danger not used semantically but only to get red color -->
 	        <button class="btn btn-danger btn-xs" ng-click="toggleMap()"><i class="icon-desktop"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;
-	        <i class="glyphicon glyphicon-user" style="font-size: 1em;"></i>&nbsp;{{userDetails.username}} - {{userDetails.name}} {{userDetails.surname}}
+<!-- 	        <a target="_self" href="/logout" ><i class="glyphicon glyphicon-user" style="font-size: 1em;"></i>&nbsp;{{userDetails.username}} - {{userDetails.name}} {{userDetails.surname}}</a> -->
 	    </li>
 <!-- 	    </ul> -->
-    </div>
+<!--     </div> -->
 <!-- </nav> -->
 </ul>
 
