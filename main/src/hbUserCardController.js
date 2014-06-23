@@ -86,13 +86,10 @@
 				            // Asychronous roles preloading
 				            GeoxmlService.getCollection(rolesCollectionId).getList({"xpath" : xpathForRoles})
 							.then(function(availableRoles) {
-									$log.debug("    >>>> HbUserCardController: loaded availableRoles.");
-									$scope.availableRoles = availableRoles;
+									$log.debug(">>>> HbUserCardController: loaded availableRoles.");
 
 									// Get available role name
-									var availableRoleNames = _.chain($scope.availableRoles).pluck('IDENTIFIANT').pluck('NOM').value();
-									// 
-									var roleNamesState = Array.apply(null, new Array(availableRoleNames.length)).map(Boolean.prototype.valueOf,false);
+									var availableRoleNames = _.chain(availableRoles).pluck('IDENTIFIANT').pluck('NOM').value();
 									
 									$scope.availableRolesCheckboxModel = [];
 
@@ -100,24 +97,20 @@
 										//$log.debug("availableRoleNames["+i+"] = " + availableRoleNames[i]);	
 										$scope.availableRolesCheckboxModel.push({"id":i,"name": availableRoleNames[i] , "state" : false});
 									}
+
+									// Expose availableRoles to scope for use by $scope.updateUserRoles create operation,
+									// only once $scope.availableRolesCheckboxModel update is complete as $scope.availableRoles is checked 
+									// against in $on HB_EVENTS.ELFIN_LOADED listener. (Fix #5)
+									$scope.availableRoles = availableRoles;									
 									
-//									for (var i = 0; i < roleNamesState.length; i++) {
-//										$log.debug("roleNamesState["+i+"] = " + roleNamesState[i]);	
-//									}							
-//									
-//									for (var i = 0; i < $scope.availableRolesCheckboxModel.length; i++) {
-//										$log.debug("availableRolesCheckboxModel["+i+"] = " + $scope.availableRolesCheckboxModel[i]);	
-//									}							
-									
-									   
-									//$scope.availableRolesCheckboxModel = _.object(availableRoleNames, roleNamesState);
-									
-//									for (property in $scope.availableRolesCheckboxModel) {
-//										$log.debug("property: "+property+" = " + $scope.availableRolesCheckboxModel[property]);	
-//									}
-									
-									$scope.initWithUserRoles();
-									
+									$log.debug(">>>> HbUserCardController: $scope.availableRolesCheckboxModel.length = " + $scope.availableRolesCheckboxModel.length);
+									// Only proceed with user roles initialisation if USER elfin is available (Fix #5)
+									if ($scope.elfin) {
+										$log.debug(">>>> HbUserCardController: PERFORM $scope.initWithUserRoles() in getAvailableRoles, OK");
+										$scope.initWithUserRoles();										
+									} else {
+										$log.debug(">>>> HbUserCardController: DELAY   $scope.initWithUserRoles() in getAvailableRoles, current USER elfin not yet available, PENDING.");	
+									}
 								},
 								function(response) {
 									var message = "Le chargement des roles a échoué (statut de retour: "+ response.status+ ")";
@@ -127,6 +120,12 @@
 			        	};
 
 			        	$scope.initWithUserRoles = function () {
+			        		
+			        		if ($scope.elfin) {
+			        			$log.debug(">>>> HbUserCardController: initWithUserRoles - elfin AVAILABLE");
+			        		} else {
+			        			$log.debug(">>>> HbUserCardController: initWithUserRoles - DAMNED!!! elfin  NOT AVAILABLE");
+			        		}
 			        		
 			        		//var userRoleNames = _.chain($scope.elfin).pluck('CARACTERISTIQUE').pluck('FRACTION').pluck('L').C[2].value();
 			        		//var userRoleNames = angular.toJson($scope.elfin['CARACTERISTIQUE']['FRACTION'], true);
@@ -171,6 +170,7 @@
 									var currRoleName = L.C[2].VALUE;
 									if (role.name == currRoleName) {
 										$log.debug("      >>>>>>>>>>>> DELETE ROLE at position "+i+" <<<<<<<<<<<<");
+										//TODO: manage POS values while removing an entry.
 										$scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].splice(i,1);
 									} else {
 										$log.debug("      >>>>>>>>>>>> NO DELETE at position "+i+" <<<<<<<<<<<<");	
@@ -207,6 +207,15 @@
 			        	
 			            // Load ELFIN collaborator ACTOR only once main elfin (here USER) has been loaded
 			            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
+			            	
+			            	$log.debug(">>>> HbUserCardController: HB_EVENTS.ELFIN_LOADED for elfin.Id = " + elfin.Id);
+		            		// Only proceed with $scope.initWithUserRoles() if $scope.availableRoles have been loaded. (Fix #5)
+			            	if ($scope.availableRoles) {
+			            		$log.debug(">>>> HbUserCardController: PERFORM $scope.initWithUserRoles() (nb.available = ) "+ $scope.availableRoles.length +" in HB_EVENTS.ELFIN_LOADED, OK.");
+			            		$scope.initWithUserRoles();	
+			            	} else {
+			            		$log.debug(">>>> HbUserCardController: DELAY   $scope.initWithUserRoles() $scope.availableRoles not yet available while in HB_EVENTS.ELFIN_LOADED, PENDING.");
+			            	}
 			            	
 			            	// Make sure a collaborator reference exists before loading
 				        	if ($scope.elfin.PARTENAIRE && $scope.elfin.PARTENAIRE.USAGER && $scope.elfin.PARTENAIRE.USAGER.Id && $scope.elfin.PARTENAIRE.USAGER.ID_G) {
