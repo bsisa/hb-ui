@@ -157,10 +157,10 @@
            		elfin.put().then( 
                			function() { 
                				// Considered good practice to reload the actual elfin state from db after successful PUT unless server load is a concern.
-               				$scope.getElfin(elfin.ID_G,elfin.Id);
+               				$scope.getElfin(elfin.ID_G,elfin.Id, HB_EVENTS.ELFIN_UPDATED);
                             $scope.elfinForm.$setPristine();
                             // Notify other controllers this elfin has been updated (used by map)
-                            $scope.$emit(HB_EVENTS.ELFIN_UPDATED, elfin);
+                            //$scope.$emit(HB_EVENTS.ELFIN_UPDATED, elfin);
                			}, 
                			function(response) { 
                				$log.debug("Error in saveElfin PUT operation with status code", response.status);
@@ -269,7 +269,7 @@
          * 1) From database using collectionId, elfinId parameters with GET HTTP call
          * 2) From HyperBird catalogue for the given ELFIN.CLASSE (without persistence to database yet).  
          */
-        $scope.getElfin = function (collectionId, elfinId) {
+        $scope.getElfin = function (collectionId, elfinId, hbEventType) {
     		
         	// hb-mode attribute is optionally set as hb-card-container directive (sibling) attribute
         	if ($attrs.hbMode === "create") {
@@ -314,7 +314,9 @@
 			        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
 			        	}
 			            $scope.elfin = elfin;
-	                    $scope.$emit(HB_EVENTS.ELFIN_LOADED, elfin);
+	                    //$scope.$emit(HB_EVENTS.ELFIN_LOADED, elfin);
+			            // Can be HB_EVENTS.ELFIN_LOADED, HB_EVENTS.ELFIN_UPDATED depending whether called from put/get
+			            $scope.$emit(hbEventType, elfin);
 			        	}, function(response) {
 			        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
 			            hbAlertMessages.addAlert("danger",message);
@@ -328,7 +330,7 @@
         	}
         };
 
-        $scope.getElfin($scope.collectionId, $scope.elfinId);
+        $scope.getElfin($scope.collectionId, $scope.elfinId, HB_EVENTS.ELFIN_LOADED);
 
 
         // When the card scope is destroyed, signal potential observers
