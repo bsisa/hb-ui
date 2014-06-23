@@ -24,7 +24,7 @@
 
 			            	// Update some catalogue properties with live data passed as route parameters 
 			            	// while in create mode, following an HB_EVENTS.ELFIN_CREATED event. 
-							if ( !($attrs.hbMode === "create") ) {
+							if ( $attrs.hbMode === "create" ) {
 								
 								if ($scope.elfin) {
 							        $scope.buildingNb = $routeParams.nocons;
