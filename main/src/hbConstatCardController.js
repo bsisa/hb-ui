@@ -3,6 +3,8 @@
 	angular.module('hb5').controller(
 			'HbConstatCardController',
 			[
+					'$attrs',
+					'$rootScope',
 					'$scope',
 					'GeoxmlService',
 					'$modal',
@@ -12,10 +14,33 @@
 					'$filter',
 					'hbAlertMessages',
 					'hbUtil',
-					function($scope, GeoxmlService, $modal, $routeParams,
-							$location, $log, $filter, hbAlertMessages, hbUtil) {
+					'HB_EVENTS',
+					function($attrs, $rootScope, $scope, GeoxmlService, $modal, $routeParams,
+							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS) {
 
 						$log.debug("    >>>> Using ConstatCardController ");
+						
+			            $rootScope.$on(HB_EVENTS.ELFIN_CREATED, function(event, elfin) {
+
+			            	// Update some catalogue properties with live data passed as route parameters 
+			            	// while in create mode, following an HB_EVENTS.ELFIN_CREATED event. 
+							if ( !($attrs.hbMode === "create") ) {
+								
+								if ($scope.elfin) {
+							        $scope.buildingNb = $routeParams.nocons;
+							        $scope.saiNb = $routeParams.sai;
+							        $scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
+							        $scope.elfin.IDENTIFIANT.COMPTE = $routeParams.nocons;
+							        $scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
+								} else {
+									$log.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
+								}
+							} else {
+								// Do nothing
+							}			            	
+			            	
+			            });						
+						
 						
 						// Get statusTypes dynamically from HB5 catalogue CONSTAT
 						$scope.statusTypes = null;
@@ -29,10 +54,10 @@
 						// ============================================
 						// TODO: move to hbDate directive - START
 						// ============================================
-						$scope.fromDate = new Date();
+						//$scope.fromDate = new Date();
 
 						// TODO: should be automatic with $locale providing the correct id i.e.: fr-ch, de-ch,...
-						$scope.dateFormat = 'dd.MM.yyyy';						
+						//$scope.dateFormat = 'dd.MM.yyyy';						
 						
 						
 						// Only valid with ui.bootstrap 0.11.0 not 0.10.0						

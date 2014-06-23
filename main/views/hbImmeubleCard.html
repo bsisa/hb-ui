@@ -160,7 +160,20 @@
 					<div ng-show="constats" class="col-sm-12">
 						<table class="table table-condensed table-bordered table-striped">
 							<thead>
-								<tr>
+							<tr>
+								<th colspan="3">
+									<div class="input-group">
+										<div>Constats</div>
+										<span class="input-group-btn">
+											<a class="btn btn-default" type="button"
+												ng-href="/elfin/create/CONSTAT?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+												<i class="icon-plus-sign"></i> Nouveau
+											</a>
+										</span>
+									</div>
+								</th>
+							</tr>
+							<tr>
 									<th>Constat</th>
 									<th>Date</th>
 									<th>Nom</th>

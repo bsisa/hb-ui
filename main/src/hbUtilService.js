@@ -7,6 +7,29 @@
 	
 	angular.module('hb5').service('hbUtil', ['$window',function ($window) {
 
+		/**
+		 * Returns the YYYY-MM-DD string corresponding to the date parameter
+		 */
+		var getDateInHbTextFormat = function(date) {
+			// Get day as string
+			var dd = date.getDate().toString();
+			// Get month as string. Note monthes are
+			// zero based.
+			var mm = (date.getMonth() + 1).toString();
+			// Get full year
+			var yyyy = date.getFullYear().toString();
+			// Make sure string day and month are padded
+			// with zero when necessary
+			return yyyy
+					+ "-"
+					+ (mm.length === 2 ? mm : "0"
+							+ mm[0])
+					+ "-"
+					+ (dd.length === 2 ? dd : "0"
+							+ dd[0]);
+		};
+		
+		
         /**
          * Sort any array by its elements POS property.
          * Assumes the array elements possess POS property of Int type.  
@@ -196,7 +219,8 @@
         	applyPaths:applyPaths,
         	getValueAtPath:getValueAtPath,
         	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault,
-        	encodeUriParameter:encodeUriParameter
+        	encodeUriParameter:encodeUriParameter,
+        	getDateInHbTextFormat:getDateInHbTextFormat
         };
     }]);
 	
