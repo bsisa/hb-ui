@@ -2,7 +2,7 @@
 
 
     /**
-     * Directive encapsulating GeoXML ELFIN[@CLASSE='ISER'] specific view 
+     * Directive encapsulating GeoXML ELFIN[@CLASSE='USER'] specific view 
      * and behaviour.
      */
     angular.module('hb5').directive('hbUserCard', function () {
