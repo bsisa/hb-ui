@@ -32,6 +32,8 @@
 							        $scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
 							        $scope.elfin.IDENTIFIANT.COMPTE = $routeParams.nocons;
 							        $scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
+							        // Default value from catalogue contains statusTypes list reset it. 
+							        $scope.elfin.IDENTIFIANT.QUALITE = "";
 								} else {
 									$log.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
 								}
@@ -109,6 +111,7 @@
 			            // Asychronous CONSTAT template preloading
 			            GeoxmlService.getNewElfin("CONSTAT").get()
 			            .then(function(constat) {
+			            		// Get statusTypes from catalogue default
 			            		$scope.statusTypes = hbUtil.buildArrayFromCatalogueDefault(constat.IDENTIFIANT.QUALITE);
 							},
 							function(response) {
