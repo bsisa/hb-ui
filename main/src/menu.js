@@ -299,15 +299,6 @@
         }
         );
         
-        /* Obtain user details from GeoxmlService */
-        GeoxmlService.getWhoAmI().get().then(function(userDetails) {
-        	$scope.userDetails = userDetails;
-        }, function(response) {
-        	var errorMessage = "Error with status code " + response.status + " while getting user details information (whoami).";
-        	$log.error(errorMessage);
-        	hbAlertMessages.addAlert("danger","Les informations utilisateur n'ont pu être obtenues.");
-        }
-        );        
 
         /* Activate current configuration */
         $scope.$watch('$$activeConfiguration', function(newVal /*, oldVal, scope */) {
@@ -333,29 +324,72 @@
 	             * C[5] Acces (Role/Group having access to this job) 
 	             */            
 	            var jobReferences = newVal['CARACTERISTIQUE']['FRACTION']['L'];
+	            // Get default job position (POS not array index)
+	            var defaultJobPos = parseInt(newVal['CARACTERISTIQUE']['CAR1']['VALEUR']);
+	            // Holds the result of testing whether the job at defaultJobPos is 
+	            // accessible by the current user.
+	            var defaultJobPosAllowed = false;
+	            
 	            // Guarantees jobReferences ordering by POS attribute
 	            reorderArrayByPOS(jobReferences);
-	           
-	            // Get default job position in jobReferences array
-	            var defaultJobPos = parseInt(newVal['CARACTERISTIQUE']['CAR1']['VALEUR']);
 	            
-	            angular.forEach(jobReferences, function(job) {
-	
-	                /* Sort cells C by C.POS is mandatory to guarantee correct results. */
-	                var jobCells = job.C;
-	                reorderArrayByPOS(jobCells);            	
+	            /* Obtain user details from GeoxmlService */
+	            GeoxmlService.getWhoAmI().get().then(function(userDetails) {
+
+	            	// Make user details available to MenuController scope 
+	            	// to display user name, family name, surname in menu bar. 
+	            	$scope.userDetails = userDetails;
+	            
+		            // jobReferences filtered by access rights
+	            	var allowedJobReferences = [];
 	            	
-	            	// Skip label (titles) line located at first position
-	                if (job.POS === 1) {
-	                    return;
-	                } else {
-		                
+	            	// Perform filtering
+		            angular.forEach(jobReferences, function(job) {
+		            	// Skip label (titles) line located at first position
+		            	if (job.POS === 1) {
+		                    return;
+		                } else {
+		                	// Get menu access rights
+			            	var jobAccessRights = job.C[5].VALUE.split(",");
+			            	// Check whether user is granted necessary role
+			            	angular.forEach(jobAccessRights, function(jobAccessRight) {
+			            		// If user allowed add menu and break out of this menu item loop
+			            		if (_.contains(userDetails.roles,jobAccessRight) ) {
+				            		allowedJobReferences.push(job);
+				    	            // Test whether the default job is available. Indeed it might be that the 
+				    	            // user is not granted the right to access job at defaultJobPos at all. 
+				            		if (job.POS === defaultJobPos) {
+				            			defaultJobPosAllowed = true;
+				            		}
+				            		return;
+				            	};
+				            });
+		                }
+		            });
+		            
+		             
+    	            // User is not granted the right to access job at defaultJobPos 
+		            // set fall back to first available job.
+		            if (!defaultJobPosAllowed) {
+		            	// POS are 1 based not 0 based
+		            	defaultJobPos = 1; 
+		            }
+		            
+		            // Guarantees allowedJobReferences ordering by POS attribute
+		            reorderArrayByPOS(allowedJobReferences);
+
+		            
+		            angular.forEach(allowedJobReferences, function(job) {
+		
+		                /* Sort cells C by C.POS is mandatory to guarantee correct results. */
+		                var jobCells = job.C;
+		                reorderArrayByPOS(jobCells);            	
+		            	
 	            		// Initialise the jobs array with METIER elfin.Id as index lookup value
 	                	// solving asynchronous response processing while preserving METIER menu ordering.
 	                	// POS are 1 based while jobs array is 0 based.
 	            		$scope.jobs[job.POS-2] = job.C[1].VALUE; 	
-		                
-		                //console.log(">>>>>> REQUESTING elfin job Id: " + jobCells[1].VALUE + " / name: "+jobCells[4].VALUE );
+			                
 		                GeoxmlService.getElfin(jobCells[2].VALUE, jobCells[1].VALUE).get()
 		                    .then(function(elfin) {
 		                    	//console.log("<<<<<< OBTAINED elfin job Id:   " + elfin.Id + " / name: " + elfin.IDENTIFIANT.NOM);
@@ -373,9 +407,13 @@
 		                        $log.error(errorMessage);
 		                        hbAlertMessages.addAlert("danger",errorMessage);
 		                    });
-	                }
-	            });
-	            // At this time jobs are only promises upon above GeoxmlService.getElfin call completion.
+		            });
+		            // At this time jobs are only promises upon above GeoxmlService.getElfin call completion.
+	            }, function(response) {
+	            	var errorMessage = "Error with status code " + response.status + " while getting user details information (whoami).";
+	            	$log.error(errorMessage);
+	            	hbAlertMessages.addAlert("danger","Les informations utilisateur n'ont pu être obtenues.");
+	            });		            
             }
         });
         
