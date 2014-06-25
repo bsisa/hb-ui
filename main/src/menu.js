@@ -10,6 +10,47 @@
         };
     };
 
+    angular.module('hb5').controller('HbResetPwdController', ['$scope', '$modalInstance', '$timeout', '$log', function($scope, $modalInstance, $timeout, $log) {
+    	
+    	$scope.model = {
+    			pwd1: "",
+    			pwd2: ""
+    	};
+    	
+		$scope.getCssHasFeedback = function (ngModelController) {
+			if (ngModelController) {
+				return {
+					"has-error" : ngModelController.$dirty && ngModelController.$invalid,
+					"has-success" : ngModelController.$dirty && ngModelController.$valid, 
+					"has-warning" : ngModelController.$pristine && ngModelController.$invalid // unexpected situation
+				};
+			} else {
+				return {};
+			}
+		};	    	    	
+    	
+    	// User ok submission
+        $scope.ok = function () {
+        	$modalInstance.close($scope.model);
+        };
+        
+    	// Trigger ok submission upon ENTER keystroke
+    	$scope.keypressCallback = function($event) {
+    		$scope.ok();
+    		$event.preventDefault();
+    	};        
+        
+        // User cancel 
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+        
+        // Force focus to first parameters list field
+		$timeout( function () {
+			$('#pwd1').focus();	
+		}, 250, false);     
+        
+    }]);    
 
     angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', '$timeout', '$log', 'itemDefinition', function($scope, $modalInstance, $timeout, $log, itemDefinition) {
     	
@@ -209,6 +250,32 @@
             	$log.debug('Choose params modal dismissed at: ' + new Date());
             });
         };        
+        
+        
+        /**
+         * Modal panel allowing the current user to reset her password
+         */
+        $scope.resetPwd = function () {
+        	
+            var modalInstance = $modal.open({
+                templateUrl: '/assets/views/password.html',
+                controller: 'HbResetPwdController',       
+                backdrop: 'static'
+            });
+
+            /**
+             * Process modalInstance.close action
+             */
+            modalInstance.result.then(function (model) {
+                
+            	$log.debug("ResetPwd with " + model.pwd1 +" / " + model.pwd2);
+
+            }, function () {
+            	$log.debug('Reset password modal dismissed at: ' + new Date());
+            });
+        };        
+        
+        
 
 
 
