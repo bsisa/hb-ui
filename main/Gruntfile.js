@@ -47,6 +47,7 @@ module.exports = function(grunt) {
 								'src/hbDefaultCardDirective.js',
 								'src/hbDefaultCardController.js',
 								'src/hbDropdownMenuDirective.js',
+								'src/hbEqualsDirective.js',
 								'src/hbFontaineCardController.js',
 								'src/hbFontaineCardDirective.js',
 								'src/hbFormeComponentController.js',
