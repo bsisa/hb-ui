@@ -208,18 +208,19 @@
 							</tr>
 							<tr>
 								<th>#</th>
-								<th>Date</th>
-								<th>Etape en cours</th>
-								<th>Resp</th>
-								<th>Délai</th>
-								<th>Groupe presta</th>
-								<th>Année presta</th>
-								<th>Montant estimé</th>
+								<th><a href="" ng-click="deadlinePredicate = 'DATE'; deadlineReverse=!deadlineReverse">Date</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'ACTION'; deadlineReverse=!deadlineReverse">Etape en cours</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'POUR_QUI'; deadlineReverse=!deadlineReverse">Resp</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'E_DATE'; deadlineReverse=!deadlineReverse">Délai</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'E_ACTION'; deadlineReverse=!deadlineReverse">Groupe presta</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'E_POUR_QUI'; deadlineReverse=!deadlineReverse">Année presta</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'E_PAR_QUI'; deadlineReverse=!deadlineReverse">Montant estimé</a></th>
 							</tr>						
 						</thead>
 						<tbody>
-							<tr ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{E_STATUT:'OK'}">
-								<td rowspan="2">{{currentEvent.POS}}</td>
+							<tr ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{E_STATUT:'OK'} | orderBy:deadlinePredicate:deadlineReverse">
+<!-- 								<td rowspan="2">{{$index + 1}}</td> -->
+								<td rowspan="2">{{currentEvent.E_STATUT}}</td>
 								<td>{{currentEvent.DATE}}</td>
 								<td>{{currentEvent.ACTION}}</td>
 								<td>{{currentEvent.POUR_QUI}}</td>

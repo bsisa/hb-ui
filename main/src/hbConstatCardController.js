@@ -43,6 +43,8 @@
 			            	
 			            });						
 						
+			            $scope.deadlinePredicate = 'DATE';
+			            $scope.deadlineReverse = true;
 						
 						// Get statusTypes dynamically from HB5 catalogue CONSTAT
 						$scope.statusTypes = null;
