@@ -159,7 +159,11 @@
 						<tbody>
 							<tr ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE  | filter:{E_STATUT:'!OK'}">
 	
-								<td rowspan="2">{{currentEvent.POS}}</td>
+								<td rowspan="2">
+									<span ng-show="{{currentEvent.E_STATUT === 'OK'}}"><i class='glyphicon glyphicon-ok'></i></span>
+									<span ng-show="{{currentEvent.E_STATUT === 'A EFFECTUER'}}"><i class='glyphicon glyphicon-wrench'></i></span>
+<!-- 									<span ng-show="{{currentEvent.E_STATUT === 'OK'}}"><i class='glyphicon glyphicon-eye-open'></i></span> -->
+								</td>
 								<td>
 									<div hb-date ng-model="currentEvent.DATE" ></div>
 								</td>
@@ -220,7 +224,9 @@
 						<tbody>
 							<tr ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{E_STATUT:'OK'} | orderBy:deadlinePredicate:deadlineReverse">
 <!-- 								<td rowspan="2">{{$index + 1}}</td> -->
-								<td rowspan="2">{{currentEvent.E_STATUT}}</td>
+								<td rowspan="2">
+								<span ng-show="{{currentEvent.E_STATUT === 'OK'}}"><i class='glyphicon glyphicon-ok'></i></span>
+								</td>
 								<td>{{currentEvent.DATE}}</td>
 								<td>{{currentEvent.ACTION}}</td>
 								<td>{{currentEvent.POUR_QUI}}</td>
