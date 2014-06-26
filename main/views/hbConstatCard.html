@@ -76,7 +76,7 @@
 									<button class="btn btn-default" type="button"
 										hb-choose-one 
 										ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )"
-										><i class="icon-search" ></i></button>
+										><i class="glyphicon glyphicon-list-alt" ></i></button>
 								</span>
 							</div>
 						</div>
@@ -91,7 +91,7 @@
 									<button class="btn btn-default" type="button"
 										hb-choose-one
 										ng-click="hbChooseOne(elfin, 'IDENTIFIANT.AUT', collaboratorActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )"
-										><i class="icon-search" ></i></button>
+										><i class="glyphicon glyphicon-list-alt" ></i></button>
 								</span>
 							</div>							
 						</div> 
@@ -111,7 +111,9 @@
 								<input id="group" name="group" type="text" class="form-control" ng-model="elfin.GROUPE" tooltip="elfin.GROUPE" required>
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="button"
-										ng-click="choosePopup(elfin, elfin.CLASSE, elfin.GROUPE)"><i class="icon-search" ></i></button>
+										hb-choose-one 
+										ng-click="hbChooseOne(elfin, 'GROUPE', constatTypes, 'value', constatTypeChooseOneColumnsDefinition, constatTypesChooseOneTemplate )"
+										><i class="glyphicon glyphicon-chevron-down" ></i></button>										
 								</span>
 							</div>
 						</div>

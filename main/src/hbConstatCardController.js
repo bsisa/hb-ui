@@ -115,18 +115,24 @@
 			            .then(function(constat) {
 			            		// Get statusTypes from catalogue default
 			            		$scope.statusTypes = hbUtil.buildArrayFromCatalogueDefault(constat.IDENTIFIANT.QUALITE);
+			            		$scope.constatTypes = hbUtil.buildArrayFromCatalogueDefault(constat.GROUPE);
 							},
 							function(response) {
 								var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
 								hbAlertMessages.addAlert("danger",message);
 							});
 			            
-			            // Parameter to hbChooseOne service function
+			            // Parameters to hbChooseOne service function for ACTOR selection
 			            $scope.actorChooseOneColumnsDefinition = [
 			                        		   		            { field:"GROUPE", displayName: "Groupe"}
 			                        		   	 		   		];
-			            // Parameter to hbChooseOne service function
 			            $scope.actorChooseOneTemplate = '/assets/views/chooseActor.html';
+
+			            // Parameter to hbChooseOne service function for ConstatType selection
+			            $scope.constatTypeChooseOneColumnsDefinition = [
+			                        		   		            { field:"value", displayName: "name"}
+			                        		   	 		   		];
+			            $scope.constatTypesChooseOneTemplate = '/assets/views/chooseOneConstatType.html';
 						
 					} ]);
 	
