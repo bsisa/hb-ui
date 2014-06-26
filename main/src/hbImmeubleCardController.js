@@ -32,6 +32,7 @@
 									
 							        $scope.constats = null;
 							        $scope.prestations = null;
+							        $scope.surfaces = null;
 							    	
 							    	// Watch related to CONSTAT list in the context of elfin of CLASSE IMMEUBLE 
 							        // hence the dedicated controller.
@@ -66,7 +67,29 @@
 														$scope.prestations = elfins;
 													},
 													function(response) {
-														var message = "Le chargement des PRESTTAIONs a échoué (statut de retour: "+ response.status+ ")";
+														var message = "Le chargement des PRESTATIONs a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});
+								            
+								          
+							    		}
+							    		
+							    	}, true);
+							    	
+							    	$scope.$watch('elfin.Id', function() { 
+
+							    		if ($scope.elfin!=null) {
+								            
+								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
+								            // TODO: constatsCollectionId must come from server configuration resource.
+								            $log.debug("TODO: HbImmeubleCardController: surfacesCollectionId must come from server configuration resource.");
+								            var surfacesCollectionId = 'G20040930101030013';
+								            GeoxmlService.getCollection(surfacesCollectionId).getList({"xpath" : xpathForSurfaces})
+												.then(function(elfins) {
+														$scope.surfaces = elfins;
+													},
+													function(response) {
+														var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
 							    		}
