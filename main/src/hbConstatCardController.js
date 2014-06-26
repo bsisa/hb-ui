@@ -32,8 +32,13 @@
 							        $scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
 							        $scope.elfin.IDENTIFIANT.COMPTE = $routeParams.nocons;
 							        $scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
-							        // Default value from catalogue contains statusTypes list reset it. 
+							        // Default value from catalogue contains statusTypes list: Reset it. 
 							        $scope.elfin.IDENTIFIANT.QUALITE = "";
+							        // Default value from catalogue contains constatTypes list: Reset it.
+							        $scope.elfin.GROUPE = "";
+							        // Remove ECHEANCE template from elfin
+							        $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.splice(0, 1);
+							        
 								} else {
 									$log.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
 								}
@@ -115,7 +120,24 @@
 			            .then(function(constat) {
 			            		// Get statusTypes from catalogue default
 			            		$scope.statusTypes = hbUtil.buildArrayFromCatalogueDefault(constat.IDENTIFIANT.QUALITE);
+			            		// Get constat types from catalogue
 			            		$scope.constatTypes = hbUtil.buildArrayFromCatalogueDefault(constat.GROUPE);
+			            		// Get ECHEANCE template from catalogue
+						        $scope.constatEcheanceTemplate = constat.ACTIVITE.EVENEMENT.ECHEANCE[0];
+						        var currentDateHbTextFormat = hbUtil.getDateInHbTextFormat(new Date());
+						        $scope.constatEcheanceTemplate.DATE=currentDateHbTextFormat;
+						        $scope.constatEcheanceTemplate.ACTION=""; 
+						        $scope.constatEcheanceTemplate.PAR_QUI="EN COURS"; 
+						        $scope.constatEcheanceTemplate.POUR_QUI="";
+						        $scope.constatEcheanceTemplate.E_DATE=currentDateHbTextFormat;;
+						        $scope.constatEcheanceTemplate.E_ACTION="";
+						        $scope.constatEcheanceTemplate.E_PAR_QUI="0";
+						        $scope.constatEcheanceTemplate.E_POUR_QUI="";
+						        $scope.constatEcheanceTemplate.E_STATUT="OK";
+						        $scope.constatEcheanceTemplate.REMARQUE="";
+						        // TODO: manage POS value at insert time (.length + 1) and possibly at delete time (more complicated :) )
+						        $scope.constatEcheanceTemplate.POS=1;			            		
+			            		
 							},
 							function(response) {
 								var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
