@@ -9,15 +9,15 @@
 			<th />
 			<!-- Remark: always empty on tested data -->
 			<!-- 			<th>Groupe</th> -->
-			<th>Propriétaire</th>
-			<th>N° de gérance</th>
-			<th>Lieu-dit</th>
-			<th>N° de construction</th>
-			<th>Adresse</th>
+			<th><a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.VALUE'; reverse=!reverse">Propriétaire</a></th>
+			<th><a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° de gérance</a></th>
+			<th><a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th>
+			<th><a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">N° de construction</a></th>
+			<th><a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="elfin in elfins">
+		<tr ng-repeat="elfin in elfins | orderBy:predicate:reverse">
 			<td><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
 			</td>
