@@ -490,132 +490,15 @@
 						class="icon-remove-sign"></i></a></td>
 			</tr>
 		</table>
-		<!--                     </form> --> </tab> <!-- FORME --> <tab
-			heading="Forme">
-
-		<div class="col_8">
-			<h5>Points</h5>
-		</div>
-		<div class="col_4 right">
-			<ul class="button-bar">
-				<li><a
-					ng-click="addRow(elfin, 'FORME.POINT', {POS: '', X: '', Y: '', Z: '', KSI: '', ANGLE: '', ALPHA: '', XS: '', YS: '', ZS: '', KSIS: '', ANGLES: '', ALPHAS: '', Id: '', ID_G:'', FONCTION:'LIBRE', CLASSE: '', GROUPE: '', REMARQUE: ''})"><i
-						class="icon-plus-sign"></i> Nouveau</a></li>
-			</ul>
-		</div>
-
-		<!--                     <form class="vertical"> -->
-		<table class="striped tight sortable">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>X</th>
-					<th>Y</th>
-					<th>Z</th>
-					<th>Ksi</th>
-					<th>Angle</th>
-					<th>Alpha</th>
-					<th>X-s</th>
-					<th>Y-s</th>
-					<th>Z-s</th>
-					<th>Ksi-s</th>
-					<th>Angle-s</th>
-					<th>Alpha-s</th>
-					<th>Id</th>
-					<th>ID_G</th>
-					<th>Fonction</th>
-					<th>Classe</th>
-					<th>Groupe</th>
-					<th>Remarque</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tr ng-repeat="point in elfin.FORME.POINT">
-				<td><input type="text" ng-model="point.POS"></td>
-				<td><input type="text" ng-model="point.X"></td>
-				<td><input type="text" ng-model="point.Y"></td>
-				<td><input type="text" ng-model="point.Z"></td>
-				<td><input type="text" ng-model="point.KSI"></td>
-				<td><input type="text" ng-model="point.ANGLE"></td>
-				<td><input type="text" ng-model="point.ALPHA"></td>
-				<td><input type="text" ng-model="point.XS"></td>
-				<td><input type="text" ng-model="point.YS"></td>
-				<td><input type="text" ng-model="point.ZS"></td>
-				<td><input type="text" ng-model="point.KSIS"></td>
-				<td><input type="text" ng-model="point.ANGLES"></td>
-				<td><input type="text" ng-model="point.ALPHAS"></td>
-				<td><input type="text" ng-model="point.Id"></td>
-				<td><input type="text" ng-model="point.ID_G"></td>
-				<td><select chosen data-placeholder="Choisir une fonction"
-					ng-model="point.FONCTION"
-					ng-options="value as label for (value, label) in formFunctions">
-				</select></td>
-				<td><input type="text" ng-model="point.CLASSE"></td>
-				<td><input type="text" ng-model="point.GROUPE"></td>
-				<td><input type="text" ng-model="point.REMARQUE"></td>
-
-
-				<td class="right"><a
-					ng-click="elfin.FORME.POINT.splice($index, 1)"><i
-						class="icon-remove-sign"></i></a> <a><i class="icon-zoom-in"></i></a>
-				</td>
-
-			</tr>
-		</table>
-		<!--                     </form> -->
-
-
-		<div class="col_8">
-			<h5>Lignes</h5>
-		</div>
-		<div class="col_4 right">
-			<ul class="button-bar">
-				<li><a
-					ng-click="addRow(elfin, 'FORME.LIGNE', {POS: '', DIRECTION:'AVAL', Id: '', ID_G: '', CLASSE: '', FONCTION: 'FRONTIERE',  REMARQUE: ''})"><i
-						class="icon-plus-sign"></i> Nouveau</a></li>
-			</ul>
-		</div>
-
-		<div class="col_12" ng-repeat="line in elfin.FORME.LIGNE"
-			style="border: 1px dotted dimgrey">
-			<div class="col_4">
-				<!--                            <form class="vertical"> -->
-				<label for="linePos">Auteur</label> <input id="linePos" type="text"
-					ng-model="line.POS"> <label for="lineId">Id</label> <input
-					id="lineId" type="text" ng-model="line.Id">
-				<!--                            </form> -->
-			</div>
-			<div class="col_4">
-				<!--                            <form class="vertical"> -->
-				<label for="lineDirection">Direction</label> <select
-					id="lineDirection" chosen data-placeholder="Choisir une direction"
-					ng-model="line.DIRECTION"
-					ng-options="value as label for (value, label) in lineDirections">
-				</select> <label for="lineIdG">ID_G</label> <input id="lineIdG" type="text"
-					ng-model="line.ID_G">
-				<!--                            </form> -->
-			</div>
-			<div class="col_4">
-				<!--                            <form class="vertical"> -->
-				<label for="lineFunction">Auteur</label> <select id="lineFunction"
-					chosen data-placeholder="Choisir une direction"
-					ng-model="line.FONCTION"
-					ng-options="value as label for (value, label) in lineFunctions">
-				</select> <label for="lineClasse">Classe</label> <input id="lineClasse"
-					type="text" ng-model="line.CLASSE">
-				<!--                            </form> -->
-			</div>
-
-			<div class="col_12">
-				<!--                            <form class="vertical"> -->
-				<label for="lineRemark">Remarque</label> <input id="lineRemark"
-					type="text" ng-model="line.REMARQUE">
-				<!--                            </form> -->
-			</div>
-		</div>
-
-
-		</tab> <!-- ANNEXE --> <tab heading="Annexe">
+		<!--                     </form> --> 
+		</tab>
+		<!-- FORME tab --> 
+		<tab heading="Forme">
+			<tab-heading>Forme</tab-heading>
+			<div class="hb-tab">
+			<div hb-forme-component></div>
+		</tab>
+		<!-- ANNEXE --> <tab heading="Annexe">
 
 		<div class="col_8">
 			<h5>Annexes</h5>
@@ -648,7 +531,10 @@
 						class="icon-remove-sign"></i></a></td>
 			</tr>
 		</table>
-		<!--                     </form> --> </tab> <!-- DIVERS --> <tab
-			heading="Divers"></tab> </tabset>
+		<!--                     </form> --> 
+		</tab> 
+		<!-- DIVERS -->
+		<tab heading="Divers"></tab>
+		</tabset>
 	</div>
 </div>
