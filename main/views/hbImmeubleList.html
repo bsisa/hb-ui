@@ -6,18 +6,92 @@
 				}}</th>
 		</tr>
 		<tr>
-			<th />
+			<th class="col-sm-1" />
 			<!-- Remark: always empty on tested data -->
 			<!-- 			<th>Groupe</th> -->
-			<th><a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.VALUE'; reverse=!reverse">Propriétaire</a></th>
-			<th><a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° de gérance</a></th>
-			<th><a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th>
-			<th><a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">N° de construction</a></th>
-			<th><a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a></th>
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.PARTENAIRE.PROPRIETAIRE.VALUE" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.VALUE'; reverse=!reverse">Propriétaire</a>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.OBJECTIF" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° de gérance</a>			
+			</th>
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" hb-no-dirty-check placeholder="">
+					</div>
+				</div>			
+				<a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.NOM" hb-no-dirty-check placeholder="">
+					</div>
+				</div>		
+				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">N° de construction</a></th>
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.ALIAS" hb-no-dirty-check placeholder="">
+					</div>
+				</div>					
+				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a></th>
+		</tr>
+		<tr>
+			<th class="col-sm-1" />
+			<!-- Remark: always empty on tested data -->
+			<!-- 			<th>Groupe</th> -->
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.PARTENAIRE.PROPRIETAIRE.VALUE" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.VALUE'; reverse=!reverse">Propriétaire</a>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.OBJECTIF" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° de gérance</a>			
+			</th>
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" hb-no-dirty-check placeholder="">
+					</div>
+				</div>			
+				<a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.NOM" hb-no-dirty-check placeholder="">
+					</div>
+				</div>		
+				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">N° de construction</a></th>
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.ALIAS" hb-no-dirty-check placeholder="">
+					</div>
+				</div>					
+				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="elfin in elfins | orderBy:predicate:reverse">
+		<tr ng-repeat="elfin in elfins | filter:search | orderBy:predicate:reverse">
 			<td><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
 			</td>

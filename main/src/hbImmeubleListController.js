@@ -8,6 +8,15 @@
     	$scope.predicate = 'IDENTIFIANT.OBJECTIF';
     	$scope.reverse = false;
 
+//    	$scope.search = {
+//    			PARTENAIRE : {
+//    				PROPRIETAIRE : {
+//    					VALUE : ""
+//    				}
+//    			}
+//    	};
+
+    	
     }]);
 
 
