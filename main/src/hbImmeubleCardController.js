@@ -20,12 +20,15 @@
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
 							        
+
+									// TODO: check hereafter code removal is fine. It moved to its own directive: hb-forme-component
+									
 									// Manage geographic or schematic mode.
-									$scope.COORDINATE_TYPE = {
-											GEOGRAPHIC : {label: "Géographique", css: "panel-primary"},
-											SCHEMATIC :  {label: "Schématique", css: "panel-success"}
-									};
-									$scope.coordinateType = $scope.COORDINATE_TYPE.GEOGRAPHIC;
+//									$scope.COORDINATE_TYPE = {
+//											GEOGRAPHIC : {label: "Géographique", css: "panel-primary"},
+//											SCHEMATIC :  {label: "Schématique", css: "panel-success"}
+//									};
+//									$scope.coordinateType = $scope.COORDINATE_TYPE.GEOGRAPHIC;
 									
 							        $scope.constats = null;
 							    	
