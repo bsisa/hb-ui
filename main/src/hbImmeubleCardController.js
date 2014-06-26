@@ -31,6 +31,7 @@
 //									$scope.coordinateType = $scope.COORDINATE_TYPE.GEOGRAPHIC;
 									
 							        $scope.constats = null;
+							        $scope.prestations = null;
 							    	
 							    	// Watch related to CONSTAT list in the context of elfin of CLASSE IMMEUBLE 
 							        // hence the dedicated controller.
@@ -50,7 +51,27 @@
 											            hbAlertMessages.addAlert("danger",message);
 													});
 							    		}
-							    	}, true);        
+							    		
+							    	}, true);     
+							    	
+							    	$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() { 
+
+							    		if ($scope.elfin!=null) {
+								            var xpathForPrestations = "//ELFIN[starts-with(IDENTIFIANT/OBJECTIF,'"+$scope.elfin.IDENTIFIANT.OBJECTIF+"')]";
+								            // TODO: constatsCollectionId must come from server configuration resource.
+								            $log.debug("TODO: HbImmeubleCardController: prestationCollectionId must come from server configuration resource.");
+								            var prestationsCollectionId = 'G20081113902512302';
+								            GeoxmlService.getCollection(prestationsCollectionId).getList({"xpath" : xpathForPrestations})
+												.then(function(elfins) {
+														$scope.prestations = elfins;
+													},
+													function(response) {
+														var message = "Le chargement des PRESTTAIONs a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});
+							    		}
+							    		
+							    	}, true);
         
 							    } ]);
 
