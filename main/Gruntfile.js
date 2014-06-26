@@ -58,6 +58,8 @@ module.exports = function(grunt) {
 								'src/hbListContainerDirective.js',
 								'src/hbMapController.js',
 								'src/hbNoDirtyCheckDirective.js', 
+								'src/hbPrestationCardController.js',
+								'src/hbPrestationCardDirective.js',
 								'src/hbRoleCardController.js',
 								'src/hbRoleCardDirective.js',
 								'src/hbUtilService.js',

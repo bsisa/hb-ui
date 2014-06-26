@@ -60,6 +60,15 @@
             .when('/elfin/:collectionId/IMMEUBLE', {
                 templateUrl: '/assets/views/IMMEUBLE_list_view.html'
             })
+            .when('/elfin/create/PRESTATION', {
+                templateUrl: '/assets/views/PRESTATION_card_new_view.html'
+            })            
+            .when('/elfin/:collectionId/PRESTATION/:elfinId', {
+                templateUrl: '/assets/views/PRESTATION_card_view.html'
+            })
+            .when('/elfin/:collectionId/PRESTATION', {
+                templateUrl: '/assets/views/PRESTATION_list_view.html'
+            })
             .when('/elfin/create/ROLE', {
                 templateUrl: '/assets/views/ROLE_card_new_view.html'
             })
