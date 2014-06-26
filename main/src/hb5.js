@@ -77,7 +77,16 @@
             })
             .when('/elfin/:collectionId/ROLE/:elfinId', {
                 templateUrl: '/assets/views/ROLE_card_view.html'
+            })
+            .when('/elfin/create/TRANSACTION', {
+                templateUrl: '/assets/views/TRANSACTION_card_new_view.html'
             })            
+            .when('/elfin/:collectionId/TRANSACTION/:elfinId', {
+                templateUrl: '/assets/views/TRANSACTION_card_view.html'
+            })
+            .when('/elfin/:collectionId/TRANSACTION', {
+                templateUrl: '/assets/views/TRANSACTION_list_view.html'
+            })
             .when('/elfin/create/USER', {
                 templateUrl: '/assets/views/USER_card_new_view.html'
             })
