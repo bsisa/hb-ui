@@ -42,6 +42,24 @@
             .when('/elfin/:collectionId/ACTEUR', {
                 templateUrl: '/assets/views/ACTEUR_list_view.html'
             })
+            .when('/elfin/create/CONSTAT', {
+                templateUrl: '/assets/views/CONSTAT_card_new_view.html'
+            })
+            .when('/elfin/:collectionId/CONSTAT/:elfinId', {
+                templateUrl: '/assets/views/CONSTAT_card_view.html'
+            })
+            .when('/elfin/:collectionId/FONTAINE/:elfinId', {
+                templateUrl: '/assets/views/FONTAINE_card_view.html'
+            })
+            .when('/elfin/create/IMMEUBLE', {
+                templateUrl: '/assets/views/IMMEUBLE_card_new_view.html'
+            })            
+            .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
+                templateUrl: '/assets/views/IMMEUBLE_card_view.html'
+            })
+            .when('/elfin/:collectionId/IMMEUBLE', {
+                templateUrl: '/assets/views/IMMEUBLE_list_view.html'
+            })
             .when('/elfin/create/ROLE', {
                 templateUrl: '/assets/views/ROLE_card_new_view.html'
             })
@@ -59,24 +77,6 @@
             })
             .when('/elfin/:collectionId/USER/:elfinId', {
                 templateUrl: '/assets/views/USER_card_view.html'
-            })
-            .when('/elfin/create/CONSTAT', {
-                templateUrl: '/assets/views/CONSTAT_card_new_view.html'
-            })
-            .when('/elfin/:collectionId/CONSTAT/:elfinId', {
-                templateUrl: '/assets/views/CONSTAT_card_view.html'
-            })
-            .when('/elfin/:collectionId/FONTAINE/:elfinId', {
-                templateUrl: '/assets/views/FONTAINE_card_view.html'
-            })            
-            .when('/elfin/create/IMMEUBLE', {
-                templateUrl: '/assets/views/IMMEUBLE_card_new_view.html'
-            })            
-            .when('/elfin/:collectionId/IMMEUBLE/:elfinId', {
-                templateUrl: '/assets/views/IMMEUBLE_card_view.html'
-            })
-            .when('/elfin/:collectionId/IMMEUBLE', {
-                templateUrl: '/assets/views/IMMEUBLE_list_view.html'
             })            
             .when('/elfin/:collectionId/:classe/:elfinId', {
                 templateUrl: '/assets/views/default_card_view.html'
