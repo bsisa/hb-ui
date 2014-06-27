@@ -211,6 +211,26 @@
 			return catalogueDefaultNameValueArray;
         };
         
+        
+        var getEcheanceTemplateFromCatalogue = function(catalogueConstat) {
+	        var constatEcheanceTemplate = catalogueConstat.ACTIVITE.EVENEMENT.ECHEANCE[0];
+	        var currentDateHbTextFormat = getDateInHbTextFormat(new Date());
+	        constatEcheanceTemplate.DATE=currentDateHbTextFormat;
+	        constatEcheanceTemplate.ACTION=""; 
+	        constatEcheanceTemplate.PAR_QUI="EN COURS"; 
+	        constatEcheanceTemplate.POUR_QUI="";
+	        constatEcheanceTemplate.E_DATE=currentDateHbTextFormat;;
+	        constatEcheanceTemplate.E_ACTION="";
+	        constatEcheanceTemplate.E_PAR_QUI="0";
+	        constatEcheanceTemplate.E_POUR_QUI="";
+	        constatEcheanceTemplate.E_STATUT="OK";
+	        constatEcheanceTemplate.REMARQUE="";
+	        // TODO: manage POS value at insert time (.length + 1) and possibly at delete time (more complicated :) )
+	        constatEcheanceTemplate.POS=1;	
+	        
+	        return constatEcheanceTemplate;
+        }
+        
         return {
         	reorderArrayByPOS:reorderArrayByPOS,
         	buildUrlQueryString:buildUrlQueryString,
@@ -220,7 +240,8 @@
         	getValueAtPath:getValueAtPath,
         	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault,
         	encodeUriParameter:encodeUriParameter,
-        	getDateInHbTextFormat:getDateInHbTextFormat
+        	getDateInHbTextFormat:getDateInHbTextFormat,
+        	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue
         };
     }]);
 	

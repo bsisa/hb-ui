@@ -123,21 +123,7 @@
 			            		// Get constat types from catalogue
 			            		$scope.constatTypes = hbUtil.buildArrayFromCatalogueDefault(constat.GROUPE);
 			            		// Get ECHEANCE template from catalogue
-						        $scope.constatEcheanceTemplate = constat.ACTIVITE.EVENEMENT.ECHEANCE[0];
-						        var currentDateHbTextFormat = hbUtil.getDateInHbTextFormat(new Date());
-						        $scope.constatEcheanceTemplate.DATE=currentDateHbTextFormat;
-						        $scope.constatEcheanceTemplate.ACTION=""; 
-						        $scope.constatEcheanceTemplate.PAR_QUI="EN COURS"; 
-						        $scope.constatEcheanceTemplate.POUR_QUI="";
-						        $scope.constatEcheanceTemplate.E_DATE=currentDateHbTextFormat;;
-						        $scope.constatEcheanceTemplate.E_ACTION="";
-						        $scope.constatEcheanceTemplate.E_PAR_QUI="0";
-						        $scope.constatEcheanceTemplate.E_POUR_QUI="";
-						        $scope.constatEcheanceTemplate.E_STATUT="OK";
-						        $scope.constatEcheanceTemplate.REMARQUE="";
-						        // TODO: manage POS value at insert time (.length + 1) and possibly at delete time (more complicated :) )
-						        $scope.constatEcheanceTemplate.POS=1;			            		
-			            		
+						        $scope.constatEcheanceTemplate = hbUtil.getEcheanceTemplateFromCatalogue(constat);
 							},
 							function(response) {
 								var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
@@ -157,6 +143,5 @@
 			            $scope.constatTypesChooseOneTemplate = '/assets/views/chooseOneConstatType.html';
 						
 					} ]);
-	
 
 })();
