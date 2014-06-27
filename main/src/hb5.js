@@ -157,6 +157,54 @@
 		};
 	});
 
+	
+	/**
+	 * Filter tailor to IMMEUBLE list requirements
+	 */
+	hb5.filter('immeubleListFilter', [function () {
+
+		// case insensitive string contains check
+		var icontains = function (targetString, matchString) {
+			if (matchString && matchString.trim().length > 0) {
+				if (targetString) {
+					if (targetString.toLowerCase().indexOf(matchString.toLowerCase()) != -1) {
+						return true;
+					} else {
+						return false;
+					}					
+				} else { // If a match string is defined and there is no target string we consider it a non match.
+					return false;
+				}
+			} else {
+				// returns true if match string empty or undefined.
+				return true;
+			}
+		};
+		
+		return function (immeubles, predicate) {
+	        if (!angular.isUndefined(immeubles) && !angular.isUndefined(predicate)) {
+	            var tempImmeubles = [ ];
+	            angular.forEach(immeubles, function (immeuble) {
+                    if ( 
+                    	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.VALUE, predicate.owner) &&
+                    	 icontains(immeuble.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
+                    	 icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
+                    	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
+                    	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address)
+                    ) {
+                    	tempImmeubles.push(immeuble);
+                    }
+                });
+	            return tempImmeubles;
+	        } else {
+	            return immeubles;
+	        }
+	    };
+	}]);	
+	
+	
+	
+	
 
     // ================================================================
     // ====                        Run                             ====

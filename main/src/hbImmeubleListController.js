@@ -8,6 +8,14 @@
     	$scope.predicate = 'IDENTIFIANT.OBJECTIF';
     	$scope.reverse = false;
 
+    	// Object holding user entered search (filter) criteria 
+    	$scope.search = {
+    			"owner" : "",
+    			"registerNb" : "",
+    			"place" : "",
+    			"buildingNb" : "",
+    			"address" : ""
+    	};
     	
     }]);
 

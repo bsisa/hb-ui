@@ -10,33 +10,33 @@
 			<th class="col-sm-2">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.PARTENAIRE.PROPRIETAIRE.VALUE" hb-no-dirty-check placeholder="">
+						<input type="text" class="form-control" ng-model="search.owner" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
 			<th class="col-sm-2">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.OBJECTIF" hb-no-dirty-check placeholder="">
+						<input type="text" class="form-control" ng-model="search.registerNb" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
 			<th class="col-sm-3">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" hb-no-dirty-check placeholder="">
+						<input type="text" class="form-control" ng-model="search.place" hb-no-dirty-check placeholder="">
 					</div>
 				</div>			
 			<th class="col-sm-2">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.NOM" hb-no-dirty-check placeholder="">
+						<input type="text" class="form-control" ng-model="search.buildingNb" hb-no-dirty-check placeholder="">
 					</div>
 				</div>		
 			<th class="col-sm-2">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.ALIAS" hb-no-dirty-check placeholder="">
+						<input type="text" class="form-control" ng-model="search.address" hb-no-dirty-check placeholder="">
 					</div>
 				</div>					
 		</tr>
@@ -56,7 +56,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="elfin in elfins | filter:search | orderBy:predicate:reverse">
+		<tr ng-repeat="elfin in elfins | immeubleListFilter:search | orderBy:predicate:reverse">
 			<td><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
 			</td>
