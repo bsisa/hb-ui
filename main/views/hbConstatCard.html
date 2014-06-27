@@ -189,13 +189,27 @@
 									<div hb-date ng-model="currentEvent.E_DATE" ></div>
 								</td>
 								<td>
-									
-									<div class="input-group">
-										<input id="currentEventEAction" type="text" class="form-control" ng-model="currentEvent.E_ACTION" tooltip="currentEvent.E_ACTION">
-										<span class="input-group-btn">
-											<button class="btn btn-default" ng-click="searchAction($index)"><span class="caret"></span></button>
-										</span>									
-									</div>
+									<div>
+										<select
+											id="prestationGroup"
+											name="prestationGroup"   
+											class="form-control"
+											chosen
+											data-placeholder=" "
+											disable-search="true"
+											allow-single-deselect="true"
+											ng-model="currentEvent.E_ACTION"
+											ng-options="prestationGroup.name as prestationGroup.value for prestationGroup in prestationGroups"
+											>
+											<option value=''> </option>
+										</select>
+									</div>																		
+<!-- 									<div class="input-group"> -->
+<!-- 										<input id="currentEventEAction" type="text" class="form-control" ng-model="currentEvent.E_ACTION" tooltip="currentEvent.E_ACTION"> -->
+<!-- 										<span class="input-group-btn"> -->
+<!-- 											<button class="btn btn-default" ng-click="searchAction($index)"><span class="caret"></span></button> -->
+<!-- 										</span>									 -->
+<!-- 									</div> -->
 								</td>
 								<td><input id="currentEventEPourQui" type="text" class="form-control" ng-model="currentEvent.E_POUR_QUI" tooltip="currentEvent.E_POUR_QUI"></td>
 								<td><input id="currentEventEParQui" type="text" class="form-control" ng-model="currentEvent.E_PAR_QUI" tooltip="currentEvent.E_PAR_QUI"></td>
