@@ -263,7 +263,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="constat in constats">
+							<tr ng-repeat="constat in constats | orderBy:'IDENTIFIANT.DE':true">
 								<td><a
 									href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
 								<td><span tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>

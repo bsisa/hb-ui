@@ -32,8 +32,13 @@
 							        $scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
 							        $scope.elfin.IDENTIFIANT.COMPTE = $routeParams.nocons;
 							        $scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
-							        // Default value from catalogue contains statusTypes list reset it. 
+							        // Default value from catalogue contains statusTypes list: Reset it. 
 							        $scope.elfin.IDENTIFIANT.QUALITE = "";
+							        // Default value from catalogue contains constatTypes list: Reset it.
+							        $scope.elfin.GROUPE = "";
+							        // Remove ECHEANCE template from elfin
+							        $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.splice(0, 1);
+							        
 								} else {
 									$log.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
 								}
@@ -115,20 +120,28 @@
 			            .then(function(constat) {
 			            		// Get statusTypes from catalogue default
 			            		$scope.statusTypes = hbUtil.buildArrayFromCatalogueDefault(constat.IDENTIFIANT.QUALITE);
+			            		// Get constat types from catalogue
+			            		$scope.constatTypes = hbUtil.buildArrayFromCatalogueDefault(constat.GROUPE);
+			            		// Get ECHEANCE template from catalogue
+						        $scope.constatEcheanceTemplate = hbUtil.getEcheanceTemplateFromCatalogue(constat);
 							},
 							function(response) {
 								var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
 								hbAlertMessages.addAlert("danger",message);
 							});
 			            
-			            // Parameter to hbChooseOne service function
+			            // Parameters to hbChooseOne service function for ACTOR selection
 			            $scope.actorChooseOneColumnsDefinition = [
 			                        		   		            { field:"GROUPE", displayName: "Groupe"}
 			                        		   	 		   		];
-			            // Parameter to hbChooseOne service function
 			            $scope.actorChooseOneTemplate = '/assets/views/chooseActor.html';
+
+			            // Parameter to hbChooseOne service function for ConstatType selection
+			            $scope.constatTypeChooseOneColumnsDefinition = [
+			                        		   		            { field:"value", displayName: "name"}
+			                        		   	 		   		];
+			            $scope.constatTypesChooseOneTemplate = '/assets/views/chooseOneConstatType.html';
 						
 					} ]);
-	
 
 })();

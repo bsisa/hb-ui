@@ -78,6 +78,15 @@
             .when('/elfin/:collectionId/ROLE/:elfinId', {
                 templateUrl: '/assets/views/ROLE_card_view.html'
             })
+            .when('/elfin/create/SURFACE', {
+                templateUrl: '/assets/views/SURFACE_card_new_view.html'
+            })            
+            .when('/elfin/:collectionId/SURFACE/:elfinId', {
+                templateUrl: '/assets/views/SURFACE_card_view.html'
+            })
+            .when('/elfin/:collectionId/SURFACE', {
+                templateUrl: '/assets/views/SURFACE_list_view.html'
+            })
             .when('/elfin/create/TRANSACTION', {
                 templateUrl: '/assets/views/TRANSACTION_card_new_view.html'
             })            

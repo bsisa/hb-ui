@@ -1,0 +1,74 @@
+<table class="table table-condensed table-bordered table-striped"
+	ng-show="elfins">
+	<thead>
+		<tr>
+			<th colspan="6"><span class="badge">{{elfinsCount}}</span> immeuble{{ elfinsCount | plural }} trouvé{{ elfinsCount | plural
+				}}</th>
+		</tr>
+		<tr>
+			<th rowspan="2" class="col-sm-1" />
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.PARTENAIRE.PROPRIETAIRE.VALUE" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.OBJECTIF" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" hb-no-dirty-check placeholder="">
+					</div>
+				</div>			
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.NOM" hb-no-dirty-check placeholder="">
+					</div>
+				</div>		
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.IDENTIFIANT.ALIAS" hb-no-dirty-check placeholder="">
+					</div>
+				</div>					
+		</tr>
+		<tr>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.VALUE'; reverse=!reverse">Propriétaire</a>
+			</th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° de gérance</a>			
+			</th>
+			<th class="col-sm-3">
+				<a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">N° de construction</a></th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="elfin in elfins | filter:search | orderBy:predicate:reverse">
+			<td><a
+				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
+			</td>
+			<!-- Remark: always empty on tested data -->
+			<!-- <td>{{elfin.GROUPE}}</td>  -->
+			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
+			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.VALUE}}</td>
+			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td>
+			<td>{{elfin.IDENTIFIANT.NOM}}</td>
+			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>
+		</tr>
+	</tbody>
+</table>
+

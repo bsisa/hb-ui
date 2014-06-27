@@ -76,7 +76,7 @@
 									<button class="btn btn-default" type="button"
 										hb-choose-one 
 										ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )"
-										><i class="icon-search" ></i></button>
+										><i class="glyphicon glyphicon-list-alt" ></i></button>
 								</span>
 							</div>
 						</div>
@@ -91,7 +91,7 @@
 									<button class="btn btn-default" type="button"
 										hb-choose-one
 										ng-click="hbChooseOne(elfin, 'IDENTIFIANT.AUT', collaboratorActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )"
-										><i class="icon-search" ></i></button>
+										><i class="glyphicon glyphicon-list-alt" ></i></button>
 								</span>
 							</div>							
 						</div> 
@@ -111,7 +111,9 @@
 								<input id="group" name="group" type="text" class="form-control" ng-model="elfin.GROUPE" tooltip="elfin.GROUPE" required>
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="button"
-										ng-click="choosePopup(elfin, elfin.CLASSE, elfin.GROUPE)"><i class="icon-search" ></i></button>
+										hb-choose-one 
+										ng-click="hbChooseOne(elfin, 'GROUPE', constatTypes, 'value', constatTypeChooseOneColumnsDefinition, constatTypesChooseOneTemplate )"
+										><i class="glyphicon glyphicon-chevron-down" ></i></button>										
 								</span>
 							</div>
 						</div>
@@ -140,7 +142,9 @@
 										<div>Evénements en cours</div>
 										<span class="input-group-btn">
 	       									<button class="btn btn-default" type="button" 
-	       									ng-click="addRow(elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', {DATE:'2014-01-01',ACTION:'',PAR_QUI:'',POUR_QUI:'',E_DATE:'2014-01-01',E_ACTION:'',E_PAR_QUI:'',E_POUR_QUI:'',E_STATUT:'',REMARQUE:''})"><i class="icon-plus-sign"></i> Nouveau</button>
+	       									ng-click="addRow(elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', constatEcheanceTemplate)"><i class="icon-plus-sign"></i> Nouveau</button>
+<!-- 	       									<button class="btn btn-default" type="button"  -->
+<!-- 	       									ng-click="addRow(elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', {DATE:'2014-01-01',ACTION:'',PAR_QUI:'',POUR_QUI:'',E_DATE:'2014-01-01',E_ACTION:'',E_PAR_QUI:'',E_POUR_QUI:'',E_STATUT:'',REMARQUE:''})"><i class="icon-plus-sign"></i> Nouveau</button>	       									 -->
 	     									</span>
 									</div>								
 								</th>
@@ -157,12 +161,11 @@
 							</tr>						
 						</thead>
 						<tbody>
-							<tr ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE  | filter:{E_STATUT:'!OK'}">
+							<tr ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE  | filter:{PAR_QUI:'!VALIDE'}">
 	
 								<td rowspan="2">
-									<span ng-show="{{currentEvent.E_STATUT === 'OK'}}"><i class='glyphicon glyphicon-ok'></i></span>
-									<span ng-show="{{currentEvent.E_STATUT === 'A EFFECTUER'}}"><i class='glyphicon glyphicon-wrench'></i></span>
-<!-- 									<span ng-show="{{currentEvent.E_STATUT === 'OK'}}"><i class='glyphicon glyphicon-eye-open'></i></span> -->
+									<span ng-show="{{currentEvent.PAR_QUI === 'EN COURS'}}"><i class='glyphicon glyphicon-wrench'></i></span>
+									<span ng-show="{{currentEvent.PAR_QUI === 'A VALIDER'}}"><i class='glyphicon glyphicon-eye-open'></i></span>
 								</td>
 								<td>
 									<div hb-date ng-model="currentEvent.DATE" ></div>
@@ -222,10 +225,10 @@
 							</tr>						
 						</thead>
 						<tbody>
-							<tr ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{E_STATUT:'OK'} | orderBy:deadlinePredicate:deadlineReverse">
+							<tr ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{PAR_QUI:'VALIDE'} | orderBy:deadlinePredicate:deadlineReverse">
 <!-- 								<td rowspan="2">{{$index + 1}}</td> -->
 								<td rowspan="2">
-								<span ng-show="{{currentEvent.E_STATUT === 'OK'}}"><i class='glyphicon glyphicon-ok'></i></span>
+								<span ng-show="{{currentEvent.PAR_QUI === 'VALIDE'}}"><i class='glyphicon glyphicon-ok'></i></span>
 								</td>
 								<td>{{currentEvent.DATE}}</td>
 								<td>{{currentEvent.ACTION}}</td>
