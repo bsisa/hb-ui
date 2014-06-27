@@ -232,7 +232,7 @@
 	        constatEcheanceTemplate.POS=1;	
 	        
 	        return constatEcheanceTemplate;
-        }
+        };
         
         return {
         	reorderArrayByPOS:reorderArrayByPOS,
