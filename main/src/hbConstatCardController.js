@@ -86,6 +86,23 @@
 						// TODO: move to hbDate directive - END
 						// ============================================
 
+						
+						/**
+						 * Add ECHEANCE 
+						 * TODO: 
+						 * * check roles to allow PAR_QUI => VALIDATE
+						 * * check PAR_QUI status to allow / forbid new ECHEANCE creation (no 'EN COURS' nor 'A VALIDER') 
+						 */
+						$scope.addEcheance = function() {
+							
+							if ($scope.constatEcheanceTemplate && $scope.elfin) {
+								$scope.addRow($scope.elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', $scope.constatEcheanceTemplate);	
+							} else {
+								hbAlertMessages.addAlert("warning", "Impossible de créer un nouvel événement. Veuillez s.v.p. contacter votre administrateur et lui reporter cette erreur.");
+							}
+						};
+						
+						
 
 				        //   /api/melfin/G20060401225530100?xpath=//ELFIN[IDENTIFIANT/QUALITE='Entreprise']
 			            var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
@@ -123,7 +140,9 @@
 			            		// Get constat types from catalogue
 			            		$scope.constatTypes = hbUtil.buildArrayFromCatalogueDefault(constat.GROUPE);
 			            		// Get ECHEANCE template from catalogue
-						        $scope.constatEcheanceTemplate = hbUtil.getEcheanceTemplateFromCatalogue(constat);
+			            		var temp = hbUtil.getEcheanceTemplateFromCatalogue(constat);
+			            		$log.debug(">>>>>> getEcheanceTemplateFromCatalogue RESULT : " + angular.toJson(temp, true));
+						        $scope.constatEcheanceTemplate = temp;
 							},
 							function(response) {
 								var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
