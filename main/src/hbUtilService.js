@@ -212,6 +212,9 @@
         };
         
         
+        /**
+         * Copy ECHEANCE object from catalogueConstat return it with default values set. 
+         */
         var getEcheanceTemplateFromCatalogue = function(catalogueConstat) {
 	        var constatEcheanceTemplate = catalogueConstat.ACTIVITE.EVENEMENT.ECHEANCE[0];
 	        var currentDateHbTextFormat = getDateInHbTextFormat(new Date());
