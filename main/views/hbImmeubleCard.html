@@ -221,70 +221,88 @@
 				</div>
 			</div>
 			<!-- 4e bloc -->
+			<tabset> <!-- Constats en cours tab --> <tab> <tab-heading>
+				Constats en cours
+			</tab-heading>
 
 			<div class="row">
-				<div ng-show="constats" class="col-sm-12">
+				<div ng-show="constatsEncours" class="col-sm-12">
 					<table class="table table-condensed table-bordered table-striped">
 						<thead>
+
 							<tr>
-								<th colspan="2">
-									<div class="input-group">
-
-										<div>Constats en cours</div>
-									</div>
-								</th>
-								<!--  <th colspan="3">
-									<div class="input-group">
-										<div>Constats réglés</div>
-										<i class="icon-list-alt">
-									</div>
-								</th>-->
-								<th colspan="1">
-									<div class="input-group">
-
-										<span class="input-group-btn"
-											tooltip="Créer un nouveau constat relatif à l'objet courant">
-											<a class="btn btn-default" type="button"
-											ng-href="/elfin/create/CONSTAT?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
-												<i class="icon-plus-sign"></i> Nouveau constat
-										</a>
-										</span>
-
-									</div>
-								</th>
-								<th colspan="3">
-									<div class="input-group">
-
-										<span class="input-group-btn"
-											tooltip="Créer la liste des constats relatifs à l'objet courant (no SAI, No Construction, Propriétaire) réglés (elfin.IDENTIFIANT.A != '')">
-											<a class="btn btn-default" type="button" ng-href=""> <i
-												class="icon-list-alt"></i> Constats réglés
-
-										</a>
-										</span>
-
-									</div>
-								</th>
-
-							</tr>
-							<tr>
-								<th>Constat</th>
-								<th>Date</th>
-								<th colspan="2">Nom</th>
+								<th><span class="input-group-btn"
+						tooltip="Créer un nouveau constat relatif à l'objet courant">
+						<a class="btn btn-default" type="button"
+						ng-href="/elfin/create/CONSTAT?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+							<i class="icon-plus-sign"></i>
+					</a>
+					</span>Constat</th>
+								<th>Etage-Locataire</th>
+								<th>Libellé</th>
+								<th>Montant</th>
+								<th>Delai</th>
+								<th>Resp</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr
-								ng-repeat="constat in constats | orderBy:'IDENTIFIANT.DE':true">
+								ng-repeat="constat in constatsEncours | orderBy:'IDENTIFIANT.DE':true">
 								<td><a
 									href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
-								<td><span tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>
-								<td colspan="2"><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
+								<td><span tooltip="constat.PARTENAIRE.USAGER.VALUE">{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
+								<td><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
+								<td><span
+									tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_PAR_QUI">voir
+										tooltip</span></td>
+								<td><span
+									tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_DATE">voir
+										tooltip</span></td>
+								<td><span
+									tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].PAR_QUI">voir
+										tooltip</span></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
+			</tab> <tabset> <!-- Constats
+			traités tab --> <tab> <tab-heading>Constats
+			traités</tab-heading> 
+			
+			<div ng-show="constatsClos" class="col-sm-12">
+					<table class="table table-condensed table-bordered table-striped">
+						<thead>
+
+							<tr>
+								<th>Constat</th>
+								<th>Etage-Locataire</th>
+								<th>Libellé</th>
+								<th>Montant</th>
+								<th>Annoncé le</th>
+								<th>Traité le</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat="constat in constatsClos | orderBy:'IDENTIFIANT.DE':true">
+								<td><a
+									href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
+								<td><span tooltip="constat.PARTENAIRE.USAGER.VALUE">{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
+								<td><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
+								<td><span
+									tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_PAR_QUI">voir
+										tooltip</span></td>
+								<td><span
+									tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>
+								<td><span
+									tooltip="constat.IDENTIFIANT.A">{{constat.IDENTIFIANT.A}}</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			</tab>
 		</div>
 		</tab> <!-- SURFACE tab --> <tab> <tab-heading>Unités
 		locatives ({{surfaces.length}})</tab-heading>

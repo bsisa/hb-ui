@@ -30,7 +30,8 @@
 //									};
 //									$scope.coordinateType = $scope.COORDINATE_TYPE.GEOGRAPHIC;
 									
-							        $scope.constats = null;
+							        $scope.constatsEncours = null;
+							        $scope.constatsClos = null;
 							        $scope.prestations = null;
 							        $scope.surfaces = null;
 							    	
@@ -39,16 +40,27 @@
 							    	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
 
 							    		if ($scope.elfin!=null) {
-								            var xpathForConstats = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"']";
+								            var xpathForConstatsEncours = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"'][not(IDENTIFIANT/A) or IDENTIFIANT/A='']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
 								            $log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
 								            var constatsCollectionId = 'G20060920171100001';
-								            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstats})
+								            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstatsEncours})
 												.then(function(elfins) {
-														$scope.constats = elfins;
+														$scope.constatsEncours = elfins;
 													},
 													function(response) {
-														var message = "Le chargement des CONSTATs a échoué (statut de retour: "+ response.status+ ")";
+														var message = "Le chargement des CONSTATs en cours a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});
+								            var xpathForConstatsClos = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"'][(IDENTIFIANT/A) and not(IDENTIFIANT/A='')]";
+								            // TODO: constatsCollectionId must come from server configuration resource.
+								            $log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
+								            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstatsClos})
+												.then(function(elfins) {
+														$scope.constatsClos = elfins;
+													},
+													function(response) {
+														var message = "Le chargement des CONSTATs clos a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
 								            
