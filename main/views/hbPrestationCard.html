@@ -68,11 +68,11 @@
 							</tr>
 							<tr>
 								<th>Transaction</th>
-								<th><a href="" ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Fournisseur</a></th>
+								<th></th>
 								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Date</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; deadlineReverse=!deadlineReverse">Montant</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Fournisseur</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; deadlineReverse=!deadlineReverse">Facturé</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Payé</a></th>
 								<th><a href="" ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
 							</tr>
 						</thead>
@@ -80,11 +80,12 @@
 							<tr ng-repeat="transaction in transactions | orderBy:deadlinePredicate:deadlineReverse">
 								<td><a
 									href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}">Détail</a></td>
-								<td><span tooltip="transaction.PARTENAIRE.FOURNISSEUR.VALUE">{{transaction.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+									<td><a
+									href=""><i class="glyphicon glyphicon-paperclip"></i></a></td>
+								<td><span tooltip="transaction.PARTENAIRE.PROPRIETAIRE.VALUE">{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
 								<td><span tooltip="transaction.IDENTIFIANT.DE">{{transaction.IDENTIFIANT.DE}}</span></td>
 								<td><span tooltip="transaction.IDENTIFIANT.VALEUR_A_NEUF">{{transaction.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
-								<td><span tooltip="transaction.GROUPE">{{transaction.GROUPE}}</span></td>
-								<td><span tooltip="transaction.IDENTIFIANT.ALIAS">{{transaction.IDENTIFIANT.ALIAS}}</span></td>
+								<td><span tooltip="transaction.IDENTIFIANT.VALEUR">{{transaction.IDENTIFIANT.VALEUR}}</span></td>
 								<td><span tooltip="transaction.DIVERS.REMARQUE">{{transaction.DIVERS.REMARQUE}}</span></td>
 							</tr>
 						</tbody>
