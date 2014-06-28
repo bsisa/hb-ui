@@ -51,7 +51,8 @@
 														var message = "Le chargement des CONSTATs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
-							    		}
+								            
+								            	}
 							    		
 							    	}, true);     
 							    	
@@ -71,7 +72,19 @@
 											            hbAlertMessages.addAlert("danger",message);
 													});
 								            
-								            
+								            var xpathForContrats = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"']";
+								            // TODO: constatsCollectionId must come from server configuration resource.
+								            $log.debug("TODO: HbImmeubleCardController: contratsCollectionId must come from server configuration resource.");
+								            var contratsCollectionId = 'G20081113902512301';
+								            GeoxmlService.getCollection(contratsCollectionId).getList({"xpath" : xpathForContrats})
+												.then(function(elfins) {
+														$scope.contrats = elfins;
+													},
+													function(response) {
+														var message = "Le chargement des CONTRATs a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});
+							    	
 							    		}
 							    		
 							    	}, true);
