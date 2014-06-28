@@ -43,6 +43,19 @@
 						    		}
 						    		
 						    	}, true);
+								
+								
+								//GROUPE
+					            // Asychronous PRESTATION template preloading
+					            GeoxmlService.getNewElfin("PRESTATION").get()
+					            .then(function(prestation) {
+					            		// Get constat types from catalogue
+					            		$scope.prestationGroups = hbUtil.buildArrayFromCatalogueDefault(prestation.GROUPE);
+									},
+									function(response) {
+										var message = "Les valeurs par défaut pour la CLASSE PRESTATION n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
+										hbAlertMessages.addAlert("danger",message);
+									});
 
 							} ]);
 

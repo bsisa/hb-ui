@@ -6,11 +6,27 @@
 		<tabset><!-- ui.bootstrap AngularJS UI tabset --> 
 		<!-- ATTRIBUTS tab -->
 		<tab> <tab-heading>Prestation </tab-heading>
-		<div class="form-group"> test
+		<div class="form-group">
 			<label for="groupe" class="col-sm-1 control-label">Groupe</label>
 			<div class="col-sm-5">
-				<input id="groupe" type="text" class="form-control"
-					ng-model="elfin.GROUPE">
+			
+				<select
+					id="groupe"
+					name="groupe"   
+					class="form-control"
+					chosen
+					data-placeholder=" "
+					disable-search="true"
+					allow-single-deselect="true"
+					ng-model="elfin.GROUPE"
+					ng-options="prestationGroup.name as prestationGroup.value for prestationGroup in prestationGroups"
+					>
+					<option value=''> </option>
+				</select>			
+			
+<!-- 				<input id="groupe" type="text" class="form-control" -->
+<!-- 					ng-model="elfin.GROUPE"> -->
+					
 			</div>
 			<label for="type" class="col-sm-1 control-label">Type</label>
 			<!-- angular-chosen-localytics -->
