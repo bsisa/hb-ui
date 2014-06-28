@@ -275,7 +275,7 @@
 			</div>
 		</div>
 		</tab> <!-- SURFACE tab --> 
-		<tab> <tab-heading>Unités locatives {{surfaces.length}}</tab-heading>
+		<tab> <tab-heading>Unités locatives ({{surfaces.length}})</tab-heading>
 <div class="row">
 				<div ng-show="surfaces" class="col-sm-12">
 					<table class="table table-condensed table-bordered table-striped">
@@ -333,7 +333,7 @@
 					</table>
 				</div>
 			</div>	
-			</tab> <!-- PRESTATION tab --> <tab> <tab-heading>Prestations</tab-heading>
+			</tab> <!-- PRESTATION tab --> <tab> <tab-heading>Prestations({{prestations.length}})</tab-heading>
 		<div class="row">
 				<div ng-show="prestations" class="col-sm-12">
 					<table class="table table-condensed table-bordered table-striped">
@@ -390,35 +390,61 @@
 					</table>
 				</div>
 			</div>
-		</tab> <!-- CONTRAT tab --> <tab> <tab-heading>Contrats</tab-heading>
-		<div class="hb-tab">
-			<div class="form-group">
-				<label for="groupe" class="col-sm-2 control-label">Groupe</label>
-				<div class="col-sm-4">
-					<input id="groupe" type="text" class="form-control"
-						ng-model="elfin.GROUPE">
-				</div>
+		</tab> <!-- CONTRAT tab --> <tab> <tab-heading>Contrats ({{contrats.length}})</tab-heading>
+		<div class="row">
+				<div ng-show="contrats" class="col-sm-12">
+					<table class="table table-condensed table-bordered table-striped">
+						<thead>
+							<tr>
+								<th colspan="2">
+									<div class="input-group">
 
-				<label for="type" class="col-sm-2 control-label">Type</label>
-				<div class="col-sm-4">
-					<select id="type" chosen class="form-control" ng-model="elfin.TYPE"
-						ng-options="value as label for (value, label) in elfinTypes">
-					</select>
-				</div>
+										<div>Contrats</div>
+									</div>
+								</th>
+								
+								<th colspan="3">
+									<div class="input-group">
 
-				<label for="nature" class="col-sm-2 control-label">Nature</label>
-				<div class="col-sm-4">
-					<input id="nature" type="text" class="form-control"
-						ng-model="elfin.NATURE">
-				</div>
+										<span class="input-group-btn"
+											tooltip="Créer un nouveau constat relatif à l'objet courant">
+											<a class="btn btn-default" type="button"
+											ng-href="/elfin/create/CONTRAT?sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+												<i class="icon-plus-sign"></i> Nouveau contrat
+										</a>
+										</span>
 
-				<label for="source" class="col-sm-2 control-label">Source</label>
-				<div class="col-sm-4">
-					<input id="source" type="text" class="form-control"
-						ng-model="elfin.SOURCE">
+									</div>
+								</th>
+								<th colspan="3">
+									<div class="input-group">
+
+										
+									</div>
+								</th>
+								
+							</tr>
+							<tr>
+								<th>Contrat</th>
+								<th><a href="" ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.UNITE'; deadlineReverse=!deadlineReverse">Presttation I</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; deadlineReverse=!deadlineReverse">Prestation II</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Entreprise</a></th>
+								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Montant</a></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="contrat in contrats | orderBy:deadlinePredicate:deadlineReverse">
+								<td><a
+									href="/elfin/{{contrat.ID_G}}/CONTRT/{{contrat.Id}}">Détail</a></td>
+								<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.UNITE">{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
+								<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.VALEUR">{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+								<td><span tooltip="contrat.PARTENAIRE.FOURNISSEUR.VALUE">{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+								<td><span tooltip="contrat.GROUPE">{{contrat.GROUPE}}</span></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
-		</div>
 		</tab> <!-- EQUIPEMENT tab --> <tab heading="Equipement"> <tab-heading>Equipement</tab-heading>
 		<div class="hb-tab">
 			<h5>Centroïdes</h5>
