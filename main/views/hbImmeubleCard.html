@@ -23,7 +23,11 @@
 		<tabset> <!-- IMMEUBLE tab --> <tab> <tab-heading>Immeuble</tab-heading>
 		<div class="hb-tab">
 
+			<!-- 1er bloc -->
+
 			<div class="row">
+				<!-- 1er colonne du premier bloc -->
+
 				<div class="col-sm-6">
 					<div class="form-group has-feedback"
 						ng-class="getCssHasFeedback(elfinForm.goal)">
@@ -35,141 +39,148 @@
 								tooltip="elfin.IDENTIFIANT.OBJECTIF" required>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.author)">
-						<label for="author" class="col-sm-4 control-label">Numéro
-							ECAP</label>
-						<div class="col-sm-8">
-							<input id="author" name="author" type="text" class="form-control"
-								ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR"
-								tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" required>
+					<div class="row">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.author)">
+							<label for="author" class="col-sm-4 control-label">Numéro
+								ECAP</label>
+							<div class="col-sm-8">
+								<input id="author" name="author" type="text"
+									class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR"
+									tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" required>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.name)">
-						<label for="name" class="col-sm-4 control-label">N° de
-							construction</label>
-						<div class="col-sm-8">
-							<input id="name" name="name" type="text" class="form-control"
-								ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM"
-								required>
+					<div class="row">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.name)">
+							<label for="name" class="col-sm-4 control-label">N° de
+								construction</label>
+							<div class="col-sm-8">
+								<input id="name" name="name" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.NOM"
+									tooltip="elfin.IDENTIFIANT.NOM" required>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.address)">
-						<label for="address" class="col-sm-4 control-label">Adresse</label>
-						<div class="col-sm-8">
-							<input id="address" name="address" type="text"
-								class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS"
-								tooltip="elfin.IDENTIFIANT.ALIAS" required>
+					<div class="row">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.address)">
+							<label for="address" class="col-sm-4 control-label">Adresse</label>
+							<div class="col-sm-8">
+								<input id="address" name="address" type="text"
+									class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS"
+									tooltip="elfin.IDENTIFIANT.ALIAS" required>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
 
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="form-group has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.cadastralNb)">
-						<label for="cadastralNb" class="col-sm-2 control-label">Numéro
-							cadastral</label>
-						<div class="col-sm-4">
-							<input id="cadastralNb" name="cadastralNb" type="text"
-								class="form-control"
-								ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"
-								tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR" required>
+					<div class="row">
+
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.cadastralNb)">
+							<label for="cadastralNb" class="col-sm-4 control-label">Numéro
+								cadastral</label>
+							<div class="col-sm-8">
+								<input id="cadastralNb" name="cadastralNb" type="text"
+									class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"
+									tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR" required>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+				<!-- 2e colonne du premier bloc -->
 
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group has-feedback"
+				<div class="col-sm-2">
+					<div class="row">
+						<label tooltip="elfin.ANNEXE.RENVOI[contains(VALUE,'Photo') or contains(VALUE,'photo')].LIEN">Photo</label>
+					</div>
+					<div class="row">
+
+						<label tooltip="voir trello fiche immeuble">dossier</label>
+					</div>
+				</div>
+				<!-- 3e colonne du premier bloc -->
+				<div class="col-sm-4">
+					<div class="row">
+
+						<div class="col-sm-6"
+							"
 						ng-class="getCssHasFeedback(elfinForm.manager)">
-						<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
-						<div class="col-sm-8">
-							<div class="input-group">
-								<input id="manager" name="manager" type="text"
-									class="form-control"
-									ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
-									tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" required>
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="button"
-										ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE)">Choix</button>
-								</span>
+							<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<input id="manager" name="manager" type="text"
+										class="form-control"
+										ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
+										tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" required>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button"
+											ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE)">Choix</button>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group has-feedback"
+								ng-class="getCssHasFeedback(elfinForm.managerName)">
+								<label for="managerName" class="col-sm-6 control-label">Nom
+									du propriétaire</label>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<input id="managerName" name="managerName" type="text"
+											class="form-control"
+											ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM"
+											tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM" required>
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button"
+												ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM)">Choix</button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.alias)">
+							<label for="alias" class="col-sm-6 control-label">Architecte</label>
+							<div class="col-sm-6">
+								<input id="alias" name="alias" type="text" class="form-control"
+									ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
+									tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE" required>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
-					<div class="form-group has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.managerName)">
-						<label for="managerName" class="col-sm-4 control-label">Nom
-							du propriétaire</label>
-						<div class="col-sm-8">
-							<div class="input-group">
-								<input id="managerName" name="managerName" type="text"
-									class="form-control"
-									ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM"
-									tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM" required> <span
-									class="input-group-btn">
-									<button class="btn btn-default" type="button"
-										ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM)">Choix</button>
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
-
+			<!-- 2e bloc -->
 			<div class="row">
-				<div class="col-sm-12">
-					<div class="form-group has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.alias)">
-						<label for="alias" class="col-sm-2 control-label">Architecte</label>
-						<div class="col-sm-4">
-							<input id="alias" name="alias" type="text" class="form-control"
-								ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
-								tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE" required>
-						</div>
+				<div class="form-group has-feedback"
+					ng-class="getCssHasFeedback(elfinForm.locality)">
+					<label for="locality" class="col-sm-2 control-label">Lieu-dit</label>
+					<div class="col-sm-10">
+						<input id="locality" name="locality" type="text"
+							class="form-control"
+							ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"
+							tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
 					</div>
 				</div>
 			</div>
-
 			<div class="row">
-				<div class="col-sm-12">
-					<div class="form-group has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.locality)">
-						<label for="locality" class="col-sm-2 control-label">Lieu-dit</label>
-						<div class="col-sm-10">
-							<input id="locality" name="locality" type="text"
-								class="form-control"
-								ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"
-								tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-12">
-					<div class="form-group has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.remark)">
-						<label for="remark" class="col-sm-2 control-label">Remarque</label>
-						<div class="col-sm-10">
-							<input id="remark" name="remark" type="text" class="form-control"
-								ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
-						</div>
+				<div class="form-group has-feedback"
+					ng-class="getCssHasFeedback(elfinForm.remark)">
+					<label for="remark" class="col-sm-2 control-label">Remarque</label>
+					<div class="col-sm-10">
+						<input id="remark" name="remark" type="text" class="form-control"
+							ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
 					</div>
 				</div>
 			</div>
+			<!-- 3e bloc -->
 
 			<div class="row">
 				<div class="col-sm-12">
@@ -209,6 +220,7 @@
 					</table>
 				</div>
 			</div>
+			<!-- 4e bloc -->
 
 			<div class="row">
 				<div ng-show="constats" class="col-sm-12">
@@ -245,16 +257,15 @@
 
 										<span class="input-group-btn"
 											tooltip="Créer la liste des constats relatifs à l'objet courant (no SAI, No Construction, Propriétaire) réglés (elfin.IDENTIFIANT.A != '')">
-											<a class="btn btn-default" type="button"
-											ng-href="">
-												<i class="icon-list-alt"></i> Constats réglés
-												
+											<a class="btn btn-default" type="button" ng-href=""> <i
+												class="icon-list-alt"></i> Constats réglés
+
 										</a>
 										</span>
 
 									</div>
 								</th>
-								
+
 							</tr>
 							<tr>
 								<th>Constat</th>
@@ -263,7 +274,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="constat in constats | orderBy:'IDENTIFIANT.DE':true">
+							<tr
+								ng-repeat="constat in constats | orderBy:'IDENTIFIANT.DE':true">
 								<td><a
 									href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
 								<td><span tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>
@@ -274,177 +286,188 @@
 				</div>
 			</div>
 		</div>
-		</tab> <!-- SURFACE tab --> 
-		<tab> <tab-heading>Unités locatives ({{surfaces.length}})</tab-heading>
-<div class="row">
-				<div ng-show="surfaces" class="col-sm-12">
-					<table class="table table-condensed table-bordered table-striped">
-						<thead>
-							<tr>
-								<th colspan="2">
-									<div class="input-group">
+		</tab> <!-- SURFACE tab --> <tab> <tab-heading>Unités
+		locatives ({{surfaces.length}})</tab-heading>
+		<div class="row">
+			<div ng-show="surfaces" class="col-sm-12">
+				<table class="table table-condensed table-bordered table-striped">
+					<thead>
+						<tr>
+							<th colspan="2">
+								<div class="input-group">
 
-										<div>Unités locatives</div>
-									</div>
-								</th>
-								
-								<th colspan="3">
-									<div class="input-group">
+									<div>Unités locatives</div>
+								</div>
+							</th>
 
-										<span class="input-group-btn"
-											tooltip="Créer une nouvelle unité locative relative à l'objet courant">
-											<a class="btn btn-default" type="button"
-											ng-href="/elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+							<th colspan="3">
+								<div class="input-group">
+
+									<span class="input-group-btn"
+										tooltip="Créer une nouvelle unité locative relative à l'objet courant">
+										<a class="btn btn-default" type="button"
+										ng-href="/elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
 											<!-- ng-href="/elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}&nomProprio={{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}&textProprio={{elfin.PARTENAIRE.PROPRIETAIRE}}"> -->
-												<i class="icon-plus-sign"></i> Nouvelle unité locative
-										</a>
-										</span>
+											<i class="icon-plus-sign"></i> Nouvelle unité locative
+									</a>
+									</span>
 
-									</div>
-								</th>
-								<th colspan="3">
-									<div class="input-group">
+								</div>
+							</th>
+							<th colspan="3">
+								<div class="input-group"></div>
+							</th>
 
-										
-									</div>
-								</th>
-								
-							</tr>
-							<tr>
-								<th>Unité {{surfaces.length}}</th>
-								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No SAI</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="surface in surfaces | orderBy:deadlinePredicate:deadlineReverse">
-								<td><a
-									href="/elfin/{{surface.ID_G}}/SURFACE/{{surface.Id}}">Détail</a></td>
-								<td><span tooltip="surface.IDENTIFIANT.OBJECTIF">{{surface.IDENTIFIANT.OBJECTIF}}</span></td>
-								<td><span tooltip="surface.IDENTIFIANT.DE">{{surface.IDENTIFIANT.DE}}</span></td>
-								<td><span tooltip="surface.GROUPE">{{surface.GROUPE}}</span></td>
-								<td><span tooltip="surface.IDENTIFIANT.ALIAS">{{surface.IDENTIFIANT.ALIAS}}</span></td>
-								<td><span tooltip="surface.DIVERS.REMARQUE">{{surface.DIVERS.REMARQUE}}</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>	
-			</tab> <!-- PRESTATION tab --> <tab> <tab-heading>Prestations({{prestations.length}})</tab-heading>
-		<div class="row">
-				<div ng-show="prestations" class="col-sm-12">
-					<table class="table table-condensed table-bordered table-striped">
-						<thead>
-							<tr>
-								<th colspan="2">
-									<div class="input-group">
-
-										<div>Prestations en cours</div>
-									</div>
-								</th>
-								
-								<th colspan="3">
-									<div class="input-group">
-
-										<span class="input-group-btn"
-											tooltip="Créer un nouveau constat relatif à l'objet courant">
-											<a class="btn btn-default" type="button"
-											ng-href="/elfin/create/PRESTATION?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
-												<i class="icon-plus-sign"></i> Nouvelle prestation
-										</a>
-										</span>
-
-									</div>
-								</th>
-								<th colspan="3">
-									<div class="input-group">
-
-										
-									</div>
-								</th>
-								
-							</tr>
-							<tr>
-								<th>Prestation</th>
-								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No SAI</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="prestation in prestations | orderBy:deadlinePredicate:deadlineReverse">
-								<td><a
-									href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a></td>
-								<td><span tooltip="prestation.IDENTIFIANT.OBJECTIF">{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
-								<td><span tooltip="prestation.IDENTIFIANT.DE">{{prestation.IDENTIFIANT.DE}}</span></td>
-								<td><span tooltip="prestation.GROUPE">{{prestation.GROUPE}}</span></td>
-								<td><span tooltip="prestation.IDENTIFIANT.ALIAS">{{prestation.IDENTIFIANT.ALIAS}}</span></td>
-								<td><span tooltip="prestation.DIVERS.REMARQUE">{{prestation.DIVERS.REMARQUE}}</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+						</tr>
+						<tr>
+							<th>Unité {{surfaces.length}}</th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No
+									SAI</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							ng-repeat="surface in surfaces | orderBy:deadlinePredicate:deadlineReverse">
+							<td><a href="/elfin/{{surface.ID_G}}/SURFACE/{{surface.Id}}">Détail</a></td>
+							<td><span tooltip="surface.IDENTIFIANT.OBJECTIF">{{surface.IDENTIFIANT.OBJECTIF}}</span></td>
+							<td><span tooltip="surface.IDENTIFIANT.DE">{{surface.IDENTIFIANT.DE}}</span></td>
+							<td><span tooltip="surface.GROUPE">{{surface.GROUPE}}</span></td>
+							<td><span tooltip="surface.IDENTIFIANT.ALIAS">{{surface.IDENTIFIANT.ALIAS}}</span></td>
+							<td><span tooltip="surface.DIVERS.REMARQUE">{{surface.DIVERS.REMARQUE}}</span></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-		</tab> <!-- CONTRAT tab --> <tab> <tab-heading>Contrats ({{contrats.length}})</tab-heading>
+		</div>
+		</tab> <!-- PRESTATION tab --> <tab> <tab-heading>Prestations({{prestations.length}})</tab-heading>
 		<div class="row">
-				<div ng-show="contrats" class="col-sm-12">
-					<table class="table table-condensed table-bordered table-striped">
-						<thead>
-							<tr>
-								<th colspan="2">
-									<div class="input-group">
+			<div ng-show="prestations" class="col-sm-12">
+				<table class="table table-condensed table-bordered table-striped">
+					<thead>
+						<tr>
+							<th colspan="2">
+								<div class="input-group">
 
-										<div>Contrats</div>
-									</div>
-								</th>
-								
-								<th colspan="3">
-									<div class="input-group">
+									<div>Prestations en cours</div>
+								</div>
+							</th>
 
-										<span class="input-group-btn"
-											tooltip="Créer un nouveau constat relatif à l'objet courant">
-											<a class="btn btn-default" type="button"
-											ng-href="/elfin/create/CONTRAT?sai={{elfin.IDENTIFIANT.OBJECTIF}}">
-												<i class="icon-plus-sign"></i> Nouveau contrat
-										</a>
-										</span>
+							<th colspan="3">
+								<div class="input-group">
 
-									</div>
-								</th>
-								<th colspan="3">
-									<div class="input-group">
+									<span class="input-group-btn"
+										tooltip="Créer un nouveau constat relatif à l'objet courant">
+										<a class="btn btn-default" type="button"
+										ng-href="/elfin/create/PRESTATION?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+											<i class="icon-plus-sign"></i> Nouvelle prestation
+									</a>
+									</span>
 
-										
-									</div>
-								</th>
-								
-							</tr>
-							<tr>
-								<th>Contrat</th>
-								<th><a href="" ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.UNITE'; deadlineReverse=!deadlineReverse">Presttation I</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; deadlineReverse=!deadlineReverse">Prestation II</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Entreprise</a></th>
-								<th><a href="" ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Montant</a></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="contrat in contrats | orderBy:deadlinePredicate:deadlineReverse">
-								<td><a
-									href="/elfin/{{contrat.ID_G}}/CONTRT/{{contrat.Id}}">Détail</a></td>
-								<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.UNITE">{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-								<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.VALEUR">{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-								<td><span tooltip="contrat.PARTENAIRE.FOURNISSEUR.VALUE">{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-								<td><span tooltip="contrat.GROUPE">{{contrat.GROUPE}}</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+								</div>
+							</th>
+							<th colspan="3">
+								<div class="input-group"></div>
+							</th>
+
+						</tr>
+						<tr>
+							<th>Prestation</th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No
+									SAI</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							ng-repeat="prestation in prestations | orderBy:deadlinePredicate:deadlineReverse">
+							<td><a
+								href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a></td>
+							<td><span tooltip="prestation.IDENTIFIANT.OBJECTIF">{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
+							<td><span tooltip="prestation.IDENTIFIANT.DE">{{prestation.IDENTIFIANT.DE}}</span></td>
+							<td><span tooltip="prestation.GROUPE">{{prestation.GROUPE}}</span></td>
+							<td><span tooltip="prestation.IDENTIFIANT.ALIAS">{{prestation.IDENTIFIANT.ALIAS}}</span></td>
+							<td><span tooltip="prestation.DIVERS.REMARQUE">{{prestation.DIVERS.REMARQUE}}</span></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+		</div>
+		</tab> <!-- CONTRAT tab --> <tab> <tab-heading>Contrats
+		({{contrats.length}})</tab-heading>
+		<div class="row">
+			<div ng-show="contrats" class="col-sm-12">
+				<table class="table table-condensed table-bordered table-striped">
+					<thead>
+						<tr>
+							<th colspan="2">
+								<div class="input-group">
+
+									<div>Contrats</div>
+								</div>
+							</th>
+
+							<th colspan="3">
+								<div class="input-group">
+
+									<span class="input-group-btn"
+										tooltip="Créer un nouveau constat relatif à l'objet courant">
+										<a class="btn btn-default" type="button"
+										ng-href="/elfin/create/CONTRAT?sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+											<i class="icon-plus-sign"></i> Nouveau contrat
+									</a>
+									</span>
+
+								</div>
+							</th>
+							<th colspan="3">
+								<div class="input-group"></div>
+							</th>
+
+						</tr>
+						<tr>
+							<th>Contrat</th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.UNITE'; deadlineReverse=!deadlineReverse">Presttation
+									I</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; deadlineReverse=!deadlineReverse">Prestation
+									II</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Entreprise</a></th>
+							<th><a href=""
+								ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Montant</a></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							ng-repeat="contrat in contrats | orderBy:deadlinePredicate:deadlineReverse">
+							<td><a href="/elfin/{{contrat.ID_G}}/CONTRT/{{contrat.Id}}">Détail</a></td>
+							<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.UNITE">{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
+							<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.VALEUR">{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+							<td><span tooltip="contrat.PARTENAIRE.FOURNISSEUR.VALUE">{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+							<td><span tooltip="contrat.GROUPE">{{contrat.GROUPE}}</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 		</tab> <!-- EQUIPEMENT tab --> <tab heading="Equipement"> <tab-heading>Equipement</tab-heading>
 		<div class="hb-tab">
 			<h5>Centroïdes</h5>
