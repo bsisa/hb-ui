@@ -96,7 +96,8 @@
 
 				<div class="col-sm-2">
 					<div class="row">
-						<label tooltip="elfin.ANNEXE.RENVOI[contains(VALUE,'Photo') or contains(VALUE,'photo')].LIEN">Photo</label>
+						<label
+							tooltip="elfin.ANNEXE.RENVOI[contains(VALUE,'Photo') or contains(VALUE,'photo')].LIEN">Photo</label>
 					</div>
 					<div class="row">
 
@@ -222,8 +223,7 @@
 			</div>
 			<!-- 4e bloc -->
 			<tabset> <!-- Constats en cours tab --> <tab> <tab-heading>
-				Constats en cours
-			</tab-heading>
+			Constats en cours </tab-heading>
 
 			<div class="row">
 				<div ng-show="constatsEncours" class="col-sm-12">
@@ -232,12 +232,12 @@
 
 							<tr>
 								<th><span class="input-group-btn"
-						tooltip="Créer un nouveau constat relatif à l'objet courant">
-						<a class="btn btn-default" type="button"
-						ng-href="/elfin/create/CONSTAT?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
-							<i class="icon-plus-sign"></i>
-					</a>
-					</span>Constat</th>
+									tooltip="Créer un nouveau constat relatif à l'objet courant">
+										<a class="btn btn-default" type="button"
+										ng-href="/elfin/create/CONSTAT?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+											<i class="icon-plus-sign"></i>
+									</a>
+								</span>Constat</th>
 								<th>Etage-Locataire</th>
 								<th>Libellé</th>
 								<th>Montant</th>
@@ -266,43 +266,40 @@
 					</table>
 				</div>
 			</div>
-			</tab> <tabset> <!-- Constats
+			</tab> <!-- Constats
 			traités tab --> <tab> <tab-heading>Constats
-			traités</tab-heading> 
-			
-			<div ng-show="constatsClos" class="col-sm-12">
-					<table class="table table-condensed table-bordered table-striped">
-						<thead>
+			traités</tab-heading>
 
-							<tr>
-								<th>Constat</th>
-								<th>Etage-Locataire</th>
-								<th>Libellé</th>
-								<th>Montant</th>
-								<th>Annoncé le</th>
-								<th>Traité le</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr
-								ng-repeat="constat in constatsClos | orderBy:'IDENTIFIANT.DE':true">
-								<td><a
-									href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
-								<td><span tooltip="constat.PARTENAIRE.USAGER.VALUE">{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
-								<td><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
-								<td><span
-									tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_PAR_QUI">voir
-										tooltip</span></td>
-								<td><span
-									tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>
-								<td><span
-									tooltip="constat.IDENTIFIANT.A">{{constat.IDENTIFIANT.A}}</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+			<div ng-show="constatsClos" class="col-sm-12">
+				<table class="table table-condensed table-bordered table-striped">
+					<thead>
+
+						<tr>
+							<th>Constat</th>
+							<th>Etage-Locataire</th>
+							<th>Libellé</th>
+							<th>Montant</th>
+							<th>Annoncé le</th>
+							<th>Traité le</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							ng-repeat="constat in constatsClos | orderBy:'IDENTIFIANT.DE':true">
+							<td><a href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
+							<td><span tooltip="constat.PARTENAIRE.USAGER.VALUE">{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
+							<td><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
+							<td><span
+								tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_PAR_QUI">voir
+									tooltip</span></td>
+							<td><span tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>
+							<td><span tooltip="constat.IDENTIFIANT.A">{{constat.IDENTIFIANT.A}}</span></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			</tab>
+			</tab> </tabset>
+
 		</div>
 		</tab> <!-- SURFACE tab --> <tab> <tab-heading>Unités
 		locatives ({{surfaces.length}})</tab-heading>
