@@ -35,7 +35,7 @@
 						comptable</label>
 					<div class="col-sm-8">
 						<input id="goal" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.COMPTE">
+							ng-model="elfin.IDENTIFIANT.ORIGINE">
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -100,18 +100,17 @@
 						<thead>
 
 							<tr>
-								<th><a class="btn btn-default" type="button"
+								<th colspan="2"><a class="btn btn-default" type="button"
 									tooltip="Créer une nouvelle transaction relative à l prestation courante"
 									ng-href="/elfin/create/TRANSACTION?&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
 										<i class="icon-plus-sign"></i>
 								</a>Transaction</th>
-								<th></th>
 								<th><a href=""
 									ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Date</a></th>
 								<th><a href=""
-									ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; deadlineReverse=!deadlineReverse">Facturé</a></th>
-								<th><a href=""
 									ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Fournisseur</a></th>
+								<th><a href=""
+									ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; deadlineReverse=!deadlineReverse">Facturé</a></th>
 								<th><a href=""
 									ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Payé</a></th>
 								<th><a href=""
@@ -123,10 +122,10 @@
 								ng-repeat="transaction in transactions | orderBy:deadlinePredicate:deadlineReverse">
 								<td><a
 									href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}">Détail</a></td>
-								<td><a href=""><i class="glyphicon glyphicon-paperclip"></i></a></td>
+								<td><a href=""><i tooltip="Ouvrir la pièce jointe" class="glyphicon glyphicon-paperclip"></i></a></td>
+								<td><span tooltip="transaction.IDENTIFIANT.DE">{{transaction.IDENTIFIANT.DE}}</span></td>
 								<td><span
 									tooltip="transaction.PARTENAIRE.PROPRIETAIRE.VALUE">{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
-								<td><span tooltip="transaction.IDENTIFIANT.DE">{{transaction.IDENTIFIANT.DE}}</span></td>
 								<td><span tooltip="transaction.IDENTIFIANT.VALEUR_A_NEUF">{{transaction.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
 								<td><span tooltip="transaction.IDENTIFIANT.VALEUR">{{transaction.IDENTIFIANT.VALEUR}}</span></td>
 								<td><span tooltip="transaction.DIVERS.REMARQUE">{{transaction.DIVERS.REMARQUE}}</span></td>
