@@ -30,6 +30,14 @@
 //									};
 //									$scope.coordinateType = $scope.COORDINATE_TYPE.GEOGRAPHIC;
 									
+									// Called a million times. Do not perform any computation!
+									$scope.getLienFileName = function (lien) {
+										//$log.debug(">>>> RECEIVED LIEN : " + lien);
+										var splitString = lien.split('/');
+										return splitString[splitString.length-1];
+									};
+									
+									
 							        $scope.constatsEncours = null;
 							        $scope.constatsClos = null;
 							        $scope.prestations = null;
@@ -105,6 +113,7 @@
 
 							    		if ($scope.elfin!=null) {
 								            
+							    			// Get SURFACES
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
 								            $log.debug("TODO: HbImmeubleCardController: surfacesCollectionId must come from server configuration resource.");
@@ -117,7 +126,45 @@
 														var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
-							    		}
+								            // Get Photo
+								            //var photoLink = null;
+								            for (var i = 0; i < $scope.elfin.ANNEXE.RENVOI.length; i++) {
+												
+								            	var currentRenvoi = $scope.elfin.ANNEXE.RENVOI[i];
+												
+												if ( currentRenvoi.VALUE.toLowerCase().indexOf("photo") != -1 ) {
+													// We found the photo:
+													$log.debug(">>>>>>>>>>>>>>>>>>>>>>>> !!! PHOTO !!! <<<<<<<<<<<<<<<<<<<<<<<<<<");
+													$log.debug("annex value = " + currentRenvoi.VALUE);
+													$log.debug("annex link  = " + currentRenvoi.LIEN);
+													var photoLink = currentRenvoi;
+													$scope.photoSrc = '/api/melfin/annex/'+$scope.elfin.ID_G+"/"+$scope.elfin.Id+"/"+ $scope.getLienFileName(photoLink.LIEN);
+													$log.debug(">>>>>>>>>>>>>>>>>>>>>>>> !!! PHOTO !!! <<<<<<<<<<<<<<<<<<<<<<<<<<");
+													break;
+												} else {
+													// No photo found
+													$log.debug(">>>>>>>>>>>>>>>>>>>>>>>> <<<<<<<<<<<<<<<<<<<<<<<<<<");
+												$log.debug("annex value = " + currentRenvoi.VALUE);
+												$log.debug("annex link  = " + currentRenvoi.LIEN);
+													$log.debug(">>>>>>>>>>>>>>>>>>>>>>>> <<<<<<<<<<<<<<<<<<<<<<<<<<");													
+												}
+											}
+//								            
+//								            if ( photoLink ) {
+//								            	$log.debug(">>>>>>>>>>>>>>>>>>>>>>>> !!! PHOTO LINK DEFINED !!! <<<<<<<<<<<<<<<<<<<<<<<<<<");
+//								            	var canvas = document.getElementById('photoCanvas');
+//								            	var context = canvas.getContext('2d');
+//								            	var context = $('#photoCanvas').getContext('2d');
+//								            	var photo = new Image();
+//								            	photo.src = '/api/melfin/annex/'+$scope.elfin.ID_G+"/"+$scope.elfin.Id+"/"+ $scope.getLienFileName(photoLink.LIEN);
+//								            	photo.onload = function() {
+//								            		context.drawImage(photo, 200, 260);
+//								            	};
+								            	//photo.load();
+//								            } else {
+//								            	$log.debug(">>>>>>>>>>>>>>>>>>>>>>>> !!! PHOTO LINK NOT DEFINED !!! <<<<<<<<<<<<<<<<<<<<<<<<<<");
+//								            }
+							    		};
 							    		
 							    	}, true);
         
