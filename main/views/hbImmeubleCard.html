@@ -25,7 +25,7 @@
 			<!-- 1st tab 1st row -->
 			<div class="row">
 				<!-- 1st col first tab first row start -->
-				<div class="col-sm-5" style="border: solid 4px gold;">
+				<div class="col-sm-5" >
 					<div class="form-group has-feedback"
 						ng-class="getCssHasFeedback(elfinForm.goal)">
 						<label for="goal" class="col-sm-4 control-label">Numéro de
@@ -83,21 +83,21 @@
 						</div>
 				</div><!-- 1st col first tab first row end -->
 				<!-- 2nd col first tab first row start -->
-				<div class="col-sm-2" style="text-align: center;border:solid 4px pink; height: 100%">
+				<div class="col-sm-2" style="text-align: center; height: 100%">
 <!-- 					<div class="col-sm-12" style="text-align: center;"> -->
 <!-- 						<table -->
 <!-- 							style="border: solid 4px orange; width: 100%; height: 100%; margin: 0 auto;"> -->
 <!-- 							<tbody> -->
 <!-- 								<tr> -->
 <!-- 									<td style="border: solid 4px green; height: 240px; margin: 0 auto;"> -->
-										<table ng-if="photoSrc"
+										<table ng-if="!photoSrc"
 											style="border: solid 4px #F0F0F0; width: 180px; height: 240px; margin: 0 auto;">
 											<tr>
 												<td style="vertical-align: middle; text-align: center"><i
 													class="glyphicon glyphicon-upload" style="font-size: 4em;"></i></td>
 											</tr>
 										</table> 
-										<img ng-if="!photoSrc" ng-src="{{photoSrc}}" width="180px"
+										<img ng-if="photoSrc" ng-src="{{photoSrc}}" width="180px"
 										class="img-thumbnail" />
 <!-- 									</td> -->
 <!-- 								</tr> -->
@@ -129,7 +129,7 @@
 					</div>
 				</div><!-- 2nd col first tab first row end -->
 				<!-- 3rd col first tab first row start -->
-				<div class="col-sm-5" style="border: solid 4px blue;">
+				<div class="col-sm-5" >
 						<div class="col-sm-12">
 							<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
 								<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
