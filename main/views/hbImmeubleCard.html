@@ -317,219 +317,235 @@
 			 </tabset>
 
 		</div>
-		</tab> <!-- SURFACE tab --> <tab> <tab-heading>Unités
-		locatives ({{surfaces.length}})</tab-heading>
-		<div class="row">
-			<div ng-show="surfaces" class="col-sm-12">
+		</tab> 
+		<!-- SURFACE tab --> 
+		<tab> 
+			<tab-heading>Unités locatives ({{surfaces.length}})</tab-heading>
+			<div class="hb-tab">
+				<div class="row">
+					<div ng-show="surfaces" class="col-sm-12">
+						<table class="table table-condensed table-bordered table-striped">
+							<thead>
+								<tr>
+									<th colspan="2">
+										<div class="input-group">
+		
+											<div>Unités locatives</div>
+										</div>
+									</th>
+		
+									<th colspan="3">
+										<div class="input-group">
+		
+											<span class="input-group-btn"
+												tooltip="Créer une nouvelle unité locative relative à l'objet courant">
+												<a class="btn btn-default" type="button"
+												ng-href="/elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+													<!-- ng-href="/elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}&nomProprio={{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}&textProprio={{elfin.PARTENAIRE.PROPRIETAIRE}}"> -->
+													<i class="icon-plus-sign"></i> Nouvelle unité locative
+											</a>
+											</span>
+		
+										</div>
+									</th>
+									<th colspan="3">
+										<div class="input-group"></div>
+									</th>
+		
+								</tr>
+								<tr>
+									<th>Unité {{surfaces.length}}</th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No
+											SAI</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									ng-repeat="surface in surfaces | orderBy:deadlinePredicate:deadlineReverse">
+									<td><a href="/elfin/{{surface.ID_G}}/SURFACE/{{surface.Id}}">Détail</a></td>
+									<td><span tooltip="surface.IDENTIFIANT.OBJECTIF">{{surface.IDENTIFIANT.OBJECTIF}}</span></td>
+									<td><span tooltip="surface.IDENTIFIANT.DE">{{surface.IDENTIFIANT.DE}}</span></td>
+									<td><span tooltip="surface.GROUPE">{{surface.GROUPE}}</span></td>
+									<td><span tooltip="surface.IDENTIFIANT.ALIAS">{{surface.IDENTIFIANT.ALIAS}}</span></td>
+									<td><span tooltip="surface.DIVERS.REMARQUE">{{surface.DIVERS.REMARQUE}}</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</tab> 
+		<!-- PRESTATION tab --> 
+		<tab> 
+			<tab-heading>Prestations({{prestations.length}})</tab-heading>
+			<div class="hb-tab">
+				<div class="row">
+					<div ng-show="prestations" class="col-sm-12">
+						<table class="table table-condensed table-bordered table-striped">
+							<thead>
+								<tr>
+									<th colspan="2">
+										<div class="input-group">
+		
+											<div>Prestations en cours</div>
+										</div>
+									</th>
+		
+									<th colspan="3">
+										<div class="input-group">
+		
+											<span class="input-group-btn"
+												tooltip="Créer un nouveau constat relatif à l'objet courant">
+												<a class="btn btn-default" type="button"
+												ng-href="/elfin/create/PRESTATION?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+													<i class="icon-plus-sign"></i> Nouvelle prestation
+											</a>
+											</span>
+		
+										</div>
+									</th>
+									<th colspan="3">
+										<div class="input-group"></div>
+									</th>
+		
+								</tr>
+								<tr>
+									<th>Prestation</th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No
+											SAI</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									ng-repeat="prestation in prestations | orderBy:deadlinePredicate:deadlineReverse">
+									<td><a
+										href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a></td>
+									<td><span tooltip="prestation.IDENTIFIANT.OBJECTIF">{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
+									<td><span tooltip="prestation.IDENTIFIANT.DE">{{prestation.IDENTIFIANT.DE}}</span></td>
+									<td><span tooltip="prestation.GROUPE">{{prestation.GROUPE}}</span></td>
+									<td><span tooltip="prestation.IDENTIFIANT.ALIAS">{{prestation.IDENTIFIANT.ALIAS}}</span></td>
+									<td><span tooltip="prestation.DIVERS.REMARQUE">{{prestation.DIVERS.REMARQUE}}</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</tab> 
+		<!-- CONTRAT tab --> 
+		<tab>
+			<tab-heading>Contrats ({{contrats.length}})</tab-heading>
+			<div class="hb-tab">
+				<div class="row">
+					<div ng-show="contrats" class="col-sm-12">
+						<table class="table table-condensed table-bordered table-striped">
+							<thead>
+								<tr>
+									<th colspan="2">
+										<div class="input-group">
+		
+											<div>Contrats</div>
+										</div>
+									</th>
+		
+									<th colspan="3">
+										<div class="input-group">
+		
+											<span class="input-group-btn"
+												tooltip="Créer un nouveau constat relatif à l'objet courant">
+												<a class="btn btn-default" type="button"
+												ng-href="/elfin/create/CONTRAT?sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+													<i class="icon-plus-sign"></i> Nouveau contrat
+											</a>
+											</span>
+		
+										</div>
+									</th>
+									<th colspan="3">
+										<div class="input-group"></div>
+									</th>
+		
+								</tr>
+								<tr>
+									<th>Contrat</th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.UNITE'; deadlineReverse=!deadlineReverse">Presttation
+											I</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; deadlineReverse=!deadlineReverse">Prestation
+											II</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Entreprise</a></th>
+									<th><a href=""
+										ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Montant</a></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									ng-repeat="contrat in contrats | orderBy:deadlinePredicate:deadlineReverse">
+									<td><a href="/elfin/{{contrat.ID_G}}/CONTRT/{{contrat.Id}}">Détail</a></td>
+									<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.UNITE">{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
+									<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.VALEUR">{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+									<td><span tooltip="contrat.PARTENAIRE.FOURNISSEUR.VALUE">{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+									<td><span tooltip="contrat.GROUPE">{{contrat.GROUPE}}</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</tab> 
+		<!-- EQUIPEMENT tab --> 
+		<tab> 
+			<tab-heading>Equipement</tab-heading>
+			<div class="hb-tab">
+				<h5>Centroïdes</h5>
 				<table class="table table-condensed table-bordered table-striped">
 					<thead>
 						<tr>
-							<th colspan="2">
-								<div class="input-group">
-
-									<div>Unités locatives</div>
-								</div>
-							</th>
-
-							<th colspan="3">
-								<div class="input-group">
-
-									<span class="input-group-btn"
-										tooltip="Créer une nouvelle unité locative relative à l'objet courant">
-										<a class="btn btn-default" type="button"
-										ng-href="/elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
-											<!-- ng-href="/elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}&nomProprio={{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}&textProprio={{elfin.PARTENAIRE.PROPRIETAIRE}}"> -->
-											<i class="icon-plus-sign"></i> Nouvelle unité locative
-									</a>
-									</span>
-
-								</div>
-							</th>
-							<th colspan="3">
-								<div class="input-group"></div>
-							</th>
-
-						</tr>
-						<tr>
-							<th>Unité {{surfaces.length}}</th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No
-									SAI</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
+							<th style="padding-right: 5em;">Type</th>
+							<th>Xm</th>
+							<th>Ym</th>
+							<th>Zm</th>
+							<th>Rm</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr
-							ng-repeat="surface in surfaces | orderBy:deadlinePredicate:deadlineReverse">
-							<td><a href="/elfin/{{surface.ID_G}}/SURFACE/{{surface.Id}}">Détail</a></td>
-							<td><span tooltip="surface.IDENTIFIANT.OBJECTIF">{{surface.IDENTIFIANT.OBJECTIF}}</span></td>
-							<td><span tooltip="surface.IDENTIFIANT.DE">{{surface.IDENTIFIANT.DE}}</span></td>
-							<td><span tooltip="surface.GROUPE">{{surface.GROUPE}}</span></td>
-							<td><span tooltip="surface.IDENTIFIANT.ALIAS">{{surface.IDENTIFIANT.ALIAS}}</span></td>
-							<td><span tooltip="surface.DIVERS.REMARQUE">{{surface.DIVERS.REMARQUE}}</span></td>
+						<tr ng-repeat="centroide in elfin.GEOSELECTION.CENTROIDE">
+							<td><select chosen data-placeholder="Choisir un type"
+								class="form-control" ng-model="centroide.TYPE"
+								ng-options="value as label for (value, label) in typeTypes">
+							</select></td>
+							<td><input type="text" class="form-control"
+								ng-model="centroide.XM"></td>
+							<td><input type="text" class="form-control"
+								ng-model="centroide.YM"></td>
+							<td><input type="text" class="form-control"
+								ng-model="centroide.ZM"></td>
+							<td><input type="text" class="form-control"
+								ng-model="centroide.RM"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-		</div>
-		</tab> <!-- PRESTATION tab --> <tab> <tab-heading>Prestations({{prestations.length}})</tab-heading>
-		<div class="row">
-			<div ng-show="prestations" class="col-sm-12">
-				<table class="table table-condensed table-bordered table-striped">
-					<thead>
-						<tr>
-							<th colspan="2">
-								<div class="input-group">
-
-									<div>Prestations en cours</div>
-								</div>
-							</th>
-
-							<th colspan="3">
-								<div class="input-group">
-
-									<span class="input-group-btn"
-										tooltip="Créer un nouveau constat relatif à l'objet courant">
-										<a class="btn btn-default" type="button"
-										ng-href="/elfin/create/PRESTATION?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
-											<i class="icon-plus-sign"></i> Nouvelle prestation
-									</a>
-									</span>
-
-								</div>
-							</th>
-							<th colspan="3">
-								<div class="input-group"></div>
-							</th>
-
-						</tr>
-						<tr>
-							<th>Prestation</th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No
-									SAI</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr
-							ng-repeat="prestation in prestations | orderBy:deadlinePredicate:deadlineReverse">
-							<td><a
-								href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a></td>
-							<td><span tooltip="prestation.IDENTIFIANT.OBJECTIF">{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
-							<td><span tooltip="prestation.IDENTIFIANT.DE">{{prestation.IDENTIFIANT.DE}}</span></td>
-							<td><span tooltip="prestation.GROUPE">{{prestation.GROUPE}}</span></td>
-							<td><span tooltip="prestation.IDENTIFIANT.ALIAS">{{prestation.IDENTIFIANT.ALIAS}}</span></td>
-							<td><span tooltip="prestation.DIVERS.REMARQUE">{{prestation.DIVERS.REMARQUE}}</span></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		</tab> <!-- CONTRAT tab --> <tab> <tab-heading>Contrats
-		({{contrats.length}})</tab-heading>
-		<div class="row">
-			<div ng-show="contrats" class="col-sm-12">
-				<table class="table table-condensed table-bordered table-striped">
-					<thead>
-						<tr>
-							<th colspan="2">
-								<div class="input-group">
-
-									<div>Contrats</div>
-								</div>
-							</th>
-
-							<th colspan="3">
-								<div class="input-group">
-
-									<span class="input-group-btn"
-										tooltip="Créer un nouveau constat relatif à l'objet courant">
-										<a class="btn btn-default" type="button"
-										ng-href="/elfin/create/CONTRAT?sai={{elfin.IDENTIFIANT.OBJECTIF}}">
-											<i class="icon-plus-sign"></i> Nouveau contrat
-									</a>
-									</span>
-
-								</div>
-							</th>
-							<th colspan="3">
-								<div class="input-group"></div>
-							</th>
-
-						</tr>
-						<tr>
-							<th>Contrat</th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.UNITE'; deadlineReverse=!deadlineReverse">Presttation
-									I</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; deadlineReverse=!deadlineReverse">Prestation
-									II</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Entreprise</a></th>
-							<th><a href=""
-								ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Montant</a></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr
-							ng-repeat="contrat in contrats | orderBy:deadlinePredicate:deadlineReverse">
-							<td><a href="/elfin/{{contrat.ID_G}}/CONTRT/{{contrat.Id}}">Détail</a></td>
-							<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.UNITE">{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-							<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.VALEUR">{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-							<td><span tooltip="contrat.PARTENAIRE.FOURNISSEUR.VALUE">{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-							<td><span tooltip="contrat.GROUPE">{{contrat.GROUPE}}</span></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		</tab> <!-- EQUIPEMENT tab --> <tab heading="Equipement"> <tab-heading>Equipement</tab-heading>
-		<div class="hb-tab">
-			<h5>Centroïdes</h5>
-			<table class="table table-condensed table-bordered table-striped">
-				<thead>
-					<tr>
-						<th style="padding-right: 5em;">Type</th>
-						<th>Xm</th>
-						<th>Ym</th>
-						<th>Zm</th>
-						<th>Rm</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="centroide in elfin.GEOSELECTION.CENTROIDE">
-						<td><select chosen data-placeholder="Choisir un type"
-							class="form-control" ng-model="centroide.TYPE"
-							ng-options="value as label for (value, label) in typeTypes">
-						</select></td>
-						<td><input type="text" class="form-control"
-							ng-model="centroide.XM"></td>
-						<td><input type="text" class="form-control"
-							ng-model="centroide.YM"></td>
-						<td><input type="text" class="form-control"
-							ng-model="centroide.ZM"></td>
-						<td><input type="text" class="form-control"
-							ng-model="centroide.RM"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
 		</tab> <!-- FORME tab --> <tab heading="Forme"> <tab-heading>Forme</tab-heading>
 		<div class="hb-tab">
 			<div hb-forme-component></div>
