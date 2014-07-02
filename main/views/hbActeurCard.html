@@ -36,7 +36,7 @@
 							allow-single-deselect="true"						
 							ng-model="elfin.IDENTIFIANT.QUALITE"
 							tooltip="elfin.IDENTIFIANT.QUALITE"
-							ng-options="value as label for (value,label) in qualiteList">
+							ng-options="role.name as role.value for role in actorRoles">
 						</select>
 					</div>
 				</div>
