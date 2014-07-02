@@ -8,16 +8,16 @@
 		</tr>
 		<tr>
 			<th />
-			<th>Groupe</th>
-			<th ng-show="isCollaboratorOnly">Nom de famille</th>
-			<th ng-show="isCollaboratorOnly">Prénom</th>
-			<th>Rôle</th>
-			<th>N° de téléphone</th>
-			<th ng-show="isCollaboratorOnly">Email</th>
+			<th><a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Groupe</a></th>
+			<th ng-show="isCollaboratorOnly"><a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">Nom de famille</a></th>
+			<th ng-show="isCollaboratorOnly"><a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Prénom</a></th>
+			<th><a href="" ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse">Rôle</a></th>
+			<th><a href="" ng-click="predicate = 'CARACTERISTIQUE.CAR4.VALEUR'; reverse=!reverse">N° de téléphone</a></th>
+			<th ng-show="isCollaboratorOnly"><a href="" ng-click="predicate = 'CARACTERISTIQUE.CAR5.VALEUR'; reverse=!reverse">Email</a></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="elfin in elfins">
+		<tr ng-repeat="elfin in elfins | orderBy:predicate:reverse">
 			<td><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td>
 			<td>{{elfin.GROUPE}}</td>
