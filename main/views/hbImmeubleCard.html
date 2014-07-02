@@ -308,34 +308,36 @@
 			traités tab --> <tab> <tab-heading>Constats
 			traités</tab-heading>
 			<div class="hb-tab">
-			<div ng-show="constatsClos" class="col-sm-12">
-				<table class="table table-condensed table-bordered table-striped">
-					<thead>
-
-						<tr>
-							<th>Constat</th>
-							<th>Etage-Locataire</th>
-							<th>Libellé</th>
-							<th>Montant</th>
-							<th>Annoncé le</th>
-							<th>Traité le</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr
-							ng-repeat="constat in constatsClos | orderBy:'IDENTIFIANT.DE':true">
-							<td><a href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
-							<td><span tooltip="constat.PARTENAIRE.USAGER.VALUE">{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
-							<td><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
-							<td><span
-								tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_PAR_QUI">voir
-									tooltip</span></td>
-							<td><span tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>
-							<td><span tooltip="constat.IDENTIFIANT.A">{{constat.IDENTIFIANT.A}}</span></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+				<div class="row">
+					<div ng-show="constatsClos" class="col-sm-12">
+						<table class="table table-condensed table-bordered table-striped">
+							<thead>
+		
+								<tr>
+									<th>Constat</th>
+									<th>Etage-Locataire</th>
+									<th>Libellé</th>
+									<th>Montant</th>
+									<th>Annoncé le</th>
+									<th>Traité le</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									ng-repeat="constat in constatsClos | orderBy:'IDENTIFIANT.DE':true">
+									<td><a href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
+									<td><span tooltip="constat.PARTENAIRE.USAGER.VALUE">{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
+									<td><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
+									<td><span
+										tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_PAR_QUI">voir
+											tooltip</span></td>
+									<td><span tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>
+									<td><span tooltip="constat.IDENTIFIANT.A">{{constat.IDENTIFIANT.A}}</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 			</tab> </tabset>
 
