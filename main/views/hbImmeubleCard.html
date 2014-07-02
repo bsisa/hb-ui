@@ -241,13 +241,7 @@
 						<thead>
 
 							<tr>
-								<th><span class="input-group-btn"
-									tooltip="Créer un nouveau constat relatif à l'objet courant">
-										<a class="btn btn-default" type="button"
-										ng-href="/elfin/create/CONSTAT?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}">
-											<i class="icon-plus-sign"></i>
-									</a>
-								</span>Constat</th>
+								<th>Constat</th>
 								<th>Etage-Locataire</th>
 								<th>Libellé</th>
 								<th>Montant</th>
@@ -277,9 +271,10 @@
 				</div>
 			</div>
 			</div>
-			</tab> <!-- Constats
-			traités tab --> <tab> <tab-heading>Constats
-			traités</tab-heading>
+			</tab> 
+			<!-- Constats traités tab --> 
+			<tab> 
+			<tab-heading>Constats traités</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
 					<div ng-show="constatsClos" class="col-sm-12">
@@ -312,7 +307,14 @@
 					</div>
 				</div>
 			</div>
-			</tab> </tabset>
+			</tab>
+			<tab select="createNewConstat()"> 
+			<tab-heading tooltip="Créer un nouveau constat relatif à l'objet courant" tooltip-popup-delay="1000">Créer un nouveau constat <i class="icon-plus-sign"></i></tab-heading>
+			<div class="hb-tab">
+
+			</div>
+			</tab>			
+			 </tabset>
 
 		</div>
 		</tab> <!-- SURFACE tab --> <tab> <tab-heading>Unités
