@@ -20,17 +20,26 @@
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
 									
-									// Extracts file name for ANNEXE/RENVOI/LIEN corresponding to a photo.
-									$scope.getLienFileName = function (lien) {
-										var splitString = lien.split('/');
-										return splitString[splitString.length-1];
-									};
-									
 							        $scope.constatsEncours = null;
 							        $scope.constatsClos = null;
 							        $scope.prestations = null;
 							        $scope.surfaces = null;
 							    	
+							        
+									// Triggers a redirection to the CONSTAT creation URL with current 
+									// IMMEUBLE building number and SAI number passed as parameters.
+									$scope.createNewConstat = function() {
+										var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+										$location.search(searchObj).path( "/elfin/create/CONSTAT" );	
+									};									
+									
+									// Extracts file name for ANNEXE/RENVOI/LIEN corresponding to a photo.
+									$scope.getLienFileName = function (lien) {
+										var splitString = lien.split('/');
+										return splitString[splitString.length-1];
+									};							        
+							        
+							        
 							    	// Watch related to CONSTAT list in the context of elfin of CLASSE IMMEUBLE 
 							        // hence the dedicated controller.
 							    	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
