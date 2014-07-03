@@ -113,8 +113,8 @@
 											ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
 											tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" required>
 										<span class="input-group-btn">
-											<button class="btn btn-default" type="button"
-												ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE)">Choix</button>
+											<button class="btn btn-default" type="button" hb-choose-one
+												ng-click="hbChooseOne(elfin, 'PARTENAIRE.PROPRIETAIRE.VALUE', ownerActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )" ><i class="glyphicon glyphicon-list-alt"></i></button>
 										</span>
 									</div>
 								</div>
