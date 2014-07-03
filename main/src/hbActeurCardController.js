@@ -31,6 +31,13 @@
 										var message = "Les valeurs par défaut pour la CLASSE ACTEUR n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
 										hbAlertMessages.addAlert("danger",message);
 									});				    			
+					            
+								if ( $attrs.hbMode === "create" ) {
+									// Remove default roles from catalogue
+								    $scope.elfin.IDENTIFIANT.QUALITE = "";
+								} else {
+									// Do nothing
+								}					            
 				    		};
 				    		
 				    	}, true);						
