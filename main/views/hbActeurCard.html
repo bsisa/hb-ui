@@ -5,6 +5,7 @@
 		<span ng-show="elfinForm.email.$error.email">Le champs <strong>Email</strong> n'est pas valide</span>
 		<span ng-show="elfinForm.email.$error.required">Le champs <strong>Email</strong> est obligatoire pour les collaborateurs</span>
 		<span ng-show="elfinForm.societe.$error.required">Le champs <strong>Société</strong> est obligatoire excepté pour les collaborateurs</span>
+		<span ng-show="elfinForm.role.$error.required">Le champs <strong>Rôle</strong> est obligatoire</span>
 	</div>
 	<div class="row" style="padding-top: 8px;">
 		<div class="col-xs-12">
@@ -36,7 +37,8 @@
 							allow-single-deselect="true"						
 							ng-model="elfin.IDENTIFIANT.QUALITE"
 							tooltip="elfin.IDENTIFIANT.QUALITE"
-							ng-options="role.name as role.value for role in actorRoles">
+							ng-options="role.name as role.value for role in actorRoles"
+							required>
 						</select>
 					</div>
 				</div>
