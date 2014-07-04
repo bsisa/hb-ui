@@ -1,6 +1,6 @@
 <div>
 	<div class="modal-header">
-		<h3 class="modal-title">Sélectionnez le collaborateur de votre choix</h3>
+		<h3 class="modal-title">Sélectionnez <span ng-if="role">le {{role | lowercase}}</span><span ng-if="!role">l'acteur</span> de votre choix</h3>
 	</div>
 	<div class="modal-body" style="height: 480px;">
 <!-- 		<div class="form-group"> -->

@@ -70,8 +70,9 @@
 							<input id="collaborator_name" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.NOM" ng-readonly="true" ng-required="true">
 							<span class="input-group-btn" tooltip="Recherche de collaborateur">
 								<button class="btn btn-default" type="button"
-									hb-choose-collaborator
-									ng-click="hbChooseCollaborator(selected, 'collaborator')"
+									hb-choose-actor
+									hb-choose-actor-role="Collaborateur"
+									ng-click="hbChooseActor(selected, 'collaborator')"
 									><i class="icon-search" ></i></button>
 							</span>
 						</div>		
