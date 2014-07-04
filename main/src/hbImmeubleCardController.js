@@ -6,6 +6,7 @@
 					'HbImmeubleCardController',
 					[
 							'$scope',
+							'$rootScope',
 							'GeoxmlService',
 							'$modal',
 							'$routeParams',
@@ -14,11 +15,15 @@
 							'$timeout',
 							'hbAlertMessages',
 							'hbUtil',
-							function($scope, GeoxmlService, $modal,
+							'HB_EVENTS',
+							function($scope, $rootScope, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout, hbAlertMessages,
-									hbUtil) {
+									hbUtil, HB_EVENTS) {
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
+									
+									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
+									$scope.selected = { "owner" : null , "ownerDisplay" : null};
 									
 							        $scope.constatsEncours = null;
 							        $scope.constatsClos = null;
@@ -123,47 +128,118 @@
 														var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
+								            
 								            // Get Photo
-								            for (var i = 0; i < $scope.elfin.ANNEXE.RENVOI.length; i++) {
-												
-								            	var currentRenvoi = $scope.elfin.ANNEXE.RENVOI[i];
-												
-												if ( currentRenvoi.VALUE.toLowerCase().indexOf("photo") != -1 ) {
-													// Photo found build link
-													var photoLink = currentRenvoi;
-													$scope.photoSrc = '/api/melfin/annex/'+$scope.elfin.ID_G+"/"+$scope.elfin.Id+"/"+ $scope.getLienFileName(photoLink.LIEN);
-													break;
-												} else {
-													// No photo found (other annex)
+								            if ($scope.elfin.ANNEXE) {
+									            for (var i = 0; i < $scope.elfin.ANNEXE.RENVOI.length; i++) {
+													
+									            	var currentRenvoi = $scope.elfin.ANNEXE.RENVOI[i];
+													
+													if ( currentRenvoi.VALUE.toLowerCase().indexOf("photo") != -1 ) {
+														// Photo found build link
+														var photoLink = currentRenvoi;
+														$scope.photoSrc = '/api/melfin/annex/'+$scope.elfin.ID_G+"/"+$scope.elfin.Id+"/"+ $scope.getLienFileName(photoLink.LIEN);
+														break;
+													} else {
+														// No photo found (other annex)
+													}
 												}
-											}
+								            }
+								            
 							    		};
 							    		
 							    	}, true);
 							    	
 							    	
 							    	
-							    	
-						            var xpathForOwner = "//ELFIN[IDENTIFIANT/QUALITE='Propriétaire']";
-						            // TODO: actorsCollectionId must come from server configuration resource.
-						            $log.debug("TODO: ImmeubleCardController: actorsCollectionId must come from server configuration resource.");
-						            var actorsCollectionId = 'G20060401225530100';
-						            
-						            // Asynchronous ownerActors pre-loading
-						            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForOwner})
-									.then(function(ownerActors) {
-											$scope.ownerActors = ownerActors;
-										},
-										function(response) {
-											var message = "Le chargement des ACTEURS Propriétaire a échoué (statut de retour: "+ response.status+ ")";
+									// Owner actor linked to building 
+							        $scope.getElfinOwnerActor = function (collectionId, elfinId) {
+							        	
+								        GeoxmlService.getElfin(collectionId, elfinId).get()
+								        .then(function(elfin) {
+								        	// Force CAR array sorting by POS attribute
+								        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
+								        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
+								        	//       Need review of other similar operations
+								        	if ( elfin['CARACTERISTIQUE'] != null && elfin['CARACTERISTIQUE']['CARSET'] != null && elfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+								        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
+								        	}
+								        	$log.debug(">>>>>>>>>>>> ownerActor.Id = " + elfin.Id);
+								        	$scope.selected.owner = elfin;
+								        	$scope.selected.ownerDisplay = $scope.selected.owner.IDENTIFIANT.NOM + " - " + $scope.selected.owner.GROUPE;
+								        	}, function(response) {
+								        	var message = "Le chargement du propriétaire lié à l'immeuble no gérance "+$scope.elfin.IDENTIFIANT.OBJECTIF+" a échoué (statut de retour: " + response.status + ")";
 								            hbAlertMessages.addAlert("danger",message);
-										});							    	
+								        });
+						        		
+						        	};							    	
 							    	
-						            // Parameters to hbChooseOne service function for ACTOR selection
-						            $scope.actorChooseOneColumnsDefinition = [
-						                        		   		            { field:"GROUPE", displayName: "Groupe"}
-						                        		   	 		   		];
-						            $scope.actorChooseOneTemplate = '/assets/views/chooseActor.html';							    	
+
+						            // Load ELFIN owner ACTOR only once main elfin (here IMMEUBLE) has been loaded
+						            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
+						            	
+						            	$log.debug(">>>> HbImmeubleCardController: HB_EVENTS.ELFIN_LOADED for elfin.Id = " + elfin.Id);
+						            	
+						            	// Make sure a valid owner reference exists before loading
+								        if ( 
+								        		$scope.elfin.PARTENAIRE && 
+								        		$scope.elfin.PARTENAIRE.PROPRIETAIRE && 
+								        		$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id && 
+								        		(elfin.PARTENAIRE.PROPRIETAIRE.Id != 'null') &&
+								        		$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G && 
+								        		(elfin.PARTENAIRE.PROPRIETAIRE.ID_G != 'null')) {							        		
+							        		
+							        		$log.debug(">>>> HbImmeubleCardController: loading ELFIN owner Actor Id = " + elfin.PARTENAIRE.PROPRIETAIRE.Id + ", ID_G = " + elfin.PARTENAIRE.PROPRIETAIRE.ID_G);
+							        		$scope.getElfinOwnerActor(elfin.PARTENAIRE.PROPRIETAIRE.ID_G, elfin.PARTENAIRE.PROPRIETAIRE.Id);	
+							        	}			            	
+
+						            });			        	
+						        	
+						            
+						            /**
+						             * Update current IMMEUBLE link to owner ACTOR upon new owner ACTOR selection
+						             */
+						            $scope.$watch('selected.owner.Id', function(newId, oldId) {
+						            	
+						            	if ( newId && $scope.elfin && ($scope.elfin.PARTENAIRE.PROPRIETAIRE.Id != $scope.selected.owner.Id) ) {
+
+						            		$scope.selected.ownerDisplay = $scope.selected.owner.IDENTIFIANT.NOM + " - " + $scope.selected.owner.GROUPE;
+						            		
+							            	// Update the new ACTOR ids
+							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G = $scope.selected.owner.ID_G;
+							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id = $scope.selected.owner.Id;
+							            	// According to the GeoXML Schema GROUP and NOM are part of PROPRIETAIRE.
+							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE = $scope.selected.owner.GROUPE;
+							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = $scope.selected.owner.IDENTIFIANT.NOM;
+							            	// Reset VALUE which should no more be used.
+							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE = "";
+							            	// Notify the user the data need saving.
+							            	$scope.elfinForm.$setDirty();			            		
+						            	}
+
+						            });						        	
+						        	
+							    	
+//						            var xpathForOwner = "//ELFIN[IDENTIFIANT/QUALITE='Propriétaire']";
+//						            // TODO: actorsCollectionId must come from server configuration resource.
+//						            $log.debug("TODO: ImmeubleCardController: actorsCollectionId must come from server configuration resource.");
+//						            var actorsCollectionId = 'G20060401225530100';
+//						            
+//						            // Asynchronous ownerActors pre-loading
+//						            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForOwner})
+//									.then(function(ownerActors) {
+//											$scope.ownerActors = ownerActors;
+//										},
+//										function(response) {
+//											var message = "Le chargement des ACTEURS Propriétaire a échoué (statut de retour: "+ response.status+ ")";
+//								            hbAlertMessages.addAlert("danger",message);
+//										});							    	
+//							    	
+//						            // Parameters to hbChooseOne service function for ACTOR selection
+//						            $scope.actorChooseOneColumnsDefinition = [
+//						                        		   		            { field:"GROUPE", displayName: "Groupe"}
+//						                        		   	 		   		];
+//						            $scope.actorChooseOneTemplate = '/assets/views/chooseActor.html';							    	
         
 							    } ]);
 

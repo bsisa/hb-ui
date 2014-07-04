@@ -110,11 +110,22 @@
 									<div class="input-group">
 										<input id="manager" name="manager" type="text"
 											class="form-control"
-											ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
-											tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" required>
+											ng-model="selected.ownerDisplay"
+											tooltip="selected.ownerDisplay" 
+											required
+											readonly>
+<!-- 										<input id="manager" name="manager" type="hidden" -->
+<!-- 											class="form-control" -->
+<!-- 											ng-value="elfin.PARTENAIRE.PROPRIETAIRE.GROUPE" -->
+<!-- 											tooltip="elfin.PARTENAIRE.PROPRIETAIRE.GROUPE" required>											 -->
 										<span class="input-group-btn">
-											<button class="btn btn-default" type="button" hb-choose-one
-												ng-click="hbChooseOne(elfin, 'PARTENAIRE.PROPRIETAIRE.VALUE', ownerActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )" ><i class="glyphicon glyphicon-list-alt"></i></button>
+<!-- 											<button class="btn btn-default" type="button" hb-choose-one -->
+<!-- 												ng-click="hbChooseOne(elfin, 'PARTENAIRE.PROPRIETAIRE.VALUE', ownerActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )" ><i class="glyphicon glyphicon-list-alt"></i></button> -->
+								<button class="btn btn-default" type="button"
+									hb-choose-actor
+									hb-choose-actor-role="Propriétaire"
+									ng-click="hbChooseActor(selected, 'owner')"
+									><i class="glyphicon glyphicon-list-alt" ></i></button>												
 										</span>
 									</div>
 								</div>
