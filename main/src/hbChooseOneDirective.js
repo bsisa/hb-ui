@@ -15,9 +15,9 @@
      *  { field:"PARTENAIRE.GERANT.VALUE", displayName: "Manager"},
      *  { field:"PARTENAIRE.USAGER.VALUE", displayName: "User"}
      * ];
-     * The template is a URL such as '/assets/views/chooseActor.html' providing the selection list 
+     * The template is a URL such as '/assets/views/chooseOneActor.html' providing the selection list 
      * 
-     * See: hbConstatCardController.js, chooseActor.html for example usage.
+     * See: hbConstatCardController.js, chooseOneActor.html for example usage.
      * 
      */
     angular.module('hb5').directive('hbChooseOne', function () {

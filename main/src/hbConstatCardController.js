@@ -154,7 +154,7 @@
 			            $scope.actorChooseOneColumnsDefinition = [
 			                        		   		            { field:"GROUPE", displayName: "Groupe"}
 			                        		   	 		   		];
-			            $scope.actorChooseOneTemplate = '/assets/views/chooseActor.html';
+			            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';
 
 			            // Parameter to hbChooseOne service function for ConstatType selection
 			            $scope.constatTypeChooseOneColumnsDefinition = [
