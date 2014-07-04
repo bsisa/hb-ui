@@ -213,7 +213,10 @@
 	// = right place for application initialisation tasks             =
     // ================================================================        
     
-    hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', '$log', '$locale', function(Restangular, hbAlertMessages, $location, $window, $log, $locale){
+    hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', '$log', '$locale', 'userDetails', function(Restangular, hbAlertMessages, $location, $window, $log, $locale, userDetails){
+
+    	// Force service initialisation.
+    	userDetails.getAbbreviation;
     	
     	//TODO: Manage locale - check why this does not seem to be effective
     	$log.debug("Setting locale to swiss french: fr-ch");

@@ -68,10 +68,12 @@ module.exports = function(grunt) {
 								'src/hbSurfaceCardDirective.js',
 								'src/hbTransactionCardController.js',
 								'src/hbTransactionCardDirective.js',
+								'src/hbTransactionCreateCardDirective.js',
 								'src/hbUtilService.js',
 								'src/hbUserCardController.js',
 								'src/hbUserCardDirective.js',
-								'src/spreadsheetSelect.js'],
+								'src/spreadsheetSelect.js',
+								'src/userDetailsService.js'],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
