@@ -13,16 +13,42 @@
 				<div class="row">
 					<label for="groupe" class="col-sm-4 control-label">Groupe</label>
 					<div class="col-sm-8">
-						<input id="groupe" type="text" class="form-control"
-							ng-model="elfin.GROUPE">
+<!-- 						<input id="groupe" type="text" class="form-control" -->
+<!-- 							ng-model="elfin.GROUPE"> -->
+							
+							
+							<select id="groupe" name="groupe" class="form-control" chosen
+								data-placeholder=" " disable-search="false"
+								allow-single-deselect="true"
+								ng-model="elfin.GROUPE"
+								ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
+								<option value=''></option>
+							</select>							
+							
 					</div>
 				</div>
 				<div class="row">
 					<label for="objectif" class="col-sm-4 control-label">No SAI</label>
 					<div class="col-sm-8">
-						<input id="objectif" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.OBJECTIF">
+<!-- 						<input id="objectif" type="text" class="form-control" -->
+<!-- 							ng-model="elfin.IDENTIFIANT.OBJECTIF"> -->
+
+						<div class="input-group">
+							<input id="objectif" name="objectif" type="text" class="form-control" hb-no-dirty-check 
+								autocomplete="off"
+								typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{registerNb : $viewValue }"
+								ng-model="elfin.IDENTIFIANT.OBJECTIF"
+								tooltip="elfin.IDENTIFIANT.OBJECTIF"> <span
+								class="input-group-btn" tooltip="Recherche de SAI">
+								<button class="btn btn-default" type="button" hb-choose-one
+									ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
+									<i class="glyphicon glyphicon-list-alt"></i>
+								</button>
+							</span>
+						</div>		
+
 					</div>
+					
 				</div>
 				<div class="row">
 					<label for="annee" class="col-sm-4 control-label">Année</label>
