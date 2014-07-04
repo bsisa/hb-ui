@@ -192,45 +192,45 @@
 				</div>
 			</div>
 			<!-- 3e bloc -->
-
-			<div class="row" >
-				<div class="col-sm-12">
-					<table class="table table-condensed table-bordered table-striped">
-						<thead>
-							<tr>
-								<th>
-									<div class="input-group">
-										<div>Mots clés</div>
-										<span class="input-group-btn">
-											<button class="btn btn-default" type="button"
-												ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: '' })">
-												<i class="icon-plus-sign"></i> Nouveau
-											</button>
-										</span>
-									</div>
-								</th>
-							</tr>
-						</thead>
-						<tbody ng-show="elfin.IDENTIFIANT.MOTCLE.length > 0">
-							<tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
-								<td>
-									<div class="input-group">
-										<input type="text" name="keyword{$index}" class="form-control"
-											ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE"
-											placeholder="Saisissez un nouveau mot clé"> <span
-											class="input-group-btn">
-											<button class="btn btn-default"
-												ng-click="removeKeyword($index)">
-												<i class="icon-remove-sign"></i> Supprimer
-											</button>
-										</span>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+<!-- Keywords are currently unused. -->
+<!-- 			<div class="row" > -->
+<!-- 				<div class="col-sm-12"> -->
+<!-- 					<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 						<thead> -->
+<!-- 							<tr> -->
+<!-- 								<th> -->
+<!-- 									<div class="input-group"> -->
+<!-- 										<div>Mots clés</div> -->
+<!-- 										<span class="input-group-btn"> -->
+<!-- 											<button class="btn btn-default" type="button" -->
+<!-- 												ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: '' })"> -->
+<!-- 												<i class="icon-plus-sign"></i> Nouveau -->
+<!-- 											</button> -->
+<!-- 										</span> -->
+<!-- 									</div> -->
+<!-- 								</th> -->
+<!-- 							</tr> -->
+<!-- 						</thead> -->
+<!-- 						<tbody ng-show="elfin.IDENTIFIANT.MOTCLE.length > 0"> -->
+<!-- 							<tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE"> -->
+<!-- 								<td> -->
+<!-- 									<div class="input-group"> -->
+<!-- 										<input type="text" name="keyword{$index}" class="form-control" -->
+<!-- 											ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE" -->
+<!-- 											placeholder="Saisissez un nouveau mot clé"> <span -->
+<!-- 											class="input-group-btn"> -->
+<!-- 											<button class="btn btn-default" -->
+<!-- 												ng-click="removeKeyword($index)"> -->
+<!-- 												<i class="icon-remove-sign"></i> Supprimer -->
+<!-- 											</button> -->
+<!-- 										</span> -->
+<!-- 									</div> -->
+<!-- 								</td> -->
+<!-- 							</tr> -->
+<!-- 						</tbody> -->
+<!-- 					</table> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 			<!-- 4e bloc -->
 			<tabset> <!-- Constats en cours tab --> <tab> <tab-heading>
 			Constats en cours </tab-heading>
