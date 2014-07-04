@@ -22,6 +22,28 @@
 					 			
 								$log.debug("    >>>> Using HbTransactionCardController");
 
+								$scope.displayBuildingAddress = function (noSai) {
+									if ( (!$scope.selectedImmeuble) || ($scope.selectedImmeuble && $scope.selectedImmeuble.IDENTIFIANT.OBJECTIF != noSai) ) { 
+										if ($scope.immeubles && $scope.immeubles.length > 0) {
+											for (var i = 0; i < $scope.immeubles.length; i++) {
+												var currImm = $scope.immeubles[i];
+												if (currImm.IDENTIFIANT.OBJECTIF == noSai) {
+													$scope.selectedImmeuble = currImm;
+													break;
+												}
+											} 
+										}
+									} else {
+										//$log.debug("    >>>> objectif BLUR No new SAI");
+									}
+//									if ($scope.selectedImmeuble) {
+//										$log.debug("$scope.selectedImmeuble.IDENTIFIANT.ALIAS = " + $scope.selectedImmeuble.IDENTIFIANT.ALIAS);		
+//									} else {
+//										$log.debug("$scope.selectedImmeuble.IDENTIFIANT.ALIAS = undefined or null");
+//									}
+								 
+					            };
+								
 					            $rootScope.$on(HB_EVENTS.ELFIN_CREATED, function(event, elfin) {
 
 					            	// Update some catalogue properties with live data passed as route parameters 
@@ -70,9 +92,7 @@
 					            
 								var focusOnGroupField = function() {
 									$log.debug(">>>>>>>>>>>>>>>>>> FOCUS ON #objectif <<<<<<<<<<<<<<<<<<<<< ");
-//									$('#groupe').focus();	
 									$('#objectif').focus();
-									
 								};        
 								
 								// TODO: FocusTimeout issue. Find a better solution ? 

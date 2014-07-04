@@ -11,6 +11,38 @@
 			<!-- 1ere colonne -->
 			<div class="col-sm-6">
 				<div class="row">
+					<label for="objectif" class="col-sm-4 control-label">No SAI</label>
+					<div class="col-sm-8">
+<!-- 						<input id="objectif" type="text" class="form-control" -->
+<!-- 							ng-model="elfin.IDENTIFIANT.OBJECTIF"> 
+-->
+
+						<div class="input-group">
+							<input id="objectif" name="objectif" type="text" class="form-control" 
+								hb-no-dirty-check 
+								ng-blur="displayBuildingAddress(elfin.IDENTIFIANT.OBJECTIF)"
+								autocomplete="off"
+								typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{registerNb : $viewValue }"
+								ng-model="elfin.IDENTIFIANT.OBJECTIF"
+								tooltip="elfin.IDENTIFIANT.OBJECTIF"> <span
+								class="input-group-btn" tooltip="Recherche de SAI">
+								<button class="btn btn-default" type="button" hb-choose-one
+									ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
+									<i class="glyphicon glyphicon-list-alt"></i>
+								</button>
+							</span>
+						</div>		
+
+					</div>
+					
+				</div>
+				<div class="row">
+					<label class="col-sm-4 control-label">Adresse</label>
+					<div ng-show="selectedImmeuble && selectedImmeuble.Id" class="col-sm-8">
+						{{selectedImmeuble.IDENTIFIANT.ALIAS}}
+					</div>
+				</div>
+				<div class="row">
 					<label for="groupe" class="col-sm-4 control-label">Groupe</label>
 					<div class="col-sm-8">
 <!-- 						<input id="groupe" type="text" class="form-control" -->
@@ -28,29 +60,6 @@
 					</div>
 				</div>
 				<div class="row">
-					<label for="objectif" class="col-sm-4 control-label">No SAI</label>
-					<div class="col-sm-8">
-<!-- 						<input id="objectif" type="text" class="form-control" -->
-<!-- 							ng-model="elfin.IDENTIFIANT.OBJECTIF"> -->
-
-						<div class="input-group">
-							<input id="objectif" name="objectif" type="text" class="form-control" hb-no-dirty-check 
-								autocomplete="off"
-								typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{registerNb : $viewValue }"
-								ng-model="elfin.IDENTIFIANT.OBJECTIF"
-								tooltip="elfin.IDENTIFIANT.OBJECTIF"> <span
-								class="input-group-btn" tooltip="Recherche de SAI">
-								<button class="btn btn-default" type="button" hb-choose-one
-									ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
-									<i class="glyphicon glyphicon-list-alt"></i>
-								</button>
-							</span>
-						</div>		
-
-					</div>
-					
-				</div>
-				<div class="row">
 					<label for="annee" class="col-sm-4 control-label">Année</label>
 					<div class="col-sm-8">
 						<input id="annee" type="text" class="form-control"
@@ -59,14 +68,14 @@
 				</div>
 				<div class="row">
 					<label for="date" class="col-sm-4 control-label">Date</label>
-					<div class="col-sm-8">
+					<div class="col-sm-4">
 						<input id="date" type="text" class="form-control"
 							ng-model="elfin.IDENTIFIANT.DE">
 					</div>
-				</div>
-				<div class="row">
-					<label for="auteur" class="col-sm-4 control-label">Auteur</label>
-					<div class="col-sm-8">
+<!-- 				</div> -->
+<!-- 				<div class="row"> -->
+					<label for="auteur" class="col-sm-2 control-label">Auteur</label>
+					<div class="col-sm-2">
 						<input id="auteur" type="text" class="form-control"
 							ng-model="elfin.IDENTIFIANT.AUT" readonly>
 					</div>
