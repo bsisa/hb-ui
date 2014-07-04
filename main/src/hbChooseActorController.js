@@ -45,7 +45,7 @@
 				        $scope.hbChooseActor = function (selected, selectedPathElement) {
 				        	
 				            var modalInstance = $modal.open({
-				                templateUrl: '/assets/views/chooseCollaboratorActor.html',
+				                templateUrl: '/assets/views/chooseActor.html',
 				                scope: $scope,
 				                controller: 'HbChooseActorModalController',
 				                resolve: {
