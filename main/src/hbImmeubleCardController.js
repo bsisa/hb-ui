@@ -150,7 +150,9 @@
 							    		
 							    	}, true);
 							    	
-							    	
+							    	// ============================================================================
+							    	// === Manage owner link 
+							    	// ============================================================================							    	
 							    	
 									// Owner actor linked to building 
 							        $scope.getElfinOwnerActor = function (collectionId, elfinId) {
@@ -217,29 +219,10 @@
 							            	$scope.elfinForm.$setDirty();			            		
 						            	}
 
-						            });						        	
-						        	
-							    	
-//						            var xpathForOwner = "//ELFIN[IDENTIFIANT/QUALITE='Propriétaire']";
-//						            // TODO: actorsCollectionId must come from server configuration resource.
-//						            $log.debug("TODO: ImmeubleCardController: actorsCollectionId must come from server configuration resource.");
-//						            var actorsCollectionId = 'G20060401225530100';
-//						            
-//						            // Asynchronous ownerActors pre-loading
-//						            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForOwner})
-//									.then(function(ownerActors) {
-//											$scope.ownerActors = ownerActors;
-//										},
-//										function(response) {
-//											var message = "Le chargement des ACTEURS Propriétaire a échoué (statut de retour: "+ response.status+ ")";
-//								            hbAlertMessages.addAlert("danger",message);
-//										});							    	
-//							    	
-//						            // Parameters to hbChooseOne service function for ACTOR selection
-//						            $scope.actorChooseOneColumnsDefinition = [
-//						                        		   		            { field:"GROUPE", displayName: "Groupe"}
-//						                        		   	 		   		];
-//						            $scope.actorChooseOneTemplate = '/assets/views/chooseActor.html';							    	
+						            });
+						            
+							    	// ============================================================================						            
+						    	
         
 							    } ]);
 
