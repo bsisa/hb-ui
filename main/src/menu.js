@@ -94,9 +94,12 @@
     
     
     angular.module('hb5').controller('MenuController', [
-        '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS',
-        function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS) {
+        '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS', 'userDetails',
+        function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS, userDetails) {
 
+      	// Force service initialisation.
+       	userDetails.getAbbreviation;  
+        	
     	// Functions used in alert ui.bootstrap component found in menu.html
     	$scope.getAlerts = hbAlertMessages.getAlerts();
     	$scope.removeAlert = hbAlertMessages.removeAlert;
