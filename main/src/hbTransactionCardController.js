@@ -22,6 +22,29 @@
 					 			
 								$log.debug("    >>>> Using HbTransactionCardController");
 
+								// Benefit from server side cache...
+					            var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
+					            // TODO: immeublesCollectionId must come from server configuration resource.
+					            $log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
+					            var immeublesCollectionId = 'G20040930101030005';
+					            
+					            // Asychronous entrepriseActors preloading
+					            GeoxmlService.getCollection(immeublesCollectionId).getList({"xpath" : xpathForImmeubles}).then(
+					            	function(immeubles) {
+										$scope.immeubles = immeubles;
+										$log.debug(">>> IMMEUBLES: " + immeubles.length);
+									},
+									function(response) {
+										var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "+ response.status+ ")";
+							            hbAlertMessages.addAlert("danger",message);
+									});				
+								
+								if ($scope.immeubles) {
+									$log.debug("    >>>> Using HbTransactionCardController : $scope.immeubles.length = " + $scope.immeubles.length);
+								} else {
+									$log.debug("    >>>> Using HbTransactionCardController : $scope.immeubles NOT AVAILABLE ...");
+								}
+								
 								$scope.displayBuildingAddress = function (noSai) {
 									if ( (!$scope.selectedImmeuble) || ($scope.selectedImmeuble && $scope.selectedImmeuble.IDENTIFIANT.OBJECTIF != noSai) ) { 
 										if ($scope.immeubles && $scope.immeubles.length > 0) {
@@ -90,36 +113,18 @@
 									});					            
 					            
 					            
-								var focusOnGroupField = function() {
-									$log.debug(">>>>>>>>>>>>>>>>>> FOCUS ON #objectif <<<<<<<<<<<<<<<<<<<<< ");
+								var focusOnField = function() {
 									$('#objectif').focus();
 								};        
-								
-								// TODO: FocusTimeout issue. Find a better solution ? 
-								$timeout(focusOnGroupField , 1000, true);
-								
-								
-					            var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
-					            // TODO: immeublesCollectionId must come from server configuration resource.
-					            $log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
-					            var immeublesCollectionId = 'G20040930101030005';
-					            
-					            // Asychronous entrepriseActors preloading
-					            GeoxmlService.getCollection(immeublesCollectionId).getList({"xpath" : xpathForImmeubles})
-								.then(function(immeubles) {
-										$scope.immeubles = immeubles;
-										$log.debug(">>> IMMEUBLES: " + immeubles.length);
-									},
-									function(response) {
-										var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "+ response.status+ ")";
-							            hbAlertMessages.addAlert("danger",message);
-									});								
-								
+
 					            $scope.immeubleChooseOneColumnsDefinition = [{ field:"PARTENAIRE.PROPRIETAIRE.VALUE", displayName: "Propriétaire"},
 					                        		   		          { field:"IDENTIFIANT.OBJECTIF", displayName: "Numéro de gérance"},
 					                        		   		          { field:"CARACTERISTIQUE.CARSET.CAR[0].VALEUR", displayName: "Lieu-dit"}
 					                        		   		          ];
 					            $scope.immeubleChooseOneTemplate = '/assets/views/chooseOneImmeuble.html';
+
+								// TODO: FocusTimeout issue. Find a better solution ? 
+								$timeout(focusOnField , 500, true);					            
 					            
 							} ]);
 
