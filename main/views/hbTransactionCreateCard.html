@@ -3,95 +3,106 @@
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
-		<tabset><!-- ui.bootstrap AngularJS UI tabset --> <!-- Transaction tab -->
-		<tab> <tab-heading>Transaction CREATION ... <!-- <i class="icon-tag"></i> <b>Attributs</b> -->
-		</tab-heading>
-		<div class="form-group ">
+		<tabset><!-- ui.bootstrap AngularJS UI tabset --> 
+		<!-- Transaction tab -->
+		<tab> <tab-heading>Transaction (CREATION)</tab-heading>
+		<div class="hb-tab">
+		<div class="row">
+<!-- 		<div class="form-group "> -->
 			<!-- 1er bloc 2 colonnes de 5 lignes -->
 			<!-- 1ere colonne -->
 			<div class="col-sm-6">
-				<div class="row">
-					<label for="objectif" class="col-sm-4 control-label">No SAI</label>
-					<div class="col-sm-8">
-<!-- 						<input id="objectif" type="text" class="form-control" -->
-<!-- 							ng-model="elfin.IDENTIFIANT.OBJECTIF"> 
--->
-
-						<div class="input-group">
-							<input id="objectif" name="objectif" type="text" class="form-control" 
-								hb-no-dirty-check 
-								ng-blur="displayBuildingAddress(elfin.IDENTIFIANT.OBJECTIF)"
-								autocomplete="off"
-								typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{registerNb : $viewValue }"
-								ng-model="elfin.IDENTIFIANT.OBJECTIF"
-								tooltip="elfin.IDENTIFIANT.OBJECTIF"> <span
-								class="input-group-btn" tooltip="Recherche de SAI">
-								<button class="btn btn-default" type="button" hb-choose-one
-									ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
-									<i class="glyphicon glyphicon-list-alt"></i>
-								</button>
-							</span>
-						</div>		
-
-					</div>
-					
-				</div>
-				<div class="row">
-					<label class="col-sm-4 control-label">Adresse</label>
-					<div ng-show="selectedImmeuble && selectedImmeuble.Id" class="col-sm-8">
-						{{selectedImmeuble.IDENTIFIANT.ALIAS}}
-					</div>
-				</div>
-				<div class="row">
-					<label for="groupe" class="col-sm-4 control-label">Groupe</label>
-					<div class="col-sm-8">
-<!-- 						<input id="groupe" type="text" class="form-control" -->
-<!-- 							ng-model="elfin.GROUPE"> -->
-							
-							
-							<select id="groupe" name="groupe" class="form-control" chosen
-								data-placeholder=" " disable-search="false"
-								allow-single-deselect="true"
-								ng-model="elfin.GROUPE"
-								ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
-								<option value=''></option>
-							</select>							
-							
-					</div>
-				</div>
-				<div class="row">
-					<label for="annee" class="col-sm-4 control-label">Année</label>
-					<div class="col-sm-8">
-						<input id="annee" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.PAR">
-					</div>
-				</div>
-				<div class="row">
-					<label for="date" class="col-sm-4 control-label">Date</label>
-					<div class="col-sm-4">
-						<input id="date" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.DE">
+<!-- 				<div class="row"> -->
+					<div class="form-group">
+						<label for="objectif" class="col-sm-4 control-label">No SAI</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input id="objectif" name="objectif" type="text" class="form-control" 
+									hb-no-dirty-check 
+									ng-blur="displayBuildingAddress(elfin.IDENTIFIANT.OBJECTIF)"
+									autocomplete="off"
+									typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{registerNb : $viewValue }"
+									ng-model="elfin.IDENTIFIANT.OBJECTIF"
+									tooltip="elfin.IDENTIFIANT.OBJECTIF"> <span
+									class="input-group-btn" tooltip="Recherche de SAI">
+									<button class="btn btn-default" type="button" hb-choose-one
+										ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
+										<i class="glyphicon glyphicon-list-alt"></i>
+									</button>
+								</span>
+							</div>		
+	
+						</div>
 					</div>
 <!-- 				</div> -->
 <!-- 				<div class="row"> -->
-					<label for="auteur" class="col-sm-2 control-label">Auteur</label>
-					<div class="col-sm-2">
-						<input id="auteur" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.AUT" readonly>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Adresse</label>
+						<div ng-show="selectedImmeuble && selectedImmeuble.Id" class="col-sm-8">
+							<p class="form-control-static">{{selectedImmeuble.IDENTIFIANT.ALIAS}}</p>
+						</div>
 					</div>
-				</div>
+<!-- 				</div> -->
+<!-- 				<div class="row"> -->
+					<div class="form-group">
+						<label for="groupe" class="col-sm-4 control-label">Groupe</label>
+						<div class="col-sm-8">
+	<!-- 						<input id="groupe" type="text" class="form-control" -->
+	<!-- 							ng-model="elfin.GROUPE"> -->
+								
+								
+								<select id="groupe" name="groupe" class="form-control" chosen
+									data-placeholder=" " disable-search="false"
+									allow-single-deselect="true"
+									ng-model="elfin.GROUPE"
+									ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
+									<option value=''></option>
+								</select>							
+								
+						</div>
+					</div>
+<!-- 				</div> -->
+<!-- 				<div class="row"> -->
+					<div class="form-group">
+						<label for="annee" class="col-sm-4 control-label">Année</label>
+						<div class="col-sm-8">
+							<input id="annee" type="text" class="form-control"
+								ng-model="elfin.IDENTIFIANT.PAR">
+						</div>
+					</div>
+<!-- 				</div> -->
+<!-- 				<div class="row"> -->
+					<div class="form-group">
+						<label for="date" class="col-sm-4 control-label">Date</label>
+						<div class="col-sm-4">
+							<input id="date" type="text" class="form-control"
+								ng-model="elfin.IDENTIFIANT.DE">
+						</div>
+	<!-- 				</div> -->
+	<!-- 				<div class="row"> -->
+						<label for="auteur" class="col-sm-2 control-label">Auteur</label>
+						<div class="col-sm-2">
+							<input id="auteur" type="text" class="form-control"
+								ng-model="elfin.IDENTIFIANT.AUT" readonly>
+						</div>
+					</div>
+<!-- 				</div> -->
 			</div>
 
 			<!-- 2e colonne -->
 			<div class="col-sm-6">
-				<div class="row">
-					<label for="repartition" class="col-sm-4 control-label">Répartition</label>
-					<div class="col-sm-8">
-						<input id="repartition" type="text" class="form-control"
-							ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR">
+			
+<!-- 				<div class="row"> -->
+					<div class="form-group">				
+						<label for="repartition" class="col-sm-4 control-label">Répartition</label>
+						<div class="col-sm-8">
+							<input id="repartition" type="text" class="form-control"
+								ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR">
+						</div>
 					</div>
-				</div>
-				<div class="row">
+<!-- 				</div> -->
+<!-- 				<div class="row"> -->
+					<div class="form-group">
 						<label for="type" class="col-sm-4 control-label">Destinataire</label>
 							<div class="col-sm-8">
 								<input id="alias" name="alias" type="text" class="form-control"
@@ -99,29 +110,37 @@
 									tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" required>
 							</div>
 						</div>
-				<div class="row">
-					<label for="valeur_a_neuf" class="col-sm-4 control-label">Facturé</label>
-					<div class="col-sm-8">
-						<input id="valeur_a_neuf" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
+<!-- 					</div> -->
+<!-- 				<div class="row"> -->
+					<div class="form-group">
+						<label for="valeur_a_neuf" class="col-sm-4 control-label">Facturé</label>
+						<div class="col-sm-8">
+							<input id="valeur_a_neuf" type="text" class="form-control"
+								ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<label for="valeur" class="col-sm-4 control-label">Somme
-						payée</label>
-					<div class="col-sm-8">
-						<input id="valeur" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.VALEUR">
+<!-- 				</div> -->
+<!-- 				<div class="row"> -->
+					<div class="form-group">
+						<label for="valeur" class="col-sm-4 control-label">Somme
+							payée</label>
+						<div class="col-sm-8">
+							<input id="valeur" type="text" class="form-control"
+								ng-model="elfin.IDENTIFIANT.VALEUR">
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<label for="source" class="col-sm-4 control-label">Compte</label>
-					<div class="col-sm-8">
-						<input id="source" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.COMPTE">
+<!-- 				</div> -->
+<!-- 				<div class="row"> -->
+					<div class="form-group">
+						<label for="source" class="col-sm-4 control-label">Compte</label>
+						<div class="col-sm-8">
+							<input id="source" type="text" class="form-control"
+								ng-model="elfin.IDENTIFIANT.COMPTE">
+						</div>
 					</div>
-				</div>
+<!-- 				</div> -->
 			</div>
+		</div>
 		</div>
 		</tab> </tabset>
 	</div>
