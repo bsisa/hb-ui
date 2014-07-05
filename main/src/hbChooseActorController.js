@@ -110,6 +110,9 @@
 							
 							$scope.search = { text: ""};
 							
+							// TODO: following usage goes through all elfin properties with 
+							// search.text which is not very user friendly (matches outside 
+							// visual elfin properties.) Use custom filter, see immeubleFilter. 
 							$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);
 							
 							$scope.$watch('search.text', function() { 
