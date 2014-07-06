@@ -72,9 +72,13 @@
 									}
 
 								};
+								
+								// Copy VALEUR_A_NEUF to VALEUR only if VALEUR is 0 
 								$scope.copyValeur_a_Neuf2Valeur = function(valneuf) {
-									scope.IDENTIFIANT.VALEUR = valneuf;
-									
+									// Only initialise to valneuf if no set (== 0)
+									if ($scope.elfin.IDENTIFIANT.VALEUR == 0) {
+										$scope.elfin.IDENTIFIANT.VALEUR = valneuf;
+									} 
 								};
 
 								$rootScope
