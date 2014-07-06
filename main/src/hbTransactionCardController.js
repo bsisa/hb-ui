@@ -32,7 +32,7 @@
 								$log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
 								var immeublesCollectionId = 'G20040930101030005';
 
-								// Asychronous entrepriseActors preloading
+								// Asychronous buildings preloading
 								GeoxmlService
 										.getCollection(immeublesCollectionId)
 										.getList({
@@ -110,40 +110,33 @@
 												});
 
 								// Asychronous TRANSACTION template preloading
-								GeoxmlService
-										.getNewElfin("TRANSACTION")
-										.get()
-										.then(
-												function(transaction) {
-													// Get transaction types
-													// from catalogue
-													$scope.transactionTypes = hbUtil
-															.buildArrayFromCatalogueDefault(transaction.GROUPE);
-
-												},
-												function(response) {
-													var message = "Les valeurs par défaut pour la CLASSE TRANSACTION n'ont pas pu être chargées. (statut de retour: "
-															+ response.status
-															+ ")";
-													hbAlertMessages.addAlert(
-															"danger", message);
-													/* ajout PYS 20140706 ca ne marche pas
-													 })
-													 .then(function(prestation)
-													 {
-													 Get prestation types from
-													 catalogue
-													 $scope.prestationTypes =
-													 hbUtil.buildArrayFromCatalogueDefault(prestation.GROUPE);
-
-													 },
-													 function(response) {
-													 var message = "Les
-													 valeurs par défaut pour la CLASSE PRESTATION n'ont pas pu être chargées. (statut de retour: "+
-													 response.status+ ")";
-													 hbAlertMessages.addAlert("danger",message);
-													 */
-												});
+								GeoxmlService.getNewElfin("TRANSACTION").get().then(
+									function(transaction) {
+										// Get transaction types
+										// from catalogue
+										$scope.transactionTypes = hbUtil.buildArrayFromCatalogueDefault(transaction.GROUPE);
+									},
+									function(response) {
+										var message = "Les valeurs par défaut pour la CLASSE TRANSACTION n'ont pas pu être chargées. (statut de retour: "
+												+ response.status
+												+ ")";
+										hbAlertMessages.addAlert(
+												"danger", message);
+									});
+								
+								// Asychronous PRESTATION template preloading
+								GeoxmlService.getNewElfin("PRESTATION").get().then(
+									function(prestation) {
+										 //Get prestation types from catalogue
+										 $scope.prestationTypes = hbUtil.buildArrayFromCatalogueDefault(prestation.GROUPE);
+									},
+									function(response) {
+										var message = "Les valeurs par défaut pour la CLASSE PRESTATION n'ont pas pu être chargées. (statut de retour: "
+												+ response.status
+												+ ")";
+										hbAlertMessages.addAlert(
+												"danger", message);
+									});
 
 								var focusOnField = function() {
 									$('#objectif').focus();
@@ -168,22 +161,33 @@
 								// solution ?
 								$timeout(focusOnField, 500, true);
 
-								/* ajout PYS 20140706 ca ne marche pas
+								
+								var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
+					            // TODO: actorsCollectionId must come from server configuration resource.
+					            $log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
+					            var actorsCollectionId = 'G20060401225530100';								
+								
+								/* ajout PYS 20140706 ca ne marche pas */
 								$scope.entrepriseActors = null;
 
-								GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForEntreprises})
-										.then(
-												function(entrepriseActors) {
-													$scope.entrepriseActors = entrepriseActors;
-												},
-												function(response) {
-													var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "
-															+ response.status
-															+ ")";
-													hbAlertMessages.addAlert(
-															"danger", message);
-												}); */
-
+								GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForEntreprises}).then(
+									function(entrepriseActors) {
+										$scope.entrepriseActors = entrepriseActors;
+									},
+									function(response) {
+										var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "
+												+ response.status
+												+ ")";
+										hbAlertMessages.addAlert(
+												"danger", message);
+									});
+								
+					            // Parameters to hbChooseOne service function for ACTOR selection
+					            $scope.actorChooseOneColumnsDefinition = [
+						                        		   		            { field:"GROUPE", displayName: "Groupe"}
+						                        		   	 		   		];
+					            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';									
+								
 							} ]);
 
 })();

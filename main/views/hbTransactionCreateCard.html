@@ -73,7 +73,8 @@
 						<label for="annee" class="col-sm-4 control-label">Année</label>
 						<div class="col-sm-8">
 							<input id="annee" type="text" class="form-control"
-								ng-model="elfin.IDENTIFIANT.PAR">
+								ng-model="elfin.IDENTIFIANT.PAR" 
+								hb-no-dirty-check >
 						</div>
 					</div>
 <!-- 				</div> -->
@@ -106,7 +107,8 @@
 						<label for="date" class="col-sm-4 control-label">Date</label>
 						<div class="col-sm-4">
 							<input id="date" type="text" class="form-control"
-								ng-model="elfin.IDENTIFIANT.DE">
+								ng-model="elfin.IDENTIFIANT.DE"
+								hb-no-dirty-check >
 						</div>
 	<!-- 				</div> -->
 	<!-- 				<div class="row"> -->
@@ -122,7 +124,8 @@
 						<label for="repartition" class="col-sm-4 control-label">Répartition</label>
 						<div class="col-sm-8">
 							<input id="repartition" type="text" class="form-control"
-								ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR">
+								ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR" 
+								hb-no-dirty-check >
 						</div>
 					</div>
 					<!-- 				</div> -->
@@ -132,15 +135,17 @@
 						<div class="col-sm-8">
 							<div class="input-group">
 								<input id="alias" type="text" class="form-control"
+									hb-no-dirty-check 
 									autocomplete="off"
 									typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8"
-									ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
-									tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"> <span
-									class="input-group-btn" tooltip="Recherche d'entreprise">
-									<!--  ><button class="btn btn-default" type="button" hb-choose-one
-										ng-click="hbChooseOne(elfin, 'PARTENAIRE.PROPRIETAIRE.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+									ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
+									tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> <span
+									class="input-group-btn" tooltip="Recherche d'entreprise"
+									 >
+									<button class="btn btn-default" type="button" hb-choose-one
+										ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
 										<i class="glyphicon glyphicon-list-alt"></i>
-									</button>-->
+									</button>
 								</span>
 							</div>
 						</div>
@@ -151,12 +156,14 @@
 						<label for="valeur_a_neuf" class="col-sm-4 control-label">Facturé</label>
 						<div class="col-sm-3">
 							<input id="valeur_a_neuf" type="text" class="form-control" ng-blur="copyValeur_a_Neuf2Valeur(elfin.IDENTIFIANT.VALEUR_A_NEUF)"
-								ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
+								ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF" 
+								hb-no-dirty-check >
 						</div>
 						<label for="valeur" class="col-sm-2 control-label">Payé</label>
 						<div class="col-sm-3">
 							<input id="valeur" type="text" class="form-control"
-								ng-model="elfin.IDENTIFIANT.VALEUR">
+								ng-model="elfin.IDENTIFIANT.VALEUR" 
+								hb-no-dirty-check >
 						</div>
 
 					</div>
@@ -166,7 +173,8 @@
 						<label for="source" class="col-sm-4 control-label">Compte</label>
 						<div class="col-sm-8">
 							<input id="source" type="text" class="form-control"
-								ng-model="elfin.IDENTIFIANT.COMPTE">
+								ng-model="elfin.IDENTIFIANT.COMPTE" 
+								hb-no-dirty-check >
 						</div>
 					</div>
 					<!-- 				</div> -->
