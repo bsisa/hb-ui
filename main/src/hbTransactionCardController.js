@@ -91,6 +91,10 @@
 									// }
 
 								};
+								$scope.copyValeur_a_Neuf2Valeur = function(valneuf) {
+									scope.IDENTIFIANT.VALEUR = valneuf;
+									
+								};
 
 								$rootScope
 										.$on(
