@@ -138,8 +138,7 @@
 															// abbreviation from
 															// userDetails
 															// service.
-															$scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation;
-
+															$scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();
 															// Default value
 															// from catalogue
 															// contains
