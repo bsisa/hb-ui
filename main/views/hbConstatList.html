@@ -2,25 +2,119 @@
 	ng-show="elfins">
 	<thead>
 		<tr>
-			<th colspan="6"><span class="badge">{{elfinsCount}}</span> 
-			<span>constat{{ elfinsCount | plural }} trouvé</span>{{elfinsCount | plural }}</th>
+			<th colspan="7"><span class="badge">{{elfinsCount}}</span> <span>constat{{
+					elfinsCount | plural }} trouvé</span>{{elfinsCount | plural }}</th>
+			<th colspan="5">Phasage</th>
+			<th colspan="6">Planning</th>
 		</tr>
 		<tr>
+			<th>Filtre </th>
 			<th />
-			<th><a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Groupe</a></th>
-			<th ><a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">NOM</a></th>
-			<th ><a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">ALIAS</a></th>
-			<th><a href="" ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse">QUALITE</a></th>
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			<th />
+			</tr>
+			<tr>
+			<th>Tri</th>
+			<th><a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Resp</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse">Constaté
+					le</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">Descriptif</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse">Etage-Locataire</a></th>
+			<th><a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Type</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">No
+					SAI</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Analyse</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Avant-Projet</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Adjudication</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Exécution</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Réception</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Retard</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">S1</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">S2</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">S3</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">M1</a></th>
+			<th><a href=""
+				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">&gt;1 an</a></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="elfin in elfins | orderBy:predicate:reverse">
 			<td><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td>
+			<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[position()=last()].POUR_QUI">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE[1].POUR_QUI}}</td>
+			<td>{{elfin.IDENTIFIANT.DE}}</td>
+			<td>{{elfin.IDENTIFIANT.NOM}}</td>
+			<td>{{elfin.PARTENAIRE.USAGER.VALUE}}</td>
 			<td>{{elfin.GROUPE}}</td>
-			<td >{{elfin.IDENTIFIANT.NOM}}</td>
-			<td >{{elfin.IDENTIFIANT.ALIAS}}</td>
-			<td>{{elfin.IDENTIFIANT.QUALITE}}</td>
+			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<!-- je ne sais pas comment filtrer
+			
+			<td	tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[ACTION='Analyse'].E_DATE">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Analyse'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Analyse'}}</td>  -->
+			<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Analyse'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Analyse'">voir
+				tooltip</td>
+			<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Avant-Projet'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Avant-Projet'">voir
+				tooltip</td>
+			<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Appel d offre et Adjudication'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Appel d offre et Adjudication'">voir
+				tooltip</td>
+			<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Exécution'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Exécution'">voir
+				tooltip</td>
+			<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Réception'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Réception'">voir
+				tooltip</td>
+			<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()].E_PAR_QUI}}">voir
+				tooltip</td>
+		<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+7j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+7j].E_PAR_QUI}}">voir
+				tooltip</td>
+	<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+14j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+14j].E_PAR_QUI}}">voir
+				tooltip</td>
+					<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+21j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+21j].E_PAR_QUI}}">voir
+				tooltip</td>
+									<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+30j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+30j].E_PAR_QUI}}">voir
+				tooltip</td>
+													<td
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+365j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+365j].E_PAR_QUI}}">voir
+				tooltip</td>
+				
+				
+
 		</tr>
 	</tbody>
 </table>
