@@ -48,6 +48,9 @@
             .when('/elfin/:collectionId/CONSTAT/:elfinId', {
                 templateUrl: '/assets/views/CONSTAT_card_view.html'
             })
+            .when('/elfin/:collectionId/CONSTAT', {
+                templateUrl: '/assets/views/CONSTAT_list_view.html'
+            })
             .when('/elfin/:collectionId/FONTAINE/:elfinId', {
                 templateUrl: '/assets/views/FONTAINE_card_view.html'
             })

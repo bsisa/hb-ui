@@ -1,0 +1,26 @@
+<table class="table table-condensed table-bordered table-striped"
+	ng-show="elfins">
+	<thead>
+		<tr>
+			<th colspan="6"><span class="badge">{{elfinsCount}}</span> 
+			<span>constat{{ elfinsCount | plural }} trouvé</span>{{elfinsCount | plural }}</th>
+		</tr>
+		<tr>
+			<th />
+			<th><a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Groupe</a></th>
+			<th ><a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">NOM</a></th>
+			<th ><a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">ALIAS</a></th>
+			<th><a href="" ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse">QUALITE</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="elfin in elfins | orderBy:predicate:reverse">
+			<td><a
+				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td>
+			<td>{{elfin.GROUPE}}</td>
+			<td >{{elfin.IDENTIFIANT.NOM}}</td>
+			<td >{{elfin.IDENTIFIANT.ALIAS}}</td>
+			<td>{{elfin.IDENTIFIANT.QUALITE}}</td>
+		</tr>
+	</tbody>
+</table>
