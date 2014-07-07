@@ -38,13 +38,7 @@
 										$location.search(searchObj).path( "/elfin/create/CONSTAT" );	
 									};									
 									
-									// Extracts file name for ANNEXE/RENVOI/LIEN corresponding to a photo.
-									$scope.getLienFileName = function (lien) {
-										var splitString = lien.split('/');
-										return splitString[splitString.length-1];
-									};							        
-							        
-							        
+						        
 							    	// Watch related to CONSTAT list in the context of elfin of CLASSE IMMEUBLE 
 							        // hence the dedicated controller.
 							    	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
@@ -138,7 +132,7 @@
 													if ( currentRenvoi.VALUE.toLowerCase().indexOf("photo") != -1 ) {
 														// Photo found build link
 														var photoLink = currentRenvoi;
-														$scope.photoSrc = '/api/melfin/annex/'+$scope.elfin.ID_G+"/"+$scope.elfin.Id+"/"+ $scope.getLienFileName(photoLink.LIEN);
+														$scope.photoSrc = hbUtil.getLinkFileApiUrl($scope.elfin.ID_G, $scope.elfin.Id, photoLink.LIEN);
 														break;
 													} else {
 														// No photo found (other annex)

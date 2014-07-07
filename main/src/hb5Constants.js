@@ -19,3 +19,15 @@ angular.module('hb5').constant('HB_EVENTS', {
 	ELFIN_DELETED : "hb5:elfin:deletedEvent",
     ELFIN_FORM_DRAW_EVENT : 'hb5:elfin:FormDrawEvent'
 });
+
+
+
+/**
+ * Define API related collection ids, URL fragment,... as constants.
+ * Some of these values might be refactored to server side configurations
+ * in the future. Having them all already centralised will make 
+ * this refactoring easier.
+ */
+angular.module('hb5').constant('HB_API', {
+	ANNEXE_URL : "/api/melfin/annex/"
+});

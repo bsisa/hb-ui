@@ -5,7 +5,7 @@
 	 * without code duplication.
 	 */
 	
-	angular.module('hb5').service('hbUtil', ['$window',function ($window) {
+	angular.module('hb5').service('hbUtil', ['$log','$window','HB_API',function ($log,$window,HB_API) {
 
 		/**
 		 * Returns the YYYY-MM-DD string corresponding to the date parameter
@@ -234,6 +234,28 @@
 	        return constatEcheanceTemplate;
         };
         
+        
+		/**
+		 * Extracts file name for ANNEXE/RENVOI/LIEN corresponding to a photo.
+		 * 
+		 * Note: logic is currently basic and not strictly specific but may evolve thus 
+		 * the dedicated function.
+		 */
+		var getLinkFileName = function (link) {
+			var splitString = link.split('/');
+			return splitString[splitString.length-1];
+		};							               
+		
+		/**
+		 * Build URL to get file for ANNEXE/RENVOI/LIEN from HyperBird API service.
+		 */
+		var getLinkFileApiUrl = function (elfinID_G, elfinId, link) {
+			var url = HB_API.ANNEXE_URL+elfinID_G+"/"+elfinId+"/"+ getLinkFileName(link);
+			$log.debug("getLinkFileApiUrl => " + url);
+			return url;		
+		};
+        
+        
         return {
         	reorderArrayByPOS:reorderArrayByPOS,
         	buildUrlQueryString:buildUrlQueryString,
@@ -244,7 +266,10 @@
         	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault,
         	encodeUriParameter:encodeUriParameter,
         	getDateInHbTextFormat:getDateInHbTextFormat,
-        	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue
+        	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue,
+        	getLinkFileName:getLinkFileName,
+        	getLinkFileApiUrl:getLinkFileApiUrl
+        	
         };
     }]);
 	
