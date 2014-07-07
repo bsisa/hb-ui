@@ -15,7 +15,7 @@
 <!-- 				<div class="row"> -->
 					<div class="form-group">
 						<label for="objectif" class="col-sm-4 control-label">No SAI</label>
-						<div class="col-sm-8">
+						<div class="col-sm-4">
 						<!--  	Suggestion de saisie inutile et coute 2 tabs	
 						<div class="input-group">
 							
@@ -35,10 +35,11 @@
 								</span>  
 							</div>		-->
 							<input id="objectif" type="text" class="form-control" hb-no-dirty-check 
-									ng-blur="displayBuildingAddress(elfin.IDENTIFIANT.OBJECTIF)"
-								ng-model="elfin.IDENTIFIANT.OBJECTIF">
-	
+									ng-blur="displayBuildingAddress(constatSelectionHelperSai)"
+								ng-model="constatSelectionHelperSai">
+							
 						</div>
+						<p class="col-sm-4 form-control-static"><em>SAI prest: - {{elfin.IDENTIFIANT.OBJECTIF}}</em></p>
 					</div>
 <!-- 				</div> -->
 <!-- 				<div class="row"> -->
@@ -74,32 +75,23 @@
 						<div class="col-sm-8">
 							<input id="annee" type="text" class="form-control"
 								ng-model="elfin.IDENTIFIANT.PAR" 
-								hb-no-dirty-check >
+								hb-no-dirty-check 
+								ng-blur="getPrestation(constatSelectionHelperSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR)">
 						</div>
 					</div>
 <!-- 				</div> -->
 <!-- <div class="row"> -->
 					<div class="form-group">
-						<label for="groupe" class="col-sm-4 control-label">Groupe Transaction</label>
+						<label for="source" class="col-sm-4 control-label">Compte</label>
 						<div class="col-sm-8">
-	<!-- 						<input id="groupe" type="text" class="form-control" -->
-	<!-- 							ng-model="elfin.GROUPE"> -->
-								
-								
-								<select id="groupe" name="groupe" class="form-control" chosen
-									data-placeholder=" " disable-search="false"
-									allow-single-deselect="true"
-									ng-model="elfin.GROUPE"
-									ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
-									<option value=''></option>
-								</select>							
-								
+<!-- 							<input id="source" type="text" class="form-control" -->
+<!-- 								ng-model="elfin.IDENTIFIANT.COMPTE"  -->
+<!-- 								hb-no-dirty-check > -->
+							<p class="form-control-static">{{elfin.IDENTIFIANT.COMPTE}}</p>
 						</div>
 					</div>
 <!-- 				</div> -->
- 				
 			</div>
-
 			<!-- 2e colonne -->
 			<div class="col-sm-6">
 	<!-- 		<div class="row"> -->
@@ -141,12 +133,12 @@
 									hb-no-dirty-check 
 									autocomplete="off"
 									typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8"
-									ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
-									tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> <span
+									ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
+									<span
 									class="input-group-btn" tooltip="Recherche d'entreprise"
 									 >
 									<button class="btn btn-default" type="button" hb-choose-one
-										ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+										ng-click="hbChooseOne(elfin, 'PARTENAIRE.PROPRIETAIRE.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
 										<i class="glyphicon glyphicon-list-alt"></i>
 									</button>
 								</span>
@@ -173,13 +165,22 @@
 					<!-- 				</div> -->
 					<!-- 				<div class="row"> -->
 					<div class="form-group">
-						<label for="source" class="col-sm-4 control-label">Compte</label>
+						<label for="groupe" class="col-sm-4 control-label">Groupe Transaction</label>
 						<div class="col-sm-8">
-							<input id="source" type="text" class="form-control"
-								ng-model="elfin.IDENTIFIANT.COMPTE" 
-								hb-no-dirty-check >
+	<!-- 						<input id="groupe" type="text" class="form-control" -->
+	<!-- 							ng-model="elfin.GROUPE"> -->
+								
+								
+								<select id="groupe" name="groupe" class="form-control" chosen
+									data-placeholder=" " disable-search="false"
+									allow-single-deselect="true"
+									ng-model="elfin.GROUPE"
+									ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
+									<option value=''></option>
+								</select>							
+								
 						</div>
-					</div>
+					</div>					
 					<!-- 				</div> -->
 			</div>
 		</div>
