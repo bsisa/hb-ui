@@ -124,8 +124,11 @@
 						<label for="repartition" class="col-sm-4 control-label">Répartition</label>
 						<div class="col-sm-8">
 							<input id="repartition" type="text" class="form-control"
+								autocomplete="off"
+								typeahead="repartition.name as repartition.value for repartition in repartitions | filter:$viewValue | limitTo:8" 
 								ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR" 
-								hb-no-dirty-check >
+								hb-no-dirty-check 
+								>
 						</div>
 					</div>
 					<!-- 				</div> -->

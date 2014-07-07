@@ -104,6 +104,8 @@
 															$scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();
 															// Default value from catalogue contains constatTypes list: Reset it.
 															$scope.elfin.GROUPE = "";
+															// Default value from catalogue contains repartition list: Reset it.
+															$scope.elfin.CARACTERISTIQUE.CAR3.VALEUR = "";
 														} else {
 															$log
 																	.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
@@ -119,6 +121,7 @@
 										// Get transaction types
 										// from catalogue
 										$scope.transactionTypes = hbUtil.buildArrayFromCatalogueDefault(transaction.GROUPE);
+										$scope.repartitions = hbUtil.buildArrayFromCatalogueDefault(transaction.CARACTERISTIQUE.CAR3.VALEUR);
 									},
 									function(response) {
 										var message = "Les valeurs par défaut pour la CLASSE TRANSACTION n'ont pas pu être chargées. (statut de retour: "
@@ -171,7 +174,6 @@
 					            $log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
 					            var actorsCollectionId = 'G20060401225530100';								
 								
-								/* ajout PYS 20140706 ca ne marche pas */
 								$scope.entrepriseActors = null;
 
 								GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForEntreprises}).then(
