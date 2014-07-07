@@ -70,7 +70,7 @@
 			<td><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td>
 			<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[position()=last()].POUR_QUI">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE[1].POUR_QUI}}</td>
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[position()=last()].POUR_QUI">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE[elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI}}</td>
 			<td>{{elfin.IDENTIFIANT.DE}}</td>
 			<td>{{elfin.IDENTIFIANT.NOM}}</td>
 			<td>{{elfin.PARTENAIRE.USAGER.VALUE}}</td>
