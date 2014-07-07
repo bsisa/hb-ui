@@ -80,14 +80,23 @@
 			
 			<td	tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[ACTION='Analyse'].E_DATE">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Analyse'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Analyse'}}</td>  -->
 			<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Analyse'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Analyse'">voir
-				tooltip</td>
+				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Analyse'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Analyse'">
+				<span ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Analyse'} ">
+				{{analysis.POUR_QUI}} <span ng-if="!$last">;</span>
+				</span>
+			</td>
 			<td
 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Avant-Projet'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Avant-Projet'">voir
-				tooltip</td>
+				<span ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ">
+				{{analysis.POUR_QUI}} <span ng-if="!$last">;</span>
+				</span>
+			</td>
 			<td
 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Appel d offre et Adjudication'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Appel d offre et Adjudication'">voir
-				tooltip</td>
+				<span ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ">
+				{{analysis.POUR_QUI}} <span ng-if="!$last">;</span>
+				</span>
+			</td>
 			<td
 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Exécution'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Exécution'">voir
 				tooltip</td>
