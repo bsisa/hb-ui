@@ -11,8 +11,8 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="annexe in annexes">
-					<td>Link</td>
-					<td>File name</td>
+					<td><a target="_self" ng-href="{{annexe.link}}">Détail</a></td>
+					<td>{{annexe.fileName}}</td>
 				</tr>
 			</tbody>
 		</table>
