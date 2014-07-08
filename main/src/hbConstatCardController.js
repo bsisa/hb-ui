@@ -182,9 +182,16 @@
 							});
 			            
 			            // Parameters to hbChooseOne service function for ACTOR selection
-			            $scope.actorChooseOneColumnsDefinition = [
-			                        		   		            { field:"GROUPE", displayName: "Groupe"}
+			            $scope.actorCollaboratorChooseOneColumnsDefinition = [
+			                        		   		            { field:"GROUPE", displayName: "Groupe"},
+			                        		   		            { field:"IDENTIFIANT.NOM", displayName: "Nom"},
+			                        		   		            { field:"IDENTIFIANT.ALIAS", displayName: "Prénom"}
 			                        		   	 		   		];
+
+			            $scope.actorCompanyChooseOneColumnsDefinition = [
+				                        		   		            { field:"GROUPE", displayName: "Groupe"}
+				                        		   	 		   		];
+			            
 			            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';
 
 			            // Parameter to hbChooseOne service function for ConstatType selection

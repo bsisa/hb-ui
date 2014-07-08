@@ -92,7 +92,7 @@
 							<span class="input-group-btn"
 								tooltip="Recherche de collaborateur">
 								<button class="btn btn-default" type="button" hb-choose-one
-									ng-click="hbChooseOne(elfin, 'IDENTIFIANT.AUT', collaboratorActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+									ng-click="hbChooseOne(elfin, 'IDENTIFIANT.AUT', collaboratorActors, 'GROUPE', actorCollaboratorChooseOneColumnsDefinition, actorChooseOneTemplate )">
 									<i class="glyphicon glyphicon-list-alt"></i>
 								</button>
 							</span>
@@ -121,12 +121,12 @@
 						<div class="input-group">
 							<input id="alias" type="text" class="form-control"
 								autocomplete="off"
-								typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8"
+								typeahead="actor.GROUPE for actor in entrepriseActors | filter:{GROUPE: $viewValue} | limitTo:8"
 								ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
 								tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> <span
 								class="input-group-btn" tooltip="Recherche d'entreprise">
 								<button class="btn btn-default" type="button" hb-choose-one
-									ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+									ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorCompanyChooseOneColumnsDefinition, actorChooseOneTemplate )">
 									<i class="glyphicon glyphicon-list-alt"></i>
 								</button>
 							</span>
@@ -302,13 +302,20 @@
 							<div class="input-group">
 								<input id="currentEventPourQui" type="text" class="form-control"
 									ng-model="currentEvent.POUR_QUI"
-									tooltip="currentEvent.POUR_QUI"> <span
-									class="input-group-btn">
-									<button class="btn btn-default"
-										ng-click="searchManager($index)">
-										<span class="caret"></span>
+									tooltip="currentEvent.POUR_QUI"> 
+								<span class="input-group-btn"
+									tooltip="Recherche de collaborateur">
+									<button class="btn btn-default" type="button" hb-choose-one
+										ng-click="hbChooseOne(currentEvent, 'POUR_QUI', collaboratorActors, 'GROUPE', actorCollaboratorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+										<i class="glyphicon glyphicon-list-alt"></i>
 									</button>
 								</span>
+<!-- 								<span class="input-group-btn"> -->
+<!-- 									<button class="btn btn-default" -->
+<!-- 										ng-click="searchManager($index)"> -->
+<!-- 										<span class="caret"></span> -->
+<!-- 									</button> -->
+<!-- 								</span> -->
 							</div>
 						</td>
 
