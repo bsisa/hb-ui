@@ -108,8 +108,14 @@
 						// TODO: move to hbDate directive - END
 						// ============================================
 
+						/**
+						 * Dynamic event status tooltip
+						 */
 						$scope.eventStatusTooltip = "";
 						
+						/**
+						 * Make tooltip keep in sync. with switch button state.
+						 */
 						$scope.updateEventStatusTooltip = function() {
 							if ($scope.currentEvent.PAR_QUI === "EN COURS") {
 								$scope.eventStatusTooltip = 'Statut en cours';
@@ -122,6 +128,9 @@
 							}
 						};
 						
+						/**
+						 * Make switch button switch from state to state.
+						 */
 						$scope.switchEventStatus = function (currentEvent) {
 							
 							if (currentEvent.PAR_QUI === "EN COURS") {
