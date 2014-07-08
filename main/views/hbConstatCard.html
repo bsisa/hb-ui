@@ -88,7 +88,7 @@
 							<input id="author" type="text" class="form-control"
 								autocomplete="off"
 								typeahead="actor.GROUPE for actor in collaboratorActors | filter:{GROUPE: $viewValue} | limitTo:8"
-								ng-model="elfin.IDENTIFIANT.AUT" tooltip="elfin.IDENTIFIANT.AUT">
+								ng-model="elfin.IDENTIFIANT.AUT" >
 							<span class="input-group-btn"
 								tooltip="Recherche de collaborateur">
 								<button class="btn btn-default" type="button" hb-choose-one
@@ -302,7 +302,9 @@
 							<div class="input-group">
 								<input id="currentEventPourQui" type="text" class="form-control"
 									ng-model="currentEvent.POUR_QUI"
-									tooltip="currentEvent.POUR_QUI"> 
+									autocomplete="off"
+									typeahead="actor.GROUPE for actor in collaboratorActors | filter:{GROUPE: $viewValue} | limitTo:8"
+									> 
 								<span class="input-group-btn"
 									tooltip="Recherche de collaborateur">
 									<button class="btn btn-default" type="button" hb-choose-one
@@ -335,12 +337,12 @@
 							<!-- 										<span class="input-group-btn"> --> <!-- 											<button class="btn btn-default" ng-click="searchAction($index)"><span class="caret"></span></button> -->
 							<!-- 										</span>									 --> <!-- 									</div> -->
 						</td>
-						<td><input id="currentEventEPourQui" type="text"
-							class="form-control" ng-model="currentEvent.E_POUR_QUI"
-							tooltip="currentEvent.E_POUR_QUI"></td>
-						<td><input id="currentEventEParQui" type="text"
-							class="form-control" ng-model="currentEvent.E_PAR_QUI"
-							tooltip="currentEvent.E_PAR_QUI"></td>
+						<td>
+							<input id="currentEventEPourQui" type="text" class="form-control" ng-model="currentEvent.E_POUR_QUI">
+						</td>
+						<td>
+							<input id="currentEventEParQui" type="text" class="form-control" ng-model="currentEvent.E_PAR_QUI">
+						</td>
 					</tr>
 <!-- 					<tr ng-repeat-end> -->
 					<tr>
