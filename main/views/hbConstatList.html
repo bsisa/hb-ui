@@ -28,7 +28,7 @@
 			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse">Constaté
 					le</a></th>
-			<th width="150px"><a href=""
+			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">Descriptif</a></th>
 			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse">Etage-Locataire</a></th>
@@ -70,7 +70,7 @@
 			<td
 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[position()=last()].POUR_QUI">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE[elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI}}</td>
 			<td>{{elfin.IDENTIFIANT.DE}}</td>
-			<td width="150px">{{elfin.IDENTIFIANT.NOM}}</td>
+			<td>{{elfin.IDENTIFIANT.NOM}}</td>
 			<td>{{elfin.PARTENAIRE.USAGER.VALUE}}</td>
 			<td>{{elfin.GROUPE}}</td>
 			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
@@ -79,37 +79,37 @@
 			<td	tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[ACTION='Analyse'].E_DATE">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Analyse'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Analyse'}}</td>  -->
 			<td>
 				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Analyse'} ">
-				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span>
 				<span ng-if="!$last"></br></span>
 				</span>
 			</td>
 			<td>
 				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ">
-				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span>
 				<span ng-if="!$last"></br></span>
 				</span>
 			</td>
 			<td>
 				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Appel d offre et Adjudication'} ">
-				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span>
 				<span ng-if="!$last"></br></span>
 				</span>
 			</td>
 			<td>
 				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Exécution'} ">
-				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span>
 				<span ng-if="!$last"></br></span>
 				</span>
 			</td>
@@ -118,10 +118,10 @@
 <!-- 				tooltip</td> -->
 			<td>
 				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Réception'} ">
-				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
-				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} </br> {{echeance.E_DATE}}</span>
 				<span ng-if="!$last"></br></span>
 				</span>
 			</td>
@@ -131,7 +131,7 @@
 <!-- 					<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{getPhaseAbbreviation(echeance.ACTION)}}</span></span> -->
 					<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{getPhaseAbbreviation(echeance.ACTION)}} - {{getEcheanceStatus(echeance.E_DATE)}}</span></span>
 <!-- 					<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{getPhaseAbbreviation(echeance.ACTION)}}</span> -->
-					<span ng-if="!$last">;</span>
+<!-- 					<span ng-if="!$last">;</span> -->
 				</span>
 			</td>
 <!-- 			<td -->
