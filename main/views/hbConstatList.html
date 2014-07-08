@@ -79,22 +79,24 @@
 			<!-- je ne sais pas comment filtrer
 			
 			<td	tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[ACTION='Analyse'].E_DATE">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Analyse'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Analyse'}}</td>  -->
-			<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Analyse'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Analyse'">
-				<span ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Analyse'} ">
-				{{analysis.POUR_QUI}} <span ng-if="!$last">;</span>
+			<td>
+				<span style="background-color:red" ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Analyse'} ">
+				{{analysis.POUR_QUI}} - {{analysis.E_DATE}} <span ng-if="!$last"></br></span>
 				</span>
 			</td>
-			<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Avant-Projet'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Avant-Projet'">voir
-				<span ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ">
-				{{analysis.POUR_QUI}} <span ng-if="!$last">;</span>
+			<td>
+				<span style="background-color:green" ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ">
+				{{analysis.POUR_QUI}} - {{analysis.E_DATE}} <span ng-if="!$last">;</span>
 				</span>
 			</td>
-			<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Appel d offre et Adjudication'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Appel d offre et Adjudication'">voir
-				<span ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ">
-				{{analysis.POUR_QUI}} <span ng-if="!$last">;</span>
+			<td>
+				<span style="background-color:orange" ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Appel d offre et Adjudication'} ">
+				{{analysis.POUR_QUI}} - {{analysis.E_DATE}} <span ng-if="!$last">;</span>
+				</span>
+			</td>
+			<td>
+				<span style="background-color:orange" ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Exécution'} ">
+				{{analysis.POUR_QUI}} - {{analysis.E_DATE}} <span ng-if="!$last">;</span>
 				</span>
 			</td>
 			<td
