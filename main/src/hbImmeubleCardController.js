@@ -35,6 +35,9 @@
 						            
 						            $scope.prestaPredicate = 'IDENTIFIANT.DE';
 						            $scope.prestaReverse = true;
+						            
+						            $scope.contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE';
+						            $scope.contractReverse = false;
 							        
 							        
 									// Triggers a redirection to the CONSTAT creation URL with current 

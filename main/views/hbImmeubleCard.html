@@ -498,20 +498,20 @@
 								<tr>
 									<th>Contrat</th>
 									<th><a href=""
-										ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.UNITE'; deadlineReverse=!deadlineReverse">Prestation
+										ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
 											I</a></th>
 									<th><a href=""
-										ng-click="deadlinePredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; deadlineReverse=!deadlineReverse">Prestation
+										ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
 											II</a></th>
 									<th><a href=""
-										ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Entreprise</a></th>
+										ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
 									<th><a href=""
-										ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Montant</a></th>
+										ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr
-									ng-repeat="contrat in contrats | orderBy:deadlinePredicate:deadlineReverse">
+									ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse">
 									<td><a href="/elfin/{{contrat.ID_G}}/CONTRT/{{contrat.Id}}">Détail</a></td>
 									<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.UNITE">{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 									<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.VALEUR">{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
