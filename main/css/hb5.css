@@ -1,4 +1,9 @@
 
+colgroup col.phase {
+  background-color: #eeeeee;
+  border: solid 1px grey;
+}
+
 /* Remove arrows on input field of type number */
 input[type='number'] {
     -moz-appearance:textfield;
