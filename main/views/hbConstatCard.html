@@ -287,15 +287,24 @@
 							<div hb-date ng-model="currentEvent.DATE"></div>
 						</td>
 						<td>
-							<div class="input-group">
-								<input id="currentEventAction" type="text" class="form-control"
-									ng-model="currentEvent.ACTION" tooltip="currentEvent.ACTION">
-								<span class="input-group-btn">
-									<button class="btn btn-default"
-										ng-click="searchFollowUpStage($index)">
-										<span class="caret"></span>
-									</button>
-								</span>
+<!-- 							<div class="input-group"> -->
+<!-- 								<input id="currentEventAction" type="text" class="form-control" -->
+<!-- 									ng-model="currentEvent.ACTION" tooltip="currentEvent.ACTION"> -->
+<!-- 								<span class="input-group-btn"> -->
+<!-- 									<button class="btn btn-default" -->
+<!-- 										ng-click="searchFollowUpStage($index)"> -->
+<!-- 										<span class="caret"></span> -->
+<!-- 									</button> -->
+<!-- 								</span> -->
+<!-- 							</div> -->
+							<div>								
+								<select id="currentEventAction" name="currentEventAction"
+									class="form-control" chosen data-placeholder=" "
+									disable-search="true" allow-single-deselect="true"
+									ng-model="currentEvent.ACTION"
+									ng-options="phase.name as phase.value for phase in phaseList">
+									<option value=''></option>
+								</select>								
 							</div>
 						</td>
 						<td>
