@@ -87,7 +87,7 @@
 						<div class="input-group">
 							<input id="author" type="text" class="form-control"
 								autocomplete="off"
-								typeahead="actor.GROUPE for actor in collaboratorActors | filter:$viewValue | limitTo:8"
+								typeahead="actor.GROUPE for actor in collaboratorActors | filter:{GROUPE: $viewValue} | limitTo:8"
 								ng-model="elfin.IDENTIFIANT.AUT" tooltip="elfin.IDENTIFIANT.AUT">
 							<span class="input-group-btn"
 								tooltip="Recherche de collaborateur">
