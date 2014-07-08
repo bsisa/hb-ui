@@ -173,6 +173,8 @@
 			            		$scope.statusTypes = hbUtil.buildArrayFromCatalogueDefault(constat.IDENTIFIANT.QUALITE);
 			            		// Get constat types from catalogue
 			            		$scope.constatTypes = hbUtil.buildArrayFromCatalogueDefault(constat.GROUPE);
+			            		// Get phase list from ECHEANCE.ACTION default values.
+			            		$scope.phaseList = hbUtil.buildArrayFromCatalogueDefault(constat.ACTIVITE.EVENEMENT.ECHEANCE[0].ACTION);
 			            		// Get prestation groups from ECHEANCE.E_ACTION default values.
 			            		$scope.prestationGroups = hbUtil.buildArrayFromCatalogueDefault(constat.ACTIVITE.EVENEMENT.ECHEANCE[0].E_ACTION);
 			            		// Get ECHEANCE template from catalogue
