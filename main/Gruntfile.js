@@ -24,6 +24,7 @@ module.exports = function(grunt) {
                                 'src/hbMapService.js',
                                 'src/hb5.js',
                                 'src/hb5Constants.js',
+                                'src/hb5Filters.js',
                                 'src/menu.js',
 								'src/hbActeurCardDirective.js',
 								'src/hbActeurCardController.js',

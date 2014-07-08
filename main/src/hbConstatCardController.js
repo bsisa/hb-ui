@@ -59,9 +59,15 @@
 						            $log.debug("Sorting "+$scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length+" ECHEANCEs");
 					            	hbUtil.reorderArrayByPOS($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE);
 					            };
+					            $scope.currentEvent = $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE[$scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1];
 				    		};
 				    		
 				    	}, true);
+				    	
+				    	$scope.$watchCollection('elfin.ACTIVITE.EVENEMENT.ECHEANCE', function(newEcheances, oldEcheances) {
+				    		$scope.currentEvent = newEcheances[newEcheances.length-1];
+				        });
+
 						
 //			            $scope.deadlinePredicate = 'DATE';
 //			            $scope.deadlineReverse = true;
