@@ -7,45 +7,69 @@
 			<th colspan="5">Phasage</th>
 			<th colspan="1">Planning</th>
 		</tr>
-<!-- 		<tr> -->
-<!-- 			<th>Filtre </th> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 			<th /> -->
-<!-- 		</tr> -->
+	<tr> 
+		<th>Filtre </th> 
+			<th><div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.last_resp" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th> 
+			<th><div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.description" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th> 
+			<th><div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.constat_date" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th> 
+			<th /> 
+			<th><div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.constat_group" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th> 
+<th><div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.constat_noSAI" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th> 			<th /> 
+			<th /> 
+ 			<th /> 
+ 			<th /> 
+ 			<th /> 
+			<th /> 
+		</tr> 
 		<tr>
 			<th>Tri</th>
-			<th><a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Resp</a></th>
+			<th><a href="" ng-click="predicate = 'ACTIVITE.EVENEMENT.ECHEANCE.POUR_QUI'; reverse=!reverse">Resp</a></th>
 			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse">Constaté
 					le</a></th>
 			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">Descriptif</a></th>
 			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse">Etage-Locataire</a></th>
+				ng-click="predicate = 'PARTENAIRE.USAGER.VALUE'; reverse=!reverse">Etage-Locataire</a></th>
 			<th><a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Type</a></th>
 			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">No
 					SAI</a></th>
 			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Analyse</a></th>
+				ng-click="">Analyse</a></th>
 			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Avant-Projet</a></th>
+				ng-click="">Avant-Projet</a></th>
 			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Adjudication</a></th>
+				ng-click="">Adjudication</a></th>
 			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Exécution</a></th>
+				ng-click="e">Exécution</a></th>
 			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Réception</a></th>
+				ng-click="e">Réception</a></th>
 			<th>
 				Planning
 			</th>
