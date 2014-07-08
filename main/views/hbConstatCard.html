@@ -347,29 +347,36 @@
 					</tr>
 					<tr>
 						<th>#</th>
-						<th><a href=""
-							ng-click="deadlinePredicate = 'DATE'; deadlineReverse=!deadlineReverse">Date</a></th>
-						<th><a href=""
-							ng-click="deadlinePredicate = 'ACTION'; deadlineReverse=!deadlineReverse">Etape
-								en cours</a></th>
-						<th><a href=""
-							ng-click="deadlinePredicate = 'POUR_QUI'; deadlineReverse=!deadlineReverse">Resp</a></th>
-						<th><a href=""
-							ng-click="deadlinePredicate = 'E_DATE'; deadlineReverse=!deadlineReverse">Délai</a></th>
-						<th><a href=""
-							ng-click="deadlinePredicate = 'E_ACTION'; deadlineReverse=!deadlineReverse">Groupe
-								presta</a></th>
-						<th><a href=""
-							ng-click="deadlinePredicate = 'E_POUR_QUI'; deadlineReverse=!deadlineReverse">Année
-								presta</a></th>
-						<th><a href=""
-							ng-click="deadlinePredicate = 'E_PAR_QUI'; deadlineReverse=!deadlineReverse">Montant
-								estimé</a></th>
+						<th>Date</th>
+						<th>Etape en cours</th>
+						<th>Resp</th>
+						<th>Délai</th>
+						<th>Groupe presta</th>
+						<th>Année presta</th>
+						<th>Montant estimé</th>						
+<!-- 						<th><a href="" -->
+<!-- 							ng-click="deadlinePredicate = 'DATE'; deadlineReverse=!deadlineReverse">Date</a></th> -->
+<!-- 						<th><a href="" -->
+<!-- 							ng-click="deadlinePredicate = 'ACTION'; deadlineReverse=!deadlineReverse">Etape -->
+<!-- 								en cours</a></th> -->
+<!-- 						<th><a href="" -->
+<!-- 							ng-click="deadlinePredicate = 'POUR_QUI'; deadlineReverse=!deadlineReverse">Resp</a></th> -->
+<!-- 						<th><a href="" -->
+<!-- 							ng-click="deadlinePredicate = 'E_DATE'; deadlineReverse=!deadlineReverse">Délai</a></th> -->
+<!-- 						<th><a href="" -->
+<!-- 							ng-click="deadlinePredicate = 'E_ACTION'; deadlineReverse=!deadlineReverse">Groupe -->
+<!-- 								presta</a></th> -->
+<!-- 						<th><a href="" -->
+<!-- 							ng-click="deadlinePredicate = 'E_POUR_QUI'; deadlineReverse=!deadlineReverse">Année -->
+<!-- 								presta</a></th> -->
+<!-- 						<th><a href="" -->
+<!-- 							ng-click="deadlinePredicate = 'E_PAR_QUI'; deadlineReverse=!deadlineReverse">Montant -->
+<!-- 								estimé</a></th> -->
 					</tr>
 				</thead>
 				<tbody>
 					<tr
-						ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{PAR_QUI:'VALIDE'} | orderBy:deadlinePredicate:deadlineReverse">
+						ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{PAR_QUI:'VALIDE'}">
 						<!-- 								<td rowspan="2">{{$index + 1}}</td> -->
 						<td rowspan="2"><span
 							ng-show="{{currentEvent.PAR_QUI === 'VALIDE'}}"><i
