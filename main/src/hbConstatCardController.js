@@ -46,10 +46,25 @@
 								// Do nothing
 							}			            	
 			            	
-			            });						
+			            });
+
+			            /**
+			             * Perform operations on current CONSTAT elfin once available
+			             */
+				    	$scope.$watch('elfin.Id', function() { 
+
+				    		if ($scope.elfin!=null) {
+					            $log.debug("ABOUT TO SORT ECHEANCE ...");
+					            if ($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE && $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length > 1) {
+						            $log.debug("Sorting "+$scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length+" ECHEANCEs");
+					            	hbUtil.reorderArrayByPOS($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE);
+					            };
+				    		};
+				    		
+				    	}, true);
 						
-			            $scope.deadlinePredicate = 'DATE';
-			            $scope.deadlineReverse = true;
+//			            $scope.deadlinePredicate = 'DATE';
+//			            $scope.deadlineReverse = true;
 						
 						// Get statusTypes dynamically from HB5 catalogue CONSTAT
 						$scope.statusTypes = null;
