@@ -276,12 +276,19 @@
 <!-- 						ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE  | filter:{PAR_QUI:'!VALIDE'}"> -->
 
 						<td rowspan="2">
-							<span ng-show="currentEvent.PAR_QUI === 'EN COURS'" tooltip="Statut en cours"><i class='glyphicon glyphicon-wrench'></i></span>
-							<span ng-show="currentEvent.PAR_QUI === 'A VALIDER'" tooltip="Statut à valider"><i class='glyphicon glyphicon-eye-open'></i></span>
-							<span ng-show="currentEvent.PAR_QUI === 'VALIDE'" tooltip="Statut valide"><i	class='glyphicon glyphicon-ok'></i></span>
-							<span ng-show="currentEvent.PAR_QUI != 'VALIDE' && currentEvent.PAR_QUI != 'A VALIDER' && currentEvent.PAR_QUI != 'EN COURS'" tooltip="Statut inconnu">
-								<i class='glyphicon glyphicon-question-sign'></i>
-							</span>
+							<button class="btn btn-default" type="button" ng-click="switchEventStatus(currentEvent)" tooltip="{{eventStatusTooltip}}">
+								<i ng-show="currentEvent.PAR_QUI === 'EN COURS'" class='glyphicon glyphicon-wrench'></i>
+								<i ng-show="currentEvent.PAR_QUI === 'A VALIDER'" class='glyphicon glyphicon-eye-open'></i>
+								<i ng-show="currentEvent.PAR_QUI === 'VALIDE'" class='glyphicon glyphicon-ok'></i>
+								<i ng-show="currentEvent.PAR_QUI != 'VALIDE' && currentEvent.PAR_QUI != 'A VALIDER' && currentEvent.PAR_QUI != 'EN COURS'" class='glyphicon glyphicon-question-sign'></i>
+							</button>
+							
+<!-- 							<span ng-show="currentEvent.PAR_QUI === 'EN COURS'" tooltip="Statut en cours"><i class='glyphicon glyphicon-wrench'></i></span> -->
+<!-- 							<span ng-show="currentEvent.PAR_QUI === 'A VALIDER'" tooltip="Statut à valider"><i class='glyphicon glyphicon-eye-open'></i></span> -->
+<!-- 							<span ng-show="currentEvent.PAR_QUI === 'VALIDE'" tooltip="Statut valide"><i	class='glyphicon glyphicon-ok'></i></span> -->
+<!-- 							<span ng-show="currentEvent.PAR_QUI != 'VALIDE' && currentEvent.PAR_QUI != 'A VALIDER' && currentEvent.PAR_QUI != 'EN COURS'" tooltip="Statut inconnu"> -->
+<!-- 								<i class='glyphicon glyphicon-question-sign'></i> -->
+<!-- 							</span> -->
 						</td>
 						<td>
 							<div hb-date ng-model="currentEvent.DATE"></div>

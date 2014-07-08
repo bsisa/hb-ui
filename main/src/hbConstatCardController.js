@@ -66,6 +66,7 @@
 				    	
 				    	$scope.$watchCollection('elfin.ACTIVITE.EVENEMENT.ECHEANCE', function(newEcheances, oldEcheances) {
 				    		$scope.currentEvent = newEcheances[newEcheances.length-1];
+				    		$scope.updateEventStatusTooltip();
 				        });
 
 						
@@ -107,6 +108,35 @@
 						// TODO: move to hbDate directive - END
 						// ============================================
 
+						$scope.eventStatusTooltip = "";
+						
+						$scope.updateEventStatusTooltip = function() {
+							if ($scope.currentEvent.PAR_QUI === "EN COURS") {
+								$scope.eventStatusTooltip = 'Statut en cours';
+							} else if ($scope.currentEvent.PAR_QUI === "A VALIDER") {
+								$scope.eventStatusTooltip = 'Statut à valider';
+							} else if ($scope.currentEvent.PAR_QUI === "VALIDE") {
+								$scope.eventStatusTooltip = 'Statut valide';
+							} else {
+								$scope.eventStatusTooltip = '';
+							}
+						};
+						
+						$scope.switchEventStatus = function (currentEvent) {
+							
+							if (currentEvent.PAR_QUI === "EN COURS") {
+								currentEvent.PAR_QUI = 'A VALIDER';
+							} else if (currentEvent.PAR_QUI === "A VALIDER") {
+								currentEvent.PAR_QUI = 'VALIDE';
+							} else if (currentEvent.PAR_QUI === "VALIDE") {
+								currentEvent.PAR_QUI = 'EN COURS';
+							} else {
+								// If unknown status set it to "EN COURS"
+								currentEvent.PAR_QUI = 'EN COURS';
+							}
+							
+							$scope.updateEventStatusTooltip();
+						};
 						
 						/**
 						 * Add ECHEANCE 
