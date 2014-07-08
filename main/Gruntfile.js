@@ -45,6 +45,8 @@ module.exports = function(grunt) {
 								'src/hbConstatCardController.js',
 								'src/hbConstatListController.js',
 								'src/hbConstatListDirective.js',
+								'src/hbContratCardController.js',
+								'src/hbContratCardDirective.js',
 								'src/hbDateDirective.js',
 								'src/hbDateController.js',
 								'src/hbDateParserDirective.js',

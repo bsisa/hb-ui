@@ -364,17 +364,18 @@
 									</th>
 		
 								</tr>
+								
 								<tr>
-									<th>Unité {{surfaces.length}}</th>
+									<th>tri</th>
 									<th><a href=""
 										ng-click="locUnitPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitReverse=!locUnitReverse">No
 											SAI</a></th>
 									<th><a href=""
-										ng-click="locUnitPredicate = 'IDENTIFIANT.DE'; locUnitReverse=!locUnitReverse">Année</a></th>
-									<th><a href=""
 										ng-click="locUnitPredicate = 'GROUPE'; locUnitReverse=!locUnitReverse">Groupe</a></th>
 									<th><a href=""
-										ng-click="locUnitPredicate = 'IDENTIFIANT.ALIAS'; locUnitReverse=!locUnitReverse">Dénomination</a></th>
+										ng-click="locUnitPredicate = 'PARTENAIRE.USAGER.VALUE'; locUnitReverse=!locUnitReverse">Locataire</a></th>
+								<th><a href=""
+										ng-click="locUnitPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; locUnitReverse=!locUnitReverse">Surface (m2)</a></th>
 									<th><a href=""
 										ng-click="locUnitPredicate = 'DIVERS.REMARQUE'; locUnitReverse=!locUnitReverse">Remarque</a></th>
 								</tr>
@@ -384,9 +385,9 @@
 									ng-repeat="surface in surfaces | orderBy:locUnitPredicate:locUnitReverse">
 									<td><a href="/elfin/{{surface.ID_G}}/SURFACE/{{surface.Id}}">Détail</a></td>
 									<td><span tooltip="surface.IDENTIFIANT.OBJECTIF">{{surface.IDENTIFIANT.OBJECTIF}}</span></td>
-									<td><span tooltip="surface.IDENTIFIANT.DE">{{surface.IDENTIFIANT.DE}}</span></td>
 									<td><span tooltip="surface.GROUPE">{{surface.GROUPE}}</span></td>
-									<td><span tooltip="surface.IDENTIFIANT.ALIAS">{{surface.IDENTIFIANT.ALIAS}}</span></td>
+									<td><span tooltip="surface.PARTENAIRE.USAGER.VALUE">{{surface.PARTENAIRE.USAGER.VALUE}}</span></td>
+									<td><span tooltip="surface.CARACTERISTIQUE.CAR1.VALEUR">{{surface.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 									<td><span tooltip="surface.DIVERS.REMARQUE">{{surface.DIVERS.REMARQUE}}</span></td>
 								</tr>
 							</tbody>
@@ -438,8 +439,10 @@
 										ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
 									<th><a href=""
 										ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a></th>
+																		<th><a href=""
+										ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
 									<th><a href=""
-										ng-click="prestaPredicate = 'IDENTIFIANT.ALIAS'; prestaReverse=!prestaReverse">Dénomination</a></th>
+										ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
 									<th><a href=""
 										ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
 								</tr>
@@ -452,7 +455,8 @@
 									<td><span tooltip="prestation.IDENTIFIANT.OBJECTIF">{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 									<td><span tooltip="prestation.IDENTIFIANT.DE">{{prestation.IDENTIFIANT.DE}}</span></td>
 									<td><span tooltip="prestation.GROUPE">{{prestation.GROUPE}}</span></td>
-									<td><span tooltip="prestation.IDENTIFIANT.ALIAS">{{prestation.IDENTIFIANT.ALIAS}}</span></td>
+									<td><span tooltip=prestation.IDENTIFIANT.ORIGINE>{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
+									<td><span tooltip="prestation.IDENTIFIANT.VALEUR_A_NEUF">{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
 									<td><span tooltip="prestation.DIVERS.REMARQUE">{{prestation.DIVERS.REMARQUE}}</span></td>
 								</tr>
 							</tbody>
@@ -507,15 +511,18 @@
 										ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
 									<th><a href=""
 										ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
+								<th><a href=""
+										ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr
 									ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse">
-									<td><a href="/elfin/{{contrat.ID_G}}/CONTRT/{{contrat.Id}}">Détail</a></td>
+									<td><a href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}">Détail</a></td>
 									<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.UNITE">{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 									<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.VALEUR">{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 									<td><span tooltip="contrat.PARTENAIRE.FOURNISSEUR.VALUE">{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+									<td><span tooltip="contrat.IDENTIFIANT.VALEUR">{{contrat.IDENTIFIANT.VALEUR}}</span></td>
 									<td><span tooltip="contrat.GROUPE">{{contrat.GROUPE}}</span></td>
 								</tr>
 							</tbody>
@@ -528,46 +535,21 @@
 		<tab> 
 			<tab-heading>Equipement</tab-heading>
 			<div class="hb-tab">
-				<h5>Centroïdes</h5>
-				<table class="table table-condensed table-bordered table-striped">
-					<thead>
-						<tr>
-							<th style="padding-right: 5em;">Type</th>
-							<th>Xm</th>
-							<th>Ym</th>
-							<th>Zm</th>
-							<th>Rm</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="centroide in elfin.GEOSELECTION.CENTROIDE">
-							<td><select chosen data-placeholder="Choisir un type"
-								class="form-control" ng-model="centroide.TYPE"
-								ng-options="value as label for (value, label) in typeTypes">
-							</select></td>
-							<td><input type="text" class="form-control"
-								ng-model="centroide.XM"></td>
-							<td><input type="text" class="form-control"
-								ng-model="centroide.YM"></td>
-							<td><input type="text" class="form-control"
-								ng-model="centroide.ZM"></td>
-							<td><input type="text" class="form-control"
-								ng-model="centroide.RM"></td>
-						</tr>
-					</tbody>
-				</table>
+				<h5>A faire</h5>
+				
 			</div>
 		</tab> 
-		<!-- FORME tab -->
+	<!-- Annexes tab -->
+		<tab> 
+			<tab-heading>Annexes ({{annexes.length}})</tab-heading>
+			<div class="hb-tab"><div hb-annexes-component></div></div>
+		</tab>		
+			<!-- FORME tab -->
 		<tab> 
 			<tab-heading>Forme</tab-heading>
 			<div class="hb-tab"><div hb-forme-component></div></div>
 		</tab> 
-		<!-- Annexes tab -->
-		<tab> 
-			<tab-heading>Annexes</tab-heading>
-			<div class="hb-tab"><div hb-annexes-component></div></div>
-		</tab>		
+		
 		</tabset>
 	</div>
 </div>
