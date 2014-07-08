@@ -212,7 +212,6 @@
 					</tr>
 					<tr>
 						<th>#</th>
-						<th>Classe</th>
 						<th>Date</th>
 						<th>Message</th>
 						<th>Décision</th>
@@ -220,30 +219,31 @@
 					</tr>
 				</thead>
 				<tbody>
-					<!-- mis en commentaire car fait planter toute la page
-					 <tr ng-repeat-start="message in elfin.CARACTERISTIQUE.FRACTION.L"> 
-					<tr>
-						<td>
-							<div hb-date ng-model="message.POS"></div>
+ 				 	<tr ng-repeat ="message in elfin.CARACTERISTIQUE.FRACTION.L">
+						<td width="3">
+							<div>
+								<input id="message_pos" name="message_pos" type="text"
+									class="form-control" ng-model="message.POS">
+							</div>
 						</td>
-						<td>
-							<div hb-date ng-model="message.C[1]"></div>
-						</td>
-						<td>
-							<div hb-date ng-model="message.C[2]"></div>
-						</td>
-						<td>
-							<div hb-date ng-model="message.C[3]"></div>
-						</td>
-						<td>
-							<div hb-date ng-model="message.C[4]"></div>
-						</td>
-						<td>
+						<td width="50"><div>
+								<input id="message_c2" name="message_c2" type="text"
+									class="form-control" ng-model="message.C[1].VALUE">
+							</div></td>
+						<td width="200"><div>
+								<input id="message_c3" name="message_c3" type="text"
+									class="form-control" ng-model="message.C[2].VALUE">
+							</div></td>
+						<td width="10"><div>
+								<input id="message_c4" name="message_c4" type="text"
+									class="form-control" ng-model="message.C[3].VALUE">
+							</div></td>
+						<td width="3">
 							<button class="btn btn-default" type="button"
-								tooltip="mailto:Valerie.Schindler@ne.ch;Veronique.Hengrave-Burnier@ne.ch&subject=Gespatri"
-								ng-click=""></button> @
+								tooltip=""
+								ng-click="mailto:Valerie.Schindler@ne.ch;Veronique.Hengrave-Burnier@ne.ch&subject=Gespatri">@</button> 
 						</td>
-					</tr>-->
+					</tr>
 				</tbody>
 			</table>
 		</div>
