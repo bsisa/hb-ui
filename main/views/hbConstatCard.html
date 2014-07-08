@@ -272,8 +272,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr
-						ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE  | filter:{PAR_QUI:'!VALIDE'}">
+					<tr>
+<!-- 						ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE[elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1]"> -->
+<!-- 						ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE  | filter:{PAR_QUI:'!VALIDE'}"> -->
 
 						<td rowspan="2"><span
 							ng-show="{{currentEvent.PAR_QUI === 'EN COURS'}}"><i
@@ -332,7 +333,8 @@
 							class="form-control" ng-model="currentEvent.E_PAR_QUI"
 							tooltip="currentEvent.E_PAR_QUI"></td>
 					</tr>
-					<tr ng-repeat-end>
+<!-- 					<tr ng-repeat-end> -->
+					<tr>
 						<td colspan="7"><input id="currentEventRemarque" type="text"
 							class="form-control" ng-model="currentEvent.REMARQUE"
 							tooltip="currentEvent.REMARQUE"></td>
@@ -376,21 +378,22 @@
 				</thead>
 				<tbody>
 					<tr
-						ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{PAR_QUI:'VALIDE'}">
+						ng-repeat-start="formerEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | notLastFilter ">
+<!-- 						ng-repeat-start="formerEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{PAR_QUI:'VALIDE'}"> -->
 						<!-- 								<td rowspan="2">{{$index + 1}}</td> -->
 						<td rowspan="2"><span
-							ng-show="{{currentEvent.PAR_QUI === 'VALIDE'}}"><i
+							ng-show="{{formerEvent.PAR_QUI === 'VALIDE'}}"><i
 								class='glyphicon glyphicon-ok'></i></span></td>
-						<td>{{currentEvent.DATE}}</td>
-						<td>{{currentEvent.ACTION}}</td>
-						<td>{{currentEvent.POUR_QUI}}</td>
-						<td>{{currentEvent.E_DATE}}</td>
-						<td>{{currentEvent.E_ACTION}}</td>
-						<td>{{currentEvent.E_POUR_QUI}}</td>
-						<td>{{currentEvent.E_PAR_QUI}}</td>
+						<td>{{formerEvent.DATE}}</td>
+						<td>{{formerEvent.ACTION}}</td>
+						<td>{{formerEvent.POUR_QUI}}</td>
+						<td>{{formerEvent.E_DATE}}</td>
+						<td>{{formerEvent.E_ACTION}}</td>
+						<td>{{formerEvent.E_POUR_QUI}}</td>
+						<td>{{formerEvent.E_PAR_QUI}}</td>
 					</tr>
 					<tr ng-repeat-end>
-						<td colspan="7">{{currentEvent.REMARQUE}}</td>
+						<td colspan="7">{{formerEvent.REMARQUE}}</td>
 					</tr>
 				</tbody>
 			</table>
