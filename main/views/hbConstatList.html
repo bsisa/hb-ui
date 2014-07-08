@@ -5,35 +5,30 @@
 			<th colspan="7"><span class="badge">{{elfinsCount}}</span> <span>constat{{
 					elfinsCount | plural }} trouvé</span>{{elfinsCount | plural }}</th>
 			<th colspan="5">Phasage</th>
-			<th colspan="6">Planning</th>
+			<th colspan="1">Planning</th>
 		</tr>
+<!-- 		<tr> -->
+<!-- 			<th>Filtre </th> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 			<th /> -->
+<!-- 		</tr> -->
 		<tr>
-			<th>Filtre </th>
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			<th />
-			</tr>
-			<tr>
 			<th>Tri</th>
 			<th><a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Resp</a></th>
 			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse">Constaté
 					le</a></th>
-			<th><a href=""
+			<th width="150px"><a href=""
 				ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">Descriptif</a></th>
 			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse">Etage-Locataire</a></th>
@@ -51,18 +46,21 @@
 				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Exécution</a></th>
 			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Réception</a></th>
-			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Retard</a></th>
-			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">S1</a></th>
-			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">S2</a></th>
-			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">S3</a></th>
-			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">M1</a></th>
-			<th><a href=""
-				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">&gt;1 an</a></th>
+			<th>
+				Planning
+			</th>
+<!-- 			<th><a href="" -->
+<!-- 				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">Retard</a></th> -->
+<!-- 			<th><a href="" -->
+<!-- 				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">S1</a></th> -->
+<!-- 			<th><a href="" -->
+<!-- 				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">S2</a></th> -->
+<!-- 			<th><a href="" -->
+<!-- 				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">S3</a></th> -->
+<!-- 			<th><a href="" -->
+<!-- 				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">M1</a></th> -->
+<!-- 			<th><a href="" -->
+<!-- 				ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">&gt;1 an</a></th> -->
 		</tr>
 	</thead>
 	<tbody>
@@ -72,7 +70,7 @@
 			<td
 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[position()=last()].POUR_QUI">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE[elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI}}</td>
 			<td>{{elfin.IDENTIFIANT.DE}}</td>
-			<td>{{elfin.IDENTIFIANT.NOM}}</td>
+			<td width="150px">{{elfin.IDENTIFIANT.NOM}}</td>
 			<td>{{elfin.PARTENAIRE.USAGER.VALUE}}</td>
 			<td>{{elfin.GROUPE}}</td>
 			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
@@ -80,49 +78,80 @@
 			
 			<td	tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[ACTION='Analyse'].E_DATE">{{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Analyse'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Analyse'}}</td>  -->
 			<td>
-				<span style="background-color:red" ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Analyse'} ">
-				{{analysis.POUR_QUI}} - {{analysis.E_DATE}} <span ng-if="!$last"></br></span>
+				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Analyse'} ">
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="!$last"></br></span>
 				</span>
 			</td>
 			<td>
-				<span style="background-color:green" ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ">
-				{{analysis.POUR_QUI}} - {{analysis.E_DATE}} <span ng-if="!$last">;</span>
+				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ">
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="!$last"></br></span>
 				</span>
 			</td>
 			<td>
-				<span style="background-color:orange" ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Appel d offre et Adjudication'} ">
-				{{analysis.POUR_QUI}} - {{analysis.E_DATE}} <span ng-if="!$last">;</span>
+				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Appel d offre et Adjudication'} ">
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="!$last"></br></span>
 				</span>
 			</td>
 			<td>
-				<span style="background-color:orange" ng-repeat="analysis in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Exécution'} ">
-				{{analysis.POUR_QUI}} - {{analysis.E_DATE}} <span ng-if="!$last">;</span>
+				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Exécution'} ">
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="!$last"></br></span>
 				</span>
 			</td>
-			<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Exécution'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Exécution'">voir
-				tooltip</td>
-			<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Réception'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Réception'">voir
-				tooltip</td>
-			<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()].E_PAR_QUI}}">voir
-				tooltip</td>
-		<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+7j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+7j].E_PAR_QUI}}">voir
-				tooltip</td>
-	<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+14j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+14j].E_PAR_QUI}}">voir
-				tooltip</td>
-					<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+21j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+21j].E_PAR_QUI}}">voir
-				tooltip</td>
-									<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+30j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+30j].E_PAR_QUI}}">voir
-				tooltip</td>
-													<td
-				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+365j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+365j].E_PAR_QUI}}">voir
-				tooltip</td>
+<!-- 			<td -->
+<!-- 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_DATE | filter:{ACTION:'Exécution'}} - {{elfin.ACTIVITE.EVENEMENT.ECHEANCE.E_PAR_QUI | filter:{ACTION:'Exécution'">voir -->
+<!-- 				tooltip</td> -->
+			<td>
+				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Réception'} ">
+				<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span></span>
+				<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{echeance.POUR_QUI}} - {{echeance.E_DATE}}</span>
+				<span ng-if="!$last"></br></span>
+				</span>
+			</td>
+			<td>
+				<span ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE">
+<!-- 					<span ng-if="echeance.PAR_QUI == 'VALIDE'"  class="btn btn-success btn-block"><span class="badge">{{getPhaseAbbreviation(echeance.ACTION)}}</span></span> -->
+<!-- 					<span ng-if="echeance.PAR_QUI == 'A VALIDE'"  class="btn btn-warning btn-block"><span class="badge">{{getPhaseAbbreviation(echeance.ACTION)}}</span></span> -->
+					<span ng-if="echeance.PAR_QUI == 'EN COURS'"  class="btn btn-danger btn-block"><span class="badge">{{getPhaseAbbreviation(echeance.ACTION)}} - {{getEcheanceStatus(echeance.E_DATE)}}</span></span>
+<!-- 					<span ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDE' && echeance.PAR_QUI != 'VALIDE'" class="btn btn-default btn-block"><span class="badge">{{getPhaseAbbreviation(echeance.ACTION)}}</span> -->
+					<span ng-if="!$last">;</span>
+				</span>
+			</td>
+<!-- 			<td -->
+<!-- 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()].E_PAR_QUI}}">voir -->
+<!-- 				tooltip</td> -->
+<!-- 		<td -->
+<!-- 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+7j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+7j].E_PAR_QUI}}">voir -->
+<!-- 				tooltip</td> -->
+<!-- 	<td -->
+<!-- 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+14j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+14j].E_PAR_QUI}}">voir -->
+<!-- 				tooltip</td> -->
+<!-- 					<td -->
+<!-- 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+21j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+21j].E_PAR_QUI}}">voir -->
+<!-- 				tooltip</td> -->
+<!-- 									<td -->
+<!-- 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+30j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+30j].E_PAR_QUI}}">voir -->
+<!-- 				tooltip</td> -->
+<!-- 													<td -->
+<!-- 				tooltip="elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+365j].ACTION}} - elfin.ACTIVITE.EVENEMENT.ECHEANCE[PAR_QUI='EN COURS' and E_DATE<today()+365j].E_PAR_QUI}}">voir -->
+<!-- 				tooltip</td> -->
 				
 				
 
