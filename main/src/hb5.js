@@ -214,7 +214,49 @@
 	    };
 	}]);	
 	
-	
+	 /** Filter tailor to IMMEUBLE list requirements
+	 */
+	hb5.filter('constatListFilter', [function () {
+
+		// case insensitive string contains check
+		var icontains = function (targetString, matchString) {
+			if (matchString && matchString.trim().length > 0) {
+				if (targetString) {
+					if (targetString.toLowerCase().indexOf(matchString.toLowerCase()) != -1) {
+						return true;
+					} else {
+						return false;
+					}					
+				} else { // If a match string is defined and there is no target string we consider it a non match.
+					return false;
+				}
+			} else {
+				// returns true if match string empty or undefined.
+				return true;
+			}
+		};
+		
+		return function (constats, predicate) {
+	        if (!angular.isUndefined(constats) && !angular.isUndefined(predicate)) {
+	            var tempConstats = [ ];
+	            angular.forEach(constats, function (constat) {
+                    if ( 
+                    //	 icontains(constat.ACTIVITE.EVENEMENT.ECHEANCE.POUR_QUI, predicate.last_resp) &&
+                    	 icontains(constat.IDENTIFIANT.DE, predicate.description) &&
+                    	 icontains(constat.IDENTIFIANT.NOM, predicate.constat_date) &&
+                    	 icontains(constat.GROUPE, predicate.constat_group) &&
+                    	 icontains(constat.IDENTIFIANT.OBJECTIF, predicate.constat_noSAI)
+                    ) {
+                    	tempConstats.push(constat);
+                    	
+                    }
+                });
+	            return tempConstats;
+	        } else {
+	            return constats;
+	        }
+	    };
+	}]);
 	
 	
 
