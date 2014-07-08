@@ -22,16 +22,16 @@
     hb5.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: '/assets/views/welcome.html',
-                controller: function($scope, $location, $timeout, $log) {
-                	$scope.postWelcome = function() {
-                		$timeout(function() {
-                			// TODO: create a CONSTANT service using angular .constant
-                    		var IMMEUBLE_COLLECTION_ID = 'G20040930101030005';
-                    		$location.path( '/elfin/'+IMMEUBLE_COLLECTION_ID+'/IMMEUBLE' );	
-                    	}, 1250, true);     
-                	};
-                }
+                templateUrl: '/assets/views/welcome.html'
+//                controller: function($scope, $location, $timeout, $log) {
+//                	$scope.postWelcome = function() {
+//                		$timeout(function() {
+//                			// TODO: create a CONSTANT service using angular .constant
+//                    		var IMMEUBLE_COLLECTION_ID = 'G20040930101030005';
+//                    		$location.path( '/elfin/'+IMMEUBLE_COLLECTION_ID+'/IMMEUBLE' );	
+//                    	}, 1250, true);     
+//                	};
+//                }
             })
             .when('/elfin/create/ACTEUR', {
                 templateUrl: '/assets/views/ACTEUR_card_new_view.html'

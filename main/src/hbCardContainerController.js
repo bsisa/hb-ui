@@ -191,7 +191,8 @@
                				// Flag information useful not to perform GET on deleted resource.
                				$scope.elfinDeleted = true;
                				// Go to the list corresponding to the deleted ELFIN collection filtered by CLASSE.
-               				$location.path("/elfin/" + elfin.ID_G + "/" + elfin.CLASSE);
+               				//$location.path("/elfin/" + elfin.ID_G + "/" + elfin.CLASSE);
+               				$location.path("/");
                				// Notify other controllers this elfin has been deleted (used by map)
                             $scope.$emit(HB_EVENTS.ELFIN_DELETED, elfin);
                         },
