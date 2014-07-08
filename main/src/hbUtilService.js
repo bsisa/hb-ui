@@ -7,6 +7,27 @@
 	
 	angular.module('hb5').service('hbUtil', ['$log','$window','HB_API',function ($log,$window,HB_API) {
 
+		
+		/**
+		 * Returns the date corresponding to the string date expected to have 
+		 * YYYY-MM-DD format
+		 */
+		var getDateFromHbTextDateFormat = function(textDate) {
+
+			var dateParts = textDate.split('-');
+
+			var yyyy = dateParts[0];
+			var mm = dateParts[1];
+			var dd = dateParts[2];
+			
+			if (!yyyy || (yyyy && yyyy.length < 4) ) throw "getDateFromHbTextDateFormat invalid year : " + year;
+			if (!mm || (mm && (mm > 12 || mm < 1)) ) throw "getDateFromHbTextDateFormat invalid month : " + mm;
+			if (!dd || (dd && (dd > 31 || dd < 1)) ) throw "getDateFromHbTextDateFormat invalid day : " + day;
+			
+			return new Date(yyyy,mm-1,dd);
+		};		
+		
+		
 		/**
 		 * Returns the YYYY-MM-DD string corresponding to the date parameter
 		 */
@@ -266,6 +287,7 @@
         	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault,
         	encodeUriParameter:encodeUriParameter,
         	getDateInHbTextFormat:getDateInHbTextFormat,
+        	getDateFromHbTextDateFormat:getDateFromHbTextDateFormat,
         	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue,
         	getLinkFileName:getLinkFileName,
         	getLinkFileApiUrl:getLinkFileApiUrl
