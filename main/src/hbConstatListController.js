@@ -5,8 +5,16 @@
     	$log.debug("    >>>> HbConstatListController called... " );
 
     	// Default order is by "Groupe" 
-    	$scope.predicate = 'GROUPE';
+    	$scope.predicate = 'IDENTIFIANT.DE';
     	$scope.reverse = false;
+   	
+    	$scope.search = {
+    			"last_resp" : "",
+    			"description" : "",
+    			"constat_date" : "",
+    			"constat_group" : "",
+    			"constat_noSAI" : ""
+    	}; 
         
     	$scope.getPhaseAbbreviation = function (phase) {
 //    		$log.debug(">>> getPhaseAbbreviation for phase = " + phase);
