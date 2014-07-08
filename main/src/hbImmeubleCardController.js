@@ -31,7 +31,10 @@
 							        $scope.surfaces = null;
 							    	
 						            $scope.locUnitPredicate = 'IDENTIFIANT.DE';
-						            $scope.locUnitReverse = true;							        
+						            $scope.locUnitReverse = true;		
+						            
+						            $scope.prestaPredicate = 'IDENTIFIANT.DE';
+						            $scope.prestaReverse = true;
 							        
 							        
 									// Triggers a redirection to the CONSTAT creation URL with current 

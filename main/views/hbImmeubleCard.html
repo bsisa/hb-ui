@@ -367,21 +367,21 @@
 								<tr>
 									<th>Unité {{surfaces.length}}</th>
 									<th><a href=""
-										ng-click="locUnitPredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No
+										ng-click="locUnitPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitReverse=!locUnitReverse">No
 											SAI</a></th>
 									<th><a href=""
-										ng-click="locUnitPredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
+										ng-click="locUnitPredicate = 'IDENTIFIANT.DE'; locUnitReverse=!locUnitReverse">Année</a></th>
 									<th><a href=""
-										ng-click="locUnitPredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
+										ng-click="locUnitPredicate = 'GROUPE'; locUnitReverse=!locUnitReverse">Groupe</a></th>
 									<th><a href=""
-										ng-click="locUnitPredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
+										ng-click="locUnitPredicate = 'IDENTIFIANT.ALIAS'; locUnitReverse=!locUnitReverse">Dénomination</a></th>
 									<th><a href=""
-										ng-click="locUnitPredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
+										ng-click="locUnitPredicate = 'DIVERS.REMARQUE'; locUnitReverse=!locUnitReverse">Remarque</a></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr
-									ng-repeat="surface in surfaces | orderBy:locUnitPredicate:deadlineReverse">
+									ng-repeat="surface in surfaces | orderBy:locUnitPredicate:locUnitReverse">
 									<td><a href="/elfin/{{surface.ID_G}}/SURFACE/{{surface.Id}}">Détail</a></td>
 									<td><span tooltip="surface.IDENTIFIANT.OBJECTIF">{{surface.IDENTIFIANT.OBJECTIF}}</span></td>
 									<td><span tooltip="surface.IDENTIFIANT.DE">{{surface.IDENTIFIANT.DE}}</span></td>
@@ -432,21 +432,21 @@
 								<tr>
 									<th>Prestation</th>
 									<th><a href=""
-										ng-click="deadlinePredicate = 'IDENTIFIANT.OBJECTIF'; deadlineReverse=!deadlineReverse">No
+										ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
 											SAI</a></th>
 									<th><a href=""
-										ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Année</a></th>
+										ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
 									<th><a href=""
-										ng-click="deadlinePredicate = 'GROUPE'; deadlineReverse=!deadlineReverse">Groupe</a></th>
+										ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a></th>
 									<th><a href=""
-										ng-click="deadlinePredicate = 'IDENTIFIANT.ALIAS'; deadlineReverse=!deadlineReverse">Dénomination</a></th>
+										ng-click="prestaPredicate = 'IDENTIFIANT.ALIAS'; prestaReverse=!prestaReverse">Dénomination</a></th>
 									<th><a href=""
-										ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
+										ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr
-									ng-repeat="prestation in prestations | orderBy:deadlinePredicate:deadlineReverse">
+									ng-repeat="prestation in prestations | orderBy:prestaPredicate:prestaReverse">
 									<td><a
 										href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a></td>
 									<td><span tooltip="prestation.IDENTIFIANT.OBJECTIF">{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
