@@ -30,6 +30,9 @@
 							        $scope.prestations = null;
 							        $scope.surfaces = null;
 							    	
+						            $scope.locUnitPredicate = 'IDENTIFIANT.DE';
+						            $scope.locUnitReverse = true;							        
+							        
 							        
 									// Triggers a redirection to the CONSTAT creation URL with current 
 									// IMMEUBLE building number and SAI number passed as parameters.
