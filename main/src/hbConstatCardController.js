@@ -127,7 +127,10 @@
 								$log.debug("$scope.constatEcheanceTemplate.POS = " + $scope.constatEcheanceTemplate.POS);
 								// Set full year in string format
 								$scope.constatEcheanceTemplate.E_POUR_QUI = new Date().getFullYear().toString();
+								// Add new ECHEANCE row
 								$scope.addRow($scope.elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', $scope.constatEcheanceTemplate);	
+								// Set form to dirty state 
+								$scope.elfinForm.$setDirty();
 							} else {
 								hbAlertMessages.addAlert("warning", "Impossible de créer un nouvel événement. Veuillez s.v.p. contacter votre administrateur et lui reporter cette erreur.");
 							}
