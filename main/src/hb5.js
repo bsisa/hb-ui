@@ -198,7 +198,7 @@
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
                     if ( 
-                    	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.VALUE, predicate.owner) &&
+                    	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.GROUPE, predicate.owner) &&
                     	 icontains(immeuble.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
                     	 icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
                     	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
