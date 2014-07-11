@@ -84,7 +84,9 @@
 							    	$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() { 
 
 							    		if ($scope.elfin!=null) {
-								            var xpathForPrestations = "//ELFIN[starts-with(IDENTIFIANT/OBJECTIF,'"+$scope.elfin.IDENTIFIANT.OBJECTIF+"')]";
+							    			// TODO: add restriction on PROPRIETAIRE
+								            var xpathForPrestations = "//ELFIN[starts-with(IDENTIFIANT/OBJECTIF,'"+$scope.elfin.IDENTIFIANT.OBJECTIF+"') and PARTENAIRE/PROPRIETAIRE/@NOM='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM+"']";
+							    			//var xpathForPrestations = "//ELFIN[starts-with(IDENTIFIANT/OBJECTIF,'"+$scope.elfin.IDENTIFIANT.OBJECTIF+"')]";
 								            // TODO: constatsCollectionId must come from server configuration resource.
 								            $log.debug("TODO: HbImmeubleCardController: prestationCollectionId must come from server configuration resource.");
 								            var prestationsCollectionId = 'G20081113902512302';
