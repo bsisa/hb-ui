@@ -23,9 +23,6 @@
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
 									
-									// Empty object to be populated by ngflow as config.ngflow
-//									$scope.config = { ngflow :{ target : HB_API.ANNEXE_UPLOAD_URL }};
-									
 									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
 									$scope.selected = { "owner" : null , "ownerDisplay" : null};
 									
@@ -124,12 +121,6 @@
 
 							    		if ($scope.elfin!=null) {
 								            
-//											// Set upload URL using elfin.ID_G/Id
-//							    			if ($scope.config.ngflow) {
-//							    				$scope.config.ngflow.opts.target = "'" +"/api/melfin/annex/" + $scope.elfin.ID_G + "/" + $scope.elfin.Id + "/myfile4.pdf" + "'";
-//							    				$log.debug(">>>> UPDATED $scope.config.ngflow.opts.target to " + $scope.config.ngflow.opts.target);
-//							    			}
-							    			
 							    			// Get SURFACES
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
@@ -247,37 +238,6 @@
 						            	$log.debug("flowFilesSubmitted.");
 						            };						            
 						            
-//						            $scope.$watch('config.ngflow.target', function(newFlow, oldFlow) { 
-//
-//										if ($scope.config.ngflow) {
-//
-//											// Set upload URL using elfin.ID_G/Id
-//							    			if ($scope.elfin) {
-//							    				$scope.config.ngflow.opts.target = "'" +"/api/melfin/annex/" + $scope.elfin.ID_G + "/" + $scope.elfin.Id + "/myfile5.pdf" + "'";
-//							    				$log.debug(">>>> UPDATED from config.ngflow WATCH $scope.config.ngflow.opts.target to " + $scope.config.ngflow.opts.target);
-//							    			}											
-//											
-//											$log.debug(">>>> FOUND $scope.config.ngflow !!!");
-//											for (var property in $scope.config.ngflow) {
-//												var currValue = $scope.config.ngflow[property];
-//												//$log.debug("Property name: " + property + ", value: " + currValue);
-//												if (property == 'defaults' || property == 'opts') {
-//													for (var subprop in currValue) {
-//														$log.debug(property + " sub property name: " + subprop + ", value: " + currValue[subprop]);
-//													}
-//												}
-//											}
-//										} else {
-//											$log.debug(">>>> NOT FOUND $scope.config.ngflow !!!");
-//										}
-//							    		
-//							    	}, true);   						            
-						            
-						            
-						            $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
-						            	$log.debug(">>>> flow::fileAdded caught for flowFile: " + flowFile.name);
-						            	  event.preventDefault();//prevent file from uploading
-						            	});
         
 							    } ]);
 
