@@ -96,25 +96,6 @@
 					<div ng-if="photoSrc" style="height:198px;">
 						<img ng-src="{{photoSrc}}" width="180px" class="img-thumbnail" />
 					</div>
-
-<!-- 					
-<div flow-init="{target: '/upload'}"
-     flow-files-submitted="$flow.upload()"
-     flow-file-success="$file.msg = $message">
-
-  <input type="file" flow-btn/>
-  Input OR Other element as upload button
-  <span class="btn" flow-btn>Upload File</span>
-
-  <table>
-    <tr ng-repeat="file in $flow.files">
-        <td>{{$index+1}}</td>
-        <td>{{file.name}}</td>
-        <td>{{file.msg}}</td>
-    </tr>
-  </table>
-</div>
- -->					
 					
 					<div 
 					class="col-sm-12" 
@@ -129,7 +110,7 @@
 flow-init="config.ngflow.target"
  										flow-files-submitted="$flow.upload()"
  -->
-					<div>Opts target: {{config.ngflow.opts.target}}</div>
+<!-- 					<div>Opts target: {{config.ngflow.opts.target}}</div> -->
 <!-- 					<div>Init target: {{config.ngflow.target}}</div> -->
 					
 <!-- 						<div class="btn btn-default"><i class="glyphicon glyphicon-folder-open"></i></div> -->
@@ -137,23 +118,13 @@ flow-init="config.ngflow.target"
 <!-- 						Dir: <input type="file" flow-btn flow-directory /> -->
 						
 	<div class="btn btn-default" flow-btn><i class="glyphicon glyphicon-folder-open"></i></div>
-	<div class="btn btn-default" ng-click="$flow.upload()"><i class="glyphicon glyphicon-upload"></i></div>
+	<div class="btn btn-default" ng-click="$flow.upload()" ng-disabled="$flow.isUploading()"><i class="glyphicon glyphicon-upload"></i></div>
       
 <!--       <div flow-file-progress=" ... events can be also assigned inside flow-init ... "></div> -->
       
-<div class="flow-progress">
-        <table>
-          <tr>
-            <td width="100%"><div class="progress-container"><div class="progress-bar"></div></div></td>
-<!--             <td class="progress-text" nowrap="nowrap"></td> -->
-<!--             <td class="progress-pause" nowrap="nowrap"> -->
-<!--               <a href="#" onclick="r.upload(); return(false);" class="progress-resume-link"><img src="resume.png" title="Resume upload" /></a> -->
-<!--               <a href="#" onclick="r.pause(); return(false);" class="progress-pause-link"><img src="pause.png" title="Pause upload" /></a> -->
-<!--               <a href="#" onclick="r.cancel(); return(false);" class="progress-cancel-link"><img src="cancel.png" title="Cancel upload" /></a> -->
-<!--             </td> -->
-          </tr>
-        </table>
-      </div>      
+<div class="col-sm-4" ng-show="$flow.isUploading()"><progressbar class="progress-striped" max="1" value="$flow.progress()" >{{$flow.progress()*100}}%</progressbar></div>      
+      
+   
       
       
 <h2>Transfers:</h2>
