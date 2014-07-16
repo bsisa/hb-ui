@@ -159,7 +159,8 @@
 			chunkRetryInterval : 5000,
 			simultaneousUploads : 4,
 			withCredentials : true,
-			prioritizeFirstAndLastChunk : true
+			prioritizeFirstAndLastChunk : true,
+			singleFile : true
 		};
 		flowFactoryProvider.on('catchAll', function(event) {
 			console.log('catchAll', arguments);
