@@ -55,6 +55,17 @@ input::-webkit-inner-spin-button {
 	width: 100%;
 }
 
+.hb-upload-progressbar-container {
+	position: relative;
+}
+
+.hb-upload-progressbar {
+	position: absolute;
+	top: -26px;
+	left: 0px;
+	width: 100%;
+}
+
 /* alert panels floating a fixed position under top menu bar*/
 .hb-alert-panel-fixed-top {
 	position: fixed;

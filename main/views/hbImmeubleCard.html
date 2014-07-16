@@ -98,7 +98,7 @@
 					</div>
 					
 					<div 
-					class="col-sm-12" 
+					class="col-sm-12 hb-upload-progressbar-container" 
 					style="text-align: center;border: solid 2px red;" 
 					flow-name="config.ngflow"
 					flow-init  
@@ -106,23 +106,16 @@
 					flow-files-submitted="flowFilesSubmitted($flow)"
 					flow-file-success="$file.msg = $message"
 					>
-<!--
-flow-init="config.ngflow.target"
- 										flow-files-submitted="$flow.upload()"
- -->
-<!-- 					<div>Opts target: {{config.ngflow.opts.target}}</div> -->
-<!-- 					<div>Init target: {{config.ngflow.target}}</div> -->
-					
-<!-- 						<div class="btn btn-default"><i class="glyphicon glyphicon-folder-open"></i></div> -->
-<!-- 						<input type="file" flow-btn /> -->
-<!-- 						Dir: <input type="file" flow-btn flow-directory /> -->
 						
-	<div class="btn btn-default" flow-btn><i class="glyphicon glyphicon-folder-open"></i></div>
-	<div class="btn btn-default" ng-click="$flow.upload()" ng-disabled="$flow.isUploading()"><i class="glyphicon glyphicon-upload"></i></div>
+						<div class="btn btn-default" flow-btn ng-disabled="$flow.isUploading()"><i class="glyphicon glyphicon-folder-open"></i></div>
+						<div class="btn btn-default" ng-click="$flow.upload()" ng-disabled="$flow.isUploading()"><i class="glyphicon glyphicon-upload"></i></div>
+						<div class="btn btn-default" ng-click="$flow.cancel()" ng-disabled="!$flow.isUploading()"><i class="glyphicon glyphicon-remove-circle"></i></div>
       
-<!--       <div flow-file-progress=" ... events can be also assigned inside flow-init ... "></div> -->
-      
-<div class="col-sm-4" ng-show="$flow.isUploading()"><progressbar class="progress-striped" max="1" value="$flow.progress()" >{{$flow.progress()*100}}%</progressbar></div>      
+			<!--       <div flow-file-progress=" ... events can be also assigned inside flow-init ... "></div> -->
+						<progressbar class="progress-striped hb-upload-progressbar" max="1" value="$flow.progress()" ng-show="true">
+							<div class="text-center" style="color:black; width: 100%">{{ ($flow.progress()*100) | number:0}}%</div>
+						</progressbar>
+     
       
    
       

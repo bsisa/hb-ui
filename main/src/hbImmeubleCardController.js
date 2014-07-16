@@ -22,6 +22,7 @@
 									hbUtil, HB_EVENTS, HB_API) {
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
+									
 									// Empty object to be populated by ngflow as config.ngflow
 									//$scope.config = { ngflow : { opts : { query : { elfinID_G : "", elfinId : ""} }}};
 									$scope.config = { ngflow : { opts : {}}};
