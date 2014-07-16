@@ -22,6 +22,9 @@
 									hbUtil, HB_EVENTS, HB_API) {
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
+									// Empty object to be populated by ngflow as config.ngflow
+									//$scope.config = { ngflow : { opts : { query : { elfinID_G : "", elfinId : ""} }}};
+									$scope.config = { ngflow : { opts : {}}};
 									
 									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
 									$scope.selected = { "owner" : null , "ownerDisplay" : null};
@@ -117,10 +120,17 @@
 							    		
 							    	}, true);
 							    	
+							    	// Check when elfin instance becomes available 
 							    	$scope.$watch('elfin.Id', function() { 
 
 							    		if ($scope.elfin!=null) {
 								            
+							            	// Add elfin ID_G and Id properties values to upload information using query parameter:
+							            	// see https://github.com/flowjs/flow.js#flow
+							    			if ($scope.config.ngflow.opts.query) {
+							    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
+							    			}
+							    			
 							    			// Get SURFACES
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
@@ -238,6 +248,14 @@
 						            	$log.debug("flowFilesSubmitted.");
 						            };						            
 						            
+							    	// Check when ngflow instance becomes available from flow-name directive initialisation  
+						            $scope.$watch('config.ngflow.opts', function(newFlow, oldFlow) { 
+						            	// Add elfin ID_G and Id properties values to upload information using query parameter:
+						            	// see https://github.com/flowjs/flow.js#flow
+						    			if ($scope.elfin) {
+						    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
+						    			}											
+							    	}, true);   						    
         
 							    } ]);
 
