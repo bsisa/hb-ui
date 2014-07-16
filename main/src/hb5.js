@@ -9,13 +9,12 @@
 (function() {
 	
     var hb5 = angular.module('hb5',
-        ['ngGrid','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils']);
+        ['flow','ngGrid','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils']);
 	
-
     // ================================================================
     // ====                      Config                            ====
     // ================================================================    
-    
+
     /**
      * Client side routes configuration
      */
@@ -147,6 +146,26 @@
     hb5.config(['$locationProvider', function($locationProvider) {
     	$locationProvider.html5Mode(true);
     }]);    
+    
+	/**
+	 * Configurations for ng-flow HTML5 based file upload directive 
+	 * relying on the flow.js  library.
+	 */
+    hb5.config(['flowFactoryProvider', function (flowFactoryProvider) {
+    	flowFactoryProvider.defaults = {
+    		target : '/api/melfin/annex/upload',
+			permanentErrors : [ 401, 404, 500, 501 ],
+			maxChunkRetries : 3,
+			chunkRetryInterval : 5000,
+			simultaneousUploads : 4,
+			withCredentials : true
+		};
+		flowFactoryProvider.on('catchAll', function(event) {
+			console.log('catchAll', arguments);
+		});
+		// Can be used with different implementations of Flow.js
+		// flowFactoryProvider.factory = fustyFlowFactory;
+    }]);
     
 
     
