@@ -151,9 +151,9 @@
 	 * Configurations for ng-flow HTML5 based file upload directive 
 	 * relying on the flow.js  library.
 	 */
-    hb5.config(['flowFactoryProvider', function (flowFactoryProvider) {
+    hb5.config(['flowFactoryProvider', 'HB_API', function (flowFactoryProvider, HB_API) {
     	flowFactoryProvider.defaults = {
-    		target : '/api/melfin/annex/upload',
+    		target : HB_API.ANNEXE_UPLOAD_URL,
 			permanentErrors : [ 401, 404, 500, 501 ],
 			maxChunkRetries : 3,
 			chunkRetryInterval : 5000,
