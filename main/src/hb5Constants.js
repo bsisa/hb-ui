@@ -29,5 +29,6 @@ angular.module('hb5').constant('HB_EVENTS', {
  * this refactoring easier.
  */
 angular.module('hb5').constant('HB_API', {
-	ANNEXE_URL : "/api/melfin/annex/"
+	ANNEXE_URL : "/api/melfin/annex/",
+	ANNEXE_UPLOAD_URL : "/api/melfin/annex/upload"
 });
