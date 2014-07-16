@@ -96,9 +96,140 @@
 					<div ng-if="photoSrc" style="height:198px;">
 						<img ng-src="{{photoSrc}}" width="180px" class="img-thumbnail" />
 					</div>
-					<div class="col-sm-12" style="text-align: center;">
-<!-- 						<label tooltip="voir trello fiche immeuble">Dossier</label> -->
-						<div class="btn btn-default"><i class="glyphicon glyphicon-folder-open"></i></div>
+
+<!-- 					
+<div flow-init="{target: '/upload'}"
+     flow-files-submitted="$flow.upload()"
+     flow-file-success="$file.msg = $message">
+
+  <input type="file" flow-btn/>
+  Input OR Other element as upload button
+  <span class="btn" flow-btn>Upload File</span>
+
+  <table>
+    <tr ng-repeat="file in $flow.files">
+        <td>{{$index+1}}</td>
+        <td>{{file.name}}</td>
+        <td>{{file.msg}}</td>
+    </tr>
+  </table>
+</div>
+ -->					
+					
+					<div 
+					class="col-sm-12" 
+					style="text-align: center;border: solid 2px red;" 
+					flow-name="config.ngflow"
+					flow-init  
+					flow-file-added="flowFileAdded($file,$event)"
+					flow-files-submitted="flowFilesSubmitted($flow)"
+					flow-file-success="$file.msg = $message"
+					>
+<!--
+flow-init="config.ngflow.target"
+ 										flow-files-submitted="$flow.upload()"
+ -->
+					<div>Opts target: {{config.ngflow.opts.target}}</div>
+<!-- 					<div>Init target: {{config.ngflow.target}}</div> -->
+					
+<!-- 						<div class="btn btn-default"><i class="glyphicon glyphicon-folder-open"></i></div> -->
+<!-- 						<input type="file" flow-btn /> -->
+<!-- 						Dir: <input type="file" flow-btn flow-directory /> -->
+						
+	<div class="btn btn-default" flow-btn><i class="glyphicon glyphicon-folder-open"></i></div>
+	<div class="btn btn-default" ng-click="$flow.upload()"><i class="glyphicon glyphicon-upload"></i></div>
+      
+<!--       <div flow-file-progress=" ... events can be also assigned inside flow-init ... "></div> -->
+      
+<div class="flow-progress">
+        <table>
+          <tr>
+            <td width="100%"><div class="progress-container"><div class="progress-bar"></div></div></td>
+<!--             <td class="progress-text" nowrap="nowrap"></td> -->
+<!--             <td class="progress-pause" nowrap="nowrap"> -->
+<!--               <a href="#" onclick="r.upload(); return(false);" class="progress-resume-link"><img src="resume.png" title="Resume upload" /></a> -->
+<!--               <a href="#" onclick="r.pause(); return(false);" class="progress-pause-link"><img src="pause.png" title="Pause upload" /></a> -->
+<!--               <a href="#" onclick="r.cancel(); return(false);" class="progress-cancel-link"><img src="cancel.png" title="Cancel upload" /></a> -->
+<!--             </td> -->
+          </tr>
+        </table>
+      </div>      
+      
+      
+<h2>Transfers:</h2>
+
+  <p>
+    <a class="btn btn-small btn-success" ng-click="$flow.resume()">Upload</a>
+    <a class="btn btn-small btn-danger" ng-click="$flow.pause()">Pause</a>
+    <a class="btn btn-small btn-info" ng-click="$flow.cancel()">Cancel</a>
+    <span class="label label-info">Size: {{$flow.getSize()}}</span>
+    <span class="label label-info">Is Uploading: {{$flow.isUploading()}}</span>
+  </p>
+  <table class="table table-hover table-bordered table-striped" flow-transfers>
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Size</th>
+      <th>Relative Path</th>
+      <th>Unique Identifier</th>
+      <th>#Chunks</th>
+      <th>Progress</th>
+      <th>Paused</th>
+      <th>Uploading</th>
+      <th>Completed</th>
+      <th>Settings</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="file in transfers">
+      <td>{{$index+1}}</td>
+      <td>{{file.name}}</td>
+      <td>{{file.size}}</td>
+      <td>{{file.relativePath}}</td>
+      <td>{{file.uniqueIdentifier}}</td>
+      <td>{{file.chunks.length}}</td>
+      <td>{{file.progress()}}</td>
+      <td>{{file.paused}}</td>
+      <td>{{file.isUploading()}}</td>
+      <td>{{file.isComplete()}}</td>
+      <td>
+        <div class="btn-group">
+          <a class="btn btn-mini btn-warning" ng-click="file.pause()" ng-hide="file.paused">
+            Pause
+          </a>
+          <a class="btn btn-mini btn-warning" ng-click="file.resume()" ng-show="file.paused">
+            Resume
+          </a>
+          <a class="btn btn-mini btn-danger" ng-click="file.cancel()">
+            Cancel
+          </a>
+          <a class="btn btn-mini btn-info" ng-click="file.retry()" ng-show="file.error">
+            Retry
+          </a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>      
+      
+      
+      
+<!--       <span class="btn" flow-btn flow-directory ng-show="$flow.supportDirectory"><i class="icon icon-folder-open"></i> -->
+<!--         Upload Folder -->
+<!--       </span> -->
+					
+						
+						
+						
+<!-- 						<table style="border: solid 2px green"> -->
+<!-- 							<tr ng-repeat="file in $flow.files"> -->
+<!-- 								<td>{{$index+1}}</td> -->
+<!-- 								<td>{{file.name}}</td> -->
+<!-- 								<td>{{file.msg}}</td> -->
+<!-- 							</tr> -->
+<!-- 						</table> -->
+
 					</div>
 				</div><!-- 2nd col first tab first row end -->
 				<!-- 3rd col first tab first row start -->
@@ -113,7 +244,9 @@
 											ng-model="selected.ownerDisplay"
 											tooltip="selected.ownerDisplay" 
 											required
-											readonly>
+											readonly
+											ng-model-options="{ debounce: 6000 }"
+											>
 <!-- 										<input id="manager" name="manager" type="hidden" -->
 <!-- 											class="form-control" -->
 <!-- 											ng-value="elfin.PARTENAIRE.PROPRIETAIRE.GROUPE" -->
