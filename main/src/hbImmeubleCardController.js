@@ -243,7 +243,20 @@
 						            
 									// Empty object to be populated by ngflow as config.ngflow
 									//$scope.config = { ngflow : { opts : { query : { elfinID_G : "", elfinId : ""} }}};
-									$scope.config = { ngflow : { opts : {}}};						            
+									$scope.config = { ngflow : { opts : {}}};		
+
+									// Available annexes types.
+						            $scope.uploadFileTypes = [
+						                                      { name: "Fichier" , value: "file"},
+						                                      { name: "Photo" , value: "photo"}
+						                                      ];									
+									
+									// Note: update by reference. See doc: https://docs.angularjs.org/api/ng/directive/select
+						            $scope.selectedUploadFileType = $scope.uploadFileTypes[0];
+						            
+						            $scope.selectUploadFileType = function(uploadFileType) {
+						            	$scope.selectedUploadFileType = uploadFileType;
+						            };
 						            
 						            $scope.flowFileAdded = function(file,event) {
 						            	event.preventDefault();//prevent file from uploading !?
@@ -280,6 +293,22 @@
 						            	$log.debug("flowFileSuccess(file = "+file.name+", message = "+message+", flow )");
 						            	flow.removeFile(file);
 						            	$log.debug("flowFileSuccess: removed file from flow.files");
+
+//						            	<RENVOI POS="1" LIEN="../../HB4-Objets/G20040930101030005/annexes/G20040203114894000/J_de_Hochberg13_ContratEcap.pdf">J_de_Hochberg13_ContratEcap.pdf</RENVOI>
+						            	
+							            if ($scope.elfin.ANNEXE) {
+							            	if ($scope.elfin.ANNEXE.RENVOI) {
+							            	var newRenvoi = { POS : $scope.elfin.ANNEXE.RENVOI.length+1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value };
+							            	$scope.elfin.ANNEXE.RENVOI.push(newRenvoi);
+							            	$log.debug("flowFileSuccess: Added newRenvoi: " + newRenvoi);
+							            	}
+							            } else {
+							            	var newAnnexe = {RENVOI : [ { POS : 1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value} ] };
+							            	$scope.elfin.ANNEXE = newAnnexe;
+							            	$log.debug("flowFileSuccess: Added newAnnexe: " + newAnnexe);
+							            }
+							            // TODO: Evaluate whether we should automatically save elfin to server ?!
+						            	$scope.elfinForm.$setDirty();
 						            	hbAlertMessages.addAlert("info","Le fichier " + file.name + " a été téléversé avec succès.");
 						            	$scope.hbUploadStatusLabelCss = "label-info";
 						            };						            
@@ -300,6 +329,9 @@
 						    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
 						    			}											
 							    	}, true);
+						            
+	
+						            
 						            
 							    	// ============================================================================
         
