@@ -107,8 +107,8 @@
 					flow-file-success="$file.msg = $message"
 					>
 						
-						<div class="btn btn-default" flow-btn ng-disabled="$flow.isUploading()"><i class="glyphicon glyphicon-folder-open"></i></div>
-						<div class="btn btn-default" ng-click="$flow.upload()" ng-disabled="$flow.isUploading()"><i class="glyphicon glyphicon-upload"></i></div>
+						<div class="btn btn-default" flow-btn ng-disabled="$flow.isUploading() || !$flow.support"><i class="glyphicon glyphicon-folder-open"></i></div>
+						<div class="btn btn-default" ng-click="$flow.upload()" ng-disabled="$flow.isUploading() || !$flow.support"><i class="glyphicon glyphicon-upload"></i></div>
 						<div class="btn btn-default" ng-click="$flow.cancel()" ng-disabled="!$flow.isUploading()"><i class="glyphicon glyphicon-remove-circle"></i></div>
       
 			<!--       <div flow-file-progress=" ... events can be also assigned inside flow-init ... "></div> -->
