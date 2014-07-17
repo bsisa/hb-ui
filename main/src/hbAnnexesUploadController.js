@@ -14,7 +14,7 @@
 								hbUtil) {
     
 									$log.debug("    >>>> Using HbAnnexesUploadController");
-							        
+									
 							    	// ============================================================================
 							    	// === Manage file upload
 							    	// ============================================================================
@@ -108,6 +108,16 @@
 						    			}											
 							    	}, true);
 						            
+							    	// Check when elfin instance becomes available 
+							    	$scope.$watch('elfin.Id', function() { 
+							    		if ($scope.elfin!=null) {
+							            	// Add elfin ID_G and Id properties values to upload information using query parameter:
+							            	// see https://github.com/flowjs/flow.js#flow
+							    			if ($scope.config.ngflow.opts.query) {
+							    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
+							    			}
+							    		};
+							    	}, true);						            
 						            
 							    	// ============================================================================
 									
