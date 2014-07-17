@@ -38,8 +38,18 @@
 						            
 						            $scope.flowFileAdded = function(file,event) {
 						            	event.preventDefault();//prevent file from uploading !?
-						            	// TODO: name validation
+
+						            	// Perform name substitution
+						            	var oldFileName = file.name;
+						            	var newFileName = file.name.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+						            	
+						            	if (!(oldFileName == newFileName)) {
+						            		file.name = newFileName;
+						            		hbAlertMessages.addAlert("warning", "Le nom de votre fichier a été modifier de: " + oldFileName + " à " + newFileName);
+						            	}
+						            	
 						            	// TODO: already exist check
+						            	
 						            	$log.debug("flowFileAdded event: file = " + file.name + ", event = " + event);
 						            	$scope.hbUploadStatusLabelCss = "label-info";
 						            };
@@ -59,10 +69,10 @@
 							            	hbAlertMessages.addAlert("info","Le téléversement du fichier " + file.name + " a été annulé.");						            		
 						            	} else if (flow.files.length > 1) {
 							            	flow.cancel();
-						            		hbAlertMessages.addAlert("warn","Plusieurs fichiers sont sélectionnés pour le téléversement, c'est imprévu! Tous les téléversements ont été annulés.");
+						            		hbAlertMessages.addAlert("warning","Plusieurs fichiers sont sélectionnés pour le téléversement, c'est imprévu! Tous les téléversements ont été annulés.");
 						            	} else {
 						            		flow.cancel();
-						            		hbAlertMessages.addAlert("warn","Aucun fichier sélectionnés pour le téléversement!");
+						            		hbAlertMessages.addAlert("warning","Aucun fichier sélectionnés pour le téléversement!");
 						            	}
 						            	$scope.hbUploadStatusLabelCss = "label-info";
 						            };
@@ -101,22 +111,36 @@
 						            
 							    	// Check when ngflow instance becomes available from flow-name directive initialisation  
 						            $scope.$watch('config.ngflow.opts', function(newFlow, oldFlow) { 
+
+//						            	var oldFlowValue = "";
+//						            		if (oldFlow) { oldFlowValue = angular.toJson(oldFlow, true); } else { oldFlowValue = "NULL";};
+//						            	$log.debug("config.ngflow.opts listener: oldFlow => newFlow = " + oldFlowValue + " => " + angular.toJson(newFlow, true));
+						            	
 						            	// Add elfin ID_G and Id properties values to upload information using query parameter:
 						            	// see https://github.com/flowjs/flow.js#flow
 						    			if ($scope.elfin) {
 						    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
-						    			}											
+						    				//$log.debug("config.ngflow.opts listener just set query parameters = " + angular.toJson($scope.config.ngflow.opts.query, true));
+						    			} else {
+						    				//$log.debug("config.ngflow.opts listener COULD NOT set query parameters NO ELFIN AVAILABLE");
+						    			}
 							    	}, true);
 						            
 							    	// Check when elfin instance becomes available 
 							    	$scope.$watch('elfin.Id', function() { 
+							    		
 							    		if ($scope.elfin!=null) {
 							            	// Add elfin ID_G and Id properties values to upload information using query parameter:
 							            	// see https://github.com/flowjs/flow.js#flow
-							    			if ($scope.config.ngflow.opts.query) {
+							    			if ($scope.config.ngflow.opts) {
 							    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
+							    				//$log.debug("elfin.Id listener just set query parameters = " + angular.toJson($scope.config.ngflow.opts.query, true));
+							    			} else {
+							    				//$log.debug("elfin.Id listener COULD NOT set query parameters, NO config.ngflow.opts available.");
 							    			}
-							    		};
+							    		} else {
+						    				//$log.debug("elfin.Id listener COULD NOT set query parameters, NO ELFIN available.");
+							    		}
 							    	}, true);						            
 						            
 							    	// ============================================================================
