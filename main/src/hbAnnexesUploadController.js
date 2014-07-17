@@ -20,7 +20,6 @@
 							    	// ============================================================================
 						            
 									// Empty object to be populated by ngflow as config.ngflow
-									//$scope.config = { ngflow : { opts : { query : { elfinID_G : "", elfinId : ""} }}};
 									$scope.config = { ngflow : { opts : {}}};		
 
 									// Available annexes types.
@@ -37,9 +36,11 @@
 						            };
 						            
 						            $scope.flowFileAdded = function(file,event) {
-						            	event.preventDefault();//prevent file from uploading !?
 
-						            	// Perform name substitution
+						            	//prevent file from uploading directly after user selection.
+						            	event.preventDefault();
+
+						            	// Perform name substitution (need to be URL friendly %20 are not very nice in file names either.)
 						            	var oldFileName = file.name;
 						            	var newFileName = file.name.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
 						            	
@@ -48,7 +49,7 @@
 						            		hbAlertMessages.addAlert("warning", "Le nom de votre fichier a été modifier de: " + oldFileName + " à " + newFileName);
 						            	}
 						            	
-						            	// TODO: already exist check
+						            	// TODO: Check if file already exists
 						            	
 						            	$log.debug("flowFileAdded event: file = " + file.name + ", event = " + event);
 						            	$scope.hbUploadStatusLabelCss = "label-info";
@@ -78,17 +79,13 @@
 						            };
 						            
 						            $scope.flowFileSuccess = function(file, message, flow) {
-						            	$log.debug("flowFileSuccess(file = "+file.name+", message = "+message+", flow )");
-						            	flow.removeFile(file);
-						            	$log.debug("flowFileSuccess: removed file from flow.files");
 
-//						            	<RENVOI POS="1" LIEN="../../HB4-Objets/G20040930101030005/annexes/G20040203114894000/J_de_Hochberg13_ContratEcap.pdf">J_de_Hochberg13_ContratEcap.pdf</RENVOI>
-						            	
-							            if ($scope.elfin.ANNEXE) {
+						            	flow.removeFile(file);
+
+						            	if ($scope.elfin.ANNEXE) {
 							            	if ($scope.elfin.ANNEXE.RENVOI) {
-							            	var newRenvoi = { POS : $scope.elfin.ANNEXE.RENVOI.length+1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value };
-							            	$scope.elfin.ANNEXE.RENVOI.push(newRenvoi);
-							            	$log.debug("flowFileSuccess: Added newRenvoi: " + newRenvoi);
+								            	var newRenvoi = { POS : $scope.elfin.ANNEXE.RENVOI.length+1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value };
+								            	$scope.elfin.ANNEXE.RENVOI.push(newRenvoi);
 							            	}
 							            } else {
 							            	var newAnnexe = {RENVOI : [ { POS : 1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value} ] };
@@ -96,13 +93,13 @@
 							            	$log.debug("flowFileSuccess: Added newAnnexe: " + newAnnexe);
 							            }
 							            // TODO: Evaluate whether we should automatically save elfin to server ?!
+						            	// Requires a save from user at the moment, this to preserve ELFIN.ANNEXE modification.
 						            	$scope.elfinForm.$setDirty();
 						            	hbAlertMessages.addAlert("info","Le fichier " + file.name + " a été téléversé avec succès.");
 						            	$scope.hbUploadStatusLabelCss = "label-info";
 						            };						            
 						            
 								    $scope.flowFileError = function(file, message) {
-						            	$log.debug("flowFileError(file = "+file.name+", message = "+message+")");
 						            	$scope.hbUploadStatusLabelCss = "label-danger";
 						            	hbAlertMessages.addAlert("danger","Le téléversement du fichier " + file.name + " a échoué!");
 						            };
@@ -112,15 +109,10 @@
 							    	// Check when ngflow instance becomes available from flow-name directive initialisation  
 						            $scope.$watch('config.ngflow.opts', function(newFlow, oldFlow) { 
 
-//						            	var oldFlowValue = "";
-//						            		if (oldFlow) { oldFlowValue = angular.toJson(oldFlow, true); } else { oldFlowValue = "NULL";};
-//						            	$log.debug("config.ngflow.opts listener: oldFlow => newFlow = " + oldFlowValue + " => " + angular.toJson(newFlow, true));
-						            	
 						            	// Add elfin ID_G and Id properties values to upload information using query parameter:
 						            	// see https://github.com/flowjs/flow.js#flow
 						    			if ($scope.elfin) {
 						    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
-						    				//$log.debug("config.ngflow.opts listener just set query parameters = " + angular.toJson($scope.config.ngflow.opts.query, true));
 						    			} else {
 						    				//$log.debug("config.ngflow.opts listener COULD NOT set query parameters NO ELFIN AVAILABLE");
 						    			}
@@ -134,7 +126,6 @@
 							            	// see https://github.com/flowjs/flow.js#flow
 							    			if ($scope.config.ngflow.opts) {
 							    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
-							    				//$log.debug("elfin.Id listener just set query parameters = " + angular.toJson($scope.config.ngflow.opts.query, true));
 							    			} else {
 							    				//$log.debug("elfin.Id listener COULD NOT set query parameters, NO config.ngflow.opts available.");
 							    			}
@@ -144,8 +135,6 @@
 							    	}, true);						            
 						            
 							    	// ============================================================================
-									
-									
 									        
 							    } ]);
 
