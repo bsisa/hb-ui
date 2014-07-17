@@ -5,6 +5,12 @@
 	flow-upload-started="flowUploadStarted($flow)"
 	flow-file-success="flowFileSuccess($file, $message, $flow)"
 	flow-file-error="flowFileError($file, $message)">
+
+	<div class="btn btn-default btn-xs" flow-btn
+		ng-disabled="$flow.isUploading() || !$flow.support">
+		<i class="glyphicon glyphicon-folder-open"></i>
+	</div>
+	
 	<div class="btn-group" style="padding: 0;">
 		<button class="btn btn-default btn-xs dropdown-toggle" type="button"
 			data-toggle="dropdown">
@@ -17,15 +23,13 @@
 				ng-click="selectUploadFileType(uploadFileType)"><a
 				role="menuitem" tabindex="-1" href="#">{{uploadFileType.name}}</a></li>
 		</ul>
-	</div>
-	<div class="btn btn-default btn-xs" flow-btn
-		ng-disabled="$flow.isUploading() || !$flow.support">
-		<i class="glyphicon glyphicon-folder-open"></i>
-	</div>
+	</div>	
+	
 	<div class="btn btn-default btn-xs" ng-click="$flow.upload()"
 		ng-disabled="$flow.files.length < 1 || $flow.isUploading() || !$flow.support">
 		<i class="glyphicon glyphicon-upload"></i>
 	</div>
+	
 	<div class="btn btn-default btn-xs" ng-click="flowCancel($flow)"
 		ng-disabled="$flow.files.length < 1">
 		<i class="glyphicon glyphicon-remove-circle"></i>
