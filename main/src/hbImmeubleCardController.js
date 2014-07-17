@@ -23,10 +23,6 @@
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
 									
-									// Empty object to be populated by ngflow as config.ngflow
-									//$scope.config = { ngflow : { opts : { query : { elfinID_G : "", elfinId : ""} }}};
-									$scope.config = { ngflow : { opts : {}}};
-									
 									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
 									$scope.selected = { "owner" : null , "ownerDisplay" : null};
 									
@@ -240,14 +236,61 @@
 						            
 							    	// ============================================================================						            
 						    	
+						            
+							    	// ============================================================================
+							    	// === Manage file upload
+							    	// ============================================================================
+						            
+									// Empty object to be populated by ngflow as config.ngflow
+									//$scope.config = { ngflow : { opts : { query : { elfinID_G : "", elfinId : ""} }}};
+									$scope.config = { ngflow : { opts : {}}};						            
+						            
 						            $scope.flowFileAdded = function(file,event) {
 						            	event.preventDefault();//prevent file from uploading !?
+						            	// TODO: name validation
+						            	// TODO: already exist check
 						            	$log.debug("flowFileAdded event: file = " + file.name + ", event = " + event);
+						            	$scope.hbUploadStatusLabelCss = "label-info";
 						            };
 						            
-						            $scope.flowFilesSubmitted = function(flow) {
-						            	$log.debug("flowFilesSubmitted.");
+						            $scope.flowUploadStarted = function(flow) {
+						            	$log.debug("flowUploadStarted.");
+						            	$scope.hbUploadStatusLabelCss = "label-success";
+						            };			
+						            
+						            $scope.flowCancel = function(flow) {
+						            	// We are in single file mode
+						            	// check we have a single file
+						            	if (flow.files.length == 1) {
+							            	var file = flow.files[0];
+							            	flow.cancel();
+							            	// TODO: send API clean up instruction ? 
+							            	hbAlertMessages.addAlert("info","Le téléversement du fichier " + file.name + " a été annulé.");						            		
+						            	} else if (flow.files.length > 1) {
+							            	flow.cancel();
+						            		hbAlertMessages.addAlert("warn","Plusieurs fichiers sont sélectionnés pour le téléversement, c'est imprévu! Tous les téléversements ont été annulés.");
+						            	} else {
+						            		flow.cancel();
+						            		hbAlertMessages.addAlert("warn","Aucun fichier sélectionnés pour le téléversement!");
+						            	}
+						            	$scope.hbUploadStatusLabelCss = "label-info";
+						            };
+						            
+						            $scope.flowFileSuccess = function(file, message, flow) {
+						            	$log.debug("flowFileSuccess(file = "+file.name+", message = "+message+", flow )");
+						            	flow.removeFile(file);
+						            	$log.debug("flowFileSuccess: removed file from flow.files");
+						            	hbAlertMessages.addAlert("info","Le fichier " + file.name + " a été téléversé avec succès.");
+						            	$scope.hbUploadStatusLabelCss = "label-info";
 						            };						            
+						            
+								    $scope.flowFileError = function(file, message) {
+						            	$log.debug("flowFileError(file = "+file.name+", message = "+message+")");
+						            	$scope.hbUploadStatusLabelCss = "label-danger";
+						            	hbAlertMessages.addAlert("danger","Le téléversement du fichier " + file.name + " a échoué!");
+						            };
+						            
+						            $scope.hbUploadStatusLabelCss = "label-info";
 						            
 							    	// Check when ngflow instance becomes available from flow-name directive initialisation  
 						            $scope.$watch('config.ngflow.opts', function(newFlow, oldFlow) { 
@@ -256,7 +299,9 @@
 						    			if ($scope.elfin) {
 						    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
 						    			}											
-							    	}, true);   						    
+							    	}, true);
+						            
+							    	// ============================================================================
         
 							    } ]);
 
