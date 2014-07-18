@@ -160,11 +160,12 @@
 			simultaneousUploads : 4,
 			withCredentials : true,
 			prioritizeFirstAndLastChunk : true,
+			//chunkSize : 1024, // Default is 1*1024*1024 (1Mb) keep it. Note: 1024 used to create very small test data
 			singleFile : true
 		};
-		flowFactoryProvider.on('catchAll', function(event) {
-			console.log('catchAll', arguments);
-		});
+//		flowFactoryProvider.on('catchAll', function(event) {
+//			console.log('catchAll', arguments);
+//		});
 		// Can be used with different implementations of Flow.js
 		// flowFactoryProvider.factory = fustyFlowFactory;
     }]);
