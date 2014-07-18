@@ -156,10 +156,11 @@
     		target : HB_API.ANNEXE_UPLOAD_URL,
 			permanentErrors : [ 401, 404, 500, 501 ],
 			maxChunkRetries : 3,
+			testChunks: false, // This is only interesting for resume of large upload. Not relevant here.
 			chunkRetryInterval : 5000,
 			simultaneousUploads : 4,
 			withCredentials : true,
-			prioritizeFirstAndLastChunk : true,
+			prioritizeFirstAndLastChunk : true, // Simplifies testing for upload completion
 			//chunkSize : 1024, // Default is 1*1024*1024 (1Mb) keep it. Note: 1024 used to create very small test data
 			singleFile : true
 		};
