@@ -15,13 +15,6 @@
     
 									$log.debug("    >>>> Using HbAnnexesUploadController");
 									
-							    	// ============================================================================
-							    	// === Manage file upload
-							    	// ============================================================================
-						            
-									// Empty object to be populated by ngflow as config.ngflow
-									$scope.config = { ngflow : { opts : {}}};		
-
 									// Available annexes types.
 						            $scope.uploadFileTypes = [
 						                                      { name: "Fichier" , value: "file"},
@@ -35,12 +28,20 @@
 						            	$scope.selectedUploadFileType = uploadFileType;
 						            };
 						            
+						            // Triggers file upload after having set extra POST query parameters. 
+						            // Note: Using controller function for upload elegantly solves headaches 
+						            // to reliably set flow.opts.query.
+						            $scope.flowUpload = function(flow) {
+						            	// Add elfin ID_G and Id properties values to upload information using query parameter:
+						            	// see https://github.com/flowjs/flow.js#flow
+						            	flow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
+						            	flow.upload();
+						            };
+						            
 						            $scope.flowFileAdded = function(file,event) {
-
-						            	//prevent file from uploading directly after user selection.
-						            	event.preventDefault();
-
-						            	// Perform name substitution (need to be URL friendly %20 are not very nice in file names either.)
+						            	event.preventDefault();//prevent file from uploading !?
+						            	
+						            	// Perform name substitution
 						            	var oldFileName = file.name;
 						            	var newFileName = file.name.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
 						            	
@@ -49,7 +50,7 @@
 						            		hbAlertMessages.addAlert("warning", "Le nom de votre fichier a été modifier de: " + oldFileName + " à " + newFileName);
 						            	}
 						            	
-						            	// TODO: Check if file already exists
+						            	// TODO: already exist check
 						            	
 						            	$log.debug("flowFileAdded event: file = " + file.name + ", event = " + event);
 						            	$scope.hbUploadStatusLabelCss = "label-info";
@@ -79,13 +80,14 @@
 						            };
 						            
 						            $scope.flowFileSuccess = function(file, message, flow) {
-
+						            	$log.debug("flowFileSuccess(file = "+file.name+", message = "+message+", flow )");
 						            	flow.removeFile(file);
 
-						            	if ($scope.elfin.ANNEXE) {
+							            if ($scope.elfin.ANNEXE) {
 							            	if ($scope.elfin.ANNEXE.RENVOI) {
-								            	var newRenvoi = { POS : $scope.elfin.ANNEXE.RENVOI.length+1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value };
-								            	$scope.elfin.ANNEXE.RENVOI.push(newRenvoi);
+							            	var newRenvoi = { POS : $scope.elfin.ANNEXE.RENVOI.length+1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value };
+							            	$scope.elfin.ANNEXE.RENVOI.push(newRenvoi);
+							            	$log.debug("flowFileSuccess: Added newRenvoi: " + newRenvoi);
 							            	}
 							            } else {
 							            	var newAnnexe = {RENVOI : [ { POS : 1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value} ] };
@@ -93,48 +95,19 @@
 							            	$log.debug("flowFileSuccess: Added newAnnexe: " + newAnnexe);
 							            }
 							            // TODO: Evaluate whether we should automatically save elfin to server ?!
-						            	// Requires a save from user at the moment, this to preserve ELFIN.ANNEXE modification.
 						            	$scope.elfinForm.$setDirty();
 						            	hbAlertMessages.addAlert("info","Le fichier " + file.name + " a été téléversé avec succès.");
 						            	$scope.hbUploadStatusLabelCss = "label-info";
 						            };						            
 						            
 								    $scope.flowFileError = function(file, message) {
+						            	$log.debug("flowFileError(file = "+file.name+", message = "+message+")");
 						            	$scope.hbUploadStatusLabelCss = "label-danger";
 						            	hbAlertMessages.addAlert("danger","Le téléversement du fichier " + file.name + " a échoué!");
 						            };
 						            
 						            $scope.hbUploadStatusLabelCss = "label-info";
 						            
-							    	// Check when ngflow instance becomes available from flow-name directive initialisation  
-						            $scope.$watch('config.ngflow.opts', function(newFlow, oldFlow) { 
-
-						            	// Add elfin ID_G and Id properties values to upload information using query parameter:
-						            	// see https://github.com/flowjs/flow.js#flow
-						    			if ($scope.elfin) {
-						    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
-						    			} else {
-						    				//$log.debug("config.ngflow.opts listener COULD NOT set query parameters NO ELFIN AVAILABLE");
-						    			}
-							    	}, true);
-						            
-							    	// Check when elfin instance becomes available 
-							    	$scope.$watch('elfin.Id', function() { 
-							    		
-							    		if ($scope.elfin!=null) {
-							            	// Add elfin ID_G and Id properties values to upload information using query parameter:
-							            	// see https://github.com/flowjs/flow.js#flow
-							    			if ($scope.config.ngflow.opts) {
-							    				$scope.config.ngflow.opts.query = { elfinID_G : $scope.elfin.ID_G , elfinId : $scope.elfin.Id };
-							    			} else {
-							    				//$log.debug("elfin.Id listener COULD NOT set query parameters, NO config.ngflow.opts available.");
-							    			}
-							    		} else {
-						    				//$log.debug("elfin.Id listener COULD NOT set query parameters, NO ELFIN available.");
-							    		}
-							    	}, true);						            
-						            
-							    	// ============================================================================
 									        
 							    } ]);
 
