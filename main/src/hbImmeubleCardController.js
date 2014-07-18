@@ -122,6 +122,14 @@
 
 							    		if ($scope.elfin!=null) {
 								            
+							    			// Data correction - if no elfin.PARTENAIRE.FOURNISSEUR.VALUE datastructure exist creates it
+							    			// TODO: evaluate batch data update. 
+							    			if (!$scope.elfin.PARTENAIRE.FOURNISSEUR) {
+							    				$log.debug("No elfin.PARTENAIRE.FOURNISSEUR data structure found, create it.");
+							    				$scope.elfin.PARTENAIRE.FOURNISSEUR = {"Id":"null","ID_G":"null","NOM":"null","GROUPE":"null","VALUE":"-"};
+							    				$scope.elfinForm.$setDirty();
+							    			}
+							    			
 							    			// Get SURFACES
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
