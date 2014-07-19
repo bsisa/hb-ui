@@ -10,9 +10,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="annexe in annexes">
-					<td><a target="_self" ng-href="{{annexe.link}}">Détail</a></td>
-					<td>{{annexe.fileName}}</td>
+				<tr ng-repeat="annexe in elfin.ANNEXE.RENVOI | annexNoPhototFilter">
+					<td><a target="_self" ng-href="{{hbUtil.getLinkFileApiUrl(elfin.ID_G, elfin.Id, annexe.LIEN)}}">Détail</a></td>
+					<td>{{hbUtil.getLinkFileName(annexe.LIEN)}}</td>
 				</tr>
 			</tbody>
 		</table>
