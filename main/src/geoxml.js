@@ -22,7 +22,7 @@
 
 (function() {
     angular.module('geoxml', ['restangular']).factory('GeoxmlService', [
-        'Restangular', '$log', function(Restangular, $log) {
+        'Restangular', '$log', 'HB_API', function(Restangular, $log, HB_API) {
 
             var restGeoxml = Restangular.withConfig(function(Configurer) {
             	/*
@@ -106,7 +106,7 @@
                 	return _geoxmlService.one("security/hash", plainTxtPwd);
                 },
                 getAnnex: function(collectionId, elfinId, fileName) {
-                	return _geoxmlService.one("annex/"+collectionId+"/"+elfinId, fileName);
+                	return _geoxmlService.one(HB_API.ANNEXE_URL_PREFIX+"/"+collectionId+"/"+elfinId, fileName);
                 }
                 
             };

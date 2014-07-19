@@ -30,5 +30,6 @@ angular.module('hb5').constant('HB_EVENTS', {
  */
 angular.module('hb5').constant('HB_API', {
 	ANNEXE_URL : "/api/melfin/annex/",
+	ANNEXE_URL_PREFIX : "annex",
 	ANNEXE_UPLOAD_URL : "/api/melfin/annex/upload"
 });
