@@ -49,15 +49,25 @@
 						            		file.name = newFileName;
 						            		hbAlertMessages.addAlert("warning", "Le nom de votre fichier a été modifier de: " + oldFileName + " à " + newFileName);
 						            	}
-						            	
-						            	// TODO: already exist check
-						            	
-						            	$log.debug("flowFileAdded event: file = " + file.name + ", event = " + event);
-						            	$scope.hbUploadStatusLabelCss = "label-info";
+
+						            	// Already exist check, using HTTP HEAD.
+						            	// Receiving HTTP 200 Ok means the user must be warn of already existing file
+						            	// while receiving HTTP 701 custom code means Ok: file was not found.
+					            		GeoxmlService.getAnnex($scope.elfin.ID_G, $scope.elfin.Id, file.name).head()
+				            			.then(function() { // HTTP 200: warning file already exists
+											var message = "L'annexe " + file.name + " existe déjà. Si vous ne désirez pas l'écraser par votre sélection courrante, changer le nom de votre fichier et sélectionnez le à nouveau.";
+											hbAlertMessages.addAlert("danger",message);
+										},
+										function(response) { // HTTP 701: custom file not found code: Ok.
+											// Do nothing
+											$log.debug("Ok, checked annex " + file.name + " does not exist yet: " + response);
+										});							            	
+
+					            		// Reset file name to upload label CSS. 
+					            		$scope.hbUploadStatusLabelCss = "label-info";
 						            };
 						            
 						            $scope.flowUploadStarted = function(flow) {
-						            	$log.debug("flowUploadStarted.");
 						            	$scope.hbUploadStatusLabelCss = "label-success";
 						            };			
 						            
@@ -80,7 +90,7 @@
 						            };
 						            
 						            $scope.flowFileSuccess = function(file, message, flow) {
-						            	$log.debug("flowFileSuccess(file = "+file.name+", message = "+message+", flow )");
+
 						            	flow.removeFile(file);
 
 							            if ($scope.elfin.ANNEXE) {
@@ -107,7 +117,6 @@
 						            };
 						            
 						            $scope.hbUploadStatusLabelCss = "label-info";
-						            
 									        
 							    } ]);
 

@@ -104,7 +104,11 @@
                 },
                 getHash: function(plainTxtPwd) {
                 	return _geoxmlService.one("security/hash", plainTxtPwd);
+                },
+                getAnnex: function(collectionId, elfinId, fileName) {
+                	return _geoxmlService.one("annex/"+collectionId+"/"+elfinId, fileName);
                 }
+                
             };
         }
     ]);

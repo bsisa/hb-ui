@@ -307,7 +307,7 @@
 		        		var errMsg = "Droits d'accès insuffisants pour cette operation. ";
 		        		$log.error(errMsg +  " ( " + response.data.DESCRIPTION +" )");
 		        		hbAlertMessages.addAlert("danger",errMsg);
-    	        	} 
+    	        	}
     	        	else if (response.status == 404) {
 //    	        		for (var property in response) {
 //   	        			   console.log("Property name: " + property + ", value: " + response[property]);
@@ -315,7 +315,8 @@
     	        		var errMsg = "Ressource non disponible. ( " + response.data.DESCRIPTION +" )";
     	        		$log.error(errMsg);
     	        		hbAlertMessages.addAlert("danger",errMsg);
-    	        	} else if (response.status == 500) {
+    	        	} 
+    	        	else if (response.status == 500) {
     	        		var errMsg = "Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. " ;
     	        		if (response.data.DESCRIPTION) {
     	        			errMsg += "( " + response.data.DESCRIPTION +" )"; 
@@ -334,7 +335,13 @@
     	        		var userErrMsg = "L'obtention du hachage encrypté du mot de passe a échoué. Veuillez s.v.p. prendre contact avec votre administrateur système.";
     	        		$log.error("PasswordHashException ("+response.status+"): ERROR = " + response.data.ERROR + ", DESCRIPTION = " + response.data.DESCRIPTION + ", User message = " + userErrMsg);
     	        		hbAlertMessages.addAlert("danger",userErrMsg);
-    	        	} else {
+    	        	} else if (response.status == 701) { // 701 - Custom success code for HEAD not found tests
+    	        		$log.debug("701 - Custom success code for HEAD not found tests ("+response.status+"): ERROR = " + response.data.ERROR + ", DESCRIPTION = " + response.data.DESCRIPTION );
+    	        		return response;
+    	        	}  
+    	        	// General 404 processing forbids ability to use HEAD for resource existence check.
+    	        	// Indeed a 404 is a perfectly correct status when testing a resource does not yet exists.
+    	        	else {
     	        		var errMsg = "Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status ;
     	        		$log.error(errMsg);
     	        		hbAlertMessages.addAlert("danger",errMsg);    	        		
