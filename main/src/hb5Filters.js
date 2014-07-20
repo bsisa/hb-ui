@@ -30,11 +30,12 @@
 
 		return function (RENVOIS, tag) {
 	        if (!angular.isUndefined(RENVOIS) && !angular.isUndefined(tag)) {
+	        	var tagLower = tag.toLowerCase();
 	            var fileteredRENVOIS = [];
 	            for (var i = 0; i < RENVOIS.length; i++) {
 					var RENVOI = RENVOIS[i];
-					if ( RENVOI.VALUE.toLowerCase().indexOf(tag) == -1 ) {
-					fileteredRENVOIS.push(RENVOI);
+					if ( RENVOI.VALUE.toLowerCase().indexOf(tagLower) == -1 ) {
+						fileteredRENVOIS.push(RENVOI);
 					}
 				}
 	            return fileteredRENVOIS;
@@ -59,11 +60,12 @@
 		
 		return function (RENVOIS, tag) {
 	        if (!angular.isUndefined(RENVOIS) && !angular.isUndefined(tag)) {
+	        	var tagLower = tag.toLowerCase();
 	            var fileteredRENVOIS = [];
 	            for (var i = 0; i < RENVOIS.length; i++) {
 					var RENVOI = RENVOIS[i];
-					if ( RENVOI.VALUE.toLowerCase().indexOf(tag) != -1 ) {
-					fileteredRENVOIS.push(RENVOI);
+					if ( RENVOI.VALUE.toLowerCase().indexOf(tagLower) != -1 ) {
+						fileteredRENVOIS.push(RENVOI);
 					}
 				}
 	            return fileteredRENVOIS;
