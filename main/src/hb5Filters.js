@@ -28,18 +28,39 @@
 	/**
 	 * Filter specialised for ELFIN ANNEXE RENVOI ...
 	 */
-	angular.module('hb5').filter('annexNoPhototFilter', [function () {
+	angular.module('hb5').filter('annexExcludeTagFilter', [function () {
 
-		return function (RENVOIS) {
-	        if (!angular.isUndefined(RENVOIS)) {
-	            var tempElements = [];
+		return function (RENVOIS, tag) {
+	        if (!angular.isUndefined(RENVOIS) && !angular.isUndefined(tag)) {
+	            var fileteredRENVOIS = [];
 	            for (var i = 0; i < RENVOIS.length; i++) {
 					var RENVOI = RENVOIS[i];
-					if ( RENVOI.VALUE.toLowerCase().indexOf("photo") == -1 ) {
-					tempElements.push(RENVOI);
+					if ( RENVOI.VALUE.toLowerCase().indexOf(tag) == -1 ) {
+					fileteredRENVOIS.push(RENVOI);
 					}
 				}
-	            return tempElements;
+	            return fileteredRENVOIS;
+	        } else {
+	            return RENVOIS;
+	        }
+	    };
+	}]);	
+	
+	/**
+	 * Filter specialised for ELFIN ANNEXE RENVOI ...
+	 */
+	angular.module('hb5').filter('annexIncludeTagFilter', [function () {
+		
+		return function (RENVOIS, tag) {
+	        if (!angular.isUndefined(RENVOIS) && !angular.isUndefined(tag)) {
+	            var fileteredRENVOIS = [];
+	            for (var i = 0; i < RENVOIS.length; i++) {
+					var RENVOI = RENVOIS[i];
+					if ( RENVOI.VALUE.toLowerCase().indexOf(tag) != -1 ) {
+					fileteredRENVOIS.push(RENVOI);
+					}
+				}
+	            return fileteredRENVOIS;
 	        } else {
 	            return RENVOIS;
 	        }
