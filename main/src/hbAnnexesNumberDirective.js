@@ -9,7 +9,8 @@
     	return {
 		    require: '^hbCardContainer',
 			restrict: 'A',
-		    templateUrl : "/assets/views/hbAnnexesNumber.html"
+		    templateUrl : "/assets/views/hbAnnexesNumber.html",
+		    controller: 'HbAnnexesNumberController'
 		};
 	
     });
