@@ -3,7 +3,7 @@
  * 
  * Available filters:
  * <ul>
- * <li>annexExcludeTagFilter</li>
+ * <li>annexExcludeTag</li>
  * <li>annexIncludeTagFilter</li>
  * <li>constatListFilter</li>
  * <li>immeubleListFilter</li> 
@@ -26,7 +26,7 @@
 	 * Usage: annexExcludeTabFilter:tag 
 	 * For instance: annexExcludeTabFilter:photo
 	 */
-	angular.module('hb5').filter('annexExcludeTagFilter', [function () {
+	angular.module('hb5').filter('annexExcludeTag', [function () {
 
 		return function (RENVOIS, tag) {
 	        if (!angular.isUndefined(RENVOIS) && !angular.isUndefined(tag)) {
