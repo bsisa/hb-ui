@@ -263,10 +263,10 @@
     	// Configurer.addResponseInterceptor(
         Restangular.setResponseInterceptor(
     			function(data,operation,what,url,response,deferred) {
-    	          $log.debug("Restangular response interceptor caught: status: " + response.status + 
-    	        		  ", operation: " + operation + 
-    	        		  ", what: " + what + 
-    	        		  ", url: " + url);
+//    	          $log.debug("Restangular response interceptor caught: status: " + response.status + 
+//    	        		  ", operation: " + operation + 
+//    	        		  ", what: " + what + 
+//    	        		  ", url: " + url);
     				
     	          // Important: The responseInterceptor must return the restangularized data element.
     	          // https://github.com/mgonto/restangular#seterrorinterceptor
