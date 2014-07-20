@@ -65,8 +65,10 @@
 				    	}, true);
 				    	
 				    	$scope.$watchCollection('elfin.ACTIVITE.EVENEMENT.ECHEANCE', function(newEcheances, oldEcheances) {
-				    		$scope.currentEvent = newEcheances[newEcheances.length-1];
-				    		$scope.updateEventStatusTooltip();
+				    		if (!angular.isUndefined(newEcheances)) {
+					    		$scope.currentEvent = newEcheances[newEcheances.length-1];
+					    		$scope.updateEventStatusTooltip();
+				    		}
 				        });
 
 						
