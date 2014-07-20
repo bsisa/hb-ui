@@ -32,7 +32,7 @@
 						// Update ngModel on user date change
 						$scope.$watch('date', function (newDate, oldDate) {
 
-							$log.debug("Date change from " + oldDate + " to " + newDate);
+							//$log.debug("Date change from " + oldDate + " to " + newDate);
 							
 							if (newDate && (newDate !== null)) {
 								// Convert $scope.date to GeoXML string format suitable for hbDateNgModelCtrl
@@ -54,7 +54,7 @@
 						// Listen to hbDateNgModelCtrl model value change. (reference to method is safe thanks angular.noop)
 						$scope.$watch('hbDateNgModelCtrl.$modelValue', function (newValue, oldValue) {
 							
-							$log.debug("hbDateNgModelCtrl.$modelValue changed : " + oldValue + " => " + newValue);
+							//$log.debug("hbDateNgModelCtrl.$modelValue changed : " + oldValue + " => " + newValue);
 							
 							if ($scope.hbDateNgModelCtrl && (newValue !== oldValue) && (newValue !== null)) {								
 								// update datepicker date with hbDate
