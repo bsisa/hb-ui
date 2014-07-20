@@ -38,8 +38,32 @@
 						            	flow.upload();
 						            };
 						            
+						            /**
+						             * Used to enable/disable flowUpload button.
+						             * Message to end-user related to the inability to upload together with its reasons
+						             * are managed in flowFileAdded.
+						             */
+						            $scope.canUpload = function() {
+						            	// Only valid state is acceptable for upload as it triggers automatic ELFIN save.
+						            	if ($scope.canSave() || ($scope.elfinForm.$pristine && $scope.elfinForm.$valid )) {
+						            		return true;
+						            	} else {
+						            		return false;
+						            	}
+						            };
+						            
 						            $scope.flowFileAdded = function(file,event) {
 						            	event.preventDefault();//prevent file from uploading !?
+						            	
+						            	if ($scope.canUpload()) {
+						            		if ($scope.canSave()) {
+						            			hbAlertMessages.addAlert("info", "Le téléversement de votre fichier entrainera la sauvegarde automatique de vos modifications en cours.");	
+						            		} else {
+							            		// Nothing to tell the user, the current elfin if pristine and valid and will stay so after the upload completed.						            			
+						            		}
+						            	} else {
+						            		hbAlertMessages.addAlert("danger", "Le téléversement de votre fichier ne sera possible que lorsque les règles de validation de votre formulaire seront satisfaites. En effet, Le téléversement de votre fichier entrainera la sauvegarde automatique de vos modifications en cours.");
+						            	}						            	
 						            	
 						            	// Perform name substitution
 						            	var oldFileName = file.name;
@@ -47,7 +71,7 @@
 						            	
 						            	if (!(oldFileName == newFileName)) {
 						            		file.name = newFileName;
-						            		hbAlertMessages.addAlert("warning", "Le nom de votre fichier a été modifier de: " + oldFileName + " à " + newFileName);
+						            		hbAlertMessages.addAlert("warning", "Le nom de votre fichier a été modifié de: " + oldFileName + " à " + newFileName);
 						            	}
 
 						            	// Already exist check, using HTTP HEAD.
@@ -81,7 +105,7 @@
 							            	hbAlertMessages.addAlert("info","Le téléversement du fichier " + file.name + " a été annulé.");						            		
 						            	} else if (flow.files.length > 1) {
 							            	flow.cancel();
-						            		hbAlertMessages.addAlert("warning","Plusieurs fichiers sont sélectionnés pour le téléversement, c'est imprévu! Tous les téléversements ont été annulés.");
+						            		hbAlertMessages.addAlert("warning","Plusieurs fichiers sont sélectionnés pour le téléversement, c'est inattendu! Tous les téléversements ont été annulés.");
 						            	} else {
 						            		flow.cancel();
 						            		hbAlertMessages.addAlert("warning","Aucun fichier sélectionnés pour le téléversement!");
@@ -90,25 +114,45 @@
 						            };
 						            
 						            $scope.flowFileSuccess = function(file, message, flow) {
-
+						            	
+						            	$log.debug("flowFileSuccess: About to add newRenvoi for file (before remove) = " + file.name);
 						            	flow.removeFile(file);
+						            	$log.debug("flowFileSuccess: About to add newRenvoi for file (after remove) = " + file.name);						            	
 
 							            if ($scope.elfin.ANNEXE) {
 							            	if ($scope.elfin.ANNEXE.RENVOI) {
-							            	var newRenvoi = { POS : $scope.elfin.ANNEXE.RENVOI.length+1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value };
-							            	$scope.elfin.ANNEXE.RENVOI.push(newRenvoi);
-							            	$log.debug("flowFileSuccess: Added newRenvoi: " + newRenvoi);
-							            	}
+							            		
+								            	var newRenvoi = { 
+								            			"POS" : $scope.elfin.ANNEXE.RENVOI.length+1, 
+								            			"LIEN" : file.name, 
+								            			"VALUE" : $scope.selectedUploadFileType.value 
+								            	};
+								            	$scope.elfin.ANNEXE.RENVOI.push(newRenvoi);
+								            	
+								            	$log.debug("flowFileSuccess: Added newRenvoi (POS, LIEN, VALUE): (" + newRenvoi.POS + ", " + newRenvoi.LIEN + ", " + newRenvoi.VALUE + ")");
+								            	for (var i = 0; i < $scope.elfin.ANNEXE.RENVOI.length; i++) {
+								            		var currRENVOI = $scope.elfin.ANNEXE.RENVOI[i];
+								            		$log.debug("RENVOI (POS, LIEN, VALUE): (" + currRENVOI.POS + ", " + currRENVOI.LIEN + ", " + currRENVOI.VALUE + ")");
+								            	};
+								            } else {
+								            	//TODO: test this scenario
+								            	var newAnnexeRenvoiArrayWithSingleRENVOI = [ { POS : 1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value } ];
+								            	$scope.elfin.ANNEXE.RENVOI = newAnnexeRenvoiArrayWithSingleRENVOI;
+								            	$log.debug("flowFileSuccess: Added newAnnexe: " + newAnnexeRenvoiArrayWithSingleRENVOI);
+								            }
 							            } else {
-							            	var newAnnexe = {RENVOI : [ { POS : 1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value} ] };
-							            	$scope.elfin.ANNEXE = newAnnexe;
-							            	$log.debug("flowFileSuccess: Added newAnnexe: " + newAnnexe);
+							            	//TODO: test this scenario
+							            	var newAnnexeWithRenvoiArrayWithSingleRENVOI = {RENVOI : [ { POS : 1, LIEN : file.name, VALUE : $scope.selectedUploadFileType.value } ] };
+							            	$scope.elfin.ANNEXE = newAnnexeWithRenvoiArrayWithSingleRENVOI;
+							            	$log.debug("flowFileSuccess: Added newAnnexe: " + newAnnexeWithRenvoiArrayWithSingleRENVOI);
 							            }
-							            // TODO: Evaluate whether we should automatically save elfin to server ?!
-						            	$scope.elfinForm.$setDirty();
+
+							            // Automatically save elfin to server 
+						            	$scope.saveElfin($scope.elfin);							            	
+						            	
 						            	hbAlertMessages.addAlert("info","Le fichier " + file.name + " a été téléversé avec succès.");
 						            	$scope.hbUploadStatusLabelCss = "label-info";
-						            };						            
+						            };
 						            
 								    $scope.flowFileError = function(file, message) {
 						            	$log.debug("flowFileError(file = "+file.name+", message = "+message+")");
