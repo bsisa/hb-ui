@@ -56,7 +56,7 @@
 							
 							$log.debug("hbDateNgModelCtrl.$modelValue changed : " + oldValue + " => " + newValue);
 							
-							if ($scope.hbDateNgModelCtrl && (newValue !== oldValue)) {
+							if ($scope.hbDateNgModelCtrl && (newValue !== oldValue) && (newValue !== null) && !(isNaN(newValue)) ) {
 								// update datepicker date with hbDate
 								var milliseconds = Date.parse($scope.hbDateNgModelCtrl.$modelValue);
 					            if (!isNaN(milliseconds)) {
@@ -65,7 +65,8 @@
 					            } else {
 					            	//$log.debug(">>>> NaN for $scope.hbDateNgModelCtrl.$modelValue : " + $scope.hbDateNgModelCtrl.$modelValue);
 					            	// TODO: check if this is a good way to trigger date validation error.
-					            	$scope.date = NaN;
+					            	// looks a bad idea do nothing
+					            	//$scope.date = NaN;
 					            }
 							} else {
 								//$log.debug(">>>> DO NOTHING: hbDateNgModelCtrl.$modelValue new and old are identical.");
