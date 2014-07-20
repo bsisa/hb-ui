@@ -559,12 +559,14 @@
 						//$log.debug("No function name.");
 					}
 				} catch (e) {
-					$log.debug("JSON parse exception for entryName: "
-									+ entryName
-									+ ", group: "
-									+ groupName
-									+ ". Exception: "
-									+ e);
+					// TODO: review once menu configurations have be made final
+					// deactive meanwhile, to verbose.
+//					$log.debug("JSON parse exception for entryName: "
+//									+ entryName
+//									+ ", group: "
+//									+ groupName
+//									+ ". Exception: "
+//									+ e);
 					// Fallback to actual cell string value in case of JSON parsing problem.
 					actionValue = L.C[2].VALUE;
 				}
