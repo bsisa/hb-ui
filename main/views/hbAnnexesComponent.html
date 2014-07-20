@@ -7,18 +7,18 @@
 				<tr>
 					<th class="col-md-1">Ouvrir</th>
 					<th class="col-md-11">Nom</th>
-					<th class="col-md-11">POS</th>
-					<th class="col-md-11">LIEN</th>
-					<th class="col-md-11">VALUE</th>
+<!-- 					<th class="col-md-11">POS</th> -->
+<!-- 					<th class="col-md-11">LIEN</th> -->
+<!-- 					<th class="col-md-11">VALUE</th> -->
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="renvoi in elfin.ANNEXE.RENVOI | annexExcludeTag:'photo'">
 					<td><a target="_self" ng-href="{{hbUtil.getLinkFileApiUrl(elfin.ID_G, elfin.Id, renvoi.LIEN)}}">Détail</a></td>
 					<td>{{hbUtil.getLinkFileName(renvoi.LIEN)}}</td>
-					<td>{{renvoi.POS}}</td>
-					<td>{{renvoi.LIEN}}</td>
-					<td>{{renvoi.VALUE}}</td>
+<!-- 					<td>{{renvoi.POS}}</td> -->
+<!-- 					<td>{{renvoi.LIEN}}</td> -->
+<!-- 					<td>{{renvoi.VALUE}}</td> -->
 					
 				</tr>
 			</tbody>
