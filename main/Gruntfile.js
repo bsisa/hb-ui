@@ -33,6 +33,7 @@ module.exports = function(grunt) {
 								'src/hbAlertMessagesService.js',
 								'src/hbAnnexesComponentController.js',
 								'src/hbAnnexesComponentDirective.js',
+								'src/hbAnnexesNumberDirective.js',
 								'src/hbAnnexesUploadController.js',
 								'src/hbAnnexesUploadDirective.js',
 								'src/hbCardContainerDirective.js',
