@@ -78,6 +78,7 @@
 
 	/**
      * Filter tailored to CONSTAT list requirements
+     * Keeping 'Filter' postfix is useful to avoid naming conflict with actual constat list.
 	 */
 	angular.module('hb5').filter('constatListFilter', [function () {
 
@@ -123,7 +124,8 @@
 
 	
 	/**
-	 * Filter tailored to IMMEUBLE list requirements
+	 * Filter tailored to IMMEUBLE list requirements.
+	 * Keeping 'Filter' postfix is useful to avoid naming conflict with actual immeuble list. 
 	 */
 	angular.module('hb5').filter('immeubleListFilter', [function () {
 
