@@ -33,7 +33,7 @@
 		return function (RENVOIS) {
 	        if (!angular.isUndefined(RENVOIS)) {
 	            var tempElements = [];
-	            for (var i = 0; i < RENVOIS.length-1; i++) {
+	            for (var i = 0; i < RENVOIS.length; i++) {
 					var RENVOI = RENVOIS[i];
 					if ( RENVOI.VALUE.toLowerCase().indexOf("photo") == -1 ) {
 					tempElements.push(RENVOI);
