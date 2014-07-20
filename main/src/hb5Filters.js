@@ -4,7 +4,7 @@
  * Available filters:
  * <ul>
  * <li>annexExcludeTag</li>
- * <li>annexIncludeTagFilter</li>
+ * <li>annexIncludeTag</li>
  * <li>constatListFilter</li>
  * <li>immeubleListFilter</li> 
  * <li>notLastFilter</li>
@@ -53,10 +53,10 @@
 	 * will be used for filtering in a case insensitive way, including
 	 * matching tags.
 	 * 
-	 * Usage: annexIncludeTagFilter:tag 
-	 * For instance: annexIncludeTagFilter:photo
+	 * Usage: annexIncludeTag:tag 
+	 * For instance: annexIncludeTag:photo
 	 */
-	angular.module('hb5').filter('annexIncludeTagFilter', [function () {
+	angular.module('hb5').filter('annexIncludeTag', [function () {
 		
 		return function (RENVOIS, tag) {
 	        if (!angular.isUndefined(RENVOIS) && !angular.isUndefined(tag)) {
