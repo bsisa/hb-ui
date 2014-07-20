@@ -26,7 +26,14 @@
 	
 	
 	/**
-	 * Filter specialised for ELFIN ANNEXE RENVOI ...
+	 * Filter specialised for ELFIN ANNEXE RENVOI.
+	 *  
+	 * `tag` parameter is expected to be a plain text string which 
+	 * will be used for filtering in a case insensitive way, excluding
+	 * matching tags.
+	 * 
+	 * Usage: annexExcludeTabFilter:tag 
+	 * For instance: annexExcludeTabFilter:photo
 	 */
 	angular.module('hb5').filter('annexExcludeTagFilter', [function () {
 
@@ -47,7 +54,14 @@
 	}]);	
 	
 	/**
-	 * Filter specialised for ELFIN ANNEXE RENVOI ...
+	 * Filter specialised for ELFIN ANNEXE RENVOI.
+	 *  
+	 * `tag` parameter is expected to be a plain text string which 
+	 * will be used for filtering in a case insensitive way, including
+	 * matching tags.
+	 * 
+	 * Usage: annexIncludeTagFilter:tag 
+	 * For instance: annexIncludeTagFilter:photo
 	 */
 	angular.module('hb5').filter('annexIncludeTagFilter', [function () {
 		
