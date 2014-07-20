@@ -272,7 +272,6 @@
 		 */
 		var getLinkFileApiUrl = function (elfinID_G, elfinId, link) {
 			var url = HB_API.ANNEXE_URL+elfinID_G+"/"+elfinId+"/"+ getLinkFileName(link);
-			$log.debug("getLinkFileApiUrl => " + url);
 			return url;		
 		};
         
