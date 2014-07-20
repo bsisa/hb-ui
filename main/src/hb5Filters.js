@@ -1,30 +1,21 @@
 /**
- * hb5 module filters 
+ * hb5 module custom filters.
+ * 
+ * Available filters:
+ * <ul>
+ * <li>annexExcludeTagFilter</li>
+ * <li>annexIncludeTagFilter</li>
+ * <li>constatListFilter</li>
+ * <li>immeubleListFilter</li> 
+ * <li>notLastFilter</li>
+ * <li>plural</li>
+ * </ul> 
  *  
  * @author Patrick Refondini 
  */
 (function() {
 
-	/**
-	 * Filter returning all array elements except last one
-	 */
-	angular.module('hb5').filter('notLastFilter', [function () {
 
-		return function (elements) {
-	        if (!angular.isUndefined(elements)) {
-	            var tempElements = [];
-	            for (var i = 0; i < elements.length-1; i++) {
-					var element = elements[i];
-					tempElements.push(element);
-				}
-	            return tempElements;
-	        } else {
-	            return elements;
-	        }
-	    };
-	}]);
-	
-	
 	/**
 	 * Filter specialised for ELFIN ANNEXE RENVOI.
 	 *  
@@ -53,6 +44,7 @@
 	    };
 	}]);	
 	
+	
 	/**
 	 * Filter specialised for ELFIN ANNEXE RENVOI.
 	 *  
@@ -79,6 +71,134 @@
 	            return RENVOIS;
 	        }
 	    };
+	}]);		
+	
+
+	/**
+     * Filter tailored to CONSTAT list requirements
+	 */
+	angular.module('hb5').filter('constatListFilter', [function () {
+
+		// case insensitive string contains check
+		var icontains = function (targetString, matchString) {
+			if (matchString && matchString.trim().length > 0) {
+				if (targetString) {
+					if (targetString.toLowerCase().indexOf(matchString.toLowerCase()) != -1) {
+						return true;
+					} else {
+						return false;
+					}					
+				} else { // If a match string is defined and there is no target string we consider it a non match.
+					return false;
+				}
+			} else {
+				// returns true if match string empty or undefined.
+				return true;
+			}
+		};
+		
+		return function (constats, predicate) {
+	        if (!angular.isUndefined(constats) && !angular.isUndefined(predicate)) {
+	            var tempConstats = [ ];
+	            angular.forEach(constats, function (constat) {
+                    if ( 
+                    //	 icontains(constat.ACTIVITE.EVENEMENT.ECHEANCE.POUR_QUI, predicate.last_resp) &&
+                    	 icontains(constat.IDENTIFIANT.DE, predicate.description) &&
+                    	 icontains(constat.IDENTIFIANT.NOM, predicate.constat_date) &&
+                    	 icontains(constat.GROUPE, predicate.constat_group) &&
+                    	 icontains(constat.IDENTIFIANT.OBJECTIF, predicate.constat_noSAI)
+                    ) {
+                    	tempConstats.push(constat);
+                    	
+                    }
+                });
+	            return tempConstats;
+	        } else {
+	            return constats;
+	        }
+	    };
+	}]);
+
+	
+	/**
+	 * Filter tailored to IMMEUBLE list requirements
+	 */
+	angular.module('hb5').filter('immeubleListFilter', [function () {
+
+		// case insensitive string contains check
+		var icontains = function (targetString, matchString) {
+			if (matchString && matchString.trim().length > 0) {
+				if (targetString) {
+					if (targetString.toLowerCase().indexOf(matchString.toLowerCase()) != -1) {
+						return true;
+					} else {
+						return false;
+					}					
+				} else { // If a match string is defined and there is no target string we consider it a non match.
+					return false;
+				}
+			} else {
+				// returns true if match string empty or undefined.
+				return true;
+			}
+		};
+		
+		return function (immeubles, predicate) {
+	        if (!angular.isUndefined(immeubles) && !angular.isUndefined(predicate)) {
+	            var tempImmeubles = [ ];
+	            angular.forEach(immeubles, function (immeuble) {
+                    if ( 
+                    	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.GROUPE, predicate.owner) &&
+                    	 icontains(immeuble.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
+                    	 icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
+                    	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
+                    	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address)
+                    ) {
+                    	tempImmeubles.push(immeuble);
+                    }
+                });
+	            return tempImmeubles;
+	        } else {
+	            return immeubles;
+	        }
+	    };
 	}]);	
+	
+	
+	/**
+	 * Filter returning all array elements except last one
+	 */
+	angular.module('hb5').filter('notLastFilter', [function () {
+
+		return function (elements) {
+	        if (!angular.isUndefined(elements)) {
+	            var tempElements = [];
+	            for (var i = 0; i < elements.length-1; i++) {
+					var element = elements[i];
+					tempElements.push(element);
+				}
+	            return tempElements;
+	        } else {
+	            return elements;
+	        }
+	    };
+	}]);
+	
+	
+    /**
+     * Basic filter to add an "s" to result titles 
+     * depending on the number of entries returned. 
+     */
+	angular.module('hb5').filter('plural', function() {
+		return function(number) {
+			if (number > 1) {
+				return "s";
+			} else {
+				return "";
+			}
+		};
+	});
+	
+
 	
 })();
