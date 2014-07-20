@@ -34,7 +34,7 @@
 
 							$log.debug("Date change from " + oldDate + " to " + newDate);
 							
-							if (newDate) {
+							if (newDate && (newDate !== null)) {
 								// Convert $scope.date to GeoXML string format suitable for hbDateNgModelCtrl
 								var isoTextDate = $filter('date')($scope.date, GEOXML_DATE_FORMAT);
 							
@@ -56,7 +56,7 @@
 							
 							$log.debug("hbDateNgModelCtrl.$modelValue changed : " + oldValue + " => " + newValue);
 							
-							if ($scope.hbDateNgModelCtrl && (newValue !== oldValue) && (newValue !== null) && !(isNaN(newValue)) ) {
+							if ($scope.hbDateNgModelCtrl && (newValue !== oldValue) && (newValue !== null)) {								
 								// update datepicker date with hbDate
 								var milliseconds = Date.parse($scope.hbDateNgModelCtrl.$modelValue);
 					            if (!isNaN(milliseconds)) {
