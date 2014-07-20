@@ -7,7 +7,7 @@
  * <li>annexIncludeTag</li>
  * <li>constatListFilter</li>
  * <li>immeubleListFilter</li> 
- * <li>notLastFilter</li>
+ * <li>notLast</li>
  * <li>plural</li>
  * </ul> 
  *  
@@ -170,7 +170,7 @@
 	/**
 	 * Filter returning all array elements except last one
 	 */
-	angular.module('hb5').filter('notLastFilter', [function () {
+	angular.module('hb5').filter('notLast', [function () {
 
 		return function (elements) {
 	        if (!angular.isUndefined(elements)) {
