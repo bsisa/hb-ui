@@ -1,0 +1,17 @@
+
+<!-- <div class="btn-group" style="padding: 0;"> -->
+<!-- <div class="btn-group"> -->
+<!-- 	<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown"> -->
+<div class="dropdown" >
+	<button class="btn btn-default dropdown-toggle" style="width: 100%;" type="button" data-toggle="dropdown">
+	<span ng-show="selectedOption">{{selectedOption.name}}</span><span ng-show="!selectedOption"><em>Sélectionnez&nbsp;</em></span>
+		 <span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" style="width: 100%;" role="menu">
+<!-- 		<li role="presentation" class="dropdown-header">titre...</li> -->
+		<li ng-repeat="option in options"
+			ng-click="selectOption(option)"><a
+			role="menuitem" tabindex="-1" href="#">{{option.name}}</a></li>
+	</ul>
+</div>
+

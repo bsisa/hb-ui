@@ -77,6 +77,8 @@ module.exports = function(grunt) {
 								'src/hbRoleCardDirective.js',
 								'src/hbSurfaceCardController.js',
 								'src/hbSurfaceCardDirective.js',
+								'src/hbSingleSelectController.js',
+								'src/hbSingleSelectDirective.js',
 								'src/hbTransactionCardController.js',
 								'src/hbTransactionCardDirective.js',
 								'src/hbTransactionCreateCardDirective.js',
