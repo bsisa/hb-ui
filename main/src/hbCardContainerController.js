@@ -246,6 +246,27 @@
             GeoxmlService.addRow(elfin, path, rowObject);
         };
 
+		// Updates photoSrc property with first available photo.
+    	$scope.updatePhotoSrc = function() {
+            if ($scope.elfin.ANNEXE) {
+            	// In case there are several pictures, reverse loop provides most recent first. 
+            	for (var i = $scope.elfin.ANNEXE.RENVOI.length - 1; i >= 0; i--) {
+	            //for (var i = 0; i < $scope.elfin.ANNEXE.RENVOI.length; i++) {
+					
+	            	var currentRenvoi = $scope.elfin.ANNEXE.RENVOI[i];
+					
+					if ( currentRenvoi.VALUE.toLowerCase().indexOf("photo") != -1 ) {
+						// Photo found build link
+						var photoLink = currentRenvoi;
+						$scope.photoSrc = hbUtil.getLinkFileApiUrl($scope.elfin.ID_G, $scope.elfin.Id, photoLink.LIEN);
+						break;
+					} else {
+						// No photo found (other annex)
+					}
+				}
+            }							    		
+    	};		        
+        
         $scope.uploadFile = function (renvoi) {
 
         	var modalInstance = $modal.open({

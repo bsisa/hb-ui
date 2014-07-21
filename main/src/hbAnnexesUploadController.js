@@ -150,6 +150,11 @@
 							            // Automatically save elfin to server 
 						            	$scope.saveElfin($scope.elfin);							            	
 						            	
+						            	// Update photo link 
+						            	if ($scope.selectedUploadFileType.value === 'photo') {
+						            		$scope.updatePhotoSrc();
+						            	}
+						            	
 						            	hbAlertMessages.addAlert("info","Le fichier " + file.name + " a été téléversé avec succès.");
 						            	$scope.hbUploadStatusLabelCss = "label-info";
 						            };

@@ -48,7 +48,6 @@
 										$location.search(searchObj).path( "/elfin/create/CONSTAT" );	
 									};									
 									
-						        
 							    	// Watch related to CONSTAT list in the context of elfin of CLASSE IMMEUBLE 
 							        // hence the dedicated controller.
 							    	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
@@ -143,27 +142,12 @@
 														var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
-								            
-								            // Get Photo
-								            if ($scope.elfin.ANNEXE) {
-									            for (var i = 0; i < $scope.elfin.ANNEXE.RENVOI.length; i++) {
-													
-									            	var currentRenvoi = $scope.elfin.ANNEXE.RENVOI[i];
-													
-													if ( currentRenvoi.VALUE.toLowerCase().indexOf("photo") != -1 ) {
-														// Photo found build link
-														var photoLink = currentRenvoi;
-														$scope.photoSrc = hbUtil.getLinkFileApiUrl($scope.elfin.ID_G, $scope.elfin.Id, photoLink.LIEN);
-														break;
-													} else {
-														// No photo found (other annex)
-													}
-												}
-								            }
-								            
+								            // Make IMMEUBLE photo available
+								            $scope.updatePhotoSrc();
 							    		};
 							    		
 							    	}, true);
+							    	
 							    	
 							    	// ============================================================================
 							    	// === Manage owner link 
