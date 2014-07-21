@@ -13,10 +13,14 @@
 					'hbUtil', 
 					'$rootScope',
 					'HB_EVENTS',
+					'$timeout',
 					function($scope, GeoxmlService, $modal, $routeParams,
-							$location, $log, hbAlertMessages, hbUtil, $rootScope, HB_EVENTS) {
+							$location, $log, hbAlertMessages, hbUtil, $rootScope, HB_EVENTS, $timeout) {
 
 						$log.debug("    >>>> Using HbUserCardController ");
+						
+						// Wait for the collaborator actor to have a chance to load before displaying validation error.
+						$scope.validateCollaborator = false;
 						
 						// Actor linked to the current user.
 						$scope.selected = { "collaborator" : null };
@@ -47,6 +51,13 @@
 							$scope.pwd2 = null;
 						};
 						
+						// enables collaborator actor validation with a delay.
+						$scope.enableValidateCollaborator = function() {
+							$timeout(function(){
+								$scope.validateCollaborator = true;
+							}, 2000, true);
+						};
+						
 						// Link to user actor for personal information (name, email, phone...)
 				        $scope.getElfinActor = function (collectionId, elfinId) {
 				        	
@@ -62,9 +73,11 @@
 						        	}
 						        	$log.debug(">>>>>>>>>>>> collaboratorActor.Id = " + elfin.Id);
 						        	$scope.selected.collaborator = elfin;
+						        	$scope.enableValidateCollaborator();
 						        	}, function(response) {
 						        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
 						            hbAlertMessages.addAlert("danger",message);
+						            $scope.enableValidateCollaborator();
 						        });
 //				            }
 //				            else {
@@ -219,8 +232,10 @@
 			            	
 			            	// Make sure a collaborator reference exists before loading
 				        	if ($scope.elfin.PARTENAIRE && $scope.elfin.PARTENAIRE.USAGER && $scope.elfin.PARTENAIRE.USAGER.Id && $scope.elfin.PARTENAIRE.USAGER.ID_G) {
-				        		$scope.getElfinActor($scope.elfin.PARTENAIRE.USAGER.ID_G, $scope.elfin.PARTENAIRE.USAGER.Id);	
-				        	}			            	
+				        		$scope.getElfinActor($scope.elfin.PARTENAIRE.USAGER.ID_G, $scope.elfin.PARTENAIRE.USAGER.Id);
+				        	} else {
+				        		$scope.enableValidateCollaborator();
+				        	}	            	
 
 			            });			        	
 			        	
