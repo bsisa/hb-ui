@@ -123,7 +123,8 @@
 								ng-repeat="transaction in transactions | orderBy:deadlinePredicate:deadlineReverse">
 								<td><a
 									href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}">Détail</a></td>
-								<td><a href=""><i tooltip="Ouvrir la pièce jointe" class="glyphicon glyphicon-paperclip"></i></a></td>
+								<td><a
+									href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}"><i tooltip="Ouvrir la pièce jointe (voir annexes)" class="glyphicon glyphicon-paperclip"></i></a></td>
 								<td><span tooltip="transaction.IDENTIFIANT.DE">{{transaction.IDENTIFIANT.DE}}</span></td>
 								<td><span
 									tooltip="transaction.PARTENAIRE.PROPRIETAIRE.VALUE">{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
