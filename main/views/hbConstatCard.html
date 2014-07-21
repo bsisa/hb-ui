@@ -215,15 +215,11 @@
 								<tbody>
 				 				 	<tr ng-repeat ="message in elfin.CARACTERISTIQUE.FRACTION.L">
 										<td width="3">
-											<div>{{message.POS}}
-<!-- 												<input id="message_pos" name="message_pos" type="text" -->
-<!-- 													class="form-control" ng-model="message.POS"> -->
-											</div>
+											<div class="form-control-static">{{message.POS}}</div>
 										</td>
-										<td width="50"><div>
-												<input id="message_c2" name="message_c2" type="text"
-													class="form-control" ng-model="message.C[1].VALUE">
-											</div></td>
+										<td width="50">
+											<div hb-date ng-model="message.C[1].VALUE"></div>										
+										</td>
 										<td width="200"><div>
 												<input id="message_c3" name="message_c3" type="text"
 													class="form-control" ng-model="message.C[0].VALUE">
