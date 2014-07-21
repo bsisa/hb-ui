@@ -3,9 +3,6 @@
 	<!-- Custom validation message to be defined here -->
 	<span ng-show="elfinForm.username.$error.required" >Le champs <strong>Nom d'utilisateur</strong> est obligatoire!</span>
 	<span ng-show="elfinForm.collaborator_name.$error.required" >Un <strong>collaborateur</strong> doit obligatoirement être associé à un compte utilisateur</span>
-	<span ng-show="elfinForm.collaborator_email.$error.required" >Le <strong>collaborateur</strong> associé au compte utilisateur doit avoir un <strong>Email</strong> défini</span>
-	<span ng-show="elfinForm.collaborator_email.$error.email" >Le <strong>collaborateur</strong> associé au compte utilisateur doit avoir un <strong>Email</strong> valide</span>
-	
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -17,7 +14,7 @@
 						<label for="username" class="col-sm-2 control-label">Nom d'utilisateur</label>
 						<div class="col-sm-3">
 							<input id="username" name="username" type="text" class="form-control"
-								ng-model="elfin.IDENTIFIANT.NOM" required
+								ng-model="elfin.IDENTIFIANT.NOM" ng-required="true"
 								tooltip="elfin.IDENTIFIANT.NOM">
 						</div>
 					</span>			
@@ -67,7 +64,7 @@
 						famille</label>
 					<div class="col-sm-3">
 						<div class="input-group">
-							<input id="collaborator_name" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.NOM" ng-readonly="true" ng-required="true">
+							<input id="collaborator_name" name="collaborator_name" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.NOM" ng-readonly="true" ng-required="validateCollaborator">
 							<span class="input-group-btn" tooltip="Recherche de collaborateur">
 								<button class="btn btn-default" type="button"
 									hb-choose-actor
