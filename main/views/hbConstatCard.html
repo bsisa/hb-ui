@@ -205,30 +205,30 @@
 											</button> Messages
 									</tr>
 									<tr>
-										<th>#</th>
-										<th>Date</th>
-										<th>Message</th>
-										<th>Décision</th>
-										<th>@</th>
+										<th class="col-md-1">#</th>
+										<th class="col-md-1">Date</th>
+										<th class="col-md-7">Message</th>
+										<th class="col-md-2">Décision</th>
+										<th class="col-md-1">@</th>
 									</tr>
 								</thead>
 								<tbody>
 				 				 	<tr ng-repeat ="message in elfin.CARACTERISTIQUE.FRACTION.L">
-										<td width="3">
+										<td >
 											<div class="form-control-static">{{message.POS}}</div>
 										</td>
-										<td width="50">
+										<td >
 											<div hb-date ng-model="message.C[1].VALUE"></div>										
 										</td>
-										<td width="200"><div>
+										<td ><div>
 												<input id="message_c3" name="message_c3" type="text"
 													class="form-control" ng-model="message.C[0].VALUE">
 											</div></td>
-										<td width="10"><div>
+										<td ><div>
 												<input id="message_c4" name="message_c4" type="text"
 													class="form-control" ng-model="message.C[2].VALUE">
 											</div></td>
-										<td width="3">
+										<td >
 										<a href="mailto:Valerie.Schindler@ne.ch;Veronique.Hengrave-Burnier@ne.ch;?subject=Gespatri" target="_self" >
 											<span class="btn btn-default" >@</span></a> 
 										</td>
@@ -242,28 +242,24 @@
 							<thead>
 								<tr>
 									<th colspan="8">
-			
 										<button class="btn btn-default" type="button"
 											tooltip="Nouvel événement" ng-click="addEcheance()">
 											<i class="icon-plus-sign"></i>
 										</button> Evénements en cours
 								</tr>
 								<tr>
-									<th>#</th>
-									<th>Date</th>
-									<th>Etape en cours</th>
-									<th>Resp</th>
-									<th>Délai</th>
-									<th>Groupe presta</th>
-									<th>Année presta</th>
-									<th>Montant estimé</th>
+									<th class="col-md-1">Statut</th>
+									<th class="col-md-1">Date</th>
+									<th class="col-md-3">Etape en cours</th>
+									<th class="col-md-1">Resp</th>
+									<th class="col-md-1">Délai</th>
+									<th class="col-md-3">Groupe presta</th>
+									<th class="col-md-1">Année presta</th>
+									<th class="col-md-1">Montant estimé</th>
 								</tr>
 							</thead>
 							<tbody ng-show="currentEvent">
 								<tr>
-			<!-- 						ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE[elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1]"> -->
-			<!-- 						ng-repeat-start="currentEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE  | filter:{PAR_QUI:'!VALIDE'}"> -->
-			
 									<td rowspan="2">
 										<button class="btn btn-default" type="button" ng-click="switchEventStatus(currentEvent)" tooltip="{{eventStatusTooltip}}">
 											<i ng-show="currentEvent.PAR_QUI === 'EN COURS'" class='glyphicon glyphicon-wrench'></i>
@@ -271,36 +267,20 @@
 											<i ng-show="currentEvent.PAR_QUI === 'VALIDE'" class='glyphicon glyphicon-ok'></i>
 											<i ng-show="currentEvent.PAR_QUI != 'VALIDE' && currentEvent.PAR_QUI != 'A VALIDER' && currentEvent.PAR_QUI != 'EN COURS'" class='glyphicon glyphicon-question-sign'></i>
 										</button>
-										
-			<!-- 							<span ng-show="currentEvent.PAR_QUI === 'EN COURS'" tooltip="Statut en cours"><i class='glyphicon glyphicon-wrench'></i></span> -->
-			<!-- 							<span ng-show="currentEvent.PAR_QUI === 'A VALIDER'" tooltip="Statut à valider"><i class='glyphicon glyphicon-eye-open'></i></span> -->
-			<!-- 							<span ng-show="currentEvent.PAR_QUI === 'VALIDE'" tooltip="Statut valide"><i	class='glyphicon glyphicon-ok'></i></span> -->
-			<!-- 							<span ng-show="currentEvent.PAR_QUI != 'VALIDE' && currentEvent.PAR_QUI != 'A VALIDER' && currentEvent.PAR_QUI != 'EN COURS'" tooltip="Statut inconnu"> -->
-			<!-- 								<i class='glyphicon glyphicon-question-sign'></i> -->
-			<!-- 							</span> -->
 									</td>
 									<td>
 										<div hb-date ng-model="currentEvent.DATE"></div>
 									</td>
 									<td>
-			<!-- 							<div class="input-group"> -->
-			<!-- 								<input id="currentEventAction" type="text" class="form-control" -->
-			<!-- 									ng-model="currentEvent.ACTION" tooltip="currentEvent.ACTION"> -->
-			<!-- 								<span class="input-group-btn"> -->
-			<!-- 									<button class="btn btn-default" -->
-			<!-- 										ng-click="searchFollowUpStage($index)"> -->
-			<!-- 										<span class="caret"></span> -->
-			<!-- 									</button> -->
-			<!-- 								</span> -->
-			<!-- 							</div> -->
 										<div>								
-											<select id="currentEventAction" name="currentEventAction"
-												class="form-control" chosen data-placeholder=" "
-												disable-search="true" allow-single-deselect="true"
-												ng-model="currentEvent.ACTION"
-												ng-options="phase.name as phase.value for phase in phaseList">
-												<option value=''></option>
-											</select>								
+											<div hb-single-select hb-single-select-options="phaseList" ng-model="currentEvent.ACTION" ></div>
+<!-- 											<select id="currentEventAction" name="currentEventAction" -->
+<!-- 												class="form-control" chosen data-placeholder=" " -->
+<!-- 												disable-search="true" allow-single-deselect="true" -->
+<!-- 												ng-model="currentEvent.ACTION" -->
+<!-- 												ng-options="phase.name as phase.value for phase in phaseList"> -->
+<!-- 												<option value=''></option> -->
+<!-- 											</select>								 -->
 										</div>
 									</td>
 									<td>
@@ -317,30 +297,22 @@
 													<i class="glyphicon glyphicon-list-alt"></i>
 												</button>
 											</span>
-			<!-- 								<span class="input-group-btn"> -->
-			<!-- 									<button class="btn btn-default" -->
-			<!-- 										ng-click="searchManager($index)"> -->
-			<!-- 										<span class="caret"></span> -->
-			<!-- 									</button> -->
-			<!-- 								</span> -->
 										</div>
 									</td>
-			
 									<td>
 										<div hb-date ng-model="currentEvent.E_DATE"></div>
 									</td>
 									<td>
 										<div>
-											<select id="prestationGroup" name="prestationGroup"
-												class="form-control" chosen data-placeholder=" "
-												disable-search="true" allow-single-deselect="true"
-												ng-model="currentEvent.E_ACTION"
-												ng-options="prestationGroup.name as prestationGroup.value for prestationGroup in prestationGroups">
-												<option value=''></option>
-											</select>
-										</div> <!-- 									<div class="input-group"> --> <!-- 										<input id="currentEventEAction" type="text" class="form-control" ng-model="currentEvent.E_ACTION" tooltip="currentEvent.E_ACTION"> -->
-										<!-- 										<span class="input-group-btn"> --> <!-- 											<button class="btn btn-default" ng-click="searchAction($index)"><span class="caret"></span></button> -->
-										<!-- 										</span>									 --> <!-- 									</div> -->
+											<div hb-single-select hb-single-select-options="prestationGroups" ng-model="currentEvent.E_ACTION" ></div>										
+<!-- 											<select id="prestationGroup" name="prestationGroup" -->
+<!-- 												class="form-control" chosen data-placeholder=" " -->
+<!-- 												disable-search="true" allow-single-deselect="true" -->
+<!-- 												ng-model="currentEvent.E_ACTION" -->
+<!-- 												ng-options="prestationGroup.name as prestationGroup.value for prestationGroup in prestationGroups"> -->
+<!-- 												<option value=''></option> -->
+<!-- 											</select> -->
+										</div> 
 									</td>
 									<td>
 										<input id="currentEventEPourQui" type="text" class="form-control" ng-model="currentEvent.E_POUR_QUI">
@@ -349,7 +321,6 @@
 										<input id="currentEventEParQui" type="text" class="form-control" ng-model="currentEvent.E_PAR_QUI">
 									</td>
 								</tr>
-			<!-- 					<tr ng-repeat-end> -->
 								<tr>
 									<td colspan="7"><input id="currentEventRemarque" type="text"
 										class="form-control" ng-model="currentEvent.REMARQUE"
@@ -364,39 +335,18 @@
 									<th colspan="8">Evénements antérieurs (non modifiables)</th>
 								</tr>
 								<tr>
-									<th>#</th>
-									<th>Date</th>
-									<th>Etape en cours</th>
-									<th>Resp</th>
-									<th>Délai</th>
-									<th>Groupe presta</th>
-									<th>Année presta</th>
-									<th>Montant estimé</th>						
-			<!-- 						<th><a href="" -->
-			<!-- 							ng-click="deadlinePredicate = 'DATE'; deadlineReverse=!deadlineReverse">Date</a></th> -->
-			<!-- 						<th><a href="" -->
-			<!-- 							ng-click="deadlinePredicate = 'ACTION'; deadlineReverse=!deadlineReverse">Etape -->
-			<!-- 								en cours</a></th> -->
-			<!-- 						<th><a href="" -->
-			<!-- 							ng-click="deadlinePredicate = 'POUR_QUI'; deadlineReverse=!deadlineReverse">Resp</a></th> -->
-			<!-- 						<th><a href="" -->
-			<!-- 							ng-click="deadlinePredicate = 'E_DATE'; deadlineReverse=!deadlineReverse">Délai</a></th> -->
-			<!-- 						<th><a href="" -->
-			<!-- 							ng-click="deadlinePredicate = 'E_ACTION'; deadlineReverse=!deadlineReverse">Groupe -->
-			<!-- 								presta</a></th> -->
-			<!-- 						<th><a href="" -->
-			<!-- 							ng-click="deadlinePredicate = 'E_POUR_QUI'; deadlineReverse=!deadlineReverse">Année -->
-			<!-- 								presta</a></th> -->
-			<!-- 						<th><a href="" -->
-			<!-- 							ng-click="deadlinePredicate = 'E_PAR_QUI'; deadlineReverse=!deadlineReverse">Montant -->
-			<!-- 								estimé</a></th> -->
+									<th class="col-md-1">Statut</th>
+									<th class="col-md-1">Date</th>
+									<th class="col-md-3">Etape en cours</th>
+									<th class="col-md-1">Resp</th>
+									<th class="col-md-1">Délai</th>
+									<th class="col-md-3">Groupe presta</th>
+									<th class="col-md-1">Année presta</th>
+									<th class="col-md-1">Montant estimé</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr
-									ng-repeat-start="formerEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | notLast ">
-			<!-- 						ng-repeat-start="formerEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{PAR_QUI:'VALIDE'}"> -->
-									<!-- 								<td rowspan="2">{{$index + 1}}</td> -->
+								<tr ng-repeat-start="formerEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | notLast ">
 									<td rowspan="2">
 										<span ng-show="formerEvent.PAR_QUI === 'EN COURS'" tooltip="Statut en cours"><i class='glyphicon glyphicon-wrench'></i></span>
 										<span ng-show="formerEvent.PAR_QUI === 'A VALIDER'" tooltip="Statut à valider"><i class='glyphicon glyphicon-eye-open'></i></span>
