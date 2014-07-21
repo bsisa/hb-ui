@@ -26,6 +26,8 @@
 								$log.debug("    >>>> Using HbTransactionCardController");
 
 								$scope.constatSelectionHelperSai = '';
+								// Loaded asynchronously
+								$scope.repartitions = null;
 								
 								// Benefit from server side cache...
 								var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
@@ -110,9 +112,15 @@
 															$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
 															$log.debug(">>> : $scope.constatPrestation = " + $scope.constatPrestation);
 														} else if (prestations.length < 1) {
+															$scope.constatPrestation = null;
+															$scope.elfin.IDENTIFIANT.COMPTE = null;
+															$scope.elfin.IDENTIFIANT.OBJECTIF = null;
 															hbAlertMessages.addAlert(
 																	"warning", "Pas de prestation correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);
 														} else if (prestations.length > 1) {
+															$scope.constatPrestation = null;
+															$scope.elfin.IDENTIFIANT.COMPTE = null;
+															$scope.elfin.IDENTIFIANT.OBJECTIF = null;															
 															hbAlertMessages.addAlert(
 																	"warning", "Plusieurs prestations correspondent aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);															
 														}
@@ -128,39 +136,48 @@
 								};								
 								
 
-								$rootScope
-										.$on(
-												HB_EVENTS.ELFIN_CREATED,
-												function(event, elfin) {
+					            /**
+					             * Perform operations once we are garanteed to have access to $scope.elfin instance.
+					             * This is more reliable than HB_EVENTS.ELFIN_CREATED event observation.
+					             */
+						    	$scope.$watch('elfin.Id', function() { 
 
-													// Update elfin properties from catalogue while in create mode
-													if ($attrs.hbMode === "create") {
+						    		if ($scope.elfin!=null) {
 
-														if ($scope.elfin) {
+										// Update elfin properties from catalogue while in create mode
+										if ($attrs.hbMode === "create") {
 
-															var currentDate = new Date();
-															$scope.elfin.IDENTIFIANT.DE = hbUtil
-																	.getDateInHbTextFormat(currentDate);
-															$scope.elfin.IDENTIFIANT.PAR = currentDate
-																	.getFullYear()
-																	.toString();
+											$log.debug(">>>>>>>>>>>>>>> CREATE INITIALISATION !!!!! <<<<<<<<<<<<<<<<<<<<");
+											
+											if ($scope.elfin) {
 
-															// Reset default value from catalogue is not relevant
-															$scope.elfin.IDENTIFIANT.QUALITE = "";
-															// Get user abbreviation from userDetails service
-															$scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();
-															// Default value from catalogue contains constatTypes list: Reset it.
-															$scope.elfin.GROUPE = "";
-															// Default value from catalogue contains repartition list: Reset it.
-															$scope.elfin.CARACTERISTIQUE.CAR3.VALEUR = "";
-														} else {
-															$log
-																	.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
-														}
-													} else {
-														// Do nothing
-													}
-												});
+												var currentDate = new Date();
+												$scope.elfin.IDENTIFIANT.DE = hbUtil
+														.getDateInHbTextFormat(currentDate);
+												$scope.elfin.IDENTIFIANT.PAR = currentDate
+														.getFullYear()
+														.toString();
+
+												// Reset default value from catalogue is not relevant
+												$scope.elfin.IDENTIFIANT.QUALITE = "";
+												// Get user abbreviation from userDetails service
+												$scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();
+												// Default value from catalogue contains constatTypes list: Reset it.
+												$scope.elfin.GROUPE = "";
+												// Default value from catalogue contains repartition list: Reset it.
+												$scope.elfin.CARACTERISTIQUE.CAR3.VALEUR = "";
+											} else {
+												$log
+														.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
+											}
+										} else {
+											// Do nothing
+										}						    			
+						    			
+						    		};
+						    		
+						    	}, true);								
+								
 
 								// Asychronous TRANSACTION template preloading
 								GeoxmlService.getNewElfin("TRANSACTION").get().then(
