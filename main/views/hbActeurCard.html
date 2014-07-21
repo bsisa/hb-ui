@@ -4,7 +4,7 @@
 		<span ng-show="elfinForm.surname.$error.required">Le champs <strong>Prénom</strong> est obligatoire pour les collaborateurs</span>
 		<span ng-show="elfinForm.email.$error.email">Le champs <strong>Email</strong> n'est pas valide</span>
 		<span ng-show="elfinForm.email.$error.required">Le champs <strong>Email</strong> est obligatoire pour les collaborateurs</span>
-		<span ng-show="elfinForm.societe.$error.required">Le champs <strong>Société</strong> est obligatoire excepté pour les collaborateurs</span>
+		<span ng-show="elfinForm.societe.$error.required">Le champs <strong><span ng-show="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'" >Société</span><span ng-show="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'" >Abréviation</span></strong> est obligatoire</span>
 		<span ng-show="elfinForm.role.$error.required">Le champs <strong>Rôle</strong> est obligatoire</span>
 	</div>
 	<div class="row" style="padding-top: 8px;">
@@ -28,25 +28,25 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="role" class="col-sm-2 control-label">Rôle</label>
+					<label for="role" class="col-sm-2 control-label">Rôle:  {{elfin.IDENTIFIANT.QUALITE}}</label>
 					<div class="col-sm-10">
 						<select id="role" name="role" type="text" class="form-control"
 							chosen
 							data-placeholder="Choisir un rôle..."
 							disable-search="true"
-							allow-single-deselect="true"						
+							allow-single-deselect="false"						
 							ng-model="elfin.IDENTIFIANT.QUALITE"
 							tooltip="elfin.IDENTIFIANT.QUALITE"
 							ng-options="role.name as role.value for role in actorRoles"
-							required>
+							ng-required="true">
 						</select>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="societe" class="col-sm-2 control-label">Société</label>
+					<label for="societe" class="col-sm-2 control-label"><span ng-show="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'" >Société</span><span ng-show="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'" >Abréviation</span></label>
 					<div class="col-sm-10">
 						<input id="societe" name="societe" type="text" class="form-control"
-							ng-model="elfin.GROUPE" tooltip="elfin.GROUPE" ng-required="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'">
+							ng-model="elfin.GROUPE" tooltip="elfin.GROUPE" ng-required="elfin.IDENTIFIANT.QUALITE != ''">
 					</div>
 				</div>
 				<div class="form-group">
