@@ -33,7 +33,7 @@
 						<div class="col-sm-8">
 							<input id="goal" name="goal" type="text" class="form-control"
 								ng-model="elfin.IDENTIFIANT.OBJECTIF"
-								tooltip="elfin.IDENTIFIANT.OBJECTIF" required>
+								required>
 						</div>
 					</div>
 						<div class="form-group has-feedback"
@@ -44,7 +44,7 @@
 								<input id="author" name="author" type="text"
 									class="form-control"
 									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR"
-									tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" required>
+									required>
 							</div>
 						</div>
 						<div class="form-group has-feedback"
@@ -54,7 +54,7 @@
 							<div class="col-sm-8">
 								<input id="name" name="name" type="text" class="form-control"
 									ng-model="elfin.IDENTIFIANT.NOM"
-									tooltip="elfin.IDENTIFIANT.NOM" required>
+									required>
 							</div>
 						</div>
 						<div class="form-group has-feedback"
@@ -63,7 +63,7 @@
 							<div class="col-sm-8">
 								<input id="address" name="address" type="text"
 									class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS"
-									tooltip="elfin.IDENTIFIANT.ALIAS" required>
+									required>
 							</div>
 						</div>
 <!-- 					</div> -->
@@ -78,7 +78,7 @@
 								<input id="cadastralNb" name="cadastralNb" type="text"
 									class="form-control"
 									ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"
-									tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR" required>
+									required>
 							</div>
 						</div>
 				</div><!-- 1st col first tab first row end -->
@@ -110,7 +110,6 @@
 										<input id="manager" name="manager" type="text"
 											class="form-control"
 											ng-model="selected.ownerDisplay"
-											tooltip="selected.ownerDisplay" 
 											readonly
 											ng-model-options="{ debounce: 500 }"
 											ng-required="validateOwner"
@@ -158,7 +157,7 @@
 								<div class="col-sm-8">
 									<input id="alias" name="alias" type="text" class="form-control"
 										ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
-										tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE" required>
+										required>
 								</div>
 							</div>
 						</div>
@@ -188,7 +187,7 @@
 							<input id="locality" name="locality" type="text"
 								class="form-control"
 								ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"
-								tooltip="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR">
+								>
 						</div>
 					</div>
 				</div>
@@ -198,7 +197,7 @@
 						<label for="remark" class="col-sm-1 control-label">Remarque</label>
 						<div class="col-sm-11">
 							<input id="remark" name="remark" type="text" class="form-control"
-								ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE">
+								ng-model="elfin.DIVERS.REMARQUE" >
 						</div>
 					</div>
 				</div>
@@ -266,8 +265,8 @@
 								ng-repeat="constat in constatsEncours | orderBy:'IDENTIFIANT.DE':true">
 								<td><a
 									href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
-								<td><span tooltip="constat.PARTENAIRE.USAGER.VALUE">{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
-								<td><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
+								<td><span >{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
+								<td><span >{{constat.IDENTIFIANT.NOM}}</span></td>
 								<td><span
 									tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_PAR_QUI">voir
 										tooltip</span></td>
@@ -306,13 +305,13 @@
 								<tr
 									ng-repeat="constat in constatsClos | orderBy:'IDENTIFIANT.DE':true">
 									<td><a href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
-									<td><span tooltip="constat.PARTENAIRE.USAGER.VALUE">{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
-									<td><span tooltip="constat.IDENTIFIANT.NOM">{{constat.IDENTIFIANT.NOM}}</span></td>
+									<td><span >{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
+									<td><span >{{constat.IDENTIFIANT.NOM}}</span></td>
 									<td><span
 										tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_PAR_QUI">voir
 											tooltip</span></td>
-									<td><span tooltip="constat.IDENTIFIANT.DE">{{constat.IDENTIFIANT.DE}}</span></td>
-									<td><span tooltip="constat.IDENTIFIANT.A">{{constat.IDENTIFIANT.A}}</span></td>
+									<td><span >{{constat.IDENTIFIANT.DE}}</span></td>
+									<td><span >{{constat.IDENTIFIANT.A}}</span></td>
 								</tr>
 							</tbody>
 						</table>
@@ -385,11 +384,11 @@
 								<tr
 									ng-repeat="surface in surfaces | orderBy:locUnitPredicate:locUnitReverse">
 									<td><a href="/elfin/{{surface.ID_G}}/SURFACE/{{surface.Id}}">Détail</a></td>
-									<td><span tooltip="surface.IDENTIFIANT.OBJECTIF">{{surface.IDENTIFIANT.OBJECTIF}}</span></td>
-									<td><span tooltip="surface.GROUPE">{{surface.GROUPE}}</span></td>
-									<td><span tooltip="surface.PARTENAIRE.USAGER.VALUE">{{surface.PARTENAIRE.USAGER.VALUE}}</span></td>
-									<td><span tooltip="surface.CARACTERISTIQUE.CAR1.VALEUR">{{surface.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-									<td><span tooltip="surface.DIVERS.REMARQUE">{{surface.DIVERS.REMARQUE}}</span></td>
+									<td><span >{{surface.IDENTIFIANT.OBJECTIF}}</span></td>
+									<td><span >{{surface.GROUPE}}</span></td>
+									<td><span >{{surface.PARTENAIRE.USAGER.VALUE}}</span></td>
+									<td><span >{{surface.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+									<td><span >{{surface.DIVERS.REMARQUE}}</span></td>
 								</tr>
 							</tbody>
 						</table>
@@ -453,12 +452,12 @@
 									ng-repeat="prestation in prestations | orderBy:prestaPredicate:prestaReverse">
 									<td><a
 										href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a></td>
-									<td><span tooltip="prestation.IDENTIFIANT.OBJECTIF">{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
-									<td><span tooltip="prestation.IDENTIFIANT.DE">{{prestation.IDENTIFIANT.DE}}</span></td>
-									<td><span tooltip="prestation.GROUPE">{{prestation.GROUPE}}</span></td>
-									<td><span tooltip=prestation.IDENTIFIANT.ORIGINE>{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
-									<td><span tooltip="prestation.IDENTIFIANT.VALEUR_A_NEUF">{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
-									<td><span tooltip="prestation.DIVERS.REMARQUE">{{prestation.DIVERS.REMARQUE}}</span></td>
+									<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
+									<td><span >{{prestation.IDENTIFIANT.DE}}</span></td>
+									<td><span >{{prestation.GROUPE}}</span></td>
+									<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
+									<td><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
+									<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
 								</tr>
 							</tbody>
 						</table>
@@ -520,11 +519,11 @@
 								<tr
 									ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse">
 									<td><a href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}">Détail</a></td>
-									<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.UNITE">{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-									<td><span tooltip="contrat.CARACTERISTIQUE.CAR1.VALEUR">{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-									<td><span tooltip="contrat.PARTENAIRE.FOURNISSEUR.VALUE">{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-									<td><span tooltip="contrat.IDENTIFIANT.VALEUR">{{contrat.IDENTIFIANT.VALEUR}}</span></td>
-									<td><span tooltip="contrat.GROUPE">{{contrat.GROUPE}}</span></td>
+									<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
+									<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+									<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+									<td><span >{{contrat.IDENTIFIANT.VALEUR}}</span></td>
+									<td><span >{{contrat.GROUPE}}</span></td>
 								</tr>
 							</tbody>
 						</table>
