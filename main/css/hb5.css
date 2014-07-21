@@ -1,4 +1,18 @@
 
+/* 
+Although this ng-cloak CSS is already available in angular.js 
+including it here prevents flicker issue to occur between a view 
+is first loaded and before Angular has had a chance to run.
+*/
+[ng\:cloak],   
+[ng-cloak],   
+[data-ng-cloak],   
+[x-ng-cloak],   
+.ng-cloak,   
+.x-ng-cloak {  
+	display: none !important;  
+}  
+
 colgroup col.phase {
   background-color: #eeeeee;
   border: solid 1px grey;
