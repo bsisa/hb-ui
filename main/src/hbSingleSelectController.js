@@ -16,17 +16,17 @@
 							$scope.ngModelCtrl = ctrl;						
 						};
 						
-						$scope.selectedOption = null;
-
-						//$scope.options = null;
-						
 						$scope.selectOption = function(option) {
-							$scope.selectedOption = option;
-							// Simulate user entry
+							// Reflect user selection to model.
 							$scope.ngModelCtrl.$viewValue = option.name;
 							$scope.ngModelCtrl.$commitViewValue();
 						};
 
+						
+						// Listen to ngModelCtrl model value change. (reference to method is safe thanks angular.noop)
+						$scope.$watch('ngModelCtrl.$modelValue', function (newValue, oldValue) {
+							$scope.ngModelCtrl.$viewValue = $scope.ngModelCtrl.$modelValue;
+						}, true);										
 	
 					} ]);
 	
