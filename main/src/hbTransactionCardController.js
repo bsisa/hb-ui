@@ -146,8 +146,6 @@
 
 										// Update elfin properties from catalogue while in create mode
 										if ($attrs.hbMode === "create") {
-
-											$log.debug(">>>>>>>>>>>>>>> CREATE INITIALISATION !!!!! <<<<<<<<<<<<<<<<<<<<");
 											
 											if ($scope.elfin) {
 
@@ -167,13 +165,11 @@
 												// Default value from catalogue contains repartition list: Reset it.
 												$scope.elfin.CARACTERISTIQUE.CAR3.VALEUR = "";
 											} else {
-												$log
-														.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
+												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
 										} else {
 											// Do nothing
 										}						    			
-						    			
 						    		};
 						    		
 						    	}, true);								
