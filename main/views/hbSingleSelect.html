@@ -3,7 +3,7 @@
 <!-- could pass btn-sm, bth-xs,... to ng-class for size customisation -->
 <div class="dropdown" >
 	<button class="btn btn-default dropdown-toggle" style="width: 100%; padding-left: 0.5em;" type="button" data-toggle="dropdown">
-	<div class="col-sm-10" style="text-align: left" ng-show="selectedOption">{{selectedOption.name}}</div><div class="col-sm-10" style="text-align: left" ng-show="!selectedOption"><em>Sélectionnez&nbsp;</em></div>
+	<div class="col-sm-10" style="text-align: left" ng-show="ngModelCtrl.$viewValue">{{ngModelCtrl.$viewValue}}</div><div class="col-sm-10" style="text-align: left" ng-show="!ngModelCtrl.$viewValue || ngModelCtrl.$viewValue === ''"><em>Sélectionnez&nbsp;</em></div>
 		 <div class="col-sm-2"><span class="caret"></span></div>
 	</button>
 	<ul class="dropdown-menu" style="width: 100%;" role="menu">
