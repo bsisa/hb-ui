@@ -80,8 +80,8 @@
 				</div>
 				<div class="form-group">
 					<label for="collaborator_surname" class="col-sm-2 control-label">Prénom</label>
-					<div class="col-sm-3">
-						<input id="collaborator_surname" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.ALIAS" ng-readonly="true">
+					<div class="col-sm-3"><div class="form-control-static">{{selected.collaborator.IDENTIFIANT.ALIAS}}</div>
+<!-- 						<input id="collaborator_surname" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.ALIAS" ng-readonly="true"> -->
 <!-- 						<div class="input-group"> -->
 <!-- 							<input id="collaborator_surname" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.ALIAS" ng-readonly="true"> -->
 <!-- 							<span class="input-group-btn" tooltip="Recherche de collaborateur"> -->
@@ -95,8 +95,8 @@
 				</div>
 				<div class="form-group">
 					<label for="collaborator_group" class="col-sm-2 control-label">Abréviation</label>
-					<div class="col-sm-3">
-						<input id="collaborator_group" type="text" class="form-control" ng-model="selected.collaborator.GROUPE" ng-readonly="true">
+					<div class="col-sm-3"><div class="form-control-static">{{selected.collaborator.GROUPE}}</div>
+<!-- 						<input id="collaborator_group" type="text" class="form-control" ng-model="selected.collaborator.GROUPE" ng-readonly="true"> -->
 <!-- 						<div class="input-group"> -->
 <!-- 							<input id="collaborator_group" type="text" class="form-control" ng-model="selected.collaborator.GROUPE" ng-readonly="true"> -->
 <!-- 							<span class="input-group-btn" tooltip="Recherche de collaborateur"> -->
@@ -110,18 +110,18 @@
 				</div>
 				<div class="form-group">
 					<label for="collaborator_tel" class="col-sm-2 control-label">Téléphone</label>
-					<div class="col-sm-3">
-						<input id="collaborator_tel" type="text" class="form-control"
-							ng-model="selected.collaborator.CARACTERISTIQUE.CAR4.VALEUR"
-							ng-readonly="true">
+					<div class="col-sm-3"><div class="form-control-static">{{selected.collaborator.CARACTERISTIQUE.CAR4.VALEUR}}</div>
+<!-- 						<input id="collaborator_tel" type="text" class="form-control" -->
+<!-- 							ng-model="selected.collaborator.CARACTERISTIQUE.CAR4.VALEUR" -->
+<!-- 							ng-readonly="true"> -->
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="collaborator_email" class="col-sm-2 control-label">Email</label>
-					<div class="col-sm-3">
-						<input id="collaborator_email" name="collaborator_email" type="email" class="form-control"
-							ng-model="selected.collaborator.CARACTERISTIQUE.CAR5.VALEUR"
-							ng-readonly="true" ng-required="true">
+					<div class="col-sm-3"><div class="form-control-static">{{selected.collaborator.CARACTERISTIQUE.CAR5.VALEUR}}</div>
+<!-- 						<input id="collaborator_email" name="collaborator_email" type="email" class="form-control" -->
+<!-- 							ng-model="selected.collaborator.CARACTERISTIQUE.CAR5.VALEUR" -->
+<!-- 							ng-readonly="true" ng-required="true"> -->
 					</div>
 				</div>			
 			</div>		
