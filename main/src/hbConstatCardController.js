@@ -69,10 +69,6 @@
 				    		}
 				        });
 
-						
-//			            $scope.deadlinePredicate = 'DATE';
-//			            $scope.deadlineReverse = true;
-						
 						// Get statusTypes dynamically from HB5 catalogue CONSTAT
 						$scope.statusTypes = null;
 						
@@ -80,33 +76,6 @@
 						$scope.entrepriseActors = null;
 			            // Parameter to hbChooseOne service function
 						$scope.collaboratorActors = null;
-						
-
-						// ============================================
-						// TODO: move to hbDate directive - START
-						// ============================================
-						//$scope.fromDate = new Date();
-
-						// TODO: should be automatic with $locale providing the correct id i.e.: fr-ch, de-ch,...
-						//$scope.dateFormat = 'dd.MM.yyyy';						
-						
-						
-						// Only valid with ui.bootstrap 0.11.0 not 0.10.0						
-//						$scope.fromDateOpened = false;
-//						$scope.open = function($event) {
-//						    $event.preventDefault();
-//						    $event.stopPropagation();
-//						    if ($scope.fromDateOpened) {
-//						    	$log.debug("    >>>>  OPEN -> CLOSE  <<<<");
-//						    	$scope.fromDateOpened = false;
-//						    } else {
-//						    	$log.debug("    >>>>  CLOSE -> OPEN  <<<<");
-//						    	$scope.fromDateOpened = true;	
-//						    }
-//						  };
-						// ============================================
-						// TODO: move to hbDate directive - END
-						// ============================================
 
 						/**
 						 * Dynamic event status tooltip
@@ -177,6 +146,37 @@
 							}
 						};
 						
+						/**
+						 * Add Message as: CARACTERISTIQUE.FRACTION.L.{[C message,C date,C decision]}
+						 */
+						$scope.addMessage = function() {
+							
+							var emptyFractionTemplate = { "L": [  ] };
+							var messageTemplate = { "C": [ { "POS": 1, "VALUE": ""},
+                                     { "POS": 2, "VALUE": "1999-01-01"},
+                                     { "POS": 3, "VALUE": ""} ], "POS": 1 };
+							messageTemplate.C[1].VALUE = hbUtil.getDateInHbTextFormat(new Date());
+							
+							if ($scope.elfin.CARACTERISTIQUE) {
+								if ($scope.elfin.CARACTERISTIQUE.FRACTION) {
+									if ($scope.elfin.CARACTERISTIQUE.FRACTION.L) {
+										messageTemplate.POS = $scope.elfin.CARACTERISTIQUE.FRACTION.L.length+1;
+										$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', messageTemplate);
+									} else {
+										// FRACTION with no lines
+										$scope.elfin.CARACTERISTIQUE.FRACTION = emptyFractionTemplate;
+										$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', messageTemplate);
+									}
+								} else {
+									// Missing properties are created automatically in JS, thus same code as for empty FRACTION.
+									$scope.elfin.CARACTERISTIQUE.FRACTION = emptyFractionTemplate;
+									$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', messageTemplate);									
+								}
+							} else {
+								// always available in catalogue
+							}
+						};
+						// elfin.CARACTERISTIQUE.FRACTION.L
 						
 
 				        //   /api/melfin/G20060401225530100?xpath=//ELFIN[IDENTIFIANT/QUALITE='Entreprise']
