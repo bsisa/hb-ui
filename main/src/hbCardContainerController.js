@@ -309,6 +309,9 @@
     		        	}
     		            $scope.elfin = elfin;
     		            $scope.elfinForm.$setDirty();
+    		            //TODO: problem: elfin is a promise and might not be available when 
+    		            // we trigger the HB_EVENTS.ELFIN_CREATED event. Observer of this event
+    		            // expect the elfin to be available.
     		            $rootScope.$emit(HB_EVENTS.ELFIN_CREATED);
     		            // Annoying message, should at least fade out after a couple of seconds. Keep it as reminder.
     		            //hbAlertMessages.addAlert("info","Création du nouvel objet " + $scope.elfin.CLASSE);
