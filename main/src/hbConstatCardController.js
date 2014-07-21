@@ -143,7 +143,9 @@
 								// If unknown status set it to "EN COURS"
 								currentEvent.PAR_QUI = 'EN COURS';
 							}
-							
+							// Set form to dirty state 
+							$scope.elfinForm.$setDirty();
+							// Update tooltip
 							$scope.updateEventStatusTooltip();
 						};
 						
