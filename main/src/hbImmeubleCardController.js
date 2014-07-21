@@ -23,6 +23,9 @@
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
 									
+									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
+									$scope.validateOwner = false;									
+									
 									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
 									$scope.selected = { "owner" : null , "ownerDisplay" : null};
 									
@@ -148,6 +151,12 @@
 							    		
 							    	}, true);
 							    	
+									// enables Owner actor validation with a delay.
+									$scope.enableValidateOwner = function() {
+										$timeout(function(){
+											$scope.validateOwner = true;
+										}, 2000, true);
+									};
 							    	
 							    	// ============================================================================
 							    	// === Manage owner link 
@@ -168,9 +177,15 @@
 								        	$log.debug(">>>>>>>>>>>> ownerActor.Id = " + elfin.Id);
 								        	$scope.selected.owner = elfin;
 								        	$scope.selected.ownerDisplay = $scope.selected.owner.IDENTIFIANT.NOM + " - " + $scope.selected.owner.GROUPE;
+
+								            // Enable validation the current status should be ok.
+								        	$scope.enableValidateOwner();
+								        	
 								        	}, function(response) {
 								        	var message = "Le chargement du propriétaire lié à l'immeuble no gérance "+$scope.elfin.IDENTIFIANT.OBJECTIF+" a échoué (statut de retour: " + response.status + ")";
 								            hbAlertMessages.addAlert("danger",message);
+								            // Enable validation to show the problem
+								            $scope.enableValidateOwner();
 								        });
 						        		
 						        	};							    	
@@ -191,8 +206,10 @@
 								        		(elfin.PARTENAIRE.PROPRIETAIRE.ID_G != 'null')) {							        		
 							        		
 							        		$log.debug(">>>> HbImmeubleCardController: loading ELFIN owner Actor Id = " + elfin.PARTENAIRE.PROPRIETAIRE.Id + ", ID_G = " + elfin.PARTENAIRE.PROPRIETAIRE.ID_G);
-							        		$scope.getElfinOwnerActor(elfin.PARTENAIRE.PROPRIETAIRE.ID_G, elfin.PARTENAIRE.PROPRIETAIRE.Id);	
-							        	}			            	
+							        		$scope.getElfinOwnerActor(elfin.PARTENAIRE.PROPRIETAIRE.ID_G, elfin.PARTENAIRE.PROPRIETAIRE.Id);
+							        	} else {
+							        		$scope.enableValidateOwner();
+							        	}		            	
 
 						            });			        	
 						        	
