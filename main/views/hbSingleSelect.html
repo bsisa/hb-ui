@@ -1,11 +1,10 @@
 
-<!-- <div class="btn-group" style="padding: 0;"> -->
-<!-- <div class="btn-group"> -->
-<!-- 	<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown"> -->
+<!-- style="padding: 0; margin: 0;" -->
+<!-- could pass btn-sm, bth-xs,... to ng-class for size customisation -->
 <div class="dropdown" >
-	<button class="btn btn-default dropdown-toggle" style="width: 100%;" type="button" data-toggle="dropdown">
-	<span ng-show="selectedOption">{{selectedOption.name}}</span><span ng-show="!selectedOption"><em>Sélectionnez&nbsp;</em></span>
-		 <span class="caret"></span>
+	<button class="btn btn-default dropdown-toggle" style="width: 100%; padding-left: 0.5em;" type="button" data-toggle="dropdown">
+	<div class="col-sm-10" style="text-align: left" ng-show="selectedOption">{{selectedOption.name}}</div><div class="col-sm-10" style="text-align: left" ng-show="!selectedOption"><em>Sélectionnez&nbsp;</em></div>
+		 <div class="col-sm-2"><span class="caret"></span></div>
 	</button>
 	<ul class="dropdown-menu" style="width: 100%;" role="menu">
 <!-- 		<li role="presentation" class="dropdown-header">titre...</li> -->
