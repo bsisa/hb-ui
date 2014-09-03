@@ -393,6 +393,30 @@
 	            $scope.elfinForm.$setDirty();
         	}
         });
+        
+        
+        
+//        $scope.$on("$locationChangeStart", function(event, next, current) {
+//        	$log.debug(' >>>>> SCOPE EVENT :::: $locationChangeStart: ' + current + " to " + next);
+//        });
+//        
+//        $scope.$on("$routeChangeStart", function(event, next, current) {
+//        	$log.debug(' >>>>> SCOPE EVENT :::: $routeChangeStart: ' + current.templateUrl + " to " + next.templateUrl);
+//        });
+        
+        $rootScope.$on("$locationChangeStart", function(event, next, current) {
+        	$log.debug(' >>>>> ROOTSCOPE EVENT :::: $locationChangeStart: ' + current + " to " + next);
+//        	if ($scope.canSave == true) {
+//        		alert('Changes pending...');
+//        		event.preventDefault() ;
+//        	}
+        });
+        
+        $rootScope.$on("$routeChangeStart", function(event, next, current) {
+        	$log.debug(' >>>>> ROOTSCOPE EVENT :::: $routeChangeStart: ' + current.templateUrl + " to " + next.templateUrl);
+        });        
+        
+        
 
     }]);
 
