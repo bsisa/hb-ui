@@ -20,7 +20,21 @@
         };        
         
     };    
+      
+    
+    var UnsavedWarnDialogController = function ($scope, $modalInstance) {
+
+        $scope.ok = function () {
+            $modalInstance.close();
+        };
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };        
         
+    };    
+    
+    
+    
     /**
      * Controller for hb-card-container directive providing the global elfin card toolbox and 
      * insert point (ng-transclude) for custom cards layout.
@@ -40,6 +54,9 @@
         
         // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
+        
+        // Proceed with initialisation tasks
+        init();
         
         // ============================================================
         // Button bar layout helpers
@@ -206,7 +223,8 @@
             	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " annulée.";
    				hbAlertMessages.addAlert("warning",message);
             });        	
-        };        
+        };
+        
         
         $scope.elfinTypes = {
             BIEN: "Bien",
@@ -267,6 +285,7 @@
             }							    		
     	};		        
         
+    	//TODO: check if it can be removed.
         $scope.uploadFile = function (renvoi) {
 
         	var modalInstance = $modal.open({
@@ -285,6 +304,54 @@
             });
         };
 
+        /**
+         * Proceed to initialisation tasks
+         */
+        function init() {
+        	// Trigger a warning dialogue to the end-user if there are pending changes.
+        	// onRouteChangeOff is a function intended to turn listener off when called.
+        	onRouteChangeOff = $rootScope.$on('$locationChangeStart', routeChange);
+      	}
+
+        /**
+         * Notify end-user of pending modifications if any.
+         */
+        function routeChange(event, nextUrl, currentUrl) {
+            //Navigate to nextUrl if the form isn't dirty
+
+        	// Notify user if there is something to be saved, else navigate to nextUrl  
+        	if ($scope.canSave() == true) {
+        		// Prevent default navigation to nextUrl to let end user decision happen
+    			if (event.preventDefault) {	event.preventDefault(); }
+
+            	var modalInstance = $modal.open({
+                    templateUrl: '/assets/views/unsavedWarnDialog.html',
+                    controller: UnsavedWarnDialogController,
+                    scope: $scope,
+                    backdrop: 'static'
+                });
+
+                modalInstance.result.then(function (nada) {
+                	// User wants to save modifications. Navigation cancellation is what we have and want.
+                	//$log.debug('Modal confirmed at: ' + new Date() + ' should stay on : ' + currentUrl);
+                }, function () {
+                	// The user accepts loosing modification and navigating further.
+                	//$log.debug('Modal dismissed at: ' + new Date() + ' should go to : ' + nextUrl);
+                	// Stop listening for location changes to prevent deadloop
+                	onRouteChangeOff();
+                	// Perform location change using nextUrl parameter.
+                	$location.$$parse(nextUrl);
+                	//$log.debug('Parsed URL: ' + nextUrl + "$location.absURL = " + $location.absUrl());
+                	
+                });	
+                
+        	} else {
+        		//$log.debug(' >>>>> ROOTSCOPE EVENT :::: with no pending change.');
+        	}        	
+        }        
+        
+        
+        
 
         /**
          * Returns an elfin object. The elfin object is either obtained:
@@ -392,31 +459,7 @@
 	        	$scope.elfin = elfin;
 	            $scope.elfinForm.$setDirty();
         	}
-        });
-        
-        
-        
-//        $scope.$on("$locationChangeStart", function(event, next, current) {
-//        	$log.debug(' >>>>> SCOPE EVENT :::: $locationChangeStart: ' + current + " to " + next);
-//        });
-//        
-//        $scope.$on("$routeChangeStart", function(event, next, current) {
-//        	$log.debug(' >>>>> SCOPE EVENT :::: $routeChangeStart: ' + current.templateUrl + " to " + next.templateUrl);
-//        });
-        
-        $rootScope.$on("$locationChangeStart", function(event, next, current) {
-        	$log.debug(' >>>>> ROOTSCOPE EVENT :::: $locationChangeStart: ' + current + " to " + next);
-//        	if ($scope.canSave == true) {
-//        		alert('Changes pending...');
-//        		event.preventDefault() ;
-//        	}
-        });
-        
-        $rootScope.$on("$routeChangeStart", function(event, next, current) {
-        	$log.debug(' >>>>> ROOTSCOPE EVENT :::: $routeChangeStart: ' + current.templateUrl + " to " + next.templateUrl);
         });        
-        
-        
 
     }]);
 
