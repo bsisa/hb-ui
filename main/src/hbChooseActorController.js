@@ -40,7 +40,7 @@
 						
 						
 						/**
-				         * Modal panel to update an elfin reference with the selection of from a list of actors.
+				         * Modal panel to update an elfin reference with the selection from a list of actors.
 				         */
 				        $scope.hbChooseActor = function (selected, selectedPathElement) {
 				        	
