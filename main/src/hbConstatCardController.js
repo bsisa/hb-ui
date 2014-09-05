@@ -63,10 +63,10 @@
 				    	}, true);
 				    	
 				    	$scope.$watchCollection('elfin.ACTIVITE.EVENEMENT.ECHEANCE', function(newEcheances, oldEcheances) {
-				    		if (!angular.isUndefined(newEcheances)) {
+				    		if (!angular.isUndefined(newEcheances) && newEcheances.length > 0) {
 					    		$scope.currentEvent = newEcheances[newEcheances.length-1];
 					    		$scope.updateEventStatusTooltip();
-				    		}
+				    		}			
 				        });
 
 						// Get statusTypes dynamically from HB5 catalogue CONSTAT
@@ -86,14 +86,17 @@
 						 * Make tooltip keep in sync. with switch button state.
 						 */
 						$scope.updateEventStatusTooltip = function() {
-							if ($scope.currentEvent.PAR_QUI === "EN COURS") {
-								$scope.eventStatusTooltip = 'Statut en cours';
-							} else if ($scope.currentEvent.PAR_QUI === "A VALIDER") {
-								$scope.eventStatusTooltip = 'Statut à valider';
-							} else if ($scope.currentEvent.PAR_QUI === "VALIDE") {
-								$scope.eventStatusTooltip = 'Statut valide';
-							} else {
-								$scope.eventStatusTooltip = '';
+							// Protect against call when no currentEvent is defined.
+							if (!angular.isUndefined($scope.currentEvent)) {
+								if ($scope.currentEvent.PAR_QUI === "EN COURS") {
+									$scope.eventStatusTooltip = 'Statut en cours';
+								} else if ($scope.currentEvent.PAR_QUI === "A VALIDER") {
+									$scope.eventStatusTooltip = 'Statut à valider';
+								} else if ($scope.currentEvent.PAR_QUI === "VALIDE") {
+									$scope.eventStatusTooltip = 'Statut valide';
+								} else {
+									$scope.eventStatusTooltip = '';
+								}								
 							}
 						};
 						
