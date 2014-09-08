@@ -200,7 +200,7 @@
 									<tr>
 										<th colspan="8">
 											<button class="btn btn-default" type="button"
-												tooltip="Nouveau message" ng-click="addMessage()">
+												tooltip="Nouveau message" ng-click="addMessage()" >
 												<i class="icon-plus-sign"></i>
 											</button> Messages
 									</tr>
@@ -243,7 +243,7 @@
 								<tr>
 									<th colspan="8">
 										<button class="btn btn-default" type="button"
-											tooltip="Nouvel événement" ng-click="addEcheance()">
+											tooltip="Nouvel événement" ng-click="addEcheance()" ng-disabled="currentEvent && currentEvent.PAR_QUI != 'VALIDE'">
 											<i class="icon-plus-sign"></i>
 										</button> Evénements en cours
 								</tr>
