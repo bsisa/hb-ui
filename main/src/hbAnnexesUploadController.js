@@ -5,28 +5,68 @@
 			.controller(
 					'HbAnnexesUploadController',
 					[
+					 	'$attrs',
 						'$scope',
 						'GeoxmlService',
 						'$log',
 						'hbAlertMessages',
 						'hbUtil',
-						function($scope, GeoxmlService, $log, hbAlertMessages,
+						function($attrs, $scope, GeoxmlService, $log, hbAlertMessages,
 								hbUtil) {
     
 									$log.debug("    >>>> Using HbAnnexesUploadController");
+
+									var canSelectAnnexTypeBool = false;
+									
+									$scope.canSelectAnnexType = function() {
+										return canSelectAnnexTypeBool;
+									};
+									
+					 				// Annex types are annexes meta informations tagging annexes.
+					 		        // They define business context, meaning. Not file media types.
+					 				var FILE_ANNEX_TYPE = { name: "Fichier" , value: "file"};
+					 				var PHOTO_ANNEX_TYPE = { name: "Photo" , value: "photo"};									
 									
 									// Available annexes types.
-						            $scope.uploadFileTypes = [
-						                                      { name: "Fichier" , value: "file"},
-						                                      { name: "Photo" , value: "photo"}
-						                                      ];									
+						            $scope.uploadFileTypes = [FILE_ANNEX_TYPE,PHOTO_ANNEX_TYPE];									
 									
 									// Note: update by reference. See doc: https://docs.angularjs.org/api/ng/directive/select
-						            $scope.selectedUploadFileType = $scope.uploadFileTypes[0];
+						            $scope.selectedUploadFileType = FILE_ANNEX_TYPE;
 						            
 						            $scope.selectUploadFileType = function(uploadFileType) {
 						            	$scope.selectedUploadFileType = uploadFileType;
-						            };
+						            };									
+									
+						            /**
+						             * Proceed to initialisation tasks
+						             */
+						            function init() {
+						            	// Check for optional annex-type attribute
+						            	if ($attrs.annexType) {
+						            		if ($attrs.annexType == FILE_ANNEX_TYPE.value) {
+						            			// Configure parametrised annex type
+						            			$scope.selectUploadFileType(FILE_ANNEX_TYPE);
+						            			// Do not let end-user choose annex type
+						            			canSelectAnnexTypeBool = false;
+						            		} else if ($attrs.annexType == PHOTO_ANNEX_TYPE.value) {
+						            			// Configure parametrised annex type
+						            			$scope.selectUploadFileType(PHOTO_ANNEX_TYPE);
+						            			// Do not let end-user choose annex type
+						            			canSelectAnnexTypeBool = false;
+						            		} else {
+						            			// unknown annex type, let user select it
+						            			$log.warn("Unknown annex type configured for hb-annexes-upload: " + $attrs.annexType + ". Falling back to end user manual selection.");
+						            			canSelectAnnexTypeBool = true;
+						            		}
+						            	} else {
+						            		// No annex type attribute defintion. Let end user choose it.
+						            		canSelectAnnexTypeBool = true;
+						            	}
+						          	}									
+									
+									// Proceed with initialisation tasks
+									init();									
+									
 						            
 						            // Triggers file upload after having set extra POST query parameters. 
 						            // Note: Using controller function for upload elegantly solves headaches 
@@ -166,6 +206,7 @@
 						            };
 						            
 						            $scope.hbUploadStatusLabelCss = "label-info";
+						            
 									        
 							    } ]);
 
