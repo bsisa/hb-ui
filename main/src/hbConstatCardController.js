@@ -64,6 +64,9 @@
 				    	
 				    	$scope.$watchCollection('elfin.ACTIVITE.EVENEMENT.ECHEANCE', function(newEcheances, oldEcheances) {
 				    		if (!angular.isUndefined(newEcheances) && newEcheances.length > 0) {
+				    			// Make sure sorting is done according to POS 
+				    			hbUtil.reorderArrayByPOS(newEcheances);
+				    			// Update current event with last echeance
 					    		$scope.currentEvent = newEcheances[newEcheances.length-1];
 					    		$scope.updateEventStatusTooltip();
 				    		}			
