@@ -6,47 +6,48 @@
 	flow-file-success="flowFileSuccess($file, $message, $flow)"
 	flow-file-error="flowFileError($file, $message)">
 
-<div class="col-sm-12">
+	<div class="col-sm-12">
 
-	<div class="btn btn-default btn-xs" flow-btn
-		ng-disabled="$flow.isUploading() || !$flow.support">
-		<i class="glyphicon glyphicon-folder-open"></i>
+		<div class="btn btn-default btn-xs" flow-btn
+			ng-disabled="$flow.isUploading() || !$flow.support">
+			<i class="glyphicon glyphicon-folder-open"></i>
+		</div>
+
+		<div ng-show="{{canSelectAnnexType()}}" class="btn-group"
+			style="padding: 0;">
+			<button class="btn btn-default btn-xs dropdown-toggle" type="button"
+				data-toggle="dropdown">
+				{{selectedUploadFileType.name}} <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li role="presentation" class="dropdown-header">Type de
+					téléversement</li>
+				<li ng-repeat="uploadFileType in uploadFileTypes"
+					ng-click="selectUploadFileType(uploadFileType)"><a
+					role="menuitem" tabindex="-1" href="#">{{uploadFileType.name}}</a></li>
+			</ul>
+		</div>
+
+		<div class="btn btn-default btn-xs" ng-click="flowUpload($flow)"
+			ng-disabled="!canUpload() || $flow.files.length < 1 || $flow.isUploading() || !$flow.support">
+			<i class="glyphicon glyphicon-upload"></i>
+		</div>
+
+		<div class="btn btn-default btn-xs" ng-click="flowCancel($flow)"
+			ng-disabled="$flow.files.length < 1">
+			<i class="glyphicon glyphicon-remove-circle"></i>
+		</div>
+
+		<progressbar class="progress-striped hb-upload-progressbar" max="1"
+			value="$flow.progress()" ng-show="$flow.isUploading()">
+		<div class="text-center" style="color: black; width: 100%">{{
+			($flow.progress()*100) | number:0}}%</div>
+		</progressbar>
+
 	</div>
-	
-	<div ng-show="{{canSelectAnnexType()}}" class="btn-group" style="padding: 0;">
-		<button class="btn btn-default btn-xs dropdown-toggle" type="button"
-			data-toggle="dropdown">
-			{{selectedUploadFileType.name}} <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" role="menu">
-			<li role="presentation" class="dropdown-header">Type de
-				téléversement</li>
-			<li ng-repeat="uploadFileType in uploadFileTypes"
-				ng-click="selectUploadFileType(uploadFileType)"><a
-				role="menuitem" tabindex="-1" href="#">{{uploadFileType.name}}</a></li>
-		</ul>
-	</div>	
-	
-	<div class="btn btn-default btn-xs" ng-click="flowUpload($flow)"
-		ng-disabled="!canUpload() || $flow.files.length < 1 || $flow.isUploading() || !$flow.support">
-		<i class="glyphicon glyphicon-upload"></i>
+	<div class="col-sm-12">
+		<div class="label" ng-class="hbUploadStatusLabelCss"
+			ng-if="$flow.files.length > 0">{{$flow.files[0].name}}</div>
+
 	</div>
-	
-	<div class="btn btn-default btn-xs" ng-click="flowCancel($flow)"
-		ng-disabled="$flow.files.length < 1">
-		<i class="glyphicon glyphicon-remove-circle"></i>
-	</div>
-
-	<progressbar class="progress-striped hb-upload-progressbar" max="1"
-		value="$flow.progress()" ng-show="$flow.isUploading()">
-	<div class="text-center" style="color: black; width: 100%">{{
-		($flow.progress()*100) | number:0}}%</div>
-	</progressbar>
-
-</div>
-<div class="col-sm-12" >
-	<div class="label" ng-class="hbUploadStatusLabelCss"
-		ng-if="$flow.files.length > 0">{{$flow.files[0].name}}</div>
-
-</div>
 </div>
