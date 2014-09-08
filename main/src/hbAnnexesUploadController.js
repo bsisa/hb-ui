@@ -42,20 +42,20 @@
 						             */
 						            function init() {
 						            	// Check for optional annex-type attribute
-						            	if ($attrs.annexType) {
-						            		if ($attrs.annexType == FILE_ANNEX_TYPE.value) {
+						            	if ($attrs.hbAnnexesUploadAnnexType) {
+						            		if ($attrs.hbAnnexesUploadAnnexType == FILE_ANNEX_TYPE.value) {
 						            			// Configure parametrised annex type
 						            			$scope.selectUploadFileType(FILE_ANNEX_TYPE);
 						            			// Do not let end-user choose annex type
 						            			canSelectAnnexTypeBool = false;
-						            		} else if ($attrs.annexType == PHOTO_ANNEX_TYPE.value) {
+						            		} else if ($attrs.hbAnnexesUploadAnnexType == PHOTO_ANNEX_TYPE.value) {
 						            			// Configure parametrised annex type
 						            			$scope.selectUploadFileType(PHOTO_ANNEX_TYPE);
 						            			// Do not let end-user choose annex type
 						            			canSelectAnnexTypeBool = false;
 						            		} else {
 						            			// unknown annex type, let user select it
-						            			$log.warn("Unknown annex type configured for hb-annexes-upload: " + $attrs.annexType + ". Falling back to end user manual selection.");
+						            			$log.warn("Unknown annex type configured for hb-annexes-upload: " + $attrs.hbAnnexesUploadAnnexType + ". Falling back to end user manual selection.");
 						            			canSelectAnnexTypeBool = true;
 						            		}
 						            	} else {
