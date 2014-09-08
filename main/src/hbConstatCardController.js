@@ -133,6 +133,7 @@
 						$scope.addEcheance = function() {
 							
 							if ($scope.constatEcheanceTemplate && $scope.elfin) {
+								
 								if ($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE) {
 									// Manage POS 
 									$scope.constatEcheanceTemplate.POS = $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length+1;
@@ -143,10 +144,13 @@
 								$log.debug("$scope.constatEcheanceTemplate.POS = " + $scope.constatEcheanceTemplate.POS);
 								// Set full year in string format
 								$scope.constatEcheanceTemplate.E_POUR_QUI = new Date().getFullYear().toString();
+								var newConstatEcheanceEntry = $scope.constatEcheanceTemplate;
 								// Add new ECHEANCE row
-								$scope.addRow($scope.elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', $scope.constatEcheanceTemplate);	
+								$scope.addRow($scope.elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', newConstatEcheanceEntry);	
 								// Set form to dirty state 
 								$scope.elfinForm.$setDirty();
+								// Preload new fresh copy of template for new addEcheance call.
+								$scope.getNewConstatEcheanceTemplate();
 							} else {
 								hbAlertMessages.addAlert("warning", "Impossible de créer un nouvel événement. Veuillez s.v.p. contacter votre administrateur et lui reporter cette erreur.");
 							}
@@ -212,26 +216,32 @@
 								var message = "Le chargement des ACTEURS Collaborateur a échoué (statut de retour: "+ response.status+ ")";
 					            hbAlertMessages.addAlert("danger",message);
 							});	
+			            
 
-			            // Asychronous CONSTAT template preloading
-			            GeoxmlService.getNewElfin("CONSTAT").get()
-			            .then(function(constat) {
-			            		// Get statusTypes from catalogue default
-			            		$scope.statusTypes = hbUtil.buildArrayFromCatalogueDefault(constat.IDENTIFIANT.QUALITE);
-			            		// Get constat types from catalogue
-			            		$scope.constatTypes = hbUtil.buildArrayFromCatalogueDefault(constat.GROUPE);
-			            		// Get phase list from ECHEANCE.ACTION default values.
-			            		$scope.phaseList = hbUtil.buildArrayFromCatalogueDefault(constat.ACTIVITE.EVENEMENT.ECHEANCE[0].ACTION);
-			            		// Get prestation groups from ECHEANCE.E_ACTION default values.
-			            		$scope.prestationGroups = hbUtil.buildArrayFromCatalogueDefault(constat.ACTIVITE.EVENEMENT.ECHEANCE[0].E_ACTION);
-			            		// Get ECHEANCE template from catalogue
-			            		var echeanceTemplate = hbUtil.getEcheanceTemplateFromCatalogue(constat);
-						        $scope.constatEcheanceTemplate = echeanceTemplate;
-							},
-							function(response) {
-								var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
-								hbAlertMessages.addAlert("danger",message);
-							});
+			            $scope.getNewConstatEcheanceTemplate = function() {
+				            // Asychronous CONSTAT template preloading
+				            GeoxmlService.getNewElfin("CONSTAT").get()
+				            .then(function(constat) {
+				            		// Get statusTypes from catalogue default
+				            		$scope.statusTypes = hbUtil.buildArrayFromCatalogueDefault(constat.IDENTIFIANT.QUALITE);
+				            		// Get constat types from catalogue
+				            		$scope.constatTypes = hbUtil.buildArrayFromCatalogueDefault(constat.GROUPE);
+				            		// Get phase list from ECHEANCE.ACTION default values.
+				            		$scope.phaseList = hbUtil.buildArrayFromCatalogueDefault(constat.ACTIVITE.EVENEMENT.ECHEANCE[0].ACTION);
+				            		// Get prestation groups from ECHEANCE.E_ACTION default values.
+				            		$scope.prestationGroups = hbUtil.buildArrayFromCatalogueDefault(constat.ACTIVITE.EVENEMENT.ECHEANCE[0].E_ACTION);
+				            		// Get ECHEANCE template from catalogue
+				            		var echeanceTemplate = hbUtil.getEcheanceTemplateFromCatalogue(constat);
+							        $scope.constatEcheanceTemplate = echeanceTemplate;
+								},
+								function(response) {
+									var message = "Les valeurs par défaut pour la CLASSE CONSTAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
+									hbAlertMessages.addAlert("danger",message);
+								});
+			            };
+			            
+			            // First template preloading
+			            $scope.getNewConstatEcheanceTemplate();
 			            
 			            // Parameters to hbChooseOne service function for ACTOR selection
 			            $scope.actorCollaboratorChooseOneColumnsDefinition = [
