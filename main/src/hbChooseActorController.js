@@ -30,8 +30,9 @@
 			            // Asychronous actors preloading
 			            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForActor})
 						.then(function(actors) {
-								$log.debug("    >>>> HbChooseActorController: loaded actors ...");
+								$log.debug("    >>>> HbChooseActorController: loading actors ...");
 								$scope.actors = actors;
+								$log.debug("    >>>> HbChooseActorController: " + $scope.actors.length + " actors loaded.");
 							},
 							function(response) {
 								var message = "Le chargement des ACTEURS Collaborateur a échoué (statut de retour: "+ response.status+ ")";
