@@ -122,16 +122,18 @@
 							    	
 							    	// Check when elfin instance becomes available 
 							    	$scope.$watch('elfin.Id', function() { 
-
-							    		if ($attrs.hbMode === "create") {
-							    			$log.debug("    >>>> create mode : reset template values: " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM);
-							    			//$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = '';
-							    		} else {
-							    			$log.debug("    >>>> NOT in create mode");
-							    		}
 							    		
 							    		if ($scope.elfin!=null) {
 								            
+								    		if ($attrs.hbMode === "create") {
+								    			$log.debug("    >>>> create mode : reset template values: " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM);
+//								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = '';
+//								    			$log.debug("    >>>> create mode : reset template values: " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM);
+								    		} else {
+								    			$log.debug("    >>>> NOT in create mode");
+								    		}							    			
+							    			
+							    			
 							    			// Data correction - if no elfin.PARTENAIRE.FOURNISSEUR.VALUE datastructure exist creates it
 							    			// TODO: evaluate batch data update. 
 							    			if (!$scope.elfin.PARTENAIRE.FOURNISSEUR) {
