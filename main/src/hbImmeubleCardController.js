@@ -27,6 +27,9 @@
 									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
 									$scope.validateOwner = false;									
 									
+									// Expose current hbMode in scope for use by ng-show in HTML view.
+									$scope.createMode = ($attrs.hbMode === "create");
+									
 									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
 									$scope.selected = { "owner" : null , "ownerDisplay" : null};
 									
@@ -45,18 +48,26 @@
 						            $scope.contractReverse = false;
 							        
 							        
-									// Triggers a redirection to the CONSTAT creation URL with current 
-									// IMMEUBLE building number and SAI number passed as parameters.
+									/**
+									 * Triggers a redirection to the CONSTAT creation URL with current
+									 * IMMEUBLE building number and SAI number passed as parameters.
+									 * Must not be effective while in create mode (no association is 
+									 * relevant while the IMMEUBLE creation is ongoing/pending.)
+									 */ 
 									$scope.createNewConstat = function() {
-										var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
-										$location.search(searchObj).path( "/elfin/create/CONSTAT" );	
+										if ($attrs.hbMode != "create") {
+											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+											$location.search(searchObj).path( "/elfin/create/CONSTAT" );
+										}
 									};									
 									
-							    	// Watch related to CONSTAT list in the context of elfin of CLASSE IMMEUBLE 
-							        // hence the dedicated controller.
+							    	/**
+							    	 * Listener used to load CONSTAT list related to this IMMEUBLE
+							    	 * Only relevant while not in create mode.
+							    	 */
 							    	$scope.$watch('elfin.IDENTIFIANT.NOM', function() { 
 
-							    		if ($scope.elfin!=null) {
+							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
 								            var xpathForConstatsEncours = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"'][not(IDENTIFIANT/A) or IDENTIFIANT/A='']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
 								            $log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
@@ -85,9 +96,13 @@
 							    		
 							    	}, true);     
 							    	
+							    	/**
+							    	 * Listener used to load PRESTATION, CONTRAT lists related to this IMMEUBLE 
+							    	 * Only relevant while not in create mode.
+							    	 */
 							    	$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() { 
 
-							    		if ($scope.elfin!=null) {
+							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
 							    			// TODO: add restriction on PROPRIETAIRE
 								            var xpathForPrestations = "//ELFIN[starts-with(IDENTIFIANT/OBJECTIF,'"+$scope.elfin.IDENTIFIANT.OBJECTIF+"') and PARTENAIRE/PROPRIETAIRE/@NOM='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM+"']";
 							    			//var xpathForPrestations = "//ELFIN[starts-with(IDENTIFIANT/OBJECTIF,'"+$scope.elfin.IDENTIFIANT.OBJECTIF+"')]";
@@ -125,15 +140,15 @@
 							    		
 							    		if ($scope.elfin!=null) {
 								            
+							    			/**
+							    			 * Perform template clean up tasks while in create mode.
+							    			 */
 								    		if ($attrs.hbMode === "create") {
-								    			$log.debug("    >>>> create mode : reset template values: " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM);
-//								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = '';
-//								    			$log.debug("    >>>> create mode : reset template values: " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM);
-								    		} else {
-								    			$log.debug("    >>>> NOT in create mode");
-								    		}							    			
-							    			
-							    			
+								    			// TODO: review all properties
+								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = '';
+								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE = '';
+								    			$scope.elfin.CARACTERISTIQUE.CAR2.VALEUR = '';
+								    		} 
 							    			// Data correction - if no elfin.PARTENAIRE.FOURNISSEUR.VALUE datastructure exist creates it
 							    			// TODO: evaluate batch data update. 
 							    			if (!$scope.elfin.PARTENAIRE.FOURNISSEUR) {
