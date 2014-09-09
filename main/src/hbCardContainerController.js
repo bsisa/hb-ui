@@ -308,9 +308,10 @@
          * Proceed to initialisation tasks
          */
         function init() {
+        	$log.debug("function init() called");
         	// Trigger a warning dialogue to the end-user if there are pending changes.
         	// onRouteChangeOff is a function intended to turn listener off when called.
-        	onRouteChangeOff = $rootScope.$on('$locationChangeStart', routeChange);
+        	//onRouteChangeOff = $rootScope.$on('$locationChangeStart', routeChange);
       	}
 
         /**
