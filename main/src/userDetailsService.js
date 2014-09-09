@@ -22,6 +22,9 @@
 				return {
 					getAbbreviation : function() {
 						return userDetailsCache.abbreviation;
+					},
+					getRoles : function() {
+						return userDetailsCache.roles;
 					}
 				};
 			} ]);
