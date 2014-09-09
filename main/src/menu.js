@@ -404,6 +404,7 @@
 	            reorderArrayByPOS(jobReferences);
 	            
 	            /* Obtain user details from GeoxmlService */
+	            // TODO: make use of userDetails service
 	            GeoxmlService.getWhoAmI().get().then(function(userDetails) {
 
 	            	// Make user details available to MenuController scope 
