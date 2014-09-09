@@ -1,10 +1,11 @@
 (function() {
-
+	
 	    angular
 			.module('hb5')
 			.controller(
 					'HbImmeubleCardController',
 					[
+					 		'$attrs',				 
 							'$scope',
 							'$rootScope',
 							'GeoxmlService',
@@ -17,7 +18,7 @@
 							'hbUtil',
 							'HB_EVENTS',
 							'HB_API',
-							function($scope, $rootScope, GeoxmlService, $modal,
+							function($attrs, $scope, $rootScope, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout, hbAlertMessages,
 									hbUtil, HB_EVENTS, HB_API) {
     
@@ -122,6 +123,13 @@
 							    	// Check when elfin instance becomes available 
 							    	$scope.$watch('elfin.Id', function() { 
 
+							    		if ($attrs.hbMode === "create") {
+							    			$log.debug("    >>>> create mode : reset template values: " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM);
+							    			//$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = '';
+							    		} else {
+							    			$log.debug("    >>>> NOT in create mode");
+							    		}
+							    		
 							    		if ($scope.elfin!=null) {
 								            
 							    			// Data correction - if no elfin.PARTENAIRE.FOURNISSEUR.VALUE datastructure exist creates it
