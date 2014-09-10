@@ -5,19 +5,14 @@
 			.controller(
 					'HbAnnexesNumberController',
 					[
-					        '$rootScope',
 							'$scope',
 							'$log',
-							'$filter',
 							'HB_EVENTS',
-							function($rootScope, $scope, $log, $filter, HB_EVENTS) {
-
+							'hbUtil',
+							function($scope, $log, HB_EVENTS, hbUtil) {
+					        	
 					            $scope.refresh = function() {
-									if (!(angular.isUndefined($scope.elfin) || $scope.elfin===null) && !angular.isUndefined($scope.elfin.ANNEXE) && !angular.isUndefined($scope.elfin.ANNEXE.RENVOI)) {
-										$scope.annexesNoPhoto = $filter('annexExcludeTag')($scope.elfin.ANNEXE.RENVOI, 'photo');
-									} else {
-										$scope.annexesNoPhoto = new Array();
-									}
+					            	$scope.annexesNoPhoto = hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo');
 					            };
 					            
 					            $scope.$watch('elfin.ANNEXE.RENVOI', function() { 
