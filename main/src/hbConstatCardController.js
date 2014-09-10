@@ -20,6 +20,16 @@
 							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, userDetails) {
 
 						$log.debug("    >>>> Using ConstatCardController ");
+
+						// Parameter used to make at least one annex mandatory.
+			        	$scope.minBound = 1;
+
+				    	$scope.$watchCollection('elfin.ANNEXE.RENVOI', function(newRenvois, oldRenvois) {
+							// We want at least one annex mandatory, except photo, although is should not apply to CONSTAT.
+				    		$scope.annexesWithoutPhoto = hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo');
+							// Property bound to elfinForm to make at least one annex mandatory.
+							$scope.annexesNoPhotoNb = $scope.annexesWithoutPhoto.length;
+				        });			        	
 						
 			            /**
 			             * Perform operations on current CONSTAT elfin once available.
