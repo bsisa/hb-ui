@@ -156,9 +156,6 @@
                			function() { 
     	       				$scope.elfin = elfin;
     	                    $scope.elfinForm.$setPristine();
-    	                    // TODO: Review if we need to issue an ELFIN_CREATED. 
-    	                    // This would only be useful for elfins drawn on map.
-    	                    // $scope.$emit(HB_EVENTS.ELFIN_CREATED, elfin);
     	                   	var redirUrl = '/elfin/'+elfin.ID_G+'/'+$attrs.hbElfinClasse+'/'+elfin.Id;
     	                   	$location.path( redirUrl );
     	       			}, 
@@ -377,12 +374,6 @@
     		        	}
     		            $scope.elfin = elfin;
     		            $scope.elfinForm.$setDirty();
-    		            //TODO: problem: elfin is a promise and might not be available when 
-    		            // we trigger the HB_EVENTS.ELFIN_CREATED event. Observer of this event
-    		            // expect the elfin to be available.
-    		            $rootScope.$emit(HB_EVENTS.ELFIN_CREATED);
-    		            // Annoying message, should at least fade out after a couple of seconds. Keep it as reminder.
-    		            //hbAlertMessages.addAlert("info","Création du nouvel objet " + $scope.elfin.CLASSE);
     		        	}, function(response) {
     		        	var message = "Le chargement du nouvel objet de CLASSE = "+$attrs.hbElfinClasse+" a échoué (statut de retour: " + response.status + ")";
     		            hbAlertMessages.addAlert("danger",message);
@@ -407,7 +398,6 @@
 			        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
 			        	}
 			            $scope.elfin = elfin;
-	                    //$scope.$emit(HB_EVENTS.ELFIN_LOADED, elfin);
 			            // Can be HB_EVENTS.ELFIN_LOADED, HB_EVENTS.ELFIN_UPDATED depending whether called from put/get
 			            $scope.$emit(hbEventType, elfin);
 			        	}, function(response) {

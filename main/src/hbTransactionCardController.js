@@ -138,7 +138,6 @@
 
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
-					             * This is more reliable than HB_EVENTS.ELFIN_CREATED event observation.
 					             */
 						    	$scope.$watch('elfin.Id', function() { 
 
