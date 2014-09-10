@@ -21,44 +21,40 @@
 
 						$log.debug("    >>>> Using ConstatCardController ");
 						
-			            $rootScope.$on(HB_EVENTS.ELFIN_CREATED, function(event, elfin) {
-
-			            	// Update some catalogue properties with live data passed as route parameters 
-			            	// while in create mode, following an HB_EVENTS.ELFIN_CREATED event. 
-							if ( $attrs.hbMode === "create" ) {
-								
-								if ($scope.elfin) {
-							        $scope.buildingNb = $routeParams.nocons;
-							        $scope.saiNb = $routeParams.sai;
-							        $scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
-							        $scope.elfin.IDENTIFIANT.COMPTE = $routeParams.nocons;
-							        $scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
-							        // Default value from catalogue contains statusTypes list: Reset it. 
-							        $scope.elfin.IDENTIFIANT.QUALITE = "";
-							        // Default value from catalogue contains constatTypes list: Reset it.
-							        $scope.elfin.GROUPE = "";
-							        // Remove ECHEANCE template from elfin
-							        $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.splice(0, 1);
-							        
-								} else {
-									$log.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
-								}
-							} else {
-								// Do nothing
-							}			            	
-			            	
-			            });
-
 			            /**
-			             * Perform operations on current CONSTAT elfin once available
+			             * Perform operations on current CONSTAT elfin once available.
 			             */
 				    	$scope.$watch('elfin.Id', function() { 
 
 				    		if ($scope.elfin!=null) {
-					            if ($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE && $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length > 1) {
-					            	hbUtil.reorderArrayByPOS($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE);
-					            };
-					            $scope.currentEvent = $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE[$scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1];
+				    			
+				            	// Update some catalogue properties with live data passed as route parameters 
+				            	// while in create mode, following an HB_EVENTS.ELFIN_CREATED event. 
+								if ( $attrs.hbMode === "create" ) {
+								
+									if ($scope.elfin) {
+								        $scope.buildingNb = $routeParams.nocons;
+								        $scope.saiNb = $routeParams.sai;
+								        $scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
+								        $scope.elfin.IDENTIFIANT.COMPTE = $routeParams.nocons;
+								        $scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
+								        // Default value from catalogue contains statusTypes list: Reset it. 
+								        $scope.elfin.IDENTIFIANT.QUALITE = "";
+								        // Default value from catalogue contains constatTypes list: Reset it.
+								        $scope.elfin.GROUPE = "";
+								        // Remove ECHEANCE template from elfin
+								        $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.splice(0, 1);
+								        
+									} else {
+										$log.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
+									}
+								} else {
+									// Operations relevant only when not in create mode
+						            if ($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE && $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length > 1) {
+						            	hbUtil.reorderArrayByPOS($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE);
+						            };
+						            $scope.currentEvent = $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE[$scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1];
+								}						            
 				    		};
 				    		
 				    	}, true);
