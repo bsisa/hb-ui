@@ -7,6 +7,8 @@
 	</span> <span ng-show="elfinForm.status.$error.required">Le champs <strong>Statut</strong>
 		est obligatoire!
 	</span>
+	<span ng-show="elfinForm.annexlength.$error.min"><strong>L'annexe</strong> est obligatoire!
+	</span>	
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -375,7 +377,12 @@
 		<!-- Annexes tab -->
 		<tab> 
 			<tab-heading><div hb-annexes-number></div></tab-heading>
-			<div class="hb-tab"><div hb-annexes-component></div></div>
+			<div class="hb-tab"><div hb-annexes-component hb-annexes-upload-no-validation="true"></div>
+			 	<!-- Non intuitive way to make at least one annex to the CONSTAT mandatory -->
+			 	<div ng-show="false">
+					<input type="number" name="annexlength" ng-model="annexesNoPhotoNb" min="{{minBound}}" required>
+				</div>
+			</div>
 		</tab>		
 		</tabset>
 	</div>
