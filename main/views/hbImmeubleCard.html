@@ -267,15 +267,12 @@
 									href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}">Détail</a></td>
 								<td><span >{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
 								<td><span >{{constat.IDENTIFIANT.NOM}}</span></td>
-								<td><span
-									tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_PAR_QUI">
+								<td><span>
 										{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI}}</span></td>
-								<td><span
-									tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].E_DATE">
+								<td><span>
 									{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_DATE}}
 									</span></td>
-								<td><span
-									tooltip="constat.ACTIVITE.EVENEMENT.ECHEANCE[last()].PAR_QUI => plutôt POUR_QUI">
+								<td><span>
 									{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI}}
 									</span></td>
 							</tr>
