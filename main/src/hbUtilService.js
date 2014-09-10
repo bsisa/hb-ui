@@ -5,7 +5,7 @@
 	 * without code duplication.
 	 */
 	
-	angular.module('hb5').service('hbUtil', ['$log','$window','HB_API',function ($log,$window,HB_API) {
+	angular.module('hb5').service('hbUtil', ['$log','$window','$filter','HB_API',function ($log,$window,$filter,HB_API) {
 
 		
 		/**
@@ -256,6 +256,15 @@
         };
         
         
+        var getAnnexesExcludingTag = function(elfin, excludeTag) {
+        	if (!(angular.isUndefined(elfin) || elfin===null) && !angular.isUndefined(elfin.ANNEXE) && !angular.isUndefined(elfin.ANNEXE.RENVOI)) {
+        		var filterAnnexesRenvoi = $filter('annexExcludeTag')(elfin.ANNEXE.RENVOI, excludeTag);
+        		return filterAnnexesRenvoi;
+        	} else {
+				return new Array();
+			}
+        };        
+        
 		/**
 		 * Extracts file name for ANNEXE/RENVOI/LIEN corresponding to a photo.
 		 * 
@@ -289,7 +298,8 @@
         	getDateFromHbTextDateFormat:getDateFromHbTextDateFormat,
         	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue,
         	getLinkFileName:getLinkFileName,
-        	getLinkFileApiUrl:getLinkFileApiUrl
+        	getLinkFileApiUrl:getLinkFileApiUrl,
+        	getAnnexesExcludingTag:getAnnexesExcludingTag
         	
         };
     }]);
