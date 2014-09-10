@@ -144,7 +144,10 @@
 							    			 * Perform template clean up tasks while in create mode.
 							    			 */
 								    		if ($attrs.hbMode === "create") {
-								    			// TODO: review all properties
+								    			$scope.elfin.IDENTIFIANT.NOM = '';
+								    			$scope.elfin.IDENTIFIANT.OBJECTIF = '';
+								    			$scope.elfin.IDENTIFIANT.QUALITE = '';
+								    			$scope.elfin.IDENTIFIANT.COMPTE = '';
 								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = '';
 								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE = '';
 								    			$scope.elfin.CARACTERISTIQUE.CAR2.VALEUR = '';
