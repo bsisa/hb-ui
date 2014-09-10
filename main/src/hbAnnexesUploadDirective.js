@@ -11,7 +11,8 @@
 		    require: '^hbCardContainer',
 			restrict: 'A',
 		    templateUrl : "/assets/views/hbAnnexesUpload.html",
-			controller: 'HbAnnexesUploadController'
+			controller: 'HbAnnexesUploadController',
+			scope: true
 		};
 	
     });
