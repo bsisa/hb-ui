@@ -124,9 +124,11 @@
 											var message = "L'annexe " + file.name + " existe déjà. Si vous ne désirez pas l'écraser par votre sélection courrante, changer le nom de votre fichier et sélectionnez le à nouveau.";
 											hbAlertMessages.addAlert("danger",message);
 										},
-										function(response) { // HTTP 701: custom file not found code: Ok.
+										// HTTP 701: custom file not found code. Expected situation 
+										// every time a file to upload does not yet exist on the upload target: Ok.
+										function(response) { 
 											// Do nothing
-											$log.debug("Ok, checked annex " + file.name + " does not exist yet: " + response);
+											$log.debug("Ok, checked annex " + file.name + " does not exist yet, custome HTTP status code = " + response.status);
 										});							            	
 
 					            		// Reset file name to upload label CSS. 
