@@ -233,7 +233,7 @@
     	        		$log.error("PasswordHashException ("+response.status+"): ERROR = " + response.data.ERROR + ", DESCRIPTION = " + response.data.DESCRIPTION + ", User message = " + userErrMsg);
     	        		hbAlertMessages.addAlert("danger",userErrMsg);
     	        	} else if (response.status == 701) { // 701 - Custom success code for HEAD not found tests
-    	        		$log.debug("701 - Custom success code for HEAD not found tests ("+response.status+"): ERROR = " + response.data.ERROR + ", DESCRIPTION = " + response.data.DESCRIPTION );
+    	        		$log.debug("701 - Custom success code for HEAD not found tests ("+response.status+").");
     	        		return response;
     	        	}  
     	        	// General 404 processing forbids ability to use HEAD for resource existence check.
