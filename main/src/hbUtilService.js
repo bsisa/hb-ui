@@ -13,18 +13,7 @@
 		 * YYYY-MM-DD format
 		 */
 		var getDateFromHbTextDateFormat = function(textDate) {
-
-			var dateParts = textDate.split('-');
-
-			var yyyy = dateParts[0];
-			var mm = dateParts[1];
-			var dd = dateParts[2];
-			
-			if (!yyyy || (yyyy && yyyy.length < 4) ) throw "getDateFromHbTextDateFormat invalid year : " + year;
-			if (!mm || (mm && (mm > 12 || mm < 1)) ) throw "getDateFromHbTextDateFormat invalid month : " + mm;
-			if (!dd || (dd && (dd > 31 || dd < 1)) ) throw "getDateFromHbTextDateFormat invalid day : " + day;
-			
-			return new Date(yyyy,mm-1,dd);
+			return moment(textDate, "YYYY-MM-DD").toDate();
 		};		
 		
 		
@@ -32,22 +21,7 @@
 		 * Returns the YYYY-MM-DD string corresponding to the date parameter
 		 */
 		var getDateInHbTextFormat = function(date) {
-			// Get day as string
-			var dd = date.getDate().toString();
-			// Get month as string. Note monthes are
-			// zero based.
-			var mm = (date.getMonth() + 1).toString();
-			// Get full year
-			var yyyy = date.getFullYear().toString();
-			// Make sure string day and month are padded
-			// with zero when necessary
-			return yyyy
-					+ "-"
-					+ (mm.length === 2 ? mm : "0"
-							+ mm[0])
-					+ "-"
-					+ (dd.length === 2 ? dd : "0"
-							+ dd[0]);
+			return moment(date).format("YYYY-MM-DD");
 		};
 		
 		
