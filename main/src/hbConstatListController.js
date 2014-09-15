@@ -29,53 +29,28 @@
 	    	return abbrev;
     	};
     	
-    	var addDays = function addDays(date, days) {
-    	    var result = new Date(date);
-    	    result.setDate(date.getDate() + days);
-    	    return result;
-    	};    	
-    	
-    	$scope.getEcheanceStatus = function(date) {
-    		
-    		var echeanceDate = hbUtil.getDateFromHbTextDateFormat(date);
-    		var currentDate = new Date();
-    		var currentDatePlus7Days = addDays(new Date(), 7);
-    		var currentDatePlus14Days = addDays(new Date(), 14);
-    		var currentDatePlus21Days = addDays(new Date(), 21);
-    		var currentDatePlus30Days = addDays(new Date(), 30);
-    		var currentDatePlus365Days = addDays(new Date(), 365);
-    		
-//    		$log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-//    		$log.debug("getEcheanceStatus : echeanceDate = " + echeanceDate + " - currentDate = " + currentDate);
-//    		$log.debug("getEcheanceStatus : echeanceDate = " + echeanceDate + " - currentDatePlus7Days = " + currentDatePlus7Days);
-//    		$log.debug("getEcheanceStatus : echeanceDate = " + echeanceDate + " - currentDatePlus14Days = " + currentDatePlus14Days);
-//    		$log.debug("getEcheanceStatus : echeanceDate = " + echeanceDate + " - currentDatePlus21Days = " + currentDatePlus21Days);
-//    		$log.debug("getEcheanceStatus : echeanceDate = " + echeanceDate + " - currentDatePlus30Days = " + currentDatePlus30Days);
-//    		$log.debug("getEcheanceStatus : echeanceDate = " + echeanceDate + " - currentDatePlus365Days = " + currentDatePlus365Days);
-//    		$log.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");    		
 
-    		var status = null;
+    	/**
+    	 * Compute duration difference between echeance date and now to produce meaningful user status. 
+    	 */
+    	$scope.getEcheanceStatus = function(echeanceTextDate) {
+
+    		// Get moment date from text date 
+    		var echeanceDate = moment(hbUtil.getDateFromHbTextDateFormat(echeanceTextDate));
+    		// Define current date to compare from
+    		var currentDate = moment();
+    		// Compute number of days difference between echeance and current date.
+    		var daysDiff = echeanceDate.diff(currentDate, 'days');
     		
-    		if (echeanceDate < currentDate) {
+    		var status = null;
+    		// Negative difference means overdue schedule
+    		if (daysDiff < 0) {
 				status = 'Retard';
-			} else if (echeanceDate >= currentDate
-					&& echeanceDate < currentDatePlus7Days) {
-				status = '+7';
-			} else if (echeanceDate >= currentDatePlus7Days
-					&& echeanceDate < currentDatePlus14Days) {
-				status = '+14';
-			} else if (echeanceDate >= currentDatePlus14Days
-					&& echeanceDate < currentDatePlus21Days) {
-				status = '+21';
-			} else if (echeanceDate >= currentDatePlus21Days
-					&& echeanceDate < currentDatePlus30Days) {
-				status = '+30';
-			} else if (echeanceDate >= currentDatePlus30Days
-					&& echeanceDate < currentDatePlus365Days) {
-				status = '+365';
-			} else {
-				status = '>365';
-			}
+    		} else if (daysDiff >= 0 && daysDiff <= 365) {
+    			status = '+' + daysDiff;
+    		} else {
+    			status = '>365';
+    		}
 	    	return status;
     	};
     	
