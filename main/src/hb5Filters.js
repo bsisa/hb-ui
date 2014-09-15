@@ -104,8 +104,12 @@
 	        if (!angular.isUndefined(constats) && !angular.isUndefined(predicate)) {
 	            var tempConstats = [ ];
 	            angular.forEach(constats, function (constat) {
+	            	var currentlastResp = undefined; 
+	            	if (!angular.isUndefined(constat.ACTIVITE.EVENEMENT.ECHEANCE) && constat.ACTIVITE.EVENEMENT.ECHEANCE.length > 0) {
+	            		currentlastResp = constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI;
+	            	}
                     if ( 
-                    //	 icontains(constat.ACTIVITE.EVENEMENT.ECHEANCE.POUR_QUI, predicate.last_resp) &&
+                    	 icontains(currentlastResp, predicate.last_resp) &&
                     	 icontains(constat.IDENTIFIANT.DE, predicate.description) &&
                     	 icontains(constat.IDENTIFIANT.NOM, predicate.constat_date) &&
                     	 icontains(constat.GROUPE, predicate.constat_group) &&

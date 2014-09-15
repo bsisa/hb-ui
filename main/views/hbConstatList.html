@@ -14,14 +14,12 @@
 		</tr>
 	<tr> 
 		<th>Filtre </th>
-								<th /> 
-		 
-			<!-- <th><div class="form-group">
+			<th><div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.last_resp" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
-			</th> -->
+			</th>
 			<th><div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.description" hb-no-dirty-check placeholder="">
@@ -41,13 +39,13 @@
 					</div>
 				</div>
 			</th> 
-<th><div class="form-group">
+			<th><div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.constat_noSAI" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th> 
-						<th /> 
+			<th /> 
 			<th /> 
  			<th /> 
  			<th /> 
@@ -56,7 +54,7 @@
 		</tr> 
 		<tr>
 			<th>Tri</th>
-			<th><a href="" ng-click="predicate = 'ACTIVITE.EVENEMENT.ECHEANCE.POUR_QUI'; reverse=!reverse">Resp</a></th>
+			<th><a href="" ng-click="predicate = 'ACTIVITE.EVENEMENT.ECHEANCE[ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI'; reverse=!reverse">Resp</a></th>
 			<th><a href=""
 				ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse">Constaté
 					le</a></th>
