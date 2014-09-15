@@ -12,6 +12,7 @@
     			"last_resp" : "",
     			"description" : "",
     			"constat_date" : "",
+    			"partenaire_usager" : "",
     			"constat_group" : "",
     			"constat_noSAI" : ""
     	}; 

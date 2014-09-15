@@ -108,10 +108,15 @@
 	            	if (!angular.isUndefined(constat.ACTIVITE.EVENEMENT.ECHEANCE) && constat.ACTIVITE.EVENEMENT.ECHEANCE.length > 0) {
 	            		currentlastResp = constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI;
 	            	}
+	            	var currentPartnerUser = undefined;
+	            	if (!angular.isUndefined(constat.PARTENAIRE) && !angular.isUndefined(constat.PARTENAIRE.USAGER) && !angular.isUndefined(constat.PARTENAIRE.USAGER.VALUE)) {
+	            		currentPartnerUser = constat.PARTENAIRE.USAGER.VALUE;
+	            	}
                     if ( 
                     	 icontains(currentlastResp, predicate.last_resp) &&
                     	 icontains(constat.IDENTIFIANT.DE, predicate.description) &&
                     	 icontains(constat.IDENTIFIANT.NOM, predicate.constat_date) &&
+                    	 icontains(currentPartnerUser, predicate.partenaire_usager) && 
                     	 icontains(constat.GROUPE, predicate.constat_group) &&
                     	 icontains(constat.IDENTIFIANT.OBJECTIF, predicate.constat_noSAI)
                     ) {
