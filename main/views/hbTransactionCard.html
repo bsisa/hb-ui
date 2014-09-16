@@ -1,6 +1,9 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
+	<span ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong>est obligatoire!</span>
+	<span ng-show="elfinForm.managerName.$error.required">Le champs	<strong>Nom du propriétaire</strong> est obligatoire!</span>
 </div>
+
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
 		<tabset><!-- ui.bootstrap AngularJS UI tabset --> <!-- Transaction tab -->
@@ -11,6 +14,29 @@
 			<!-- 1er bloc 2 colonnes de 5 lignes -->
 			<!-- 1ere colonne -->
 			<div class="col-sm-6">
+					
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
+					<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input id="manager" name="manager" type="text"
+								class="form-control"
+								ng-model="selected.ownerDisplay"
+								readonly
+								ng-model-options="{ debounce: 500 }"
+								ng-required="validateOwner"
+								>
+							<span class="input-group-btn">
+					<button class="btn btn-default" type="button"
+						hb-choose-actor
+						hb-choose-actor-role="Propriétaire"
+						ng-click="hbChooseActor(selected, 'owner')"
+						><i class="glyphicon glyphicon-list-alt" ></i></button>												
+							</span>
+						</div>
+					</div>
+				</div>
+			
 				<div class="form-group">
 					<label for="objectif" class="col-sm-4 control-label">No SAI prestation</label>
 					<p class="col-sm-8 form-control-static">{{elfin.IDENTIFIANT.OBJECTIF}}</p>
