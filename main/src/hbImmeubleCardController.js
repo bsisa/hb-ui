@@ -160,6 +160,21 @@
 							    				$scope.elfinForm.$setDirty();
 							    			}
 							    			
+							    			// Manage IMMEUBLE PARTENAIRE.PROPRIETAIRE owner link initialisation 
+							            	if ( 
+									        		$scope.elfin.PARTENAIRE && 
+									        		$scope.elfin.PARTENAIRE.PROPRIETAIRE && 
+									        		$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id && 
+									        		($scope.elfin.PARTENAIRE.PROPRIETAIRE.Id != 'null') &&
+									        		$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G && 
+									        		($scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G != 'null')) {							        		
+								        		
+								        		$log.debug(">>>> HbImmeubleCardController: loading IMMEUBLE owner Actor Id = " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.Id + ", ID_G = " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G);
+								        		$scope.getElfinOwnerActor($scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G, $scope.elfin.PARTENAIRE.PROPRIETAIRE.Id);
+								        	} else {
+								        		$scope.enableValidateOwner();
+								        	}									    			
+							    			
 							    			// Get SURFACES
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
@@ -218,34 +233,6 @@
 						        		
 						        	};							    	
 							    	
-
-						            // Load ELFIN owner ACTOR only once main elfin (here IMMEUBLE) has been loaded
-						            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
-						            	
-						            	$log.debug(">>>> HbImmeubleCardController: HB_EVENTS.ELFIN_LOADED for elfin.Id = " + elfin.Id + ", elfin.CLASSE = " + elfin.CLASSE);
-						            	
-						            	// Make sure a valid owner reference exists before loading
-								        if ( elfin.CLASSE == 'IMMEUBLE') { // Protect when listening to HB_EVENTS.ELFIN_LOADED triggered by other elfin.CLASSE
-							            	if ( 
-									        		$scope.elfin.PARTENAIRE && 
-									        		$scope.elfin.PARTENAIRE.PROPRIETAIRE && 
-									        		$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id && 
-									        		(elfin.PARTENAIRE.PROPRIETAIRE.Id != 'null') &&
-									        		$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G && 
-									        		(elfin.PARTENAIRE.PROPRIETAIRE.ID_G != 'null')) {							        		
-								        		
-								        		$log.debug(">>>> HbImmeubleCardController: loading ELFIN owner Actor Id = " + elfin.PARTENAIRE.PROPRIETAIRE.Id + ", ID_G = " + elfin.PARTENAIRE.PROPRIETAIRE.ID_G);
-								        		$scope.getElfinOwnerActor(elfin.PARTENAIRE.PROPRIETAIRE.ID_G, elfin.PARTENAIRE.PROPRIETAIRE.Id);
-								        	} else {
-								        		$scope.enableValidateOwner();
-								        	}		            	
-						            	} else {
-						            		$log.debug(">>>> HbImmeubleCardController: only proceeding with CLASSE 'IMMEUBLE'");
-						            	}
-
-						            });			        	
-						        	
-						            
 						            /**
 						             * Update current IMMEUBLE link to owner ACTOR upon new owner ACTOR selection
 						             */
