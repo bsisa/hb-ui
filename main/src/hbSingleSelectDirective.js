@@ -1,7 +1,7 @@
 (function() {
 
 	/**
-     * Directive hbSingleSelect emulate HTML select using Bootstrap drowdown 
+     * Directive hbSingleSelect emulate HTML select using Bootstrap dropdown 
      * for increase styling and behaviour control.
      * TODO: investigate enhancements: http://silviomoreto.github.io/bootstrap-select/
      */
