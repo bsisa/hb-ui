@@ -8,7 +8,8 @@
 		est obligatoire!
 	</span>
 	<span ng-show="elfinForm.annexlength.$error.min"><strong>L'annexe</strong> est obligatoire!
-	</span>	
+	</span>
+	<span ng-show="elfinForm.currentEventEParQui.$error.pattern">Le montant estimé doit être <strong>un nombre</strong> valide!</span>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -320,7 +321,7 @@
 										<input id="currentEventEPourQui" type="text" class="form-control" ng-model="currentEvent.E_POUR_QUI">
 									</td>
 									<td>
-										<input id="currentEventEParQui" type="text" class="form-control" ng-model="currentEvent.E_PAR_QUI">
+										<input id="currentEventEParQui" name="currentEventEParQui" type="text" class="form-control" ng-model="currentEvent.E_PAR_QUI" ng-pattern="numericOnlyRegexp" ng-trim='false'>
 									</td>
 								</tr>
 								<tr>

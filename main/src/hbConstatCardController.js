@@ -23,7 +23,11 @@
 
 						// Parameter used to make at least one annex mandatory.
 			        	$scope.minBound = 1;
+			        	$scope.numericOnlyRegexp = /^\d*\.?\d*$/;
+			        	// To allow negative values:
+			        	//$scope.numericOnlyRegexp = /^[-]?\d*\.?\d*$/;
 
+			        	
 				    	$scope.$watchCollection('elfin.ANNEXE.RENVOI', function(newRenvois, oldRenvois) {
 							// We want at least one annex mandatory, except photo, although is should not apply to CONSTAT.
 				    		$scope.annexesWithoutPhoto = hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo');
