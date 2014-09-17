@@ -11,7 +11,8 @@
     	return {
 		    require: '^hbCardContainer',
 			restrict: 'A',
-			controller: 'HbChooseActorController'
+			controller: 'HbChooseActorController',
+			scope: true
 		};
 	
     });
