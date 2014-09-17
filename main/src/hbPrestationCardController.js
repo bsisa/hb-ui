@@ -19,9 +19,19 @@
 
 								$log.debug("    >>>> Using HbPrestationCardController");
 								
+								/**
+								 * Selection lists
+								 */
 						        $scope.transactions = null;
 						        $scope.prestationGroups = null;
 
+						        /**
+						         * Validation support
+						         */
+					        	$scope.numericOnlyRegexp = /^\d*\.?\d*$/;
+					        	// To allow negative values:
+					        	//$scope.numericOnlyRegexp = /^[-]?\d*\.?\d*$/;						        
+						        
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
