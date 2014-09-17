@@ -333,7 +333,7 @@
 			<tab-heading>Unités locatives ({{surfaces.length}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
-					<div ng-show="surfaces" class="col-sm-12">
+					<div class="col-sm-12">
 						<table class="table table-condensed table-bordered table-striped">
 							<thead>
 								<tr>
@@ -379,7 +379,7 @@
 										ng-click="locUnitPredicate = 'DIVERS.REMARQUE'; locUnitReverse=!locUnitReverse">Remarque</a></th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody ng-show="surfaces">
 								<tr
 									ng-repeat="surface in surfaces | orderBy:locUnitPredicate:locUnitReverse">
 									<td><a href="/elfin/{{surface.ID_G}}/SURFACE/{{surface.Id}}">Détail</a></td>
@@ -400,7 +400,7 @@
 			<tab-heading>Prestations({{prestations.length}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
-					<div ng-show="prestations" class="col-sm-12">
+					<div class="col-sm-12">
 						<table class="table table-condensed table-bordered table-striped">
 							<thead>
 								<tr>
@@ -446,7 +446,7 @@
 										ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody ng-show="prestations">
 								<tr
 									ng-repeat="prestation in prestations | orderBy:prestaPredicate:prestaReverse">
 									<td><a
@@ -469,7 +469,7 @@
 			<tab-heading>Contrats ({{contrats.length}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
-					<div ng-show="contrats" class="col-sm-12">
+					<div class="col-sm-12">
 						<table class="table table-condensed table-bordered table-striped">
 							<thead>
 								<tr>
@@ -514,7 +514,7 @@
 										ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody ng-show="contrats">
 								<tr
 									ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse">
 									<td><a href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}">Détail</a></td>
