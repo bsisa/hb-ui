@@ -65,7 +65,7 @@
 												});
 
 								/**
-								 * 
+								 * Updates $scope.selectedImmeuble for IMMEUBLE matching both No SAI and owner Id
 								 */
 								$scope.displayBuildingAddress = function(noSai,owner) {
 									if ( 	(!$scope.selectedImmeuble) ||
@@ -326,7 +326,7 @@
 								
 								var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
 					            // TODO: actorsCollectionId must come from server configuration resource.
-					            $log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
+					            $log.debug("TODO: HbTransactionCardController: actorsCollectionId must come from server configuration resource.");
 					            var actorsCollectionId = 'G20060401225530100';								
 								
 								$scope.entrepriseActors = null;
@@ -348,7 +348,7 @@
 						                        		   		            { field:"GROUPE", displayName: "Groupe"}
 						                        		   	 		   		];
 					            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';									
-								
+
 							} ]);
 
 })();
