@@ -73,7 +73,7 @@
 											( $scope.selectedImmeuble && $scope.selectedImmeuble.PARTENAIRE.PROPRIETAIRE.Id != owner.Id) 
 									) {
 										if ($scope.immeubles
-												&& $scope.immeubles.length > 0) {
+												&& $scope.immeubles.length > 0 && owner != null) {
 											for (var i = 0; i < $scope.immeubles.length; i++) {
 												var currImm = $scope.immeubles[i];
 												if (currImm.IDENTIFIANT.OBJECTIF == noSai && owner.Id == currImm.PARTENAIRE.PROPRIETAIRE.Id && owner.ID_G == currImm.PARTENAIRE.PROPRIETAIRE.ID_G) {
