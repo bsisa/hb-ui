@@ -1,0 +1,197 @@
+
+<!-- 
+
+Example error messages: 
+
+	<span ng-show="elfinForm.collaborator_name.$error.required" >Un <strong>collaborateur</strong> doit obligatoirement être associé à un compte utilisateur</span>
+	<span ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire! </span>
+	<span ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong>est obligatoire!</span>	
+
+Parameters: 
+
+id  => actor_type
+name => actor_type
+     => hb-choose-actor-id-name= 
+ng-model NO => LOCAL view intended data
+hb-choose-actor-model => points to an OWNER object that is mapped to local "selected.actor" instance
+tooltip => hb-choose-actor-tooltip= 
+hb-choose-actor-role => {Propriétaire, Collaborateur, ...}
+hb-choose-actor-default-by-name="NE"
+ ??? hb-choose-actor-default-callback="selected.owner" ??? 
+
+ -->
+
+						<div class="input-group">
+							<input 
+								id="{{actorIdName}}" 
+								name="{{actorIdName}}" 
+								type="text" 
+								class="form-control" 
+								ng-model="selected.actorDisplay" 
+								ng-readonly="true"
+								ng-model-options="{ debounce: 500 }" 
+								ng-required="validateActor">
+							<span class="input-group-btn" tooltip="{{tooltip}}">
+								<button class="btn btn-default" type="button"
+									ng-click="hbChooseActor()"
+									><i class="glyphicon glyphicon-list-alt" ></i></button>
+							</span>
+						</div>		
+
+
+
+<!-- ================================================================================================================================== -->
+<!-- FROM hbImmeubleCard.html -->
+<!-- ================================================================================================================================== -->
+<!-- 							<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)"> -->
+<!-- 								<label for="manager" class="col-sm-4 control-label">Propriétaire</label> -->
+<!-- 								<div class="col-sm-8"> -->
+								
+<!-- 								<div  -->
+<!-- 									hb-choose-actor  -->
+<!-- 									hb-choose-actor-id-name="manager"  -->
+<!-- 									hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE" -->
+<!-- 									hb-choose-actor-tooltip="Recherche de propriétaire" -->
+<!-- 									hb-choose-actor-role="Propriétaire" -->
+<!-- 									></div> -->
+								
+		<!-- 									<div class="input-group"> -->
+		<!-- 										<input id="manager" name="manager" type="text" -->
+		<!-- 											class="form-control" -->
+		<!-- 											ng-model="selected.ownerDisplay" -->
+		<!-- 											readonly -->
+		<!-- 											ng-model-options="{ debounce: 500 }" -->
+		<!-- 											ng-required="validateOwner" -->
+		<!-- 											> -->
+		<!-- 										<span class="input-group-btn"> -->
+		<!-- 											<button class="btn btn-default" type="button" -->
+		<!-- 												hb-choose-actor -->
+		<!-- 												hb-choose-actor-role="Propriétaire" -->
+		<!-- 												ng-click="hbChooseActor(selected, 'owner')" -->
+		<!-- 												><i class="glyphicon glyphicon-list-alt" ></i></button>												 -->
+		<!-- 										</span> -->
+		<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- ================================================================================================================================== -->
+
+
+
+<!-- ================================================================================================================================== -->
+<!-- FROM hbTransactionCard.html -->
+<!-- ================================================================================================================================== -->
+<!-- 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)"> -->
+<!-- 					<label for="manager" class="col-sm-4 control-label">Propriétaire</label> -->
+<!-- 					<div class="col-sm-8"> -->
+					
+<!-- 								<div  -->
+<!-- 									hb-choose-actor  -->
+<!-- 									hb-choose-actor-id-name="manager"  -->
+<!-- 									hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE" -->
+<!-- 									hb-choose-actor-tooltip="Recherche de propriétaire" -->
+<!-- 									hb-choose-actor-role="Propriétaire" -->
+<!-- 									></div>					 -->
+					
+		<!-- 						<div class="input-group"> -->
+		<!-- 							<input id="manager" name="manager" type="text" -->
+		<!-- 								class="form-control" -->
+		<!-- 								ng-model="selected.ownerDisplay" -->
+		<!-- 								readonly -->
+		<!-- 								ng-model-options="{ debounce: 500 }" -->
+		<!-- 								ng-required="validateOwner" -->
+		<!-- 								> -->
+		<!-- 							<span class="input-group-btn"> -->
+		<!-- 								<button class="btn btn-default" type="button" -->
+		<!-- 									hb-choose-actor -->
+		<!-- 									hb-choose-actor-role="Propriétaire" -->
+		<!-- 									ng-click="hbChooseActor(selected, 'owner')" -->
+		<!-- 									><i class="glyphicon glyphicon-list-alt" ></i></button>												 -->
+		<!-- 							</span> -->
+		<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- ================================================================================================================================== -->
+
+
+
+<!-- ================================================================================================================================== -->
+<!-- FROM hbTransactionCreateCard.html -->
+<!-- ================================================================================================================================== -->
+
+<!-- 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)"> -->
+<!-- 					<label for="manager" class="col-sm-4 control-label">Propriétaire</label> -->
+<!-- 					<div class="col-sm-8"> -->
+					
+<!-- 								<div  -->
+<!-- 									hb-choose-actor  -->
+<!-- 									hb-choose-actor-id-name="manager"  -->
+<!-- 									hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE" -->
+<!-- 									hb-choose-actor-tooltip="Recherche de propriétaire" -->
+<!-- 									hb-choose-actor-role="Propriétaire" -->
+<!-- 									hb-choose-actor-default-by-name="NE" -->
+<!-- 									></div>					 -->
+					
+					
+		<!-- 						<div class="input-group"> -->
+		<!-- 							<input id="manager" name="manager" type="text" -->
+		<!-- 								class="form-control" -->
+		<!-- 								ng-model="selected.ownerDisplay" -->
+		<!-- 								readonly -->
+		<!-- 								ng-model-options="{ debounce: 500 }" -->
+		<!-- 								ng-required="validateOwner" -->
+		<!-- 								> -->
+		<!-- 							<span class="input-group-btn"> -->
+		<!-- 								<button class="btn btn-default" type="button" -->
+		<!-- 									hb-choose-actor -->
+		<!-- 									hb-choose-actor-role="Propriétaire" -->
+		<!-- 									hb-choose-actor-default-by-name="NE" -->
+		<!-- 									hb-choose-actor-default-callback="selected.owner" -->
+		<!-- 									ng-click="hbChooseActor(selected, 'owner')" -->
+		<!-- 									><i class="glyphicon glyphicon-list-alt" ></i></button>												 -->
+		<!-- 							</span> -->
+		<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div>		 -->
+
+<!-- ================================================================================================================================== -->
+
+
+
+<!-- ================================================================================================================================== -->
+<!-- FROM hbUserCard.html -->
+<!-- ================================================================================================================================== -->
+
+<!-- 				<div class="form-group"> -->
+<!-- 					<label for="nom" class="col-sm-2 control-label">Nom de -->
+<!-- 						famille</label> -->
+<!-- 					<div class="col-sm-3"> -->
+
+<!-- 								<div  -->
+<!-- 									hb-choose-actor  -->
+<!-- 									hb-choose-actor-id-name="collaborator_name"  -->
+<!-- 									hb-choose-actor-model="elfin.PARTENAIRE.USAGER" -->
+<!-- 									hb-choose-actor-tooltip="Recherche de collaborateur" -->
+<!-- 									hb-choose-actor-role="Collaborateur" -->
+<!-- 									></div>					 -->
+					
+		<!-- 						<div class="input-group"> -->
+		<!-- 							<input  -->
+		<!-- 								id="collaborator_name"  -->
+		<!-- 								name="collaborator_name"  -->
+		<!-- 								type="text"  -->
+		<!-- 								class="form-control"  -->
+		<!-- 								ng-model="selected.collaborator.IDENTIFIANT.NOM"  -->
+		<!-- 								ng-readonly="true"  -->
+		<!-- 								ng-required="validateCollaborator"> -->
+		<!-- 							<span class="input-group-btn" tooltip="Recherche de collaborateur"> -->
+		<!-- 								<button class="btn btn-default" type="button" -->
+		<!-- 									hb-choose-actor -->
+		<!-- 									hb-choose-actor-role="Collaborateur" -->
+		<!-- 									ng-click="hbChooseActor(selected, 'collaborator')" -->
+		<!-- 									><i class="glyphicon glyphicon-list-alt" ></i></button> -->
+		<!-- 							</span> -->
+		<!-- 						</div>		 -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+
+<!-- ================================================================================================================================== -->

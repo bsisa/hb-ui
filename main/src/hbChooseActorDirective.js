@@ -11,8 +11,21 @@
     	return {
 		    require: '^hbCardContainer',
 			restrict: 'A',
-			controller: 'HbChooseActorController',
-			scope: true
+			scope : {
+				'actorModel' : '=hbChooseActorModel',
+				'actorIdName' : '@hbChooseActorIdName', 
+				'actorRole' : '@?hbChooseActorRole',
+				'defaultByName' : '@?hbChooseActorDefaultByName',
+				'tooltip' : '@?hbChooseActorTooltip'
+			},		    
+		    transclude: true,
+			templateUrl : "/assets/views/hbChooseActor.html",			
+			controller: 'HbChooseActorController'
+//			scope: true
+//			scope: {
+//				'defaultActor' : '=hbChooseActorDefaultCallback',
+//				hbChooseActor : '&'
+//			}
 		};
 	
     });
