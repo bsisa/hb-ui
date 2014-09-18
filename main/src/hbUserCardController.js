@@ -217,7 +217,14 @@
 			                      };
 			        		return newRole;
 			        	};
-			        	
+
+
+			        	//TODO: Move initialisation tasks to $scope listener insteand of $rootScope for HB_EVENTS:  
+//				    	$scope.$watch('elfin.Id', function() { 
+//				    		if ($scope.elfin!=null) {
+//				    			
+//				    		}
+//				    	});
 			            // Load ELFIN collaborator ACTOR only once main elfin (here USER) has been loaded
 			            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
 			            	
