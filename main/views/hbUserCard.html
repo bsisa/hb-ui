@@ -68,23 +68,33 @@
 					<label for="nom" class="col-sm-2 control-label">Nom de
 						famille</label>
 					<div class="col-sm-3">
-						<div class="input-group">
-							<input 
-								id="collaborator_name" 
-								name="collaborator_name" 
-								type="text" 
-								class="form-control" 
-								ng-model="selected.collaborator.IDENTIFIANT.NOM" 
-								ng-readonly="true" 
-								ng-required="validateCollaborator">
-							<span class="input-group-btn" tooltip="Recherche de collaborateur">
-								<button class="btn btn-default" type="button"
-									hb-choose-actor
-									hb-choose-actor-role="Collaborateur"
-									ng-click="hbChooseActor(selected, 'collaborator')"
-									><i class="glyphicon glyphicon-list-alt" ></i></button>
-							</span>
-						</div>		
+					
+						<div 
+							hb-choose-actor 
+							hb-choose-actor-id-name="collaborator_name" 
+							hb-choose-actor-model="elfin.PARTENAIRE.USAGER"
+							hb-choose-actor-tooltip="Recherche de collaborateur"
+							hb-choose-actor-role="Collaborateur"
+							></div>					
+					
+					
+<!-- 						<div class="input-group"> -->
+<!-- 							<input  -->
+<!-- 								id="collaborator_name"  -->
+<!-- 								name="collaborator_name"  -->
+<!-- 								type="text"  -->
+<!-- 								class="form-control"  -->
+<!-- 								ng-model="selected.collaborator.IDENTIFIANT.NOM"  -->
+<!-- 								ng-readonly="true"  -->
+<!-- 								ng-required="validateCollaborator"> -->
+<!-- 							<span class="input-group-btn" tooltip="Recherche de collaborateur"> -->
+<!-- 								<button class="btn btn-default" type="button" -->
+<!-- 									hb-choose-actor -->
+<!-- 									hb-choose-actor-role="Collaborateur" -->
+<!-- 									ng-click="hbChooseActor(selected, 'collaborator')" -->
+<!-- 									><i class="glyphicon glyphicon-list-alt" ></i></button> -->
+<!-- 							</span> -->
+<!-- 						</div>		 -->
 					</div>
 				</div>
 				<div class="form-group">
