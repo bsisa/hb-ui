@@ -12,6 +12,8 @@
 		    require: '^hbCardContainer',
 			restrict: 'A',
 			scope : {
+				'elfin' : "@hbChooseActorElfin",
+				'elfinForm' : '=hbChooseActorElfinForm',
 				'actorModel' : '=hbChooseActorModel',
 				'actorIdName' : '@hbChooseActorIdName', 
 				'actorRole' : '@?hbChooseActorRole',

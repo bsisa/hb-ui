@@ -71,23 +71,37 @@
 			        		
 			        	};							
 						
+
+//			        	$scope.$watch('elfin.Id', function() { 					    		
+//			        		// Only load actor if elfin is available with actor reference defined.
+//			        		if ($scope.elfin != null
+//								&& $scope.actorModel.ID_G != null
+//								&& $scope.actorModel.ID_G != ''
+//								&& $scope.actorModel.Id != null
+//								&& $scope.actorModel.Id != '') {
+//				    			$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
+//				    		}
+//			        	});
+			            	
+
 			        	/**
 			        	 * actorModel references an ELFIN property with Id, ID_G, GROUPE and NOM properties.
 			        	 */
-//			        	var actorModelWatchDeregistration = $scope.$watch('actorModel.Id', function(newId, oldId) {
-//			            	
-//			            	$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') = " + oldId + " => " + newId);
-//			            	
-//			            	// Make sure an actor reference exists before loading
-//			            	if ( newId && newId != null) {
-//			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => getElfinActor for " + newId);
-//				            	$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
-//				            	// Notify the user the data need saving.
-//				            	//$scope.elfinForm.$setDirty();			            		
-//			            	}
-//			            	$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
-//			            	actorModelWatchDeregistration();
-//			            });			        	
+			        	var actorModelWatchDeregistration = $scope.$watch('actorModel.Id', function(newId, oldId) {			        		
+			            	$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') = " + oldId + " => " + newId);
+			            	
+			            	// Make sure an actor reference exists before loading
+			            	if ( newId && newId != null) {
+			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => getElfinActor for " + newId);
+				            	$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
+				            	// Notify the user the data need saving.
+				            	//$scope.elfinForm.$setDirty();
+				            	// TODO: this is not OK for hbMode='create' !!!
+				            	$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
+				            	actorModelWatchDeregistration();				            	
+			            	}
+
+			            });			        	
 			        	
 //			            /**
 //			             * Update current actor object upon actor.Id change link to ACTOR upon new ACTOR selection
@@ -219,6 +233,9 @@
 					            	// Reset VALUE which should no more be used.
 					            	$scope.actorModel.VALUE = "";				            		
 				            		
+					            	// Notify user current data need saving.
+					            	$scope.elfinForm.$setDirty();			
+					            	
 				            	} else {
 				            		$log.debug("No selection returned!!!");				            		
 				            	}
@@ -230,7 +247,7 @@
 				        
 				        
 				        // TODO: add check on actorModel availability, ID_G, Id...
-				        $scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);				        
+				        //$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);				        
 				        
 				        
 
