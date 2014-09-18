@@ -15,7 +15,10 @@
 					function($attrs, $scope, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil, GeoxmlService) {
 
-						$log.debug("    >>>> Using HbChooseActorController");	
+						$log.debug("    >>>> Using HbChooseActorController");
+						
+						$scope.defaultActor = null;
+						
 						var xpathForActor = null;
 						// Restrict to provided hb-choose-actor-role 
 						if ($attrs.hbChooseActorRole) {
@@ -23,6 +26,15 @@
 						} else { // Select all actors 
 							xpathForActor = "//ELFIN[@CLASSE='ACTEUR']";
 						}
+						
+						if ($attrs.hbChooseActorDefaultByName) {
+							var name = $attrs.hbChooseActorDefaultByName.trim();
+							if (name!=null && name.length > 0) {
+								$scope.defaultByName = name;
+								$log.debug(">>>> SET default by name to " + $scope.defaultByName);
+							}
+						}
+						
 			            // TODO: actorsCollectionId must come from server configuration resource.
 			            $log.debug("TODO: HbChooseActorController: actorsCollectionId must come from server configuration resource.");
 			            var actorsCollectionId = 'G20060401225530100';			        	
@@ -32,6 +44,17 @@
 						.then(function(actors) {
 								$log.debug("    >>>> HbChooseActorController: loading actors ...");
 								$scope.actors = actors;
+								if ($scope.defaultByName) {
+									for (var i=0; actors.length; i++) {
+										var actor = actors[i];
+										if (actor.IDENTIFIANT.NOM == $scope.defaultByName) {
+											$scope.defaultActor = actor;
+											$log.debug(">>>> SET default actor to Id " + $scope.defaultActor.Id);
+											break;
+										}
+									}
+								}
+								 
 								$log.debug("    >>>> HbChooseActorController: " + $scope.actors.length + " actors loaded.");
 							},
 							function(response) {
@@ -46,7 +69,7 @@
 				        $scope.hbChooseActor = function (selected, selectedPathElement) {
 				        	
 				            var modalInstance = $modal.open({
-				                templateUrl: '/assets/views/hbChooseActor.html',
+				                templateUrl: '/assets/views/hbChooseActorModalDialog.html',
 				                scope: $scope,
 				                controller: 'HbChooseActorModalController',
 				                resolve: {
