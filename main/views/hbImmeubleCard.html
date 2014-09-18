@@ -102,80 +102,31 @@
 				</div><!-- 2nd col first tab first row end -->
 				<!-- 3rd col first tab first row start -->
 				<div class="col-sm-5" >
-						<div class="col-sm-12">
-							<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
-								<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
-								<div class="col-sm-8">
-								
-									<div 
-										hb-choose-actor 
-										hb-choose-actor-id-name="manager" 
-										hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE"
-										hb-choose-actor-tooltip="Recherche de propriétaire"
-										hb-choose-actor-role="Propriétaire"
-										></div>								
-								
-<!-- 									<div class="input-group"> -->
-<!-- 										<input id="manager" name="manager" type="text" -->
-<!-- 											class="form-control" -->
-<!-- 											ng-model="selected.ownerDisplay" -->
-<!-- 											readonly -->
-<!-- 											ng-model-options="{ debounce: 500 }" -->
-<!-- 											ng-required="validateOwner" -->
-<!-- 											> -->
-<!-- 										<span class="input-group-btn"> -->
-<!-- 										<button class="btn btn-default" type="button" -->
-<!-- 											hb-choose-actor -->
-<!-- 											hb-choose-actor-role="Propriétaire" -->
-<!-- 											ng-click="hbChooseActor(selected, 'owner')" -->
-<!-- 											><i class="glyphicon glyphicon-list-alt" ></i></button>												 -->
-<!-- 										</span> -->
-<!-- 									</div> -->
-								</div>
+					<div class="col-sm-12">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
+							<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
+							<div class="col-sm-8">
+								<div 
+									hb-choose-actor 
+									hb-choose-actor-id-name="manager" 
+									hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE"
+									hb-choose-actor-tooltip="Recherche de propriétaire"
+									hb-choose-actor-role="Propriétaire"
+									></div>								
 							</div>
 						</div>
-<!-- 						<div class="col-sm-12" > -->
-<!-- 							<div class="form-group has-feedback" -->
-<!-- 								ng-class="getCssHasFeedback(elfinForm.managerName)"> -->
-<!-- 								<label for="managerName" class="col-sm-4 control-label">Nom -->
-<!-- 									du propriétaire</label> -->
-<!-- 								<div class="col-sm-8"> -->
-<!-- 									<div class="input-group"> -->
-<!-- 										<input id="managerName" name="managerName" type="text" -->
-<!-- 											class="form-control" -->
-<!-- 											ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM" -->
-<!-- 											tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM" required> -->
-<!-- 										<span class="input-group-btn"> -->
-<!-- 											<button class="btn btn-default" type="button" -->
-<!-- 												ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM)">Choix</button> -->
-<!-- 										</span> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-						<div class="col-sm-12">
-							<div class="form-group has-feedback"
-							ng-class="getCssHasFeedback(elfinForm.alias)">
-								<label for="alias" class="col-sm-4 control-label">Architecte</label>
-								<div class="col-sm-8">
-									<input id="alias" name="alias" type="text" class="form-control"
-										ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
-										required>
-								</div>
+					</div>
+					<div class="col-sm-12">
+						<div class="form-group has-feedback"
+						ng-class="getCssHasFeedback(elfinForm.alias)">
+							<label for="alias" class="col-sm-4 control-label">Architecte</label>
+							<div class="col-sm-8">
+								<input id="alias" name="alias" type="text" class="form-control"
+									ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
+									required>
 							</div>
 						</div>
-<!-- 					</div> -->
-<!-- 					<div class="row"> -->
-<!-- 						<div class="form-group has-feedback" -->
-<!-- 							ng-class="getCssHasFeedback(elfinForm.alias)"> -->
-<!-- 							<label for="alias" class="col-sm-6 control-label">Architecte</label> -->
-<!-- 							<div class="col-sm-6"> -->
-<!-- 								<input id="alias" name="alias" type="text" class="form-control" -->
-<!-- 									ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" -->
-<!-- 									tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE" required> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
+					</div>
 				</div><!-- 3rd col first tab first row end --> 					
 			</div><!-- row end -->
 
