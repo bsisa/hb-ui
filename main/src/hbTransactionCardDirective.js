@@ -2,7 +2,7 @@
 
 
     /**
-     * Directive encapsulating GeoXML ELFIN[@CLASSE='TRANSCATION'] specific view 
+     * Directive encapsulating GeoXML ELFIN[@CLASSE='TRANSACTION'] specific view 
      * and behaviour.
      */
     angular.module('hb5').directive('hbTransactionCard', function () {

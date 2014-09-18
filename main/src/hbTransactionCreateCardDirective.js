@@ -2,7 +2,7 @@
 
 
     /**
-     * Directive encapsulating GeoXML ELFIN[@CLASSE='TRANSCATION'] specific view 
+     * Directive encapsulating GeoXML ELFIN[@CLASSE='TRANSACTION'] specific view 
      * and behaviour for CREATION only. Editing, reading will be done with another 
      * view.
      */
