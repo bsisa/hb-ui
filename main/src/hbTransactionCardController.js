@@ -28,12 +28,16 @@
 								// Wait for the owner actor to have a chance to load before displaying annoying validation error.
 								$scope.validateOwner = false;									
 								
-								// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
+								// ===================================================================================
+								// Input fields used to select IMMEUBLE related to current TRANSACTION backing models
+								// ===================================================================================								
+								// Owner Actor (ACTEUR role=Propriétaire) 
 								$scope.selected = { "owner" : null , "ownerDisplay" : null};								
-								
-								
+								// No SAI user input field used to select IMMEUBLE related to current TRANSACTION
 								$scope.constatSelectionHelperSai = '';
-								// Loaded asynchronously
+								// ===================================================================================								
+								
+								// Available repartition codes list loaded asynchronously from catalogue
 								$scope.repartitions = null;
 								
 								// Benefit from server side cache...
@@ -247,6 +251,8 @@
 					             * Update current IMMEUBLE link to owner ACTOR upon new owner ACTOR selection
 					             */
 					            $scope.$watch('selected.owner.Id', function(newId, oldId) {
+					            	
+					            	$log.debug("selected.owner.Id has changed from oldId " + oldId + " to newId " + newId); 
 					            	
 					            	if ( newId && $scope.elfin && ($scope.elfin.PARTENAIRE.PROPRIETAIRE.Id != $scope.selected.owner.Id) ) {
 
