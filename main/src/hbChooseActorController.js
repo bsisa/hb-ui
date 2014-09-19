@@ -50,21 +50,22 @@
 				        $scope.getElfinActor = function (collectionId, elfinId) {
 				        	
 					        GeoxmlService.getElfin(collectionId, elfinId).get()
-					        .then(function(elfin) {
+					        .then(function(actorElfin) {
 					        	// Force CAR array sorting by POS attribute
 					        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
 					        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
 					        	//       Need review of other similar operations
-					        	if ( elfin['CARACTERISTIQUE'] != null && elfin['CARACTERISTIQUE']['CARSET'] != null && elfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
-					        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
+					        	if ( actorElfin['CARACTERISTIQUE'] != null && actorElfin['CARACTERISTIQUE']['CARSET'] != null && actorElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+					        		hbUtil.reorderArrayByPOS(actorElfin['CARACTERISTIQUE']['CARSET']['CAR']);
 					        	}
-					        	$log.debug(">>>>>>>>>>>> HbChooseActorController elfin.Id = " + elfin.Id);
-					        	$scope.selected.actor = elfin;
+					        	$log.debug(">>>>>>>>>>>> HbChooseActorController actorElfin.Id = " + actorElfin.Id);
+					        	$scope.selected.actor = actorElfin;
 					        	$scope.selected.actorDisplay = $scope.selected.actor.IDENTIFIANT.NOM + " - " + $scope.selected.actor.GROUPE;					        	
 					        	
 					        	$scope.enableValidateActor();
 					        	}, function(response) {
-					        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
+					        	var message = "Aucun object ACTEUR disponible pour la collection: " + collectionId + " et l'identifiant: " + elfinId + ".";
+					        	$log.warn("HbChooseActorController - statut de retour: " + response.status + ". Message utilisateur: " + message);
 					            hbAlertMessages.addAlert("danger",message);
 					            $scope.enableValidateActor();
 					        });
@@ -86,20 +87,32 @@
 
 			        	/**
 			        	 * actorModel references an ELFIN property with Id, ID_G, GROUPE and NOM properties.
+			        	 * This listener is used only for actor initialisation 
 			        	 */
 			        	var actorModelWatchDeregistration = $scope.$watch('actorModel.Id', function(newId, oldId) {			        		
 			            	$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') = " + oldId + " => " + newId);
-			            	
-			            	// Make sure an actor reference exists before loading
-			            	if ( newId && newId != null) {
-			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => getElfinActor for " + newId);
-				            	$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
-				            	// Notify the user the data need saving.
-				            	//$scope.elfinForm.$setDirty();
-				            	// TODO: this is not OK for hbMode='create' !!!
-				            	$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
-				            	actorModelWatchDeregistration();				            	
+
+			            	// Only initialise if no selected actor object exist 
+			            	if ( $scope.selected.actor == null ) {
+			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor == null - OK");
+				            	// Make sure an actor reference exists before trying to load actor elfin
+				            	if ( newId && newId != null && newId.trim() != '') {
+				            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => getElfinActor for " + newId);
+					            	$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
+					            	// Notify the user the data need saving.
+					            	//$scope.elfinForm.$setDirty();
+					            	// TODO: this is not OK for hbMode='create' !!!
+					            	$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
+				            		// Remove listener now that we tried loading the actor elfin object.
+					            	actorModelWatchDeregistration();		            	
+				            	}
+			            	} else {
+			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor NOT NULL !!! ");
+			            		$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
+			            		// Remove listener if selected actor already exists 
+			            		actorModelWatchDeregistration();
 			            	}
+
 
 			            });			        	
 			        	
