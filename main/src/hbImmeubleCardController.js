@@ -100,8 +100,10 @@
 							    	 * Listener used to load PRESTATION, CONTRAT lists related to this IMMEUBLE 
 							    	 * Only relevant while not in create mode.
 							    	 */
-							    	$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() { 
+							    	$scope.$watchCollection('[elfin.IDENTIFIANT.OBJECTIF,elfin.PARTENAIRE.PROPRIETAIRE.NOM]', function(newValues, oldValues) {							    		
 
+							    		$log.debug("$watchCollection for OBJECTIF, PROPRIETAIRE.NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
+							    		
 							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
 							    			// TODO: add restriction on PROPRIETAIRE
 								            var xpathForPrestations = "//ELFIN[starts-with(IDENTIFIANT/OBJECTIF,'"+$scope.elfin.IDENTIFIANT.OBJECTIF+"') and PARTENAIRE/PROPRIETAIRE/@NOM='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM+"']";
