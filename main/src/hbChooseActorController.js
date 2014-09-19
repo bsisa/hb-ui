@@ -61,9 +61,8 @@
 					        	$log.debug(">>>>>>>>>>>> HbChooseActorController actorElfin.Id = " + actorElfin.Id);
 					        	$scope.selected.actor = actorElfin;
 					        	$scope.selected.actorDisplay = $scope.selected.actor.IDENTIFIANT.NOM + " - " + $scope.selected.actor.GROUPE;					        	
-					        	
 					        	$scope.enableValidateActor();
-					        	}, function(response) {
+					        }, function(response) {
 					        	var message = "Aucun object ACTEUR disponible pour la collection: " + collectionId + " et l'identifiant: " + elfinId + ".";
 					        	$log.warn("HbChooseActorController - statut de retour: " + response.status + ". Message utilisateur: " + message);
 					            hbAlertMessages.addAlert("danger",message);
@@ -95,16 +94,34 @@
 			            	// Only initialise if no selected actor object exist 
 			            	if ( $scope.selected.actor == null ) {
 			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor == null - OK");
-				            	// Make sure an actor reference exists before trying to load actor elfin
-				            	if ( newId && newId != null && newId.trim() != '') {
-				            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => getElfinActor for " + newId);
-					            	$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
-					            	// Notify the user the data need saving.
-					            	//$scope.elfinForm.$setDirty();
-					            	// TODO: this is not OK for hbMode='create' !!!
-					            	$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
+			            		/* Do not perform DEREGISTRATION for case oldId => newId : undefined => undefined
+			            		 * while situation like undefined => null or undefined => Gxxxxx must trigger it.
+			            		 */
+				            	if ( newId ) {
+				            		// Make sure an actor reference is defined before trying to load actor elfin
+					            	if ( newId != null && newId.trim() != '' && newId.trim() != "null") {
+					            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => getElfinActor for " + newId);
+						            	$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
+					            	} else {
+					            		// Force validation in create mode as well
+					            		$scope.enableValidateActor();
+					            	}
+					            	
+					            	if (!$scope.actorModel == undefined && $scope.actorModel == null) {
+					            		var roleStr = function() { if ($scope.actorRole) {return $scope.actorRole;} else {return "";}};
+										var message = "La sauvegarde du champs lié à la donnée d'acteur " + roleStr + " n'est pas possible. Veuillez notifier votre administrateur de base de données.";
+							            hbAlertMessages.addAlert("danger",message);
+					            		$log.error(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') - MISSING MANDATORY actorModel OBJECT found !");
+					            	} else {
+					            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') - actorModel not null : " + $scope.actorModel.toString());
+					            	}
 				            		// Remove listener now that we tried loading the actor elfin object.
-					            	actorModelWatchDeregistration();		            	
+					            	$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
+					            	actorModelWatchDeregistration();
+					            	
+				            	} else {
+				            		// Keep on listening as long as newId is undefined
+				            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => Keep on listening as long as newId is undefined");
 				            	}
 			            	} else {
 			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor NOT NULL !!! ");
@@ -112,7 +129,6 @@
 			            		// Remove listener if selected actor already exists 
 			            		actorModelWatchDeregistration();
 			            	}
-
 
 			            });			        	
 			        	
