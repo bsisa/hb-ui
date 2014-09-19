@@ -72,18 +72,6 @@
 			        	};							
 						
 
-//			        	$scope.$watch('elfin.Id', function() { 					    		
-//			        		// Only load actor if elfin is available with actor reference defined.
-//			        		if ($scope.elfin != null
-//								&& $scope.actorModel.ID_G != null
-//								&& $scope.actorModel.ID_G != ''
-//								&& $scope.actorModel.Id != null
-//								&& $scope.actorModel.Id != '') {
-//				    			$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
-//				    		}
-//			        	});
-			            	
-
 			        	/**
 			        	 * actorModel references an ELFIN property with Id, ID_G, GROUPE and NOM properties.
 			        	 * This listener is used only for actor initialisation 
@@ -132,35 +120,6 @@
 
 			            });			        	
 			        	
-//			            /**
-//			             * Update current actor object upon actor.Id change link to ACTOR upon new ACTOR selection
-//			             */
-//			            $scope.$watch('selected.actor.Id', function(newId, oldId) {
-//			            	
-//			            	$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('selected.actor.Id') = " + oldId + " => " + newId);
-//			            	
-//			            	if ( newId && $scope.actorModel && ($scope.actorModel.Id != $scope.selected.actor.Id) ) {
-//
-//			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('selected.actor.Id') => UPDATING actorModel... ");
-//			            		
-//					        	$scope.selected.actorDisplay = $scope.selected.actor.IDENTIFIANT.NOM + " - " + $scope.selected.actor.GROUPE;
-//			            		
-//				            	// Update the new ACTOR ids
-//				            	$scope.actorModel.ID_G = $scope.selected.actor.ID_G;
-//				            	$scope.actorModel.Id = $scope.selected.actor.Id;
-//				            	// According to the GeoXML Schema GROUP and NOM are part of USAGER.
-//				            	$scope.actorModel.GROUPE = $scope.selected.actor.GROUPE;
-//				            	$scope.actorModel.NOM = $scope.selected.actor.IDENTIFIANT.NOM;			            		
-//			            		
-//				            	// Reset VALUE which should no more be used.
-//				            	$scope.actorModel.VALUE = "";				            	
-//				            	
-//				            	// Notify the user the data need saving.
-//				            	//$scope.elfinForm.$setDirty();			            		
-//			            	}
-//
-//			            });			        	
-			        	
 						// ========================================================================
 						// NEW IMPLEMENTATION END
 						// ========================================================================
@@ -176,16 +135,6 @@
 						} else { // Select all actors 
 							xpathForActor = "//ELFIN[@CLASSE='ACTEUR']";
 						}
-						
-						//if ($attrs.hbChooseActorDefaultByName) {
-//						if ($scope.defaultByName) {
-//							//var name = $attrs.hbChooseActorDefaultByName.trim();
-//							var name = $scope.defaultByName.trim();
-//							if (name!=null && name.length > 0) {
-//								$scope.defaultByName = name;
-//								$log.debug(">>>> SET default by name to " + $scope.defaultByName);
-//							}
-//						}
 						
 			            // TODO: actorsCollectionId must come from server configuration resource.
 			            $log.debug("TODO: HbChooseActorController: actorsCollectionId must come from server configuration resource.");
