@@ -1,7 +1,7 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
-	<span ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong>est obligatoire!</span>
-	<span ng-show="elfinForm.managerName.$error.required">Le champs	<strong>Nom du propriétaire</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.destinataire.$error.required">Le champs <strong>Destinataire</strong> est obligatoire!</span>
 </div>
 
 <div class="row" style="padding-top: 8px;">
@@ -21,7 +21,6 @@
 						<div 
 							hb-choose-actor 
 							hb-choose-actor-id-name="manager" 
-							hb-choose-actor-elfin="elfin"
 							hb-choose-actor-elfin-form="elfinForm"
 							hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE"
 							hb-choose-actor-tooltip="Recherche de propriétaire"
@@ -80,10 +79,11 @@
 					<label for="type" class="col-sm-4 control-label">Destinataire</label>
 					<div class="col-sm-8">
 						<div class="input-group">
-							<input id="alias" type="text" class="form-control"
+							<input id="destinataire" name="destinataire" type="text" class="form-control"
 								autocomplete="off"
 								typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8"
-								ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
+								ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
+								required>
 								<span
 								class="input-group-btn" tooltip="Recherche d'entreprise"
 								 >
