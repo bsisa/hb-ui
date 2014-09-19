@@ -3,7 +3,7 @@
 
     /**
      * hb-choose-actor directive provides specific popup to select 
-     * an ELFIN of CLASSE='ACTOR' with IDENTIFIANT/QUALITE='{"collaborateur, propriétaire,..."}'
+     * an ELFIN of CLASSE='ACTEUR' with IDENTIFIANT/QUALITE='{"collaborateur, propriétaire,..."}'
      * 
      */
     angular.module('hb5').directive('hbChooseActor', function () {
