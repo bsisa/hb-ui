@@ -209,9 +209,11 @@
 //    	        		for (var property in response) {
 //   	        			   console.log("Property name: " + property + ", value: " + response[property]);
 //    	        		}
-    	        		var errMsg = "Ressource non disponible. ( " + response.data.DESCRIPTION +" )";
-    	        		$log.error(errMsg);
-    	        		hbAlertMessages.addAlert("danger",errMsg);
+//    	        		var errMsg = "Ressource non disponible. ( " + response.data.DESCRIPTION +" )";
+//    	        		$log.error(errMsg);
+//    	        		hbAlertMessages.addAlert("danger",errMsg);
+    	        		$log.debug("404 - let flow resource not found to application level: Response status ("+response.status+").");
+    	        		return response;    	        		
     	        	} 
     	        	else if (response.status == 500) {
     	        		var errMsg = "Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. " ;
