@@ -177,7 +177,7 @@
 //								        		$scope.enableValidateOwner();
 //								        	}									    			
 							    			
-							    			// Get SURFACES
+							    			// Get UNITE_LOCATIVE by corresponding to current ELFIN.Id
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
 								            $log.debug("TODO: HbImmeubleCardController: locationUnitsCollectionId must come from server configuration resource.");
