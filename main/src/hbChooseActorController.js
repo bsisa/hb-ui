@@ -128,9 +128,7 @@
 						
 						var xpathForActor = null;
 						// Restrict to provided hb-choose-actor-role 
-						//if ($attrs.hbChooseActorRole) {
 						if ($scope.actorRole) {
-							//xpathForActor = "//ELFIN[@CLASSE='ACTEUR' and IDENTIFIANT/QUALITE='"+$attrs.hbChooseActorRole+"']";
 							xpathForActor = "//ELFIN[@CLASSE='ACTEUR' and IDENTIFIANT/QUALITE='"+$scope.actorRole+"']";
 						} else { // Select all actors 
 							xpathForActor = "//ELFIN[@CLASSE='ACTEUR']";
@@ -154,8 +152,9 @@
 											break;
 										}
 									}
+									var message = "L'ACTEUR par défaut correspondant au nom: " + $scope.defaultByName + " n'a pas pu être trouvé parmi les " + actors.length + " acteurs disponibles.";
+						            hbAlertMessages.addAlert("warning",message);									
 								}
-								 
 								$log.debug("    >>>> HbChooseActorController: " + $scope.actors.length + " actors loaded.");
 							},
 							function(response) {
@@ -167,7 +166,6 @@
 						/**
 				         * Modal panel to update an elfin reference with the selection from a list of actors.
 				         */
-				        //$scope.hbChooseActor = function (selected, selectedPathElement) {
 				        $scope.hbChooseActor = function () {
 				        	
 				            var modalInstance = $modal.open({
@@ -183,7 +181,6 @@
 				                    },
 				                    role: function () {
 				                    	return $scope.actorRole;
-				                    	//return $attrs.hbChooseActorRole;
 				                    }
 				                },                
 				                backdrop: 'static'
