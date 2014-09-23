@@ -36,7 +36,7 @@
 							        $scope.constatsEncours = null;
 							        $scope.constatsClos = null;
 							        $scope.prestations = null;
-							        $scope.surfaces = null;
+							        $scope.locationUnits = null;
 							    	
 						            $scope.locUnitPredicate = 'IDENTIFIANT.DE';
 						            $scope.locUnitReverse = true;		
@@ -180,11 +180,11 @@
 							    			// Get SURFACES
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
-								            $log.debug("TODO: HbImmeubleCardController: surfacesCollectionId must come from server configuration resource.");
-								            var surfacesCollectionId = 'G20040930101030013';
-								            GeoxmlService.getCollection(surfacesCollectionId).getList({"xpath" : xpathForSurfaces})
+								            $log.debug("TODO: HbImmeubleCardController: locationUnitsCollectionId must come from server configuration resource.");
+								            var locationUnitsCollectionId = 'G20040930101030013';
+								            GeoxmlService.getCollection(locationUnitsCollectionId).getList({"xpath" : xpathForSurfaces})
 												.then(function(elfins) {
-														$scope.surfaces = elfins;
+														$scope.locationUnits = elfins;
 													},
 													function(response) {
 														var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
