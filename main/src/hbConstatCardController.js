@@ -143,9 +143,6 @@
 						
 						/**
 						 * Add ECHEANCE 
-						 * TODO: 
-						 * * check roles to allow PAR_QUI => VALIDATE
-						 * * check PAR_QUI status to allow / forbid new ECHEANCE creation (no 'EN COURS' nor 'A VALIDER') 
 						 */
 						$scope.addEcheance = function() {
 							
