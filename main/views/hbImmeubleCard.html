@@ -130,13 +130,33 @@
 					</div>
 					<div class="col-sm-12">
 						<div class="form-group" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L">
-							<label for="otherPartner-{{$index}}" class="col-sm-4 control-label">{{otherPartnerLine.C[1].VALUE}}</label>
-							<div class="col-sm-8">
-								<input id="otherPartner-{{$index}}" name="otherPartner-{{$index}}" type="text" class="form-control"
-									ng-model="otherPartnerLine.C[2].VALUE">
+							<!-- Provides converted.actor -->
+							<div hb-actor-line-converter hb-actor-line-converter-line-model="otherPartnerLine" hb-actor-line-converter-actor-model="convertedActor" hb-actor-line-converter-actor-role="actorRole">
+								<label for="otherPartner-{{$index}}" class="col-sm-4 control-label">{{convertedActor.IDENTIFIANT.QUALITE}}</label>								
+								<div class="col-sm-8">
+									<div 
+										hb-choose-actor 
+										hb-choose-actor-id-name="otherPartner-{{$index}}" 
+										hb-choose-actor-elfin-form="elfinForm"
+										hb-choose-actor-model="convertedActor"
+										hb-choose-actor-tooltip="Recherche de partenaire"
+										hb-choose-actor-role="Concierge"
+										></div>
+								</div>
 							</div>
 						</div>
-					</div>					
+					</div>
+					<div class="col-sm-8 col-sm-offset-4">
+						<div class="input-group">
+							<span class="input-group-btn"
+								tooltip="Ajouter un nouveau partenaire, responsable chauffage, concierge...">
+								<a class="btn btn-default" type="button"
+								ng-click="addOtherPartner()">
+									<i class="icon-plus-sign"></i> Ajouter un partenaire
+							</a>
+							</span>
+						</div>					
+					</div>			
 				</div><!-- 3rd col first tab first row end --> 					
 			</div><!-- row end -->
 
