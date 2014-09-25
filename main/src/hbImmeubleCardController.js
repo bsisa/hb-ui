@@ -239,6 +239,8 @@
 													$scope.elfin.CARACTERISTIQUE.FRACTION.L.splice(index,1);
 													// Allow user saving the new data structure following above element deletion
 													$scope.elfinForm.$setDirty();
+													// Deal with POS numbering.
+													GeoxmlService.renumberPos($scope.elfin.CARACTERISTIQUE.FRACTION.L);
 												}
 											}
 										}
