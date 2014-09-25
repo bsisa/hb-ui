@@ -60,7 +60,7 @@
 					        	}
 					        	$log.debug(">>>>>>>>>>>> HbChooseActorController actorElfin.Id = " + actorElfin.Id);
 					        	$scope.selected.actor = actorElfin;
-					        	$scope.selected.actorDisplay = $scope.selected.actor.IDENTIFIANT.NOM + " - " + $scope.selected.actor.GROUPE;					        	
+				        		defaultModelDisplayUpdate();
 					        	$scope.enableValidateActor();
 					        }, function(response) {
 					        	var message = "Aucun object ACTEUR disponible pour la collection: " + collectionId + " et l'identifiant: " + elfinId + ".";
@@ -195,19 +195,20 @@
 				            		//selected[selectedPathElement] = selectedElfin;
 				            		
 				            		$scope.selected.actor = selectedElfin;
-				            		
-						        	$scope.selected.actorDisplay = $scope.selected.actor.IDENTIFIANT.NOM + " - " + $scope.selected.actor.GROUPE;
-				            		
-					            	// Update the new ACTOR ids
-					            	$scope.actorModel.ID_G = $scope.selected.actor.ID_G;
-					            	$scope.actorModel.Id = $scope.selected.actor.Id;
-					            	// According to the GeoXML Schema GROUP and NOM are part of USAGER.
-					            	$scope.actorModel.GROUPE = $scope.selected.actor.GROUPE;
-					            	$scope.actorModel.NOM = $scope.selected.actor.IDENTIFIANT.NOM;			            		
-				            		
-					            	// Reset VALUE which should no more be used.
-					            	$scope.actorModel.VALUE = "";				            		
-				            		
+
+						        	/**
+						        	 * actor model type relates to geoXml.xsd definition.
+						        	 * Currently actors references are stored in dedicated 
+						        	 * PARTENAIRE elements all of them of 'PERSONNEType' 
+						        	 * as well as in line element ('L') of generic FRACTION
+						        	 * of 'MATRICEType' element.
+						        	 * For use with line element ('L') of generic FRACTION
+						        	 * of 'MATRICEType' element use hb-actor-line-converter 
+						        	 * directive.
+						        	 */
+					        		defaultModelUpdate();			
+					        		defaultModelDisplayUpdate();
+
 					            	// Notify user current data need saving.
 					            	$scope.elfinForm.$setDirty();			
 					            	
@@ -225,6 +226,21 @@
 				        //$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);				        
 				        
 				        
+				        var defaultModelUpdate = function() {
+			            	// Update the new ACTOR ids
+			            	$scope.actorModel.ID_G = $scope.selected.actor.ID_G;
+			            	$scope.actorModel.Id = $scope.selected.actor.Id;
+			            	// According to the GeoXML Schema GROUP and NOM are part of USAGER.
+			            	$scope.actorModel.GROUPE = $scope.selected.actor.GROUPE;
+			            	$scope.actorModel.NOM = $scope.selected.actor.IDENTIFIANT.NOM;			            		
+		            		
+			            	// Reset VALUE which should no more be used.
+			            	$scope.actorModel.VALUE = "";				        	
+				        };
+				        
+				        var defaultModelDisplayUpdate = function() {
+				        	$scope.selected.actorDisplay = ( ( $scope.selected.actor.IDENTIFIANT.NOM === "" || _.isNull($scope.selected.actor.IDENTIFIANT.NOM) || _.isUndefined($scope.selected.actor.IDENTIFIANT.NOM)) ? ("") : ($scope.selected.actor.IDENTIFIANT.NOM + " - ") ) + $scope.selected.actor.GROUPE;				        	
+				        };
 
 					} ]); // End of HbChooseActorController definition
 	
