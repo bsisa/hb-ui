@@ -162,21 +162,6 @@
 							    				$scope.elfinForm.$setDirty();
 							    			}
 							    			
-							    			// Manage IMMEUBLE PARTENAIRE.PROPRIETAIRE owner link initialisation 
-//							            	if ( 
-//									        		$scope.elfin.PARTENAIRE && 
-//									        		$scope.elfin.PARTENAIRE.PROPRIETAIRE && 
-//									        		$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id && 
-//									        		($scope.elfin.PARTENAIRE.PROPRIETAIRE.Id != 'null') &&
-//									        		$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G && 
-//									        		($scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G != 'null')) {							        		
-//								        		
-//								        		$log.debug(">>>> HbImmeubleCardController: loading IMMEUBLE owner Actor Id = " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.Id + ", ID_G = " + $scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G);
-//								        		$scope.getElfinOwnerActor($scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G, $scope.elfin.PARTENAIRE.PROPRIETAIRE.Id);
-//								        	} else {
-//								        		$scope.enableValidateOwner();
-//								        	}									    			
-							    			
 							    			// Get UNITE_LOCATIVE by corresponding to current ELFIN.Id
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
@@ -241,70 +226,6 @@
 										}
 									};
 									// elfin.CARACTERISTIQUE.FRACTION.L							    	
-							    	
-									// enables Owner actor validation with a delay.
-//									$scope.enableValidateOwner = function() {
-//										$timeout(function(){
-//											$scope.validateOwner = true;
-//										}, 2000, true);
-//									};
-							    	
-							    	// ============================================================================
-							    	// === Manage owner link 
-							    	// ============================================================================							    	
-							    	
-									// Owner actor linked to building 
-//							        $scope.getElfinOwnerActor = function (collectionId, elfinId) {
-//							        	
-//								        GeoxmlService.getElfin(collectionId, elfinId).get()
-//								        .then(function(elfin) {
-//								        	// Force CAR array sorting by POS attribute
-//								        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
-//								        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
-//								        	//       Need review of other similar operations
-//								        	if ( elfin['CARACTERISTIQUE'] != null && elfin['CARACTERISTIQUE']['CARSET'] != null && elfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
-//								        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
-//								        	}
-//								        	$log.debug(">>>>>>>>>>>> ownerActor.Id = " + elfin.Id);
-//								        	$scope.selected.owner = elfin;
-//								        	$scope.selected.ownerDisplay = $scope.selected.owner.IDENTIFIANT.NOM + " - " + $scope.selected.owner.GROUPE;
-//
-//								            // Enable validation the current status should be ok.
-//								        	$scope.enableValidateOwner();
-//								        	
-//								        	}, function(response) {
-//								        	var message = "Le chargement du propriétaire lié à l'immeuble no gérance "+$scope.elfin.IDENTIFIANT.OBJECTIF+" a échoué (statut de retour: " + response.status + ")";
-//								            hbAlertMessages.addAlert("danger",message);
-//								            // Enable validation to show the problem
-//								            $scope.enableValidateOwner();
-//								        });
-//						        		
-//						        	};							    	
-							    	
-//						            /**
-//						             * Update current IMMEUBLE link to owner ACTOR upon new owner ACTOR selection
-//						             */
-//						            $scope.$watch('selected.owner.Id', function(newId, oldId) {
-//						            	
-//						            	if ( newId && $scope.elfin && ($scope.elfin.PARTENAIRE.PROPRIETAIRE.Id != $scope.selected.owner.Id) ) {
-//
-//						            		$scope.selected.ownerDisplay = $scope.selected.owner.IDENTIFIANT.NOM + " - " + $scope.selected.owner.GROUPE;
-//						            		
-//							            	// Update the new ACTOR ids
-//							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G = $scope.selected.owner.ID_G;
-//							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id = $scope.selected.owner.Id;
-//							            	// According to the GeoXML Schema GROUP and NOM are part of PROPRIETAIRE.
-//							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE = $scope.selected.owner.GROUPE;
-//							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = $scope.selected.owner.IDENTIFIANT.NOM;
-//							            	// Reset VALUE which should no more be used.
-//							            	$scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE = "";
-//							            	// Notify the user the data need saving.
-//							            	$scope.elfinForm.$setDirty();			            		
-//						            	}
-//
-//						            });
-						            
-							    	// ============================================================================
 
 							    } ]);
 
