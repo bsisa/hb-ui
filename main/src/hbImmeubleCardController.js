@@ -196,6 +196,52 @@
 							    		
 							    	}, true);
 							    	
+							    	
+									/**
+									 * Add other partner as: CARACTERISTIQUE.FRACTION.L.{
+									 * [
+									 *  C = ??? ,
+									 *  C = Actor.ID_G,
+									 *  C = Actor.Id,
+									 *  C = Actor.GROUPE,
+									 *  C = Actor.NOM
+									 *  ]
+									 * }
+									 */
+									$scope.addOtherPartner = function() {
+										
+										var emptyFractionTemplate = { "L": [  ] };
+										var actorCellTemplate = { "C": [ 
+										                               { "POS": 1, "VALUE": ""},
+										                               { "POS": 2, "VALUE": ""},
+										                               { "POS": 3, "VALUE": ""},
+										                               { "POS": 4, "VALUE": ""},
+										                               { "POS": 5, "VALUE": ""}
+										                               ]
+																		,
+																"POS": 1 };
+										
+										if ($scope.elfin.CARACTERISTIQUE) {
+											if ($scope.elfin.CARACTERISTIQUE.FRACTION) {
+												if ($scope.elfin.CARACTERISTIQUE.FRACTION.L) {
+													actorCellTemplate.POS = $scope.elfin.CARACTERISTIQUE.FRACTION.L.length+1;
+													$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', actorCellTemplate);
+												} else {
+													// FRACTION with no lines
+													$scope.elfin.CARACTERISTIQUE.FRACTION = emptyFractionTemplate;
+													$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', actorCellTemplate);
+												}
+											} else {
+												// Missing properties are created automatically in JS, thus same code as for empty FRACTION.
+												$scope.elfin.CARACTERISTIQUE.FRACTION = emptyFractionTemplate;
+												$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', actorCellTemplate);									
+											}
+										} else {
+											// always available in catalogue
+										}
+									};
+									// elfin.CARACTERISTIQUE.FRACTION.L							    	
+							    	
 									// enables Owner actor validation with a delay.
 //									$scope.enableValidateOwner = function() {
 //										$timeout(function(){
