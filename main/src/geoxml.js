@@ -72,7 +72,25 @@
                     }
                     root.push(row);
                 },
-
+                /**
+                 * Used to renumber POS attributes for instance when element removal takes place.
+                 */
+                renumberPos: function(array) {
+                    if (!angular.isArray(array)) {
+                        return;
+                    }
+                    // Check every element has a POS property
+                    var haveAllPos = _.reduce(array, function(memo, element){ return (memo && (!_.isUndefined(element.POS)) ); }, true);
+                    $log.debug("haveAllPos = " + haveAllPos);
+                    if (!haveAllPos) {
+                    	return;
+                    } else {
+                        for (var i = 0; i < array.length; i++) {
+                        	var currentElement = array[i];
+                        	currentElement.POS = i+1; 
+                        }
+                    }
+                },                
                 validateId: function(identifier) {
                     return angular.isString(identifier) &&
                         identifier.length == 18 &&
