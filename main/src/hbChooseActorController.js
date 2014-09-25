@@ -96,7 +96,7 @@
 					            	}
 					            	
 					            	if (!$scope.actorModel == undefined && $scope.actorModel == null) {
-					            		var roleStr = function() { if ($scope.actorRole) {return $scope.actorRole;} else {return "";}};
+					            		var roleStr = $scope.actorRole ? $scope.actorRole : "";
 										var message = "La sauvegarde du champs lié à la donnée d'acteur " + roleStr + " n'est pas possible. Veuillez notifier votre administrateur de base de données.";
 							            hbAlertMessages.addAlert("danger",message);
 					            		$log.error(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') - MISSING MANDATORY actorModel OBJECT found !");
@@ -129,10 +129,21 @@
 						var xpathForActor = null;
 						// Restrict to provided hb-choose-actor-role 
 						if ($scope.actorRole) {
-							xpathForActor = "//ELFIN[@CLASSE='ACTEUR' and IDENTIFIANT/QUALITE='"+$scope.actorRole+"']";
+							if (_.contains($scope.actorRole, ",")) {
+								var rolesArray = $scope.actorRole.split(",");
+								//ELFIN[@CLASSE='ACTEUR' and (IDENTIFIANT/QUALITE='Responsable chauffage' or IDENTIFIANT/QUALITE='Concierge')]
+								xpathForActor = "//ELFIN[@CLASSE='ACTEUR' and ("; 
+								for (var i = 0; i < rolesArray.length; i++) {
+									xpathForActor += "IDENTIFIANT/QUALITE='"+rolesArray[i].trim()+"'";
+									xpathForActor += (i===(rolesArray.length-1)) ? ")]" : " or ";
+								}
+							} else {
+								xpathForActor = "//ELFIN[@CLASSE='ACTEUR' and IDENTIFIANT/QUALITE='"+$scope.actorRole+"']";
+							}
 						} else { // Select all actors 
 							xpathForActor = "//ELFIN[@CLASSE='ACTEUR']";
 						}
+						//$log.debug("xpathForActor = " + xpathForActor);
 						
 			            // TODO: actorsCollectionId must come from server configuration resource.
 			            $log.debug("TODO: HbChooseActorController: actorsCollectionId must come from server configuration resource.");
