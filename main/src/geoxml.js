@@ -73,15 +73,14 @@
                     root.push(row);
                 },
                 /**
-                 * Used to renumber POS attributes for instance when element removal takes place.
+                 * Function used to renumber POS attributes for instance when element removal takes place.
                  */
                 renumberPos: function(array) {
                     if (!angular.isArray(array)) {
                         return;
                     }
-                    // Check every element has a POS property
+                    // Check every element has a POS property. Should not happen with XSD validation.
                     var haveAllPos = _.reduce(array, function(memo, element){ return (memo && (!_.isUndefined(element.POS)) ); }, true);
-                    $log.debug("haveAllPos = " + haveAllPos);
                     if (!haveAllPos) {
                     	return;
                     } else {
