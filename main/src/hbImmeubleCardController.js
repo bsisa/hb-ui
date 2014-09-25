@@ -227,6 +227,25 @@
 									};
 									// elfin.CARACTERISTIQUE.FRACTION.L							    	
 
+									/**
+									 * Remove an existing `other partner`
+									 */
+									$scope.removeOtherPartner = function(index) {
+										
+										if ($scope.elfin.CARACTERISTIQUE) {
+											if ($scope.elfin.CARACTERISTIQUE.FRACTION) {
+												if ($scope.elfin.CARACTERISTIQUE.FRACTION.L) {
+													// Remove one element at index
+													$scope.elfin.CARACTERISTIQUE.FRACTION.L.splice(index,1);
+													// Allow user saving the new data structure following above element deletion
+													$scope.elfinForm.$setDirty();
+												}
+											}
+										}
+									};
+									
+									
+									
 							    } ]);
 
 })();
