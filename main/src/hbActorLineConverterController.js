@@ -27,20 +27,23 @@
 						 */
 				        $scope.getElfinActor = function (collectionId, elfinId) {
 				        	
-					        GeoxmlService.getElfin(collectionId, elfinId).get()
-					        .then(function(actorElfin) {
-					        	// Force CAR array sorting by POS attribute
-					        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
-					        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
-					        	//       Need review of other similar operations
-					        	if ( actorElfin['CARACTERISTIQUE'] != null && actorElfin['CARACTERISTIQUE']['CARSET'] != null && actorElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
-					        		hbUtil.reorderArrayByPOS(actorElfin['CARACTERISTIQUE']['CARSET']['CAR']);
-					        	}
-					        	$scope.actorModel.IDENTIFIANT.QUALITE = actorElfin.IDENTIFIANT.QUALITE; 
-					        }, function(response) {
-					        	var message = "Aucun object ACTEUR disponible pour la collection: " + collectionId + " et l'identifiant: " + elfinId + ".";
-					        	$log.warn("HbChooseActorController - statut de retour: " + response.status + ". Message utilisateur: " + message);
-					        });
+				        	// Do not perform call without valid ids.
+				        	if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {				        	
+						        GeoxmlService.getElfin(collectionId, elfinId).get()
+						        .then(function(actorElfin) {
+						        	// Force CAR array sorting by POS attribute
+						        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
+						        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
+						        	//       Need review of other similar operations
+						        	if ( actorElfin['CARACTERISTIQUE'] != null && actorElfin['CARACTERISTIQUE']['CARSET'] != null && actorElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+						        		hbUtil.reorderArrayByPOS(actorElfin['CARACTERISTIQUE']['CARSET']['CAR']);
+						        	}
+						        	$scope.actorModel.IDENTIFIANT.QUALITE = actorElfin.IDENTIFIANT.QUALITE; 
+						        }, function(response) {
+						        	var message = "Aucun object ACTEUR disponible pour la collection: " + collectionId + " et l'identifiant: " + elfinId + ".";
+						        	$log.warn("HbChooseActorController - statut de retour: " + response.status + ". Message utilisateur: " + message);
+						        });
+				        	};
 			        		
 			        	};							
 
