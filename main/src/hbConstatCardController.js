@@ -16,11 +16,15 @@
 					'hbUtil',
 					'HB_EVENTS',
 					'userDetails',
+					'hbQueryService',
 					function($attrs, $rootScope, $scope, GeoxmlService, $modal, $routeParams,
-							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, userDetails) {
+							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, userDetails, hbQueryService) {
 
 						$log.debug("    >>>> Using ConstatCardController ");
 
+						// Used to provide UNITE_LOCATION (apartements) selection list
+						$scope.locationUnits = null;
+						
 						// Parameter used to make at least one annex mandatory.
 			        	$scope.minBound = 1;
 			        	$scope.numericOnlyRegexp = /^\d*\.?\d*$/;
@@ -68,7 +72,44 @@
 						            	hbUtil.reorderArrayByPOS($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE);
 						            };
 						            $scope.currentEvent = $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE[$scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1];
-								}						            
+								}			
+								
+								// We want UNITE_LOCATIVE list both in create and edit mode
+				    			// Get UNITE_LOCATIVE corresponding to ELFIN Id of ELFIN[@CLASSE='IMMEUBLE'] by building number
+							
+								var buildingNb = $scope.elfin.IDENTIFIANT.COMPTE;
+								// todo: get IMMEUBLE.Id
+								xpathForImmeubleLinkedToCurrentConstat = "//ELFIN[IDENTIFIANT/NOM='"+buildingNb+"']";
+								hbQueryService.getImmeubles(xpathForImmeubleLinkedToCurrentConstat)
+									.then(function(immeubles) {
+										// Expected case
+										if (immeubles.length === 1) {
+											var immeuble = immeubles[0];
+								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+immeuble.Id+"']";
+								            hbQueryService.getLocationUnits(xpathForSurfaces)
+												.then(
+													function(uniteLocatives) {
+														$scope.locationUnits = uniteLocatives;
+													},
+													function(response) {
+														var message = "Le chargement des UNITE_LOCATIVE a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													}
+												);
+										} else if (immeubles.length < 1) { 
+											var message = "L'IMMEUBLE correspondant au CONSTAT courrant n'a pas pu être trouvé dans la base de donnée! (statut de retour: "+ response.status+ ")";
+								            hbAlertMessages.addAlert("danger",message);
+										} else {
+											var message = "Plusieurs IMMEUBLE correspondent au CONSTAT courrant pour le no de construction: " + buildingNb + ". Le résultat devrait être unique.";
+								            hbAlertMessages.addAlert("danger",message);
+										}
+									},
+									function(response) {
+										var message = "Le chargement des UNITE_LOCATIVE a échoué (statut de retour: "+ response.status+ ")";
+							            hbAlertMessages.addAlert("danger",message);
+									});
+								
+
 				    		};
 				    		
 				    	}, true);
