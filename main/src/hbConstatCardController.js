@@ -316,6 +316,14 @@
 			                        		   		            { field:"value", displayName: "name"}
 			                        		   	 		   		];
 			            $scope.constatTypesChooseOneTemplate = '/assets/views/chooseOneConstatType.html';
+			            
+			            $scope.uniteLocativeChooseOneColumnsDefinition = [
+						                        		   		            { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI"},
+						                        		   		         { field:"PARTENAIRE.USAGER.VALUE", displayName: "Locataire"}
+						                        		   	 		   		]; 
+			            
+			            $scope.uniteLocativesChooseOneTemplate = '/assets/views/chooseOneUniteLocative.html';
+			            
 						
 					} ]);
 
