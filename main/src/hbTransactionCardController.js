@@ -141,8 +141,17 @@
 																"danger", message);
 													});
 									
-								};								
+								};				
 								
+								/**
+								 * Listen to informations required to find out related PRESTATION
+								 */
+								$scope.$watch('[helper.constatSelectionSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR]', function() {
+									// Prevent unnecessary call to getPrestation
+									if ($scope.elfin!=null && $scope.elfin.IDENTIFIANT.PAR.length === 4 && $scope.helper.constatSelectionSai.length > 0 && $scope.elfin.CARACTERISTIQUE.CAR1.UNITE.length > 0) {
+										$scope.getPrestation($scope.helper.constatSelectionSai,$scope.elfin.CARACTERISTIQUE.CAR1.UNITE,$scope.elfin.IDENTIFIANT.PAR);
+									}
+								}, true);
 
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
