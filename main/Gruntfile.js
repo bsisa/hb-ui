@@ -76,6 +76,7 @@ module.exports = function(grunt) {
 								'src/hbNoDirtyCheckDirective.js', 
 								'src/hbPrestationCardController.js',
 								'src/hbPrestationCardDirective.js',
+								'src/hbQueryService.js',
 								'src/hbRoleCardController.js',
 								'src/hbRoleCardDirective.js',
 								'src/hbSurfaceCardController.js',

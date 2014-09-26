@@ -16,11 +16,12 @@
 							'$timeout',
 							'hbAlertMessages',
 							'hbUtil',
+							'hbQueryService',
 							'HB_EVENTS',
 							'HB_API',
 							function($attrs, $scope, $rootScope, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout, hbAlertMessages,
-									hbUtil, HB_EVENTS, HB_API) {
+									hbUtil, hbQueryService, HB_EVENTS, HB_API) {
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
 									
@@ -165,9 +166,11 @@
 							    			// Get UNITE_LOCATIVE by corresponding to current ELFIN.Id
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
-								            $log.debug("TODO: HbImmeubleCardController: locationUnitsCollectionId must come from server configuration resource.");
-								            var locationUnitsCollectionId = 'G20040930101030013';
-								            GeoxmlService.getCollection(locationUnitsCollectionId).getList({"xpath" : xpathForSurfaces})
+//								            $log.debug("TODO: HbImmeubleCardController: locationUnitsCollectionId must come from server configuration resource.");
+//								            var locationUnitsCollectionId = 'G20040930101030013';
+//								            
+//								            GeoxmlService.getCollection(locationUnitsCollectionId).getList({"xpath" : xpathForSurfaces})
+								            hbQueryService.getLocationUnits(xpathForSurfaces)
 												.then(function(elfins) {
 														$scope.locationUnits = elfins;
 													},
