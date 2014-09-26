@@ -163,13 +163,8 @@
 							    				$scope.elfinForm.$setDirty();
 							    			}
 							    			
-							    			// Get UNITE_LOCATIVE by corresponding to current ELFIN.Id
+							    			// Get UNITE_LOCATIVE corresponding to current ELFIN.Id
 								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
-								            // TODO: constatsCollectionId must come from server configuration resource.
-//								            $log.debug("TODO: HbImmeubleCardController: locationUnitsCollectionId must come from server configuration resource.");
-//								            var locationUnitsCollectionId = 'G20040930101030013';
-//								            
-//								            GeoxmlService.getCollection(locationUnitsCollectionId).getList({"xpath" : xpathForSurfaces})
 								            hbQueryService.getLocationUnits(xpathForSurfaces)
 												.then(function(elfins) {
 														$scope.locationUnits = elfins;
@@ -178,6 +173,7 @@
 														var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
+								            
 								            // Make IMMEUBLE photo available
 								            $scope.updatePhotoSrc();
 							    		};
