@@ -124,8 +124,6 @@
 						// NEW IMPLEMENTATION END
 						// ========================================================================
 						
-						$scope.defaultActor = null;
-						
 						var xpathForActor = null;
 						// Restrict to provided hb-choose-actor-role 
 						if ($scope.actorRole) {
@@ -155,16 +153,21 @@
 								$log.debug("    >>>> HbChooseActorController: loading actors ...");
 								$scope.actors = actors;
 								if ($scope.defaultByName) {
+									var defaultActorIsSet = false;
 									for (var i=0; actors.length; i++) {
 										var actor = actors[i];
 										if (actor.IDENTIFIANT.NOM == $scope.defaultByName) {
-											$scope.defaultActor = actor;
-											$log.debug(">>>> SET default actor to Id " + $scope.defaultActor.Id);
+											$scope.selected.actor = actor;
+							        		defaultModelUpdate();			
+							        		defaultModelDisplayUpdate();
+											defaultActorIsSet = true;
 											break;
 										}
 									}
-									var message = "L'ACTEUR par défaut correspondant au nom: " + $scope.defaultByName + " n'a pas pu être trouvé parmi les " + actors.length + " acteurs disponibles.";
-						            hbAlertMessages.addAlert("warning",message);									
+									if (!defaultActorIsSet) {
+										var message = "L'ACTEUR par défaut correspondant au nom: " + $scope.defaultByName + " n'a pas pu être trouvé parmi les " + actors.length + " acteurs disponibles.";
+							            hbAlertMessages.addAlert("warning",message);
+									}
 								}
 								$log.debug("    >>>> HbChooseActorController: " + $scope.actors.length + " actors loaded.");
 							},
