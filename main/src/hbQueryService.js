@@ -22,8 +22,20 @@
 	        	return GeoxmlService.getCollection(locationUnitsCollectionId).getList();
 	        }
 		};
+		
+		var getImmeubles = function(xpath) {
+			//TODO: check message
+	        $log.debug("TODO: hbQueryService: immeublesCollectionId should be move to DB_CONSTANTS resource.");
+	        var immeublesCollectionId = 'G20040930101030005';
+	        if ( _.isString(xpath) && xpath.trim().length > 0) { 
+	        	return GeoxmlService.getCollection(immeublesCollectionId).getList({"xpath" : xpath});
+	        } else {
+	        	return GeoxmlService.getCollection(immeublesCollectionId).getList();
+	        }
+		};
         
         return {
+        	getImmeubles:getImmeubles,
         	getLocationUnits:getLocationUnits
         };
 
