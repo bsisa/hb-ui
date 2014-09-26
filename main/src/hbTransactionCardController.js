@@ -18,10 +18,11 @@
 							'hbUtil',
 							'HB_EVENTS',
 							'userDetails',
+							'hbQueryService',
 							function($attrs, $scope, $rootScope, GeoxmlService,
 									$modal, $routeParams, $location, $log,
 									$timeout, hbAlertMessages, hbUtil,
-									HB_EVENTS, userDetails) {
+									HB_EVENTS, userDetails, hbQueryService) {
 
 								$log.debug("    >>>> Using HbTransactionCardController");
 
@@ -39,31 +40,20 @@
 								
 								// Benefit from server side cache...
 								var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
-								// TODO: immeublesCollectionId must come from
-								// server configuration resource.
-								$log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
-								var immeublesCollectionId = 'G20040930101030005';
-
 								// Asychronous buildings preloading
-								GeoxmlService
-										.getCollection(immeublesCollectionId)
-										.getList({
-											"xpath" : xpathForImmeubles
-										})
-										.then(
-												function(immeubles) {
-													$scope.immeubles = immeubles;
-													$log
-															.debug(">>> IMMEUBLES: "
-																	+ immeubles.length);
-												},
-												function(response) {
-													var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "
-															+ response.status
-															+ ")";
-													hbAlertMessages.addAlert(
-															"danger", message);
-												});
+								hbQueryService.getImmeubles(xpathForImmeubles)
+									.then(
+											function(immeubles) {
+												$scope.immeubles = immeubles;
+												$log.debug(">>> IMMEUBLES: " + immeubles.length);
+											},
+											function(response) {
+												var message = "Le chargement de la liste IMMEUBLE a échoué (statut de retour: "
+														+ response.status
+														+ ")";
+												hbAlertMessages.addAlert("danger", message);
+											}
+										);
 
 								/**
 								 * Updates $scope.selectedImmeuble for IMMEUBLE matching both No SAI and owner Id
