@@ -47,17 +47,14 @@
 									</button> 
 								</span>  
 							</div>		-->
-							<input id="objectif" type="text" class="form-control" hb-no-dirty-check 
-									ng-blur="displayBuildingAddress(constatSelectionHelperSai,selected.owner)"
-								ng-model="constatSelectionHelperSai">
-							
+							<input id="objectif" type="text" class="form-control" ng-model="helper.constatSelectionSai" hb-no-dirty-check>
 						</div>
 						<p class="col-sm-4 form-control-static"><em>SAI prest: - {{elfin.IDENTIFIANT.OBJECTIF}}</em></p>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-4 control-label">Adresse</label>
 						<div ng-show="selectedImmeuble && selectedImmeuble.Id" class="col-sm-8">
-							<p class="form-control-static">{{selectedImmeuble.IDENTIFIANT.ALIAS}}</p>
+							<p class="form-control-static"><span ng-bind="selectedImmeuble.IDENTIFIANT.ALIAS" ></span>{{helper.constatSelectionSai}}</p>
 						</div>
 					</div>
 					<div class="form-group">
@@ -78,7 +75,7 @@
 							<input id="annee" type="text" class="form-control"
 								ng-model="elfin.IDENTIFIANT.PAR" 
 								hb-no-dirty-check 
-								ng-blur="getPrestation(constatSelectionHelperSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR)">
+								ng-blur="getPrestation(helper.constatSelectionSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR)">
 						</div>
 					</div>
 					<div class="form-group">

@@ -32,7 +32,7 @@
 								// Owner Actor (ACTEUR role=Propriétaire) 
 								$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 								// No SAI user input field used to select IMMEUBLE related to current TRANSACTION
-								$scope.constatSelectionHelperSai = '';
+								$scope.helper = { constatSelectionSai : ""};
 								// ===================================================================================								
 								
 								// Available repartition codes list loaded asynchronously from catalogue
@@ -59,26 +59,30 @@
 								 * Updates $scope.selectedImmeuble for IMMEUBLE matching both No SAI and owner Id
 								 */
 								$scope.displayBuildingAddress = function(noSai,owner) {
-									if ( 	(!$scope.selectedImmeuble) ||
-											( $scope.selectedImmeuble && $scope.selectedImmeuble.IDENTIFIANT.OBJECTIF != noSai) ||
-											( $scope.selectedImmeuble && $scope.selectedImmeuble.PARTENAIRE.PROPRIETAIRE.Id != owner.Id) 
-									) {
+									$log.debug("displayBuildingAddress = function("+noSai+","+owner.Id+")");
 										if ($scope.immeubles
 												&& $scope.immeubles.length > 0 && owner != null) {
+											var foundSelection = false;
 											for (var i = 0; i < $scope.immeubles.length; i++) {
 												var currImm = $scope.immeubles[i];
 												if (currImm.IDENTIFIANT.OBJECTIF == noSai && owner.Id == currImm.PARTENAIRE.PROPRIETAIRE.Id && owner.ID_G == currImm.PARTENAIRE.PROPRIETAIRE.ID_G) {
 													$scope.selectedImmeuble = currImm;
+													foundSelection = true;
 													break;
 												}
 											}
+											if (!foundSelection) {
+												$scope.selectedImmeuble = null;
+											}
 										}
-									} else {
-										// $log.debug(" >>>> objectif BLUR No
-										// new SAI");
-									}
-
 								};
+								
+								/**
+						    	 * Refresh address found with helpers CONSTAT and ACTOR 'Propriétaire' information changes.
+						    	 */
+						    	$scope.$watch('[helper.constatSelectionSai,searchOwner.Id]', function() {
+						    		$scope.displayBuildingAddress($scope.helper.constatSelectionSai,$scope.searchOwner);
+						    	}, true);								
 								
 								// Copy VALEUR_A_NEUF to VALEUR only if VALEUR is 0 
 								$scope.copyValeur_a_Neuf2Valeur = function(valneuf) {
@@ -175,7 +179,6 @@
 										}
 						    		};
 						    	}, true);								
-								
 
 								// Asychronous TRANSACTION template preloading
 								GeoxmlService.getNewElfin("TRANSACTION").get().then(
