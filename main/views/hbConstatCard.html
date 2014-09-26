@@ -54,22 +54,22 @@
 								<label for="origine" class="col-sm-4 control-label">No SAI
 									Appartement</label>
 								<div class="col-sm-8">
-									<input id="origine" type="text" class="form-control"
-											autocomplete="off" 
-											ng-model="elfin.IDENTIFIANT.ORIGINE">
+<!-- 									<input id="origine" type="text" class="form-control" -->
+<!-- 											autocomplete="off"  -->
+<!-- 											ng-model="elfin.IDENTIFIANT.ORIGINE"> -->
 									<!-- TODO: Review spec. -->								
-			<!-- 						<div class="input-group"> -->
-			<!-- 							<input id="origine" type="text" class="form-control" -->
-			<!-- 								autocomplete="off"  -->
-			<!-- 								ng-model="elfin.IDENTIFIANT.ORIGINE"								 -->
-			<!-- 								tooltip="surfaces.[starts-with(IDENTIFIANT.OBJECTIF, elfin.IDENTIFIANT.OBJECTIF) - montrer surface.IDENTIFIANT.OBJECTIF |surface.CARACTERISTIQUE.CAR3.VALEUR |surface.PARTENAIRE.USAGER.VALUE - reprendre surface.IDENTIFIANT.OBJECTIF"> -->
-			<!-- 							<span class="input-group-btn" tooltip="Recherche d'entreprise"> -->
-			<!-- 								<button class="btn btn-default" type="button" hb-choose-one -->
-			<!-- 									ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )"> -->
-			<!-- 									<i class="glyphicon glyphicon-list-alt"></i> -->
-			<!-- 								</button> -->
-			<!-- 							</span> -->
-			<!-- 						</div> -->
+									<div class="input-group">
+										<input id="origine" type="text" class="form-control"
+											autocomplete="off" 
+											ng-model="elfin.IDENTIFIANT.ORIGINE" >
+<!-- 											tooltip="surfaces.[starts-with(IDENTIFIANT.OBJECTIF, elfin.IDENTIFIANT.OBJECTIF) - montrer surface.IDENTIFIANT.OBJECTIF |surface.CARACTERISTIQUE.CAR3.VALEUR |surface.PARTENAIRE.USAGER.VALUE - reprendre surface.IDENTIFIANT.OBJECTIF"> -->
+										<span class="input-group-btn" tooltip="Recherche d'unité locative">
+											<button class="btn btn-default" type="button" hb-choose-one
+												ng-click="hbChooseOne(elfin, 'IDENTIFIANT.ORIGINE', locationUnits, 'IDENTIFIANT.OBJECTIF', uniteLocativeChooseOneColumnsDefinition, uniteLocativesChooseOneTemplate )">
+												<i class="glyphicon glyphicon-list-alt"></i>
+											</button>
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
