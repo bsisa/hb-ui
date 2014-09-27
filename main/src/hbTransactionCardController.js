@@ -262,10 +262,40 @@
 												"danger", message);
 									});
 								
+								var xpathForCollaborators = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
+					            // TODO: actorsCollectionId must come from server configuration resource.
+					            $log.debug("TODO: HbTransactionCardController: actorsCollectionId must come from server configuration resource.");
+					            var actorsCollectionId = 'G20060401225530100';								
+
+								
+								$scope.collaboratorActors = null;
+								
+								GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForCollaborators}).then(
+										function(collaboratorActors) {
+											$scope.collaboratorActors = collaboratorActors;
+										},
+										function(response) {
+											var message = "Le chargement des ACTEURS Collaborateur a échoué (statut de retour: "
+													+ response.status
+													+ ")";
+											hbAlertMessages.addAlert(
+													"danger", message);
+										});
+								
+								
+								
+								
 					            // Parameters to hbChooseOne service function for ACTOR selection
 					            $scope.actorChooseOneColumnsDefinition = [
 						                        		   		            { field:"GROUPE", displayName: "Groupe"}
 						                        		   	 		   		];
+					            
+					            $scope.collaboratorActorChooseOneColumnsDefinition = [
+					                                                        { field:"IDENTIFIANT.NOM", displayName: "Nom"},
+																			{ field:"IDENTIFIANT.ALIAS", displayName: "Prénom"},
+						                        		   		            { field:"GROUPE", displayName: "Groupe"}
+						                        		   	 		   		];					            
+					            
 					            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';									
 
 							} ]);

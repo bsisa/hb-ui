@@ -48,10 +48,7 @@
 						<p class="form-control-static">{{elfin.IDENTIFIANT.COMPTE}}</p>
 					</div>
 				</div>
-			</div>
-
-			<!-- 2e colonne -->
-			<div class="col-sm-6">
+				
 				<div class="form-group">
 					<label for="dateFrom" class="col-sm-4 control-label">Date</label>
 					<div class="col-sm-4">
@@ -64,7 +61,33 @@
 					<div class="col-sm-2">
 						<p class="form-control-static">{{elfin.IDENTIFIANT.AUT}}</p>
 					</div>
-				</div>			
+				</div>				
+				
+				
+			</div>
+
+			<!-- 2e colonne -->
+			<div class="col-sm-6">
+
+				<div class="form-group">
+					<label for="type" class="col-sm-4 control-label">Responsable visa de facture</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input id="resp" name="resp" type="text" class="form-control"
+								hb-no-dirty-check 
+								autocomplete="off"
+								typeahead="resp.GROUPE for resp in collaboratorActors | filter:$viewValue | limitTo:8"
+								ng-model="elfin.IDENTIFIANT.RES"
+								required>
+							<span class="input-group-btn" tooltip="Recherche de collaborateur">
+								<button class="btn btn-default" type="button" hb-choose-one
+									ng-click="hbChooseOne(elfin, 'IDENTIFIANT.RES', collaboratorActors, 'GROUPE', collaboratorActorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+									<i class="glyphicon glyphicon-list-alt"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>		
 
 				<div class="form-group">				
 					<label for="repartition" class="col-sm-4 control-label">Répartition</label>
