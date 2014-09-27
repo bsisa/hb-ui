@@ -220,7 +220,7 @@
 									});
 
 								var focusOnField = function() {
-									$('#objectif').focus();
+									$('#objectifSearchHelper').focus();
 								};
 
 								$scope.immeubleChooseOneColumnsDefinition = [

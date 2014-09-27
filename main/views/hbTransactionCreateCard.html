@@ -14,7 +14,7 @@
 			<div class="col-sm-6">
 			
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
-					<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
+					<label for="manager" class="col-sm-4 control-label"><em>Propriétaire</em></label>
 					<div class="col-sm-8">
 						<div 
 							hb-choose-actor 
@@ -29,8 +29,8 @@
 				</div>			
 			
 					<div class="form-group">
-						<label for="objectif" class="col-sm-4 control-label">No SAI</label>
-						<div class="col-sm-4">
+						<label for="objectifSearchHelper" class="col-sm-4 control-label"><em>No SAI</em></label>
+						<div class="col-sm-3">
 						<!-- Kept as reminder - Suggestion de saisie inutile et coute 2 tabs	
 						<div class="input-group">
 								<input id="objectif" name="objectif" type="text" class="form-control" 
@@ -47,15 +47,19 @@
 									</button> 
 								</span>  
 							</div>		-->
-							<input id="objectif" type="text" class="form-control" ng-model="helper.constatSelectionSai" hb-no-dirty-check>
+							<input id="objectifSearchHelper" type="text" class="form-control" ng-model="helper.constatSelectionSai" hb-no-dirty-check>
 						</div>
-						<p class="col-sm-4 form-control-static"><em>SAI prest: - {{elfin.IDENTIFIANT.OBJECTIF}}</em></p>
+						<label for="objectif" class="col-sm-3 control-label">SAI prest:</label>
+						<div id="objectif" class="col-sm-2 form-control-static">{{elfin.IDENTIFIANT.OBJECTIF}}</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-4 control-label">Adresse</label>
 						<div ng-show="selectedImmeuble && selectedImmeuble.Id" class="col-sm-8">
 							<p class="form-control-static"><span ng-bind="selectedImmeuble.IDENTIFIANT.ALIAS" ></span></p>
 						</div>
+						<div ng-show="!selectedImmeuble || !selectedImmeuble.Id" class="col-sm-8">
+							<p class="form-control-static"><span>Pas d'immeuble pour Propriétaire/No SAI</span></p>
+						</div>						
 					</div>
 					<div class="form-group">
 						<label for="groupe" class="col-sm-4 control-label">Groupe Prestation</label>
