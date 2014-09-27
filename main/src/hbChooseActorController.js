@@ -60,6 +60,7 @@
 					        	}
 					        	$log.debug(">>>>>>>>>>>> HbChooseActorController actorElfin.Id = " + actorElfin.Id);
 					        	$scope.selected.actor = actorElfin;
+					        	defaultModelUpdate();
 				        		defaultModelDisplayUpdate();
 					        	$scope.enableValidateActor();
 					        }, function(response) {
@@ -249,7 +250,13 @@
 			            	$scope.actorModel.NOM = $scope.selected.actor.IDENTIFIANT.NOM;			            		
 		            		
 			            	// Reset VALUE which should no more be used.
-			            	$scope.actorModel.VALUE = "";				        	
+			            	$scope.actorModel.VALUE = "";		
+			            	
+			            	// Provide access to full ACTOR ELFIN model to provide 
+			            	// all properties to external scope for display without 
+			            	// requiring extra API call.  
+			            	$scope.actorElfinModel = $scope.selected.actor;
+			            	
 				        };
 				        
 				        var defaultModelDisplayUpdate = function() {

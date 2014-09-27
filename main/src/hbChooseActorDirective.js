@@ -13,6 +13,7 @@
 			scope : {
 				'elfinForm' : '=hbChooseActorElfinForm',
 				'actorModel' : '=hbChooseActorModel',
+				'actorElfinModel' : '=?hbChooseActorElfinModel',
 				'actorIdName' : '@hbChooseActorIdName', 
 				'actorRole' : '@?hbChooseActorRole',
 				'defaultByName' : '@?hbChooseActorDefaultByName',
