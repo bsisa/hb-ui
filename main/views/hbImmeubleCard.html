@@ -134,7 +134,8 @@
 						<div class="form-group" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L">
 							<!-- Provides converted.actor -->
 							<div hb-actor-line-converter hb-actor-line-converter-line-model="otherPartnerLine" hb-actor-line-converter-actor-model="convertedActor" hb-actor-line-converter-actor-role="actorRole">
-								<label for="otherPartner-{{$index}}" class="col-sm-3 control-label">{{convertedActor.IDENTIFIANT.QUALITE}}</label>
+<!-- 								<label for="otherPartner-{{$index}}" class="col-sm-2 control-label">{{convertedActor.IDENTIFIANT.QUALITE}}</label> -->
+								<label for="otherPartner-{{$index}}" class="col-sm-3 control-label">{{convertedActorElfin.IDENTIFIANT.QUALITE}}</label>
 								<div class="col-sm-1 btn btn-default" ng-click="removeOtherPartner($index)" tooltip="Supprimer le partenaire"><i class="glyphicon glyphicon-remove-circle"></i></div>
 								<div class="col-sm-8">
 									<div 
@@ -142,6 +143,7 @@
 										hb-choose-actor-id-name="otherPartner-{{$index}}" 
 										hb-choose-actor-elfin-form="elfinForm"
 										hb-choose-actor-model="convertedActor"
+										hb-choose-actor-elfin-model="convertedActorElfin"
 										hb-choose-actor-tooltip="Recherche de partenaire"
 										hb-choose-actor-role="Concierge,Responsable chauffage"
 										></div>
