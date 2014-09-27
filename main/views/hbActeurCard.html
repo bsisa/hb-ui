@@ -14,14 +14,14 @@
 				<div class="form-group">
 					<label for="name" class="col-sm-2 control-label">Nom de
 						famille</label>
-					<div class="col-sm-10">
+					<div class="col-sm-5">
 						<input id="name" name="name" type="text" class="form-control"
 							ng-model="elfin.IDENTIFIANT.NOM" ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="surname" class="col-sm-2 control-label">Prénom</label>
-					<div class="col-sm-10">
+					<div class="col-sm-5">
 						<input id="surname" name="surname" type="text" class="form-control"
 							ng-model="elfin.IDENTIFIANT.ALIAS"
 							ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
@@ -29,21 +29,21 @@
 				</div>
 				<div class="form-group">
 					<label for="role" class="col-sm-2 control-label">Rôle</label>
-					<div class="col-sm-2">
+					<div class="col-sm-5">
 						<div hb-single-select hb-single-select-options="actorRoles" ng-model="elfin.IDENTIFIANT.QUALITE" ></div>
 					</div>
 					
 				</div>
 				<div class="form-group">
 					<label for="societe" class="col-sm-2 control-label"><span ng-show="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'" >Société</span><span ng-show="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'" >Abréviation</span></label>
-					<div class="col-sm-10">
+					<div class="col-sm-5">
 						<input id="societe" name="societe" type="text" class="form-control"
 							ng-model="elfin.GROUPE" tooltip="elfin.GROUPE" ng-required="elfin.IDENTIFIANT.QUALITE != ''">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="tel" class="col-sm-2 control-label">Téléphone</label>
-					<div class="col-sm-10">
+					<div class="col-sm-5">
 						<input id="tel" name="tel" type="text" class="form-control"
 							ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"
 							tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR">
@@ -51,7 +51,7 @@
 				</div>
 				<div class="form-group">
 					<label for="email" class="col-sm-2 control-label">Email</label>
-					<div class="col-sm-10">
+					<div class="col-sm-5">
 						<input id="email" name="email" type="email" class="form-control"
 							ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR"
 							tooltip="elfin.CARACTERISTIQUE.CAR5.VALEUR" ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
