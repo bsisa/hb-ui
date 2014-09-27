@@ -244,16 +244,11 @@
 						// elfin.CARACTERISTIQUE.FRACTION.L
 						
 
-				        //   /api/melfin/G20060401225530100?xpath=//ELFIN[IDENTIFIANT/QUALITE='Entreprise']
 			            var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
 			            var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
-			            //var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE!='Entreprise']";
-			            // TODO: actorsCollectionId must come from server configuration resource.
-			            $log.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
-			            var actorsCollectionId = 'G20060401225530100';
-			            
+
 			            // Asychronous entrepriseActors preloading
-			            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForEntreprises})
+			            hbQueryService.getActors(xpathForEntreprises)
 						.then(function(entrepriseActors) {
 								$scope.entrepriseActors = entrepriseActors;
 							},
@@ -263,7 +258,7 @@
 							});
 			            
 			            // Asychronous collaboratorActors preloading
-			            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForCollaborator})
+			            hbQueryService.getActors(xpathForCollaborator)
 						.then(function(collaboratorActors) {
 								$scope.collaboratorActors = collaboratorActors;
 							},

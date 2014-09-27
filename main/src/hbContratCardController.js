@@ -14,27 +14,17 @@
 							'$timeout',
 							'hbAlertMessages',
 							'hbUtil',
+							'hbQueryService',
 							function($scope, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout,
-									hbAlertMessages, hbUtil) {
+									hbAlertMessages, hbUtil, hbQueryService) {
 
 								$log
 										.debug("    >>>> Using HbContratCardController");
 
 								var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
-								// TODO: actorsCollectionId must come from
-								// server configuration resource.
-								$log
-										.debug("TODO: ConstatCardController: actorsCollectionId must come from server configuration resource.");
-								var actorsCollectionId = 'G20060401225530100';
-
 								$scope.entrepriseActors = null;
-
-								GeoxmlService
-										.getCollection(actorsCollectionId)
-										.getList({
-											"xpath" : xpathForEntreprises
-										})
+								hbQueryService.getActors(xpathForEntreprises)
 										.then(
 												function(entrepriseActors) {
 													$scope.entrepriseActors = entrepriseActors;

@@ -16,8 +16,9 @@
 					'hbAlertMessages',
 					'hbUtil',
 					'GeoxmlService',
+					'hbQueryService',
 					function($attrs, $scope, $modal, $routeParams,
-							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService) {
+							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
 						$log.debug("    >>>> Using HbChooseActorController");
 						
@@ -144,12 +145,8 @@
 						}
 						//$log.debug("xpathForActor = " + xpathForActor);
 						
-			            // TODO: actorsCollectionId must come from server configuration resource.
-			            $log.debug("TODO: HbChooseActorController: actorsCollectionId must come from server configuration resource.");
-			            var actorsCollectionId = 'G20060401225530100';			        	
-
 			            // Asychronous actors preloading
-			            GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForActor})
+			            hbQueryService.getActors(xpathForActor)		
 						.then(function(actors) {
 								$log.debug("    >>>> HbChooseActorController: loading actors ...");
 								$scope.actors = actors;
