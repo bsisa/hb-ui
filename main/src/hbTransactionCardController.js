@@ -242,15 +242,11 @@
 								// solution ?
 								$timeout(focusOnField, 500, true);
 
-								
-								var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
-					            // TODO: actorsCollectionId must come from server configuration resource.
-					            $log.debug("TODO: HbTransactionCardController: actorsCollectionId must come from server configuration resource.");
-					            var actorsCollectionId = 'G20060401225530100';								
-								
-								$scope.entrepriseActors = null;
 
-								GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForEntreprises}).then(
+								// Load ACTEUR `Entreprise` list
+								$scope.entrepriseActors = null;
+								var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
+								hbQueryService.getActors(xpathForEntreprises).then(
 									function(entrepriseActors) {
 										$scope.entrepriseActors = entrepriseActors;
 									},
@@ -261,16 +257,11 @@
 										hbAlertMessages.addAlert(
 												"danger", message);
 									});
-								
-								var xpathForCollaborators = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
-					            // TODO: actorsCollectionId must come from server configuration resource.
-					            $log.debug("TODO: HbTransactionCardController: actorsCollectionId must come from server configuration resource.");
-					            var actorsCollectionId = 'G20060401225530100';								
 
-								
+								// Load ACTEUR `Collaborateur` list
 								$scope.collaboratorActors = null;
-								
-								GeoxmlService.getCollection(actorsCollectionId).getList({"xpath" : xpathForCollaborators}).then(
+								var xpathForCollaborators = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";								
+								hbQueryService.getActors(xpathForCollaborators).then(										
 										function(collaboratorActors) {
 											$scope.collaboratorActors = collaboratorActors;
 										},
@@ -281,9 +272,7 @@
 											hbAlertMessages.addAlert(
 													"danger", message);
 										});
-								
-								
-								
+
 								
 					            // Parameters to hbChooseOne service function for ACTOR selection
 					            $scope.actorChooseOneColumnsDefinition = [
