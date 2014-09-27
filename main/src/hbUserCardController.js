@@ -19,14 +19,6 @@
 
 						$log.debug("    >>>> Using HbUserCardController ");
 						
-						// Wait for the collaborator actor to have a chance to load before displaying validation error.
-						$scope.validateCollaborator = false;
-						
-						// Actor linked to the current user.
-						$scope.selected = { "collaborator" : null };
-						// Actors selection list 
-						//$scope.collaboratorActors = null;
-						
 						// Plain text passwords used to obtain the encrypted password signature. 
 						// Must never be persisted nor logged.
 						$scope.pwd1 = null;
@@ -51,41 +43,6 @@
 							$scope.pwd2 = null;
 						};
 						
-						// enables collaborator actor validation with a delay.
-						$scope.enableValidateCollaborator = function() {
-							$timeout(function(){
-								$scope.validateCollaborator = true;
-							}, 2000, true);
-						};
-						
-						// Link to user actor for personal information (name, email, phone...)
-				        $scope.getElfinActor = function (collectionId, elfinId) {
-				        	
-				        	//if (GeoxmlService.validateId(collectionId) && GeoxmlService.validateId(elfinId)) {
-						        GeoxmlService.getElfin(collectionId, elfinId).get()
-						        .then(function(elfin) {
-						        	// Force CAR array sorting by POS attribute
-						        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
-						        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
-						        	//       Need review of other similar operations
-						        	if ( elfin['CARACTERISTIQUE'] != null && elfin['CARACTERISTIQUE']['CARSET'] != null && elfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
-						        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
-						        	}
-						        	$log.debug(">>>>>>>>>>>> collaboratorActor.Id = " + elfin.Id);
-						        	$scope.selected.collaborator = elfin;
-						        	$scope.enableValidateCollaborator();
-						        	}, function(response) {
-						        	var message = "Le chargement des informations a échoué (statut de retour: " + response.status + ")";
-						            hbAlertMessages.addAlert("danger",message);
-						            $scope.enableValidateCollaborator();
-						        });
-//				            }
-//				            else {
-//				                var message = "Les identifiants de collection (" + $scope.collectionId + " ) et/ou (" + $scope.elfinId + ") ne sont pas corrects";
-//				                hbAlertMessages.addAlert("warning",message);
-//				            }        		
-			        		
-			        	};
 			        	
 			        	$scope.availableRolesCheckboxModel = null;
 			        	
@@ -236,36 +193,8 @@
 			            	} else {
 			            		$log.debug(">>>> HbUserCardController: DELAY   $scope.initWithUserRoles() $scope.availableRoles not yet available while in HB_EVENTS.ELFIN_LOADED, PENDING.");
 			            	}
-			            	
-			            	// Make sure a collaborator reference exists before loading
-				        	if ($scope.elfin.PARTENAIRE && $scope.elfin.PARTENAIRE.USAGER && $scope.elfin.PARTENAIRE.USAGER.Id && $scope.elfin.PARTENAIRE.USAGER.ID_G) {
-				        		$scope.getElfinActor($scope.elfin.PARTENAIRE.USAGER.ID_G, $scope.elfin.PARTENAIRE.USAGER.Id);
-				        	} else {
-				        		$scope.enableValidateCollaborator();
-				        	}	            	
-
 			            });			        	
 			        	
-			            
-			            /**
-			             * Update current USER link to ACTOR upon new ACTOR selection
-			             */
-			            $scope.$watch('selected.collaborator.Id', function(newId, oldId) {
-			            	
-			            	if ( newId && $scope.elfin && ($scope.elfin.PARTENAIRE.USAGER.Id != $scope.selected.collaborator.Id) ) {
-
-				            	// Update the new ACTOR ids
-				            	$scope.elfin.PARTENAIRE.USAGER.ID_G = $scope.selected.collaborator.ID_G;
-				            	$scope.elfin.PARTENAIRE.USAGER.Id = $scope.selected.collaborator.Id;
-				            	// According to the GeoXML Schema GROUP and NOM are part of USAGER.
-				            	$scope.elfin.PARTENAIRE.USAGER.GROUPE = $scope.selected.collaborator.GROUPE;
-				            	$scope.elfin.PARTENAIRE.USAGER.NOM = $scope.selected.collaborator.IDENTIFIANT.NOM;
-				            	// Notify the user the data need saving.
-				            	$scope.elfinForm.$setDirty();			            		
-			            	}
-
-			            });
-			            
 			            // Load available roles
 			            $scope.getAvailableRoles();
 			            

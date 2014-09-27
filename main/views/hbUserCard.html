@@ -1,4 +1,3 @@
-
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
 	<span ng-show="elfinForm.username.$error.required" >Le champs <strong>Nom d'utilisateur</strong> est obligatoire!</span>
@@ -73,6 +72,7 @@
 							hb-choose-actor-id-name="collaborator_name" 
 							hb-choose-actor-elfin-form="elfinForm"
 							hb-choose-actor-model="elfin.PARTENAIRE.USAGER"
+							hb-choose-actor-elfin-model="selectedCollaboratorElfin"
 							hb-choose-actor-tooltip="Recherche de collaborateur"
 							hb-choose-actor-role="Collaborateur"
 							></div>					
@@ -80,49 +80,19 @@
 				</div>
 				<div class="form-group">
 					<label for="collaborator_surname" class="col-sm-2 control-label">Prénom</label>
-					<div class="col-sm-3"><div class="form-control-static">{{selected.collaborator.IDENTIFIANT.ALIAS}}</div>
-<!-- 						<input id="collaborator_surname" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.ALIAS" ng-readonly="true"> -->
-<!-- 						<div class="input-group"> -->
-<!-- 							<input id="collaborator_surname" type="text" class="form-control" ng-model="selected.collaborator.IDENTIFIANT.ALIAS" ng-readonly="true"> -->
-<!-- 							<span class="input-group-btn" tooltip="Recherche de collaborateur"> -->
-<!-- 								<button class="btn btn-default" type="button" -->
-<!-- 									hb-choose-collaborator -->
-<!-- 									ng-click="hbChooseCollaborator(selected, 'collaborator')" -->
-<!-- 									><i class="icon-search" ></i></button> -->
-<!-- 							</span> -->
-<!-- 						</div>									 -->
-					</div>
+					<div class="col-sm-3"><div class="form-control-static">{{selectedCollaboratorElfin.IDENTIFIANT.ALIAS}}</div></div>
 				</div>
 				<div class="form-group">
 					<label for="collaborator_group" class="col-sm-2 control-label">Abréviation</label>
-					<div class="col-sm-3"><div class="form-control-static">{{selected.collaborator.GROUPE}}</div>
-<!-- 						<input id="collaborator_group" type="text" class="form-control" ng-model="selected.collaborator.GROUPE" ng-readonly="true"> -->
-<!-- 						<div class="input-group"> -->
-<!-- 							<input id="collaborator_group" type="text" class="form-control" ng-model="selected.collaborator.GROUPE" ng-readonly="true"> -->
-<!-- 							<span class="input-group-btn" tooltip="Recherche de collaborateur"> -->
-<!-- 								<button class="btn btn-default" type="button" -->
-<!-- 									hb-choose-collaborator -->
-<!-- 									ng-click="hbChooseCollaborator(selected, 'collaborator')" -->
-<!-- 									><i class="icon-search" ></i></button> -->
-<!-- 							</span> -->
-<!-- 						</div>		 -->
-					</div>
+					<div class="col-sm-3"><div class="form-control-static">{{selectedCollaboratorElfin.GROUPE}}</div></div>
 				</div>
 				<div class="form-group">
 					<label for="collaborator_tel" class="col-sm-2 control-label">Téléphone</label>
-					<div class="col-sm-3"><div class="form-control-static">{{selected.collaborator.CARACTERISTIQUE.CAR4.VALEUR}}</div>
-<!-- 						<input id="collaborator_tel" type="text" class="form-control" -->
-<!-- 							ng-model="selected.collaborator.CARACTERISTIQUE.CAR4.VALEUR" -->
-<!-- 							ng-readonly="true"> -->
-					</div>
+					<div class="col-sm-3"><div class="form-control-static">{{selectedCollaboratorElfin.CARACTERISTIQUE.CAR4.VALEUR}}</div></div>
 				</div>
 				<div class="form-group">
 					<label for="collaborator_email" class="col-sm-2 control-label">Email</label>
-					<div class="col-sm-3"><div class="form-control-static">{{selected.collaborator.CARACTERISTIQUE.CAR5.VALEUR}}</div>
-<!-- 						<input id="collaborator_email" name="collaborator_email" type="email" class="form-control" -->
-<!-- 							ng-model="selected.collaborator.CARACTERISTIQUE.CAR5.VALEUR" -->
-<!-- 							ng-readonly="true" ng-required="true"> -->
-					</div>
+					<div class="col-sm-3"><div class="form-control-static">{{selectedCollaboratorElfin.CARACTERISTIQUE.CAR5.VALEUR}}</div></div>
 				</div>			
 			</div>		
 		</tab>
