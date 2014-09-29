@@ -219,7 +219,8 @@
 							var emptyFractionTemplate = { "L": [  ] };
 							var messageTemplate = { "C": [ { "POS": 1, "VALUE": ""},
                                      { "POS": 2, "VALUE": "1999-01-01"},
-                                     { "POS": 3, "VALUE": ""} ], "POS": 1 };
+                                     { "POS": 3, "VALUE": ""},
+                                     { "POS": 4, "VALUE": ""}], "POS": 1 };
 							messageTemplate.C[1].VALUE = hbUtil.getDateInHbTextFormat(new Date());
 							
 							if ($scope.elfin.CARACTERISTIQUE) {
