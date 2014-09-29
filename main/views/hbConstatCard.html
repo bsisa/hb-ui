@@ -45,7 +45,7 @@
 								<div class="col-sm-8">
 									<input readonly id="goal" type="text" class="form-control"
 										ng-model="elfin.IDENTIFIANT.OBJECTIF"
-										tooltip="elfin.IDENTIFIANT.OBJECTIF">
+										>
 								</div>
 							</div>
 						</div>
@@ -80,7 +80,7 @@
 								<div class="col-sm-8">
 									<input readonly id="compte" type="text" class="form-control"
 										ng-model="elfin.IDENTIFIANT.COMPTE"
-										tooltip="elfin.IDENTIFIANT.COMPTE">
+										>
 								</div>
 							</div>
 						</div>
@@ -125,8 +125,7 @@
 										<input id="alias" type="text" class="form-control"
 											autocomplete="off"
 											typeahead="actor.GROUPE for actor in entrepriseActors | filter:{GROUPE: $viewValue} | limitTo:8"
-											ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
-											tooltip="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> <span
+											ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> <span
 											class="input-group-btn" tooltip="Recherche d'entreprise">
 											<button class="btn btn-default" type="button" hb-choose-one
 												ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorCompanyChooseOneColumnsDefinition, actorChooseOneTemplate )">
@@ -155,7 +154,7 @@
 								<div class="col-sm-10">
 									<input id="usedby" type="text" class="form-control"
 										ng-model="elfin.PARTENAIRE.USAGER.VALUE"
-										tooltip="elfin.PARTENAIRE.USAGER.VALUE">
+										>
 								</div>
 							</div>
 						</div>
@@ -166,7 +165,7 @@
 								<div class="col-sm-10">
 									<div class="input-group">
 										<input id="group" name="group" type="text" class="form-control"
-											ng-model="elfin.GROUPE" tooltip="elfin.GROUPE" required>
+											ng-model="elfin.GROUPE" required>
 										<span class="input-group-btn">
 											<button class="btn btn-default" type="button" hb-choose-one
 												ng-click="hbChooseOne(elfin, 'GROUPE', constatTypes, 'value', constatTypeChooseOneColumnsDefinition, constatTypesChooseOneTemplate )">
@@ -183,7 +182,7 @@
 								<label for="name" class="col-sm-2 control-label">Descriptif</label>
 								<div class="col-sm-10">
 									<input id="name" name="name" type="text" class="form-control"
-										ng-model="elfin.IDENTIFIANT.NOM" tooltip="elfin.IDENTIFIANT.NOM"
+										ng-model="elfin.IDENTIFIANT.NOM" 
 										required>
 								</div>
 							</div>
@@ -192,7 +191,7 @@
 								<!-- 					<label for="address" class="col-sm-2 control-label">Remarque</label> -->
 								<div class="col-sm-offset-2 col-sm-10">
 									<textarea id="address" class="form-control"
-										ng-model="elfin.DIVERS.REMARQUE" tooltip="elfin.DIVERS.REMARQUE"></textarea>
+										ng-model="elfin.DIVERS.REMARQUE" ></textarea>
 								</div>
 							</div>
 						</div>
@@ -327,7 +326,7 @@
 								<tr>
 									<td colspan="7"><input id="currentEventRemarque" type="text"
 										class="form-control" ng-model="currentEvent.REMARQUE"
-										tooltip="currentEvent.REMARQUE"></td>
+										></td>
 								</tr>
 							</tbody>
 						</table>
