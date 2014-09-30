@@ -63,6 +63,11 @@
 								 * 2) Owner (... per node Id,ID_G or ...)
 								 * and should thus no only be triggered by elfin.IDENTIFIANT.OBJECTIF change but also
 								 * elfin.PARTENAIRE.PROPRIETAIRE.Id modification. 
+								 * 
+								 * REVIEW: Owner restriction seems not necessary as elfin.IDENTIFIANT.OBJECTIF
+								 * information is unique to a single PRESTATION as No SAI + unique index 
+								 * such as: 195.22
+								 * It could be simpler to link TRANSACTION to PRESTATION with Id (ID_G,Id or CLASSE,Id)  
 								 */
 								$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() { 
 
