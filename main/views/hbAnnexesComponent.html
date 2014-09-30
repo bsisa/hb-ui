@@ -23,6 +23,14 @@
 				</tr>
 			</tbody>
 		</table>
+		<!-- Non intuitive way to make at least one annex mandatory trigger form validation events 
+			Only activate required validation if hb-annexes-upload-no-validation is turned on.
+			Indeed activating annexlength validation at hb-annexes-component level requires disabling
+			hb-annexes-upload validation which would not allow upload to take place as long as 
+			annexlength validation requirement be fulfilled, thus letting the user in a dead end. -->
+	 	<div ng-show="false">
+			<input type="number" name="annexlength" ng-model="annexesNoPhotoNb" min="{{minBound}}" ng-required="isRequired">
+		</div>
 	</div>
 	<div class="panel-footer"><div hb-annexes-upload hb-annexes-upload-no-validation="{{hbAnnexesUploadNoValidation}}"></div></div>
 </div>
