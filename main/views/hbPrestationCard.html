@@ -20,9 +20,9 @@
 					</div>
 				</div>
 				<div class="form-group col-sm-4">
-					<label for="name" class="col-sm-4 control-label">Responsable</label>
+					<label for="manager" class="col-sm-4 control-label">Responsable</label>
 					<div class="col-sm-8">
-						<input id="name" type="text" class="form-control"
+						<input id="manager" name="manager" type="text" class="form-control"
 							ng-model="elfin.PARTENAIRE.GERANT.VALUE">
 					</div>
 				</div>
@@ -44,20 +44,20 @@
 					</div>
 				</div>
 				<div class="form-group col-sm-4">
-					<label for="manager" class="col-sm-4 control-label">Propriétaire</label>
+					<label for="owner" class="col-sm-4 control-label">Propriétaire</label>
 					<div class="col-sm-8">
 						<div class="input-group">
-							<input id="manager" name="manager" type="text"
+							<input id="owner" name="owner" type="text"
 								class="form-control"
 								ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
 								tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" required>
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button"
-									ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE)">Choix</button>
+									ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.VALUE)">Choix</button>
 							</span>
 						</div>
 					</div>
-				</div>
+				</div>				
 			</div>
 			<div class="row">
 				<div class="form-group col-sm-4">
@@ -71,16 +71,16 @@
 					<label for="alias" class="col-sm-4 control-label">Budget</label>
 					<div class="col-sm-8">
 						<input id="alias" name="alias" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.ALIAS" ng-pattern="numericOnlyRegexp"
+							ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF" ng-pattern="numericOnlyRegexp"
 							ng-trim='false'>
 					</div>
 				</div>
 				<div class="form-group col-sm-4">
-					<label for="managerName" class="col-sm-4 control-label">Nom
+					<label for="ownerName" class="col-sm-4 control-label">Nom
 						du propriétaire</label>
 					<div class="col-sm-8">
 						<div class="input-group">
-							<input id="managerName" name="managerName" type="text"
+							<input id="ownerName" name="ownerName" type="text"
 								class="form-control"
 								ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM"
 								tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM" required> <span
