@@ -19,13 +19,34 @@
 							ng-model="elfin.IDENTIFIANT.OBJECTIF">
 					</div>
 				</div>
+<!-- 				<div class="form-group col-sm-4"> -->
+<!-- 					<label for="manager" class="col-sm-4 control-label">Responsable</label> -->
+<!-- 					<div class="col-sm-8"> -->
+<!-- 						<input id="manager" name="manager" type="text" class="form-control" -->
+<!-- 							ng-model="elfin.PARTENAIRE.GERANT.VALUE"> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				<div class="form-group col-sm-4">
 					<label for="manager" class="col-sm-4 control-label">Responsable</label>
 					<div class="col-sm-8">
-						<input id="manager" name="manager" type="text" class="form-control"
-							ng-model="elfin.PARTENAIRE.GERANT.VALUE">
+						<div class="input-group">
+							<input id="manager" name="manager" type="text" class="form-control"
+								autocomplete="off"
+								typeahead="actor.GROUPE for actor in collaboratorActors | filter:{GROUPE: $viewValue} | limitTo:8"
+								ng-model="elfin.PARTENAIRE.GERANT.VALUE" >
+							<span class="input-group-btn"
+								tooltip="Recherche de collaborateur" tooltip-popup-delay="1500">
+								<button class="btn btn-default" type="button" hb-choose-one
+									ng-click="hbChooseOne(elfin, 'PARTENAIRE.GERANT.VALUE', collaboratorActors, 'GROUPE', actorCollaboratorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+									<i class="glyphicon glyphicon-list-alt"></i>
+								</button>
+							</span>
+						</div>
 					</div>
-				</div>
+				</div>				
+				
+				
+				
 			</div>
 			<div class="row">
 				<div class="form-group col-sm-4">

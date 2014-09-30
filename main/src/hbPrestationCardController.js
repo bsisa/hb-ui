@@ -13,9 +13,10 @@
 							'$timeout',
 							'hbAlertMessages',
 							'hbUtil',
+							'hbQueryService',
 							function($attrs, $scope, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout,
-									hbAlertMessages, hbUtil) {
+									hbAlertMessages, hbUtil, hbQueryService) {
 
 								$log.debug("    >>>> Using HbPrestationCardController");
 								
@@ -24,6 +25,7 @@
 								 */
 						        $scope.transactions = null;
 						        $scope.prestationGroups = null;
+						        $scope.collaboratorActors = null;
 
 						        /**
 						         * Validation support
@@ -99,6 +101,29 @@
 										hbAlertMessages.addAlert("danger",message);
 									});
 
+					            /**
+					             * Asychronous ACTEUR 'Collaborateur' list preloading
+					             */
+					            var xpathForActor = "//ELFIN[@CLASSE='ACTEUR' and IDENTIFIANT/QUALITE='Collaborateur']";
+					            hbQueryService.getActors(xpathForActor)		
+								.then(function(actors) {
+										$scope.collaboratorActors = actors;
+									},
+									function(response) {
+										var message = "Le chargement des ACTEURS Collaborateur a échoué (statut de retour: "+ response.status+ ")";
+							            hbAlertMessages.addAlert("danger",message);
+									});					            
+					            
+					            // Parameters to hbChooseOne service function for ACTOR selection
+					            $scope.actorCollaboratorChooseOneColumnsDefinition = [
+					                        		   		            { field:"GROUPE", displayName: "Groupe"},
+					                        		   		            { field:"IDENTIFIANT.NOM", displayName: "Nom"},
+					                        		   		            { field:"IDENTIFIANT.ALIAS", displayName: "Prénom"}
+					                        		   	 		   		];
+					            
+					            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';
+
+					            
 							} ]);
 
 })();
