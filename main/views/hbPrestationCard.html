@@ -43,19 +43,17 @@
 							ng-model="elfin.IDENTIFIANT.DE">
 					</div>
 				</div>
-				<div class="form-group col-sm-4">
+				<div class="form-group col-sm-4 has-feedback" ng-class="getCssHasFeedback(elfinForm.owner)">
 					<label for="owner" class="col-sm-4 control-label">Propriétaire</label>
 					<div class="col-sm-8">
-						<div class="input-group">
-							<input id="owner" name="owner" type="text"
-								class="form-control"
-								ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
-								tooltip="elfin.PARTENAIRE.PROPRIETAIRE.VALUE" required>
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.VALUE)">Choix</button>
-							</span>
-						</div>
+						<div 
+							hb-choose-actor 
+							hb-choose-actor-id-name="owner" 
+							hb-choose-actor-elfin-form="elfinForm"
+							hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE"
+							hb-choose-actor-tooltip="Recherche de propriétaire"
+							hb-choose-actor-role="Propriétaire"
+							></div>								
 					</div>
 				</div>				
 			</div>
@@ -73,22 +71,6 @@
 						<input id="alias" name="alias" type="text" class="form-control"
 							ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF" ng-pattern="numericOnlyRegexp"
 							ng-trim='false'>
-					</div>
-				</div>
-				<div class="form-group col-sm-4">
-					<label for="ownerName" class="col-sm-4 control-label">Nom
-						du propriétaire</label>
-					<div class="col-sm-8">
-						<div class="input-group">
-							<input id="ownerName" name="ownerName" type="text"
-								class="form-control"
-								ng-model="elfin.PARTENAIRE.PROPRIETAIRE.NOM"
-								tooltip="elfin.PARTENAIRE.PROPRIETAIRE.NOM" required> <span
-								class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									ng-click="choosePopup(elfin, elfin.CLASSE, elfin.PARTENAIRE.PROPRIETAIRE.NOM)">Choix</button>
-							</span>
-						</div>
 					</div>
 				</div>
 			</div>
