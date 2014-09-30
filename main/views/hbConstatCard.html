@@ -63,7 +63,7 @@
 											autocomplete="off" 
 											ng-model="elfin.IDENTIFIANT.ORIGINE" >
 <!-- 											tooltip="surfaces.[starts-with(IDENTIFIANT.OBJECTIF, elfin.IDENTIFIANT.OBJECTIF) - montrer surface.IDENTIFIANT.OBJECTIF |surface.CARACTERISTIQUE.CAR3.VALEUR |surface.PARTENAIRE.USAGER.VALUE - reprendre surface.IDENTIFIANT.OBJECTIF"> -->
-										<span class="input-group-btn" tooltip="Recherche d'unité locative">
+										<span class="input-group-btn" tooltip="Recherche d'unité locative" tooltip-popup-delay="1500">
 											<button class="btn btn-default" type="button" hb-choose-one
 												ng-click="hbChooseOne(elfin, 'IDENTIFIANT.ORIGINE', locationUnits, 'IDENTIFIANT.OBJECTIF', uniteLocativeChooseOneColumnsDefinition, uniteLocativesChooseOneTemplate )">
 												<i class="glyphicon glyphicon-list-alt"></i>
@@ -95,7 +95,7 @@
 											typeahead="actor.GROUPE for actor in collaboratorActors | filter:{GROUPE: $viewValue} | limitTo:8"
 											ng-model="elfin.IDENTIFIANT.AUT" >
 										<span class="input-group-btn"
-											tooltip="Recherche de collaborateur">
+											tooltip="Recherche de collaborateur" tooltip-popup-delay="1500">
 											<button class="btn btn-default" type="button" hb-choose-one
 												ng-click="hbChooseOne(elfin, 'IDENTIFIANT.AUT', collaboratorActors, 'GROUPE', actorCollaboratorChooseOneColumnsDefinition, actorChooseOneTemplate )">
 												<i class="glyphicon glyphicon-list-alt"></i>
@@ -126,7 +126,7 @@
 											autocomplete="off"
 											typeahead="actor.GROUPE for actor in entrepriseActors | filter:{GROUPE: $viewValue} | limitTo:8"
 											ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"> <span
-											class="input-group-btn" tooltip="Recherche d'entreprise">
+											class="input-group-btn" tooltip="Recherche d'entreprise" tooltip-popup-delay="1500">
 											<button class="btn btn-default" type="button" hb-choose-one
 												ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorCompanyChooseOneColumnsDefinition, actorChooseOneTemplate )">
 												<i class="glyphicon glyphicon-list-alt"></i>
@@ -202,7 +202,7 @@
 									<tr>
 										<th colspan="8">
 											<button class="btn btn-default" type="button"
-												tooltip="Nouveau message" ng-click="addMessage()" >
+												 ng-click="addMessage()" tooltip="Nouveau message" tooltip-popup-delay="1500">
 												<i class="icon-plus-sign"></i>
 											</button> Messages
 									</tr>
@@ -245,7 +245,7 @@
 								<tr>
 									<th colspan="8">
 										<button class="btn btn-default" type="button"
-											tooltip="Nouvel événement" ng-click="addEcheance()" ng-disabled="currentEvent && currentEvent.PAR_QUI != 'VALIDE'">
+											tooltip="Nouvel événement" tooltip-popup-delay="1500" ng-click="addEcheance()" ng-disabled="currentEvent && currentEvent.PAR_QUI != 'VALIDE'">
 											<i class="icon-plus-sign"></i>
 										</button> Evénements en cours
 								</tr>
@@ -293,7 +293,7 @@
 												typeahead="actor.GROUPE for actor in collaboratorActors | filter:{GROUPE: $viewValue} | limitTo:8"
 												> 
 											<span class="input-group-btn"
-												tooltip="Recherche de collaborateur">
+												tooltip="Recherche de collaborateur" tooltip-popup-delay="1500">
 												<button class="btn btn-default" type="button" hb-choose-one
 													ng-click="hbChooseOne(currentEvent, 'POUR_QUI', collaboratorActors, 'GROUPE', actorCollaboratorChooseOneColumnsDefinition, actorChooseOneTemplate )">
 													<i class="glyphicon glyphicon-list-alt"></i>
