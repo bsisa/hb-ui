@@ -86,7 +86,9 @@
 						            $scope.canUpload = function() {
 						            	// Only valid state is acceptable for upload as it triggers automatic ELFIN save.
 						            	// Let attribute hb-annexes-upload-no-validation='true' disable this behaviour 
-						            	// for special validation case such as mandatory annexe validation in CONSTAT form.
+						            	// for special validation case such as mandatory annex validation in TRANSACTION form.
+						            	// Indeed in that situation only annex uploading can let the user solve the validation
+						            	// error linked to the missing annex.
 						            	if ($attrs.hbAnnexesUploadNoValidation === 'true' || $scope.canSave() || ($scope.elfinForm.$pristine && $scope.elfinForm.$valid ) ) {
 						            		return true;
 						            	} else {
