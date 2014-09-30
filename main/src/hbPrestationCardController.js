@@ -69,10 +69,7 @@
 						    		if ($scope.elfin!=null) {
 							            
 							            var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"']";
-							            // TODO: constatsCollectionId must come from server configuration resource.
-							            $log.debug("TODO: HbImmeubleCardController: prestationCollectionId must come from server configuration resource.");
-							            var transactionsCollectionId = 'G20040930101030011';
-							            GeoxmlService.getCollection(transactionsCollectionId).getList({"xpath" : xpathForTransactions})
+							            hbQueryService.getTransactions(xpathForTransactions)
 											.then(function(elfins) {
 													$scope.transactions = elfins;
 												},
