@@ -3,12 +3,13 @@
 	<span ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire!</span>
 	<span ng-show="elfinForm.destinataire.$error.required">Le champs <strong>Destinataire</strong> est obligatoire!</span>
 	<span ng-show="elfinForm.resp.$error.required">Le champs <strong>Responsable visa de facture</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.annexlength.$error.min"><strong>L'annexe</strong> est obligatoire!</span>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
 		<tabset><!-- ui.bootstrap AngularJS UI tabset -->
 		<!-- Transaction tab -->
-		<tab> <tab-heading>Transaction (CREATION)</tab-heading>
+		<tab> <tab-heading>Transaction</tab-heading>
 		<div class="hb-tab">
 		<div class="row">
 			<!-- 1st column -->
