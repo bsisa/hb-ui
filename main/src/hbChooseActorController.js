@@ -79,18 +79,18 @@
 			        	 * This listener is used only for actor initialisation 
 			        	 */
 			        	var actorModelWatchDeregistration = $scope.$watch('actorModel.Id', function(newId, oldId) {			        		
-			            	$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') = " + oldId + " => " + newId);
+			            	//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') = " + oldId + " => " + newId);
 
 			            	// Only initialise if no selected actor object exist 
 			            	if ( $scope.selected.actor == null ) {
-			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor == null - OK");
+			            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor == null - OK");
 			            		/* Do not perform DEREGISTRATION for case oldId => newId : undefined => undefined
 			            		 * while situation like undefined => null or undefined => Gxxxxx must trigger it.
 			            		 */
 				            	if ( newId ) {
 				            		// Make sure an actor reference is defined before trying to load actor elfin
 					            	if ( newId != null && newId.trim() != '' && newId.trim() != "null") {
-					            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => getElfinActor for " + newId);
+					            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => getElfinActor for " + newId);
 						            	$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
 					            	} else {
 					            		// Force validation in create mode as well
@@ -103,19 +103,19 @@
 							            hbAlertMessages.addAlert("danger",message);
 					            		$log.error(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') - MISSING MANDATORY actorModel OBJECT found !");
 					            	} else {
-					            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') - actorModel not null : " + $scope.actorModel.toString());
+					            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') - actorModel not null : " + $scope.actorModel.toString());
 					            	}
 				            		// Remove listener now that we tried loading the actor elfin object.
-					            	$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
+					            	//$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
 					            	actorModelWatchDeregistration();
 					            	
 				            	} else {
 				            		// Keep on listening as long as newId is undefined
-				            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => Keep on listening as long as newId is undefined");
+				            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => Keep on listening as long as newId is undefined");
 				            	}
 			            	} else {
-			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor NOT NULL !!! ");
-			            		$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
+			            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor NOT NULL !!! ");
+			            		//$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
 			            		// Remove listener if selected actor already exists 
 			            		actorModelWatchDeregistration();
 			            	}
@@ -148,7 +148,7 @@
 			            // Asychronous actors preloading
 			            hbQueryService.getActors(xpathForActor)		
 						.then(function(actors) {
-								$log.debug("    >>>> HbChooseActorController: loading actors ...");
+								//$log.debug("    >>>> HbChooseActorController: loading actors ...");
 								$scope.actors = actors;
 								if ($scope.defaultByName) {
 									var defaultActorIsSet = false;
@@ -167,7 +167,7 @@
 							            hbAlertMessages.addAlert("warning",message);
 									}
 								}
-								$log.debug("    >>>> HbChooseActorController: " + $scope.actors.length + " actors loaded.");
+								//$log.debug("    >>>> HbChooseActorController: " + $scope.actors.length + " actors loaded.");
 							},
 							function(response) {
 								var message = "Le chargement des ACTEURS Collaborateur a échoué (statut de retour: "+ response.status+ ")";
