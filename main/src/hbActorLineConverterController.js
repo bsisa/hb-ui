@@ -24,27 +24,39 @@
 			        	 * and set actorModel. 
 			        	 */
 						$scope.$watch('lineModel.C[2]', function (newValue, oldValue) {
-							// C[0] corresponding to POS="1" is unused.
+							
+							$log.debug("lineModel.C[2] >>>> lineModel.C.length: " + $scope.lineModel.C.length);
+							
+							// C[@POS="1"] => C[0] is unused
+							// C[@POS='2'] contains ID_G
 			            	$scope.actorModel.ID_G = $scope.lineModel.C[1].VALUE;
+							// C[@POS='3'] contains Id
 			            	$scope.actorModel.Id = $scope.lineModel.C[2].VALUE;
-			            	$scope.actorModel.GROUPE = $scope.lineModel.C.length > 2 ? $scope.lineModel.C[3].VALUE : "";
-			            	$scope.actorModel.NAME = $scope.lineModel.C.length > 3 ? $scope.lineModel.C[4].VALUE : "";
+							// C[@POS='4'] optionally contains GROUPE
+			            	$scope.actorModel.GROUPE = $scope.lineModel.C.length > 3 ? $scope.lineModel.C[3].VALUE : "";
+							// C[@POS='5'] optionally contains NOM
+			            	$scope.actorModel.NOM = $scope.lineModel.C.length > 4 ? $scope.lineModel.C[4].VALUE : "";
 						}, true);						
 						
 						/**
 						 * Listen to actorModel update to be reflected to lineModel
 						 */
 						$scope.$watch('actorModel', function (newValue, oldValue) {
-							// C[0] corresponding to POS="1" is unused.
+							// C[@POS="1"] => C[0] is unused
 							$scope.lineModel.C[1].VALUE = $scope.actorModel.ID_G;
+							// C[@POS='2'] contains ID_G							
 			            	$scope.lineModel.C[2].VALUE = $scope.actorModel.Id;
+							// C[@POS='3'] contains Id
 			            	// Deal with incomplete data.
 			            	if ($scope.lineModel.C.length === 3) {
 			            		$scope.lineModel.C.push({POS: 4, VALUE: $scope.actorModel.GROUPE});
-			            		$scope.lineModel.C.push({POS: 5, VALUE: $scope.actorModel.NAME});
-			            	} else {
+			            		$scope.lineModel.C.push({POS: 5, VALUE: $scope.actorModel.NOM});
+			            	} else if ($scope.lineModel.C.length === 4) {
 				            	$scope.lineModel.C[3].VALUE = $scope.actorModel.GROUPE;
-				            	$scope.lineModel.C[4].VALUE = $scope.actorModel.NAME;			            		
+			            		$scope.lineModel.C.push({POS: 5, VALUE: $scope.actorModel.NOM});
+			            	} else if ($scope.lineModel.C.length > 4) {
+				            	$scope.lineModel.C[3].VALUE = $scope.actorModel.GROUPE;
+				            	$scope.lineModel.C[4].VALUE = $scope.actorModel.NOM;				            		
 			            	}
 						}, true);
 	
