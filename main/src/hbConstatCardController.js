@@ -150,7 +150,7 @@
 								} else if ($scope.currentEvent.PAR_QUI === "VALIDE") {
 									$scope.eventStatusTooltip = 'Statut valide';
 								} else {
-									$scope.eventStatusTooltip = '';
+									$scope.eventStatusTooltip = 'Statut inconnu';
 								}								
 							}
 						};
