@@ -27,6 +27,7 @@
 						
 						// Parameter used to make at least one annex mandatory.
 			        	$scope.minBound = 1;
+			        	// Expression used by ng-pattern for numeric only validation.
 			        	$scope.numericOnlyRegexp = /^\d*\.?\d*$/;
 			        	// To allow negative values:
 			        	//$scope.numericOnlyRegexp = /^[-]?\d*\.?\d*$/;
