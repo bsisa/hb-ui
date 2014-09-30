@@ -22,6 +22,16 @@
 		};
 		
 		/**
+		 * `actorsCollectionId`: Identifies collection for ELFIN objects of CLASSE ACTEUR
+		 *  `xpath`: Optional XPath restriction
+		 *  @see getList
+		 */		
+		var getActors = function(xpath) {
+			var actorsCollectionId = 'G20060401225530100';	
+	        return getList(actorsCollectionId,xpath);
+		};		
+		
+		/**
 		 * `immeublesCollectionId`: Identifies collection for ELFIN objects of CLASSE IMMEUBLE
 		 *  `xpath`: Optional XPath restriction
 		 *  @see getList  
@@ -40,21 +50,23 @@
 			var locationUnitsCollectionId = 'G20040930101030013';
 	        return getList(locationUnitsCollectionId,xpath);
 		};
-		
+        
 		/**
-		 * `actorsCollectionId`: Identifies collection for ELFIN objects of CLASSE ACTEUR
+		 * `transactionsCollectionId`: Identifies collection for ELFIN objects of CLASSE TRANSACTION
 		 *  `xpath`: Optional XPath restriction
 		 *  @see getList
-		 */		
-		var getActors = function(xpath) {
-			var actorsCollectionId = 'G20060401225530100';	
-	        return getList(actorsCollectionId,xpath);
+		 */
+		var getTransactions = function(xpath) {
+			var transactionsCollectionId = 'G20040930101030011';
+			return getList(transactionsCollectionId,xpath);
 		};
         
+	
         return {
         	getActors:getActors,
         	getImmeubles:getImmeubles,
-        	getLocationUnits:getLocationUnits
+        	getLocationUnits:getLocationUnits,
+        	getTransactions:getTransactions
         };
 
     }]);
