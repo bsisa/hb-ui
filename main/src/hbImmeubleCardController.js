@@ -122,10 +122,7 @@
 													});
 								            
 								            var xpathForContrats = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"']";
-								            // TODO: constatsCollectionId must come from server configuration resource.
-								            $log.debug("TODO: HbImmeubleCardController: contratsCollectionId must come from server configuration resource.");
-								            var contratsCollectionId = 'G20081113902512301';
-								            GeoxmlService.getCollection(contratsCollectionId).getList({"xpath" : xpathForContrats})
+								            hbQueryService.getContrats(xpathForContrats)
 												.then(function(elfins) {
 														$scope.contrats = elfins;
 													},
