@@ -52,6 +52,16 @@
 		};
         
 		/**
+		 * `prestationsCollectionId`: Identifies collection for ELFIN objects of CLASSE PRESTATION
+		 *  `xpath`: Optional XPath restriction
+		 *  @see getList
+		 */
+		var getPrestations = function(xpath) {
+			var prestationsCollectionId = 'G20081113902512302';
+			return getList(prestationsCollectionId,xpath);
+		};
+		
+		/**
 		 * `transactionsCollectionId`: Identifies collection for ELFIN objects of CLASSE TRANSACTION
 		 *  `xpath`: Optional XPath restriction
 		 *  @see getList
@@ -66,6 +76,7 @@
         	getActors:getActors,
         	getImmeubles:getImmeubles,
         	getLocationUnits:getLocationUnits,
+        	getPrestations:getPrestations,
         	getTransactions:getTransactions
         };
 
