@@ -32,6 +32,16 @@
 		};		
 		
 		/**
+		 * `contratsCollectionId`: Identifies collection for ELFIN objects of CLASSE CONTRAT
+		 *  `xpath`: Optional XPath restriction
+		 *  @see getList
+		 */		
+		var getContrats = function(xpath) {		
+			var contratsCollectionId = 'G20081113902512301';
+	        return getList(contratsCollectionId,xpath);
+		};		
+		
+		/**
 		 * `immeublesCollectionId`: Identifies collection for ELFIN objects of CLASSE IMMEUBLE
 		 *  `xpath`: Optional XPath restriction
 		 *  @see getList  
@@ -74,6 +84,7 @@
 	
         return {
         	getActors:getActors,
+        	getContrats:getContrats,
         	getImmeubles:getImmeubles,
         	getLocationUnits:getLocationUnits,
         	getPrestations:getPrestations,
