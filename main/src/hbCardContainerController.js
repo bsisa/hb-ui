@@ -152,11 +152,13 @@
         	if ($attrs.hbMode === "create" && $attrs.hbElfinClasse) {
 
         		var restGeoxml = GeoxmlService.getService();
+        		$log.debug(">>>>> create mode: perform POST to: elfin.ID_G/elfin.Id = " + elfin.ID_G+ '/' + elfin.Id)
         		restGeoxml.all(elfin.ID_G+ '/' + elfin.Id).post(elfin).then( 
                			function() { 
     	       				$scope.elfin = elfin;
     	                    $scope.elfinForm.$setPristine();
     	                   	var redirUrl = '/elfin/'+elfin.ID_G+'/'+$attrs.hbElfinClasse+'/'+elfin.Id;
+    	                   	$log.debug(">>>>> redirUrl: " + redirUrl);
     	                   	$location.path( redirUrl );
     	       			}, 
     	       			function(response) { 
@@ -168,6 +170,7 @@
        		
         	} else { // Perform PUT when mode != create
 
+        		$log.debug(">>>>> edit mode: perform PUT for elfin.Id = " + elfin.Id);
            		elfin.put().then( 
                			function() { 
                				// Considered good practice to reload the actual elfin state from db after successful PUT unless server load is a concern.
