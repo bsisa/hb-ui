@@ -46,6 +46,9 @@
 											function(immeubles) {
 												$scope.immeubles = immeubles;
 												$log.debug(">>> IMMEUBLES: " + immeubles.length);
+												// Force selectedImmeuble update in case these were set before the current 
+												// immeubles list was loaded. This is the case in create mode with $routeParams.sai
+												$scope.displayBuildingAddress($scope.helper.constatSelectionSai,$scope.searchOwner);
 											},
 											function(response) {
 												var message = "Le chargement de la liste IMMEUBLE a échoué (statut de retour: "
@@ -171,7 +174,7 @@
 												$scope.elfin.IDENTIFIANT.PAR = currentDate
 														.getFullYear()
 														.toString();
-
+												
 												// Reset default value from catalogue is not relevant
 												$scope.elfin.IDENTIFIANT.QUALITE = "";
 												// Get user abbreviation from userDetails service
@@ -180,6 +183,44 @@
 												$scope.elfin.GROUPE = "";
 												// Default value from catalogue contains repartition list: Reset it.
 												$scope.elfin.CARACTERISTIQUE.CAR3.VALEUR = "";
+												
+												// If a No SAI corresponding to an existing PRESTATION is provided
+												// set it to elfin.IDENTIFIANT.OBJECTIF
+												if ($routeParams.sai) {
+													// Check the corresponding PRESTATION exists and if available, copy relevant information to 
+													// current new TRANSACTION.
+													var xpathForPrestationByObjectif = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$routeParams.sai+"']";
+													hbQueryService.getPrestations(xpathForPrestationByObjectif).then(
+														function(prestations) {
+															if (prestations.length === 1) {
+																var prestation = prestations[0];
+																// Update OBJECTIF
+																$scope.elfin.IDENTIFIANT.OBJECTIF = prestation.IDENTIFIANT.OBJECTIF;
+																// Update helper fields
+																$scope.searchOwner = {Id : prestation.PARTENAIRE.PROPRIETAIRE.Id, ID_G : prestation.PARTENAIRE.PROPRIETAIRE.ID_G, GROUPE : prestation.PARTENAIRE.PROPRIETAIRE.GROUPE, NOM : prestation.PARTENAIRE.PROPRIETAIRE.NOM};
+																$scope.helper.constatSelectionSai = prestation.IDENTIFIANT.OBJECTIF.split('.')[0];
+																// Groupe prestation
+																$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = prestation.GROUPE; 
+															} else if (prestations.length > 1 ) {
+																var message = "Le numéro d'objectif: "+$routeParams.sai+" fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
+																hbAlertMessages.addAlert(
+																		"warning", message);
+															} else if (prestations.length > 1 ) {
+																var message = "Le numéro d'objectif: "+$routeParams.sai+" fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
+																hbAlertMessages.addAlert(
+																		"warning", message);
+															}
+														},
+														function(response) {
+															var message = "L'obtention d'une PRESTATION pour le numéro d'objectif: "+$routeParams.sai+" a échoué. (statut: "
+																	+ response.status
+																	+ ")";
+															hbAlertMessages.addAlert(
+																	"danger", message);
+														});													
+												}												
+												
+												
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
