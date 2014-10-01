@@ -38,12 +38,52 @@
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
 						    	$scope.$watch('elfin.Id', function() { 
-						    		
+						    		$log.debug("    >>>> Using HbPrestationCardController: elfin.Id watch triggered...");
 						    		if ($scope.elfin!=null) {
+							    		$log.debug("    >>>> Using HbPrestationCardController: elfin.Id NOT NULL");
 							    		if ($attrs.hbMode === "create") {
+							    			$log.debug("    >>>> Using HbPrestationCardController: CREATE MODE");
 											if ($scope.elfin) {
+												$log.debug("    >>>> Using HbPrestationCardController: elfin defined");
 												// Template fields clean up.
 												$scope.elfin.GROUPE = '';
+												// Initialise with URL parameter "nocons"
+												$scope.elfin.IDENTIFIANT.COMPTE = $routeParams.nocons;
+												// Find next PRESTATION OBJECTIF available number.
+												// TODO: the REST API should provide this feature 
+												// to ensure correct result event in highly 
+												// concurrent usage. 
+												// This is not currently an issue.
+												//ELFIN[@CLASSE='PRESTATION' and starts-with(IDENTIFIANT/OBJECTIF,'195')]/IDENTIFIANT/OBJECTIF
+									            var xpathForPrestations = "//ELFIN[starts-with(IDENTIFIANT/OBJECTIF,'"+$routeParams.sai+"')]";
+									            hbQueryService.getPrestations(xpathForPrestations)
+													.then(function(prestations) {
+															if (prestations.length > 0) {
+																var objectifArray = new Array(0);
+																for (var i = 0; i < prestations.length; i++ ) {
+																	var prestation = prestations[i];
+																	var objectifSplit = prestation.IDENTIFIANT.OBJECTIF.split('.');
+																	if (objectifSplit.length === 2) {
+																		var objectifIndex = objectifSplit[1];
+																			objectifArray.push(parseInt(objectifIndex.trim()));
+																	} else {
+																		var splitErrorMsg = "Le calcul de l'objectif de PRESTATION a rencontré un problème: l'objectif suivant appartenant à la prestation avec Id " + prestation.Id + " ne suit pas la structure {No SAI}.{index}: " + prestation.IDENTIFIANT.OBJECTIF ;
+																		hbAlertMessages.addAlert("danger",splitErrorMsg);
+																	}
+																}
+																// Sort descending
+																objectifArray.sort(function(a, b) { return b - a; });
+																var nextIndex = (objectifArray[0] + 1);
+																$scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai + "." + nextIndex;
+																$log.debug("PRESTATION next index: " + nextIndex);																
+															}
+														},
+														function(response) {
+															var message = "Le chargement des PRESTATIONs a échoué (statut de retour: "+ response.status+ ")";
+												            hbAlertMessages.addAlert("danger",message);
+														});
+												
+												
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
