@@ -7,7 +7,7 @@
 		<!-- ATTRIBUTS tab -->
 		<tab> <tab-heading>Attributs <!-- <i class="icon-tag"></i> <b>Attributs</b> -->
 		</tab-heading>
-		<h5>Attributs</h5>
+		<div class="hb-tab">
 		<div class="form-group">
 			<label for="groupe" class="col-sm-1 control-label">Groupe</label>
 			<div class="col-sm-5">
@@ -33,29 +33,31 @@
 					ng-model="elfin.SOURCE">
 			</div>
 		</div>
+		</div>
 		</tab> 
 		<!-- MUTATIONS tab --> 
-		<tab>
-		<tab-heading>Mutations</tab-heading>
-		<table class="table table-condensed table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>Date</th>
-					<th>Utilisateur</th>
-					<th>Rôle</th>
-				</tr>
-			</thead>
-			<tr ng-repeat="mutation in elfin.MUTATIONS">
-				<td>{{mutation.DATE}}</td>
-				<td>{{mutation.UTILISATEUR}}</td>
-				<td>{{mutation.ROLE}}</td>
-			</tr>
-		</table>
-		</tab> 
+<!-- 		<tab> -->
+<!-- 		<tab-heading>Mutations</tab-heading> -->
+<!-- 		<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 			<thead> -->
+<!-- 				<tr> -->
+<!-- 					<th>Date</th> -->
+<!-- 					<th>Utilisateur</th> -->
+<!-- 					<th>Rôle</th> -->
+<!-- 				</tr> -->
+<!-- 			</thead> -->
+<!-- 			<tr ng-repeat="mutation in elfin.MUTATIONS"> -->
+<!-- 				<td>{{mutation.DATE}}</td> -->
+<!-- 				<td>{{mutation.UTILISATEUR}}</td> -->
+<!-- 				<td>{{mutation.ROLE}}</td> -->
+<!-- 			</tr> -->
+<!-- 		</table> -->
+<!-- 		</tab>  -->
 		<!-- GEOSELECTION tab --> 
 		<tab>
 		<tab-heading>Géosélection</tab-heading>
-		<h5>Centroïdes</h5>
+		<div class="hb-tab">
+		<div class="col-sm-12">Centroïdes</div>
 
 		<table class="table table-condensed table-bordered table-striped">
 			<thead>
@@ -80,10 +82,12 @@
 			</tr>
 			</tbody>
 		</table>
-		<!-- IDENTIFIANT tab --> 
+		</div>
 		</tab> 
+		<!-- IDENTIFIANT tab --> 
 		<tab>
 			<tab-heading>Identifiant</tab-heading>
+			<div class="hb-tab">
 			<div class="form-group">
 			
 				<label for="author" class="col-sm-1 control-label">Auteur</label> 
@@ -188,11 +192,12 @@
 				</tbody>
 			</table>
 		</div>
+		</div>
 		</tab> 
 		<!-- CARACTERISTIQUE tab --> 
 		<tab>
 			<tab-heading>Caractéristiques</tab-heading>
-			<h5>Caractéristiques</h5>
+			<div class="hb-tab">
 			<div class="col-sm-12">
 				<table class="table table-condensed table-bordered table-striped" 
 					ng-init="carIndexes = [1, 2, 3, 4, 5, 6]">
@@ -252,7 +257,9 @@
 				</table>
 			</div>
 
-			<h5>Etats</h5>
+			<div class="col-sm-12">
+				<h5>Etats</h5>
+			</div>
 			<div class="col-sm-12">
 				<table class="table table-condensed table-bordered table-striped" 
 					ng-init="etatIndexes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
@@ -368,173 +375,138 @@
 					</tbody>
 				</table>
 			</div>
-		
+		</div>
 		</tab>
 		 
 		<!-- PARTENAIRES tab --> 
-		<tab heading="Partenaires">
-		<table class="striped tight sortable"
-			ng-init="partenaires = ['GERANT', 'USAGER', 'FOURNISSEUR', 'PROPRIETAIRE']">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Id</th>
-					<th>ID_G</th>
-					<th>Nom</th>
-					<th>Groupe</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tr ng-repeat="partenaire in partenaires">
-				<td>{{partenaire}}</td>
-				<td><input type="text"
-					ng-model="elfin.PARTENAIRE[partenaire].Id"></td>
-				<td><input type="text"
-					ng-model="elfin.PARTENAIRE[partenaire].ID_G"></td>
-				<td><input type="text"
-					ng-model="elfin.PARTENAIRE[partenaire].NOM"></td>
-				<td><input type="text"
-					ng-model="elfin.PARTENAIRE[partenaire].GROUPE"></td>
-				<td class="right"><a><i class="icon-zoom-in"></i></a></td>
-
-			</tr>
-		</table>
-		<!--                     </form> --> </tab> <!-- ACTIVITE --> <tab
-			heading="Activité">
-		<div class="col_8">
-			<h5>Echéances</h5>
-		</div>
-		<div class="col_4 right">
-			<ul class="button-bar">
-				<li><a
-					ng-click="addRow(elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', {DATE: '', ACTION: '', PAR_QUI: '', POUR_QUI: '', E_DATE: '', E_ACTION: '', E_PAR_QUI: '', E_POUR_QUI: '', E_STATUT: '', REMARQUE: ''})"><i
-						class="icon-plus-sign"></i> Nouveau</a></li>
-			</ul>
-		</div>
-
-		<!--                     <form class="vertical"> -->
-		<table class="striped tight sortable">
-			<thead>
-				<tr>
-					<th>Date</th>
-					<th>Action</th>
-					<th>Par Qui</th>
-					<th>Pour Qui</th>
-					<th>E. Date</th>
-					<th>E. Action</th>
-					<th>E. Par Qui</th>
-					<th>E. Pour Quoi</th>
-					<th>E. Statut</th>
-					<th>Remarque</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tr ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE">
-				<td><input type="text" ng-model="echeance.DATE"></td>
-				<td><input type="text" ng-model="echeance.ACTION"></td>
-				<td><input type="text" ng-model="echeance.PAR_QUI"></td>
-				<td><input type="text" ng-model="echeance.POUR_QUI"></td>
-				<td><input type="text" ng-model="echeance.E_DATE"></td>
-				<td><input type="text" ng-model="echeance.E_ACTION"></td>
-				<td><input type="text" ng-model="echeance.E_PAR_QUI"></td>
-				<td><input type="text" ng-model="echeance.E_POUR_QUI"></td>
-				<td><input type="text" ng-model="echeance.E_STATUT"></td>
-				<td><input type="text" ng-model="echeance.E_REMARQUET"></td>
-
-				<td class="right"><a
-					ng-click="elfin.ACTIVITE.EVENEMENT.ECHEANCE.splice($index, 1)"><i
-						class="icon-remove-sign"></i></a></td>
-
-			</tr>
-		</table>
-		<!--                     </form> -->
-
-		<div class="col_8">
-			<h5>Gestion</h5>
-		</div>
-		<div class="col_4 right">
-			<ul class="button-bar">
-				<li><a
-					ng-click="addRow(elfin, 'ACTIVITE.GESTION.L', {POS: '', C: [{POS:'1', VALEUR:''}, {POS:'2', VALEUR:''}, {POS:'3', VALEUR:''}, {POS:'4', VALEUR:''}, {POS:'5', VALEUR:''}, {POS:'6', VALEUR:''}, {POS:'7', VALEUR:''}]})"><i
-						class="icon-plus-sign"></i> Nouveau</a></li>
-			</ul>
-		</div>
-
-		<!--                     <form class="vertical"> -->
-		<table class="striped tight sortable">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>C1</th>
-					<th>C2</th>
-					<th>C3</th>
-					<th>C4</th>
-					<th>C5</th>
-					<th>C6</th>
-					<th>C7</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tr ng-repeat="l in elfin.ACTIVITE.GESTION.L">
-				<td><input type="text" ng-model="l.POS"></td>
-				<td><input type="text" ng-model="l.C[0].VALEUR"></td>
-				<td><input type="text" ng-model="l.C[1].VALEUR"></td>
-				<td><input type="text" ng-model="l.C[2].VALEUR"></td>
-				<td><input type="text" ng-model="l.C[3].VALEUR"></td>
-				<td><input type="text" ng-model="l.C[4].VALEUR"></td>
-				<td><input type="text" ng-model="l.C[5].VALEUR"></td>
-				<td><input type="text" ng-model="l.C[6].VALEUR"></td>
-
-				<td class="right"><a
-					ng-click="elfin.ACTIVITE.GESTION.L.splice($index, 1)"><i
-						class="icon-remove-sign"></i></a></td>
-			</tr>
-		</table>
-		<!--                     </form> --> 
-		</tab>
-		<!-- FORME tab --> 
-		<tab heading="Forme">
+<!-- 		<tab heading="Partenaires"> -->
+<!-- 			<table class="striped tight sortable" -->
+<!-- 				ng-init="partenaires = ['GERANT', 'USAGER', 'FOURNISSEUR', 'PROPRIETAIRE']"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th>#</th> -->
+<!-- 						<th>Id</th> -->
+<!-- 						<th>ID_G</th> -->
+<!-- 						<th>Nom</th> -->
+<!-- 						<th>Groupe</th> -->
+<!-- 						<th></th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tr ng-repeat="partenaire in partenaires"> -->
+<!-- 					<td>{{partenaire}}</td> -->
+<!-- 					<td><input type="text" -->
+<!-- 						ng-model="elfin.PARTENAIRE[partenaire].Id"></td> -->
+<!-- 					<td><input type="text" -->
+<!-- 						ng-model="elfin.PARTENAIRE[partenaire].ID_G"></td> -->
+<!-- 					<td><input type="text" -->
+<!-- 						ng-model="elfin.PARTENAIRE[partenaire].NOM"></td> -->
+<!-- 					<td><input type="text" -->
+<!-- 						ng-model="elfin.PARTENAIRE[partenaire].GROUPE"></td> -->
+<!-- 					<td class="right"><a><i class="icon-zoom-in"></i></a></td> -->
+		
+<!-- 				</tr> -->
+<!-- 			</table> -->
+<!-- 		</tab>  -->
+		<!-- ACTIVITE --> 
+<!-- 		<tab heading="Activité"> -->
+<!-- 			<div class="col_8"> -->
+<!-- 				<h5>Echéances</h5> -->
+<!-- 			</div> -->
+<!-- 			<div class="col_4 right"> -->
+<!-- 				<ul class="button-bar"> -->
+<!-- 					<li><a -->
+<!-- 						ng-click="addRow(elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', {DATE: '', ACTION: '', PAR_QUI: '', POUR_QUI: '', E_DATE: '', E_ACTION: '', E_PAR_QUI: '', E_POUR_QUI: '', E_STATUT: '', REMARQUE: ''})"><i -->
+<!-- 							class="icon-plus-sign"></i> Nouveau</a></li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
+	
+<!-- 			<table class="striped tight sortable"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th>Date</th> -->
+<!-- 						<th>Action</th> -->
+<!-- 						<th>Par Qui</th> -->
+<!-- 						<th>Pour Qui</th> -->
+<!-- 						<th>E. Date</th> -->
+<!-- 						<th>E. Action</th> -->
+<!-- 						<th>E. Par Qui</th> -->
+<!-- 						<th>E. Pour Quoi</th> -->
+<!-- 						<th>E. Statut</th> -->
+<!-- 						<th>Remarque</th> -->
+<!-- 						<th></th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tr ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE"> -->
+<!-- 					<td><input type="text" ng-model="echeance.DATE"></td> -->
+<!-- 					<td><input type="text" ng-model="echeance.ACTION"></td> -->
+<!-- 					<td><input type="text" ng-model="echeance.PAR_QUI"></td> -->
+<!-- 					<td><input type="text" ng-model="echeance.POUR_QUI"></td> -->
+<!-- 					<td><input type="text" ng-model="echeance.E_DATE"></td> -->
+<!-- 					<td><input type="text" ng-model="echeance.E_ACTION"></td> -->
+<!-- 					<td><input type="text" ng-model="echeance.E_PAR_QUI"></td> -->
+<!-- 					<td><input type="text" ng-model="echeance.E_POUR_QUI"></td> -->
+<!-- 					<td><input type="text" ng-model="echeance.E_STATUT"></td> -->
+<!-- 					<td><input type="text" ng-model="echeance.E_REMARQUET"></td> -->
+	
+<!-- 					<td class="right"><a -->
+<!-- 						ng-click="elfin.ACTIVITE.EVENEMENT.ECHEANCE.splice($index, 1)"><i -->
+<!-- 							class="icon-remove-sign"></i></a></td> -->
+	
+<!-- 				</tr> -->
+<!-- 			</table> -->
+	
+<!-- 			<div class="col_8"> -->
+<!-- 				<h5>Gestion</h5> -->
+<!-- 			</div> -->
+<!-- 			<div class="col_4 right"> -->
+<!-- 				<ul class="button-bar"> -->
+<!-- 					<li><a -->
+<!-- 						ng-click="addRow(elfin, 'ACTIVITE.GESTION.L', {POS: '', C: [{POS:'1', VALEUR:''}, {POS:'2', VALEUR:''}, {POS:'3', VALEUR:''}, {POS:'4', VALEUR:''}, {POS:'5', VALEUR:''}, {POS:'6', VALEUR:''}, {POS:'7', VALEUR:''}]})"><i -->
+<!-- 							class="icon-plus-sign"></i> Nouveau</a></li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
+	
+<!-- 			<table class="striped tight sortable"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th>#</th> -->
+<!-- 						<th>C1</th> -->
+<!-- 						<th>C2</th> -->
+<!-- 						<th>C3</th> -->
+<!-- 						<th>C4</th> -->
+<!-- 						<th>C5</th> -->
+<!-- 						<th>C6</th> -->
+<!-- 						<th>C7</th> -->
+<!-- 						<th></th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tr ng-repeat="l in elfin.ACTIVITE.GESTION.L"> -->
+<!-- 					<td><input type="text" ng-model="l.POS"></td> -->
+<!-- 					<td><input type="text" ng-model="l.C[0].VALEUR"></td> -->
+<!-- 					<td><input type="text" ng-model="l.C[1].VALEUR"></td> -->
+<!-- 					<td><input type="text" ng-model="l.C[2].VALEUR"></td> -->
+<!-- 					<td><input type="text" ng-model="l.C[3].VALEUR"></td> -->
+<!-- 					<td><input type="text" ng-model="l.C[4].VALEUR"></td> -->
+<!-- 					<td><input type="text" ng-model="l.C[5].VALEUR"></td> -->
+<!-- 					<td><input type="text" ng-model="l.C[6].VALEUR"></td> -->
+	
+<!-- 					<td class="right"><a -->
+<!-- 						ng-click="elfin.ACTIVITE.GESTION.L.splice($index, 1)"><i -->
+<!-- 							class="icon-remove-sign"></i></a></td> -->
+<!-- 				</tr> -->
+<!-- 			</table> -->
+<!-- 		</tab> -->
+		<!-- End of ACTIVITE tab --> 
+		
+		<!-- Annexes tab -->
+		<tab> 
+			<tab-heading><div hb-annexes-number></div></tab-heading>
+			<div class="hb-tab"><div hb-annexes-component></div></div>
+		</tab>		
+			<!-- FORME tab -->
+		<tab> 
 			<tab-heading>Forme</tab-heading>
-			<div class="hb-tab">
-			<div hb-forme-component></div>
-		</tab>
-		<!-- ANNEXE --> <tab heading="Annexe">
-
-		<div class="col_8">
-			<h5>Annexes</h5>
-		</div>
-
-		<div class="col_4 right">
-			<ul class="button-bar">
-				<li><a
-					ng-click="addRow(elfin, 'ANNEXE.RENVOI', {POS: '', LIEN:''})"><i
-						class="icon-plus-sign"></i> Nouveau</a></li>
-			</ul>
-		</div>
-
-		<!--                     <form class="vertical"> -->
-		<table class="striped tight sortable">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Lien</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tr ng-repeat="renvoi in elfin.ANNEXE.RENVOI">
-				<td><input type="text" ng-model="renvoi.POS"></td>
-				<td><a href="{{renvoi.LIEN}}">{{renvoi.LIEN}}</a></td>
-
-				<td class="right"><a ng-click="uploadFile(renvoi)"><i
-						class="icon-upload"></i></a> <a
-					ng-click="elfin.ANNEXE.RENVOI.splice($index, 1)"><i
-						class="icon-remove-sign"></i></a></td>
-			</tr>
-		</table>
-		<!--                     </form> --> 
+			<div class="hb-tab"><div hb-forme-component></div></div>
 		</tab> 
-		<!-- DIVERS -->
-		<tab heading="Divers"></tab>
-		</tabset>
 	</div>
 </div>
