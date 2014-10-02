@@ -1,5 +1,10 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
+	
+	
+	<span ng-show="elfinForm.nom.$error.required">Le champs <strong>No de contrat</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.objectif.$error.required">Le champs <strong>Immeuble</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.fournisseur_valeur.$error.required">Le champs <strong>Entreprise</strong> est obligatoire!</span>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -8,55 +13,53 @@
 				<tab-heading>Contrat</tab-heading>
 				<div class="hb-tab">
 					<div class="row">				
+					
 						<div class="form-group has-feedback col-sm-6"
 							ng-class="getCssHasFeedback(elfinForm.nom)">
-							<label for="nom" class="col-sm-4 control-label">Contrat</label>
+							<label for="nom" class="col-sm-4 control-label">No de contrat</label>
 							<div class="col-sm-8">
 								<input id="nom" name="nom" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.NOM">
-							</div>
-						</div>
-						<div class="form-group has-feedback col-sm-6"  
-							ng-class="getCssHasFeedback(elfinForm.valeur)">
-							<label for="valeur" class="col-sm-4 control-label">Montant</label>
-							<div class="col-sm-8">
-								<input id="valeur" name="valeur" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.VALEUR">
+									ng-model="elfin.IDENTIFIANT.NOM" required>
 							</div>
 						</div>
 						<div class="form-group has-feedback col-sm-6"
 							ng-class="getCssHasFeedback(elfinForm.objectif)">
-							<label for="objectif" class="col-sm-4 control-label">Immeuble(s)</label>
+							<label for="objectif" class="col-sm-4 control-label">Immeuble</label>
 							<div class="col-sm-8">
 								<input id="objectif" name="objectif"  type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.OBJECTIF">
+									ng-model="elfin.IDENTIFIANT.OBJECTIF" required>
 							</div>
 						</div>
-						<div class="form-group has-feedback col-sm-6"
-							ng-class="getCssHasFeedback(elfinForm.car3_valeur)">
-							<label for="car3_valeur" class="col-sm-4 control-label">Durée
-								de la reconduction (ans)</label>
-							<div class="col-sm-8">
-								<input id="car3_valeur" name="car3_valeur" type="text" class="form-control"
-									ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR">
+						<div class="form-group has-feedback col-sm-12"
+							ng-class="getCssHasFeedback(elfinForm.fournisseur_valeur)">
+							<label for="fournisseur_valeur" class="col-sm-2 control-label">Entreprise</label>
+							<div class="col-sm-9">
+								<div class="input-group">
+									<input id="fournisseur_valeur" name="fournisseur_valeur" type="text" class="form-control"
+										hb-no-dirty-check 
+										autocomplete="off"
+										typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8"
+										ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
+										required>
+										<span
+										class="input-group-btn" tooltip="Recherche d'entreprise"
+										 >
+										<button class="btn btn-default" type="button" hb-choose-one
+											ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+											<i class="glyphicon glyphicon-list-alt"></i>
+										</button>
+									</span>
+								</div>
 							</div>
-						</div>					
+						</div>						
+						
 						<div class="form-group has-feedback col-sm-6"
 							ng-class="getCssHasFeedback(elfinForm.de)">
 							<label for="de" class="col-sm-4 control-label">Date
-								de début (m2)</label>
+								de début</label>
 							<div class="col-sm-8">
 								<input id="de" name="de" type="text" class="form-control"
 									ng-model=elfin.IDENTIFIANT.DE>
-							</div>
-						</div>
-						<div class="form-group has-feedback col-sm-6"
-							ng-class="getCssHasFeedback(elfinForm.car4_valeur)">
-							<label for="car4_valeur" class="col-sm-4 control-label">Délais
-								de préavis (mois)</label>
-							<div class="col-sm-8">
-								<input id="car4_valeur" name="car4_valeur" type="text" class="form-control"
-									ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR">
 							</div>
 						</div>
 						<div class="form-group has-feedback col-sm-6"
@@ -69,15 +72,6 @@
 							</div>
 						</div>
 						<div class="form-group has-feedback col-sm-6"
-							ng-class="getCssHasFeedback(elfinForm.car5_valeur)">
-							<label for="car5_valeur" class="col-sm-4 control-label">Nombre
-								d'intervention (par année)</label>
-							<div class="col-sm-8">
-								<input id="car5_valeur" name="car5_valeur" type="text" class="form-control"
-									ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR">
-							</div>
-						</div>
-						<div class="form-group has-feedback col-sm-6"
 							ng-class="getCssHasFeedback(elfinForm.par)">
 							<label for="par" class="col-sm-4 control-label">Dénoncé
 								au</label>
@@ -85,7 +79,44 @@
 								<input id="par" name="par" type="text" class="form-control"
 									ng-model="elfin.IDENTIFIANT.PAR">
 							</div>
+						</div>						
+						<div class="form-group has-feedback col-sm-6"  
+							ng-class="getCssHasFeedback(elfinForm.valeur)">
+							<label for="valeur" class="col-sm-4 control-label">Montant</label>
+							<div class="col-sm-8">
+								<input id="valeur" name="valeur" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.VALEUR" >
+							</div>
+						</div>								
+						
+						<div class="form-group has-feedback col-sm-6"
+							ng-class="getCssHasFeedback(elfinForm.car3_valeur)">
+							<label for="car3_valeur" class="col-sm-6 control-label">Durée
+								de la reconduction (ans)</label>
+							<div class="col-sm-6">
+								<input id="car3_valeur" name="car3_valeur" type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR">
+							</div>
+						</div>								
+						<div class="form-group has-feedback col-sm-6"
+							ng-class="getCssHasFeedback(elfinForm.car4_valeur)">
+							<label for="car4_valeur" class="col-sm-6 control-label">Délais
+								de préavis (mois)</label>
+							<div class="col-sm-6">
+								<input id="car4_valeur" name="car4_valeur" type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR">
+							</div>
 						</div>
+						<div class="form-group has-feedback col-sm-6"
+							ng-class="getCssHasFeedback(elfinForm.car5_valeur)">
+							<label for="car5_valeur" class="col-sm-6 control-label">Nombre
+								d'intervention (par année)</label>
+							<div class="col-sm-6">
+								<input id="car5_valeur" name="car5_valeur" type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR">
+							</div>
+						</div>
+						
 						<div class="form-group has-feedback col-sm-6"
 							ng-class="getCssHasFeedback(elfinForm.usager_value)">
 							<label for="usager_value" class="col-sm-4 control-label">Qui
@@ -95,12 +126,12 @@
 									ng-model="elfin.PARTENAIRE.USAGER.VALUE">
 							</div>
 						</div>
+						
 						<div class="form-group has-feedback col-sm-6" 
 							ng-class="getCssHasFeedback(elfinForm.groupe)">
 							<label for="groupe" class="col-sm-4 control-label" >Groupe</label>
 							<div class="col-sm-8" >
-								<input id="groupe" name="groupe" type="text" class="form-control"
-									ng-model="elfin.GROUPE">
+								<div hb-single-select hb-single-select-options="groupeChoices" ng-model="elfin.GROUPE" ></div>
 							</div>
 						</div>
 						<div class="form-group has-feedback col-sm-6" 
@@ -112,46 +143,35 @@
 									ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE">
 							</div>
 						</div>
+						
 						<div class="form-group has-feedback col-sm-6" 
-							ng-class="getCssHasFeedback(elfinForm.prestation)">
-							<label for="prestation" class="col-sm-4 control-label" >Prestation</label>
+							ng-class="getCssHasFeedback(elfinForm.prestation_I)">
+							<label for="prestation_I" class="col-sm-4 control-label" >Prestation I</label>
 							<div class="col-sm-8" >
-<!-- 							TODO: CANNOT LEAVE ng-model BLANK: TO REVIEW. -->
+								<div hb-single-select hb-single-select-options="prestation_IChoices" ng-model="elfin.CARACTERISTIQUE.CAR1.UNITE" ></div>
+							</div>							
+						</div>
+						<div class="form-group has-feedback col-sm-6" 
+							ng-class="getCssHasFeedback(elfinForm.prestation_II)">
+							<label for="prestation_II" class="col-sm-4 control-label" >Prestation II</label>
+							<div class="col-sm-8" >
+								<input id="prestation_II" name="prestation_II" type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR1.VALEUR">							
 <!-- 								<div class="input-group"> -->
-<!-- 									<input id="prestation" name="prestation" type="text" -->
-<!-- 										class="form-control" ng-model="" -->
-<!-- 										tooltip="" required>  -->
+<!-- 									<input id="prestation_II" name="prestation_II" type="text" class="form-control" -->
+<!-- 										ng-model="elfin.CARACTERISTIQUE.CAR1.VALEUR"> -->
 <!-- 									<span class="input-group-btn"> -->
 <!-- 										<button class="btn btn-default" type="button" ng-click=""> -->
 <!-- 											<i class="glyphicon glyphicon-list-alt"></i> -->
 <!-- 										</button> -->
 <!-- 									</span> -->
 <!-- 								</div> -->
-							</div>
-						</div>
-						<div class="form-group has-feedback col-sm-6"
-							ng-class="getCssHasFeedback(elfinForm.fournisseur_valeur)">
-							<label for="fournisseur_valeur" class="col-sm-4 control-label">Entreprise</label>
-							<div class="col-sm-8">
-								<div class="input-group">
-									<input id="fournisseur_valeur" name="fournisseur_valeur" type="text" class="form-control"
-										hb-no-dirty-check 
-										autocomplete="off"
-										typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8"
-										ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE">
-									<span class="input-group-btn" tooltip="Recherche d'entreprise">
-										<button class="btn btn-default" type="button" hb-choose-one
-											ng-click="hbChooseOne(elfin, 'elfin.PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
-											<i class="glyphicon glyphicon-list-alt"></i>
-										</button>
-									</span>
-								</div>
-							</div>
+							</div>							
 						</div>
 						<div class="form-group has-feedback col-sm-12" 
 							ng-class="getCssHasFeedback(elfinForm.remarque)">
 							<label for="remarque" class="col-sm-2 control-label" >Remarque</label>
-							<div class="col-sm-10" >
+							<div class="col-sm-9" >
 								<input id="remarque" name="remarque" type="text" class="form-control"
 									ng-model="elfin.DIVERS.REMARQUE">
 							</div>
