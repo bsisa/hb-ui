@@ -27,77 +27,137 @@
 		<tab>
 			<tab-heading>Identifiant</tab-heading>
 			<div class="hb-tab">
-			<div class="form-group">
 			
-				<label for="author" class="col-sm-1 control-label">Auteur</label> 
-				<div class="col-sm-5">
-					<input id="author" type="text" class="form-control"
-						ng-model="elfin.IDENTIFIANT.AUT">
+<div class="panel panel-default">
+  <div class="panel-body">			
+			
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">
+						<label for="author" class="col-sm-4 control-label">Auteur</label> 
+						<div class="col-sm-8">
+							<input id="author" type="text" class="form-control"
+								ng-model="elfin.IDENTIFIANT.AUT">
+						</div>
+					</div>
 				</div>
-				<label for="name" class="col-sm-1 control-label">Nom</label>
-				<div class="col-sm-5">
-					<input id="name" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.NOM">
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">
+						<label for="name" class="col-sm-4 control-label">Nom</label>
+						<div class="col-sm-8">
+							<input id="name" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.NOM">
+						</div>
+					</div>
 				</div>
-				<label for="goal" class="col-sm-1 control-label">Objectif</label> 
-				<div class="col-sm-5">
-					<input id="goal" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF"> 
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">				
+						<label for="goal" class="col-sm-4 control-label">Objectif</label> 
+						<div class="col-sm-8">
+							<input id="goal" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF"> 
+						</div>
+					</div>
 				</div>
-				<label for="alias" class="col-sm-1 control-label">Alias</label>
-				<div class="col-sm-5">
-					<input id="alias" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS">
-				</div>				
-				<label for="value_new" class="col-sm-1 control-label">Valeur à neuf</label>
-				<div class="col-sm-5">
-					<input id="value_new" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">
+						<label for="alias" class="col-sm-4 control-label">Alias</label>
+						<div class="col-sm-8">
+							<input id="alias" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS">
+						</div>
+					</div>
 				</div>
-			</div>
+				<div class="col-sm-12" style="border: solid 2px black" >
+					<div class="form-group">
+						<label for="value_new" class="col-sm-2 control-label">Valeur à neuf</label>
+						<div class="col-sm-4">
+							<input id="value_new" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
+						</div>
+					</div>
+				</div>
 
-			<div class="form-group">
-				<label for="manager" class="col-sm-1 control-label">Gérant</label>
-				<div class="col-sm-5">
-					<input id="manager" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.GER">
+				<div class="col-sm-6 col-sm-offset-6 " style="border: solid 2px black" style="border: solid 2px black">
+					<div class="form-group">
+						<label for="manager" class="col-sm-4 control-label">Gérant</label>
+						<div class="col-sm-8">
+							<input id="manager" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.GER">
+						</div>
+					</div>
 				</div>
-				<label for="from" class="col-sm-1 control-label">De</label>
-				<div class="col-sm-5">
-					<input id="from" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.DE">
+				
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">				
+						<label for="from" class="col-sm-4 control-label">De</label>
+						<div class="col-sm-8">
+							<input id="from" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.DE">
+						</div>
+					</div>
 				</div>
-				<label for="quality" class="col-sm-1 control-label">Qualité</label>
-				<div class="col-sm-5"> 
-					<input id="quality" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.QUALITE">
+				
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">
+						<label for="quality" class="col-sm-4 control-label">Qualité</label>
+						<div class="col-sm-8"> 
+							<input id="quality" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.QUALITE">
+						</div>
+					</div>
 				</div> 
 				
-				<label for="to" class="col-sm-1 control-label">A</label>
-				<div class="col-sm-5">
-					<input id="to" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.A">
-				</div> 
-				
-				<label for="value" class="col-sm-1 control-label">Valeur</label>
-				<div class="col-sm-5"> 
-					<input id="value" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.VALEUR">
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">
+						<label for="to" class="col-sm-4 control-label">A</label>
+						<div class="col-sm-8">
+							<input id="to" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.A">
+						</div>
+					</div>
 				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="responsible" class="col-sm-1 control-label">Responsable</label> 
-				<div class="col-sm-5" >
-					<input id="responsible" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.RES">
+				
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">				
+						<label for="value" class="col-sm-4 control-label">Valeur</label>
+						<div class="col-sm-8"> 
+							<input id="value" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.VALEUR">
+						</div>
+					</div>
+				</div>
+</div>
+</div>			
+<div class="panel panel-default">
+  <div class="panel-body">
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">				
+						<label for="responsible" class="col-sm-4 control-label">Responsable</label> 
+						<div class="col-sm-8" >
+							<input id="responsible" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.RES">
+						</div>
+					</div>
 				</div>
 				 
-				<label for="origin" class="col-sm-1 control-label">Origine</label> 
-				<div class="col-sm-5" >
-					<input id="origin" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ORIGINE">
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">				
+						<label for="origin" class="col-sm-4 control-label">Origine</label> 
+						<div class="col-sm-8" >
+							<input id="origin" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ORIGINE">
+						</div>
+					</div>
 				</div>
 				
-				<label for="account" class="col-sm-1 control-label">Compte</label>
-				<div class="col-sm-5" >
-					<input id="account" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.COMPTE">
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">				
+						<label for="account" class="col-sm-4 control-label">Compte</label>
+						<div class="col-sm-8" >
+							<input id="account" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.COMPTE">
+						</div>
+					</div>
 				</div>
 	
-				<label for="by" class="col-sm-1 control-label">Par</label>
-				<div class="col-sm-5" >
-					<input id="by" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.PAR">
+				<div class="col-sm-6" style="border: solid 2px black" >
+					<div class="form-group">
+						<label for="by" class="col-sm-4 control-label">Par</label>
+						<div class="col-sm-8" >
+							<input id="by" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.PAR">
+						</div>
+					</div>
 				</div>
-			</div>
+</div>
+</div>			
 
 		<div class="clear"></div>
 
@@ -160,6 +220,11 @@
 			<div class="col-sm-5">
 				<input id="source" type="text" class="form-control"
 					ng-model="elfin.SOURCE">
+			</div>
+			<label for="remark" class="col-sm-1 control-label">Remarque</label>
+			<div class="col-sm-5">
+				<input id="remark" type="text" class="form-control"
+					ng-model="elfin.DIVERS.REMARQUE">
 			</div>
 		</div>
 		</div>
@@ -478,36 +543,5 @@
 			<tab-heading>Forme</tab-heading>
 			<div class="hb-tab"><div hb-forme-component></div></div>
 		</tab>
-		<!-- GEOSELECTION tab --> 
-<!-- 		<tab> -->
-<!-- 		<tab-heading>Géosélection</tab-heading> -->
-<!-- 		<div class="hb-tab"> -->
-<!-- 		<div class="col-sm-12">Centroïdes</div> -->
-
-<!-- 		<table class="table table-condensed table-bordered table-striped"> -->
-<!-- 			<thead> -->
-<!-- 				<tr> -->
-<!-- 					<th style="padding-right:5em;">Type</th> -->
-<!-- 					<th>Xm</th> -->
-<!-- 					<th>Ym</th> -->
-<!-- 					<th>Zm</th> -->
-<!-- 					<th>Rm</th> -->
-<!-- 				</tr> -->
-<!-- 			</thead> -->
-<!-- 			<tbody> -->
-<!-- 			<tr ng-repeat="centroide in elfin.GEOSELECTION.CENTROIDE"> -->
-<!-- 				<td><select chosen class="form-control" data-placeholder="Choisir un type" -->
-<!-- 					ng-model="centroide.TYPE" -->
-<!-- 					ng-options="value as label for (value, label) in typeTypes"> -->
-<!-- 				</select></td> -->
-<!-- 				<td><input type="text" class="form-control" ng-model="centroide.XM"></td> -->
-<!-- 				<td><input type="text" class="form-control" ng-model="centroide.YM"></td> -->
-<!-- 				<td><input type="text" class="form-control" ng-model="centroide.ZM"></td> -->
-<!-- 				<td><input type="text" class="form-control" ng-model="centroide.RM"></td> -->
-<!-- 			</tr> -->
-<!-- 			</tbody> -->
-<!-- 		</table> -->
-<!-- 		</div> -->
-<!-- 		</tab> -->
 	</div>
 </div>
