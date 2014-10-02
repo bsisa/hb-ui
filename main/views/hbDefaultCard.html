@@ -4,37 +4,7 @@
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
 		<tabset><!-- ui.bootstrap AngularJS UI tabset --> 
-		<!-- ATTRIBUTS tab -->
-		<tab> <tab-heading>Attributs <!-- <i class="icon-tag"></i> <b>Attributs</b> -->
-		</tab-heading>
-		<div class="hb-tab">
-		<div class="form-group">
-			<label for="groupe" class="col-sm-1 control-label">Groupe</label>
-			<div class="col-sm-5">
-				<input id="groupe" type="text" class="form-control"
-					ng-model="elfin.GROUPE">
-			</div>
-			<label for="type" class="col-sm-1 control-label">Type</label>
-			<!-- angular-chosen-localytics -->
-			<div class="col-sm-5">
-				<select id="type" class="form-control" chosen
-					data-placeholder="Choisir un type" ng-model="elfin.TYPE"
-					ng-options="value as label for (value, label) in elfinTypes">
-				</select>
-			</div>
-			<label for="nature" class="col-sm-1 control-label">Nature</label>
-			<div class="col-sm-5">
-				<input id="nature" type="text" class="form-control"
-					ng-model="elfin.NATURE">
-			</div>
-			<label for="source" class="col-sm-1 control-label">Source</label>
-			<div class="col-sm-5">
-				<input id="source" type="text" class="form-control"
-					ng-model="elfin.SOURCE">
-			</div>
-		</div>
-		</div>
-		</tab> 
+ 
 		<!-- MUTATIONS tab --> 
 <!-- 		<tab> -->
 <!-- 		<tab-heading>Mutations</tab-heading> -->
@@ -53,37 +23,6 @@
 <!-- 			</tr> -->
 <!-- 		</table> -->
 <!-- 		</tab>  -->
-		<!-- GEOSELECTION tab --> 
-		<tab>
-		<tab-heading>Géosélection</tab-heading>
-		<div class="hb-tab">
-		<div class="col-sm-12">Centroïdes</div>
-
-		<table class="table table-condensed table-bordered table-striped">
-			<thead>
-				<tr>
-					<th style="padding-right:5em;">Type</th>
-					<th>Xm</th>
-					<th>Ym</th>
-					<th>Zm</th>
-					<th>Rm</th>
-				</tr>
-			</thead>
-			<tbody>
-			<tr ng-repeat="centroide in elfin.GEOSELECTION.CENTROIDE">
-				<td><select chosen class="form-control" data-placeholder="Choisir un type"
-					ng-model="centroide.TYPE"
-					ng-options="value as label for (value, label) in typeTypes">
-				</select></td>
-				<td><input type="text" class="form-control" ng-model="centroide.XM"></td>
-				<td><input type="text" class="form-control" ng-model="centroide.YM"></td>
-				<td><input type="text" class="form-control" ng-model="centroide.ZM"></td>
-				<td><input type="text" class="form-control" ng-model="centroide.RM"></td>
-			</tr>
-			</tbody>
-		</table>
-		</div>
-		</tab> 
 		<!-- IDENTIFIANT tab --> 
 		<tab>
 			<tab-heading>Identifiant</tab-heading>
@@ -194,6 +133,37 @@
 		</div>
 		</div>
 		</tab> 
+		<!-- ATTRIBUTS tab -->
+		<tab> <tab-heading>Attributs <!-- <i class="icon-tag"></i> <b>Attributs</b> -->
+		</tab-heading>
+		<div class="hb-tab">
+		<div class="form-group">
+			<label for="groupe" class="col-sm-1 control-label">Groupe</label>
+			<div class="col-sm-5">
+				<input id="groupe" type="text" class="form-control"
+					ng-model="elfin.GROUPE">
+			</div>
+			<label for="type" class="col-sm-1 control-label">Type</label>
+			<!-- angular-chosen-localytics -->
+			<div class="col-sm-5">
+				<select id="type" class="form-control" chosen
+					data-placeholder="Choisir un type" ng-model="elfin.TYPE"
+					ng-options="value as label for (value, label) in elfinTypes">
+				</select>
+			</div>
+			<label for="nature" class="col-sm-1 control-label">Nature</label>
+			<div class="col-sm-5">
+				<input id="nature" type="text" class="form-control"
+					ng-model="elfin.NATURE">
+			</div>
+			<label for="source" class="col-sm-1 control-label">Source</label>
+			<div class="col-sm-5">
+				<input id="source" type="text" class="form-control"
+					ng-model="elfin.SOURCE">
+			</div>
+		</div>
+		</div>
+		</tab>
 		<!-- CARACTERISTIQUE tab --> 
 		<tab>
 			<tab-heading>Caractéristiques</tab-heading>
@@ -503,10 +473,41 @@
 			<tab-heading><div hb-annexes-number></div></tab-heading>
 			<div class="hb-tab"><div hb-annexes-component></div></div>
 		</tab>		
-			<!-- FORME tab -->
+		<!-- FORME tab -->
 		<tab> 
 			<tab-heading>Forme</tab-heading>
 			<div class="hb-tab"><div hb-forme-component></div></div>
-		</tab> 
+		</tab>
+		<!-- GEOSELECTION tab --> 
+<!-- 		<tab> -->
+<!-- 		<tab-heading>Géosélection</tab-heading> -->
+<!-- 		<div class="hb-tab"> -->
+<!-- 		<div class="col-sm-12">Centroïdes</div> -->
+
+<!-- 		<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 			<thead> -->
+<!-- 				<tr> -->
+<!-- 					<th style="padding-right:5em;">Type</th> -->
+<!-- 					<th>Xm</th> -->
+<!-- 					<th>Ym</th> -->
+<!-- 					<th>Zm</th> -->
+<!-- 					<th>Rm</th> -->
+<!-- 				</tr> -->
+<!-- 			</thead> -->
+<!-- 			<tbody> -->
+<!-- 			<tr ng-repeat="centroide in elfin.GEOSELECTION.CENTROIDE"> -->
+<!-- 				<td><select chosen class="form-control" data-placeholder="Choisir un type" -->
+<!-- 					ng-model="centroide.TYPE" -->
+<!-- 					ng-options="value as label for (value, label) in typeTypes"> -->
+<!-- 				</select></td> -->
+<!-- 				<td><input type="text" class="form-control" ng-model="centroide.XM"></td> -->
+<!-- 				<td><input type="text" class="form-control" ng-model="centroide.YM"></td> -->
+<!-- 				<td><input type="text" class="form-control" ng-model="centroide.ZM"></td> -->
+<!-- 				<td><input type="text" class="form-control" ng-model="centroide.RM"></td> -->
+<!-- 			</tr> -->
+<!-- 			</tbody> -->
+<!-- 		</table> -->
+<!-- 		</div> -->
+<!-- 		</tab> -->
 	</div>
 </div>
