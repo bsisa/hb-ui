@@ -1,98 +1,513 @@
-	<div hb-card-header >
-		<!-- Custom validation message to be defined here -->
-	</div>
-	<div class="row" style="padding-top: 8px;">
-		<div class="col-xs-12">
-			<tabset> <!-- FONTAINE tab --> <tab> <tab-heading>Identification</tab-heading>
-			<div class="hb-tab">
-				<div class="form-group">
-					<label for="nom" class="col-sm-2 control-label">Auteur</label>
-					<div class="col-sm-10">
-						<input id="nom" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.AUT">
+<div hb-card-header>
+	<!-- Custom validation message to be defined here -->
+</div>
+<div class="row" style="padding-top: 8px;">
+	<div class="col-xs-12">
+		<tabset><!-- ui.bootstrap AngularJS UI tabset --> <!-- MUTATIONS tab -->
+		<!-- 		<tab> --> <!-- 		<tab-heading>Mutations</tab-heading> --> <!-- 		<table class="table table-condensed table-bordered table-striped"> -->
+		<!-- 			<thead> --> <!-- 				<tr> --> <!-- 					<th>Date</th> --> <!-- 					<th>Utilisateur</th> -->
+		<!-- 					<th>Rôle</th> --> <!-- 				</tr> --> <!-- 			</thead> --> <!-- 			<tr ng-repeat="mutation in elfin.MUTATIONS"> -->
+		<!-- 				<td>{{mutation.DATE}}</td> --> <!-- 				<td>{{mutation.UTILISATEUR}}</td> -->
+		<!-- 				<td>{{mutation.ROLE}}</td> --> <!-- 			</tr> --> <!-- 		</table> -->
+		<!-- 		</tab>  --> <!-- IDENTIFIANT tab --> <tab> <tab-heading>Identifiant</tab-heading>
+		<div class="hb-tab">
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="author" class="col-sm-4 control-label">Auteur</label>
+							<div class="col-sm-8">
+								<input id="author" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.AUT">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="name" class="col-sm-4 control-label">Nom</label>
+							<div class="col-sm-8">
+								<input id="name" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.NOM">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="goal" class="col-sm-4 control-label">Objectif</label>
+							<div class="col-sm-8">
+								<input id="goal" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.OBJECTIF">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="alias" class="col-sm-4 control-label">Alias</label>
+							<div class="col-sm-8">
+								<input id="alias" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.ALIAS">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="value_new" class="col-sm-2 control-label">Valeur
+								à neuf</label>
+							<div class="col-sm-4">
+								<input id="value_new" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6 col-sm-offset-6 ">
+						<div class="form-group">
+							<label for="manager" class="col-sm-4 control-label">Gérant</label>
+							<div class="col-sm-8">
+								<input id="manager" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.GER">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="from" class="col-sm-4 control-label">De</label>
+							<div class="col-sm-8">
+								<input id="from" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.DE">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="quality" class="col-sm-4 control-label">Qualité</label>
+							<div class="col-sm-8">
+								<input id="quality" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.QUALITE">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="to" class="col-sm-4 control-label">A</label>
+							<div class="col-sm-8">
+								<input id="to" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.A">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="value" class="col-sm-4 control-label">Valeur</label>
+							<div class="col-sm-8">
+								<input id="value" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.VALEUR">
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="prenom" class="col-sm-2 control-label">Adresse</label>
-					<div class="col-sm-10">
-						<input id="prenom" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.NOM"
-							tooltip="elfin.IDENTIFIANT.NOM">
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="responsible" class="col-sm-4 control-label">Responsable</label>
+							<div class="col-sm-8">
+								<input id="responsible" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.RES">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="origin" class="col-sm-4 control-label">Origine</label>
+							<div class="col-sm-8">
+								<input id="origin" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.ORIGINE">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="account" class="col-sm-4 control-label">Compte</label>
+							<div class="col-sm-8">
+								<input id="account" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.COMPTE">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="by" class="col-sm-4 control-label">Par</label>
+							<div class="col-sm-8">
+								<input id="by" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.PAR">
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="prenom" class="col-sm-2 control-label">No</label>
-					<div class="col-sm-10">
-						<input id="prenom" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.ALIAS">
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+
+					<div class="col-sm-12">
+						<table class="table table-condensed table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>
+										<div class="input-group">
+											<div>Mots clés</div>
+											<span class="input-group-btn">
+												<button class="btn btn-default" type="button"
+													ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: '' })">
+													<i class="icon-plus-sign"></i> Nouveau
+												</button>
+											</span>
+										</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody ng-show="elfin.IDENTIFIANT.MOTCLE.length > 0">
+								<tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
+									<td>
+										<div class="input-group">
+											<input type="text" name="keyword{$index}"
+												class="form-control" ng-model="motcle.VALUE"
+												tooltip="elfin.IDENTIFIANT.MOTCLE"
+												placeholder="Saisissez un nouveau mot clé"> <span
+												class="input-group-btn">
+												<button class="btn btn-default"
+													ng-click="removeKeyword($index)">
+													<i class="icon-remove-sign"></i> Supprimer
+												</button>
+											</span>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
+
 				</div>
-				<div class="form-group">
-					<label for="prenom" class="col-sm-2 control-label">Objectif</label>
-					<div class="col-sm-10">
-						<input id="prenom" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.OBJECTIF">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="prenom" class="col-sm-2 control-label">Date</label>
-					<div class="col-sm-10">
-						<input id="prenom" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.DE">
-					</div>
-				</div>		
-				
-			<!-- Keywords  -->
-			<div class="row" >
-				<div class="col-sm-12">
-					<table class="table table-condensed table-bordered table-striped">
-						<thead>
-							<tr>
-								<th>
-									<div class="input-group">
-										<div>Mots clés</div>
-										<span class="input-group-btn">
-											<button class="btn btn-default" type="button"
-												ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: '' })">
-												<i class="icon-plus-sign"></i> Nouveau
-											</button>
-										</span>
-									</div>
-								</th>
-							</tr>
-						</thead>
-						<tbody ng-show="elfin.IDENTIFIANT.MOTCLE.length > 0">
-							<tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
-								<td>
-									<div class="input-group">
-										<input type="text" name="keyword{$index}" class="form-control"
-											ng-model="motcle.VALUE" tooltip="elfin.IDENTIFIANT.MOTCLE"
-											placeholder="Saisissez un nouveau mot clé"> <span
-											class="input-group-btn">
-											<button class="btn btn-default"
-												ng-click="removeKeyword($index)">
-												<i class="icon-remove-sign"></i> Supprimer
-											</button>
-										</span>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>				
-				
-<!-- 			</div> -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="tel" class="col-sm-2 control-label">Caractéristiques</label> -->
-<!-- 					<div class="col-sm-10"> -->
-<!-- 						<input id="tel" type="text" class="form-control" -->
-<!-- 							ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR" -->
-<!-- 							tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR"> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-	
-<!-- 			</div> -->
-			</tab> </tabset>
+			</div>
 		</div>
+		</tab> <!-- ATTRIBUTS tab --> <tab> <tab-heading>Attributs<!-- <i class="icon-tag"></i> <b>Attributs</b> --></tab-heading>
+		<div class="hb-tab">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="groupe" class="col-sm-4 control-label">Groupe</label>
+							<div class="col-sm-8">
+								<input id="groupe" type="text" class="form-control"
+									ng-model="elfin.GROUPE">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="type" class="col-sm-4 control-label">Type</label>
+							<!-- angular-chosen-localytics -->
+							<div class="col-sm-8">
+								<select id="type" class="form-control" chosen
+									data-placeholder="Choisir un type" ng-model="elfin.TYPE"
+									ng-options="value as label for (value, label) in elfinTypes">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="nature" class="col-sm-4 control-label">Nature</label>
+							<div class="col-sm-8">
+								<input id="nature" type="text" class="form-control"
+									ng-model="elfin.NATURE">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="source" class="col-sm-4 control-label">Source</label>
+							<div class="col-sm-8">
+								<input id="source" type="text" class="form-control"
+									ng-model="elfin.SOURCE">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="remark" class="col-sm-2 control-label">Remarque</label>
+							<div class="col-sm-10">
+								<textarea id="remark" rows="4" class="form-control" ng-model="elfin.DIVERS.REMARQUE" ></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</tab> <!-- CARACTERISTIQUE tab --> <tab> <tab-heading>Caractéristiques</tab-heading>
+		<div class="hb-tab">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="col-sm-12">
+						<table class="table table-condensed table-bordered table-striped"
+							ng-init="carIndexes = [1, 2, 3, 4, 5, 6]">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Nom</th>
+									<th>Unité</th>
+									<th>Valeur</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tr ng-repeat="carIndex in carIndexes">
+								<td>{{'CAR' + carIndex}}</td>
+								<td><input type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].NOM"></td>
+								<td><input type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE"></td>
+								<td><input type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR"></td>
+							</tr>
+						</table>
+					</div>
+<!-- 					<div class="col-sm-6"> -->
+<!-- 						<h5>Carset</h5> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm-6 text-right"> -->
+<!-- 						<a class="btn btn-default" -->
+<!-- 							ng-click="addRow(elfin, 'CARACTERISTIQUE.CARSET', {POS: elfin.CARACTERISTIQUE.CARSET.length, NOM:'', UNITE:'', VALEUR:''})"> -->
+<!-- 							<i class="icon-plus-sign"></i> Nouveau -->
+<!-- 						</a> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="col-sm-12"> -->
+<!-- 						<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 							<thead> -->
+<!-- 								<tr> -->
+<!-- 									<th>#</th> -->
+<!-- 									<th>Nom</th> -->
+<!-- 									<th>Unité</th> -->
+<!-- 									<th>Valeur</th> -->
+<!-- 									<th></th> -->
+<!-- 								</tr> -->
+<!-- 							</thead> -->
+<!-- 							<tbody> -->
+<!-- 								<tr ng-repeat="carset in elfin.CARACTERISTIQUE.CARSET"> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="carset.POS"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="carset.NOM"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="carset.UNITE"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="carset.VALEUR"></td> -->
+<!-- 									<td class="right"><a -->
+<!-- 										ng-click="elfin.CARACTERISTIQUE.CARSET.splice($index, 1)"> -->
+<!-- 											<i class="icon-remove-sign"></i> -->
+<!-- 									</a></td> -->
+<!-- 								</tr> -->
+<!-- 							</tbody> -->
+<!-- 						</table> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="col-sm-12"> -->
+<!-- 						<h5>Etats</h5> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm-12"> -->
+<!-- 						<table class="table table-condensed table-bordered table-striped" -->
+<!-- 							ng-init="etatIndexes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"> -->
+<!-- 							<thead> -->
+<!-- 								<tr> -->
+<!-- 									<th>#</th> -->
+<!-- 									<th>A</th> -->
+<!-- 									<th>B</th> -->
+<!-- 									<th>C</th> -->
+<!-- 								</tr> -->
+<!-- 							</thead> -->
+<!-- 							<tbody> -->
+<!-- 								<tr ng-repeat="carIndex in etatIndexes"> -->
+<!-- 									<td>{{'ETAT' + carIndex}}</td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="elfin.CARACTERISTIQUE['ETAT' + carIndex].A"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="elfin.CARACTERISTIQUE['ETAT' + carIndex].B"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="elfin.CARACTERISTIQUE['ETAT' + carIndex].C"></td> -->
+<!-- 								</tr> -->
+<!-- 							</tbody> -->
+<!-- 						</table> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="col-sm-6"> -->
+<!-- 						<h5>Calcul - Dimensions</h5> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm-6 text-right"> -->
+<!-- 						<a class="btn btn-default" -->
+<!-- 							ng-click="addRow(elfin, 'CARACTERISTIQUE.CALCUL.DIMENSION', {NOM: 'LONGUEUR', TYPE:'GEOGRAPHIE', VALEUR:'0.0'})"> -->
+<!-- 							<i class="icon-plus-sign"></i> Nouveau -->
+<!-- 						</a> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm-12"> -->
+<!-- 						<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 							<thead> -->
+<!-- 								<tr> -->
+<!-- 									<th>Nom</th> -->
+<!-- 									<th>Type</th> -->
+<!-- 									<th>Valeur</th> -->
+<!-- 									<th></th> -->
+<!-- 								</tr> -->
+<!-- 							</thead> -->
+<!-- 							<tbody> -->
+<!-- 								<tr -->
+<!-- 									ng-repeat="dimension in elfin.CARACTERISTIQUE.CALCUL.DIMENSION"> -->
+<!-- 									<td> -->
+<!-- 										<select class="form-control" ng-model="dimension.NOM" -->
+<!-- 										ng-options="value as label for (value, label) in dimensionNames"> -->
+<!-- 									</select> -->
+<!-- 									</td> -->
+<!-- 									<td> -->
+<!-- 										<select class="form-control" ng-model="dimension.TYPE" -->
+<!-- 										ng-options="value as label for (value, label) in typeTypes"> -->
+<!-- 									</select> -->
+<!-- 									</td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="dimension.VALEUR"></td> -->
+<!-- 									<td class="text-right"><a -->
+<!-- 										ng-click="elfin.CARACTERISTIQUE.CALCUL.DIMENSION.splice($index, 1)"> -->
+<!-- 											<i class="icon-remove-sign"></i> -->
+<!-- 									</a></td> -->
+<!-- 								</tr> -->
+<!-- 							</tbody> -->
+<!-- 						</table> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="col-sm-6"> -->
+<!-- 						<h5>Calcul - Matrice</h5> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm-6 text-right"> -->
+<!-- 						<a class="btn btn-default" -->
+<!-- 							ng-click="addRow(elfin, 'CARACTERISTIQUE.CALCUL.L', {POS: '', C: [{POS:'1', VALEUR:''}, {POS:'2', VALEUR:''}, {POS:'3', VALEUR:''}, {POS:'4', VALEUR:''}, {POS:'5', VALEUR:''}, {POS:'6', VALEUR:''}, {POS:'7', VALEUR:''}]})"> -->
+<!-- 							<i class="icon-plus-sign"></i> Nouveau -->
+<!-- 						</a> -->
+<!-- 					</div> -->
+
+<!-- 					<div class="col-sm-12"> -->
+<!-- 						<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 							<thead> -->
+<!-- 								<tr> -->
+<!-- 									<th>#</th> -->
+<!-- 									<th>C1</th> -->
+<!-- 									<th>C2</th> -->
+<!-- 									<th>C3</th> -->
+<!-- 									<th>C4</th> -->
+<!-- 									<th>C5</th> -->
+<!-- 									<th>C6</th> -->
+<!-- 									<th>C7</th> -->
+<!-- 									<th></th> -->
+<!-- 								</tr> -->
+<!-- 							</thead> -->
+<!-- 							<tbody> -->
+<!-- 								<tr ng-repeat="l in elfin.CARACTERISTIQUE.CALCUL.L"> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="l.POS"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="l.C[0].VALEUR"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="l.C[1].VALEUR"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="l.C[2].VALEUR"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="l.C[3].VALEUR"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="l.C[4].VALEUR"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="l.C[5].VALEUR"></td> -->
+<!-- 									<td><input type="text" class="form-control" -->
+<!-- 										ng-model="l.C[6].VALEUR"></td> -->
+
+<!-- 									<td class="text-right"><a -->
+<!-- 										ng-click="elfin.CARACTERISTIQUE.CALCUL.L.splice($index, 1)"><i -->
+<!-- 											class="icon-remove-sign"></i> </a></td> -->
+<!-- 								</tr> -->
+<!-- 							</tbody> -->
+<!-- 						</table> -->
+<!-- 					</div> -->
+				</div>
+			</div>
+		</div>
+		</tab> <!-- PARTENAIRES tab --> <!-- 		<tab heading="Partenaires"> --> <!-- 			<table class="striped tight sortable" -->
+		<!-- 				ng-init="partenaires = ['GERANT', 'USAGER', 'FOURNISSEUR', 'PROPRIETAIRE']"> -->
+		<!-- 				<thead> --> <!-- 					<tr> --> <!-- 						<th>#</th> --> <!-- 						<th>Id</th> -->
+		<!-- 						<th>ID_G</th> --> <!-- 						<th>Nom</th> --> <!-- 						<th>Groupe</th> -->
+		<!-- 						<th></th> --> <!-- 					</tr> --> <!-- 				</thead> --> <!-- 				<tr ng-repeat="partenaire in partenaires"> -->
+		<!-- 					<td>{{partenaire}}</td> --> <!-- 					<td><input type="text" -->
+		<!-- 						ng-model="elfin.PARTENAIRE[partenaire].Id"></td> --> <!-- 					<td><input type="text" -->
+		<!-- 						ng-model="elfin.PARTENAIRE[partenaire].ID_G"></td> --> <!-- 					<td><input type="text" -->
+		<!-- 						ng-model="elfin.PARTENAIRE[partenaire].NOM"></td> --> <!-- 					<td><input type="text" -->
+		<!-- 						ng-model="elfin.PARTENAIRE[partenaire].GROUPE"></td> --> <!-- 					<td class="right"><a><i class="icon-zoom-in"></i></a></td> -->
+
+		<!-- 				</tr> --> <!-- 			</table> --> <!-- 		</tab>  --> <!-- ACTIVITE -->
+		<!-- 		<tab heading="Activité"> --> <!-- 			<div class="col_8"> --> <!-- 				<h5>Echéances</h5> -->
+		<!-- 			</div> --> <!-- 			<div class="col_4 right"> --> <!-- 				<ul class="button-bar"> -->
+		<!-- 					<li><a --> <!-- 						ng-click="addRow(elfin, 'ACTIVITE.EVENEMENT.ECHEANCE', {DATE: '', ACTION: '', PAR_QUI: '', POUR_QUI: '', E_DATE: '', E_ACTION: '', E_PAR_QUI: '', E_POUR_QUI: '', E_STATUT: '', REMARQUE: ''})"><i -->
+		<!-- 							class="icon-plus-sign"></i> Nouveau</a></li> --> <!-- 				</ul> -->
+		<!-- 			</div> --> <!-- 			<table class="striped tight sortable"> -->
+		<!-- 				<thead> --> <!-- 					<tr> --> <!-- 						<th>Date</th> --> <!-- 						<th>Action</th> -->
+		<!-- 						<th>Par Qui</th> --> <!-- 						<th>Pour Qui</th> --> <!-- 						<th>E. Date</th> -->
+		<!-- 						<th>E. Action</th> --> <!-- 						<th>E. Par Qui</th> --> <!-- 						<th>E. Pour Quoi</th> -->
+		<!-- 						<th>E. Statut</th> --> <!-- 						<th>Remarque</th> --> <!-- 						<th></th> -->
+		<!-- 					</tr> --> <!-- 				</thead> --> <!-- 				<tr ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE"> -->
+		<!-- 					<td><input type="text" ng-model="echeance.DATE"></td> --> <!-- 					<td><input type="text" ng-model="echeance.ACTION"></td> -->
+		<!-- 					<td><input type="text" ng-model="echeance.PAR_QUI"></td> -->
+		<!-- 					<td><input type="text" ng-model="echeance.POUR_QUI"></td> -->
+		<!-- 					<td><input type="text" ng-model="echeance.E_DATE"></td> -->
+		<!-- 					<td><input type="text" ng-model="echeance.E_ACTION"></td> -->
+		<!-- 					<td><input type="text" ng-model="echeance.E_PAR_QUI"></td> -->
+		<!-- 					<td><input type="text" ng-model="echeance.E_POUR_QUI"></td> -->
+		<!-- 					<td><input type="text" ng-model="echeance.E_STATUT"></td> -->
+		<!-- 					<td><input type="text" ng-model="echeance.E_REMARQUET"></td> -->
+
+		<!-- 					<td class="right"><a --> <!-- 						ng-click="elfin.ACTIVITE.EVENEMENT.ECHEANCE.splice($index, 1)"><i -->
+		<!-- 							class="icon-remove-sign"></i></a></td> --> <!-- 				</tr> -->
+		<!-- 			</table> --> <!-- 			<div class="col_8"> --> <!-- 				<h5>Gestion</h5> -->
+		<!-- 			</div> --> <!-- 			<div class="col_4 right"> --> <!-- 				<ul class="button-bar"> -->
+		<!-- 					<li><a --> <!-- 						ng-click="addRow(elfin, 'ACTIVITE.GESTION.L', {POS: '', C: [{POS:'1', VALEUR:''}, {POS:'2', VALEUR:''}, {POS:'3', VALEUR:''}, {POS:'4', VALEUR:''}, {POS:'5', VALEUR:''}, {POS:'6', VALEUR:''}, {POS:'7', VALEUR:''}]})"><i -->
+		<!-- 							class="icon-plus-sign"></i> Nouveau</a></li> --> <!-- 				</ul> -->
+		<!-- 			</div> --> <!-- 			<table class="striped tight sortable"> -->
+		<!-- 				<thead> --> <!-- 					<tr> --> <!-- 						<th>#</th> --> <!-- 						<th>C1</th> -->
+		<!-- 						<th>C2</th> --> <!-- 						<th>C3</th> --> <!-- 						<th>C4</th> -->
+		<!-- 						<th>C5</th> --> <!-- 						<th>C6</th> --> <!-- 						<th>C7</th> -->
+		<!-- 						<th></th> --> <!-- 					</tr> --> <!-- 				</thead> --> <!-- 				<tr ng-repeat="l in elfin.ACTIVITE.GESTION.L"> -->
+		<!-- 					<td><input type="text" ng-model="l.POS"></td> --> <!-- 					<td><input type="text" ng-model="l.C[0].VALEUR"></td> -->
+		<!-- 					<td><input type="text" ng-model="l.C[1].VALEUR"></td> --> <!-- 					<td><input type="text" ng-model="l.C[2].VALEUR"></td> -->
+		<!-- 					<td><input type="text" ng-model="l.C[3].VALEUR"></td> --> <!-- 					<td><input type="text" ng-model="l.C[4].VALEUR"></td> -->
+		<!-- 					<td><input type="text" ng-model="l.C[5].VALEUR"></td> --> <!-- 					<td><input type="text" ng-model="l.C[6].VALEUR"></td> -->
+
+		<!-- 					<td class="right"><a --> <!-- 						ng-click="elfin.ACTIVITE.GESTION.L.splice($index, 1)"><i -->
+		<!-- 							class="icon-remove-sign"></i></a></td> --> <!-- 				</tr> -->
+		<!-- 			</table> --> <!-- 		</tab> --> <!-- End of ACTIVITE tab --> <!-- Annexes tab -->
+		<tab> <tab-heading>
+		<div hb-annexes-number></div>
+		</tab-heading>
+		<div class="hb-tab">
+			<div hb-annexes-component></div>
+		</div>
+		</tab> <!-- FORME tab --> <tab> <tab-heading>Forme</tab-heading>
+		<div class="hb-tab">
+			<div hb-forme-component></div>
+		</div>
+		</tab>
 	</div>
+</div>
