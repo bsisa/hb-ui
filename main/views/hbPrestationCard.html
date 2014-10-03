@@ -1,6 +1,8 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
 	<span ng-show="elfinForm.alias.$error.pattern">Le budget doit être <strong>un nombre</strong> valide!</span>
+	<span ng-show="elfinForm.alias.$error.number">Le budget doit être <strong>un nombre</strong> valide!</span>
+	<span ng-show="elfinForm.alias.$error.required">Le budget <strong>doit être déterminé</strong>.</span>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -89,9 +91,8 @@
 				<div class="form-group col-sm-4">
 					<label for="alias" class="col-sm-4 control-label">Budget</label>
 					<div class="col-sm-8">
-						<input id="alias" name="alias" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF" ng-pattern="numericOnlyRegexp"
-							ng-trim='false'>
+						<input id="alias" name="alias" type="number" class="form-control"
+							ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF" required>
 					</div>
 				</div>
 				<div class="form-group col-sm-4">
