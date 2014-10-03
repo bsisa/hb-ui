@@ -5,6 +5,9 @@
 	<span ng-show="elfinForm.nom.$error.required">Le champs <strong>No de contrat</strong> est obligatoire!</span>
 	<span ng-show="elfinForm.objectif.$error.required">Le champs <strong>Immeuble</strong> est obligatoire!</span>
 	<span ng-show="elfinForm.fournisseur_valeur.$error.required">Le champs <strong>Entreprise</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.fournisseur_valeur.$error.required">Le champs <strong>Entreprise</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.valeur.$error.number">Le champs <strong>Montant</strong> doit être un numbre valide!</span>
+
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -84,7 +87,7 @@
 							ng-class="getCssHasFeedback(elfinForm.valeur)">
 							<label for="valeur" class="col-sm-4 control-label">Montant</label>
 							<div class="col-sm-8">
-								<input id="valeur" name="valeur" type="text" class="form-control"
+								<input id="valeur" name="valeur" type="number" class="form-control"
 									ng-model="elfin.IDENTIFIANT.VALEUR" >
 							</div>
 						</div>								
