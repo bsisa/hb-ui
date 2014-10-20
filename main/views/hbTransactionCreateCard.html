@@ -51,7 +51,7 @@
 							</div>		-->
 							<input id="objectifSearchHelper" type="text" class="form-control" ng-model="helper.constatSelectionSai" hb-no-dirty-check>
 						</div>
-						<label for="objectif" class="col-sm-3 control-label">SAI prest:</label>
+						<label for="objectif" class="col-sm-3 control-label">SAI prest.</label>
 						<div id="objectif" class="col-sm-2 form-control-static">{{elfin.IDENTIFIANT.OBJECTIF}}</div>
 					</div>
 					<div class="form-group">
@@ -64,29 +64,32 @@
 						</div>						
 					</div>
 					<div class="form-group">
-						<label for="groupe" class="col-sm-4 control-label">Groupe Prestation</label>
+						<label for="groupe-trans" class="col-sm-4 control-label">Groupe Transaction</label>
 						<div class="col-sm-8">
-							<select id="groupe" name="groupe" class="form-control" chosen
+							<select id="groupe-trans" name="groupe-trans" class="form-control" chosen
 								data-placeholder=" " disable-search="false"
 								allow-single-deselect="true"
-								ng-model="elfin.CARACTERISTIQUE.CAR1.UNITE"
-								ng-options="prestationType.name as prestationType.value for prestationType in prestationTypes">
+								ng-model="elfin.GROUPE"
+								ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
 								<option value=''></option>
 							</select>							
+						</div>
+					</div>							
+					<div class="form-group">
+						<label for="groupe-prest" class="col-sm-4 control-label">Groupe Prestation</label>
+						<div class="col-sm-8">
+							<p class="form-control-static"><span ng-bind="elfin.CARACTERISTIQUE.CAR1.UNITE" ></p>				
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="annee" class="col-sm-4 control-label">Année</label>
-						<div class="col-sm-8">
+						<div class="col-sm-3">
 							<input id="annee" type="text" class="form-control"
 								ng-model="elfin.IDENTIFIANT.PAR" 
 								hb-no-dirty-check >
-<!-- 								ng-blur="getPrestation(helper.constatSelectionSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR)"> -->
 						</div>
-					</div>
-					<div class="form-group">
-						<label for="source" class="col-sm-4 control-label">Compte</label>
-						<div class="col-sm-8">
+						<label for="source" class="col-sm-3 control-label">Compte</label>
+						<div class="col-sm-2">
 							<p class="form-control-static">{{elfin.IDENTIFIANT.COMPTE}}</p>
 						</div>
 					</div>
@@ -94,7 +97,7 @@
 			<!-- 2nd column -->
 			<div class="col-sm-6">
 				<div class="form-group">
-					<label for="type" class="col-sm-4 control-label">Responsable visa de facture</label>
+					<label for="type" class="col-sm-4 control-label">Resp. visa de facture</label>
 					<div class="col-sm-8">
 						<div class="input-group">
 							<input id="resp" name="resp" type="text" class="form-control"
@@ -168,19 +171,7 @@
 							ng-model="elfin.IDENTIFIANT.VALEUR" 
 							hb-no-dirty-check >
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="groupe" class="col-sm-4 control-label">Groupe Transaction</label>
-					<div class="col-sm-8">
-						<select id="groupe" name="groupe" class="form-control" chosen
-							data-placeholder=" " disable-search="false"
-							allow-single-deselect="true"
-							ng-model="elfin.GROUPE"
-							ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
-							<option value=''></option>
-						</select>							
-					</div>
-				</div>					
+				</div>			
 			</div>
 			<!-- Last line spanning two columns (col-sm-6) -->
 			<div class="col-sm-12">

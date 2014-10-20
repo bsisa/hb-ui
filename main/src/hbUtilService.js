@@ -258,6 +258,24 @@
 			return url;		
 		};
         
+		/**
+		 * Maps TRANSACTION.GROUPE to PRESTATION.GROUPE
+		 */
+		var getPrestationGroupForTransactionGroup = function (transactionGroup) {
+			
+			var prestationGroup = "";
+    		if (transactionGroup === "Petite réparation") {
+    			prestationGroup = 'Fonctionnement';
+    		} else if (transactionGroup === "Frais fixes") {
+    			prestationGroup = "Fonctionnement";
+    		} else if (transactionGroup === "Investissement pluriannuel") {
+    			prestationGroup = "Investissement";
+    		} else {
+    			prestationGroup = transactionGroup;
+    		}
+			return prestationGroup;		
+		};
+
         
         return {
         	reorderArrayByPOS:reorderArrayByPOS,
@@ -273,7 +291,8 @@
         	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue,
         	getLinkFileName:getLinkFileName,
         	getLinkFileApiUrl:getLinkFileApiUrl,
-        	getAnnexesExcludingTag:getAnnexesExcludingTag
+        	getAnnexesExcludingTag:getAnnexesExcludingTag,
+        	getPrestationGroupForTransactionGroup:getPrestationGroupForTransactionGroup
         	
         };
     }]);

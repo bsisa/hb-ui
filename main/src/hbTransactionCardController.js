@@ -100,60 +100,85 @@
 								// TODO: Add owner parameter.
 								$scope.getPrestation = function(sai,groupePrestation,year) {
 									
-									//elfin.IDENTIFIANT.OBJECTIF
-									//elfin.CARACTERISTIQUE.CAR1.UNITE
-									//elfin.IDENTIFIANT.PAR
-									$log.debug("getPrestation = " + "sai = " + sai +", groupePrestation = " + groupePrestation + ", year = " + year);
-									// TODO: move prestationCollectionId to constants.
-									var prestationCollectionId = "G20081113902512302";
-									var xpathForPrestation = "//ELFIN[@GROUPE='"+groupePrestation+"' and IDENTIFIANT/DE='"+year+"' and starts-with(IDENTIFIANT/OBJECTIF, '"+sai+".')]";
+									if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && year.length === 4 ) {
 									
-									// Asychronous buildings preloading
-									GeoxmlService
-											.getCollection(prestationCollectionId)
-											.getList({
-												"xpath" : xpathForPrestation
-											})
-											.then(
-													function(prestations) {
-														
-														if (prestations.length == 1) {
-															$scope.constatPrestation = prestations[0];
-															$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
-															$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
-															$log.debug(">>> : $scope.constatPrestation = " + $scope.constatPrestation);
-														} else if (prestations.length < 1) {
-															$scope.constatPrestation = null;
-															$scope.elfin.IDENTIFIANT.COMPTE = null;
-															$scope.elfin.IDENTIFIANT.OBJECTIF = null;
+										//elfin.IDENTIFIANT.OBJECTIF
+										//elfin.CARACTERISTIQUE.CAR1.UNITE
+										//elfin.IDENTIFIANT.PAR
+										$log.debug("getPrestation = " + "sai = " + sai +", groupePrestation = " + groupePrestation + ", year = " + year);
+										// TODO: move prestationCollectionId to constants.
+										var prestationCollectionId = "G20081113902512302";
+										var xpathForPrestation = "//ELFIN[@GROUPE='"+groupePrestation+"' and IDENTIFIANT/DE='"+year+"' and starts-with(IDENTIFIANT/OBJECTIF, '"+sai+".')]";
+										
+										// Asychronous buildings preloading
+										GeoxmlService
+												.getCollection(prestationCollectionId)
+												.getList({
+													"xpath" : xpathForPrestation
+												})
+												.then(
+														function(prestations) {
+															
+															if (prestations.length == 1) {
+																$scope.constatPrestation = prestations[0];
+																$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
+																$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
+																$log.debug(">>> : $scope.constatPrestation = " + $scope.constatPrestation);
+															} else if (prestations.length < 1) {
+																$scope.constatPrestation = null;
+																$scope.elfin.IDENTIFIANT.COMPTE = null;
+																$scope.elfin.IDENTIFIANT.OBJECTIF = null;
+																hbAlertMessages.addAlert(
+																		"warning", "Pas de prestation correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);
+															} else if (prestations.length > 1) {
+																$scope.constatPrestation = null;
+																$scope.elfin.IDENTIFIANT.COMPTE = null;
+																$scope.elfin.IDENTIFIANT.OBJECTIF = null;															
+																hbAlertMessages.addAlert(
+																		"warning", "Plusieurs prestations correspondent aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);															
+															}
+														},
+														function(response) {
+															var message = "Le chargement de la PRESTATION correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year + " a échoué (statut de retour: "
+																	+ response.status
+																	+ ")";
 															hbAlertMessages.addAlert(
-																	"warning", "Pas de prestation correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);
-														} else if (prestations.length > 1) {
-															$scope.constatPrestation = null;
-															$scope.elfin.IDENTIFIANT.COMPTE = null;
-															$scope.elfin.IDENTIFIANT.OBJECTIF = null;															
-															hbAlertMessages.addAlert(
-																	"warning", "Plusieurs prestations correspondent aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);															
-														}
-													},
-													function(response) {
-														var message = "Le chargement de la PRESTATION correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year + " a échoué (statut de retour: "
-																+ response.status
-																+ ")";
-														hbAlertMessages.addAlert(
-																"danger", message);
-													});
+																	"danger", message);
+														});
+									
+									} else {
+										$scope.constatPrestation = null;
+										$scope.elfin.IDENTIFIANT.COMPTE = null;
+										$scope.elfin.IDENTIFIANT.OBJECTIF = null;										
+									}
 									
 								};				
+
+								
+								/**
+								 * Updates PRESTATION.GROUPE on TRANSACTION.GROUPE update
+								 */
+						    	$scope.$watch('elfin.GROUPE', function() {
+						    		if ($scope.elfin!=null ) {
+						    			if ($scope.elfin.GROUPE!=null) {
+							    			$log.debug(">>>> updating $scope.elfin.CARACTERISTIQUE.CAR1.UNITE = " + $scope.elfin.CARACTERISTIQUE.CAR1.UNITE + " to " + hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE));
+							    			$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE);						    				
+						    			} else {
+							    			$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = '';
+							    		}
+						    		}
+						    	}, true);
 								
 								/**
 								 * Listen to informations required to find out related PRESTATION
 								 */
 								$scope.$watch('[helper.constatSelectionSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR]', function() {
 									// Prevent unnecessary call to getPrestation
-									if ($scope.elfin!=null && $scope.elfin.IDENTIFIANT.PAR.length === 4 && $scope.helper.constatSelectionSai.length > 0 && $scope.elfin.CARACTERISTIQUE.CAR1.UNITE.length > 0) {
+									//if ($scope.elfin!=null && $scope.elfin.IDENTIFIANT.PAR.length === 4 && $scope.helper.constatSelectionSai.length > 0 && $scope.elfin.CARACTERISTIQUE.CAR1.UNITE.length > 0) {
+									if ($scope.elfin!=null) {
 										$scope.getPrestation($scope.helper.constatSelectionSai,$scope.elfin.CARACTERISTIQUE.CAR1.UNITE,$scope.elfin.IDENTIFIANT.PAR);
 									}
+									//}
 								}, true);
 
 					            /**
