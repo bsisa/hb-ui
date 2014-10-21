@@ -53,8 +53,7 @@
 												// TODO: the REST API should provide this feature 
 												// to ensure correct result event in highly 
 												// concurrent usage. 
-												// This is not currently an issue.
-												//ELFIN[@CLASSE='PRESTATION' and starts-with(IDENTIFIANT/OBJECTIF,'195')]/IDENTIFIANT/OBJECTIF
+												// This is currently a non issue.
 									            var xpathForPrestations = "//ELFIN[starts-with(IDENTIFIANT/OBJECTIF,'"+$routeParams.sai+"')]";
 									            hbQueryService.getPrestations(xpathForPrestations)
 													.then(function(prestations) {
