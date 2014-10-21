@@ -226,6 +226,8 @@
 																$scope.helper.constatSelectionSai = prestation.IDENTIFIANT.OBJECTIF.split('.')[0];
 																// Groupe prestation
 																$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = prestation.GROUPE; 
+																// Year prestation
+																$scope.elfin.IDENTIFIANT.PAR = prestation.IDENTIFIANT.DE;
 															} else if (prestations.length > 1 ) {
 																var message = "Le numéro d'objectif: "+$routeParams.sai+" fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
 																hbAlertMessages.addAlert(
