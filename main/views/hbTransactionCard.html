@@ -35,6 +35,21 @@
 					<label for="objectif" class="col-sm-4 control-label">No SAI prestation</label>
 					<p class="col-sm-8 form-control-static">{{elfin.IDENTIFIANT.OBJECTIF}}</p>
 				</div>
+
+				<div class="form-group">
+					<label for="groupe" class="col-sm-4 control-label">Groupe Transaction</label>
+					<div class="col-sm-8 form-control-static">{{elfin.GROUPE}}</div>
+<!-- 					<div class="col-sm-8"> -->
+<!-- 						<select id="groupe" name="groupe" class="form-control" chosen -->
+<!-- 							data-placeholder=" " disable-search="false" -->
+<!-- 							allow-single-deselect="true" -->
+<!-- 							ng-model="elfin.GROUPE" -->
+<!-- 							ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes"> -->
+<!-- 							<option value=''></option> -->
+<!-- 						</select>							 -->
+<!-- 					</div> -->
+				</div>					
+				
 				<div class="form-group">
 					<label for="groupe" class="col-sm-4 control-label">Groupe Prestation</label>
 					<p class="col-sm-8 form-control-static">{{elfin.CARACTERISTIQUE.CAR1.UNITE}}</p>
@@ -50,11 +65,14 @@
 					</div>
 				</div>
 				
+			</div>
+
+			<!-- 2e colonne -->
+			<div class="col-sm-6">
+
 				<div class="form-group">
 					<label for="dateFrom" class="col-sm-4 control-label">Date</label>
 					<div class="col-sm-4">
-<!-- 						<input id="dateFrom" type="text" class="form-control" -->
-<!-- 							ng-model="elfin.IDENTIFIANT.DE" > -->
 						<div hb-date id="dateFrom" name="dateFrom"
 								ng-model="elfin.IDENTIFIANT.DE"></div>							
 					</div>
@@ -62,13 +80,7 @@
 					<div class="col-sm-2">
 						<p class="form-control-static">{{elfin.IDENTIFIANT.AUT}}</p>
 					</div>
-				</div>				
-				
-				
-			</div>
-
-			<!-- 2e colonne -->
-			<div class="col-sm-6">
+				</div>
 
 				<div class="form-group">
 					<label for="type" class="col-sm-4 control-label">Responsable visa de facture</label>
@@ -131,18 +143,6 @@
 							ng-model="elfin.IDENTIFIANT.VALEUR" >
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="groupe" class="col-sm-4 control-label">Groupe Transaction</label>
-					<div class="col-sm-8">
-						<select id="groupe" name="groupe" class="form-control" chosen
-							data-placeholder=" " disable-search="false"
-							allow-single-deselect="true"
-							ng-model="elfin.GROUPE"
-							ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
-							<option value=''></option>
-						</select>							
-					</div>
-				</div>	
 			</div>
 			<!-- Last line spanning two columns (col-sm-6) -->
 			<div class="col-sm-12">
