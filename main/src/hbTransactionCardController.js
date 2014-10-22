@@ -74,6 +74,7 @@
 													break;
 												}
 											}
+											// Reset selecteImmeuble in case no matching was found.
 											if (!selectionFound) {
 												$scope.selectedImmeuble = null;
 											}
