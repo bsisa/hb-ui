@@ -150,7 +150,7 @@
 																	"danger", message);
 														});
 									
-									} else {
+									} else if ($attrs.hbMode === "create") {
 										$scope.constatPrestation = null;
 										$scope.elfin.IDENTIFIANT.COMPTE = null;
 										$scope.elfin.IDENTIFIANT.OBJECTIF = null;										
