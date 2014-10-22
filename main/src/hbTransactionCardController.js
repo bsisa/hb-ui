@@ -110,7 +110,7 @@
 										var prestationCollectionId = "G20081113902512302";
 										var xpathForPrestation = "//ELFIN[@GROUPE='"+groupePrestation+"' and IDENTIFIANT/DE='"+year+"' and starts-with(IDENTIFIANT/OBJECTIF, '"+sai+".')]";
 										
-										// Asychronous buildings preloading
+										// Asychronous PRESTATIONS preloading
 										GeoxmlService
 												.getCollection(prestationCollectionId)
 												.getList({
