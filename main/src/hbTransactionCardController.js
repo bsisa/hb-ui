@@ -359,6 +359,14 @@
 					            
 					            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';									
 
+					            
+								// Allow direct call to new TRANSACTION creation without going through menus items.
+								$scope.createNewTransaction = function () {
+		    	                   	var redirUrl = '/elfin/create/TRANSACTION';
+		    	                   	$location.path( redirUrl );						        	
+						        };					            
+					            
+					            
 							} ]);
 
 })();
