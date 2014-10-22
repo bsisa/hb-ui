@@ -152,7 +152,7 @@
         	if ($attrs.hbMode === "create" && $attrs.hbElfinClasse) {
 
         		var restGeoxml = GeoxmlService.getService();
-        		$log.debug(">>>>> create mode: perform POST to: elfin.ID_G/elfin.Id = " + elfin.ID_G+ '/' + elfin.Id)
+        		$log.debug(">>>>> create mode: perform POST to: elfin.ID_G/elfin.Id = " + elfin.ID_G+ '/' + elfin.Id);
         		restGeoxml.all(elfin.ID_G+ '/' + elfin.Id).post(elfin).then( 
                			function() { 
     	       				$scope.elfin = elfin;
