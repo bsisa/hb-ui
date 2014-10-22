@@ -59,10 +59,12 @@
 										);
 
 								/**
-								 * Updates $scope.selectedImmeuble for IMMEUBLE matching both No SAI and owner Id
+								 * Updates $scope.selectedImmeuble for IMMEUBLE matching both No SAI and owner Id.
+								 * Note: This information is only used in hbTransactionCreateCard.html view while in create mode.
 								 */
 								$scope.displayBuildingAddress = function(noSai,owner) {
-									$log.debug("displayBuildingAddress = function("+noSai+","+owner.Id+")");
+									if ($attrs.hbMode === "create") {									
+										$log.debug("displayBuildingAddress = function("+noSai+","+owner.Id+")");
 										if ($scope.immeubles
 												&& $scope.immeubles.length > 0 && owner != null) {
 											var selectionFound = false;
@@ -79,6 +81,7 @@
 												$scope.selectedImmeuble = null;
 											}
 										}
+									}
 								};
 								
 								/**
