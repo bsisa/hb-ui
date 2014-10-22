@@ -24,8 +24,12 @@
 									$timeout, hbAlertMessages, hbUtil,
 									HB_EVENTS, userDetails, hbQueryService) {
 
-								$log.debug("    >>>> Using HbTransactionCardController");
+								$scope.reallocate = $routeParams.reallocate ? true:false;
+								
+								$log.debug("    >>>> Using HbTransactionCardController, reallocate = " + $scope.reallocate );
 
+
+								
 								// ===================================================================================
 								// Input fields used to select IMMEUBLE related to current TRANSACTION backing models
 								// ===================================================================================								
@@ -192,6 +196,7 @@
 
 						    		if ($scope.elfin!=null) {
 
+						    			
 										// Update elfin properties from catalogue while in create mode
 										if ($attrs.hbMode === "create") {
 											
@@ -252,6 +257,57 @@
 												}												
 												
 												
+											} else {
+												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
+											}
+										} else if ($scope.reallocate) {
+											if ($scope.elfin) {
+							    				$log.debug(">>>>>>>>>> REALLOCATING ...");
+							    				
+												// If a No SAI corresponding to an existing PRESTATION is provided
+												// set it to elfin.IDENTIFIANT.OBJECTIF
+												if ($scope.elfin.IDENTIFIANT.OBJECTIF) {
+													
+													$scope.helper.constatSelectionSai = $scope.elfin.IDENTIFIANT.OBJECTIF.split('.')[0];													
+													
+													// Check the corresponding PRESTATION exists and if available, copy relevant information to 
+													// current new TRANSACTION.
+													var xpathForPrestationByObjectif = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.helper.constatSelectionSai+"']";
+													hbQueryService.getPrestations(xpathForPrestationByObjectif).then(
+														function(prestations) {
+															if (prestations.length === 1) {
+																var prestation = prestations[0];
+																// Update OBJECTIF
+																//$scope.elfin.IDENTIFIANT.OBJECTIF = prestation.IDENTIFIANT.OBJECTIF;
+																// Update helper fields
+																$scope.searchOwner = {Id : prestation.PARTENAIRE.PROPRIETAIRE.Id, ID_G : prestation.PARTENAIRE.PROPRIETAIRE.ID_G, GROUPE : prestation.PARTENAIRE.PROPRIETAIRE.GROUPE, NOM : prestation.PARTENAIRE.PROPRIETAIRE.NOM};
+																
+																// Groupe prestation
+																//$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = prestation.GROUPE; 
+																// Year prestation
+																//$scope.elfin.IDENTIFIANT.PAR = prestation.IDENTIFIANT.DE;
+															} else if (prestations.length > 1 ) {
+																var message = "Le numéro d'objectif: "+$scope.helper.constatSelectionSai+" fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
+																hbAlertMessages.addAlert(
+																		"warning", message);
+															} else if (prestations.length > 1 ) {
+																var message = "Le numéro d'objectif: "+$scope.helper.constatSelectionSai+" fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
+																hbAlertMessages.addAlert(
+																		"warning", message);
+															}
+														},
+														function(response) {
+															var message = "L'obtention d'une PRESTATION pour le numéro d'objectif: "+$scope.helper.constatSelectionSai+" a échoué. (statut: "
+																	+ response.status
+																	+ ")";
+															hbAlertMessages.addAlert(
+																	"danger", message);
+														});													
+												}										    				
+							    				
+							    				
+							    				
+							    				
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
