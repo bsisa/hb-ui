@@ -15,8 +15,7 @@
 			<!-- 1er bloc 2 colonnes de 5 lignes -->
 			<!-- 1ere colonne -->
 			<div class="col-sm-6">
-			
-			
+				<!-- This field is only relevant to reallocate and create mode -->
 				<div ng-show="reallocate" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
 					<label for="manager" class="col-sm-4 control-label"><em>Propriétaire</em></label>
 					<div class="col-sm-8">
@@ -31,55 +30,72 @@
 							></div>					
 					</div>
 				</div>			
-					
-					<!-- This field is only relevant to create mode -->
-<!-- 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)"> -->
-<!-- 					<label for="manager" class="col-sm-4 control-label">Propriétaire</label> -->
-<!-- 					<div class="col-sm-8"> -->
-<!-- 						<div  -->
-<!-- 							hb-choose-actor  -->
-<!-- 							hb-choose-actor-id-name="manager"  -->
-<!-- 							hb-choose-actor-elfin-form="elfinForm" -->
-<!-- 							hb-choose-actor-model="searchOwner" -->
-<!-- 							hb-choose-actor-tooltip="Recherche de propriétaire" -->
-<!-- 							hb-choose-actor-role="Propriétaire" -->
-<!-- 							></div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-			
-				<div class="form-group">
+				<div ng-show="!reallocate" class="form-group">
 					<label for="objectif" class="col-sm-4 control-label">No SAI prestation</label>
 					<p class="col-sm-8 form-control-static">{{elfin.IDENTIFIANT.OBJECTIF}}</p>
 				</div>
+				<div ng-show="reallocate" class="form-group">
+					<label for="objectifSearchHelper" class="col-sm-4 control-label"><em>No SAI</em></label>
+					<div class="col-sm-3">
+						<input id="objectifSearchHelper" type="text" class="form-control" ng-model="helper.constatSelectionSai" hb-no-dirty-check>
+					</div>
+					<label for="objectif" class="col-sm-2 control-label">Prest.</label>
+					<div id="objectif" class="col-sm-3 form-control-static">{{elfin.IDENTIFIANT.OBJECTIF}}</div>
+				</div>				
 
-				<div class="form-group">
+				<div ng-show="reallocate" class="form-group">
+					<label class="col-sm-4 control-label"><em>Adresse</em></label>
+					<div ng-show="selectedImmeuble && selectedImmeuble.Id" class="col-sm-8">
+						<p class="form-control-static"><span ng-bind="selectedImmeuble.IDENTIFIANT.ALIAS" ></span></p>
+					</div>
+					<div ng-show="!selectedImmeuble || !selectedImmeuble.Id" class="col-sm-8">
+						<p class="form-control-static"><span>Pas d'immeuble pour Propriétaire/No SAI</span></p>
+					</div>						
+				</div>
+				
+				<div ng-show="reallocate" class="form-group">
+					<label for="groupe-trans" class="col-sm-4 control-label">Groupe Transaction</label>
+					<div class="col-sm-8">
+						<select id="groupe-trans" name="groupe-trans" class="form-control" chosen
+							data-placeholder=" " disable-search="false"
+							allow-single-deselect="true"
+							ng-model="elfin.GROUPE"
+							ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
+							<option value=''></option>
+						</select>							
+					</div>
+				</div>	
+				<div ng-show="!reallocate" class="form-group">
 					<label for="groupe" class="col-sm-4 control-label">Groupe Transaction</label>
 					<div class="col-sm-8 form-control-static">{{elfin.GROUPE}}</div>
-<!-- 					<div class="col-sm-8"> -->
-<!-- 						<select id="groupe" name="groupe" class="form-control" chosen -->
-<!-- 							data-placeholder=" " disable-search="false" -->
-<!-- 							allow-single-deselect="true" -->
-<!-- 							ng-model="elfin.GROUPE" -->
-<!-- 							ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes"> -->
-<!-- 							<option value=''></option> -->
-<!-- 						</select>							 -->
-<!-- 					</div> -->
 				</div>					
 				
 				<div class="form-group">
 					<label for="groupe" class="col-sm-4 control-label">Groupe Prestation</label>
 					<p class="col-sm-8 form-control-static">{{elfin.CARACTERISTIQUE.CAR1.UNITE}}</p>
 				</div>
-				<div class="form-group">
+				
+				<div ng-show="!reallocate" class="form-group">
 					<label for="annee" class="col-sm-4 control-label">Année</label>
 					<p class="col-sm-8 form-control-static">{{elfin.IDENTIFIANT.PAR}}</p>
 				</div>
-				<div class="form-group">
+				<div ng-show="!reallocate" class="form-group">
 					<label for="source" class="col-sm-4 control-label">Compte</label>
-					<div class="col-sm-8">
+					<p class="col-sm-8 form-control-static">{{elfin.IDENTIFIANT.COMPTE}}</p>
+				</div>
+				
+				<div ng-show="reallocate" class="form-group">
+					<label for="annee" class="col-sm-4 control-label">Année</label>
+					<div class="col-sm-3">
+						<input id="annee" type="text" class="form-control"
+							ng-model="elfin.IDENTIFIANT.PAR" 
+							hb-no-dirty-check >
+					</div>
+					<label for="source" class="col-sm-2 control-label">Compte</label>
+					<div class="col-sm-3">
 						<p class="form-control-static">{{elfin.IDENTIFIANT.COMPTE}}</p>
 					</div>
-				</div>
+				</div>				
 				
 			</div>
 
@@ -173,6 +189,7 @@
 			</div>
 			<div class="col-sm-12">
 				<button class="btn btn-primary" ng-click="createNewTransaction()" ng-disabled="false"><span class="glyphicon glyphicon-plus-sign"></span> Créer une nouvelle transaction</button>
+				<button class="btn btn-primary" ng-click="reallocateTransaction()" ng-disabled="reallocate"><span class="glyphicon glyphicon-plus-sign"></span> Réaffecter la transaction</button>
 			</div>
 		</div>
 		</div>

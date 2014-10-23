@@ -67,7 +67,7 @@
 								 * Note: This information is only used in hbTransactionCreateCard.html view while in create mode.
 								 */
 								$scope.displayBuildingAddress = function(noSai,owner) {
-									if ($attrs.hbMode === "create") {									
+									if ($attrs.hbMode === "create" || $scope.reallocate) {									
 										$log.debug("displayBuildingAddress = function("+noSai+","+owner.Id+")");
 										if ($scope.immeubles
 												&& $scope.immeubles.length > 0 && owner != null) {
@@ -281,7 +281,7 @@
 																//$scope.elfin.IDENTIFIANT.OBJECTIF = prestation.IDENTIFIANT.OBJECTIF;
 																// Update helper fields
 																$scope.searchOwner = {Id : prestation.PARTENAIRE.PROPRIETAIRE.Id, ID_G : prestation.PARTENAIRE.PROPRIETAIRE.ID_G, GROUPE : prestation.PARTENAIRE.PROPRIETAIRE.GROUPE, NOM : prestation.PARTENAIRE.PROPRIETAIRE.NOM};
-																
+															
 																// Groupe prestation
 																//$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = prestation.GROUPE; 
 																// Year prestation
@@ -422,6 +422,10 @@
 		    	                   	$location.path( redirUrl );						        	
 						        };					            
 					            
+						        // Allow triggering reallocate mode to allow editing of sensitive fields.
+								$scope.reallocateTransaction = function () {
+		    	                   	$location.search('reallocate', 'true');
+						        };					            						        
 					            
 							} ]);
 
