@@ -105,18 +105,18 @@
 								
 								
 								// Search prestation for no SAI, groupe prestation, year
-								// TODO: Add owner parameter.
-								$scope.getPrestation = function(sai,groupePrestation,year) {
+								// TODO: review behaviour with test data for "Add owner parameter"
+								$scope.getPrestation = function(sai,groupePrestation,year,owner) {
 									
 									if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && year.length === 4 ) {
 									
-										//elfin.IDENTIFIANT.OBJECTIF
-										//elfin.CARACTERISTIQUE.CAR1.UNITE
-										//elfin.IDENTIFIANT.PAR
-										$log.debug("getPrestation = " + "sai = " + sai +", groupePrestation = " + groupePrestation + ", year = " + year);
+										$log.debug("getPrestation = " + "sai = " + sai +", groupePrestation = " + groupePrestation + ", year = " + year + ", owner = " + angular.toJson(owner));
 										// TODO: move prestationCollectionId to constants.
 										var prestationCollectionId = "G20081113902512302";
-										var xpathForPrestation = "//ELFIN[@GROUPE='"+groupePrestation+"' and IDENTIFIANT/DE='"+year+"' and starts-with(IDENTIFIANT/OBJECTIF, '"+sai+".')]";
+										var xpathForPrestation = "//ELFIN[@GROUPE='"+groupePrestation+"' and IDENTIFIANT/DE='"+year+"' and starts-with(IDENTIFIANT/OBJECTIF, '"+sai+".')  and PARTENAIRE/PROPRIETAIRE/@Id='"+ owner.Id +"' and PARTENAIRE/PROPRIETAIRE/@ID_G='"+ owner.ID_G +"']";
+										/*
+										PARTENAIRE/PROPRIETAIRE/@Id="G20140702150305148" and PARTENAIRE/PROPRIETAIRE/@ID_G="G20060401225530100"
+										*/
 										
 										// Asychronous PRESTATIONS preloading
 										GeoxmlService
@@ -184,7 +184,7 @@
 									// Prevent unnecessary call to getPrestation
 									//if ($scope.elfin!=null && $scope.elfin.IDENTIFIANT.PAR.length === 4 && $scope.helper.constatSelectionSai.length > 0 && $scope.elfin.CARACTERISTIQUE.CAR1.UNITE.length > 0) {
 									if ($scope.elfin!=null) {
-										$scope.getPrestation($scope.helper.constatSelectionSai,$scope.elfin.CARACTERISTIQUE.CAR1.UNITE,$scope.elfin.IDENTIFIANT.PAR);
+										$scope.getPrestation($scope.helper.constatSelectionSai,$scope.elfin.CARACTERISTIQUE.CAR1.UNITE,$scope.elfin.IDENTIFIANT.PAR,$scope.searchOwner);
 									}
 									//}
 								}, true);
