@@ -76,8 +76,8 @@
 																					var objectifIndex = objectifSplit[1];
 																						objectifArray.push(parseInt(objectifIndex.trim()));
 																				} else {
-																					var splitErrorMsg = "Le calcul de l'objectif de PRESTATION a rencontré un problème: l'objectif suivant appartenant à la prestation avec Id " + prestation.Id + " ne suit pas la structure {No SAI}.{index}: " + prestation.IDENTIFIANT.OBJECTIF ;
-																					hbAlertMessages.addAlert("danger",splitErrorMsg);
+																					var splitErrorMsg = "Le calcul de l'objectif de PRESTATION a rencontré un problème: l'objectif suivant appartenant à la prestation avec Id " + prestation.Id + " ne suit pas la structure {No SAI}.{index}: " + prestation.IDENTIFIANT.OBJECTIF + " et n'est par conséquent pas pris en compte pour calculer l'index courrant." ;
+																					hbAlertMessages.addAlert("warning",splitErrorMsg);
 																				}
 																			}
 																			// Sort descending
