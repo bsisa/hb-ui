@@ -74,15 +74,21 @@
 			        	};							
 						
 
+			        	$scope.$watch('actorModel.NOM', function(newNom, oldNom) {
+			        		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.NOM') = " + oldNom + " => " + newNom);
+			        	}, true);
+			        	
+			        	
 			        	/**
 			        	 * actorModel references an ELFIN property with Id, ID_G, GROUPE and NOM properties.
 			        	 * This listener is used only for actor initialisation 
 			        	 */
 			        	var actorModelWatchDeregistration = $scope.$watch('actorModel.Id', function(newId, oldId) {			        		
-			            	//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') = " + oldId + " => " + newId);
+			            	$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') = " + oldId + " => " + newId);
 
 			            	// Only initialise if no selected actor object exist 
-			            	if ( $scope.selected.actor == null ) {
+			            	// NO I WANT null SELECTED ACTOR to be able to be updated by MODEL 
+			            	//if ( $scope.selected.actor == null ) {
 			            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor == null - OK");
 			            		/* Do not perform DEREGISTRATION for case oldId => newId : undefined => undefined
 			            		 * while situation like undefined => null or undefined => Gxxxxx must trigger it.
@@ -106,19 +112,21 @@
 					            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') - actorModel not null : " + $scope.actorModel.toString());
 					            	}
 				            		// Remove listener now that we tried loading the actor elfin object.
+					            	// NO, UPDATE MIGHT COME LATER FROM URL PARAMETERS...
+					            	
 					            	//$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
-					            	actorModelWatchDeregistration();
+					            	//actorModelWatchDeregistration();
 					            	
 				            	} else {
 				            		// Keep on listening as long as newId is undefined
 				            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => Keep on listening as long as newId is undefined");
 				            	}
-			            	} else {
+			            	//} else {
 			            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor NOT NULL !!! ");
 			            		//$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
 			            		// Remove listener if selected actor already exists 
-			            		actorModelWatchDeregistration();
-			            	}
+			            	//	actorModelWatchDeregistration();
+			            	//}
 
 			            });			        	
 			        	
