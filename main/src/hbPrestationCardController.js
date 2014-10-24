@@ -47,6 +47,8 @@
 												$log.debug("    >>>> Using HbPrestationCardController: elfin defined");
 												// Template fields clean up.
 												$scope.elfin.GROUPE = '';
+												// CAR2.NOM = 'Motif'
+												$scope.elfin.CARACTERISTIQUE.CAR2.VALEUR = '';
 												/* Check URL parameters calling IMMEUBLE instance Id, ID_G are valid. 
 												 * (Prevents against wrong manual URL typing). 
 												 */
