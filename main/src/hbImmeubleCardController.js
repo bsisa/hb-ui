@@ -106,13 +106,11 @@
 							    		$log.debug("$watchCollection for OBJECTIF, PROPRIETAIRE.NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 							    		
 							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
-							    			// DONE: added restriction on PROPRIETAIRE, CLASSE. Strict restriction on OBJECTIF, starts-with is not correct in all cases.
-								            var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@NOM='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM+"' and @CLASSE='PRESTATION']";
-
 								            // TODO: constatsCollectionId must come from server configuration resource.
 								            $log.debug("TODO: HbImmeubleCardController: prestationCollectionId must come from server configuration resource.");
-								            var prestationsCollectionId = 'G20081113902512302';
-								            GeoxmlService.getCollection(prestationsCollectionId).getList({"xpath" : xpathForPrestations})
+							    			// DONE: added restriction on PROPRIETAIRE, CLASSE. Strict restriction on OBJECTIF, starts-with is not correct in all cases.
+								            var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@NOM='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM+"' and @CLASSE='PRESTATION']";
+								            hbQueryService.getPrestations(xpathForPrestations)
 												.then(function(elfins) {
 														$scope.prestations = elfins;
 													},
