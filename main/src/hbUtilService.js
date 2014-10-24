@@ -263,17 +263,22 @@
 		 */
 		var getPrestationGroupForTransactionGroup = function (transactionGroup) {
 			
-			var prestationGroup = "";
-    		if (transactionGroup === "Petite réparation") {
-    			prestationGroup = 'Fonctionnement';
-    		} else if (transactionGroup === "Frais fixes") {
-    			prestationGroup = "Fonctionnement";
-    		} else if (transactionGroup === "Investissement pluriannuel") {
-    			prestationGroup = "Investissement";
-    		} else {
-    			prestationGroup = transactionGroup;
-    		}
-			return prestationGroup;		
+			// Protect against catalogue initialisation choices strings (pipe separated).
+			if (transactionGroup.indexOf("|") > -1) {
+				return "";
+			} else { // Proceed
+				var prestationGroup = "";
+	    		if (transactionGroup === "Petite réparation") {
+	    			prestationGroup = 'Fonctionnement';
+	    		} else if (transactionGroup === "Frais fixes") {
+	    			prestationGroup = "Fonctionnement";
+	    		} else if (transactionGroup === "Investissement pluriannuel") {
+	    			prestationGroup = "Investissement";
+	    		} else {
+	    			prestationGroup = transactionGroup;
+	    		}
+				return prestationGroup;				
+			}
 		};
 
         
