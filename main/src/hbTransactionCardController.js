@@ -109,7 +109,9 @@
 								 */
 								$scope.getPrestation = function(sai,groupePrestation,year,owner) {
 									
-									if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && year.length === 4 && owner.Id != null && owner.Id.length > 0) {
+									//if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && year.length === 4 && owner.Id != null && owner.Id.length > 0) {
+									//if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && owner.Id != null && owner.Id.length > 0) {
+									if ( sai != null && groupePrestation != null && groupePrestation.length > 0 && year != null && owner.Id != null && owner.Id.length > 0) {
 									
 										$log.debug("getPrestation = " + "sai = " + sai +", groupePrestation = " + groupePrestation + ", year = " + year + ", owner = " + angular.toJson(owner));
 
@@ -122,23 +124,29 @@
 													$scope.constatPrestation = prestations[0];
 													$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
 													$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
+													$scope.prestationStatus = null;
+													$scope.prestationStatusTooltips = "Prestation correspondant aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year;
 													$log.debug(">>> : $scope.constatPrestation = " + $scope.constatPrestation);
 												} else if (prestations.length < 1) {
 													$scope.constatPrestation = null;
 													$scope.elfin.IDENTIFIANT.COMPTE = null;
 													$scope.elfin.IDENTIFIANT.OBJECTIF = null;
-													hbAlertMessages.addAlert(
-															"warning", "Pas de prestation correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);
+													$scope.prestationStatus = "Aucun résultat";
+													$scope.prestationStatusTooltips = "Pas de prestation correspondant aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year;
+//													hbAlertMessages.addAlert(
+//															"warning", "Pas de prestation correspondant aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year);
 												} else if (prestations.length > 1) {
 													$scope.constatPrestation = null;
 													$scope.elfin.IDENTIFIANT.COMPTE = null;
-													$scope.elfin.IDENTIFIANT.OBJECTIF = null;															
+													$scope.elfin.IDENTIFIANT.OBJECTIF = null;
+													$scope.prestationStatus = "Plusieurs résultats!";
+													$scope.prestationStatusTooltips = "Plusieurs no prestations correspondent aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year;
 													hbAlertMessages.addAlert(
-															"warning", "Plusieurs prestations correspondent aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);															
+															"warning", "Plusieurs prestations correspondent aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year);															
 												}
 											},
 											function(response) {
-												var message = "Le chargement de la PRESTATION correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year + " a échoué (statut de retour: "
+												var message = "Le chargement de la PRESTATION correspondant aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year + " a échoué (statut de retour: "
 														+ response.status
 														+ ")";
 												hbAlertMessages.addAlert(
@@ -148,7 +156,8 @@
 									} else if ($attrs.hbMode === "create") {
 										$scope.constatPrestation = null;
 										$scope.elfin.IDENTIFIANT.COMPTE = null;
-										$scope.elfin.IDENTIFIANT.OBJECTIF = null;										
+										$scope.elfin.IDENTIFIANT.OBJECTIF = null;
+										$scope.prestationStatus = "Aucun résultat";
 									}
 									
 								};				
@@ -168,10 +177,19 @@
 						    		}
 						    	}, true);
 								
+						    	/**
+						    	 * Maintain helper for SAI updated ...
+						    	 */
+						    	$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() {
+						    		if ($scope.elfin!=null && $scope.elfin.IDENTIFIANT.OBJECTIF) {
+						    			$scope.helper.constatSelectionSai = $scope.elfin.IDENTIFIANT.OBJECTIF.split('.')[0];
+						    		}
+						    	}, true);
+						    	
 								/**
 								 * Listen to informations required to find out related PRESTATION
 								 */
-								$scope.$watch('[helper.constatSelectionSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR]', function() {
+								$scope.$watch('[helper.constatSelectionSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR,searchOwner.Id]', function() {
 									// Prevent unnecessary call to getPrestation
 									//if ($scope.elfin!=null && $scope.elfin.IDENTIFIANT.PAR.length === 4 && $scope.helper.constatSelectionSai.length > 0 && $scope.elfin.CARACTERISTIQUE.CAR1.UNITE.length > 0) {
 									if ($scope.elfin!=null) {

@@ -3,6 +3,12 @@
 	<span ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire!</span>
 	<span ng-show="elfinForm.destinataire.$error.required">Le champs <strong>Destinataire</strong> est obligatoire!</span>
 	<span ng-show="elfinForm.resp.$error.required">Le champs <strong>Responsable visa de facture</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.groupeTrans.$error.required">Le <strong>Groupe Transaction</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.objectif.$error.required">Le <strong>numéro de prestation {SAI}.{index}</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.objectif.$error.minlength">Le <strong>numéro de prestation {SAI}.{index}</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.year.$error.required"><strong>L'année</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.year.$error.minlength"><strong>L'année</strong> doit être composée de quatre positions.</span>
+	<span ng-show="elfinForm.year.$error.maxlength"><strong>L'année</strong> doit être composée de quatre positions.</span>
 </div>
 
 <div class="row" style="padding-top: 8px;">
@@ -37,10 +43,12 @@
 				<div ng-show="reallocate" class="form-group">
 					<label for="objectifSearchHelper" class="col-sm-4 control-label"><em>No SAI</em></label>
 					<div class="col-sm-3">
-						<input id="objectifSearchHelper" type="text" class="form-control" ng-model="helper.constatSelectionSai" hb-no-dirty-check>
+						<input id="objectifSearchHelper" name="objectifSearchHelper" type="text" class="form-control" ng-model="helper.constatSelectionSai" hb-no-dirty-check >
 					</div>
 					<label for="objectif" class="col-sm-2 control-label">Prest.</label>
-					<div id="objectif" class="col-sm-3 form-control-static">{{elfin.IDENTIFIANT.OBJECTIF}}</div>
+					<div id="objectif" ng-show="elfin.IDENTIFIANT.OBJECTIF" class="col-sm-3 form-control-static"><span class="label label-success" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{elfin.IDENTIFIANT.OBJECTIF}}</span></div>
+					<div ng-show="false"><input name="objectif" ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-required="true" ng-minlength="1"></div>  
+					<div ng-show="!elfin.IDENTIFIANT.OBJECTIF" id="objectifStatus" class="col-sm-3 form-control-static"><span class="label label-warning" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{prestationStatus}}</span></div>
 				</div>				
 
 				<div ng-show="reallocate" class="form-group">
@@ -54,13 +62,14 @@
 				</div>
 				
 				<div ng-show="reallocate" class="form-group">
-					<label for="groupe-trans" class="col-sm-4 control-label">Groupe Transaction</label>
+					<label for="groupeTrans" class="col-sm-4 control-label">Groupe Transaction</label>
 					<div class="col-sm-8">
-						<select id="groupe-trans" name="groupe-trans" class="form-control" chosen
+						<select id="groupeTrans" name="groupeTrans" class="form-control" chosen
 							data-placeholder=" " disable-search="false"
 							allow-single-deselect="true"
 							ng-model="elfin.GROUPE"
-							ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes">
+							ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes"
+							ng-required="true">
 							<option value=''></option>
 						</select>							
 					</div>
@@ -85,11 +94,11 @@
 				</div>
 				
 				<div ng-show="reallocate" class="form-group">
-					<label for="annee" class="col-sm-4 control-label">Année</label>
+					<label for="year" class="col-sm-4 control-label">Année</label>
 					<div class="col-sm-3">
-						<input id="annee" type="text" class="form-control"
+						<input id="year" name="year" type="text" class="form-control"
 							ng-model="elfin.IDENTIFIANT.PAR" 
-							hb-no-dirty-check >
+							hb-no-dirty-check ng-maxlength="4" ng-minlength="4" ng-required="true">
 					</div>
 					<label for="source" class="col-sm-2 control-label">Compte</label>
 					<div class="col-sm-3">
