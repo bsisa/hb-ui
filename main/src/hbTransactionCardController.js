@@ -67,7 +67,7 @@
 								 * Note: This information is only used in hbTransactionCreateCard.html view while in create mode.
 								 */
 								$scope.displayBuildingAddress = function(noSai,owner) {
-									if ($attrs.hbMode === "create" || $scope.reallocate) {									
+									if ($attrs.hbMode === "create" || $scope.reallocate && owner.Id != null && owner.Id.length > 0) {									
 										$log.debug("displayBuildingAddress = function("+noSai+","+owner.Id+")");
 										if ($scope.immeubles
 												&& $scope.immeubles.length > 0 && owner != null) {
@@ -104,55 +104,46 @@
 								};
 								
 								
-								// Search prestation for no SAI, groupe prestation, year
-								// TODO: review behaviour with test data for "Add owner parameter"
+								/**
+								 * Search existing PRESTATION for no SAI, groupe prestation, year, owner
+								 */
 								$scope.getPrestation = function(sai,groupePrestation,year,owner) {
 									
-									if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && year.length === 4 ) {
+									if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && year.length === 4 && owner.Id != null && owner.Id.length > 0) {
 									
 										$log.debug("getPrestation = " + "sai = " + sai +", groupePrestation = " + groupePrestation + ", year = " + year + ", owner = " + angular.toJson(owner));
-										// TODO: move prestationCollectionId to constants.
-										var prestationCollectionId = "G20081113902512302";
+
 										var xpathForPrestation = "//ELFIN[@GROUPE='"+groupePrestation+"' and IDENTIFIANT/DE='"+year+"' and starts-with(IDENTIFIANT/OBJECTIF, '"+sai+".')  and PARTENAIRE/PROPRIETAIRE/@Id='"+ owner.Id +"' and PARTENAIRE/PROPRIETAIRE/@ID_G='"+ owner.ID_G +"']";
-										/*
-										PARTENAIRE/PROPRIETAIRE/@Id="G20140702150305148" and PARTENAIRE/PROPRIETAIRE/@ID_G="G20060401225530100"
-										*/
-										
+
 										// Asychronous PRESTATIONS preloading
-										GeoxmlService
-												.getCollection(prestationCollectionId)
-												.getList({
-													"xpath" : xpathForPrestation
-												})
-												.then(
-														function(prestations) {
-															
-															if (prestations.length == 1) {
-																$scope.constatPrestation = prestations[0];
-																$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
-																$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
-																$log.debug(">>> : $scope.constatPrestation = " + $scope.constatPrestation);
-															} else if (prestations.length < 1) {
-																$scope.constatPrestation = null;
-																$scope.elfin.IDENTIFIANT.COMPTE = null;
-																$scope.elfin.IDENTIFIANT.OBJECTIF = null;
-																hbAlertMessages.addAlert(
-																		"warning", "Pas de prestation correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);
-															} else if (prestations.length > 1) {
-																$scope.constatPrestation = null;
-																$scope.elfin.IDENTIFIANT.COMPTE = null;
-																$scope.elfin.IDENTIFIANT.OBJECTIF = null;															
-																hbAlertMessages.addAlert(
-																		"warning", "Plusieurs prestations correspondent aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);															
-															}
-														},
-														function(response) {
-															var message = "Le chargement de la PRESTATION correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year + " a échoué (statut de retour: "
-																	+ response.status
-																	+ ")";
-															hbAlertMessages.addAlert(
-																	"danger", message);
-														});
+										hbQueryService.getPrestations(xpathForPrestation).then(
+											function(prestations) {
+												if (prestations.length == 1) {
+													$scope.constatPrestation = prestations[0];
+													$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
+													$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
+													$log.debug(">>> : $scope.constatPrestation = " + $scope.constatPrestation);
+												} else if (prestations.length < 1) {
+													$scope.constatPrestation = null;
+													$scope.elfin.IDENTIFIANT.COMPTE = null;
+													$scope.elfin.IDENTIFIANT.OBJECTIF = null;
+													hbAlertMessages.addAlert(
+															"warning", "Pas de prestation correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);
+												} else if (prestations.length > 1) {
+													$scope.constatPrestation = null;
+													$scope.elfin.IDENTIFIANT.COMPTE = null;
+													$scope.elfin.IDENTIFIANT.OBJECTIF = null;															
+													hbAlertMessages.addAlert(
+															"warning", "Plusieurs prestations correspondent aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year);															
+												}
+											},
+											function(response) {
+												var message = "Le chargement de la PRESTATION correspondant aux informations: SAI = " + sai + ", groupe de prestation = " + groupePrestation + ", année = " + year + " a échoué (statut de retour: "
+														+ response.status
+														+ ")";
+												hbAlertMessages.addAlert(
+														"danger", message);
+											});
 									
 									} else if ($attrs.hbMode === "create") {
 										$scope.constatPrestation = null;
