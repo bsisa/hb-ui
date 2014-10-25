@@ -229,16 +229,28 @@
 												
 												// If a No SAI corresponding to an existing PRESTATION is provided
 												// set it to elfin.IDENTIFIANT.OBJECTIF
-												if ($routeParams.sai) {
+												//if ($routeParams.sai) {
+												if ($routeParams.Id && $routeParams.ID_G) {
 													// Check the corresponding PRESTATION exists and if available, copy relevant information to 
 													// current new TRANSACTION.
-													var xpathForPrestationByObjectif = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$routeParams.sai+"']";
-													hbQueryService.getPrestations(xpathForPrestationByObjectif).then(
+													//var xpathForPrestationByObjectif = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$routeParams.sai+"']";
+													var xpathForPrestationByIdAndID_G = "//ELFIN[@Id='"+$routeParams.Id+"' and @ID_G='"+$routeParams.ID_G+"']";
+													//hbQueryService.getPrestations(xpathForPrestationByObjectif).then(
+													hbQueryService.getPrestations(xpathForPrestationByIdAndID_G).then(
 														function(prestations) {
 															if (prestations.length === 1) {
 																var prestation = prestations[0];
 																// Update OBJECTIF
 																$scope.elfin.IDENTIFIANT.OBJECTIF = prestation.IDENTIFIANT.OBJECTIF;
+																// delay owner update waiting for default to be applied first, then overriden.
+//																$timeout(function() {
+//																	$log.debug(">>>>>>>>>>>>>>>>>>>>>>> delayed update... <<<<<<<<<<<<<<<<<<<<<<<<<<");
+//																	$log.debug(">>>>>>>>>>>>>>>>>>>>>>> delayed update to "+ prestation.PARTENAIRE.PROPRIETAIRE.NOM +" <<<<<<<<<<<<<<<<<<<<<<<<<<");
+//																	$log.debug(">>>>>>>>>>>>>>>>>>>>>>> delayed update... <<<<<<<<<<<<<<<<<<<<<<<<<<");
+//																	// Update helper fields
+//																	$scope.searchOwner = {Id : prestation.PARTENAIRE.PROPRIETAIRE.Id, ID_G : prestation.PARTENAIRE.PROPRIETAIRE.ID_G, GROUPE : prestation.PARTENAIRE.PROPRIETAIRE.GROUPE, NOM : prestation.PARTENAIRE.PROPRIETAIRE.NOM};
+//										                    	}, 4000, true);     
+																
 																// Update helper fields
 																$scope.searchOwner = {Id : prestation.PARTENAIRE.PROPRIETAIRE.Id, ID_G : prestation.PARTENAIRE.PROPRIETAIRE.ID_G, GROUPE : prestation.PARTENAIRE.PROPRIETAIRE.GROUPE, NOM : prestation.PARTENAIRE.PROPRIETAIRE.NOM};
 																$scope.helper.constatSelectionSai = prestation.IDENTIFIANT.OBJECTIF.split('.')[0];
@@ -269,21 +281,22 @@
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
-										} else if ($scope.reallocate) {
+										} else if ($scope.reallocate) { // updates in reallocate mode
 											if ($scope.elfin) {
 							    				$log.debug(">>>>>>>>>> REALLOCATING ...");
 							    				
 												// If a No SAI corresponding to an existing PRESTATION is provided
 												// set it to elfin.IDENTIFIANT.OBJECTIF
 												if ($scope.elfin.IDENTIFIANT.OBJECTIF) {
-													
+													$log.debug(" >>>>>>>>>>>>>>>>>>> searching for prestation...");
 													$scope.helper.constatSelectionSai = $scope.elfin.IDENTIFIANT.OBJECTIF.split('.')[0];													
 													
 													// Check the corresponding PRESTATION exists and if available, copy relevant information to 
 													// current new TRANSACTION.
-													var xpathForPrestationByObjectif = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.helper.constatSelectionSai+"']";
+													var xpathForPrestationByObjectif = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"']";
 													hbQueryService.getPrestations(xpathForPrestationByObjectif).then(
 														function(prestations) {
+															$log.debug(" >>>>>>>>>>>>>>>>>>> found "+prestations.length+" prestation for " + xpathForPrestationByObjectif);
 															if (prestations.length === 1) {
 																var prestation = prestations[0];
 																// Update OBJECTIF
@@ -299,7 +312,7 @@
 																var message = "Le numéro d'objectif: "+$scope.helper.constatSelectionSai+" fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
 																hbAlertMessages.addAlert(
 																		"warning", message);
-															} else if (prestations.length > 1 ) {
+															} else if (prestations.length < 1 ) {
 																var message = "Le numéro d'objectif: "+$scope.helper.constatSelectionSai+" fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
 																hbAlertMessages.addAlert(
 																		"warning", message);
@@ -321,7 +334,8 @@
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
 										} else {
-											// Do nothing
+											// Manage editing initialisation
+											$scope.searchOwner = {Id : $scope.elfin.PARTENAIRE.PROPRIETAIRE.Id, ID_G : $scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G, GROUPE : $scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE, NOM : $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM};
 										}
 						    		};
 						    	}, true);								
