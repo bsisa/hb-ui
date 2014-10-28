@@ -92,7 +92,6 @@
 			        		
 			        	};							
 
-
 			        	/**
 			        	 * actorModel references an ELFIN property with Id, ID_G, GROUPE and NOM properties.
 			        	 * This listener is used only for actor initialisation 
@@ -106,6 +105,12 @@
 			        		if (newId !== undefined) {
 			        			if (newId === null || newId.trim() === '' || newId.trim() === 'null') {
 				        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: EMPTY model");
+				        			
+				        			// No actorModel.Id set default by name if provided 
+									if ($scope.defaultByName) {
+										setDefaultActorByName();
+									}				        			
+				        			
 				            		// Force validation in create mode as well
 				            		$scope.enableValidateActor();			        			
 				        		} else {
@@ -119,11 +124,10 @@
 					            		var message = "La sauvegarde du champs lié à la donnée d'acteur " + roleStr + " n'est pas possible. Veuillez notifier votre administrateur de base de données.";
 					            		hbAlertMessages.addAlert("danger",message);
 					            		$log.error(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: - MISSING MANDATORY actorModel OBJECT found !");
-					            	}				        			
-
-				        			// Remove listener now that we tried loading the actor elfin object.
-				        			actorModelWatchDeregistration();
-				        		}			        			
+					            	}
+				        		}
+			        			// Remove listener now that we tried loading the actor elfin object.
+			        			actorModelWatchDeregistration();
 			        		} else {
 			        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: UNDEFINED model");
 			            		// Keep on listening as long as newId is undefined
@@ -156,12 +160,6 @@
 			            hbQueryService.getActors(xpathForActor)		
 						.then(function(actors) {
 								$scope.actors = actors;
-								// TODO: Manage default only if actorModel initialisation did not lead to actorModel data
-								if ($scope.defaultByName && $scope.modelInitialised && $scope.actorModel != undefined 
-										&& $scope.actorModel != null && $scope.actorModel.Id.trim().length > 0) {
-									setDefaultActorByName();
-								}
-								//$log.debug("    >>>> HbChooseActorController: " + $scope.actors.length + " actors loaded.");
 							},
 							function(response) {
 								var message = "Le chargement des ACTEURS Collaborateur a échoué (statut de retour: "+ response.status+ ")";
@@ -169,6 +167,22 @@
 							});								
 						
 						
+			            // Wait for actors list to be loaded before selecting default from it
+			            var actorsListenerDeregistration = $scope.$watchCollection('actors', function(newActors, oldActors) {
+			            	// Proceed only if not the listener initialisation and we wait for default processing
+			            	if (!(newActors === oldActors )) {
+			            		if ($scope.defaultActorProcessWaiting && $scope.defaultActorProcessWaiting === true) {
+				            		$log.debug(">>>>>>>>>>>>>>>>>> actors LISTENER waiting to set default actor by name");
+				            		setDefaultActorByName();			            			
+			            		} else {
+			            			$log.debug(">>>>>>>>>>>>>>>>>> actors LISTENER NOT waiting to set default actor by name");
+			            		}
+			            		// Stop listening to actors list initialisation
+			            		actorsListenerDeregistration();
+			            	}
+			            }, true);
+			            
+			            
 						/**
 				         * Modal panel to update an elfin reference with the selection from a list of actors.
 				         */
@@ -261,23 +275,30 @@
 				         * Procedure to set default actor by name
 				         */
 				        var setDefaultActorByName = function() {
-							var defaultActorIsSet = false;
-							for (var i=0; actors.length; i++) {
-								var actor = actors[i];
-								if (actor.IDENTIFIANT.NOM == $scope.defaultByName) {
-									//$scope.selected.actor = actor;
-									selectedActorUpdate(actor);
-									actorModelsUpdate(actor);
-					        		//defaultModelUpdate();			
-					        		//defaultModelDisplayUpdate();
-									defaultActorIsSet = true;
-									break;
+				        	if ($scope.actors) {
+								var defaultActorIsSet = false;
+								for (var i=0; $scope.actors.length; i++) {
+									var actor = $scope.actors[i];
+									if (actor.IDENTIFIANT.NOM == $scope.defaultByName) {
+										//$scope.selected.actor = actor;
+										selectedActorUpdate(actor);
+										actorModelsUpdate(actor);
+						        		//defaultModelUpdate();			
+						        		//defaultModelDisplayUpdate();
+										defaultActorIsSet = true;
+										break;
+									}
 								}
-							}
-							if (!defaultActorIsSet) {
-								var message = "L'ACTEUR par défaut correspondant au nom: " + $scope.defaultByName + " n'a pas pu être trouvé parmi les " + actors.length + " acteurs disponibles.";
-					            hbAlertMessages.addAlert("warning",message);
-							}				        	
+								// Done searching for default
+								$scope.defaultActorProcessWaiting = false;
+								// Notify user if the search did not succeed.
+								if (!defaultActorIsSet) {
+									var message = "L'ACTEUR par défaut correspondant au nom: " + $scope.defaultByName + " n'a pas pu être trouvé parmi les " + actors.length + " acteurs disponibles.";
+						            hbAlertMessages.addAlert("warning",message);
+								}
+				        	} else {
+				        		$scope.defaultActorProcessWaiting = true;
+				        	}
 				        };
 
 					} ]); // End of HbChooseActorController definition
