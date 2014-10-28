@@ -267,7 +267,7 @@
 			if (transactionGroup.indexOf("|") > -1) {
 				return "";
 			} else { // Proceed
-				var prestationGroup = "";
+				var prestationGroup = null;
 	    		if (transactionGroup === "Petite réparation") {
 	    			prestationGroup = 'Fonctionnement';
 	    		} else if (transactionGroup === "Frais fixes") {
