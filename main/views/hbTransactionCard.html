@@ -22,7 +22,7 @@
 			<!-- 1ere colonne -->
 			<div class="col-sm-6">
 				<!-- This field is only relevant to reallocate and create mode -->
-				<div ng-show="reallocate" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
+				<div ng-if="reallocate" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
 					<label for="manager" class="col-sm-4 control-label"><em>Propriétaire</em></label>
 					<div class="col-sm-8">
 						<div 
@@ -198,7 +198,8 @@
 			</div>
 			<div class="col-sm-12">
 				<button class="btn btn-primary" ng-click="createNewTransaction()" ng-disabled="false"><span class="glyphicon glyphicon-plus-sign"></span> Créer une nouvelle transaction</button>
-				<button class="btn btn-primary" ng-click="reallocateTransaction()" ng-disabled="reallocate"><span class="glyphicon glyphicon-plus-sign"></span> Réaffecter la transaction</button>
+				<button class="btn btn-primary" ng-click="reallocateTransaction()" ng-show="!reallocate"><span class="glyphicon glyphicon-plus-sign"></span> Réaffecter la transaction</button>
+				<button class="btn btn-primary" ng-click="editTransaction()" ng-show="reallocate"><span class="glyphicon glyphicon-plus-sign"></span> Quitter le mode réaffectation</button>
 			</div>
 		</div>
 		</div>

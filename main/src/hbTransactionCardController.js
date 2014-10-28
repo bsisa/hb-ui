@@ -68,15 +68,15 @@
 								 */
 								$scope.displayBuildingAddress = function(noSai,owner) {
 									// Protect against null parameters values
-									if (noSai != null && owner != null ) {
-										if ( $attrs.hbMode === "create" || $scope.reallocate && owner.Id != null && owner.Id.length > 0) {									
+									if (noSai !== null && owner !== null && owner !== undefined) {
+										if ( $attrs.hbMode === "create" || $scope.reallocate && owner.Id !== null && owner.Id.length > 0) {									
 											$log.debug("displayBuildingAddress = function("+noSai+","+owner.Id+")");
 											if ($scope.immeubles
-													&& $scope.immeubles.length > 0 && owner != null) {
+													&& $scope.immeubles.length > 0 && owner !== null) {
 												var selectionFound = false;
 												for (var i = 0; i < $scope.immeubles.length; i++) {
 													var currImm = $scope.immeubles[i];
-													if (currImm.IDENTIFIANT.OBJECTIF == noSai && owner.Id == currImm.PARTENAIRE.PROPRIETAIRE.Id && owner.ID_G == currImm.PARTENAIRE.PROPRIETAIRE.ID_G) {
+													if (currImm.IDENTIFIANT.OBJECTIF === noSai && owner.Id === currImm.PARTENAIRE.PROPRIETAIRE.Id && owner.ID_G === currImm.PARTENAIRE.PROPRIETAIRE.ID_G) {
 														$scope.selectedImmeuble = currImm;
 														selectionFound = true;
 														break;
@@ -95,6 +95,10 @@
 									}
 								};
 								
+						    	$scope.$watch('searchOwner', function(newOwner,oldOwner) {
+						    		$log.debug("searchOwner changed \nFrom : "+ angular.toJson(oldOwner) + "\nTo   : " + angular.toJson(newOwner));
+						    	}, true);								
+								
 								/**
 						    	 * Refresh address found with helpers CONSTAT and ACTOR 'Propriétaire' information changes.
 						    	 */
@@ -104,8 +108,8 @@
 								
 								// Copy VALEUR_A_NEUF to VALEUR only if VALEUR is 0 
 								$scope.copyValeur_a_Neuf2Valeur = function(valneuf) {
-									// Only initialise to valneuf if no set (== 0)
-									if ($scope.elfin.IDENTIFIANT.VALEUR == 0) {
+									// Only initialise to valneuf if no set (=== 0)
+									if ($scope.elfin.IDENTIFIANT.VALEUR === 0) {
 										$scope.elfin.IDENTIFIANT.VALEUR = valneuf;
 									} 
 								};
@@ -116,9 +120,9 @@
 								 */
 								$scope.getPrestation = function(sai,groupePrestation,year,owner) {
 									
-									//if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && year.length === 4 && owner.Id != null && owner.Id.length > 0) {
-									//if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && owner.Id != null && owner.Id.length > 0) {
-									if ( sai != null && groupePrestation != null && groupePrestation.length > 0 && year != null && owner != null && owner.Id != null && owner.Id.length > 0) {
+									//if ( sai !== null && sai.length > 0 && groupePrestation !== null && groupePrestation.length > 0 && year !== null && year.length === 4 && owner.Id !== null && owner.Id.length > 0) {
+									//if ( sai !== null && sai.length > 0 && groupePrestation !== null && groupePrestation.length > 0 && year !== null && owner.Id !== null && owner.Id.length > 0) {
+									if ( sai !== null && groupePrestation !== null && groupePrestation.length > 0 && year !== null && owner !== undefined && owner !== null && owner.Id !== null && owner.Id !== 'null' && owner.Id.length > 0) {
 									
 										$log.debug(">>>>>> HbTransactionCardController - getPrestation = " + "sai = " + sai +", groupePrestation = " + groupePrestation + ", year = " + year + ", owner = " + angular.toJson(owner));
 
@@ -127,7 +131,7 @@
 										// Asychronous PRESTATIONS preloading
 										hbQueryService.getPrestations(xpathForPrestation).then(
 											function(prestations) {
-												if (prestations.length == 1) {
+												if (prestations.length === 1) {
 													$scope.constatPrestation = prestations[0];
 													$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
 													$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
@@ -174,8 +178,8 @@
 								 * Updates PRESTATION.GROUPE on TRANSACTION.GROUPE update
 								 */
 						    	$scope.$watch('elfin.GROUPE', function() {
-						    		if ($scope.elfin!=null ) {
-						    			if ($scope.elfin.GROUPE!=null) {
+						    		if ($scope.elfin!==null ) {
+						    			if ($scope.elfin.GROUPE!==null) {
 							    			$log.debug(">>>>>> HbTransactionCardController - ($watch('elfin.GROUPE') updating $scope.elfin.CARACTERISTIQUE.CAR1.UNITE = " + $scope.elfin.CARACTERISTIQUE.CAR1.UNITE + " to " + hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE));
 							    			$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE);						    				
 						    			} else {
@@ -188,7 +192,7 @@
 						    	 * Maintain helper for SAI updated ...
 						    	 */
 						    	$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() {
-						    		if ($scope.elfin!=null && $scope.elfin.IDENTIFIANT.OBJECTIF) {
+						    		if ($scope.elfin!==null && $scope.elfin.IDENTIFIANT.OBJECTIF) {
 						    			$scope.helper.constatSelectionSai = $scope.elfin.IDENTIFIANT.OBJECTIF.split('.')[0];
 						    		}
 						    	}, true);
@@ -198,8 +202,9 @@
 								 */
 								$scope.$watch('[helper.constatSelectionSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR,searchOwner.Id]', function() {
 									// Prevent unnecessary call to getPrestation
-									//if ($scope.elfin!=null && $scope.elfin.IDENTIFIANT.PAR.length === 4 && $scope.helper.constatSelectionSai.length > 0 && $scope.elfin.CARACTERISTIQUE.CAR1.UNITE.length > 0) {
-									if ($scope.elfin!=null) {
+									//if ($scope.elfin!==null && $scope.elfin.IDENTIFIANT.PAR.length === 4 && $scope.helper.constatSelectionSai.length > 0 && $scope.elfin.CARACTERISTIQUE.CAR1.UNITE.length > 0) {
+									if ($scope.elfin!==null) {
+										// TODO: review situation in which this resets the searchOwner to null values...
 										$scope.getPrestation($scope.helper.constatSelectionSai,$scope.elfin.CARACTERISTIQUE.CAR1.UNITE,$scope.elfin.IDENTIFIANT.PAR,$scope.searchOwner);
 									}
 									//}
@@ -210,7 +215,7 @@
 					             */
 						    	$scope.$watch('elfin.Id', function() { 
 
-						    		if ($scope.elfin!=null) {
+						    		if ($scope.elfin!==null) {
 
 						    			
 										// Update elfin properties from catalogue while in create mode
@@ -341,10 +346,6 @@
 															$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 														});													
 												}										    				
-							    				
-							    				
-							    				
-							    				
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
@@ -463,7 +464,12 @@
 						        // Allow triggering reallocate mode to allow editing of sensitive fields.
 								$scope.reallocateTransaction = function () {
 		    	                   	$location.search('reallocate', 'true');
-						        };					            						        
+						        };			
+						        
+						        // Allow going back from special reallocate mode to standard edit mode
+								$scope.editTransaction = function () {
+		    	                   	$location.search('reallocate', null);
+						        };			
 					            
 							} ]);
 
