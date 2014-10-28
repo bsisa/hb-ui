@@ -79,12 +79,9 @@
 					        	if ( actorElfin['CARACTERISTIQUE'] != null && actorElfin['CARACTERISTIQUE']['CARSET'] != null && actorElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
 					        		hbUtil.reorderArrayByPOS(actorElfin['CARACTERISTIQUE']['CARSET']['CAR']);
 					        	}
-					        	$log.debug(">>>>>>>>>>>> HbChooseActorController getElfinActor("+collectionId+","+elfinId+")");
-					        	//$scope.selected.actor = actorElfin;
 					        	selectedActorUpdate(actorElfin);
 					        	actorModelsUpdate(actorElfin);
-					        	//defaultModelUpdate();
-				        		//defaultModelDisplayUpdate();
+
 					        	$scope.enableValidateActor();
 					        }, function(response) {
 					        	var message = "Aucun object ACTEUR disponible pour la collection: " + collectionId + " et l'identifiant: " + elfinId + ".";
@@ -94,13 +91,8 @@
 					        });
 			        		
 			        	};							
-						
 
-//			        	$scope.$watch('actorModel.NOM', function(newNom, oldNom) {
-//			        		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.NOM') = " + oldNom + " => " + newNom);
-//			        	}, true);
-			        	
-			        	
+
 			        	/**
 			        	 * actorModel references an ELFIN property with Id, ID_G, GROUPE and NOM properties.
 			        	 * This listener is used only for actor initialisation 
@@ -111,68 +103,43 @@
 			        		var newIdValue = (newId === null) ? 'null' : (newId === undefined) ? 'undefined' : (newId.trim() === '' ? 'empty string' : newId);
 			            	
 			        		$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: oldId = " + oldIdValue + " => newId = " + newIdValue);
-			        		if (newId === undefined) {
-			        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: UNDEFINED model");	
-			        		} else if (newId === null || newId.trim() === '' || newId.trim() === 'null') {
-			        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: EMPTY model");
-			        		} else {
-			        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: DATA for model: newId = " + newId);
-			        		}
+			        		if (newId !== undefined) {
+			        			if (newId === null || newId.trim() === '' || newId.trim() === 'null') {
+				        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: EMPTY model");
+				            		// Force validation in create mode as well
+				            		$scope.enableValidateActor();			        			
+				        		} else {
+				        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: DATA for model: newId = " + newId);
+				        			// Make sure an actor reference is defined before trying to load actor elfin
+				        			$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
 
-			            	// Only initialise if no selected actor object exists 
-			            	// REVIEW: selected actor object must not be initialised before actorModel has been bound.
-			            	//if ( $scope.selected.actor == null ) {
-			            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor == null - OK");
-			            		/* Do not perform DEREGISTRATION for case oldId => newId : undefined => undefined
-			            		 * while situation like undefined => null or undefined => Gxxxxx must trigger it.
-			            		 */
-				            	if ( newId ) {
-				            		// Make sure an actor reference is defined before trying to load actor elfin
-					            	if ( newId != null && newId.trim() != '' && newId.trim() != "null") {
-					            		$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: calling getElfinActor("+$scope.actorModel.ID_G+","+$scope.actorModel.Id+")");
-						            	$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
-					            	} else {
-					            		// Force validation in create mode as well
-					            		$scope.enableValidateActor();
-					            	}
-					            	
+				        			// Special case when for instance expected actor 'role' does not exist in the system.
 					            	if (!$scope.actorModel == undefined && $scope.actorModel == null) {
 					            		var roleStr = $scope.actorRole ? $scope.actorRole : "";
-										var message = "La sauvegarde du champs lié à la donnée d'acteur " + roleStr + " n'est pas possible. Veuillez notifier votre administrateur de base de données.";
-							            hbAlertMessages.addAlert("danger",message);
+					            		var message = "La sauvegarde du champs lié à la donnée d'acteur " + roleStr + " n'est pas possible. Veuillez notifier votre administrateur de base de données.";
+					            		hbAlertMessages.addAlert("danger",message);
 					            		$log.error(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: - MISSING MANDATORY actorModel OBJECT found !");
-					            	} else {
-					            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') - actorModel not null : " + $scope.actorModel.toString());
-					            	}
-				            		// Remove listener now that we tried loading the actor elfin object.
-					            	// NO, UPDATE MIGHT COME LATER FROM URL PARAMETERS...
-					            	
-					            	$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
-					            	actorModelWatchDeregistration();
-					            	
-				            	} else {
-				            		// Keep on listening as long as newId is undefined
-				            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => Keep on listening as long as newId is undefined");
-				            	}
-			            	//} else {
-			            		//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => $scope.selected.actor NOT NULL !!! ");
-			            		//$log.debug(">>>>>>>>>>>> HbChooseActorController DEREGISTRATION OF $scope.$watch('actorModel.Id') ");
-			            		// Remove listener if selected actor already exists 
-			            	//	actorModelWatchDeregistration();
-			            	//}
+					            	}				        			
 
+				        			// Remove listener now that we tried loading the actor elfin object.
+				        			actorModelWatchDeregistration();
+				        		}			        			
+			        		} else {
+			        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: UNDEFINED model");
+			            		// Keep on listening as long as newId is undefined
+			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => Keep on listening as long as newId is undefined");
+			            	}
 			            });			        	
 			        	
-						// ========================================================================
-						// NEW IMPLEMENTATION END
-						// ========================================================================
-						
+			        	// =================================================================
+			        	// XPath restriction definition for actors selection list query
+			        	// =================================================================
 						var xpathForActor = null;
 						// Restrict to provided hb-choose-actor-role 
 						if ($scope.actorRole) {
 							if (_.contains($scope.actorRole, ",")) {
 								var rolesArray = $scope.actorRole.split(",");
-								//ELFIN[@CLASSE='ACTEUR' and (IDENTIFIANT/QUALITE='Responsable chauffage' or IDENTIFIANT/QUALITE='Concierge')]
+								// Example: ELFIN[@CLASSE='ACTEUR' and (IDENTIFIANT/QUALITE='Responsable chauffage' or IDENTIFIANT/QUALITE='Concierge')]
 								xpathForActor = "//ELFIN[@CLASSE='ACTEUR' and ("; 
 								for (var i = 0; i < rolesArray.length; i++) {
 									xpathForActor += "IDENTIFIANT/QUALITE='"+rolesArray[i].trim()+"'";
@@ -184,12 +151,10 @@
 						} else { // Select all actors 
 							xpathForActor = "//ELFIN[@CLASSE='ACTEUR']";
 						}
-						//$log.debug("xpathForActor = " + xpathForActor);
 						
 			            // Asychronous actors preloading
 			            hbQueryService.getActors(xpathForActor)		
 						.then(function(actors) {
-								//$log.debug("    >>>> HbChooseActorController: loading actors ...");
 								$scope.actors = actors;
 								// TODO: Manage default only if actorModel initialisation did not lead to actorModel data
 								if ($scope.defaultByName && $scope.modelInitialised && $scope.actorModel != undefined 
@@ -232,13 +197,6 @@
 				             */
 				            modalInstance.result.then(function (selectedElfins) {
 				            	if (selectedElfins && selectedElfins.length > 0) {
-				            		var selectedElfin = selectedElfins[0];
-				            		//selected[selectedPathElement] = selectedElfin;
-				            		
-				            		//$scope.selected.actor = selectedElfin;
-				            		selectedActorUpdate(selectedElfin);
-					        		actorModelsUpdate(selectedElfin);
-
 						        	/**
 						        	 * actor model type relates to geoXml.xsd definition.
 						        	 * Currently actors references are stored in dedicated 
@@ -249,8 +207,9 @@
 						        	 * of 'MATRICEType' element use hb-actor-line-converter 
 						        	 * directive.
 						        	 */
-					        		//defaultModelUpdate();
-					        		//defaultModelDisplayUpdate();
+				            		var selectedElfin = selectedElfins[0];
+				            		selectedActorUpdate(selectedElfin);
+					        		actorModelsUpdate(selectedElfin);
 
 					            	// Notify user current data need saving.
 					            	$scope.elfinForm.$setDirty();			
@@ -265,9 +224,6 @@
 				        };
 				        
 				        
-				        // TODO: add check on actorModel availability, ID_G, Id...
-				        //$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);				        
-
 				        /**
 				         * Update bound actorModel, actorElfinModel provided elfinActor
 				         */
@@ -290,27 +246,6 @@
 			            	// Let the scope know the actor model update has completed
 			            	$scope.modelInitialised = true;
 				        };				        
-				        
-				        /**
-				         * Update bound actorModel, actorElfinModel with end-user selected actor
-				         */
-//				        var defaultModelUpdate = function() {
-//			            	// Update the new ACTOR ids
-//			            	$scope.actorModel.ID_G = $scope.selected.actor.ID_G;
-//			            	$scope.actorModel.Id = $scope.selected.actor.Id;
-//			            	// According to the GeoXML Schema GROUP and NOM are part of USAGER.
-//			            	$scope.actorModel.GROUPE = $scope.selected.actor.GROUPE;
-//			            	$scope.actorModel.NOM = $scope.selected.actor.IDENTIFIANT.NOM;			            		
-//		            		
-//			            	// Reset VALUE which should no more be used.
-//			            	$scope.actorModel.VALUE = "";		
-//			            	
-//			            	// Provide access to full ACTOR ELFIN model to provide 
-//			            	// all properties to external scope for display without 
-//			            	// requiring extra API call.  
-//			            	$scope.actorElfinModel = $scope.selected.actor;
-//			            	
-//				        };
 				        
 				        /**
 				         * Update scope selected actor and display string
@@ -344,10 +279,6 @@
 					            hbAlertMessages.addAlert("warning",message);
 							}				        	
 				        };
-				        
-//				        var defaultModelDisplayUpdate = function() {
-//				        	$scope.selected.actorDisplay = ( ( $scope.selected.actor.IDENTIFIANT.NOM === "" || _.isNull($scope.selected.actor.IDENTIFIANT.NOM) || _.isUndefined($scope.selected.actor.IDENTIFIANT.NOM)) ? ("") : ($scope.selected.actor.IDENTIFIANT.NOM + " - ") ) + $scope.selected.actor.GROUPE;				        	
-//				        };
 
 					} ]); // End of HbChooseActorController definition
 	
