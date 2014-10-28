@@ -350,8 +350,8 @@
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
 										} else {
-											// Manage editing initialisation
-											$scope.searchOwner = {Id : $scope.elfin.PARTENAIRE.PROPRIETAIRE.Id, ID_G : $scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G, GROUPE : $scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE, NOM : $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM};
+											// Manage editing initialisation. Warning: $scope.elfin.PARTENAIRE.PROPRIETAIRE is not equal to the owner for TRANSACTION entities.
+											$scope.searchOwner = undefined;
 										}
 						    		};
 						    	}, true);								
