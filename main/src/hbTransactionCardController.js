@@ -34,7 +34,7 @@
 								// Input fields used to select IMMEUBLE related to current TRANSACTION backing models
 								// ===================================================================================								
 								// Owner Actor (ACTEUR role=Propriétaire) 
-								$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
+								//$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 								// No SAI user input field used to select IMMEUBLE related to current TRANSACTION
 								$scope.helper = { constatSelectionSai : ""};
 								// ===================================================================================								
@@ -67,24 +67,31 @@
 								 * Note: This information is only used in hbTransactionCreateCard.html view while in create mode.
 								 */
 								$scope.displayBuildingAddress = function(noSai,owner) {
-									if ($attrs.hbMode === "create" || $scope.reallocate && owner.Id != null && owner.Id.length > 0) {									
-										$log.debug("displayBuildingAddress = function("+noSai+","+owner.Id+")");
-										if ($scope.immeubles
-												&& $scope.immeubles.length > 0 && owner != null) {
-											var selectionFound = false;
-											for (var i = 0; i < $scope.immeubles.length; i++) {
-												var currImm = $scope.immeubles[i];
-												if (currImm.IDENTIFIANT.OBJECTIF == noSai && owner.Id == currImm.PARTENAIRE.PROPRIETAIRE.Id && owner.ID_G == currImm.PARTENAIRE.PROPRIETAIRE.ID_G) {
-													$scope.selectedImmeuble = currImm;
-													selectionFound = true;
-													break;
+									// Protect against null parameters values
+									if (noSai != null && owner != null ) {
+										if ( $attrs.hbMode === "create" || $scope.reallocate && owner.Id != null && owner.Id.length > 0) {									
+											$log.debug("displayBuildingAddress = function("+noSai+","+owner.Id+")");
+											if ($scope.immeubles
+													&& $scope.immeubles.length > 0 && owner != null) {
+												var selectionFound = false;
+												for (var i = 0; i < $scope.immeubles.length; i++) {
+													var currImm = $scope.immeubles[i];
+													if (currImm.IDENTIFIANT.OBJECTIF == noSai && owner.Id == currImm.PARTENAIRE.PROPRIETAIRE.Id && owner.ID_G == currImm.PARTENAIRE.PROPRIETAIRE.ID_G) {
+														$scope.selectedImmeuble = currImm;
+														selectionFound = true;
+														break;
+													}
+												}
+												// Reset selecteImmeuble in case no matching was found.
+												if (!selectionFound) {
+													$scope.selectedImmeuble = null;
 												}
 											}
-											// Reset selecteImmeuble in case no matching was found.
-											if (!selectionFound) {
-												$scope.selectedImmeuble = null;
-											}
 										}
+									} else {
+										$log.debug(">>>> Using HbTransactionCardController - displayBuildingAddress: NULL parameter value !)");
+										// Reset selecteImmeuble in case no sai or owner is available.
+										$scope.selectedImmeuble = null;
 									}
 								};
 								
@@ -111,9 +118,9 @@
 									
 									//if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && year.length === 4 && owner.Id != null && owner.Id.length > 0) {
 									//if ( sai != null && sai.length > 0 && groupePrestation != null && groupePrestation.length > 0 && year != null && owner.Id != null && owner.Id.length > 0) {
-									if ( sai != null && groupePrestation != null && groupePrestation.length > 0 && year != null && owner.Id != null && owner.Id.length > 0) {
+									if ( sai != null && groupePrestation != null && groupePrestation.length > 0 && year != null && owner != null && owner.Id != null && owner.Id.length > 0) {
 									
-										$log.debug("getPrestation = " + "sai = " + sai +", groupePrestation = " + groupePrestation + ", year = " + year + ", owner = " + angular.toJson(owner));
+										$log.debug(">>>>>> HbTransactionCardController - getPrestation = " + "sai = " + sai +", groupePrestation = " + groupePrestation + ", year = " + year + ", owner = " + angular.toJson(owner));
 
 										var xpathForPrestation = "//ELFIN[@GROUPE='"+groupePrestation+"' and IDENTIFIANT/DE='"+year+"' and starts-with(IDENTIFIANT/OBJECTIF, '"+sai+".')  and PARTENAIRE/PROPRIETAIRE/@Id='"+ owner.Id +"' and PARTENAIRE/PROPRIETAIRE/@ID_G='"+ owner.ID_G +"']";
 
@@ -126,7 +133,7 @@
 													$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
 													$scope.prestationStatus = null;
 													$scope.prestationStatusTooltips = "Prestation correspondant aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year;
-													$log.debug(">>> : $scope.constatPrestation = " + $scope.constatPrestation);
+													$log.debug(">>>>>> HbTransactionCardController - $scope.constatPrestation = " + $scope.constatPrestation);
 												} else if (prestations.length < 1) {
 													$scope.constatPrestation = null;
 													$scope.elfin.IDENTIFIANT.COMPTE = null;
@@ -169,7 +176,7 @@
 						    	$scope.$watch('elfin.GROUPE', function() {
 						    		if ($scope.elfin!=null ) {
 						    			if ($scope.elfin.GROUPE!=null) {
-							    			$log.debug(">>>> updating $scope.elfin.CARACTERISTIQUE.CAR1.UNITE = " + $scope.elfin.CARACTERISTIQUE.CAR1.UNITE + " to " + hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE));
+							    			$log.debug(">>>>>> HbTransactionCardController - ($watch('elfin.GROUPE') updating $scope.elfin.CARACTERISTIQUE.CAR1.UNITE = " + $scope.elfin.CARACTERISTIQUE.CAR1.UNITE + " to " + hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE));
 							    			$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE);						    				
 						    			} else {
 							    			$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = '';
@@ -262,10 +269,12 @@
 																var message = "Le numéro d'objectif: "+$routeParams.sai+" fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
 																hbAlertMessages.addAlert(
 																		"warning", message);
+																$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 															} else if (prestations.length > 1 ) {
 																var message = "Le numéro d'objectif: "+$routeParams.sai+" fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
 																hbAlertMessages.addAlert(
 																		"warning", message);
+																$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 															}
 														},
 														function(response) {
@@ -274,7 +283,10 @@
 																	+ ")";
 															hbAlertMessages.addAlert(
 																	"danger", message);
+															$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 														});													
+												} else {
+													$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 												}												
 												
 												
@@ -312,10 +324,12 @@
 																var message = "Le numéro d'objectif: "+$scope.helper.constatSelectionSai+" fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
 																hbAlertMessages.addAlert(
 																		"warning", message);
+																$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 															} else if (prestations.length < 1 ) {
 																var message = "Le numéro d'objectif: "+$scope.helper.constatSelectionSai+" fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
 																hbAlertMessages.addAlert(
 																		"warning", message);
+																$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 															}
 														},
 														function(response) {
@@ -324,6 +338,7 @@
 																	+ ")";
 															hbAlertMessages.addAlert(
 																	"danger", message);
+															$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 														});													
 												}										    				
 							    				
