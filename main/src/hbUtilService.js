@@ -263,7 +263,7 @@
 		 */
 		var getPrestationGroupForTransactionGroup = function (transactionGroup) {
 			
-			// Protect against catalogue initialisation choices strings (pipe separated).
+			// Protect against catalogue initialisation multiple choice strings (pipe separated).
 			if (transactionGroup.indexOf("|") > -1) {
 				return "";
 			} else { // Proceed
