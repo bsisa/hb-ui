@@ -15,6 +15,25 @@
  */
 (function() {
 
+	/** 
+	 * case insensitive string contains check
+	 */
+	var icontains = function (targetString, matchString) {
+		if (matchString && matchString.trim().length > 0) {
+			if (targetString) {
+				if (targetString.toLowerCase().indexOf(matchString.toLowerCase()) != -1) {
+					return true;
+				} else {
+					return false;
+				}					
+			} else { // If a match string is defined and there is no target string we consider it a non match.
+				return false;
+			}
+		} else {
+			// returns true if match string empty or undefined.
+			return true;
+		}
+	};
 
 	/**
 	 * Filter specialised for ELFIN ANNEXE RENVOI.
@@ -81,25 +100,7 @@
      * Keeping 'Filter' postfix is useful to avoid naming conflict with actual constat list.
 	 */
 	angular.module('hb5').filter('constatListFilter', [function () {
-
-		// case insensitive string contains check
-		var icontains = function (targetString, matchString) {
-			if (matchString && matchString.trim().length > 0) {
-				if (targetString) {
-					if (targetString.toLowerCase().indexOf(matchString.toLowerCase()) != -1) {
-						return true;
-					} else {
-						return false;
-					}					
-				} else { // If a match string is defined and there is no target string we consider it a non match.
-					return false;
-				}
-			} else {
-				// returns true if match string empty or undefined.
-				return true;
-			}
-		};
-		
+	
 		return function (constats, predicate) {
 	        if (!angular.isUndefined(constats) && !angular.isUndefined(predicate)) {
 	            var tempConstats = [ ];
@@ -137,24 +138,6 @@
 	 * Keeping 'Filter' postfix is useful to avoid naming conflict with actual immeuble list. 
 	 */
 	angular.module('hb5').filter('immeubleListFilter', [function () {
-
-		// case insensitive string contains check
-		var icontains = function (targetString, matchString) {
-			if (matchString && matchString.trim().length > 0) {
-				if (targetString) {
-					if (targetString.toLowerCase().indexOf(matchString.toLowerCase()) != -1) {
-						return true;
-					} else {
-						return false;
-					}					
-				} else { // If a match string is defined and there is no target string we consider it a non match.
-					return false;
-				}
-			} else {
-				// returns true if match string empty or undefined.
-				return true;
-			}
-		};
 		
 		return function (immeubles, predicate) {
 	        if (!angular.isUndefined(immeubles) && !angular.isUndefined(predicate)) {
