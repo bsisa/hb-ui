@@ -223,7 +223,7 @@
 				                    	return $scope.actors;
 				                    },
 				                    columnsDefinition: function() {
-				                    	return [ { field:"IDENTIFIANT.NOM", displayName: "Nom"},{ field:"IDENTIFIANT.ALIAS", displayName: "Prénom"},{ field:"GROUPE", displayName: "Abréviation"} ];
+				                    	return [ { field:"IDENTIFIANT.QUALITE", displayName: "Role"}, { field:"IDENTIFIANT.NOM", displayName: "Nom"},{ field:"IDENTIFIANT.ALIAS", displayName: "Prénom"},{ field:"GROUPE", displayName: "Abréviation"} ];
 				                    },
 				                    role: function () {
 				                    	return $scope.actorRole;
