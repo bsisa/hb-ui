@@ -10,11 +10,7 @@
 
     	// Object holding user entered search (filter) criteria 
     	$scope.search = {
-    			"owner" : "",
-    			"registerNb" : "",
-    			"place" : "",
-    			"buildingNb" : "",
-    			"address" : ""
+    			"text" : ""
     	};    	
     	
         $scope.$watch('elfins', function(newElfins, oldElfins) {
