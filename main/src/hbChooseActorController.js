@@ -369,14 +369,10 @@
 							
 							$scope.search = { text: ""};
 							
-							// TODO: following usage goes through all elfin properties with 
-							// search.text which is not very user friendly (matches outside 
-							// visual elfin properties.) Use custom filter, see immeubleFilter. 
-							$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);
-							
 							$scope.$watch('search.text', function() { 
-								$scope.gridOptions.filterOptions.filterText = $scope.search.text;
-								}, true);
+								//$scope.gridOptions.filterOptions.filterText = $scope.search.text;
+								$scope.elfins = $filter('actorListFilter')(elfins, $scope.search.text , false);
+							}, true);
 							// ============================================================
 							
 							
@@ -427,7 +423,7 @@
 							        selectedItems: $scope.selectedElfins,
 							        showColumnMenu: false, // Useful for grouping 
 							        showFilter: false, // Ugly look, redefine our own search field
-							        filterOptions : { filterText: '', useExternalFilter: false },
+							        filterOptions : { filterText: '', useExternalFilter: true },
 							        doubleClickFunction: $scope.doubleClickListener,
 							        plugins: [ngGridDoubleClickPluginInstance]
 							    };    	
