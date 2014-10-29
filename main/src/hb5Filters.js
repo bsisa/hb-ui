@@ -159,7 +159,34 @@
 	        }
 	    };
 	}]);	
+
 	
+	/**
+	 * Filter tailored to ACTEUR list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual actor list. 
+	 */
+	angular.module('hb5').filter('actorListFilter', [function () {
+		
+		return function (actors, searchText) {
+	        if (!angular.isUndefined(actors) && actors !== null && !angular.isUndefined(searchText)) {
+				console.log(">>>> actors.length, searchText = " + actors.length +", " + searchText);	        	
+	            var tempactors = [ ];
+	            angular.forEach(actors, function (actor) {
+                    if ( 
+                    	 icontains(actor.IDENTIFIANT.QUALITE, searchText) ||
+                    	 icontains(actor.IDENTIFIANT.NOM, searchText) ||
+                    	 icontains(actor.IDENTIFIANT.ALIAS, searchText) ||
+                    	 icontains(actor.GROUPE, searchText)
+                    ) {
+                    	tempactors.push(actor);
+                    }
+                });
+	            return tempactors;
+	        } else {
+	            return actors;
+	        }
+	    };
+	}]);		
 	
 	/**
 	 * Filter returning all array elements except last one
