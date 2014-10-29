@@ -185,7 +185,14 @@
 			            // Asychronous actors preloading
 			            hbQueryService.getActors(xpathForActor)		
 						.then(function(actors) {
-								$scope.actors = actors;
+								// order actors by IDENTIFIANT.QUALITE, GROUPE
+								actors.sort(function(a, b) {
+									return a.IDENTIFIANT.QUALITE < b.IDENTIFIANT.QUALITE ? -1 :
+										a.IDENTIFIANT.QUALITE > b.IDENTIFIANT.QUALITE ? 1 :
+											a.GROUPE < b.GROUPE ? -1 : 
+												a.GROUPE > b.GROUPE ? 1 : 0;
+					            });
+								$scope.actors =  actors;
 							},
 							function(response) {
 								var message = "Le chargement des ACTEURS Collaborateur a échoué (statut de retour: "+ response.status+ ")";
