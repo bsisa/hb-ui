@@ -135,26 +135,52 @@
 			            	}
 			            });			        	
 			        	
-			        	// =================================================================
-			        	// XPath restriction definition for actors selection list query
-			        	// =================================================================
+			        	/** ==================================================================
+			        	 * Build XPath restriction definition for actors selection list query
+			        	 * Supports commas separated list of values to include or if preceded
+			        	 * by a ! sign, to exclude. 
+			        	 * ===================================================================
+			        	 */
+			        	var buildXPathForActor = function(roleString) {
+			        		
+			        		var rolesArray = roleString.split(",");
+			        	    var includeRolesArray = new Array();
+			        	    var excludeRolesArray = new Array();
+			        	    
+			        	    for (var i = 0; i < rolesArray.length; i++) {
+			        	        var role = rolesArray[i].trim();
+			        	        if (role.indexOf('!') == 0) {
+			        	            excludeRolesArray.push(role.substring(1, role.length).trim());
+			        	        } else {
+			        	            includeRolesArray.push(role.trim());
+			        	        }
+			        	    }
+			        	    
+			        		var xpathForActor = "//ELFIN[@CLASSE='ACTEUR' ";
+			        		for (var i = 0; i < includeRolesArray.length; i++) {
+			        	        if (i === 0 ) {xpathForActor += " and ( ";}
+			        			xpathForActor += "IDENTIFIANT/QUALITE='"+includeRolesArray[i]+"'";
+			        			xpathForActor += (i===(includeRolesArray.length-1)) ? " ) " : " or ";
+			        		}
+			        	    for (var i = 0; i < excludeRolesArray.length; i++) {
+			        	        if (i === 0 ) {xpathForActor += " and ( ";}
+			        			xpathForActor += "IDENTIFIANT/QUALITE!='"+excludeRolesArray[i]+"'";
+			        			xpathForActor += (i===(excludeRolesArray.length-1)) ? ") " : " and ";
+			        		}    
+			        	    xpathForActor += "]";
+			        	    return xpathForActor;
+			        	};
+			        	
 						var xpathForActor = null;
+						
 						// Restrict to provided hb-choose-actor-role 
 						if ($scope.actorRole) {
-							if (_.contains($scope.actorRole, ",")) {
-								var rolesArray = $scope.actorRole.split(",");
-								// Example: ELFIN[@CLASSE='ACTEUR' and (IDENTIFIANT/QUALITE='Responsable chauffage' or IDENTIFIANT/QUALITE='Concierge')]
-								xpathForActor = "//ELFIN[@CLASSE='ACTEUR' and ("; 
-								for (var i = 0; i < rolesArray.length; i++) {
-									xpathForActor += "IDENTIFIANT/QUALITE='"+rolesArray[i].trim()+"'";
-									xpathForActor += (i===(rolesArray.length-1)) ? ")]" : " or ";
-								}
-							} else {
-								xpathForActor = "//ELFIN[@CLASSE='ACTEUR' and IDENTIFIANT/QUALITE='"+$scope.actorRole+"']";
-							}
+							xpathForActor = buildXPathForActor($scope.actorRole);
 						} else { // Select all actors 
 							xpathForActor = "//ELFIN[@CLASSE='ACTEUR']";
 						}
+
+						$log.debug("xpathForActor = " + xpathForActor);
 						
 			            // Asychronous actors preloading
 			            hbQueryService.getActors(xpathForActor)		
