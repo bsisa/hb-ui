@@ -17,7 +17,8 @@
 				'actorIdName' : '@hbChooseActorIdName', 
 				'actorRole' : '@?hbChooseActorRole',
 				'defaultByName' : '@?hbChooseActorDefaultByName',
-				'tooltip' : '@?hbChooseActorTooltip'
+				'tooltip' : '@?hbChooseActorTooltip',
+				'editable' : '@?hbChooseActorEditable'
 			},		    
 		    transclude: true,
 			templateUrl : "/assets/views/hbChooseActor.html",			

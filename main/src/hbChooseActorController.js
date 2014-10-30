@@ -39,7 +39,19 @@
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
 						$log.debug("    >>>> Using HbChooseActorController");
-						
+
+						// Check if optional editable property if available
+						if ($scope.editable) {
+							// We need to deal with text values, make it explicit rather than use == operator.
+							if (($scope.editable === 'true') || ($scope.editable === true)) {
+								$scope.cannotEdit = false;
+							} else {
+								$scope.cannotEdit = true;
+							}
+						} else { // By default the hb-choose-actor widget let the user modify the bound actorModel
+							$scope.cannotEdit = false;
+						}
+
 						// ========================================================================
 						// NEW IMPLEMENTATION START
 						// ========================================================================
