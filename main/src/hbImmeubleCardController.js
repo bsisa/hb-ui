@@ -20,9 +20,10 @@
 							'userDetails',
 							'HB_EVENTS',
 							'HB_API',
+							'HB_ROLE_FONCTION',
 							function($attrs, $scope, $rootScope, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout, hbAlertMessages,
-									hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API) {
+									hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API, HB_ROLE_FONCTION) {
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
 									
@@ -31,9 +32,9 @@
 									
 									// Expose current hbMode in scope for use by ng-show in HTML view.
 									$scope.createMode = ($attrs.hbMode === "create");
-									
-									$scope.canEdit = ($scope.createMode || _.contains(userDetails.getRoles(),'immeuble-edit'));
-									$scope.canEditParteners = ($scope.createMode || $scope.canEdit || _.contains(userDetails.getRoles(),'immeuble-edit-autres-partenaires'));
+									// Manage FONCTION level access rights
+									$scope.canEdit = ($scope.createMode || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT));
+									$scope.canEditParteners = ($scope.createMode || $scope.canEdit || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT_OTHER_PARTNERS));
 									
 									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
 									//$scope.selected = { "owner" : null , "ownerDisplay" : null};

@@ -33,3 +33,20 @@ angular.module('hb5').constant('HB_API', {
 	ANNEXE_URL_PREFIX : "annex",
 	ANNEXE_UPLOAD_URL : "/api/melfin/annex/upload"
 });
+
+
+
+/**
+ * Access rights roles are categorized in three groups: 
+ * CLASSE (class), METIER (business), FONCTIONNALITE (functionality) 
+ * The latter defines very specific access rights sometimes changing
+ * GUI aspect or behaviour like making a specific field editable or 
+ * not, a button enabled or disabled. 
+ * The current constant centralises the strings related to the 
+ * FONCTIONNALITE roles. 
+ */
+angular.module('hb5').constant('HB_ROLE_FONCTION', {
+	VALIDATION : "validation",
+	BUILDING_EDIT : "immeuble-edit",
+	BUILDING_EDIT_OTHER_PARTNERS : "immeuble-edit-autres-partenaires"
+});

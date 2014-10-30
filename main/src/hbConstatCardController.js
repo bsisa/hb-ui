@@ -15,10 +15,11 @@
 					'hbAlertMessages',
 					'hbUtil',
 					'HB_EVENTS',
+					'HB_ROLE_FONCTION', 
 					'userDetails',
 					'hbQueryService',
 					function($attrs, $rootScope, $scope, GeoxmlService, $modal, $routeParams,
-							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, userDetails, hbQueryService) {
+							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, HB_ROLE_FONCTION, userDetails, hbQueryService) {
 
 						$log.debug("    >>>> Using ConstatCardController ");
 
@@ -155,8 +156,7 @@
 								currentEvent.PAR_QUI = 'A VALIDER';
 							} else if (currentEvent.PAR_QUI === "A VALIDER") {
 								// Only users with validation role can set status to VALIDE
-								// TODO: user constant service for 'validation' token
-								if (_.contains(userDetails.getRoles(),'validation')) {
+								if (_.contains(userDetails.getRoles(),HB_ROLE_FONCTION.VALIDATION)) {
 									currentEvent.PAR_QUI = 'VALIDE';	
 								} else {
 									currentEvent.PAR_QUI = 'EN COURS';	
