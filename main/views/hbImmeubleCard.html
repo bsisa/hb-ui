@@ -137,7 +137,8 @@
 							<div hb-actor-line-converter hb-actor-line-converter-line-model="otherPartnerLine" hb-actor-line-converter-actor-model="convertedActor" hb-actor-line-converter-actor-role="actorRole">
 <!-- 								<label for="otherPartner-{{$index}}" class="col-sm-2 control-label">{{convertedActor.IDENTIFIANT.QUALITE}}</label> -->
 								<label for="otherPartner-{{$index}}" class="col-sm-3 control-label">{{convertedActorElfin.IDENTIFIANT.QUALITE}}</label>
-								<div class="col-sm-1 btn btn-default" ng-click="removeOtherPartner($index)" tooltip="Supprimer le partenaire"><i class="glyphicon glyphicon-remove-circle"></i></div>
+								<div ng-if="!canEditParteners" class="col-sm-1" > </div>
+								<div ng-if="canEditParteners" class="col-sm-1 btn btn-default" ng-click="removeOtherPartner($index)" tooltip="Supprimer le partenaire"><i class="glyphicon glyphicon-remove-circle"></i></div>
 								<div class="col-sm-8">
 									<div 
 										hb-choose-actor 
@@ -156,7 +157,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-8 col-sm-offset-4">
+					<div ng-if="canEditParteners" class="col-sm-8 col-sm-offset-4">
 						<div class="input-group">
 							<span class="input-group-btn"
 								tooltip="Ajouter un nouveau partenaire, responsable chauffage, concierge...">
