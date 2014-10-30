@@ -29,10 +29,10 @@
 					<div class="form-group has-feedback"
 						ng-class="getCssHasFeedback(elfinForm.goal)">
 						<label for="goal" class="col-sm-4 control-label">Numéro de
-							gérance</label>
+							gérance : {{}}</label>
 						<div class="col-sm-8">
 							<input id="goal" name="goal" type="text" class="form-control"
-								ng-model="elfin.IDENTIFIANT.OBJECTIF"
+								ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-readonly="!canEdit"
 								required>
 						</div>
 					</div>
@@ -43,7 +43,7 @@
 							<div class="col-sm-8">
 								<input id="author" name="author" type="text"
 									class="form-control"
-									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR"
+									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" ng-readonly="!canEdit"
 									required>
 							</div>
 						</div>
@@ -53,7 +53,7 @@
 								construction</label>
 							<div class="col-sm-8">
 								<input id="name" name="name" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.NOM"
+									ng-model="elfin.IDENTIFIANT.NOM" ng-readonly="!canEdit"
 									required>
 							</div>
 						</div>
@@ -62,7 +62,7 @@
 							<label for="address" class="col-sm-4 control-label">Adresse</label>
 							<div class="col-sm-8">
 								<input id="address" name="address" type="text"
-									class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS"
+									class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS" ng-readonly="!canEdit"
 									required>
 							</div>
 						</div>
@@ -77,7 +77,7 @@
 							<div class="col-sm-8">
 								<input id="cadastralNb" name="cadastralNb" type="text"
 									class="form-control"
-									ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"
+									ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR" ng-readonly="!canEdit"
 									required>
 							</div>
 						</div>
@@ -125,7 +125,7 @@
 							<div class="col-sm-1"></div>
 							<div class="col-sm-8">
 								<input id="alias" name="alias" type="text" class="form-control"
-									ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE"
+									ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" ng-readonly="!canEdit"
 									required>
 							</div>
 						</div>
@@ -179,6 +179,7 @@
 							<input id="locality" name="locality" type="text"
 								class="form-control"
 								ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"
+								ng-readonly="!canEdit"
 								>
 						</div>
 					</div>
@@ -189,7 +190,9 @@
 						<label for="remark" class="col-sm-1 control-label">Remarque</label>
 						<div class="col-sm-11">
 							<input id="remark" name="remark" type="text" class="form-control"
-								ng-model="elfin.DIVERS.REMARQUE" >
+								ng-model="elfin.DIVERS.REMARQUE" 
+								ng-readonly="!canEdit"
+								>
 						</div>
 					</div>
 				</div>

@@ -17,11 +17,12 @@
 							'hbAlertMessages',
 							'hbUtil',
 							'hbQueryService',
+							'userDetails',
 							'HB_EVENTS',
 							'HB_API',
 							function($attrs, $scope, $rootScope, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout, hbAlertMessages,
-									hbUtil, hbQueryService, HB_EVENTS, HB_API) {
+									hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API) {
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
 									
@@ -30,6 +31,9 @@
 									
 									// Expose current hbMode in scope for use by ng-show in HTML view.
 									$scope.createMode = ($attrs.hbMode === "create");
+									
+									$scope.canEdit = ($scope.createMode || _.contains(userDetails.getRoles(),'immeuble-edit'));
+									$scope.canEditParteners = ($scope.createMode || $scope.canEdit || _.contains(userDetails.getRoles(),'immeuble-edit-autres-partenaires'));
 									
 									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
 									//$scope.selected = { "owner" : null , "ownerDisplay" : null};
