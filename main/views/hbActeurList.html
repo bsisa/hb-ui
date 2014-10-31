@@ -23,6 +23,7 @@
 			<th ng-show="isCollaboratorOnly"><a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Prénom</a></th>
 			<th><a href="" ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse">Rôle</a></th>
 			<th><a href="" ng-click="predicate = 'CARACTERISTIQUE.CAR4.VALEUR'; reverse=!reverse">N° de téléphone</a></th>
+			<th><a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">N° de portable</a></th>			
 			<th ng-show="isCollaboratorOnly"><a href="" ng-click="predicate = 'CARACTERISTIQUE.CAR5.VALEUR'; reverse=!reverse">Email</a></th>
 		</tr>
 	</thead>
@@ -35,6 +36,7 @@
 			<td ng-show="isCollaboratorOnly">{{elfin.IDENTIFIANT.ALIAS}}</td>
 			<td>{{elfin.IDENTIFIANT.QUALITE}}</td>
 			<td>{{elfin.CARACTERISTIQUE.CAR4.VALEUR}}</td>
+			<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td>
 			<td ng-show="isCollaboratorOnly">{{elfin.CARACTERISTIQUE.CAR5.VALEUR}}</td>
 		</tr>
 	</tbody>
