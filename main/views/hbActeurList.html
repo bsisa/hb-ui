@@ -2,13 +2,13 @@
 	ng-show="elfins">
 	<thead>
 		<tr>
-			<th colspan="7"><span class="badge">{{elfinsCount}}</span> 
+			<th colspan="{{(isCollaboratorOnly?8:5)}}"><span class="badge">{{elfinsCount}}</span> 
 			<span ng-show="!isMany">{{elfins[0].IDENTIFIANT.QUALITE}}</span><span ng-show="isMany">acteur</span>{{ elfinsCount | plural }} trouvé<span ng-show="isEntrepriseOnly">e</span>{{
 				elfinsCount | plural }}</th>
 		</tr>
 		<tr>
 			<th class="col-sm-1" />
-			<th colspan="6">
+			<th colspan="{{(isCollaboratorOnly?7:4)}}">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
