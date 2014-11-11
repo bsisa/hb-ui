@@ -447,7 +447,8 @@
 								<tr
 									ng-repeat="prestation in prestations | orderBy:prestaPredicate:prestaReverse">
 									<td><a
-										href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a></td>
+										href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a>  
+										<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a></td>
 									<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 									<td><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 									<td><span >{{prestation.GROUPE}}</span></td>
