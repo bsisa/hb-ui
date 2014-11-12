@@ -24,11 +24,15 @@
 								// Object holding user entered search (filter)
 								// criteria
 								$scope.search = {
+									"group" : "",
+									"origin" : "",
+									"account" : "",
+									"goal" : "",
+									"from" : "",
+									"replacementValue" : "",
+									"manager" : "",
 									"owner" : "",
-									"registerNb" : "",
-									"place" : "",
-									"buildingNb" : "",
-									"address" : ""
+									"remark" : ""
 								};
 
 							} ]);
