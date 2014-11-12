@@ -12,10 +12,9 @@
 					'hbAlertMessages',
 					'hbUtil', 
 					'$rootScope',
-					'HB_EVENTS',
 					'$timeout',
 					function($scope, GeoxmlService, $modal, $routeParams,
-							$location, $log, hbAlertMessages, hbUtil, $rootScope, HB_EVENTS, $timeout) {
+							$location, $log, hbAlertMessages, hbUtil, $rootScope, $timeout) {
 
 						$log.debug("    >>>> Using HbUserCardController ");
 						
@@ -70,7 +69,7 @@
 
 									// Expose availableRoles to scope for use by $scope.updateUserRoles create operation,
 									// only once $scope.availableRolesCheckboxModel update is complete as $scope.availableRoles is checked 
-									// against in $on HB_EVENTS.ELFIN_LOADED listener. (Fix #5)
+									// against in $watch('elfin.Id') listener. (Fix #5)
 									$scope.availableRoles = availableRoles;									
 									
 									$log.debug(">>>> HbUserCardController: $scope.availableRolesCheckboxModel.length = " + $scope.availableRolesCheckboxModel.length);
@@ -154,6 +153,9 @@
 			        		}
 			        	};			        	
 			        	
+			        	/**
+			        	 * Empty role template
+			        	 */
 			        	$scope.createRole = function(ID_G,Id,name,pos) {
 			        		var newRole = {
 			                        "C": [
@@ -175,29 +177,25 @@
 			        		return newRole;
 			        	};
 
-
-			        	//TODO: Move initialisation tasks to $scope listener insteand of $rootScope for HB_EVENTS:  
-//				    	$scope.$watch('elfin.Id', function() { 
-//				    		if ($scope.elfin!=null) {
-//				    			
-//				    		}
-//				    	});
-			            // Load ELFIN collaborator ACTOR only once main elfin (here USER) has been loaded
-			            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
-			            	
-			            	$log.debug(">>>> HbUserCardController: HB_EVENTS.ELFIN_LOADED for elfin.Id = " + elfin.Id);
-		            		// Only proceed with $scope.initWithUserRoles() if $scope.availableRoles have been loaded. (Fix #5)
-			            	if ($scope.availableRoles) {
-			            		$log.debug(">>>> HbUserCardController: PERFORM $scope.initWithUserRoles() (nb.available = ) "+ $scope.availableRoles.length +" in HB_EVENTS.ELFIN_LOADED, OK.");
-			            		$scope.initWithUserRoles();	
-			            	} else {
-			            		$log.debug(">>>> HbUserCardController: DELAY   $scope.initWithUserRoles() $scope.availableRoles not yet available while in HB_EVENTS.ELFIN_LOADED, PENDING.");
-			            	}
-			            });			        	
-			        	
 			            // Load available roles
-			            $scope.getAvailableRoles();
-			            
+			            $scope.getAvailableRoles();			        	
+
+			        	// Perform user roles set/available initialisation once user and available roles are available.  
+				    	$scope.$watch('elfin.Id', function() { 
+				    		if ($scope.elfin!=null) {
+				    			$log.debug(">>>>> USER ELFIN AVAILABLE:         $scope.elfin.Id = "+ $scope.elfin.Id +" <<<<<");
+			            		// Only proceed with $scope.initWithUserRoles() if $scope.availableRoles have been loaded. (Fix #5)
+				            	if ($scope.availableRoles) {
+				            		$log.debug(">>>> HbUserCardController: PERFORM $scope.initWithUserRoles() (nb.available = ) "+ $scope.availableRoles.length +" in $watch('elfin.Id'), OK.");
+				            		$scope.initWithUserRoles();	
+				            	} else {
+				            		$log.debug(">>>> HbUserCardController: DELAY   $scope.initWithUserRoles() $scope.availableRoles not yet available while in $watch('elfin.Id'), PENDING.");
+				            	}				    			
+				    		} else {
+				    			$log.debug(">>>>> USER ELFIN NOT YET AVAILABLE: $scope.elfin.Id = null <<<<<");
+				    		}
+				    	});
+			        				            
 					} ]);
 	
 
