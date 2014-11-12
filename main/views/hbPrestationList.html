@@ -1,12 +1,102 @@
 
-<table class="table table-condensed table-bordered table-striped"
+<table class="table table-condensed table-bordered table-striped table-hover"
 	ng-show="elfins">
 	<thead>
 		<tr>
-			<th colspan="6"><span class="badge">{{elfinsCount}}</span>
-				prestation{{ elfinsCount | plural }} trouvée{{ elfinsCount | plural
-				}}</th>
+			<!-- For some reason class="col-sm-12" does not behave as colspan="12 ! -->
+			<th colspan="12"><span class="badge">{{elfinsCount}}</span> prestation{{ elfinsCount | plural }} trouvée{{ elfinsCount | plural}}</th>
 		</tr>
+		<tr>
+			<th rowspan="2"></th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.group" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.origin" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.account" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>			
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.goal" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>		
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.from" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.replacementValue" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.manager" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.owner" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.remark" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Groupe</a>
+			</th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.ORIGINE'; reverse=!reverse">Groupe comptable</a>			
+			</th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.COMPTE'; reverse=!reverse">Compte</a></th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° Prestation</a></th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse">Année</a></th>
+
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.VALEUR_A_NEUF'; reverse=!reverse">Budget</a></th>
+
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'PARTENAIRE.GERANT.VALUE'; reverse=!reverse">Responsable</a></th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.VALUE'; reverse=!reverse">Propriétaire</a></th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'DIVERS.REMARQUE'; reverse=!reverse">Remarque</a></th>
+		</tr>		
+		
 		<!-- 
 Groupe
 Groupe comptable
@@ -21,40 +111,24 @@ Propriétaire
 Remarque
 		
 		 -->
-		<tr>
-			<th />
-			<th>
-				<input type="text" class="form-control" ng-model="search.groupe" hb-no-dirty-check placeholder="">			
-			Groupe</th>
-			<th>Groupe comptable</th>
-			<th>Compte</th>
-			
-			<th>No Prestation</th>
-			<th>Année</th>
-			<th>Budget</th>
-			
-			<th>Responsable</th>
-			<th>Propriétaire</th>
-			<th>Remarque</th>
-		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="elfin in elfins">
-			<td><a
+			<td class="col-sm-1"><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
 			</td>
-			<td>{{elfin.GROUPE}}</td> 
-			<td>{{elfin.IDENTIFIANT.ORIGINE}}</td>
-			<td>{{elfin.IDENTIFIANT.COMPTE}}</td>
+			<td class="col-sm-1">{{elfin.GROUPE}}</td> 
+			<td class="col-sm-2">{{elfin.IDENTIFIANT.ORIGINE}}</td>
+			<td class="col-sm-1">{{elfin.IDENTIFIANT.COMPTE}}</td>
 			
-			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
-			<td>{{elfin.IDENTIFIANT.DE}}</td>
-			<td>{{elfin.IDENTIFIANT.VALEUR_A_NEUF}}</td>
+			<td class="col-sm-1">{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<td class="col-sm-1">{{elfin.IDENTIFIANT.DE}}</td>
+			<td class="col-sm-1">{{elfin.IDENTIFIANT.VALEUR_A_NEUF}}</td>
 						
 			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
-			<td>{{elfin.PARTENAIRE.GERANT.VALUE}}</td>
-			<td>need query</td>
-			<td>{{elfin.DIVERS.REMARQUE}}</td>
+			<td class="col-sm-1">{{elfin.PARTENAIRE.GERANT.VALUE}}</td>
+			<td class="col-sm-1">need query</td>
+			<td class="col-sm-2">{{elfin.DIVERS.REMARQUE}}</td>
 		</tr>
 	</tbody>
 </table>
