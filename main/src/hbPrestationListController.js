@@ -34,6 +34,23 @@
 									"owner" : "",
 									"remark" : ""
 								};
+								
+								$scope.save = function(elfin) {
+									elfin.put().then( 
+					               			function() { 
+					               				//$log.debug("Elfin: " + elfin.ID_G + "/" + elfin.Id + " saved.");
+					               			}, 
+					               			function(response) { 
+					               				//$log.debug("Error Elfin: " + elfin.ID_G + "/" + elfin.Id + " could not be saved.", response.status);
+					               				var message = "La mise à jour a échoué (statut de retour: "+ response.status+ ")";
+					        					hbAlertMessages.addAlert("danger",message);
+					               			} 
+					               		);        											
+									
+									
+									
+									
+								};
 
 							} ]);
 
