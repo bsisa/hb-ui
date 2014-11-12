@@ -58,14 +58,14 @@
 					</div>
 				</div>
 			</th>
-			<th class="col-sm-1">
-				<div class="form-group">
-					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.owner" hb-no-dirty-check placeholder="">
-					</div>
-				</div>
-			</th>
-			<th class="col-sm-2">
+<!-- 			<th class="col-sm-1"> -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;"> -->
+<!-- 						<input type="text" class="form-control" ng-model="search.owner" hb-no-dirty-check placeholder=""> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</th> -->
+			<th class="col-sm-3">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.remark" hb-no-dirty-check placeholder="">
@@ -92,9 +92,9 @@
 
 			<th class="col-sm-1">
 				<a href="" ng-click="predicate = 'PARTENAIRE.GERANT.VALUE'; reverse=!reverse">Responsable</a></th>
-			<th class="col-sm-1">
-				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.VALUE'; reverse=!reverse">Propriétaire</a></th>
-			<th class="col-sm-2">
+<!-- 			<th class="col-sm-1"> -->
+<!-- 				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.VALUE'; reverse=!reverse">Propriétaire</a></th> -->
+			<th class="col-sm-3">
 				<a href="" ng-click="predicate = 'DIVERS.REMARQUE'; reverse=!reverse">Remarque</a></th>
 		</tr>		
 		
@@ -103,19 +103,43 @@
 		<tr ng-repeat="elfin in elfins | prestationListFilter:search | orderBy:predicate:reverse">
 			<td class="col-sm-1"><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
+				<a ng-click="save(elfin)">Save</a>
 			</td>
-			<td class="col-sm-1">{{elfin.GROUPE}}</td> 
-			<td class="col-sm-2">{{elfin.IDENTIFIANT.ORIGINE}}</td>
-			<td class="col-sm-1">{{elfin.IDENTIFIANT.COMPTE}}</td>
+			<td class="col-sm-1">
+<!-- 				{{elfin.GROUPE}} -->
+				<input type="text" class="form-control" ng-model="elfin.GROUPE" hb-no-dirty-check placeholder="">
+			</td> 
+			<td class="col-sm-2">
+<!-- 				{{elfin.IDENTIFIANT.ORIGINE}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ORIGINE" hb-no-dirty-check placeholder="">
+			</td>
+			<td class="col-sm-1">
+<!-- 				{{elfin.IDENTIFIANT.COMPTE}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.COMPTE" hb-no-dirty-check placeholder="">
+			</td>
 			
-			<td class="col-sm-1">{{elfin.IDENTIFIANT.OBJECTIF}}</td>
-			<td class="col-sm-1">{{elfin.IDENTIFIANT.DE}}</td>
-			<td class="col-sm-1">{{elfin.IDENTIFIANT.VALEUR_A_NEUF}}</td>
-						
+			<td class="col-sm-1">
+<!-- 				{{elfin.IDENTIFIANT.OBJECTIF}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF" hb-no-dirty-check placeholder="">
+			</td>
+			<td class="col-sm-1">
+<!-- 				{{elfin.IDENTIFIANT.DE}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.DE" hb-no-dirty-check placeholder="">
+			</td>
+			<td class="col-sm-1">
+<!-- 				{{elfin.IDENTIFIANT.VALEUR_A_NEUF}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF" hb-no-dirty-check placeholder="">
+			</td>
 			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
-			<td class="col-sm-1">{{elfin.PARTENAIRE.GERANT.VALUE}}</td>
-			<td class="col-sm-1">need query</td>
-			<td class="col-sm-2">{{elfin.DIVERS.REMARQUE}}</td>
+			<td class="col-sm-1">
+<!-- 				{{elfin.PARTENAIRE.GERANT.VALUE}} -->
+				<input type="text" class="form-control" ng-model="elfin.PARTENAIRE.GERANT.VALUE" hb-no-dirty-check placeholder="">
+			</td>
+<!-- 			<td class="col-sm-1">need query</td> -->
+			<td class="col-sm-3">
+<!-- 				{{elfin.DIVERS.REMARQUE}} -->
+				<input type="text" class="form-control" ng-model="elfin.DIVERS.REMARQUE" hb-no-dirty-check placeholder="">
+			</td>
 		</tr>
 	</tbody>
 </table>
