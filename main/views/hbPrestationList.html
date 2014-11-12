@@ -44,11 +44,12 @@
 				</div>
 			</th>
 			<th class="col-sm-1">
-				<div class="form-group">
-					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.replacementValue" hb-no-dirty-check placeholder="">
-					</div>
-				</div>
+			<!-- Should provide numeric operators to be useful: (< > = ) -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;"> -->
+<!-- 						<input type="text" class="form-control" ng-model="search.replacementValue" hb-no-dirty-check placeholder=""> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</th>
 			<th class="col-sm-1">
 				<div class="form-group">
@@ -97,23 +98,9 @@
 				<a href="" ng-click="predicate = 'DIVERS.REMARQUE'; reverse=!reverse">Remarque</a></th>
 		</tr>		
 		
-		<!-- 
-Groupe
-Groupe comptable
-Compte
-
-Objectif
-Année
-Budget
-
-Responsable
-Propriétaire
-Remarque
-		
-		 -->
 	</thead>
 	<tbody>
-		<tr ng-repeat="elfin in elfins">
+		<tr ng-repeat="elfin in elfins | prestationListFilter:search | orderBy:predicate:reverse">
 			<td class="col-sm-1"><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
 			</td>

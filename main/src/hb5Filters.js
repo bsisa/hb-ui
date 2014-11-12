@@ -158,7 +158,81 @@
 	            return immeubles;
 	        }
 	    };
-	}]);	
+	}]);
+	
+	
+	/**
+	 * Filter tailored to PRESTATION list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual prestation list. 
+	 */
+	angular.module('hb5').filter('prestationListFilter', [function () {
+		
+		return function (prestations, search) {
+			
+			/**
+			 * checkManager function adds behaviour: 
+			 * `If a Manager criterion is defined and no Manager is defined in prestation then match result is false`
+			 * to icontains behaviour.
+			 */
+			var checkManager = function(prestation) {
+				if (!angular.isUndefined(prestation.PARTENAIRE) && !angular.isUndefined(prestation.PARTENAIRE.GERANT)) {
+					return icontains(prestation.PARTENAIRE.GERANT.VALUE,search.manager);
+				} else {
+					if (search.manager && search.manager.trim().length > 0) {
+						return false;
+					} else {
+						return true;
+					}
+				}				
+			};
+			
+			/**
+			 * checkRemark function adds behaviour: 
+			 * `If a Remark criterion is defined and no Remark is defined in prestation then match result is false`
+			 * to icontains behaviour.
+			 */
+			var checkRemark = function(prestation) {
+				   //(!angular.isUndefined(prestation.DIVERS) ? icontains(prestation.DIVERS.REMARQUE, search.remark) : true)
+				if (!angular.isUndefined(prestation.DIVERS)) {
+					return icontains(prestation.DIVERS.REMARQUE, search.remark);
+				} else {
+					if (search.remark && search.remark.trim().length > 0) {
+						return false;
+					} else {
+						return true;
+					}
+				}				
+			};
+			
+	        if (!(prestations == null || search == null ) && !angular.isUndefined(prestations) && !angular.isUndefined(search)) {
+	        	console.log(">>>> prestations.length, search = " + prestations.length +", " + search);
+	            var tempPrestations = [ ];
+	            angular.forEach(prestations, function (prestation) {
+                    if ( 
+                    	 icontains(prestation.GROUPE, search.group) &&
+                    	 icontains(prestation.IDENTIFIANT.ORIGINE, search.origin) &&
+                    	 icontains(prestation.IDENTIFIANT.COMPTE, search.account) &&
+                    	 icontains(prestation.IDENTIFIANT.OBJECTIF, search.goal) &&
+                    	 icontains(prestation.IDENTIFIANT.DE, search.from) &&
+                    	 //TODO: Numeric is not supported yet. Should use > < = operators to be useful.
+                    	 //icontains(prestation.IDENTIFIANT.VALEUR_A_NEUF, search.replacementValue) &&
+                    	// If no PARTENAIRE.GERANT object is available deactivate search restriction by always returning true
+                    	 checkManager(prestation) && 
+                    	 //(!angular.isUndefined(prestation.PARTENAIRE) && !angular.isUndefined(prestation.PARTENAIRE.GERANT) ? icontains(prestation.PARTENAIRE.GERANT.VALUE, search.manager) : true) &&
+                    	 //TODO: find the correct way to deal with references.
+                    	 //icontains(prestation.PARTENAIRE.PROPRIETAIRE.Id, search.owner) &&
+                    	 // If no DIVERS object is available deactivate search restriction by always returning true
+                    	 checkRemark(prestation)
+                    ) {
+                    	tempPrestations.push(prestation);
+                    }
+                });
+	            return tempPrestations;
+	        } else {
+	            return prestations;
+	        }
+	    };
+	}]);		
 
 	
 	/**
