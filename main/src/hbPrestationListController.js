@@ -60,6 +60,17 @@
 								$scope.setPage = function (pageNo) {
 									$scope.currentPage = pageNo;
 								};								
+
+								/**
+								 * Extract current page data for modified page index
+								 */
+								var updateCurrentFilteredElfinPage = function(maxItemsPerPage_p, filteredElfins_p) {
+									var pageStartIndex = ($scope.currentPage - 1) * maxItemsPerPage_p;
+									var pageStopIndex =  ( Math.min( pageStartIndex + maxItemsPerPage_p, filteredElfins_p.length) + 1);
+									$log.debug("pageStartIndex :: pageStopIndex = " + pageStartIndex + "::" + pageStopIndex);
+									var currentFilteredElfinPageResult = filteredElfins_p.slice( pageStartIndex , pageStopIndex);
+									return currentFilteredElfinPageResult;
+								};
 								
 								/**
 								* Unlike v0.11.0 ui.bootstrap v0.10.0 does not bind currentPage using ng-model.
@@ -68,26 +79,8 @@
 								$scope.pageChanged = function(page) {
 									$log.debug("pageChanged from " + $scope.currentPage + " to " + page);
 									$scope.currentPage = page;
-									
-									// Compute current page data for modified page index
-									var pageStartIndex = ($scope.currentPage - 1) * $scope.maxItemsPerPage;
-									var pageStopIndex =  ( Math.min( pageStartIndex + $scope.maxItemsPerPage, $scope.filteredElfins.length) + 1);
-									$log.debug("pageStartIndex :: pageStopIndex = " + pageStartIndex + "::" + pageStopIndex);
-									$scope.currentFilteredElfinPage = $scope.filteredElfins.slice( pageStartIndex , pageStopIndex);									
-									
+									$scope.currentFilteredElfinPage = updateCurrentFilteredElfinPage($scope.maxItemsPerPage, $scope.filteredElfins);
 								};								
-								
-								/**
-								 * Computes the total number of pages for a given number of elements 
-								 * and maximum number of elements per page.
-								 */
-//								var computePageNb = function(nbElements, maxItemsPerPage) {
-//									var pagesModulo = nbElements % maxItemsPerPage;
-//					    			var pagesQuotient = ( nbElements - pagesModulo ) / maxItemsPerPage;
-//					    			var endPageOrNot = pagesModulo > 0 ? 1 : 0;
-//					    			var pageNb = pagesQuotient + endPageOrNot;
-//									return pageNb;
-//								};								
 								
 								/**
 								 * Update filtered collection and associated number of pages when search
@@ -98,16 +91,10 @@
 						    		if ($scope.elfins!=null) {
 								    	$scope.filteredElfins = $filter('prestationListFilter')($scope.elfins, $scope.search);
 										$scope.filteredElfins = $filter('orderBy')($scope.filteredElfins, $scope.predicate, $scope.reverse);
-//										$scope.numPages = computePageNb($scope.filteredElfins.length, $scope.maxItemsPerPage);
 
 										// On search, sort change of filtered collection reset current page to first page
 										$scope.currentPage = 1;
-										
-										// Compute current page data for modified collection
-										var pageStartIndex = ($scope.currentPage - 1) * $scope.maxItemsPerPage;
-										var pageStopIndex =  ( Math.min( pageStartIndex + $scope.maxItemsPerPage, $scope.filteredElfins.length) + 1);
-										$log.debug("pageStartIndex :: pageStopIndex = " + pageStartIndex + "::" + pageStopIndex);
-										$scope.currentFilteredElfinPage = $scope.filteredElfins.slice( pageStartIndex , pageStopIndex); 
+										$scope.currentFilteredElfinPage = updateCurrentFilteredElfinPage($scope.maxItemsPerPage, $scope.filteredElfins);
 						    		}
 						    	}, true);								
 								
@@ -119,16 +106,10 @@
 						    		if ($scope.elfins!=null) {
 								    	$scope.filteredElfins = $filter('prestationListFilter')($scope.elfins, $scope.search);
 										$scope.filteredElfins = $filter('orderBy')($scope.filteredElfins, $scope.predicate, $scope.reverse);						    			
-//										$scope.numPages = computePageNb($scope.filteredElfins.length, $scope.maxItemsPerPage);
 										
 										// On search, sort change of filtered collection reset current page to first page
 										$scope.currentPage = 1;
-										
-										// Compute current page data for modified collection
-										var pageStartIndex = ($scope.currentPage - 1) * $scope.maxItemsPerPage;
-										var pageStopIndex =  ( Math.min( pageStartIndex + $scope.maxItemsPerPage, $scope.filteredElfins.length) + 1);
-										$log.debug("pageStartIndex :: pageStopIndex = " + pageStartIndex + "::" + pageStopIndex);
-										$scope.currentFilteredElfinPage = $scope.filteredElfins.slice( pageStartIndex , pageStopIndex);										
+										$scope.currentFilteredElfinPage = updateCurrentFilteredElfinPage($scope.maxItemsPerPage, $scope.filteredElfins);										
 						    		} else {
 						    			$log.debug(">>>>> elfins NOT YET LOADED <<<<<");
 						    		}
