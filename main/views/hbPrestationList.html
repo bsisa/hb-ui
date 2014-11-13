@@ -4,7 +4,7 @@
 	<thead>
 		<tr>
 			<!-- For some reason class="col-sm-12" does not behave as colspan="12 ! -->
-			<th colspan="12"><span class="badge">{{elfinsCount}}</span> prestation{{ elfinsCount | plural }} trouvée{{ elfinsCount | plural}}</th>
+			<th colspan="12"><span class="badge">{{filteredElfins.length}}</span> prestation{{ filteredElfins.length | plural }} sélectionée{{ filteredElfins.length | plural}} sur <span class="badge">{{elfinsCount}}</span></th>
 		</tr>
 		<tr>
 			<th rowspan="2"></th>
@@ -147,7 +147,7 @@
 		<td colspan="12">
 			<div 
 			   pagination 
-			   total-items="elfins.length" 
+			   total-items="filteredElfins.length" 
 			   page="currentPage" 
 			   max-size="maxSize" 
 			   class="pagination-sm" 
