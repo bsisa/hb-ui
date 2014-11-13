@@ -4,7 +4,40 @@
 	<thead>
 		<tr>
 			<!-- For some reason class="col-sm-12" does not behave as colspan="12 ! -->
-			<th colspan="12"><span class="badge">{{filteredElfins.length}}</span> prestation{{ filteredElfins.length | plural }} sélectionée{{ filteredElfins.length | plural}} sur <span class="badge">{{elfinsCount}}</span></th>
+			<td colspan="12" style="vertical-align: middle; text-align: center;">
+				<table class="layout" >
+						<tr>
+							<td style="vertical-align: middle; text-align: center;">
+								<div class="col-sm-12">
+									<div
+									   pagination 
+									   total-items="filteredElfins.length" 
+									   page="currentPage" 
+									   max-size="10" 
+									   items-per-page="maxItemsPerPage" 
+									   class="pagination-sm" 
+									   boundary-links="true" 
+									   rotate="false" 
+									   num-pages="numPages"
+									   on-select-page="pageChanged(page)"
+									   previous-text="&lsaquo;"
+									   next-text="&rsaquo;"
+									   first-text="&laquo;"
+									   last-text="&raquo;">				    
+								   </div>
+								 </div>							
+							</td>
+							<td style="vertical-align: middle; text-align: center;">
+								<div class="col-sm-12">
+										<span class="badge">{{filteredElfins.length}}</span> prestation{{ filteredElfins.length | plural }} sélectionée{{ filteredElfins.length | plural}} sur <span class="badge">{{elfinsCount}}</span>
+								</div>							
+							</td>							
+							<td style="vertical-align: middle; text-align: center;">
+								<div class="col-sm-12">page: <span ng-bind="currentPage"></span> / <span ng-bind="numPages"></span></div>
+							</td>
+						</tr>
+				</table>
+			</td>
 		</tr>
 		<tr>
 			<th rowspan="2"></th>
@@ -101,67 +134,46 @@
 	</thead>
 	<tbody>
 <!-- 		<tr ng-repeat="elfin in elfins | prestationListFilter:search | orderBy:predicate:reverse"> -->
-		<tr ng-repeat="elfin in filteredElfins">
+		<tr ng-repeat="elfin in currentFilteredElfinPage">
 			<td class="col-sm-1"><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
 				<a ng-click="save(elfin)">Save</a>
 			</td>
 			<td class="col-sm-1">
-				{{elfin.GROUPE}}
-<!-- 				<input type="text" class="form-control" ng-model="elfin.GROUPE" hb-no-dirty-check placeholder=""> -->
+<!-- 				{{elfin.GROUPE}} -->
+				<input type="text" class="form-control" ng-model="elfin.GROUPE" hb-no-dirty-check placeholder="">
 			</td> 
 			<td class="col-sm-2">
-				{{elfin.IDENTIFIANT.ORIGINE}}
-<!-- 				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ORIGINE" hb-no-dirty-check placeholder=""> -->
+<!-- 				{{elfin.IDENTIFIANT.ORIGINE}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.ORIGINE" hb-no-dirty-check placeholder="">
 			</td>
 			<td class="col-sm-1">
-				{{elfin.IDENTIFIANT.COMPTE}}
-<!-- 				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.COMPTE" hb-no-dirty-check placeholder=""> -->
+<!-- 				{{elfin.IDENTIFIANT.COMPTE}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.COMPTE" hb-no-dirty-check placeholder="">
 			</td>
 			
 			<td class="col-sm-1">
-				{{elfin.IDENTIFIANT.OBJECTIF}}
-<!-- 				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF" hb-no-dirty-check placeholder=""> -->
+<!-- 				{{elfin.IDENTIFIANT.OBJECTIF}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.OBJECTIF" hb-no-dirty-check placeholder="">
 			</td>
 			<td class="col-sm-1">
-				{{elfin.IDENTIFIANT.DE}}
-<!-- 				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.DE" hb-no-dirty-check placeholder=""> -->
+<!-- 				{{elfin.IDENTIFIANT.DE}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.DE" hb-no-dirty-check placeholder="">
 			</td>
 			<td class="col-sm-1">
-				{{elfin.IDENTIFIANT.VALEUR_A_NEUF}}
-<!-- 				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF" hb-no-dirty-check placeholder=""> -->
+<!-- 				{{elfin.IDENTIFIANT.VALEUR_A_NEUF}} -->
+				<input type="text" class="form-control" ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF" hb-no-dirty-check placeholder="">
 			</td>
 			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
 			<td class="col-sm-1">
-				{{elfin.PARTENAIRE.GERANT.VALUE}}
-<!-- 				<input type="text" class="form-control" ng-model="elfin.PARTENAIRE.GERANT.VALUE" hb-no-dirty-check placeholder=""> -->
+<!-- 				{{elfin.PARTENAIRE.GERANT.VALUE}} -->
+				<input type="text" class="form-control" ng-model="elfin.PARTENAIRE.GERANT.VALUE" hb-no-dirty-check placeholder="">
 			</td>
 <!-- 			<td class="col-sm-1">need query</td> -->
 			<td class="col-sm-3">
-				{{elfin.DIVERS.REMARQUE}}
-<!-- 				<input type="text" class="form-control" ng-model="elfin.DIVERS.REMARQUE" hb-no-dirty-check placeholder=""> -->
+<!-- 				{{elfin.DIVERS.REMARQUE}} -->
+				<input type="text" class="form-control" ng-model="elfin.DIVERS.REMARQUE" hb-no-dirty-check placeholder="">
 			</td>
 		</tr>
 	</tbody>
-    <tfoot>
-		<td colspan="12">
-			<div 
-			   pagination 
-			   total-items="filteredElfins.length" 
-			   page="currentPage" 
-			   max-size="maxSize" 
-			   class="pagination-sm" 
-			   boundary-links="true" 
-			   rotate="false" 
-			   num-pages="numPages"
-			   on-select-page="pageChanged(page)"
-			   previous-text="&lsaquo;"
-			   next-text="&rsaquo;"
-			   first-text="&laquo;"
-			   last-text="&raquo;"				    
-		   ></div><br />
-		   <pre>Page: <span ng-bind="currentPage"></span> / <span ng-bind="numPages"></span></pre>
-		</td>
-   </tfoot>	
-	
 </table>
