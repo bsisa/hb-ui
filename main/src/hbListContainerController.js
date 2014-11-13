@@ -13,7 +13,7 @@
     	
     	// Collection id parameter obtained from hb5.config $routeProvider
         $scope.collectionId = $routeParams.collectionId;
-        // Contains a JSON Array of ELFINs resulting of the GeoxmlService query   
+        // Contains an ELFINs JSON Array resulting from the GeoxmlService query   
         $scope.elfins = null;
         $scope.elfinsCount = null;
         
