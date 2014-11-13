@@ -73,20 +73,14 @@
 							}
 						}, true);						
 						
-						
-						// Only valid with ui.bootstrap 0.11.0 not 0.10.0						
-//						$scope.fromDateOpened = false;
-//						$scope.open = function($event) {
-//						    $event.preventDefault();
-//						    $event.stopPropagation();
-//						    if ($scope.fromDateOpened) {
-//						    	$log.debug("    >>>>  OPEN -> CLOSE  <<<<");
-//						    	$scope.fromDateOpened = false;
-//						    } else {
-//						    	$log.debug("    >>>>  CLOSE -> OPEN  <<<<");
-//						    	$scope.fromDateOpened = true;	
-//						    }
-//						  };
+
+						// Only valid/used with ui.bootstrap 0.11.0 not 0.10.0
+						$scope.open = function($event) {
+						    $event.preventDefault();
+						    $event.stopPropagation();
+
+						    $scope.opened = true;
+						};
 	
 					} ]);
 	
