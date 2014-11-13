@@ -51,6 +51,17 @@ input::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
+/** When using table for layout instead of CSS
+*/
+table.layout {
+/*  	border: solid green 1px; */
+ 	border-collapse: collapse;  
+  	border: none;  
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
 
 /* card-container buttons bar*/
 .hb-btn-bar {
