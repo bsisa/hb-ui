@@ -14,6 +14,7 @@
 							'$location',
 							'$log',
 							'$timeout',
+							'$filter',
 							'hbAlertMessages',
 							'hbUtil',
 							'hbQueryService',
@@ -22,7 +23,7 @@
 							'HB_API',
 							'HB_ROLE_FONCTION',
 							function($attrs, $scope, $rootScope, GeoxmlService, $modal,
-									$routeParams, $location, $log, $timeout, hbAlertMessages,
+									$routeParams, $location, $log, $timeout, $filter, hbAlertMessages,
 									hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API, HB_ROLE_FONCTION) {
     
 									$log.debug("    >>>> Using HbImmeubleCardController");
@@ -42,6 +43,32 @@
 							        $scope.constatsEncours = null;
 							        $scope.constatsClos = null;
 							        $scope.prestations = null;
+							        var currentYear = moment().year();
+							        var lastYear = currentYear - 1;
+							        var nextYear = currentYear + 1;
+							        $scope.currentYearAndFormerPrestationSearch = {
+											"group" : "",
+											"origin" : "",
+											"account" : "",
+											"goal" : "",
+											"from" :  lastYear+"|"+currentYear,
+											"replacementValue" : "",
+											"manager" : "",
+											"owner" : "",
+											"remark" : ""
+										};
+							        $scope.nextYearPrestationSearch = {
+											"group" : "",
+											"origin" : "",
+											"account" : "",
+											"goal" : "",
+											"from" :  nextYear.toString(),
+											"replacementValue" : "",
+											"manager" : "",
+											"owner" : "",
+											"remark" : ""
+										};
+							        
 							        $scope.locationUnits = null;
 							    	
 						            $scope.locUnitPredicate = 'IDENTIFIANT.DE';
