@@ -92,7 +92,20 @@
 											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
 											$location.search(searchObj).path( "/elfin/create/CONSTAT" );
 										}
-									};									
+									};
+									
+									/**
+									 * Triggers a redirection to the PRESTATION creation URL with current
+									 * IMMEUBLE Id and ID_G passed as parameters.
+									 * Must not be effective while in create mode (no association is 
+									 * relevant while the IMMEUBLE creation is ongoing/pending.)
+									 */ 
+									$scope.createNewPrestation = function() {
+										if ($attrs.hbMode != "create") {
+											var searchObj = {Id: $scope.elfin.Id, ID_G: $scope.elfin.ID_G}
+											$location.search(searchObj).path( "/elfin/create/PRESTATION" );
+										}
+									};										
 									
 							    	/**
 							    	 * Listener used to load CONSTAT list related to this IMMEUBLE
