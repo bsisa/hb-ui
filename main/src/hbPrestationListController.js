@@ -36,6 +36,9 @@
 									"remark" : ""
 								};
 								
+								/**
+								 * Proceeds to elfin update to hb-api.
+								 */
 								$scope.save = function(elfin) {
 									elfin.put().then( 
 					               			function() { 
@@ -73,6 +76,17 @@
 								};
 								
 								/**
+								 * Proceed to elfin_p collection `prestationListFilter` filtering and sorting
+								 */
+								var filterSortElfins = function(elfins_p, search_p, predicate_p, reverse_p) {
+									// Apply prestationListFilter
+							    	var filteredSortedElfins = $filter('prestationListFilter')(elfins_p, search_p);
+							    	// Apply predicate, reverse sorting
+							    	filteredSortedElfins = $filter('orderBy')(filteredSortedElfins, predicate_p, reverse_p);
+							    	return filteredSortedElfins;
+								};
+								
+								/**
 								* Unlike v0.11.0 ui.bootstrap v0.10.0 does not bind currentPage using ng-model.
 								* Thus we need to pass page parameter to pageChanged function. 
 								*/
@@ -89,8 +103,7 @@
 						    	$scope.$watch('[search,predicate,reverse]', function(newSearch, oldSearch) {
 						    		$log.debug(">>>>> search, predicate or reverse UPDATED <<<<< \n" + angular.toJson(newSearch) );
 						    		if ($scope.elfins!=null) {
-								    	$scope.filteredElfins = $filter('prestationListFilter')($scope.elfins, $scope.search);
-										$scope.filteredElfins = $filter('orderBy')($scope.filteredElfins, $scope.predicate, $scope.reverse);
+										$scope.filteredElfins = filterSortElfins($scope.elfins, $scope.search, $scope.predicate, $scope.reverse);
 
 										// On search, sort change of filtered collection reset current page to first page
 										$scope.currentPage = 1;
@@ -104,8 +117,7 @@
 								 */
 						    	$scope.$watch('elfins', function() { 
 						    		if ($scope.elfins!=null) {
-								    	$scope.filteredElfins = $filter('prestationListFilter')($scope.elfins, $scope.search);
-										$scope.filteredElfins = $filter('orderBy')($scope.filteredElfins, $scope.predicate, $scope.reverse);						    			
+										$scope.filteredElfins = filterSortElfins($scope.elfins, $scope.search, $scope.predicate, $scope.reverse);										
 										
 										// On search, sort change of filtered collection reset current page to first page
 										$scope.currentPage = 1;
