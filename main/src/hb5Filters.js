@@ -204,6 +204,23 @@
 				}				
 			};
 			
+			var checkFromForOr = function(prestation) {
+				if (search.from && search.from.trim().length > 0 && search.from.indexOf("|") != -1) {
+					var searchTokens = search.from.split("|");
+					var booleanResult = false;
+					for (var i = 0; i < searchTokens.length; i++) { 
+						var currToken = searchTokens[i];
+						// Avoid setting true result for something or nothing.
+						if (currToken && currToken.trim().length > 0) {
+							booleanResult = booleanResult || icontains(prestation.IDENTIFIANT.DE, currToken);
+						}
+					}
+					return booleanResult;
+				} else {
+					return icontains(prestation.IDENTIFIANT.DE, search.from);
+				}				
+			};			
+			
 	        if (!(prestations == null || search == null ) && !angular.isUndefined(prestations) && !angular.isUndefined(search)) {
 	        	console.log(">>>> prestations.length, search = " + prestations.length +", " + search);
 	            var tempPrestations = [ ];
@@ -213,7 +230,8 @@
                     	 icontains(prestation.IDENTIFIANT.ORIGINE, search.origin) &&
                     	 icontains(prestation.IDENTIFIANT.COMPTE, search.account) &&
                     	 icontains(prestation.IDENTIFIANT.OBJECTIF, search.goal) &&
-                    	 icontains(prestation.IDENTIFIANT.DE, search.from) &&
+                    	 //icontains(prestation.IDENTIFIANT.DE, search.from) &&
+                    	 checkFromForOr(prestation) &&
                     	 //TODO: Numeric is not supported yet. Should use > < = operators to be useful.
                     	 //icontains(prestation.IDENTIFIANT.VALEUR_A_NEUF, search.replacementValue) &&
                     	// If no PARTENAIRE.GERANT object is available deactivate search restriction by always returning true
