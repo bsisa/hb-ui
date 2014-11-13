@@ -397,70 +397,222 @@
 			<tab-heading>Prestations({{prestations.length}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
-					<div class="col-sm-12">
-						<table class="table table-condensed table-bordered table-striped">
-							<thead>
-								<tr>
-									<th colspan="2">
-										<div class="input-group">
-		
-											<div>Prestations en cours</div>
-										</div>
-									</th>
-		
-									<th colspan="3">
-										<div class="input-group">
-		
-											<span class="input-group-btn"
-												tooltip="Créer une nouvelle prestation relative à l'objet courant">
-												<a class="btn btn-default" type="button"
-												ng-href="/elfin/create/PRESTATION?Id={{elfin.Id}}&ID_G={{elfin.ID_G}}">
-													<i class="icon-plus-sign"></i> Nouvelle prestation
-											</a>
-											</span>
-		
-										</div>
-									</th>
-									<th colspan="3">
-										<div class="input-group"></div>
-									</th>
-		
-								</tr>
-								<tr>
-									<th>Prestation</th>
-									<th><a href=""
-										ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
-											SAI</a></th>
-									<th><a href=""
-										ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
-									<th><a href=""
-										ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a></th>
-																		<th><a href=""
-										ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
-									<th><a href=""
-										ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
-									<th><a href=""
-										ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
-								</tr>
-							</thead>
-							<tbody ng-show="prestations">
-								<tr
-									ng-repeat="prestation in prestations | orderBy:prestaPredicate:prestaReverse">
-									<td><a
-										href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a>  
-										<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a></td>
-									<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
-									<td><span >{{prestation.IDENTIFIANT.DE}}</span></td>
-									<td><span >{{prestation.GROUPE}}</span></td>
-									<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
-									<td><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
-									<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
+					<div class="col-sm-12">			
+					<tabset>  
+						<tab><!-- PRESTATION 1st tab -->
+							<tab-heading>Prestations en cours, année-1</tab-heading>
+							<div class="hb-tab">
+
+								<div class="row">
+									<div class="col-sm-12">
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">
+														<div class="input-group">
+						
+															<div>Prestations en cours</div>
+														</div>
+													</th>
+						
+													<th colspan="3">
+														<div class="input-group">
+						
+															<span class="input-group-btn"
+																tooltip="Créer une nouvelle prestation relative à l'objet courant">
+																<a class="btn btn-default" type="button"
+																ng-href="/elfin/create/PRESTATION?Id={{elfin.Id}}&ID_G={{elfin.ID_G}}">
+																	<i class="icon-plus-sign"></i> Nouvelle prestation
+															</a>
+															</span>
+						
+														</div>
+													</th>
+													<th colspan="3">
+														<div class="input-group"></div>
+													</th>
+						
+												</tr>
+												<tr>
+													<th>Prestation</th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
+															SAI</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a></th>
+																						<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
+												</tr>
+											</thead>
+											<tbody ng-show="prestations">
+												<tr 
+													ng-repeat="prestation in prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate:prestaReverse">
+													<td><a
+														href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a>  
+														<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a></td>
+													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{prestation.GROUPE}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
+													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+			
+							</div>
+						</tab>
+						
+						<tab><!-- PRESTATION 1st tab -->
+							<tab-heading>Prestations année+1</tab-heading>
+							<div class="hb-tab">
+								<div class="row">
+									<div class="col-sm-12">
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">
+														<div class="input-group">
+						
+															<div>Prestations en cours</div>
+														</div>
+													</th>
+						
+													<th colspan="3">
+														<div class="input-group">
+						
+															<span class="input-group-btn"
+																tooltip="Créer une nouvelle prestation relative à l'objet courant">
+																<a class="btn btn-default" type="button"
+																ng-href="/elfin/create/PRESTATION?Id={{elfin.Id}}&ID_G={{elfin.ID_G}}">
+																	<i class="icon-plus-sign"></i> Nouvelle prestation
+															</a>
+															</span>
+						
+														</div>
+													</th>
+													<th colspan="3">
+														<div class="input-group"></div>
+													</th>
+						
+												</tr>
+												<tr>
+													<th>Prestation</th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
+															SAI</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a></th>
+																						<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
+												</tr>
+											</thead>
+											<tbody ng-show="prestations">
+												<tr
+													ng-repeat="prestation in prestations | prestationListFilter:nextYearPrestationSearch | orderBy:prestaPredicate:prestaReverse">
+													<td><a
+														href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a>  
+														<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a></td>
+													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{prestation.GROUPE}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
+													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</tab>
+						<tab><!-- PRESTATION 1st tab -->
+							<tab-heading>Prestations toutes</tab-heading>
+							<div class="hb-tab">
+								<div class="row">
+									<div class="col-sm-12">
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">
+														<div class="input-group">
+						
+															<div>Prestations en cours</div>
+														</div>
+													</th>
+						
+													<th colspan="3">
+														<div class="input-group">
+						
+															<span class="input-group-btn"
+																tooltip="Créer une nouvelle prestation relative à l'objet courant">
+																<a class="btn btn-default" type="button"
+																ng-href="/elfin/create/PRESTATION?Id={{elfin.Id}}&ID_G={{elfin.ID_G}}">
+																	<i class="icon-plus-sign"></i> Nouvelle prestation
+															</a>
+															</span>
+						
+														</div>
+													</th>
+													<th colspan="3">
+														<div class="input-group"></div>
+													</th>
+						
+												</tr>
+												<tr>
+													<th>Prestation</th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
+															SAI</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a></th>
+																						<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
+													<th><a href=""
+														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
+												</tr>
+											</thead>
+											<tbody ng-show="prestations">
+												<tr
+													ng-repeat="prestation in prestations | orderBy:prestaPredicate:prestaReverse">
+													<td><a
+														href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}">Détail</a>  
+														<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a></td>
+													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{prestation.GROUPE}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
+													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</tab>		
+				</tabset>						
+			</div><!-- Prestation 12 col div END -->
+			</div><!-- Prestation 1st level row div END -->
+			</div><!-- Prestation 1st level hb-tab container END -->
 		</tab> 
 		<!-- CONTRAT tab --> 
 		<tab>
