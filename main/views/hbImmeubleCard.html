@@ -408,32 +408,6 @@
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
-													<th colspan="2">
-														<div class="input-group">
-						
-															<div>Prestations en cours</div>
-														</div>
-													</th>
-						
-													<th colspan="3">
-														<div class="input-group">
-						
-															<span class="input-group-btn"
-																tooltip="Créer une nouvelle prestation relative à l'objet courant">
-																<a class="btn btn-default" type="button"
-																ng-href="/elfin/create/PRESTATION?Id={{elfin.Id}}&ID_G={{elfin.ID_G}}">
-																	<i class="icon-plus-sign"></i> Nouvelle prestation
-															</a>
-															</span>
-						
-														</div>
-													</th>
-													<th colspan="3">
-														<div class="input-group"></div>
-													</th>
-						
-												</tr>
-												<tr>
 													<th>Prestation</th>
 													<th><a href=""
 														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
@@ -479,32 +453,6 @@
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
-													<th colspan="2">
-														<div class="input-group">
-						
-															<div>Prestations en cours</div>
-														</div>
-													</th>
-						
-													<th colspan="3">
-														<div class="input-group">
-						
-															<span class="input-group-btn"
-																tooltip="Créer une nouvelle prestation relative à l'objet courant">
-																<a class="btn btn-default" type="button"
-																ng-href="/elfin/create/PRESTATION?Id={{elfin.Id}}&ID_G={{elfin.ID_G}}">
-																	<i class="icon-plus-sign"></i> Nouvelle prestation
-															</a>
-															</span>
-						
-														</div>
-													</th>
-													<th colspan="3">
-														<div class="input-group"></div>
-													</th>
-						
-												</tr>
-												<tr>
 													<th>Prestation</th>
 													<th><a href=""
 														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
@@ -548,32 +496,6 @@
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
-													<th colspan="2">
-														<div class="input-group">
-						
-															<div>Prestations en cours</div>
-														</div>
-													</th>
-						
-													<th colspan="3">
-														<div class="input-group">
-						
-															<span class="input-group-btn"
-																tooltip="Créer une nouvelle prestation relative à l'objet courant">
-																<a class="btn btn-default" type="button"
-																ng-href="/elfin/create/PRESTATION?Id={{elfin.Id}}&ID_G={{elfin.ID_G}}">
-																	<i class="icon-plus-sign"></i> Nouvelle prestation
-															</a>
-															</span>
-						
-														</div>
-													</th>
-													<th colspan="3">
-														<div class="input-group"></div>
-													</th>
-						
-												</tr>
-												<tr>
 													<th>Prestation</th>
 													<th><a href=""
 														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
@@ -608,7 +530,13 @@
 									</div>
 								</div>
 							</div>
-						</tab>		
+						</tab>	
+						<tab select="createNewPrestation()" ng-show="!createMode"> 
+							<tab-heading tooltip="Créer une nouvelle prestation relative à l'objet courant" tooltip-popup-delay="1000">Créer une nouvelle prestation <i class="icon-plus-sign"></i></tab-heading>
+							<div class="hb-tab">
+							</div>
+						</tab>						
+							
 				</tabset>						
 			</div><!-- Prestation 12 col div END -->
 			</div><!-- Prestation 1st level row div END -->
