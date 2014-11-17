@@ -2,7 +2,7 @@
 	ng-show="elfins">
 	<thead>
 		<tr>
-			<th colspan="6"><span class="badge">{{elfinsCount}}</span> immeuble{{ elfinsCount | plural }} trouvé{{ elfinsCount | plural
+			<th colspan="6"><span class="badge">{{filteredElfins.length}} / {{elfinsCount}}</span> immeuble{{ elfinsCount | plural }} trouvé{{ elfinsCount | plural
 				}}</th>
 		</tr>
 		<tr>
@@ -68,7 +68,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="elfin in elfins | immeubleListFilter:search | immeubleListAnyFilter:search.text | orderBy:predicate:reverse">
+<!-- 		<tr ng-repeat="elfin in elfins | immeubleListFilter:search | immeubleListAnyFilter:search.text | orderBy:predicate:reverse"> -->
+		<tr ng-repeat="elfin in filteredElfins">
+		
 			<td><a
 				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
 			</td>
