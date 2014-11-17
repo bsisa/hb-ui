@@ -162,6 +162,34 @@
 	
 	
 	/**
+	 * Filter tailored to IMMEUBLE list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual immeuble list. 
+	 */
+	angular.module('hb5').filter('immeubleListAnyFilter', [function () {
+		
+		return function (immeubles, searchtext) {
+	        if (!angular.isUndefined(immeubles) && !angular.isUndefined(searchtext)) {
+	            var tempImmeubles = [ ];
+	            angular.forEach(immeubles, function (immeuble) {
+                    if ( 
+                    	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.GROUPE, searchtext) ||
+                    	 icontains(immeuble.IDENTIFIANT.OBJECTIF, searchtext) ||
+                    	 icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
+                    	 icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
+                    	 icontains(immeuble.IDENTIFIANT.ALIAS, searchtext)
+                    ) {
+                    	tempImmeubles.push(immeuble);
+                    }
+                });
+	            return tempImmeubles;
+	        } else {
+	            return immeubles;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
 	 * Filter tailored to PRESTATION list requirements.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual prestation list. 
 	 */

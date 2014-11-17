@@ -14,7 +14,8 @@
     			"registerNb" : "",
     			"place" : "",
     			"buildingNb" : "",
-    			"address" : ""
+    			"address" : "",
+    			"text" : ""
     	};
     	
     }]);
