@@ -119,12 +119,12 @@
 									ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Date</a></th>
 								<th><a href=""
 									ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Fournisseur</a></th>
+<th><a href=""
+									ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>									
 								<th><a href=""
 									ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; deadlineReverse=!deadlineReverse">Facturé</a></th>
 								<th><a href=""
 									ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Payé</a></th>
-								<th><a href=""
-									ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -137,9 +137,9 @@
 								<td><span tooltip="transaction.IDENTIFIANT.DE">{{transaction.IDENTIFIANT.DE}}</span></td>
 								<td><span
 									tooltip="transaction.PARTENAIRE.PROPRIETAIRE.VALUE">{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
+								<td><span tooltip="transaction.DIVERS.REMARQUE">{{transaction.DIVERS.REMARQUE}}</span></td>
 								<td><span tooltip="transaction.IDENTIFIANT.VALEUR_A_NEUF">{{transaction.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
 								<td><span tooltip="transaction.IDENTIFIANT.VALEUR">{{transaction.IDENTIFIANT.VALEUR}}</span></td>
-								<td><span tooltip="transaction.DIVERS.REMARQUE">{{transaction.DIVERS.REMARQUE}}</span></td>
 							</tr>
 						</tbody>
 					</table>
