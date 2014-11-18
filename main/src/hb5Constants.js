@@ -7,6 +7,19 @@
  */
 
 /**
+ * Define collections ids
+ */
+angular.module('hb5').constant('HB_COLLECTIONS', {
+	ACTOR_ID : "G20060401225530100",
+	CONTRAT_ID : "G20081113902512301",
+	IMMEUBLE_ID : "G20040930101030005",
+	LOCATION_UNIT_ID: "G20040930101030013",
+	PRESTATION_ID : "G20081113902512302",
+	TRANSACTION_ID : "G20040930101030011"
+});
+
+
+/**
  * Define events names as constants
  */
 angular.module('hb5').constant('HB_EVENTS', {
@@ -19,7 +32,6 @@ angular.module('hb5').constant('HB_EVENTS', {
 	ELFIN_DELETED : "hb5:elfin:deletedEvent",
     ELFIN_FORM_DRAW_EVENT : 'hb5:elfin:FormDrawEvent'
 });
-
 
 
 /**
