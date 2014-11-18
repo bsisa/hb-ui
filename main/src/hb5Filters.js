@@ -200,11 +200,11 @@
 	            var tempUniteLocatives = [ ];
 	            angular.forEach(uniteLocatives, function (uniteLocative) {
                     if ( 
-                    	 icontains(uniteLocative.PARTENAIRE.PROPRIETAIRE.GROUPE, searchtext) ||
-                    	 icontains(uniteLocative.IDENTIFIANT.OBJECTIF, searchtext) ||
-                    	 icontains(uniteLocative.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
-                    	 icontains(uniteLocative.IDENTIFIANT.NOM, searchtext) ||
-                    	 icontains(uniteLocative.IDENTIFIANT.ALIAS, searchtext)
+                    		(
+                    				!angular.isUndefined(uniteLocative.PARTENAIRE) && 
+                    				!angular.isUndefined(uniteLocative.PARTENAIRE.PROPRIETAIRE) && 
+                    				icontains(uniteLocative.PARTENAIRE.PROPRIETAIRE.VALUE, searchtext)
+                    		) || icontains(uniteLocative.IDENTIFIANT.OBJECTIF, searchtext) 
                     ) {
                     	tempUniteLocatives.push(uniteLocative);
                     }

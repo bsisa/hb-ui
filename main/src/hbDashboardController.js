@@ -73,7 +73,93 @@
     	// ============================================================    	
 		
     	
+    	// ============================================================
+    	// Apartments (flats) Section - UNITE LOCATIVE
+    	// ============================================================    	
     	
+    	// ==== Initialisation ========================================
+    	var uniteLocCollectionId = HB_COLLECTIONS.LOCATION_UNIT_ID;
+    	
+		/**
+		 *  Apply uniteLocativeListAnyFilter
+		 */
+		var filterUniteLocElfins = function(elfins_p, search_p) {
+	    	var filteredSortedElfins = $filter('uniteLocativeListAnyFilter')(elfins_p, search_p.text);
+	    	$log.debug("filteredSortedElfins.length = " + filteredSortedElfins.length);
+	    	return filteredSortedElfins;
+		};    	
+    	
+        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        $scope.uniteLocElfins = null;
+
+        /** User entered IMMEUBLE search criterion */
+        $scope.uniteLocSearch = { "text" : "" };             
+        
+        /** Query all available buildings IMMEUBLE */ 
+        GeoxmlService.getCollection(uniteLocCollectionId).getList()
+	        .then(function(uniteLocElfins) {
+        		$scope.uniteLocElfins = uniteLocElfins;
+	        }, function(response) {
+	            var message = "Le chargement des unités locatives a échoué (statut de retour: " + response.status + ")";
+	            hbAlertMessages.addAlert("danger",message);
+	        });	
+        
+		/**
+		 * uniteLocElfins result is loaded asynchronously.
+		 */
+    	$scope.$watch('uniteLocElfins', function() { 
+    		$log.debug("$watch('uniteLocElfins')");
+    		if ($scope.uniteLocElfins!=null) {
+				$scope.filteredUniteLocElfins = filterUniteLocElfins($scope.uniteLocElfins, $scope.uniteLocSearch);										
+    		}
+    	});	        
+
+    	// ==== Navigation ===========================================
+        /**
+         * Navigate to user uniteLoc selected list
+         */
+        $scope.listUniteLoc = function() {
+        	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE').search('search', $scope.uniteLocSearch.text);
+        };
+        /**
+         * Navigate to user selected flat (IMMEUBLE)
+         */        
+        $scope.viewUniteLoc = function() {
+        	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE/' + $scope.filteredUniteLocElfins[0].Id);
+        };        
+
+    	// ==== End user search related listener ==================        
+		/**
+		 * Update filtered collection when search or sorting criteria are modified. 
+		 */
+    	$scope.$watch('uniteLocSearch', function(newSearch, oldSearch) {
+    		$log.debug("$watch('uniteLocSearch')");
+    		if ($scope.uniteLocElfins!=null) {
+				$scope.filteredUniteLocElfins = filterUniteLocElfins($scope.uniteLocElfins, $scope.uniteLocSearch);
+    		}
+    	}, true);								
+			
+    	// ============================================================
+        // Buildings search - end
+    	// ============================================================    	
+
+    	/*
+    	wcElfins
+    	filteredWcElfins
+    	wcSearch
+    	
+    	horlogeElfins
+    	filteredHorlogeElfins
+    	horlogeSearch
+    	
+    	fontaineElfins
+    	filteredFontaineElfins
+    	fontaineSearch
+    	
+    	abribusElfins
+    	filteredAbribusElfins
+    	abribusSearch
+    	*/
     	
     	var focusOnSearchField = function() {
 			$('#immeubleSearchTextInput').focus();	
