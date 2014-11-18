@@ -189,6 +189,39 @@
 	}]);	
 	
 		
+	
+		
+	/**
+	 * Filter tailored to UNITE_LOCATIVE (SURFACE) list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual uniteLocative list. 
+	 */
+	angular.module('hb5').filter('uniteLocativeListFilter', [function () {
+		
+		return function (uniteLocatives, predicate) {
+	        if (!angular.isUndefined(uniteLocatives) && !angular.isUndefined(predicate)) {
+	            var tempUniteLocatives = [ ];
+	            angular.forEach(uniteLocatives, function (uniteLocative) {
+	            	var currentOwner = undefined;
+	            	if ( !angular.isUndefined(uniteLocative.PARTENAIRE) && 
+            			 !angular.isUndefined(uniteLocative.PARTENAIRE.PROPRIETAIRE) ) {
+	            		currentOwner = uniteLocative.PARTENAIRE.PROPRIETAIRE.VALUE;
+	            	}
+                    if ( 
+                    	 icontains(currentOwner, predicate.owner) &&
+                    	 icontains(uniteLocative.IDENTIFIANT.OBJECTIF, predicate.registerNb) 
+                    ) {
+                    	tempUniteLocatives.push(uniteLocative);
+                    }
+                });
+	            return tempUniteLocatives;
+	        } else {
+	            return uniteLocatives;
+	        }
+	    };
+	}]);	
+	
+	
+	
 	/**
 	 * Filter tailored to UNITE_LOCATIVE list single search criterion on `all fields`.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual uniteLocative list. 
