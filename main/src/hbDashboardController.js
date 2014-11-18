@@ -140,14 +140,82 @@
     	}, true);								
 			
     	// ============================================================
-        // Buildings search - end
+        // Apartments (flats) Section - UNITE LOCATIVE - end
     	// ============================================================    	
 
-    	/*
-    	wcElfins
-    	filteredWcElfins
-    	wcSearch
     	
+    	// ============================================================
+    	// WC Section
+    	// ============================================================    	
+    	
+    	// ==== Initialisation ========================================
+    	var wcCollectionId = HB_COLLECTIONS.WC_ID;
+    	
+		/**
+		 *  Apply wcListAnyFilter
+		 */
+		var filterWcElfins = function(elfins_p, search_p) {
+	    	var filteredSortedElfins = $filter('wcListAnyFilter')(elfins_p, search_p.text);
+	    	$log.debug("filteredSortedElfins.length = " + filteredSortedElfins.length);
+	    	return filteredSortedElfins;
+		};    	
+    	
+        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        $scope.wcElfins = null;
+
+        /** User entered IMMEUBLE search criterion */
+        $scope.wcSearch = { "text" : "" };             
+        
+        /** Query all available WC */ 
+        GeoxmlService.getCollection(wcCollectionId).getList()
+	        .then(function(wcElfins) {
+        		$scope.wcElfins = wcElfins;
+	        }, function(response) {
+	            var message = "Le chargement des WC a échoué (statut de retour: " + response.status + ")";
+	            hbAlertMessages.addAlert("danger",message);
+	        });	
+        
+		/**
+		 * wcElfins result is loaded asynchronously.
+		 */
+    	$scope.$watch('wcElfins', function() { 
+    		$log.debug("$watch('wcElfins')");
+    		if ($scope.wcElfins!=null) {
+				$scope.filteredWcElfins = filterWcElfins($scope.wcElfins, $scope.wcSearch);										
+    		}
+    	});	        
+
+    	// ==== Navigation ===========================================
+        /**
+         * Navigate to user WC selected list
+         */
+        $scope.listWc = function() {
+        	$location.path('/elfin/'+wcCollectionId+'/WC').search('search', $scope.wcSearch.text);
+        };
+        /**
+         * Navigate to user selected WC
+         */        
+        $scope.viewWc = function() {
+        	$location.path('/elfin/'+wcCollectionId+'/WC/' + $scope.filteredWcElfins[0].Id);
+        };        
+
+    	// ==== End user search related listener ==================        
+		/**
+		 * Update filtered collection when search or sorting criteria are modified. 
+		 */
+    	$scope.$watch('wcSearch', function(newSearch, oldSearch) {
+    		$log.debug("$watch('wcSearch')");
+    		if ($scope.wcElfins!=null) {
+				$scope.filteredWcElfins = filterWcElfins($scope.wcElfins, $scope.wcSearch);
+    		}
+    	}, true);								
+			
+    	// ============================================================
+        // WC Section - end
+    	// ============================================================    	
+    	
+    	
+    	/*
     	horlogeElfins
     	filteredHorlogeElfins
     	horlogeSearch

@@ -32,7 +32,13 @@
 					<button ng-show="filteredUniteLocElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
 				</div>			
 			</th>
-			<th >Sélection  <span class="badge">{{filteredWcElfins.length}}</span></th>
+			<th >Sélection  <span class="badge">{{filteredWcElfins.length}}</span>
+				<div class="right">
+					<button tabindex="2" ng-show="filteredWcElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listWc()"><i class="glyphicon glyphicon-list-alt"></i></button>
+					<button tabindex="2" ng-show="filteredWcElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewWc()"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button ng-show="filteredWcElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+				</div>						
+			</th>
 			<th >Sélection  <span class="badge">{{filteredHorlogeElfins.length}}</span></th>
 			<th >Sélection  <span class="badge">{{filteredFontaineElfins.length}}</span></th>
 			<th >Sélection  <span class="badge">{{filteredAbribusElfins.length}}</span></th>
