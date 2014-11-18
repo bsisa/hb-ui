@@ -6,7 +6,7 @@
 	 * The goal of the current service is to avoid both code and 
 	 * configurations duplication. 
 	 */
-	angular.module('hb5').service('hbQueryService', ['$log','GeoxmlService',function ($log,GeoxmlService) {
+	angular.module('hb5').service('hbQueryService', ['$log','GeoxmlService', 'HB_COLLECTIONS',function ($log,GeoxmlService,HB_COLLECTIONS) {
 		
 		/**
 		 * Returns a handle to function:
@@ -27,8 +27,7 @@
 		 *  @see getList
 		 */		
 		var getActors = function(xpath) {
-			var actorsCollectionId = 'G20060401225530100';	
-	        return getList(actorsCollectionId,xpath);
+	        return getList(HB_COLLECTIONS.ACTOR_ID,xpath);
 		};		
 		
 		/**
@@ -37,8 +36,7 @@
 		 *  @see getList
 		 */		
 		var getContrats = function(xpath) {		
-			var contratsCollectionId = 'G20081113902512301';
-	        return getList(contratsCollectionId,xpath);
+	        return getList(HB_COLLECTIONS.CONTRAT_ID,xpath);
 		};		
 		
 		/**
@@ -47,8 +45,7 @@
 		 *  @see getList  
 		 */
 		var getImmeubles = function(xpath) {
-	        var immeublesCollectionId = 'G20040930101030005';
-	        return getList(immeublesCollectionId,xpath);
+	        return getList(HB_COLLECTIONS.IMMEUBLE_ID,xpath);
 		};		
 		
 		/**
@@ -57,8 +54,7 @@
 		 *  @see getList
 		 */
 		var getLocationUnits = function(xpath) {
-			var locationUnitsCollectionId = 'G20040930101030013';
-	        return getList(locationUnitsCollectionId,xpath);
+	        return getList(HB_COLLECTIONS.LOCATION_UNIT_ID,xpath);
 		};
         
 		/**
@@ -67,8 +63,7 @@
 		 *  @see getList
 		 */
 		var getPrestations = function(xpath) {
-			var prestationsCollectionId = 'G20081113902512302';
-			return getList(prestationsCollectionId,xpath);
+			return getList(HB_COLLECTIONS.PRESTATION_ID,xpath);
 		};
 		
 		/**
@@ -77,8 +72,7 @@
 		 *  @see getList
 		 */
 		var getTransactions = function(xpath) {
-			var transactionsCollectionId = 'G20040930101030011';
-			return getList(transactionsCollectionId,xpath);
+			return getList(HB_COLLECTIONS.TRANSACTION_ID,xpath);
 		};
         
 	
