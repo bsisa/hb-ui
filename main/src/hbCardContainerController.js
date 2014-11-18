@@ -45,8 +45,8 @@
      * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
     angular.module('hb5').controller('HbCardContainerController', [
-        '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', '$attrs',
-        function($scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS, $attrs) {
+        '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'MapService',
+        function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS, MapService) {
     
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
@@ -57,6 +57,29 @@
         
         // Proceed with initialisation tasks
         init();
+        
+        // ============================================================
+        // Global navigation buttons (also found in MenuController)
+        // ============================================================        
+        
+        /**
+         * Go home navigation function
+         */
+    	$scope.home = function() {
+    		$log.debug("$scope.home...");
+    		// Need to encapsulate location path in location url 
+    		// to reset any possibly existing search parameters from URL. 
+    		$location.url($location.path('/'));
+    	};
+        
+    	/**
+    	 * Show/hide map navigation function
+    	 */
+        $scope.toggleMap = function() {
+        	$log.debug("$scope.toggleMap...");
+            $scope.displayMap = MapService.toggleMap();
+            $scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, $scope.displayMap);
+        };        
         
         // ============================================================
         // Button bar layout helpers
