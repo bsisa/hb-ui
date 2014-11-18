@@ -59,9 +59,12 @@
             .when('/elfin/:collectionId/CONTRAT', {
                 templateUrl: '/assets/views/CONTRAT_list_view.html'
             })
-             .when('/elfin/:collectionId/FONTAINE/:elfinId', {
+            .when('/elfin/:collectionId/FONTAINE/:elfinId', {
                 templateUrl: '/assets/views/FONTAINE_card_view.html'
             })
+            .when('/elfin/:collectionId/FONTAINE', {
+                templateUrl: '/assets/views/FONTAINE_list_view.html'
+            })            
             .when('/elfin/create/IMMEUBLE', {
                 templateUrl: '/assets/views/IMMEUBLE_card_new_view.html'
             })            
