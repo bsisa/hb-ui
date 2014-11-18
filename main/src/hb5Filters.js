@@ -370,6 +370,60 @@
 	}]);		
 	
 	
+	
+	/**
+	 * Filter tailored to FONTAINE list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual fontaine list. 
+	 */
+	angular.module('hb5').filter('fontaineListFilter', [function () {
+		
+		return function (fontaines, search) {
+	        if (!angular.isUndefined(fontaines) && !angular.isUndefined(search)) {
+	            var tempFontaines = [ ];
+	            angular.forEach(fontaines, function (fontaine) {
+                    if ( 
+                    	 icontains(fontaine.IDENTIFIANT.OBJECTIF, search.objectif) &&
+                    	 icontains(fontaine.IDENTIFIANT.NOM, search.nom) &&
+                    	 icontains(fontaine.IDENTIFIANT.ALIAS, search.alias) &&
+                    	 icontains(fontaine.DIVERS.REMARQUE, search.remark)
+                    ) {
+                    	tempFontaines.push(fontaine);
+                    }
+                });
+	            return tempFontaines;
+	        } else {
+	            return fontaines;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to FONTAINE list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual fontaine list. 
+	 */
+	angular.module('hb5').filter('fontaineListAnyFilter', [function () {
+		
+		return function (fontaines, searchtext) {
+	        if (!angular.isUndefined(fontaines) && !angular.isUndefined(searchtext)) {
+	            var tempFontaines = [ ];
+	            angular.forEach(fontaines, function (fontaine) {
+                    if ( 
+                    	 icontains(fontaine.IDENTIFIANT.OBJECTIF, searchtext) ||
+                    	 icontains(fontaine.IDENTIFIANT.NOM, searchtext) ||
+                    	 icontains(fontaine.IDENTIFIANT.ALIAS, searchtext) || 
+                    	 icontains(fontaine.DIVERS.REMARQUE, searchtext)
+                    ) {
+                    	tempFontaines.push(fontaine);
+                    }
+                });
+	            return tempFontaines;
+	        } else {
+	            return fontaines;
+	        }
+	    };
+	}]);	
+	
 		
 	/**
 	 * Filter tailored to WC list single search criterion on `all fields`.
