@@ -51,6 +51,12 @@ input::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
+/* Align right */
+.right {
+    float: right;
+}
+
+
 /** When using table for layout instead of CSS
 */
 table.layout {
