@@ -17,8 +17,12 @@
     			"address" : "",
     			"text" : ""
     	};
-    	
-    	
+
+    	// Initialise general search text with search request parameter if defined.
+    	// This is only expected from Dashboard calls.
+    	if ($routeParams.search) {
+    		$scope.search.text = $routeParams.search; 
+    	}
     	
 		/**
 		 * Proceed to elfin_p collection `prestationListFilter` filtering and sorting
