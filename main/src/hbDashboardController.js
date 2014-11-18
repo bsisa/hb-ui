@@ -298,7 +298,73 @@
     	horlogeElfins
     	filteredHorlogeElfins
     	horlogeSearch
+    	*/
+    	// ============================================================
+    	// HORLOGE Section
+    	// ============================================================    	
     	
+    	// ==== Initialisation ========================================
+    	var horlogeCollectionId = HB_COLLECTIONS.HORLOGE_ID;
+    	
+    	
+        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        $scope.horlogeElfins = null;
+
+        /** Query all available WC */ 
+        GeoxmlService.getCollection(horlogeCollectionId).getList()
+	        .then(function(horlogeElfins) {
+        		$scope.horlogeElfins = horlogeElfins;
+	        }, function(response) {
+	            var message = "Le chargement des HORLOGE a échoué (statut de retour: " + response.status + ")";
+	            hbAlertMessages.addAlert("danger",message);
+	        });	
+        
+		/**
+		 * horlogeElfins result is loaded asynchronously.
+		 */
+//    	$scope.$watch('horlogeElfins', function() { 
+//    		$log.debug("$watch('horlogeElfins')");
+//    		if ($scope.horlogeElfins!=null) {
+//				$scope.filteredWcElfins = filterWcElfins($scope.horlogeElfins, $scope.wcSearch);										
+//    		}
+//    	});	        
+
+    	// ==== Navigation ===========================================
+        /**
+         * Navigate to user HORLOGE selected list
+         * There are 2 HORLOGE. Do not provide extended search yet.
+         */
+//        $scope.listWc = function() {
+//        	$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE').search('search', $scope.wcSearch.text);
+//        };
+        $scope.listHorloges = function() {
+        	$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE');
+        };        
+        /**
+         * Navigate to user selected WC
+         */        
+        $scope.viewHorloge = function() {
+        	$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE/' + $scope.filteredWcElfins[0].Id);
+        };        
+
+    	// ==== End user search related listener ==================        
+		/**
+		 * Update filtered collection when search or sorting criteria are modified. 
+		 */
+//    	$scope.$watch('wcSearch', function(newSearch, oldSearch) {
+//    		$log.debug("$watch('wcSearch')");
+//    		if ($scope.horlogeElfins!=null) {
+//				$scope.filteredWcElfins = filterWcElfins($scope.horlogeElfins, $scope.wcSearch);
+//    		}
+//    	}, true);								
+			
+    	// ============================================================
+        // HORLOGE Section - end
+    	// ============================================================    	
+    	
+    	
+    	
+    	/*
     	abribusElfins
     	filteredAbribusElfins
     	abribusSearch
