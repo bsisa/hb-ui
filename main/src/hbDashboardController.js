@@ -7,8 +7,6 @@
     	
     	var immeublesCollectionId = 'G20040930101030005';
     	
-    	// Collection id parameter obtained from hb5.config $routeProvider
-        $scope.collectionId = $routeParams.collectionId;
         // Contains an ELFINs JSON Array resulting from the GeoxmlService query   
         $scope.elfins = null;
         $scope.elfinsCount = null;
