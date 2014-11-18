@@ -144,6 +144,81 @@
     	// ============================================================    	
 
     	
+    	
+    	    	
+    	
+    	// ============================================================
+    	// FONTAINE Section
+    	// ============================================================    	
+    	
+    	// ==== Initialisation ========================================
+    	var fontaineCollectionId = HB_COLLECTIONS.FONTAINE_ID;
+    	
+		/**
+		 *  Apply uniteLocativeListAnyFilter
+		 */
+		var filterFontaineElfins = function(elfins_p, search_p) {
+	    	var filteredSortedElfins = $filter('fontaineListAnyFilter')(elfins_p, search_p.text);
+	    	$log.debug("filteredSortedElfins.length = " + filteredSortedElfins.length);
+	    	return filteredSortedElfins;
+		};    	
+    	
+        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        $scope.fontaineElfins = null;
+
+        /** User entered IMMEUBLE search criterion */
+        $scope.fontaineSearch = { "text" : "" };             
+        
+        /** Query all available buildings IMMEUBLE */ 
+        GeoxmlService.getCollection(fontaineCollectionId).getList()
+	        .then(function(fontaineElfins) {
+        		$scope.fontaineElfins = fontaineElfins;
+	        }, function(response) {
+	            var message = "Le chargement des unités locatives a échoué (statut de retour: " + response.status + ")";
+	            hbAlertMessages.addAlert("danger",message);
+	        });	
+        
+		/**
+		 * fontaineElfins result is loaded asynchronously.
+		 */
+    	$scope.$watch('fontaineElfins', function() { 
+    		$log.debug("$watch('fontaineElfins')");
+    		if ($scope.fontaineElfins!=null) {
+				$scope.filteredFontaineElfins = filterFontaineElfins($scope.fontaineElfins, $scope.fontaineSearch);										
+    		}
+    	});	        
+
+    	// ==== Navigation ===========================================
+        /**
+         * Navigate to user FONTAINE selected list
+         */
+        $scope.listFontaines = function() {
+        	$location.path('/elfin/'+fontaineCollectionId+'/FONTAINE').search('search', $scope.fontaineSearch.text);
+        };
+        /**
+         * Navigate to user selected FONTAINE
+         */        
+        $scope.viewFontaine = function() {
+        	$location.path('/elfin/'+fontaineCollectionId+'/FONTAINE/' + $scope.filteredFontaineElfins[0].Id);
+        };        
+
+    	// ==== End user search related listener ==================        
+		/**
+		 * Update filtered collection when search or sorting criteria are modified. 
+		 */
+    	$scope.$watch('fontaineSearch', function(newSearch, oldSearch) {
+    		$log.debug("$watch('fontaineSearch')");
+    		if ($scope.fontaineElfins!=null) {
+				$scope.filteredFontaineElfins = filterFontaineElfins($scope.fontaineElfins, $scope.fontaineSearch);
+    		}
+    	}, true);								
+			
+    	// ============================================================
+        // FONTAINE Section - end
+    	// ============================================================    	
+    	
+    	
+    	
     	// ============================================================
     	// WC Section
     	// ============================================================    	
@@ -223,10 +298,6 @@
     	horlogeElfins
     	filteredHorlogeElfins
     	horlogeSearch
-    	
-    	fontaineElfins
-    	filteredFontaineElfins
-    	fontaineSearch
     	
     	abribusElfins
     	filteredAbribusElfins

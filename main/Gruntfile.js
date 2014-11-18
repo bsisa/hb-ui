@@ -66,6 +66,8 @@ module.exports = function(grunt) {
 								'src/hbEqualsDirective.js',
 								'src/hbFontaineCardController.js',
 								'src/hbFontaineCardDirective.js',
+								'src/hbFontaineListController.js',
+								'src/hbFontaineListDirective.js',
 								'src/hbFormeComponentController.js',
 								'src/hbFormeComponentDirective.js',
 								'src/hbImmeubleCardDirective.js', 
