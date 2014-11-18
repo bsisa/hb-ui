@@ -293,19 +293,13 @@
         // WC Section - end
     	// ============================================================    	
     	
-    	
-    	/*
-    	horlogeElfins
-    	filteredHorlogeElfins
-    	horlogeSearch
-    	*/
+
     	// ============================================================
     	// HORLOGE Section
     	// ============================================================    	
     	
     	// ==== Initialisation ========================================
     	var horlogeCollectionId = HB_COLLECTIONS.HORLOGE_ID;
-    	
     	
         /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
         $scope.horlogeElfins = null;
@@ -319,24 +313,11 @@
 	            hbAlertMessages.addAlert("danger",message);
 	        });	
         
-		/**
-		 * horlogeElfins result is loaded asynchronously.
-		 */
-//    	$scope.$watch('horlogeElfins', function() { 
-//    		$log.debug("$watch('horlogeElfins')");
-//    		if ($scope.horlogeElfins!=null) {
-//				$scope.filteredWcElfins = filterWcElfins($scope.horlogeElfins, $scope.wcSearch);										
-//    		}
-//    	});	        
-
     	// ==== Navigation ===========================================
         /**
          * Navigate to user HORLOGE selected list
          * There are 2 HORLOGE. Do not provide extended search yet.
          */
-//        $scope.listWc = function() {
-//        	$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE').search('search', $scope.wcSearch.text);
-//        };
         $scope.listHorloges = function() {
         	$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE');
         };        
@@ -347,29 +328,51 @@
         	$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE/' + $scope.filteredWcElfins[0].Id);
         };        
 
-    	// ==== End user search related listener ==================        
-		/**
-		 * Update filtered collection when search or sorting criteria are modified. 
-		 */
-//    	$scope.$watch('wcSearch', function(newSearch, oldSearch) {
-//    		$log.debug("$watch('wcSearch')");
-//    		if ($scope.horlogeElfins!=null) {
-//				$scope.filteredWcElfins = filterWcElfins($scope.horlogeElfins, $scope.wcSearch);
-//    		}
-//    	}, true);								
-			
     	// ============================================================
         // HORLOGE Section - end
     	// ============================================================    	
     	
     	
+    	// ============================================================
+    	// ABRIBUS Section
+    	// ============================================================    	
     	
-    	/*
-    	abribusElfins
-    	filteredAbribusElfins
-    	abribusSearch
-    	*/
+    	// ==== Initialisation ========================================
+    	var abribusCollectionId = HB_COLLECTIONS.ABRIBUS_ID;
     	
+        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        $scope.abribusElfins = null;
+
+        /** Query all available ABRIBUS */ 
+        GeoxmlService.getCollection(abribusCollectionId).getList()
+	        .then(function(abribusElfins) {
+        		$scope.abribusElfins = abribusElfins;
+	        }, function(response) {
+	            var message = "Le chargement des ABRIBUS a échoué (statut de retour: " + response.status + ")";
+	            hbAlertMessages.addAlert("danger",message);
+	        });	
+        
+    	// ==== Navigation ===========================================
+        /**
+         * Navigate to user ABRIBUS selected list
+         * There are 2 ABRIBUS. Do not provide extended search yet.
+         */
+        $scope.listAbribus = function() {
+        	$location.path('/elfin/'+abribusCollectionId+'/ABRIBUS');
+        };        
+        /**
+         * Navigate to user selected ABRIBUS
+         */        
+        $scope.viewAbribus = function() {
+        	$location.path('/elfin/'+abribusCollectionId+'/ABRIBUS/' + $scope.filteredWcElfins[0].Id);
+        };        
+
+    	// ============================================================
+        // ABRIBUS Section - end
+    	// ============================================================    	
+        
+        
+        
     	var focusOnSearchField = function() {
 			$('#immeubleSearchTextInput').focus();	
 		};        
