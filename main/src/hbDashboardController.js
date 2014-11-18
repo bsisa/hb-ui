@@ -188,10 +188,14 @@
     	// ==== Navigation ===========================================
         /**
          * Navigate to user WC selected list
+         * There are less than 50 WC. Do not provide extended search yet.
          */
+//        $scope.listWc = function() {
+//        	$location.path('/elfin/'+wcCollectionId+'/WC').search('search', $scope.wcSearch.text);
+//        };
         $scope.listWc = function() {
-        	$location.path('/elfin/'+wcCollectionId+'/WC').search('search', $scope.wcSearch.text);
-        };
+        	$location.path('/elfin/'+wcCollectionId+'/WC');
+        };        
         /**
          * Navigate to user selected WC
          */        

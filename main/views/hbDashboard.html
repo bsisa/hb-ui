@@ -4,17 +4,17 @@
 		<tr>
 			<th>Immeuble{{ immeubleElfins.length | plural }} <span class="badge">{{immeubleElfins.length}}</span></th>
 			<th>Unité{{ uniteLocElfins.length | plural }} locative{{ uniteLocElfins.length | plural }} <span class="badge">{{uniteLocElfins.length}}</span></th>
+			<th>Fontaine{{ fontaineElfins.length | plural }} <span class="badge">{{fontaineElfins.length}}</th>
 			<th>WC <span class="badge">{{wcElfins.length}}</th>
 			<th>Horloge{{ horlogeElfins.length | plural }} <span class="badge">{{horlogeElfins.length}}</th>
-			<th>Fontaine{{ fontaineElfins.length | plural }} <span class="badge">{{fontaineElfins.length}}</th>
 			<th>Abribus <span class="badge">{{abribusElfins.length}}</th>
 		</tr>
 		<tr>
 			<td ><img src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img src="/assets/images/fontaine.jpeg" ng-src="/assets/images/fontaine.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img src="/assets/images/wc.jpeg" ng-src="/assets/images/wc.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img src="/assets/images/horloge.jpeg" ng-src="/assets/images/horloge.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img src="/assets/images/fontaine.jpeg" ng-src="/assets/images/fontaine.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img src="/assets/images/abribus.jpeg" ng-src="/assets/images/abribus.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>		
 		<tr>
@@ -32,6 +32,7 @@
 					<button ng-show="filteredUniteLocElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
 				</div>			
 			</th>
+			<th >Sélection  <span class="badge">{{filteredFontaineElfins.length}}</span></th>			
 			<th >Sélection  <span class="badge">{{filteredWcElfins.length}}</span>
 				<div class="right">
 					<button tabindex="2" ng-show="filteredWcElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listWc()"><i class="glyphicon glyphicon-list-alt"></i></button>
@@ -40,7 +41,6 @@
 				</div>						
 			</th>
 			<th >Sélection  <span class="badge">{{filteredHorlogeElfins.length}}</span></th>
-			<th >Sélection  <span class="badge">{{filteredFontaineElfins.length}}</span></th>
 			<th >Sélection  <span class="badge">{{filteredAbribusElfins.length}}</span></th>
 		</tr>
 		<tr>
@@ -61,20 +61,6 @@
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input tabindex="5" type="text" class="form-control" ng-model="wcSearch.text" hb-no-dirty-check placeholder="">
-					</div>
-				</div>
-			</th>
-			<th >
-				<div class="form-group">
-					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input tabindex="7" type="text" class="form-control" ng-model="horlogeSearch.text" hb-no-dirty-check placeholder="">
-					</div>
-				</div>
-			</th>
-			<th >
-				<div class="form-group">
-					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input tabindex="9" type="text" class="form-control" ng-model="fontaineSearch.text" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
@@ -82,7 +68,21 @@
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input tabindex="11" type="text" class="form-control" ng-model="abribusSearch.text" hb-no-dirty-check placeholder="">
+<!-- 						<input tabindex="5" type="text" class="form-control" ng-model="wcSearch.text" hb-no-dirty-check placeholder=""> -->
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+<!-- 						<input tabindex="7" type="text" class="form-control" ng-model="horlogeSearch.text" hb-no-dirty-check placeholder=""> -->
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+<!-- 						<input tabindex="11" type="text" class="form-control" ng-model="abribusSearch.text" hb-no-dirty-check placeholder=""> -->
 					</div>
 				</div>
 			</th>
