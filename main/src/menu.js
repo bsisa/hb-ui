@@ -142,6 +142,18 @@
             });
         };
 
+        /**
+         * Go home navigation function
+         */
+    	$scope.home = function() {
+    		// Need to encapsulate location path in location url 
+    		// to reset any possibly existing search parameters from URL. 
+    		$location.url($location.path('/'));
+    	};
+        
+    	/**
+    	 * Show/hide map navigation function
+    	 */
         $scope.toggleMap = function() {
             $scope.displayMap = MapService.toggleMap();
             $scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, $scope.displayMap);
