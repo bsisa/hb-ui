@@ -90,6 +90,8 @@ module.exports = function(grunt) {
 								'src/hbTransactionCardController.js',
 								'src/hbTransactionCardDirective.js',
 								'src/hbTransactionCreateCardDirective.js',
+								'src/hbUniteLocativeListController.js',
+								'src/hbUniteLocativeListDirective.js',								
 								'src/hbUtilService.js',
 								'src/hbUserCardController.js',
 								'src/hbUserCardDirective.js',
