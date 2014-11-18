@@ -10,15 +10,18 @@
 	    
 			<!-- Fix position buttons bar -->
 			<div class="hb-btn-bar btn-group-vertical" >
-			    <button class="btn btn-primary btn-xs" ng-click="home()"><i class="glyphicon glyphicon-home"></i></button>
-				<button class="btn btn-default" ng-class="getBtnClasses(elfinForm)" ng-click="saveElfin(elfin)" ng-disabled="!canSave()"><i class="icon-save"></i></button>
+			    <button class="btn btn-default" ng-click="home()"><i class="glyphicon glyphicon-home"></i></button>
+				<button class="btn btn-default" ng-class="getBtnClasses(elfinForm)" ng-click="saveElfin(elfin)" ng-disabled="!canSave()">
+					<span ng-show="canSave()"><i class="glyphicon glyphicon-save"></i></span>
+					<span ng-show="!canSave()"><i class="glyphicon glyphicon-saved"></i></span>
+				</button>
 <!-- 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-copy"></i></button> -->
-				<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="icon-trash"></i></button>
+				<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="glyphicon glyphicon-remove-circle"></i></button>
 <!-- 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-paper-clip"></i></button> -->
-				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-print"></i></button>
+				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="glyphicon glyphicon-print"></i></button>
 <!-- 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-cogs"></i></button> -->
 <!-- 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-folder-open"></i></button> -->
-				<button class="btn btn-danger btn-xs" ng-click="toggleMap()"><i class="glyphicon glyphicon-picture"></i></button>
+				<button class="btn btn-danger" ng-click="toggleMap()"><i class="glyphicon glyphicon-picture"></i></button>
 	   		</div>    
 	    
 	        <div class="hb-card-content" ng-transclude>
