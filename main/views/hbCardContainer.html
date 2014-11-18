@@ -4,7 +4,6 @@
 		<h5><div class="loading"></div>Chargement des informations</h5>
 	</div>
 
-<!-- TODO: REFACTOR to a single form named 'elfinForm' -->
     <div ng-show="elfin" >
 	    <form name="elfinForm" class="form-horizontal" role="form" novalidate > <!--  novalidate prevents HTML5 automated validation  -->
 	    
@@ -15,12 +14,8 @@
 					<span ng-show="canSave()"><i class="glyphicon glyphicon-save"></i></span>
 					<span ng-show="!canSave()"><i class="glyphicon glyphicon-saved"></i></span>
 				</button>
-<!-- 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-copy"></i></button> -->
 				<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="glyphicon glyphicon-remove-circle"></i></button>
-<!-- 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-paper-clip"></i></button> -->
 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="glyphicon glyphicon-print"></i></button>
-<!-- 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-cogs"></i></button> -->
-<!-- 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="icon-folder-open"></i></button> -->
 				<button class="btn btn-danger" ng-click="toggleMap()"><i class="glyphicon glyphicon-picture"></i></button>
 	   		</div>    
 	    
