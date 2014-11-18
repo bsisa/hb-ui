@@ -188,6 +188,34 @@
 	    };
 	}]);	
 	
+		
+	/**
+	 * Filter tailored to UNITE_LOCATIVE list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual uniteLocative list. 
+	 */
+	angular.module('hb5').filter('uniteLocativeListAnyFilter', [function () {
+		
+		return function (uniteLocatives, searchtext) {
+	        if (!angular.isUndefined(uniteLocatives) && !angular.isUndefined(searchtext)) {
+	            var tempUniteLocatives = [ ];
+	            angular.forEach(uniteLocatives, function (uniteLocative) {
+                    if ( 
+                    	 icontains(uniteLocative.PARTENAIRE.PROPRIETAIRE.GROUPE, searchtext) ||
+                    	 icontains(uniteLocative.IDENTIFIANT.OBJECTIF, searchtext) ||
+                    	 icontains(uniteLocative.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
+                    	 icontains(uniteLocative.IDENTIFIANT.NOM, searchtext) ||
+                    	 icontains(uniteLocative.IDENTIFIANT.ALIAS, searchtext)
+                    ) {
+                    	tempUniteLocatives.push(uniteLocative);
+                    }
+                });
+	            return tempUniteLocatives;
+	        } else {
+	            return uniteLocatives;
+	        }
+	    };
+	}]);	
+	
 	
 	/**
 	 * Filter tailored to PRESTATION list requirements.
