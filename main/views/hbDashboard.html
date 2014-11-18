@@ -1,0 +1,71 @@
+
+<table class="table table-condensed table-bordered table-striped"
+	ng-show="elfins">
+	<thead>
+		<tr>
+			<th>Immeuble{{ elfinsCount | plural }} <span class="badge">{{elfinsCount}}</span></th><th>Unités locatives</th><th>WC</th><th>Horloges</th><th>Fontaines</th><th>Abribus</th>
+		</tr>
+		<tr>
+			<td ><img src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img src="/assets/images/wc.jpeg" ng-src="/assets/images/wc.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img src="/assets/images/horloge.jpeg" ng-src="/assets/images/horloge.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img src="/assets/images/fontaine.jpeg" ng-src="/assets/images/fontaine.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img src="/assets/images/abribus.jpeg" ng-src="/assets/images/abribus.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+		</tr>		
+		<tr>
+			<th >Sélectionné{{ filteredElfins.length | plural }} <span class="badge">{{filteredElfins.length}}</span></th>
+			<th >Sélectionné{{ filteredElfins.length | plural }} <span class="badge">{{filteredElfins.length}}</span></th>
+			<th >Sélectionné{{ filteredElfins.length | plural }} <span class="badge">{{filteredElfins.length}}</span></th>
+			<th >Sélectionné{{ filteredElfins.length | plural }} <span class="badge">{{filteredElfins.length}}</span></th>
+			<th >Sélectionné{{ filteredElfins.length | plural }} <span class="badge">{{filteredElfins.length}}</span></th>
+			<th >Sélectionné{{ filteredElfins.length | plural }} <span class="badge">{{filteredElfins.length}}</span></th>
+		</tr>
+		<tr>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+	</thead>
+
+</table>
+
