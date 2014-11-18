@@ -56,6 +56,10 @@ input::-webkit-inner-spin-button {
     float: right;
 }
 
+th.dashboard {
+	min-width: 180px;
+}
+	
 
 /** When using table for layout instead of CSS
 */
