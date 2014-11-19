@@ -1,22 +1,16 @@
 
 <table class="table table-condensed table-bordered table-striped" >
-	<thead>
+	<tbody>
 		<tr>
 			<th class="dashboard">Immeuble{{ immeubleElfins.length | plural }} <span class="badge">{{immeubleElfins.length}}</span></th>
 			<th class="dashboard">Unité{{ uniteLocElfins.length | plural }} locative{{ uniteLocElfins.length | plural }} <span class="badge">{{uniteLocElfins.length}}</span></th>
 			<th class="dashboard">Fontaine{{ fontaineElfins.length | plural }} <span class="badge">{{fontaineElfins.length}}</th>
-			<th class="dashboard">WC <span class="badge">{{wcElfins.length}}</th>
-			<th class="dashboard">Horloge{{ horlogeElfins.length | plural }} <span class="badge">{{horlogeElfins.length}}</th>
-			<th class="dashboard">Abribus <span class="badge">{{abribusElfins.length}}</th>
 		</tr>
 		<tr>
 			<td ><img src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img src="/assets/images/fontaine.jpeg" ng-src="/assets/images/fontaine.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img src="/assets/images/wc.jpeg" ng-src="/assets/images/wc.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img src="/assets/images/horloge.jpeg" ng-src="/assets/images/horloge.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img src="/assets/images/abribus.jpeg" ng-src="/assets/images/abribus.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-		</tr>		
+		</tr>
 		<tr>
 			<th >Sélection  <span class="badge">{{filteredImmeubleElfins.length}}</span>
 				<div class="right">
@@ -40,27 +34,6 @@
 				</div>						
 			
 			</th>			
-			<th >Sélection  <span class="badge">{{filteredWcElfins.length}}</span>
-				<div class="right">
-					<button tabindex="8" ng-show="filteredWcElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listWc()"><i class="glyphicon glyphicon-list-alt"></i></button>
-					<button tabindex="8" ng-show="filteredWcElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewWc()"><i class="glyphicon glyphicon-eye-open"></i></button>
-					<button ng-show="filteredWcElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
-				</div>						
-			</th>
-			<th >Sélection  <span class="badge">{{horlogeElfins.length}}</span>
-				<div class="right">
-					<button tabindex="10" ng-show="horlogeElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listHorloges()"><i class="glyphicon glyphicon-list-alt"></i></button>
-					<button tabindex="10" ng-show="horlogeElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewHorloge()"><i class="glyphicon glyphicon-eye-open"></i></button>
-					<button ng-show="horlogeElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
-				</div>							
-			</th>
-			<th >Sélection  <span class="badge">{{abribusElfins.length}}</span>
-				<div class="right">
-					<button tabindex="12" ng-show="abribusElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listAbribus()"><i class="glyphicon glyphicon-list-alt"></i></button>
-					<button tabindex="12" ng-show="abribusElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewAbribus()"><i class="glyphicon glyphicon-eye-open"></i></button>
-					<button ng-show="abribusElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
-				</div>							
-			</th>
 		</tr>
 		<tr>
 			<th >
@@ -84,29 +57,67 @@
 					</div>
 				</div>
 			</th>
-			<th >
-				<div class="form-group">
-					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-<!-- 						<input tabindex="5" type="text" class="form-control" ng-model="wcSearch.text" hb-no-dirty-check placeholder=""> -->
-					</div>
-				</div>
+		</tr>
+	</tbody>
+</table>
+<table class="table table-condensed table-bordered table-striped" >
+	<tbody>
+		<tr>
+			<th class="dashboard">WC <span class="badge">{{wcElfins.length}}</th>
+			<th class="dashboard">Horloge{{ horlogeElfins.length | plural }} <span class="badge">{{horlogeElfins.length}}</th>
+			<th class="dashboard">Abribus <span class="badge">{{abribusElfins.length}}</th>
+		</tr>
+		<tr>			
+			<td ><img src="/assets/images/wc.jpeg" ng-src="/assets/images/wc.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img src="/assets/images/horloge.jpeg" ng-src="/assets/images/horloge.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img src="/assets/images/abribus.jpeg" ng-src="/assets/images/abribus.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+		</tr>		
+		<tr>			
+			<th >Sélection  <span class="badge">{{filteredWcElfins.length}}</span>
+				<div class="right">
+					<button tabindex="8" ng-show="filteredWcElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listWc()"><i class="glyphicon glyphicon-list-alt"></i></button>
+					<button tabindex="8" ng-show="filteredWcElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewWc()"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button ng-show="filteredWcElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+				</div>						
 			</th>
-			<th >
-				<div class="form-group">
-					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-<!-- 						<input tabindex="7" type="text" class="form-control" ng-model="horlogeSearch.text" hb-no-dirty-check placeholder=""> -->
-					</div>
-				</div>
+			<th >Sélection  <span class="badge">{{horlogeElfins.length}}</span>
+				<div class="right">
+					<button tabindex="10" ng-show="horlogeElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listHorloges()"><i class="glyphicon glyphicon-list-alt"></i></button>
+					<button tabindex="10" ng-show="horlogeElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewHorloge()"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button ng-show="horlogeElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+				</div>							
 			</th>
-			<th >
-				<div class="form-group">
-					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-<!-- 						<input tabindex="11" type="text" class="form-control" ng-model="abribusSearch.text" hb-no-dirty-check placeholder=""> -->
-					</div>
-				</div>
+			<th >Sélection  <span class="badge">{{abribusElfins.length}}</span>
+				<div class="right">
+					<button tabindex="12" ng-show="abribusElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listAbribus()"><i class="glyphicon glyphicon-list-alt"></i></button>
+					<button tabindex="12" ng-show="abribusElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewAbribus()"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button ng-show="abribusElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+				</div>							
 			</th>
 		</tr>
-	</thead>
-
+<!-- 		<tr>			 -->
+<!-- 			<th > -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;"> -->
+<!-- 						<input tabindex="5" type="text" class="form-control" ng-model="wcSearch.text" hb-no-dirty-check placeholder=""> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</th> -->
+<!-- 			<th > -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;"> -->
+<!-- 						<input tabindex="7" type="text" class="form-control" ng-model="horlogeSearch.text" hb-no-dirty-check placeholder=""> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</th> -->
+<!-- 			<th > -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;"> -->
+<!-- 						<input tabindex="11" type="text" class="form-control" ng-model="abribusSearch.text" hb-no-dirty-check placeholder=""> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</th> -->
+<!-- 		</tr> -->
+	</tbody>
 </table>
 
