@@ -2,8 +2,7 @@
 
     angular.module('hb5').controller('HbDashboardController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil) {
     
-    	$log.debug("    >>>> HbDashboardController called... at " + new Date());
-    	
+    	$log.debug("    >>>> HbDashboardController called at " + new Date());
     	
     	// ============================================================
     	// Buildings Section - IMMEUBLE
@@ -85,7 +84,6 @@
 		 */
 		var filterUniteLocElfins = function(elfins_p, search_p) {
 	    	var filteredSortedElfins = $filter('uniteLocativeListAnyFilter')(elfins_p, search_p.text);
-	    	$log.debug("filteredSortedElfins.length = " + filteredSortedElfins.length);
 	    	return filteredSortedElfins;
 		};    	
     	
@@ -108,7 +106,6 @@
 		 * uniteLocElfins result is loaded asynchronously.
 		 */
     	$scope.$watch('uniteLocElfins', function() { 
-    		$log.debug("$watch('uniteLocElfins')");
     		if ($scope.uniteLocElfins!=null) {
 				$scope.filteredUniteLocElfins = filterUniteLocElfins($scope.uniteLocElfins, $scope.uniteLocSearch);										
     		}
@@ -133,7 +130,6 @@
 		 * Update filtered collection when search or sorting criteria are modified. 
 		 */
     	$scope.$watch('uniteLocSearch', function(newSearch, oldSearch) {
-    		$log.debug("$watch('uniteLocSearch')");
     		if ($scope.uniteLocElfins!=null) {
 				$scope.filteredUniteLocElfins = filterUniteLocElfins($scope.uniteLocElfins, $scope.uniteLocSearch);
     		}
@@ -159,7 +155,6 @@
 		 */
 		var filterFontaineElfins = function(elfins_p, search_p) {
 	    	var filteredSortedElfins = $filter('fontaineListAnyFilter')(elfins_p, search_p.text);
-	    	$log.debug("filteredSortedElfins.length = " + filteredSortedElfins.length);
 	    	return filteredSortedElfins;
 		};    	
     	
@@ -182,7 +177,6 @@
 		 * fontaineElfins result is loaded asynchronously.
 		 */
     	$scope.$watch('fontaineElfins', function() { 
-    		$log.debug("$watch('fontaineElfins')");
     		if ($scope.fontaineElfins!=null) {
 				$scope.filteredFontaineElfins = filterFontaineElfins($scope.fontaineElfins, $scope.fontaineSearch);										
     		}
@@ -207,7 +201,6 @@
 		 * Update filtered collection when search or sorting criteria are modified. 
 		 */
     	$scope.$watch('fontaineSearch', function(newSearch, oldSearch) {
-    		$log.debug("$watch('fontaineSearch')");
     		if ($scope.fontaineElfins!=null) {
 				$scope.filteredFontaineElfins = filterFontaineElfins($scope.fontaineElfins, $scope.fontaineSearch);
     		}
@@ -231,7 +224,6 @@
 		 */
 		var filterWcElfins = function(elfins_p, search_p) {
 	    	var filteredSortedElfins = $filter('wcListAnyFilter')(elfins_p, search_p.text);
-	    	$log.debug("filteredSortedElfins.length = " + filteredSortedElfins.length);
 	    	return filteredSortedElfins;
 		};    	
     	
@@ -254,7 +246,6 @@
 		 * wcElfins result is loaded asynchronously.
 		 */
     	$scope.$watch('wcElfins', function() { 
-    		$log.debug("$watch('wcElfins')");
     		if ($scope.wcElfins!=null) {
 				$scope.filteredWcElfins = filterWcElfins($scope.wcElfins, $scope.wcSearch);										
     		}
@@ -283,7 +274,6 @@
 		 * Update filtered collection when search or sorting criteria are modified. 
 		 */
     	$scope.$watch('wcSearch', function(newSearch, oldSearch) {
-    		$log.debug("$watch('wcSearch')");
     		if ($scope.wcElfins!=null) {
 				$scope.filteredWcElfins = filterWcElfins($scope.wcElfins, $scope.wcSearch);
     		}
