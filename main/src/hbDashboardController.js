@@ -41,19 +41,21 @@
     	});	        
 
     	// ==== Navigation ===========================================
-        /**
-         * Navigate to user selected list
-         */
-        $scope.listImmeubles = function() {
-        	$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE').search('search', $scope.immeubleSearch.text);
-        };
-        /**
-         * Navigate to user selected building (IMMEUBLE)
-         */        
-        $scope.viewImmeuble = function() {
-        	$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE/' + $scope.filteredImmeubleElfins[0].Id);
-        };        
 
+        /**
+         * Navigate to end user selected buildings. 
+         * Either a list, a card or stay on current page if selection is 0. 
+         */
+        $scope.listOrViewImmeuble = function() {
+        	// 
+        	if ($scope.filteredImmeubleElfins.length > 1) {
+        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE').search('search', $scope.immeubleSearch.text);
+        	} else if ($scope.filteredImmeubleElfins.length == 1) {
+        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE/' + $scope.filteredImmeubleElfins[0].Id);	
+        	}
+        };                
+
+        
     	// ==== End user search and related listener ==================        
         /** User entered IMMEUBLE search criterion */
         $scope.immeubleSearch = { "text" : "" };
@@ -112,18 +114,19 @@
     	});	        
 
     	// ==== Navigation ===========================================
+
         /**
-         * Navigate to user uniteLoc selected list
+         * Navigate to end user selected uniteLoc (flats). 
+         * Either a list, a card or stay on current page if selection is 0. 
          */
-        $scope.listUniteLoc = function() {
-        	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE').search('search', $scope.uniteLocSearch.text);
-        };
-        /**
-         * Navigate to user selected flat (IMMEUBLE)
-         */        
-        $scope.viewUniteLoc = function() {
-        	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE/' + $scope.filteredUniteLocElfins[0].Id);
-        };        
+        $scope.listOrViewUniteLoc = function() {
+        	// 
+        	if ($scope.filteredUniteLocElfins.length > 1) {
+            	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE').search('search', $scope.uniteLocSearch.text);
+        	} else if ($scope.filteredUniteLocElfins.length == 1) {
+            	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE/' + $scope.filteredUniteLocElfins[0].Id);	
+        	}
+        };      	
 
     	// ==== End user search related listener ==================        
 		/**
@@ -138,9 +141,6 @@
     	// ============================================================
         // Apartments (flats) Section - UNITE LOCATIVE - end
     	// ============================================================    	
-
-    	
-    	
     	    	
     	
     	// ============================================================
@@ -184,18 +184,18 @@
 
     	// ==== Navigation ===========================================
         /**
-         * Navigate to user FONTAINE selected list
+         * Navigate to end user selected FONTAINE. 
+         * Either a list, a card or stay on current page if selection is 0. 
          */
-        $scope.listFontaines = function() {
-        	$location.path('/elfin/'+fontaineCollectionId+'/FONTAINE').search('search', $scope.fontaineSearch.text);
-        };
-        /**
-         * Navigate to user selected FONTAINE
-         */        
-        $scope.viewFontaine = function() {
-        	$location.path('/elfin/'+fontaineCollectionId+'/FONTAINE/' + $scope.filteredFontaineElfins[0].Id);
-        };        
-
+        $scope.listOrViewFontaines = function() {
+        	// 
+        	if ($scope.filteredFontaineElfins.length > 1) {
+            	$location.path('/elfin/'+fontaineCollectionId+'/FONTAINE').search('search', $scope.fontaineSearch.text);
+        	} else if ($scope.filteredFontaineElfins.length == 1) {
+            	$location.path('/elfin/'+fontaineCollectionId+'/FONTAINE/' + $scope.filteredFontaineElfins[0].Id);	
+        	}
+        };  
+    	
     	// ==== End user search related listener ==================        
 		/**
 		 * Update filtered collection when search or sorting criteria are modified. 

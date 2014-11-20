@@ -14,46 +14,48 @@
 		<tr>
 			<th >Sélection  <span class="badge">{{filteredImmeubleElfins.length}}</span>
 				<div class="right">
-					<button tabindex="2" ng-show="filteredImmeubleElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listImmeubles()"><i class="glyphicon glyphicon-list-alt"></i></button>
-					<button tabindex="2" ng-show="filteredImmeubleElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewImmeuble()"><i class="glyphicon glyphicon-eye-open"></i></button>
-					<button ng-show="filteredImmeubleElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button tabindex="2" class="btn btn-primary btn-xs" ng-click="listOrViewImmeuble()" ng-disabled="filteredImmeubleElfins.length < 1">
+						<span ng-show="filteredImmeubleElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredImmeubleElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
 				</div>			
 			</th>
 			<th >Sélection  <span class="badge">{{filteredUniteLocElfins.length}}</span>
 				<div class="right">
-					<button tabindex="4" ng-show="filteredUniteLocElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listUniteLoc()"><i class="glyphicon glyphicon-list-alt"></i></button>
-					<button tabindex="4" ng-show="filteredUniteLocElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewUniteLoc()"><i class="glyphicon glyphicon-eye-open"></i></button>
-					<button ng-show="filteredUniteLocElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button tabindex="4" class="btn btn-primary btn-xs" ng-click="listOrViewUniteLoc()" ng-disabled="filteredUniteLocElfins.length < 1">
+						<span ng-show="filteredUniteLocElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredUniteLocElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>						
+					</button>
 				</div>			
 			</th>
 			<th >Sélection  <span class="badge">{{filteredFontaineElfins.length}}</span>
 				<div class="right">
-					<button tabindex="6" ng-show="filteredFontaineElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listFontaines()"><i class="glyphicon glyphicon-list-alt"></i></button>
-					<button tabindex="6" ng-show="filteredFontaineElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewFontaine()"><i class="glyphicon glyphicon-eye-open"></i></button>
-					<button ng-show="filteredFontaineElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button tabindex="6" class="btn btn-primary btn-xs" ng-click="listOrViewFontaines()" ng-disabled="filteredFontaineElfins.length < 1">
+						<span ng-show="filteredFontaineElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredFontaineElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
 				</div>						
-			
 			</th>			
 		</tr>
 		<tr>
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input hb-enter="listImmeubles()" tabindex="1" id="immeubleSearchTextInput" name="immeubleSearchTextInput" type="text" class="form-control" ng-model="immeubleSearch.text" hb-no-dirty-check placeholder="">
+						<input hb-enter="listOrViewImmeuble()" tabindex="1" id="immeubleSearchTextInput" name="immeubleSearchTextInput" type="text" class="form-control" ng-model="immeubleSearch.text" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input hb-enter="listUniteLoc()" tabindex="3" type="text" class="form-control" ng-model="uniteLocSearch.text" hb-no-dirty-check placeholder="">
+						<input hb-enter="listOrViewUniteLoc()" tabindex="3" type="text" class="form-control" ng-model="uniteLocSearch.text" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input hb-enter="listFontaines()"  tabindex="5" type="text" class="form-control" ng-model="fontaineSearch.text" hb-no-dirty-check placeholder="">
+						<input hb-enter="listOrViewFontaines()"  tabindex="5" type="text" class="form-control" ng-model="fontaineSearch.text" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
