@@ -424,35 +424,6 @@
 	    };
 	}]);	
 	
-		
-	/**
-	 * Filter tailored to WC list single search criterion on `all fields`.
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual wc list. 
-	 */
-	angular.module('hb5').filter('wcListAnyFilter', [function () {
-		
-		return function (wcs, searchtext) {
-	        if (!angular.isUndefined(wcs) && !angular.isUndefined(searchtext)) {
-	            var tempWcs = [ ];
-	            angular.forEach(wcs, function (wc) {
-                    if ( 
-                    	 icontains(wc.PARTENAIRE.PROPRIETAIRE.GROUPE, searchtext) ||
-                    	 icontains(wc.IDENTIFIANT.OBJECTIF, searchtext) ||
-                    	 icontains(wc.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
-                    	 icontains(wc.IDENTIFIANT.NOM, searchtext) ||
-                    	 icontains(wc.IDENTIFIANT.ALIAS, searchtext)
-                    ) {
-                    	tempWcs.push(wc);
-                    }
-                });
-	            return tempWcs;
-	        } else {
-	            return wcs;
-	        }
-	    };
-	}]);	
-	
-	
 	
 	/**
 	 * Filter returning all array elements except last one

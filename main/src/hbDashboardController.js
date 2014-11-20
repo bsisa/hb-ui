@@ -219,20 +219,9 @@
     	// ==== Initialisation ========================================
     	var wcCollectionId = HB_COLLECTIONS.WC_ID;
     	
-		/**
-		 *  Apply wcListAnyFilter
-		 */
-		var filterWcElfins = function(elfins_p, search_p) {
-	    	var filteredSortedElfins = $filter('wcListAnyFilter')(elfins_p, search_p.text);
-	    	return filteredSortedElfins;
-		};    	
-    	
         /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
         $scope.wcElfins = null;
 
-        /** User entered IMMEUBLE search criterion */
-        $scope.wcSearch = { "text" : "" };             
-        
         /** Query all available WC */ 
         GeoxmlService.getCollection(wcCollectionId).getList()
 	        .then(function(wcElfins) {
@@ -242,42 +231,21 @@
 	            hbAlertMessages.addAlert("danger",message);
 	        });	
         
-		/**
-		 * wcElfins result is loaded asynchronously.
-		 */
-    	$scope.$watch('wcElfins', function() { 
-    		if ($scope.wcElfins!=null) {
-				$scope.filteredWcElfins = filterWcElfins($scope.wcElfins, $scope.wcSearch);										
-    		}
-    	});	        
 
     	// ==== Navigation ===========================================
         /**
-         * Navigate to user WC selected list
-         * There are less than 50 WC. Do not provide extended search yet.
+         * Navigate to end user selected WC. 
+         * Either a list, a card or stay on current page if selection is 0.
+         * (There are less than 50 WC. Do not provide extended search yet.) 
          */
-//        $scope.listWc = function() {
-//        	$location.path('/elfin/'+wcCollectionId+'/WC').search('search', $scope.wcSearch.text);
-//        };
-        $scope.listWc = function() {
-        	$location.path('/elfin/'+wcCollectionId+'/WC');
-        };        
-        /**
-         * Navigate to user selected WC
-         */        
-        $scope.viewWc = function() {
-        	$location.path('/elfin/'+wcCollectionId+'/WC/' + $scope.filteredWcElfins[0].Id);
-        };        
-
-    	// ==== End user search related listener ==================        
-		/**
-		 * Update filtered collection when search or sorting criteria are modified. 
-		 */
-    	$scope.$watch('wcSearch', function(newSearch, oldSearch) {
-    		if ($scope.wcElfins!=null) {
-				$scope.filteredWcElfins = filterWcElfins($scope.wcElfins, $scope.wcSearch);
-    		}
-    	}, true);								
+        $scope.listOrViewWcs = function() {
+        	// 
+        	if ($scope.wcElfins.length > 1) {
+            	$location.path('/elfin/'+wcCollectionId+'/WC');
+        	} else if ($scope.wcElfins.length == 1) {
+            	$location.path('/elfin/'+wcCollectionId+'/WC/' + $scope.wcElfins[0].Id);	
+        	}
+        };      	
 			
     	// ============================================================
         // WC Section - end

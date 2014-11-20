@@ -75,11 +75,12 @@
 			<td ><img src="/assets/images/abribus.jpeg" ng-src="/assets/images/abribus.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>		
 		<tr>			
-			<th >Sélection  <span class="badge">{{filteredWcElfins.length}}</span>
+			<th >Sélection  <span class="badge">{{wcElfins.length}}</span>
 				<div class="right">
-					<button tabindex="8" ng-show="filteredWcElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listWc()"><i class="glyphicon glyphicon-list-alt"></i></button>
-					<button tabindex="8" ng-show="filteredWcElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewWc()"><i class="glyphicon glyphicon-eye-open"></i></button>
-					<button ng-show="filteredWcElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button tabindex="8" class="btn btn-primary btn-xs" ng-click="listOrViewWcs()" ng-disabled="wcElfins.length < 1">
+						<span ng-show="wcElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="wcElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>				
 				</div>						
 			</th>
 			<th >Sélection  <span class="badge">{{horlogeElfins.length}}</span>
