@@ -13,9 +13,10 @@
 							'$timeout',
 							'hbAlertMessages',
 							'hbUtil',
+							'hbQueryService',
 							function($scope, $attrs, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout,
-									hbAlertMessages, hbUtil) {
+									hbAlertMessages, hbUtil, hbQueryService) {
 
 								$log.debug("    >>>> Using HbSurfaceCardController");
 
@@ -41,7 +42,33 @@
 									function(response) {
 										var message = "Les valeurs par défaut pour la CLASSE UNITE_LOCATIVE n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
 										hbAlertMessages.addAlert("danger",message);
-									});								
+									});		
+						    	
+								// Load ACTEUR `Propriétaire` list
+								$scope.ownerActors = null;
+								var xpathForOwners = "//ELFIN[IDENTIFIANT/QUALITE='Propriétaire']";
+								hbQueryService.getActors(xpathForOwners).then(
+									function(ownerActors) {
+										$scope.ownerActors = ownerActors;
+									},
+									function(response) {
+										var message = "Le chargement des ACTEURS Propriétaire a échoué (statut de retour: "
+												+ response.status
+												+ ")";
+										hbAlertMessages.addAlert(
+												"danger", message);
+									});						    	
+						    	
+						    	
+					            // Parameters to hbChooseOne service function for ACTOR selection
+					            $scope.actorChooseOneColumnsDefinition = [
+					                                                      	{ field:"IDENTIFIANT.NOM", displayName: "Nom"},
+						                        		   		            { field:"GROUPE", displayName: "Groupe"}
+						                        		   	 		   		];
+
+					            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';
+						    	
+						    	
 								
 							} ]);
 
