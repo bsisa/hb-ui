@@ -7,9 +7,9 @@
 			<th class="dashboard">Fontaine{{ fontaineElfins.length | plural }} <span class="badge">{{fontaineElfins.length}}</th>
 		</tr>
 		<tr>
-			<td ><img src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img src="/assets/images/fontaine.jpeg" ng-src="/assets/images/fontaine.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewImmeuble()" src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewUniteLoc()" src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114833000/Photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewFontaines()" src="/assets/images/fontaine.jpeg" ng-src="/assets/images/fontaine.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>
 		<tr>
 			<th >Sélection  <span class="badge">{{filteredImmeubleElfins.length}}</span>
@@ -70,9 +70,9 @@
 			<th class="dashboard">Abribus <span class="badge">{{abribusElfins.length}}</th>
 		</tr>
 		<tr>			
-			<td ><img src="/assets/images/wc.jpeg" ng-src="/assets/images/wc.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img src="/assets/images/horloge.jpeg" ng-src="/assets/images/horloge.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img src="/assets/images/abribus.jpeg" ng-src="/assets/images/abribus.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewWcs()" src="/assets/images/wc.jpeg" ng-src="/assets/images/wc.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewHorloges()" src="/assets/images/horloge.jpeg" ng-src="/assets/images/horloge.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewAbribus()" src="/assets/images/abribus.jpeg" ng-src="/assets/images/abribus.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>		
 		<tr>			
 			<th >Sélection  <span class="badge">{{wcElfins.length}}</span>
@@ -80,47 +80,26 @@
 					<button tabindex="8" class="btn btn-primary btn-xs" ng-click="listOrViewWcs()" ng-disabled="wcElfins.length < 1">
 						<span ng-show="wcElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
 						<span ng-show="wcElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
-					</button>				
+					</button>
 				</div>						
 			</th>
 			<th >Sélection  <span class="badge">{{horlogeElfins.length}}</span>
 				<div class="right">
-					<button tabindex="10" ng-show="horlogeElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listHorloges()"><i class="glyphicon glyphicon-list-alt"></i></button>
-					<button tabindex="10" ng-show="horlogeElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewHorloge()"><i class="glyphicon glyphicon-eye-open"></i></button>
-					<button ng-show="horlogeElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button tabindex="10" class="btn btn-primary btn-xs" ng-click="listOrViewHorloges()" ng-disabled="horlogeElfins.length < 1">
+						<span ng-show="horlogeElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="horlogeElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
 				</div>							
 			</th>
 			<th >Sélection  <span class="badge">{{abribusElfins.length}}</span>
 				<div class="right">
-					<button tabindex="12" ng-show="abribusElfins.length > 1" class="btn btn-primary btn-xs" ng-click="listAbribus()"><i class="glyphicon glyphicon-list-alt"></i></button>
-					<button tabindex="12" ng-show="abribusElfins.length == 1" class="btn btn-primary btn-xs" ng-click="viewAbribus()"><i class="glyphicon glyphicon-eye-open"></i></button>
-					<button ng-show="abribusElfins.length < 1" class="btn btn-primary btn-xs" ng-disabled="true"><i class="glyphicon glyphicon-eye-open"></i></button>
+					<button tabindex="12" class="btn btn-primary btn-xs" ng-click="listOrViewAbribus()" ng-disabled="abribusElfins.length < 1">
+						<span ng-show="abribusElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="abribusElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
 				</div>							
 			</th>
 		</tr>
-<!-- 		<tr>			 -->
-<!-- 			<th > -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;"> -->
-<!-- 						<input tabindex="5" type="text" class="form-control" ng-model="wcSearch.text" hb-no-dirty-check placeholder=""> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</th> -->
-<!-- 			<th > -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;"> -->
-<!-- 						<input tabindex="7" type="text" class="form-control" ng-model="horlogeSearch.text" hb-no-dirty-check placeholder=""> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</th> -->
-<!-- 			<th > -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;"> -->
-<!-- 						<input tabindex="11" type="text" class="form-control" ng-model="abribusSearch.text" hb-no-dirty-check placeholder=""> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</th> -->
-<!-- 		</tr> -->
 	</tbody>
 </table>
 

@@ -239,7 +239,6 @@
          * (There are less than 50 WC. Do not provide extended search yet.) 
          */
         $scope.listOrViewWcs = function() {
-        	// 
         	if ($scope.wcElfins.length > 1) {
             	$location.path('/elfin/'+wcCollectionId+'/WC');
         	} else if ($scope.wcElfins.length == 1) {
@@ -273,18 +272,17 @@
         
     	// ==== Navigation ===========================================
         /**
-         * Navigate to user HORLOGE selected list
-         * There are 2 HORLOGE. Do not provide extended search yet.
+         * Navigate to end user selected HORLOGE. 
+         * Either a list, a card or stay on current page if selection is 0.
+         * (There are 2 HORLOGE. Do not provide extended search yet.) 
          */
-        $scope.listHorloges = function() {
-        	$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE');
-        };        
-        /**
-         * Navigate to user selected WC
-         */        
-        $scope.viewHorloge = function() {
-        	$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE/' + $scope.filteredWcElfins[0].Id);
-        };        
+        $scope.listOrViewHorloges = function() {
+        	if ($scope.horlogeElfins.length > 1) {
+            	$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE');
+        	} else if ($scope.horlogeElfins.length == 1) {
+        		$location.path('/elfin/'+horlogeCollectionId+'/HORLOGE/' + $scope.horlogeElfins[0].Id);	
+        	}        	
+        };      
 
     	// ============================================================
         // HORLOGE Section - end
@@ -312,23 +310,21 @@
         
     	// ==== Navigation ===========================================
         /**
-         * Navigate to user ABRIBUS selected list
-         * There are 2 ABRIBUS. Do not provide extended search yet.
+         * Navigate to end user selected ABRIBUS. 
+         * Either a list, a card or stay on current page if selection is 0.
+         * (There are 23 ABRIBUS. Do not provide extended search yet.)
          */
-        $scope.listAbribus = function() {
-        	$location.path('/elfin/'+abribusCollectionId+'/ABRIBUS');
-        };        
-        /**
-         * Navigate to user selected ABRIBUS
-         */        
-        $scope.viewAbribus = function() {
-        	$location.path('/elfin/'+abribusCollectionId+'/ABRIBUS/' + $scope.filteredWcElfins[0].Id);
-        };        
+        $scope.listOrViewAbribus = function() {
+        	if ($scope.abribusElfins.length > 1) {
+            	$location.path('/elfin/'+abribusCollectionId+'/ABRIBUS');
+        	} else if ($scope.abribusElfins.length == 1) {
+        		$location.path('/elfin/'+abribusCollectionId+'/ABRIBUS/' + $scope.abribusElfins[0].Id);	
+        	}
+        };     
 
     	// ============================================================
         // ABRIBUS Section - end
     	// ============================================================    	
-        
         
         
     	var focusOnSearchField = function() {
