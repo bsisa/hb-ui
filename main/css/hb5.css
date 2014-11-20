@@ -13,6 +13,16 @@ is first loaded and before Angular has had a chance to run.
 	display: none !important;  
 }  
 
+/**
+Have ng-click change on mouse hover.
+*/
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: pointer;
+}
+
+
 colgroup col.phase {
   background-color: #eeeeee;
   border: solid 1px grey;
