@@ -6,7 +6,7 @@
 
     	// Default order is by "Groupe" 
     	$scope.predicate = 'IDENTIFIANT.DE';
-    	$scope.reverse = false;
+    	$scope.reverse = true;
    	
     	$scope.search = {
     			"last_resp" : "",
