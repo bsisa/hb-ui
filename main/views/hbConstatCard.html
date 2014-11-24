@@ -41,9 +41,16 @@
 							<div class="form-group">
 								<label for="goal" class="col-sm-4 control-label">No SAI</label>
 								<div class="col-sm-8">
-									<input readonly id="goal" type="text" class="form-control"
-										ng-model="elfin.IDENTIFIANT.OBJECTIF"
-										>
+									<div class="input-group">
+										<input readonly id="goal" type="text" class="form-control"
+											ng-model="elfin.IDENTIFIANT.OBJECTIF"
+											>
+										<span class="input-group-btn" tooltip="Consultation de l'immeuble {{elfin.IDENTIFIANT.OBJECTIF}}" tooltip-popup-delay="1500">
+											<button class="btn btn-default" type="button" ng-click="viewImmeuble()" ng-disabled="!immeubleRef">
+												<i class="glyphicon glyphicon-eye-open"></i>
+											</button>									
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -25,12 +25,19 @@
 
 						// Used to provide UNITE_LOCATION (apartements) selection list
 						$scope.locationUnits = null;
+						// Used to provide navigation link back to IMMEUBLE link to this CONSTAT
+						$scope.immeubleRef = null;
 						
 			        	// Expression used by ng-pattern for numeric only validation.
 			        	$scope.numericOnlyRegexp = /^\d*\.?\d*$/;
 			        	// To allow negative values:
 			        	//$scope.numericOnlyRegexp = /^[-]?\d*\.?\d*$/;
 
+			        	// Navigate to IMMEUBLE linked to the current CONSTAT
+			        	$scope.viewImmeuble = function() {
+			        		$location.path('/elfin/'+$scope.immeubleRef.ID_G+'/IMMEUBLE/' + $scope.immeubleRef.Id);	
+			        	};
+			        	
 			            /**
 			             * Perform operations on current CONSTAT elfin once available.
 			             */
@@ -82,6 +89,7 @@
 												.then(
 													function(uniteLocatives) {
 														$scope.locationUnits = uniteLocatives;
+														$scope.immeubleRef = { "Id" : immeuble.Id,  "ID_G" : immeuble.ID_G };
 													},
 													function(response) {
 														var message = "Le chargement des UNITE_LOCATIVE a échoué (statut de retour: "+ response.status+ ")";
@@ -89,7 +97,7 @@
 													}
 												);
 										} else if (immeubles.length < 1) { 
-											var message = "L'IMMEUBLE correspondant au CONSTAT courrant n'a pas pu être trouvé dans la base de donnée! (statut de retour: "+ response.status+ ")";
+											var message = "L'IMMEUBLE correspondant au CONSTAT courrant pour le no de construction "+ buildingNb +" n'a pas pu être trouvé dans la base de donnée! (statut de retour: "+ response.status+ ")";
 								            hbAlertMessages.addAlert("danger",message);
 										} else {
 											var message = "Plusieurs IMMEUBLE correspondent au CONSTAT courrant pour le no de construction: " + buildingNb + ". Le résultat devrait être unique.";
