@@ -104,47 +104,55 @@
 				</div>
 			</div>
 			<div class="row">
-
-				<div class="col-sm-12">
-					<table class="table table-condensed table-bordered table-striped">
-						<thead>
-
-							<tr>
-								<th colspan="2"><a class="btn btn-default" type="button"
-									tooltip="Créer une nouvelle transaction relative à la prestation courante"
+			<div class="col-sm-12">
+				<div class="panel panel-default">
+  					<div class="panel-heading">
+						<a class="btn btn-default" type="button" tooltip="Créer une nouvelle transaction relative à la prestation courante"
 									ng-href="/elfin/create/TRANSACTION?&sai={{elfin.IDENTIFIANT.OBJECTIF}}&Id={{elfin.Id}}&ID_G={{elfin.ID_G}}">
-										<i class="icon-plus-sign"></i>
-								</a>Transaction</th>
-								<th><a href=""
+							<i class="icon-plus-sign"></i>
+						</a> Transactions
+					</div>
+  					<div class="panel-body">
+					<table ng-repeat="(key,value) in transactions | groupBy:'GROUPE'" class="table table-condensed table-bordered table-striped">
+						<thead>
+							<tr>
+								<th colspan="2">{{key}}</th>
+								<th class="col-sm-1"><a href=""
 									ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Date</a></th>
-								<th><a href=""
+								<th class="col-sm-2"><a href=""
+									ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Groupe Prestation</a></th>									
+								<th class="col-sm-2"><a href=""
 									ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Fournisseur</a></th>
-<th><a href=""
+								<th class="col-sm-3"><a href=""
 									ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>									
-								<th><a href=""
+								<th class="col-sm-1"><a href=""
 									ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; deadlineReverse=!deadlineReverse">Facturé</a></th>
-								<th><a href=""
+								<th class="col-sm-1"><a href=""
 									ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Payé</a></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr
-								ng-repeat="transaction in transactions | orderBy:deadlinePredicate:deadlineReverse">
+								ng-repeat="transaction in value | orderBy:deadlinePredicate:deadlineReverse">
 								<td><a
 									href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}">Détail</a></td>
 								<td><a
 									href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}"><i tooltip="Ouvrir la pièce jointe (voir annexes)" class="glyphicon glyphicon-paperclip"></i></a></td>
-								<td><span tooltip="transaction.IDENTIFIANT.DE">{{transaction.IDENTIFIANT.DE}}</span></td>
-								<td><span
-									tooltip="transaction.PARTENAIRE.PROPRIETAIRE.VALUE">{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
-								<td><span tooltip="transaction.DIVERS.REMARQUE">{{transaction.DIVERS.REMARQUE}}</span></td>
-								<td><span tooltip="transaction.IDENTIFIANT.VALEUR_A_NEUF">{{transaction.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
-								<td><span tooltip="transaction.IDENTIFIANT.VALEUR">{{transaction.IDENTIFIANT.VALEUR}}</span></td>
+								<td><span>{{transaction.IDENTIFIANT.DE}}</span></td>
+								<td><span>{{transaction.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
+								<td><span>{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
+								<td><span>{{transaction.DIVERS.REMARQUE}}</span></td>
+								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
+								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR}}</span></td>
 							</tr>
+							<tr><td colspan="6" ></td><td></td><td class="total number">{{value | map: 'IDENTIFIANT.VALEUR' | sum}}   
+<!-- 							<div ng-repeat="paid in value | map: 'IDENTIFIANT.VALEUR' ">{{paid}}</div> -->
+							</td></tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
+		</div>
 		</div>
 		</tab> 
 		</tabset>

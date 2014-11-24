@@ -61,6 +61,15 @@ input::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
+.total {
+	font-weight:bold;
+}
+
+td.number{
+    text-align: right;
+} 
+
+
 /* Align right */
 .right {
     float: right;

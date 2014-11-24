@@ -46,7 +46,8 @@
     "angular-ui-utils": "0.1.1",
     "underscore" : "1.6.0",
     "ng-flow" : "2.4.0",
-    "moment" : "2.8.3"
+    "moment" : "2.8.3",
+    "angular-filter" : "0.5.1"
   },
   "resolutions": {
     "angular": "1.2.16"
