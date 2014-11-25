@@ -16,7 +16,8 @@
 			<tab-heading>Constat</tab-heading>
 				<div class="hb-tab">
 					<div class="row">
-						<div class="col-sm-4">
+					
+						<div class="col-sm-3">
 							<div class="form-group has-feedback"
 								ng-class="getCssHasFeedback(elfinForm.status)">
 								<label for="status" class="col-sm-4 control-label"
@@ -25,7 +26,6 @@
 									<!-- 								<div class="btn-group"> -->
 									<!-- 									<label uncheckable ng-repeat="statusType in statusTypes" class="btn btn-default" ng-model="elfin.IDENTIFIANT.QUALITE" btn-radio="statusType.value" >{{statusType.name}}</label> -->
 									<!-- 								</div> -->
-		
 									<!-- Working select alternative to radio buttons group - Kept to document ng-options usage -->
 									<select id="status" name="status" class="form-control" chosen
 										data-placeholder=" " disable-search="true"
@@ -37,7 +37,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<div class="form-group">
 								<label for="goal" class="col-sm-4 control-label">No SAI</label>
 								<div class="col-sm-8">
@@ -53,21 +53,15 @@
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-sm-4">
+						</div>		
+						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="origine" class="col-sm-4 control-label">No SAI
-									Appartement</label>
+								<label for="origine" class="col-sm-4 control-label">No SAI appartement</label>
 								<div class="col-sm-8">
-<!-- 									<input id="origine" type="text" class="form-control" -->
-<!-- 											autocomplete="off"  -->
-<!-- 											ng-model="elfin.IDENTIFIANT.ORIGINE"> -->
-									<!-- TODO: Review spec. -->								
 									<div class="input-group">
 										<input id="origine" type="text" class="form-control"
 											autocomplete="off" 
 											ng-model="elfin.IDENTIFIANT.ORIGINE" >
-<!-- 											tooltip="surfaces.[starts-with(IDENTIFIANT.OBJECTIF, elfin.IDENTIFIANT.OBJECTIF) - montrer surface.IDENTIFIANT.OBJECTIF |surface.CARACTERISTIQUE.CAR3.VALEUR |surface.PARTENAIRE.USAGER.VALUE - reprendre surface.IDENTIFIANT.OBJECTIF"> -->
 										<span class="input-group-btn" tooltip="Recherche d'unité locative" tooltip-popup-delay="1500">
 											<button class="btn btn-default" type="button" hb-choose-one
 												ng-click="hbChooseOne(elfin, 'IDENTIFIANT.ORIGINE', locationUnits, 'IDENTIFIANT.OBJECTIF', uniteLocativeChooseOneColumnsDefinition, uniteLocativesChooseOneTemplate )">
@@ -78,21 +72,26 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4">
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
 							<div class="form-group">
-								<label for="compte" class="col-sm-4 control-label">N° de
-									construction</label>
+								<label for="compte" class="col-sm-4 control-label">No cons.</label>
 								<div class="col-sm-8">
 									<input readonly id="compte" type="text" class="form-control"
-										ng-model="elfin.IDENTIFIANT.COMPTE"
-										>
+										ng-model="elfin.IDENTIFIANT.COMPTE" >
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-6">
 							<div class="form-group">
-								<label for="author" class="col-sm-4 control-label">Saisi
-									par</label>
+								<label for="origine" class="col-sm-2 control-label">Adresse</label>
+								<p class="col-sm-10 form-control-static"><span>{{immeubleRef.address}}</span></p>
+							</div>
+						</div>								
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="author" class="col-sm-4 control-label">Saisi par</label>
 								<div class="col-sm-8">
 									<div class="input-group">
 										<input id="author" type="text" class="form-control"
@@ -110,7 +109,9 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4">
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
 							<div class="form-group has-feedback"
 								ng-class="getCssHasFeedback(elfinForm.dateFrom)">
 								<label for="date_constat" class="col-sm-4 control-label">Date
@@ -121,7 +122,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-8">
+						<div class="col-sm-6">
 							<div class="form-group">
 								<label for="alias" class="col-sm-2 control-label">Signalé
 									par</label>
@@ -141,7 +142,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<div class="form-group has-feedback"
 								ng-class="getCssHasFeedback(elfinForm.dateTo)">
 								<label for="date_to" class="col-sm-4 control-label">Traité
@@ -151,7 +152,10 @@
 										ng-model="elfin.IDENTIFIANT.A"></div>
 								</div>
 							</div>
-						</div>
+						</div>						
+
+<!-- </div> -->
+<!-- <div class="row"> -->
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label for="usedby" class="col-sm-2 control-label">Etage -
