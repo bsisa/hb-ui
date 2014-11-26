@@ -442,15 +442,20 @@
 	angular.module('hb5').filter('fontaineListAnyFilter', [function () {
 		
 		return function (fontaines, searchtext) {
+			
+			var checkFontaine = function(fontaine, searchtext) {
+				return (
+                   	 icontains(fontaine.IDENTIFIANT.OBJECTIF, searchtext) ||
+                	 icontains(fontaine.IDENTIFIANT.NOM, searchtext) ||
+                	 icontains(fontaine.IDENTIFIANT.ALIAS, searchtext) || 
+                	 icontains(fontaine.DIVERS.REMARQUE, searchtext)
+	    		);
+			};					
+			
 	        if (!angular.isUndefined(fontaines) && !angular.isUndefined(searchtext)) {
 	            var tempFontaines = [ ];
 	            angular.forEach(fontaines, function (fontaine) {
-                    if ( 
-                    	 icontains(fontaine.IDENTIFIANT.OBJECTIF, searchtext) ||
-                    	 icontains(fontaine.IDENTIFIANT.NOM, searchtext) ||
-                    	 icontains(fontaine.IDENTIFIANT.ALIAS, searchtext) || 
-                    	 icontains(fontaine.DIVERS.REMARQUE, searchtext)
-                    ) {
+                    if ( checkAndForTokenisedSearchText(fontaine,searchtext,checkFontaine) ) {
                     	tempFontaines.push(fontaine);
                     }
                 });
