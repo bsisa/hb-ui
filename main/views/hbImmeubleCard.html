@@ -84,6 +84,13 @@
 				</div><!-- 1st col first tab first row end -->
 				<!-- 2nd col first tab first row start -->
 				<div class="col-sm-2" style="text-align: center; height: 100%">
+					<div class="form-group">
+<!-- 						<label for="objectif" class="col-sm-4 control-label">Groupe PRESTATION comptable</label> -->
+						<p class="col-sm-8 form-control-static">						
+							{{(prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate:prestaReverse | first).IDENTIFIANT.ORIGINE}}
+						</p>
+					</div>					
+					
 					<!-- If no photo is available show upload function while using room left empty with fixed size table. -->
 					<table ng-if="!photoSrc"
 						style="border: solid 4px #F0F0F0; width: 180px; height: 198px; margin: 0 auto;">
