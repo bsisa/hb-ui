@@ -134,8 +134,9 @@
 						<tbody>
 							<tr
 								ng-repeat="transaction in value | orderBy:deadlinePredicate:deadlineReverse">
-								<td><a
-									href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}">Détail</a></td>
+								<td>
+									<div hb-card-view-link hb-href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}"></div>
+								</td>
 								<td><a
 									href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}"><i tooltip="Ouvrir la pièce jointe (voir annexes)" class="glyphicon glyphicon-paperclip"></i></a></td>
 								<td><span>{{transaction.IDENTIFIANT.DE}}</span></td>
