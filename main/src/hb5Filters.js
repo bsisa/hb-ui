@@ -34,6 +34,33 @@
 			return true;
 		}
 	};
+	
+	/**
+	 * Checks what elfins match tokenised searchtext tokens using `checkfun`
+	 * function as match condition, using AND logic between tokens outcomes.
+	 * 
+	 * Takes a collection of elfins, a `searchtext`, and a function `checkfun` 
+	 * with (elfins,searchstring) and return type boolean signature. 
+	 * The `searchstring` is being extracted from `searchtext` by tokenising 
+	 * it with a given TOKENS_SEPARATOR. 
+	 */
+	var checkAndForTokenisedSearchText = function(elfins,searchtext, checkfun) {
+		var TOKENS_SEPARATOR = " ";
+		if (searchtext && searchtext.trim().length > 0 && searchtext.indexOf(TOKENS_SEPARATOR) != -1) {
+			var searchtextTokens = searchtext.split(TOKENS_SEPARATOR);
+			var booleanResult = true;
+			for (var i = 0; i < searchtextTokens.length; i++) { 
+				var currToken = searchtextTokens[i];
+				// Avoid setting true result for something or nothing.
+				if (currToken && currToken.trim().length > 0) {
+					booleanResult = booleanResult && checkfun(elfins,currToken);
+				}
+			}
+			return booleanResult;
+		} else {
+			return checkfun(elfins,searchtext);
+		}	
+	};	
 
 	/**
 	 * Filter specialised for ELFIN ANNEXE RENVOI.
@@ -168,16 +195,21 @@
 	angular.module('hb5').filter('immeubleListAnyFilter', [function () {
 		
 		return function (immeubles, searchtext) {
+
+			var checkAnyField = function(immeuble,searchtext) {
+				return (
+					icontains(immeuble.PARTENAIRE.PROPRIETAIRE.GROUPE, searchtext) ||
+					icontains(immeuble.IDENTIFIANT.OBJECTIF, searchtext) ||
+					icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
+					icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
+					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext)
+				);		
+			};			
+
 	        if (!angular.isUndefined(immeubles) && !angular.isUndefined(searchtext)) {
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
-                    if ( 
-                    	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.GROUPE, searchtext) ||
-                    	 icontains(immeuble.IDENTIFIANT.OBJECTIF, searchtext) ||
-                    	 icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
-                    	 icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
-                    	 icontains(immeuble.IDENTIFIANT.ALIAS, searchtext)
-                    ) {
+                    if ( checkAndForTokenisedSearchText(immeuble,searchtext,checkAnyField) ) {
                     	tempImmeubles.push(immeuble);
                     }
                 });
