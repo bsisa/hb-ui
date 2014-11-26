@@ -68,7 +68,7 @@
     	var focusOnSearchField = function() {
 			$('#globalSearchField').focus();	
 		};        
-		$timeout(focusOnSearchField, 250, false);
+		$timeout(focusOnSearchField, 450, false);
     	
     }]);
 
