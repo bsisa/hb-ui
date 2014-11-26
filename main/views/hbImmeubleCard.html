@@ -85,8 +85,8 @@
 				<!-- 2nd col first tab first row start -->
 				<div class="col-sm-2" style="text-align: center; height: 100%">
 					<div class="form-group">
-<!-- 						<label for="objectif" class="col-sm-4 control-label">Groupe PRESTATION comptable</label> -->
-						<p class="col-sm-8 form-control-static">						
+						<!-- Display current year PRESTATION `Groupe comptable` information -->
+						<p class="col-sm-12 form-control-static">						
 							{{(prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate:prestaReverse | first).IDENTIFIANT.ORIGINE}}
 						</p>
 					</div>					
