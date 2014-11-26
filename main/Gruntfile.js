@@ -42,6 +42,7 @@ module.exports = function(grunt) {
 								'src/hbCardContainerDirective.js',
 								'src/hbCardContainerController.js',
 								'src/hbCardHeaderDirective.js',
+								'src/hbCardViewLinkDirective.js',
 								'src/hbChooseActorController.js',
 								'src/hbChooseActorDirective.js',
 								'src/hbChooseOneController.js',
