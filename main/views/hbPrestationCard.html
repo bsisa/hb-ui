@@ -119,11 +119,9 @@
 								<th colspan="2">{{key}}</th>
 								<th class="col-sm-1"><a href=""
 									ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Date</a></th>
-								<th class="col-sm-2"><a href=""
-									ng-click="deadlinePredicate = 'IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse">Groupe Prestation</a></th>									
-								<th class="col-sm-2"><a href=""
-									ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Fournisseur</a></th>
 								<th class="col-sm-3"><a href=""
+									ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse">Fournisseur</a></th>
+								<th class="col-sm-4"><a href=""
 									ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse">Remarque</a></th>									
 								<th class="col-sm-1"><a href=""
 									ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; deadlineReverse=!deadlineReverse">Facturé</a></th>
@@ -140,13 +138,12 @@
 								<td><a
 									href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}"><i tooltip="Ouvrir la pièce jointe (voir annexes)" class="glyphicon glyphicon-paperclip"></i></a></td>
 								<td><span>{{transaction.IDENTIFIANT.DE}}</span></td>
-								<td><span>{{transaction.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 								<td><span>{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
 								<td><span>{{transaction.DIVERS.REMARQUE}}</span></td>
 								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
 								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR}}</span></td>
 							</tr>
-							<tr><td colspan="6" ></td><td></td><td class="total number">{{value | map: 'IDENTIFIANT.VALEUR' | sum}}   
+							<tr><td colspan="5" ></td><td></td><td class="total number">{{value | map: 'IDENTIFIANT.VALEUR' | sum}}   
 <!-- 							<div ng-repeat="paid in value | map: 'IDENTIFIANT.VALEUR' ">{{paid}}</div> -->
 							</td></tr>
 						</tbody>
