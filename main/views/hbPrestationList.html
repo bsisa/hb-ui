@@ -135,8 +135,8 @@
 	<tbody>
 <!-- 		<tr ng-repeat="elfin in elfins | prestationListFilter:search | orderBy:predicate:reverse"> -->
 		<tr ng-repeat="elfin in currentFilteredElfinPage">
-			<td class="col-sm-1"><a
-				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
+			<td class="col-sm-1">
+				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>			
 				<a ng-click="save(elfin)">Save</a>
 			</td>
 			<td class="col-sm-1">

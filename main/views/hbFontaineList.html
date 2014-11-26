@@ -65,8 +65,8 @@
 	<tbody>
 		<tr ng-repeat="elfin in filteredElfins">
 		
-			<td><a
-				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
+			<td>
+				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
 			</td>
 			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
 			<td>{{elfin.IDENTIFIANT.NOM}}</td>

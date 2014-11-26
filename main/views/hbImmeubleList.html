@@ -71,8 +71,8 @@
 <!-- 		<tr ng-repeat="elfin in elfins | immeubleListFilter:search | immeubleListAnyFilter:search.text | orderBy:predicate:reverse"> -->
 		<tr ng-repeat="elfin in filteredElfins">
 		
-			<td><a
-				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a>
+			<td>
+				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
 			</td>
 			<!-- Remark: always empty on tested data -->
 			<!-- <td>{{elfin.GROUPE}}</td>  -->

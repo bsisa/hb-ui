@@ -29,8 +29,9 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="elfin in elfins | actorListFilter:search.text | orderBy:predicate:reverse">
-			<td><a
-				href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}">Détail</a></td>
+			<td>
+				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>			
+			</td>
 			<td>{{elfin.GROUPE}}</td>
 			<td ng-show="isCollaboratorOnly">{{elfin.IDENTIFIANT.NOM}}</td>
 			<td ng-show="isCollaboratorOnly">{{elfin.IDENTIFIANT.ALIAS}}</td>

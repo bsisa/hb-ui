@@ -9,7 +9,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="renvoi in elfin.ANNEXE.RENVOI | annexExcludeTag:'photo'">
-				<td><a target="_self" ng-href="{{hbUtil.getLinkFileApiUrl(elfin.ID_G, elfin.Id, renvoi.LIEN)}}">Détail</a></td>
+				<td><a class="btn btn-default btn-xs btn-block" target="_self" ng-href="{{hbUtil.getLinkFileApiUrl(elfin.ID_G, elfin.Id, renvoi.LIEN)}}"><i class="glyphicon glyphicon-eye-open"></i></a></td>
 				<td>{{hbUtil.getLinkFileName(renvoi.LIEN)}}</td>
 			</tr>
 		</tbody>
