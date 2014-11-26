@@ -259,18 +259,23 @@
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual uniteLocative list. 
 	 */
 	angular.module('hb5').filter('uniteLocativeListAnyFilter', [function () {
-		
+
 		return function (uniteLocatives, searchtext) {
+			
+			var checkUniteLocative = function(uniteLocative, searchtext) {
+				return (
+						(
+	    				!angular.isUndefined(uniteLocative.PARTENAIRE) && 
+	    				!angular.isUndefined(uniteLocative.PARTENAIRE.PROPRIETAIRE) && 
+	    				icontains(uniteLocative.PARTENAIRE.PROPRIETAIRE.VALUE, searchtext)
+						) || icontains(uniteLocative.IDENTIFIANT.OBJECTIF, searchtext)
+	    		);
+			};			
+			
 	        if (!angular.isUndefined(uniteLocatives) && !angular.isUndefined(searchtext)) {
 	            var tempUniteLocatives = [ ];
 	            angular.forEach(uniteLocatives, function (uniteLocative) {
-                    if ( 
-                    		(
-                    				!angular.isUndefined(uniteLocative.PARTENAIRE) && 
-                    				!angular.isUndefined(uniteLocative.PARTENAIRE.PROPRIETAIRE) && 
-                    				icontains(uniteLocative.PARTENAIRE.PROPRIETAIRE.VALUE, searchtext)
-                    		) || icontains(uniteLocative.IDENTIFIANT.OBJECTIF, searchtext) 
-                    ) {
+                    if ( checkAndForTokenisedSearchText(uniteLocative,searchtext,checkUniteLocative) ) {
                     	tempUniteLocatives.push(uniteLocative);
                     }
                 });
@@ -343,7 +348,7 @@
 			};			
 			
 	        if (!(prestations == null || search == null ) && !angular.isUndefined(prestations) && !angular.isUndefined(search)) {
-	        	console.log(">>>> prestations.length, search = " + prestations.length +", " + search);
+	        	//console.log(">>>> prestations.length, search = " + prestations.length +", " + search);
 	            var tempPrestations = [ ];
 	            angular.forEach(prestations, function (prestation) {
                     if ( 
