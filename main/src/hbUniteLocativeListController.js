@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbUniteLocativeListController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbUniteLocativeListController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', '$timeout', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, $timeout, hbAlertMessages, hbUtil) {
     
     	$log.debug("    >>>> HbUniteLocativeListController called...");
     	
@@ -62,7 +62,13 @@
     		}
     	});		
 		
-		
+    	/**
+    	 * Set focus on the list global search field
+    	 */
+    	var focusOnSearchField = function() {
+			$('#globalSearchField').focus();	
+		};        
+		$timeout(focusOnSearchField, 250, false);
     	
     }]);
 
