@@ -48,6 +48,13 @@ body{
 	padding:0 0 0 0;
 	color:#000;
 	background:#efefef url(kickstart/img/gray_jean.png);
+/*
+	background:#efefef;
+	background:green;
+	background:lightgrey;
+	background:grey;
+	background:silver;
+*/	
 	/*font:normal 0.9em/150% 'Arimo', arial, verdana, sans-serif; */
 	text-shadow: 0 0 1px transparent; google font pixelation fix
 }
