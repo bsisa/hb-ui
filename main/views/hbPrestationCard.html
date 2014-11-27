@@ -143,9 +143,9 @@
 								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
 								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR}}</span></td>
 							</tr>
-							<tr><td colspan="5" ></td><td></td><td class="total number">{{value | map: 'IDENTIFIANT.VALEUR' | sum}}   
-<!-- 							<div ng-repeat="paid in value | map: 'IDENTIFIANT.VALEUR' ">{{paid}}</div> -->
-							</td></tr>
+							<tr>
+								<td colspan="5" ></td><td></td><td class="total number">{{ ( value | map: 'IDENTIFIANT.VALEUR' | map: multiplyBy100 | sum ) / 100 }} <br /></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>

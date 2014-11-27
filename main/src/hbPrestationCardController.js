@@ -34,6 +34,10 @@
 					        	// To allow negative values:
 					        	//$scope.numericOnlyRegexp = /^[-]?\d*\.?\d*$/;						        
 						        
+					        	$scope.multiplyBy100 = function(nb) {
+					        		  return nb*100;
+					        	};
+					        	
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
