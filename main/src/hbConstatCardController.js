@@ -89,7 +89,7 @@
 												.then(
 													function(uniteLocatives) {
 														$scope.locationUnits = uniteLocatives;
-														$scope.immeubleRef = { "Id" : immeuble.Id,  "ID_G" : immeuble.ID_G , "address": immeuble.IDENTIFIANT.ALIAS};
+														$scope.immeubleRef = { "Id" : immeuble.Id,  "ID_G" : immeuble.ID_G , "address": immeuble.IDENTIFIANT.ALIAS, "owner": immeuble.PARTENAIRE.PROPRIETAIRE.NOM};
 													},
 													function(response) {
 														var message = "Le chargement des UNITE_LOCATIVE a échoué (statut de retour: "+ response.status+ ")";
