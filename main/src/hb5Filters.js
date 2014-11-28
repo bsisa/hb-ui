@@ -201,7 +201,7 @@
 					icontains(immeuble.PARTENAIRE.PROPRIETAIRE.GROUPE, searchtext) ||
 					icontains(immeuble.IDENTIFIANT.OBJECTIF, searchtext) ||
 					icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
-					icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
+//					icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
 					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext)
 				);		
 			};			
