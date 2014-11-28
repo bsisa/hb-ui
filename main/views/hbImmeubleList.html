@@ -16,27 +16,27 @@
 			</th>
 		</tr>
 		<tr>
-			<th class="col-sm-2">
+			<th class="col-sm-1">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.owner" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
-			<th class="col-sm-2">
+			<th class="col-sm-1">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.registerNb" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
-			<th class="col-sm-3">
+			<th class="col-sm-4">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.place" hb-no-dirty-check placeholder="">
+						<input type="text" class="form-control" ng-model="search.address" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
-			</th>			
+			</th>		
 			<th class="col-sm-2">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
@@ -44,27 +44,27 @@
 					</div>
 				</div>
 			</th>	
-			<th class="col-sm-2">
+			<th class="col-sm-3">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.address" hb-no-dirty-check placeholder="">
+						<input type="text" class="form-control" ng-model="search.place" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
-			</th>					
+			</th>		
 		</tr>
 		<tr>
-			<th class="col-sm-2">
-				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.GROUPE'; reverse=!reverse">Propriétaire</a>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.NOM'; reverse=!reverse">Propriétaire</a>
 			</th>
-			<th class="col-sm-2">
-				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° de gérance</a>			
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">No SAI</a>			
 			</th>
-			<th class="col-sm-3">
-				<a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th>
-			<th class="col-sm-2">
-				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">N° de construction</a></th>
-			<th class="col-sm-2">
+			<th class="col-sm-4">
 				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a></th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">No construction</a></th>
+			<th class="col-sm-3">
+				<a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th>				
 		</tr>
 	</thead>
 	<tbody>
@@ -77,11 +77,14 @@
 			<!-- Remark: always empty on tested data -->
 			<!-- <td>{{elfin.GROUPE}}</td>  -->
 			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
-			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.GROUPE}}</td>
+			<td>
+<!-- 				{{elfin.PARTENAIRE.PROPRIETAIRE.GROUPE}} -->
+				{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}
+			</td>
 			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
-			<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td>
+			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>			
 			<td>{{elfin.IDENTIFIANT.NOM}}</td>
-			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>
+			<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td>
 		</tr>
 	</tbody>
 </table>

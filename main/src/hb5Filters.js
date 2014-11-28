@@ -171,7 +171,7 @@
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
                     if ( 
-                    	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.GROUPE, predicate.owner) &&
+                    	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.NOM, predicate.owner) &&
                     	 icontains(immeuble.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
                     	 icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
                     	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
@@ -198,7 +198,7 @@
 
 			var checkAnyField = function(immeuble,searchtext) {
 				return (
-					icontains(immeuble.PARTENAIRE.PROPRIETAIRE.GROUPE, searchtext) ||
+					icontains(immeuble.PARTENAIRE.PROPRIETAIRE.NOM, searchtext) ||
 					icontains(immeuble.IDENTIFIANT.OBJECTIF, searchtext) ||
 					icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
 //					icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||

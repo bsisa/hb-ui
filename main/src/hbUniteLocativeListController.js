@@ -25,9 +25,9 @@
     	}
     	
 		/**
-		 * Proceed to elfin_p collection `prestationListFilter` filtering and sorting
+		 * Proceed to elfin_p collection `uniteLocativeListFilter` filtering and sorting
 		 * Moved from page defined filtering: 
-		 * immeubleListFilter:search | immeubleListAnyFilter:search.text | orderBy:predicate:reverse
+		 * uniteLocativeListFilter:search | uniteLocativeListAnyFilter:search.text | orderBy:predicate:reverse
 		 * to controller defined filtering to have access to $scope.filteredElfins.length
 		 */
 		var filterSortElfins = function(elfins_p, search_p, predicate_p, reverse_p) {
