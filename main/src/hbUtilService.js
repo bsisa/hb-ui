@@ -281,6 +281,43 @@
 			}
 		};
 
+		
+		/**
+		 * Custom `unsafe` file system access. Requires modern browsers security modification in order to be effective.  
+		 */
+		var buildAnnexeFileSystemUri = function(elfin_p) {
+			if (elfin_p) {
+				var uri = undefined;
+				var owner = elfin_p.PARTENAIRE.PROPRIETAIRE.NOM; 
+				if (owner === "NE") {
+					uri = "H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
+				} else if (owner === "FMPA") {
+					uri = "H\:\\3-BATIMENTS-DOSSIERS\\FMPA\\";
+				} else if (owner === "CDP") {
+					uri = "H\:\\3-BATIMENTS-DOSSIERS\\PREVOYANCE.NE\\";
+				} else if (owner === "DOM") {
+					uri = "H\:\\3-BATIMENTS-DOSSIERS\\DOMAINES\\";
+				} else if (owner === "ETAT") {
+					uri = "H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
+				} else if (owner === "VITEOS") {
+					uri = "H\:\\3-BATIMENTS-DOSSIERS\\VITEOS\\";
+				}
+				var name = elfin_p.IDENTIFIANT.NOM; 
+				var address = elfin_p.IDENTIFIANT.ALIAS;
+			    address = address.replace(new RegExp("[àâä]","ig"),"a");
+			    address = address.replace(new RegExp("[éèêë]","ig"),"e");
+			    address = address.replace(new RegExp("[îï]","ig"),"i");
+			    address = address.replace(new RegExp("[ôö]","ig"),"o");
+			    address = address.replace(new RegExp("[ùûü]","ig"),"u");
+			    var street = "_" + address.split(', ')[1];
+			    if (street == "_undefined") street = "";
+			    uri += name + "_" + address.split(', ')[0] +  street;
+				return uri;											
+			} else {
+				return "";
+			}
+
+		};		
         
         return {
         	reorderArrayByPOS:reorderArrayByPOS,
@@ -297,7 +334,8 @@
         	getLinkFileName:getLinkFileName,
         	getLinkFileApiUrl:getLinkFileApiUrl,
         	getAnnexesExcludingTag:getAnnexesExcludingTag,
-        	getPrestationGroupForTransactionGroup:getPrestationGroupForTransactionGroup
+        	getPrestationGroupForTransactionGroup:getPrestationGroupForTransactionGroup,
+        	buildAnnexeFileSystemUri:buildAnnexeFileSystemUri
         	
         };
     }]);
