@@ -220,7 +220,9 @@
 								            $scope.updatePhotoSrc();
 								            
 								            // Update path to local file system
-								            $scope.annexeFileSystemUri = hbUtil.buildAnnexeFileSystemUri($scope.elfin);
+								            var fsURI = hbUtil.buildAnnexeFileSystemUri($scope.elfin);
+								            $log.debug(">>>> fsURI = " + fsURI);
+								            $scope.annexeFileSystemUri = fsURI;
 								            
 							    		};
 							    		
