@@ -283,7 +283,8 @@
 
 		
 		/**
-		 * Custom `unsafe` file system access. Requires modern browsers security modification in order to be effective.  
+		 * Custom `unsafe` file system access. Requires modern browsers security modification in order to be effective.
+		 * Implementation taken from HB4 `hbfiche_displayFolder(melfin)` used by HB4 `getHB_Fiche().showAnnexeWindow(uri,uri)`  
 		 */
 		var buildAnnexeFileSystemUri = function(elfin_p) {
 			if (elfin_p) {
