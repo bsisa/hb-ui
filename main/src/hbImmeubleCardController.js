@@ -29,7 +29,8 @@
 									$log.debug("    >>>> Using HbImmeubleCardController");
 									
 									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
-									//$scope.validateOwner = false;									
+									//$scope.validateOwner = false;		
+									$scope.annexeFileSystemUri = "";
 									
 									// Expose current hbMode in scope for use by ng-show in HTML view.
 									$scope.createMode = ($attrs.hbMode === "create");
@@ -178,6 +179,7 @@
 							    		
 							    	}, true);
 							    	
+							    	
 							    	// Check when elfin instance becomes available 
 							    	$scope.$watch('elfin.Id', function() { 
 							    		
@@ -216,6 +218,10 @@
 								            
 								            // Make IMMEUBLE photo available
 								            $scope.updatePhotoSrc();
+								            
+								            // Update path to local file system
+								            $scope.annexeFileSystemUri = hbUtil.buildAnnexeFileSystemUri($scope.elfin);
+								            
 							    		};
 							    		
 							    	}, true);
@@ -284,8 +290,6 @@
 											}
 										}
 									};
-									
-									
 									
 							    } ]);
 
