@@ -174,7 +174,12 @@
 		// flowFactoryProvider.factory = fustyFlowFactory;
     }]);
     
-
+    /**
+     * Prevent `unsafe` token be placed before URL such as file:// or mailto:// etc...
+     */
+    hb5.config(['$compileProvider', function( $compileProvider ) {   
+                  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|chrome-extension):/);
+    }]);
     
     // ================================================================
     // ====                     Filters                            ====
