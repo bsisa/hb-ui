@@ -1,15 +1,8 @@
 (function() {
 
-    var UploadFileCtrl = function ($scope, $modalInstance, $$renvoi) {
-
-        $scope.$$renvoi = $$renvoi;
-
-        $scope.ok = function () {
-            $modalInstance.close();
-        };
-    };
-    
-
+	/**
+	 * Modal dialog for ELFIN delete operation
+	 */
     var DeleteConfirmCtrl = function ($scope, $modalInstance) {
 
         $scope.ok = function () {
@@ -21,7 +14,9 @@
         
     };    
       
-    
+    /**
+     * Modal dialog to warn user of possibly unsaved change while quitting the current edit context
+     */
     var UnsavedWarnDialogController = function ($scope, $modalInstance) {
 
         $scope.ok = function () {
@@ -32,7 +27,6 @@
         };        
         
     };    
-    
     
     
     /**
@@ -308,24 +302,6 @@
             }							    		
     	};		        
         
-    	//TODO: check if it can be removed.
-        $scope.uploadFile = function (renvoi) {
-
-        	var modalInstance = $modal.open({
-                templateUrl: 'defaultUploadFileModalPanel.html',
-                controller: UploadFileCtrl,
-                resolve: {
-                    $$renvoi: renvoi
-                },
-                backdrop: 'static'
-            });
-        	//TODO: check this is effectively dealing with upload and not configuration selection (see menu.js)
-            modalInstance.result.then(function (selection) {
-                $scope.$$activeConfiguration = selection;
-            }, function () {
-                $log.debug('Modal dismissed at: ' + new Date());
-            });
-        };
 
         /**
          * Proceed to initialisation tasks
