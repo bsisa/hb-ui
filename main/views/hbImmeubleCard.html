@@ -84,14 +84,14 @@
 				</div><!-- 1st col first tab first row end -->
 				<!-- 2nd col first tab first row start -->
 				<div class="col-sm-2" style="text-align: center; height: 100%">
-					<div class="btn btn-default btn-xs">
-						<a target="_self" ng-href="file:///{{annexeFileSystemUri}}" ><i class="glyphicon glyphicon-hdd"></i></a>
-					</div>					
 					<div class="form-group">
 						<!-- Display current year PRESTATION `Groupe comptable` information -->
-						<p class="col-sm-12 form-control-static">						
+						<div class="col-sm-12 form-control-static">
+							<div class="btn btn-default btn-xs">
+								<a target="_self" ng-href="file:///{{annexeFileSystemUri}}" ><i class="glyphicon glyphicon-hdd"></i></a>
+							</div>											
 							{{(prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate:prestaReverse | first).IDENTIFIANT.ORIGINE}}
-						</p>
+						</div>
 					</div>					
 					
 					<!-- If no photo is available show upload function while using room left empty with fixed size table. -->
@@ -103,11 +103,14 @@
 						</tr>
 					</table> 
 					<!-- If a photo is available show it forcing width ratio. -->
-					<div ng-if="photoSrc" style="height:198px;">
+<!-- 					<div ng-if="photoSrc" style="height:198px; border:solid red 1px;">					 -->
+					<div ng-if="photoSrc" >
 						<img ng-src="{{photoSrc}}" width="180px" class="img-thumbnail" />
 					</div>
 					
-					<div ng-if="canEdit" hb-annexes-upload hb-annexes-upload-annex-type="photo"></div>
+					<p>
+						<div ng-if="canEdit" hb-annexes-upload hb-annexes-upload-annex-type="photo"></div>
+					</p>
 
 				</div><!-- 2nd col first tab first row end -->
 				<!-- 3rd col first tab first row start -->
@@ -179,8 +182,8 @@
 					</div>			
 				</div><!-- 3rd col first tab first row end --> 					
 			</div><!-- row end -->
-
-<!-- 			</div> -->
+			<!-- Provide some spacing -->
+			<div style="margin: 0px; line-height: 0.5em"> <br /></div>
 			<!-- 2e bloc -->
 			<div class="row" >
 				<div class="col-sm-12" >
