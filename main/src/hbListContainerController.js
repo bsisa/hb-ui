@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbListContainerController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbListContainerController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$location', 'hbAlertMessages', 'hbUtil', 'MapService', 'HB_EVENTS', function($attrs, $scope, GeoxmlService, $routeParams, $log, $location, hbAlertMessages, hbUtil, MapService, HB_EVENTS) {
     
     	$log.debug("    >>>> HbListContainerController called...");
     	
@@ -17,6 +17,32 @@
         $scope.elfins = null;
         $scope.elfinsCount = null;
         
+        // ============================================================
+        // Global navigation buttons (also found in MenuController and
+        // hbCardContainerController).
+        // ============================================================        
+        
+        /**
+         * Go home navigation function
+         */
+    	$scope.home = function() {
+    		// Need to encapsulate location path in location url 
+    		// to reset any possibly existing search parameters from URL. 
+    		$location.url($location.path('/'));
+    	};
+        
+    	/**
+    	 * Show/hide map navigation function
+    	 */
+        $scope.toggleMap = function() {
+            $scope.displayMap = MapService.toggleMap();
+            $scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, $scope.displayMap);
+        };
+        
+
+        // ============================================================
+        // ELFIN collection management
+        // ============================================================
         if (GeoxmlService.validateId($scope.collectionId)) {
         	
         	if ($routeParams.xpath) {

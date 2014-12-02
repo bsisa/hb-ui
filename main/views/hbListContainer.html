@@ -7,6 +7,14 @@
 			</h5>
 		</div>
 		
+		<!-- Fix position buttons bar -->
+		<form name="navBarForm" class="form-horizontal" role="form" novalidate > <!--  novalidate prevents HTML5 automated validation  -->
+			<div class="hb-btn-bar btn-group-vertical" >
+			    <button class="btn btn-default" ng-click="home()"><i class="glyphicon glyphicon-home"></i></button>
+				<button class="btn btn-danger" ng-click="toggleMap()"><i class="glyphicon glyphicon-picture"></i></button>
+	   		</div>    
+   		</form>
+		
 		<!-- table-responsive makes table scroll horizontally up to small devices (under 768px) -->
 		<!-- ng-transclude is the placeholder where translation/inclusion will take place -->
 		<div class="table-responsive" ng-transclude>

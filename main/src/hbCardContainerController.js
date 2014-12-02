@@ -53,7 +53,8 @@
         init();
         
         // ============================================================
-        // Global navigation buttons (also found in MenuController)
+        // Global navigation buttons (also found in MenuController and
+        // hbListContainerController).
         // ============================================================        
         
         /**
