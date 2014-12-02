@@ -27,43 +27,5 @@
 
 </div>
 
-<div>
-    <script type="text/ng-template" id="defaultUploadFileModalPanel.html">
-        <div class="modal-header">
-            <h3>Téléverser un document</h3>
-        </div>
-        <div class="modal-body">
-            <form action="/uploads" ng-upload="complete(content)">
-                <input type="file" name="attachment"></input>
-                <input type="submit" value="Téléverser" ng-disabled="$isLoading"></input>
-            </form>
-
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">Fermer</button>
-        </div>
-    </script>
-</div>
-
-
-
-
-<div>
-    <script type="text/ng-template" id="deleteConfirmModalPanel.html">
-        <div class="modal-header">
-            <h3>Supprimer un objet</h3>
-        </div>
-        <div class="modal-body">
-			Voulez-vous vraiment supprimer définitivement l'objet {{elfin.CLASSE}} {{elfin.ID_G}}/{{elfin.Id}} ?
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-warning" ng-click="cancel()">Annuler</button>
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-        </div>
-    </script>
-</div>
-
-
-
 
 
