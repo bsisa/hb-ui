@@ -32,9 +32,11 @@
 	        </ul>
 	    </li>	    
 	
-	    <li class="search-wrapper">	    
-				<div class="col-sm-2" style="padding: 4px 0px 4px;"><span class="badge">{{filteredImmeubleElfins.length}}</span></div>				
-				<div class="col-sm-10 form-group" style="padding: 0px;">
+	    <li class="search-wrapper" style="width:220px; padding-right: 0px;">	    
+	    		
+				<div class="col-sm-1" style="padding: 4px 0px 4px;color: grey;"><i class="glyphicon glyphicon-search"></i></div>				
+				<div class="col-sm-3" style="padding: 4px 0px 4px;"><span class="badge">{{filteredImmeubleElfins.length}}</span></div>
+				<div class="col-sm-8 form-group" style="padding: 0px;">
 					<div class="col-sm-12" style="padding: 0px 4px 0px 4px;">
 						<input class="form-control input-sm" hb-enter="listOrViewImmeuble()" tabindex="1" id="immeubleSearchTextInput" name="immeubleSearchTextInput" type="text" class="form-control" ng-model="immeubleSearch.text" hb-no-dirty-check placeholder="">
 					</div>
