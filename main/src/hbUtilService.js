@@ -291,17 +291,17 @@
 				var uri = undefined;
 				var owner = elfin_p.PARTENAIRE.PROPRIETAIRE.NOM; 
 				if (owner === "NE") {
-					uri = "\\H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
+					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
 				} else if (owner === "FMPA") {
-					uri = "\\H\:\\3-BATIMENTS-DOSSIERS\\FMPA\\";
+					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\FMPA\\";
 				} else if (owner === "CDP") {
-					uri = "\\H\:\\3-BATIMENTS-DOSSIERS\\PREVOYANCE.NE\\";
+					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\PREVOYANCE.NE\\";
 				} else if (owner === "DOM") {
-					uri = "\\H\:\\3-BATIMENTS-DOSSIERS\\DOMAINES\\";
+					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\DOMAINES\\";
 				} else if (owner === "ETAT") {
-					uri = "\\H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
+					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
 				} else if (owner === "VITEOS") {
-					uri = "\\H\:\\3-BATIMENTS-DOSSIERS\\VITEOS\\";
+					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\VITEOS\\";
 				}
 				var name = elfin_p.IDENTIFIANT.NOM; 
 				var address = elfin_p.IDENTIFIANT.ALIAS;
