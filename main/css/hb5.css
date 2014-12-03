@@ -137,11 +137,13 @@ table.layout {
 }
 
 .menu li.search-wrapper {
+/* 	border: solid red 1px; */
 	float: left;
     height: 46px;
     margin-right: 0px;
     margin-top: 0px;
-    padding: 8px 4px 0px 4px;
+    padding: 6px 0px 0px 4px;
+	width:190px;
 }
 
 .menu ul {

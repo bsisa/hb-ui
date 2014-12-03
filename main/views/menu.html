@@ -32,32 +32,8 @@
 	        </ul>
 	    </li>	    
 	
-	    <li class="search-wrapper" style="width:220px; padding-right: 0px;">	    
-	    		
-				<div class="col-sm-1" style="padding: 4px 0px 4px;color: grey;"><i class="glyphicon glyphicon-search"></i></div>				
-				<div class="col-sm-3" style="padding: 4px 0px 4px;"><span class="badge">{{filteredImmeubleElfins.length}}</span></div>
-				<div class="col-sm-8 form-group" style="padding: 0px;">
-					<div class="col-sm-12" style="padding: 0px 4px 0px 4px;">
-						<input class="form-control input-sm" hb-enter="listOrViewImmeuble()" tabindex="1" id="immeubleSearchTextInput" name="immeubleSearchTextInput" type="text" class="form-control" ng-model="immeubleSearch.text" hb-no-dirty-check placeholder="">
-					</div>
-				</div>
-<!-- 				<div class="col-sm-1" style="padding: 0px;border: solid red 1px;"> -->
-<!-- 					<button tabindex="2" class="btn btn-primary btn-xs" ng-click="listOrViewImmeuble()" ng-disabled="filteredImmeubleElfins.length < 1"> -->
-<!-- 						<span ng-show="filteredImmeubleElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span> -->
-<!-- 						<span ng-show="filteredImmeubleElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span> -->
-<!-- 					</button> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-sm-1" style="padding: 0px;border: solid yellow 1px;"> -->
-<!-- 					<button class="btn btn-default btn-xs" ng-click="home()"><i class="glyphicon glyphicon-home"></i></button> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-sm-1" style="padding: 0px;border: solid black 1px;"> -->
-<!-- 			        Note: btn-danger not used semantically but only to get red color -->
-<!-- 			        <button class="btn btn-danger btn-xs" ng-click="toggleMap()"><i class="glyphicon glyphicon-picture"></i></button>			 -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-
-	        <!-- Note: btn-danger not used semantically but only to get red color -->
-<!-- 	        <button class="btn btn-danger btn-xs" ng-click="toggleMap()"><i class="glyphicon glyphicon-picture"></i></button>&nbsp;&nbsp;&nbsp;&nbsp; -->
+	    <li class="search-wrapper">	    
+			<div hb-search ></div>
 	    </li>
 <!-- 	    </ul> -->
 <!--     </div> -->
