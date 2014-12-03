@@ -52,6 +52,19 @@
         // Proceed with initialisation tasks
         init();
         
+        /**
+         * Used by ui-keypress to provide save action upon user `ENTER` keypress.
+         */
+        $scope.saveCallback = function ($event,elfin) {
+        	if ($scope.canSave()) {
+        		$scope.saveElfin(elfin);
+        	} else {
+        		// Do nothing.
+        	}
+        	$event.preventDefault();
+        };
+        
+        
         // ============================================================
         // Global navigation buttons (also found in MenuController and
         // hbListContainerController).
