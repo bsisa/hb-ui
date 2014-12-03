@@ -144,7 +144,7 @@
 								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR}}</span></td>
 							</tr>
 							<tr>
-								<td colspan="5" ></td><td></td><td class="total number">{{ ( value | map: 'IDENTIFIANT.VALEUR' | map: multiplyBy100 | sum ) / 100 }} <br /></td>
+								<td colspan="5" ></td><td  class="total number"></td><td class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR' | map: multiplyBy100 | sum ) / 100 ) | currency : 'CHF'}} <br /></td>
 							</tr>
 						</tbody>
 					</table>
