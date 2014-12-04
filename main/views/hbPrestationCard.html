@@ -140,11 +140,13 @@
 								<td><span>{{transaction.IDENTIFIANT.DE}}</span></td>
 								<td><span>{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
 								<td><span>{{transaction.DIVERS.REMARQUE}}</span></td>
-								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
-								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR}}</span></td>
+								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
+								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
 							</tr>
 							<tr>
-								<td colspan="5" ></td><td  class="total number"></td><td class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR' | map: multiplyBy100 | sum ) / 100 ) | currency : 'CHF'}} <br /></td>
+								<td colspan="5" ></td>
+								<td  class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR_A_NEUF' | map: multiplyBy100 | sum ) / 100 ) | currency:'CHF' }} </td>
+								<td class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR' | map: multiplyBy100 | sum ) / 100 ) | currency :'CHF'}} </td>
 							</tr>
 						</tbody>
 					</table>
