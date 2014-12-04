@@ -197,9 +197,21 @@
     
     hb5.run(['Restangular', 'hbAlertMessages', '$location', '$window', '$log', '$locale', '$timeout', function(Restangular, hbAlertMessages, $location, $window, $log, $locale, $timeout){
 
-    	//TODO: Manage locale - check why this does not seem to be effective
-    	$log.debug("Setting locale to swiss french: fr-ch");
+    	/**
+    	 * Manage locale - currently forced to swiss french
+    	 */
+    	// Swiss french
     	$locale.id = 'fr-ch';
+    	// Swiss german
+    	//$locale.id = 'de-ch';
+    	// Swiss italian
+    	//$locale.id = 'it-ch';
+    	// French
+    	//$locale.id = 'fr';
+
+
+
+    	$log.debug("Setting locale to : " + $locale.id);    	
     	
         Restangular.setErrorInterceptor(
     	        function(response) {

@@ -15,6 +15,7 @@
 							'$log',
 							'$timeout',
 							'$filter',
+							'$locale',
 							'hbAlertMessages',
 							'hbUtil',
 							'hbQueryService',
@@ -23,10 +24,10 @@
 							'HB_API',
 							'HB_ROLE_FONCTION',
 							function($attrs, $scope, $rootScope, GeoxmlService, $modal,
-									$routeParams, $location, $log, $timeout, $filter, hbAlertMessages,
+									$routeParams, $location, $log, $timeout, $filter,  $locale, hbAlertMessages,
 									hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API, HB_ROLE_FONCTION) {
     
-									$log.debug("    >>>> Using HbImmeubleCardController");
+									$log.debug("    >>>> Using HbImmeubleCardController with $locale.id = " + $locale.id);
 									
 									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
 									//$scope.validateOwner = false;		
