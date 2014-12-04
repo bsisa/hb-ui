@@ -278,12 +278,12 @@
 								</td>
 								<td><span >{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
 								<td><span >{{constat.IDENTIFIANT.NOM}}</span></td>
-								<td><span>
-										{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI}}</span></td>
-								<td><span>
-									{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_DATE}}
+								<td class="number"><span>
+										{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI | currency : 'CHF'}}</span></td>
+								<td class="date"><span>
+									{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_DATE | date }}
 									</span></td>
-								<td><span>
+								<td ><span>
 									{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI}}
 									</span></td>
 							</tr>
@@ -317,11 +317,11 @@
 									<td><div hb-card-view-link hb-href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}"></div></td>
 									<td><span >{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
 									<td><span >{{constat.IDENTIFIANT.NOM}}</span></td>
-									<td><span>
-										{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI}}
+									<td class="number"><span>
+										{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI | currency:'CHF'}}
 										</span></td>
-									<td><span >{{constat.IDENTIFIANT.DE}}</span></td>
-									<td><span >{{constat.IDENTIFIANT.A}}</span></td>
+									<td class="date"><span >{{constat.IDENTIFIANT.DE | date}}</span></td>
+									<td class="date"><span >{{constat.IDENTIFIANT.A | date}}</span></td>
 								</tr>
 							</tbody>
 						</table>
@@ -399,7 +399,7 @@
 									<td><span >{{locationUnit.IDENTIFIANT.OBJECTIF}}</span></td>
 									<td><span >{{locationUnit.GROUPE}}</span></td>
 									<td><span >{{locationUnit.PARTENAIRE.USAGER.VALUE}}</span></td>
-									<td><span >{{locationUnit.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+									<td class="number"><span >{{locationUnit.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 									<td><span >{{locationUnit.DIVERS.REMARQUE}}</span></td>
 								</tr>
 							</tbody>
@@ -448,10 +448,10 @@
 <!-- 														<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a> -->
 													</td>
 													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
-													<td><span >{{prestation.IDENTIFIANT.DE}}</span></td>
+													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 													<td><span >{{prestation.GROUPE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
-													<td><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
+													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
 													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
 												</tr>
 											</tbody>
@@ -494,10 +494,10 @@
 <!-- 														<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a> -->
 													</td>
 													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
-													<td><span >{{prestation.IDENTIFIANT.DE}}</span></td>
+													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 													<td><span >{{prestation.GROUPE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
-													<td><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
+													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
 													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
 												</tr>
 											</tbody>
@@ -538,10 +538,10 @@
 														<!-- <a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a>  -->
 													</td>
 													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
-													<td><span >{{prestation.IDENTIFIANT.DE}}</span></td>
+													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 													<td><span >{{prestation.GROUPE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
-													<td><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF}}</span></td>
+													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
 													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
 												</tr>
 											</tbody>
@@ -619,7 +619,7 @@
 									<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 									<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 									<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-									<td><span >{{contrat.IDENTIFIANT.VALEUR}}</span></td>
+									<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
 									<td><span >{{contrat.GROUPE}}</span></td>
 								</tr>
 							</tbody>
