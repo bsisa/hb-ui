@@ -294,6 +294,25 @@
 										}
 									};
 									
+									
+									/**
+									 * Get transactions for prestation
+									 */
+//									$scope.getTransactions = function(prestation) {
+//							            var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='"+prestation.IDENTIFIANT.OBJECTIF+"']";
+//							            hbQueryService.getTransactions(xpathForTransactions).$object
+////											.then(function(transactions) {
+////													return transactions;
+////												},
+////												function(response) {
+////													// TODO: Check if there is a better way
+////													return undefined;
+////												});
+//									};
+									
+									
+									
+									
 							    } ]);
 
 })();
