@@ -113,8 +113,8 @@
 						</a> Transactions
 					</div>
   					<div class="panel-body">
-					<table ng-repeat="(key,value) in transactions | groupBy:'GROUPE'" class="table table-condensed table-bordered table-striped">
-						<thead>
+					<table class="table table-condensed table-bordered table-striped">
+						<thead ng-repeat-start="(key,value) in transactions | groupBy:'GROUPE'" >
 							<tr>
 								<th colspan="2">{{key}}</th>
 								<th class="col-sm-1"><a href=""
@@ -129,7 +129,7 @@
 									ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse">Payé</a></th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody ng-repeat-end>
 							<tr
 								ng-repeat="transaction in value | orderBy:deadlinePredicate:deadlineReverse">
 								<td>
@@ -143,12 +143,19 @@
 								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
 								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
 							</tr>
-							<tr>
-								<td colspan="5" ></td>
-								<td  class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR_A_NEUF' | map: multiplyBy100 | sum ) / 100 ) | currency:'CHF' }} </td>
+							<tr class="subtotal">
+								<td colspan="5" >Sous total {{key | lowercase}}</td>
+								<td class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR_A_NEUF' | map: multiplyBy100 | sum ) / 100 ) | currency:'CHF' }} </td>
 								<td class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR' | map: multiplyBy100 | sum ) / 100 ) | currency :'CHF'}} </td>
 							</tr>
 						</tbody>
+						<tfoot >
+							<tr class="grandtotal">
+								<td colspan="5" >Total</td>
+								<td class="total number">{{transactions | map: 'IDENTIFIANT.VALEUR_A_NEUF' | sum | currency :'CHF'}}</td>
+								<td class="total number">{{transactions | map: 'IDENTIFIANT.VALEUR' | sum | currency :'CHF'}}</td>
+							</tr>						
+						</tfoot>
 					</table>
 				</div>
 			</div>

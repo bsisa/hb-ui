@@ -65,6 +65,14 @@ input::-webkit-inner-spin-button {
 	font-weight:bold;
 }
 
+tr.subtotal {
+	border-top: solid black 2px
+}
+
+tr.grandtotal {
+	border-top: double black 4px
+}
+
 td.date {
     text-align: center;
 } 
