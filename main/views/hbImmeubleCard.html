@@ -19,7 +19,7 @@
 	</span>
 </div>
 <!-- Short IMMEUBLE summary intended for display side by side with a map -->
-<div ng-show="isMapToggled()" class="row summary">
+<div ng-show="isMapToggled() && mapDisplayType === 'SPLIT' " class="row summary">
 	<div class="form-group has-feedback"
 		ng-class="getCssHasFeedback(elfinForm.goal)">
 		<label for="goal" class="control-label" style="text-align:left;">No de

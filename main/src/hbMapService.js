@@ -9,43 +9,125 @@
     angular.module('hbMap', []).factory('MapService', [
        '$log', 'GeoxmlService', function($log, GeoxmlService) {
 
+           //TODO: move to constants
+           var MAP_DISPLAY_TYPE = {
+           		"FULL": "FULL",
+           		"SPLIT": "SPLIT",
+           		"HIDDEN":"HIDDEN"
+           };
+    	   
+           var isMapDisplayed = function() {
+               return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
+           };
+           
+           var refreshLayout = function(mapDisplayType) {
+	           var mainMarginsDiv = $('#views-wrapper div.margin');
+	           var mainCardViewDiv = $('#views-wrapper div.card-view');
+	           var mainMapViewDiv = $('#views-wrapper div.map-view');
+	           var mainMapViewLeafletDiv = $('#views-wrapper div.map-view-leaflet');
+	           
+	           // Trigger display if not yet the case for all display types except HIDDEN 
+	           if (!isMapDisplayed() && mapDisplayType !== MAP_DISPLAY_TYPE.HIDDEN) {
+	        	   $log.debug(">>>> mapDisplayType = "+mapDisplayType+" => Trigger display if not yet the case for all display types except HIDDEN");
+		           mainMarginsDiv.toggleClass('splitViewMargin');
+		           mainCardViewDiv.toggleClass('splitViewMargin');
+		           mainMapViewDiv.toggle();
+	           }
+	
+	           // Hide map if not yet the case for display type HIDDEN
+	           if (isMapDisplayed() && mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) {
+	        	   $log.debug(">>>> mapDisplayType = "+mapDisplayType+" => Hide map if not yet the case for display type HIDDEN");
+		           mainMarginsDiv.toggleClass('splitViewMargin');
+		           mainCardViewDiv.toggleClass('splitViewMargin');
+		           mainMapViewDiv.toggle();
+	           }
+	           
+	           if (mainCardViewDiv.hasClass('splitViewMargin')) {
+	           	$log.debug(">>>>>> hbMapService mainCardViewDiv HAS Class splitViewMargin <<<<<<");
+	               var bodyWidth = $('body').width();
+	               var windowHeight = $(window).height() - 100;
+	               var cardViewWidth = undefined;
+	               if (mapDisplayType === 'SPLIT') {
+	            	   cardViewWidth = 450;
+	               } else {
+	            	   cardViewWidth = 0;
+	               }
+	               mainMarginsDiv.width('10px');
+	               mainCardViewDiv.width(cardViewWidth+'px');
+	               mainMapViewDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
+	               mainMapViewLeafletDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
+	               mainMapViewDiv.height(windowHeight + 'px');
+	               mainMapViewLeafletDiv.height(windowHeight + 'px');
+	               return true;
+	           } else {
+	           	$log.debug(">>>>>> hbMapService mainCardViewDiv DOES NOT HAVE Class splitViewMargin <<<<<<");
+	               mainMarginsDiv.width('');
+	               mainCardViewDiv.width('');
+	               return false;
+	           }
+           };
+           
             return {
-                toggleMap: function() {
+                toggleMap: function(mapDisplayType) {
                 	$log.debug(">>>>>> hbMapService.toggleMap <<<<<<");
-                    var mainMarginsDiv = $('#views-wrapper div.margin');
-                    var mainCardViewDiv = $('#views-wrapper div.card-view');
-                    var mainMapViewDiv = $('#views-wrapper div.map-view');
-                    var mainMapViewLeafletDiv = $('#views-wrapper div.map-view-leaflet');
+                	
+                	return refreshLayout(true);
 
-                    // This tells us if the Map DIV is hidden
-                    mainMarginsDiv.toggleClass('splitViewMargin');
-                    mainCardViewDiv.toggleClass('splitViewMargin');
-                    mainMapViewDiv.toggle();
-
-                    if (mainCardViewDiv.hasClass('splitViewMargin')) {
-                    	$log.debug(">>>>>> hbMapService mainCardViewDiv HAS Class splitViewMargin <<<<<<");
-                        var bodyWidth = $('body').width();
-                        var windowHeight = $(window).height() - 100;
-                        var cardViewWidth = 450;
-                        mainMarginsDiv.width('10px');
-                        mainCardViewDiv.width(cardViewWidth+'px');
-                        mainMapViewDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
-                        mainMapViewLeafletDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
-                        mainMapViewDiv.height(windowHeight + 'px');
-                        mainMapViewLeafletDiv.height(windowHeight + 'px');
-                        return true;
-                    } else {
-                    	$log.debug(">>>>>> hbMapService mainCardViewDiv DOES NOT HAVE Class splitViewMargin <<<<<<");
-                        mainMarginsDiv.width('');
-                        mainCardViewDiv.width('');
-                        return false;
-                    }
+//                    var mainMarginsDiv = $('#views-wrapper div.margin');
+//                    var mainCardViewDiv = $('#views-wrapper div.card-view');
+//                    var mainMapViewDiv = $('#views-wrapper div.map-view');
+//                    var mainMapViewLeafletDiv = $('#views-wrapper div.map-view-leaflet');
+//
+//                    // This tells us if the Map DIV is hidden
+//                    mainMarginsDiv.toggleClass('splitViewMargin');
+//                    mainCardViewDiv.toggleClass('splitViewMargin');
+//                    mainMapViewDiv.toggle();
+//
+//                    if (mainCardViewDiv.hasClass('splitViewMargin')) {
+//                    	$log.debug(">>>>>> hbMapService mainCardViewDiv HAS Class splitViewMargin <<<<<<");
+//                        var bodyWidth = $('body').width();
+//                        var windowHeight = $(window).height() - 100;
+//                        var cardViewWidth = 450;
+//                        mainMarginsDiv.width('10px');
+//                        mainCardViewDiv.width(cardViewWidth+'px');
+//                        mainMapViewDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
+//                        mainMapViewLeafletDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
+//                        mainMapViewDiv.height(windowHeight + 'px');
+//                        mainMapViewLeafletDiv.height(windowHeight + 'px');
+//                        return true;
+//                    } else {
+//                    	$log.debug(">>>>>> hbMapService mainCardViewDiv DOES NOT HAVE Class splitViewMargin <<<<<<");
+//                        mainMarginsDiv.width('');
+//                        mainCardViewDiv.width('');
+//                        return false;
+//                    }
                 },
 
-                isMapDisplayed: function() {
-                    return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
+                /**
+                 * Provides a function to test whether or not the map is currently displayed. 
+                 */
+                isMapDisplayed: isMapDisplayed,
+                
+                /**
+                 * Switches map display types in turn: HIDDEN > SPLIT > FULL > HIDDEN
+                 */
+                switchMapDisplayType: function (mapDisplayType) {
+                	var newMapDisplayType = undefined;
+                	if (mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) {
+                		newMapDisplayType = MAP_DISPLAY_TYPE.SPLIT;
+                		refreshLayout(newMapDisplayType);
+                		return newMapDisplayType;
+                	} else if (mapDisplayType === MAP_DISPLAY_TYPE.SPLIT) {
+                		newMapDisplayType = MAP_DISPLAY_TYPE.FULL;
+                		refreshLayout(newMapDisplayType);
+                		return newMapDisplayType;
+                	} else if (mapDisplayType === MAP_DISPLAY_TYPE.FULL) {
+                		newMapDisplayType = MAP_DISPLAY_TYPE.HIDDEN;
+                		refreshLayout(newMapDisplayType);
+                		return newMapDisplayType;
+                	}
                 },
-
+                
                 getPopupContent: function(elfin) {
                     var popup = '<b>' + elfin.IDENTIFIANT.NOM + ' ' + elfin.IDENTIFIANT.ALIAS + '</b><br>';
                     popup += elfin.CLASSE + '<br>';

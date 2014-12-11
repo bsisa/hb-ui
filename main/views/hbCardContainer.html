@@ -16,10 +16,10 @@
 				</button>
 				<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="glyphicon glyphicon-remove-circle"></i></button>
 				<button class="btn btn-default" ng-click="" ng-disabled="true"><i class="glyphicon glyphicon-print"></i></button>
-				<button class="btn btn-danger" ng-click="toggleMap()"><i class="glyphicon glyphicon-picture"></i></button>
+				<button class="btn btn-danger" ng-click="switchMapDisplayType()"><i class="glyphicon glyphicon-picture"></i></button>
 	   		</div>    
 	    
-	        <div class="hb-card-content" ng-transclude>
+	        <div ng-show="!isMapToggled() || (isMapToggled() && mapDisplayType === 'SPLIT') " class="hb-card-content" ng-transclude>
 	        </div>
 		</form>
     </div>

@@ -60,6 +60,29 @@
                 }
             });
 
+//            //TODO: move to constants
+//            var MAP_DISPLAY_TYPE = {
+//            		"FULL": "FULL",
+//            		"SPLIT": "SPLIT"
+//            };
+            
+            // Default to SPLIT
+//            $scope.mapDisplayType = MAP_DISPLAY_TYPE.SPLIT;
+            
+//            //Only two type for the moment. PRINT might be another type.
+//            $scope.switchMapDisplayType = function () {
+//            	if ($scope.mapDisplayType === MAP_DISPLAY_TYPE.SPLIT) {
+//            		$scope.mapDisplayType = MAP_DISPLAY_TYPE.FULL;
+//            	} else if ($scope.mapDisplayType === MAP_DISPLAY_TYPE.FULL) {
+//            		$scope.mapDisplayType = MAP_DISPLAY_TYPE.SPLIT;
+//            	}
+//            };
+            
+//            var switchMapDisplayListener = $rootScope.$on('SWITCH_DISPLAY_TYPE', function (event, newDisplayType) {
+//            	$log.debug("switching current map display : " + $scope.mapDisplayType + " to " + $scope.switchMapDisplayType() + " " +  $scope.mapDisplayType);
+//            });
+            
+            
             /*
             Reference to current displayed object
              */
@@ -173,7 +196,7 @@
             Display Map Events
              */
 
-            $rootScope.$on(HB_EVENTS.DISPLAY_MAP_VIEW, function (event, displayMap) {
+            var displayMapViewListener = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_VIEW, function (event, displayMap) {
                 if (displayMap === true) {
                     leafletData.getMap().then(function (map) {
                         map.invalidateSize();
@@ -182,7 +205,7 @@
             });
 
 
-            $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, mapDef) {
+            var displayMapContentListener = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, mapDef) {
 
                 leafletData.getMap().then(function (map) {
 
@@ -295,12 +318,12 @@
              */
 
             // Elfin has been loaded
-            $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
+            var elfinLoadedListener = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
                 $scope.elfin = elfin;
             });
 
             // Elfin has been unloaded, thus no more current elfin
-            $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
+            var elfinUnloadedListener = $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
                 if (elfin) {
                     updateElfinRepresentation(elfin);
                 }
@@ -314,12 +337,12 @@
              * Note: Unlike in hbCardContainerController we do always need to   
              * update the ELFIN representation on the map.
              */
-            $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
+            var elfinUpdatedListener = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
                	updateElfinRepresentation(elfin);            		
             });
 
             // Elfin has been deleted, thus remove it from the map
-            $rootScope.$on(HB_EVENTS.ELFIN_DELETED, function(event, elfin) {
+            var elfinDeletedListener = $rootScope.$on(HB_EVENTS.ELFIN_DELETED, function(event, elfin) {
                 var identifier = getElfinIdentifier(elfin);
                 if (angular.isDefined($scope.layerDictionary[identifier])) {
 
@@ -413,6 +436,21 @@
 
                 $scope.$emit(HB_EVENTS.ELFIN_UPDATED, scope.elfin);
             };
+            
+            /**
+             * Clean up rootScope listeners explicitely (required). 
+             */
+            $scope.$on('$destroy', function(event, data){
+            	$log.debug(">>>>>>>>>> $destroy called for hbMapController ! <<<<<<<<<<");
+            	//switchMapDisplayListener;
+            	displayMapViewListener();
+            	displayMapContentListener();
+                elfinLoadedListener();
+                elfinUnloadedListener();
+                elfinUpdatedListener();
+                elfinDeletedListener();
+            });
+            
         }]);
 
 

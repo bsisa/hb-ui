@@ -151,21 +151,24 @@
     		$location.url($location.path('/'));
     	};
         
-    	/**
-    	 * Show/hide map navigation function
-    	 */
-        $scope.toggleMap = function() {
-            $scope.displayMap = MapService.toggleMap();
-            $scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, $scope.displayMap);
-        };
 
+        /**
+         * Force show map in FULL mode if not yet visible.
+         */
+        $scope.switchMapDisplayType = function() {
+        	var forcedDisplayType = 'SPLIT';
+        	$scope.mapDisplayType = MapService.switchMapDisplayType(forcedDisplayType);
+        	$scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, forcedDisplayType !== 'HIDDEN');
+        };        
+        
+        
             /**
              * Generic function to display maps
              * @param itemDefinition
              */
         $scope.displayMapContent = function(itemDefinition) {
             if (!MapService.isMapDisplayed()) {
-                $scope.toggleMap();
+            	$scope.switchMapDisplayType();
             }
 
             GeoxmlService.getElfin(itemDefinition.parameters[0].idg, itemDefinition.parameters[0].id).get()
