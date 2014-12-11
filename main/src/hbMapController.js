@@ -214,7 +214,9 @@
                     	// TODO: https://github.com/bsisa/hb-ui/issues/8 
                     	// Fix the hereafter clearLayers call, it always complains: Error: layer.clearLayers is not a function
                     	// Possible ex. see: http://stackoverflow.com/questions/22987804/mapbox-clear-marker-not-working
-                    	//layer.clearLayers();
+                    	// TODO: Removing the clearLayers() call lead to problems. Notice coordinates display piling up 
+                    	// for each new map reload.
+                    	layer.clearLayers();
                         map.removeLayer(layer);
                     });
 
