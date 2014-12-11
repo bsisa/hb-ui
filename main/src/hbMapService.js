@@ -11,6 +11,7 @@
 
             return {
                 toggleMap: function() {
+                	$log.debug(">>>>>> hbMapService.toggleMap <<<<<<");
                     var mainMarginsDiv = $('#views-wrapper div.margin');
                     var mainCardViewDiv = $('#views-wrapper div.card-view');
                     var mainMapViewDiv = $('#views-wrapper div.map-view');
@@ -22,20 +23,23 @@
                     mainMapViewDiv.toggle();
 
                     if (mainCardViewDiv.hasClass('splitViewMargin')) {
+                    	$log.debug(">>>>>> hbMapService mainCardViewDiv HAS Class splitViewMargin <<<<<<");
                         var bodyWidth = $('body').width();
                         var windowHeight = $(window).height() - 100;
+                        var cardViewWidth = 450;
                         mainMarginsDiv.width('10px');
-                        mainCardViewDiv.width('600px');
-                        mainMapViewDiv.width((bodyWidth - 600 - 20 - 100) + 'px');
-                        mainMapViewLeafletDiv.width((bodyWidth - 600 - 20 - 100) + 'px');
+                        mainCardViewDiv.width(cardViewWidth+'px');
+                        mainMapViewDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
+                        mainMapViewLeafletDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
                         mainMapViewDiv.height(windowHeight + 'px');
                         mainMapViewLeafletDiv.height(windowHeight + 'px');
                         return true;
+                    } else {
+                    	$log.debug(">>>>>> hbMapService mainCardViewDiv DOES NOT HAVE Class splitViewMargin <<<<<<");
+                        mainMarginsDiv.width('');
+                        mainCardViewDiv.width('');
+                        return false;
                     }
-
-                    mainMarginsDiv.width('');
-                    mainCardViewDiv.width('');
-                    return false;
                 },
 
                 isMapDisplayed: function() {
