@@ -107,7 +107,8 @@ table.layout {
 /* card-container buttons bar*/
 .hb-btn-bar {
 	position: fixed;
-	top: 104px;
+/* 	top: 104px; */
+ 	top: 154px;
 	left: 10px;
 	width: 36px;
 }
@@ -117,8 +118,24 @@ table.layout {
 	position: fixed;
 	top: 0px;
 	left: 0px;
-	height: 48px;
+/* 	height: 48px; */
 	width: 100%;
+}
+
+.hb-menu-bar-lg-height {
+	height: 48px;
+}
+
+.hb-menu-bar-md-height {
+	height: 96px;
+}
+
+.hb-menu-bar-sm-height {
+	height: 96px;
+}
+
+.hb-menu-bar-xs-height {
+	height: 144px;
 }
 
 .hb-upload-progressbar-container {
@@ -154,7 +171,9 @@ table.layout {
     height: 46px;
     margin-right: 0px;
     margin-top: 0px;
-    padding: 6px 0px 0px 4px;
+    margin-bottom: 0px;
+    padding: 10px 0px 0px 4px;
+	min-width:190px;
 	width:190px;
 }
 
@@ -229,7 +248,7 @@ button:hover {
 
 .hb-card {
 /* 	border: 2px solid pink; */
-	padding-top: 62px;
+	padding-top: 48px;
     padding-left: 0px;
     padding-right: 0px;
     padding-bottom: 0px;
