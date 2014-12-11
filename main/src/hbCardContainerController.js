@@ -84,10 +84,16 @@
     	 * Show/hide map navigation function
     	 */
         $scope.toggleMap = function() {
-        	$log.debug("$scope.toggleMap...");
             $scope.displayMap = MapService.toggleMap();
             $scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, $scope.displayMap);
-        };        
+        };      
+        
+        /**
+         * Used to allow displaying different layout upon map visibility or not. 
+         */
+        $scope.isMapToggled = function() {
+        	return MapService.isMapDisplayed();
+        };
         
         // ============================================================
         // Button bar layout helpers

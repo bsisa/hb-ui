@@ -18,7 +18,125 @@
 		est obligatoire!
 	</span>
 </div>
-<div class="row" style="padding-top: 8px;">
+<!-- Short IMMEUBLE summary intended for display side by side with a map -->
+<div ng-show="isMapToggled()" class="row summary">
+	<div class="form-group has-feedback"
+		ng-class="getCssHasFeedback(elfinForm.goal)">
+		<label for="goal" class="control-label" style="text-align:left;">No de
+			gérance </label>
+		<div >
+			<input id="goal" name="goal" type="text" class="form-control"
+				ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-readonly="!canEdit"
+				required>
+		</div>
+	</div>
+	<div class="form-group has-feedback"
+		ng-class="getCssHasFeedback(elfinForm.author)">
+		<label for="author" class="control-label">No
+			ECAP</label>
+		<div>
+			<input id="author" name="author" type="text"
+				class="form-control"
+				ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR" ng-readonly="!canEdit"
+				required>
+		</div>
+	</div>
+	<div class="form-group has-feedback"
+		ng-class="getCssHasFeedback(elfinForm.name)">
+		<label for="name" class="control-label">No de
+			constr.</label>
+		<div >
+			<input id="name" name="name" type="text" class="form-control"
+				ng-model="elfin.IDENTIFIANT.NOM" ng-readonly="!canEdit"
+				required>
+		</div>
+	</div>
+	<div class="form-group has-feedback"
+		ng-class="getCssHasFeedback(elfinForm.address)">
+		<label for="address" class="control-label">Adresse</label>
+		<div >
+			<input id="address" name="address" type="text"
+				class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS" ng-readonly="!canEdit"
+				required>
+		</div>
+	</div>
+	<div class="form-group has-feedback"
+		ng-class="getCssHasFeedback(elfinForm.cadastralNb)">
+		<label for="cadastralNb" class="control-label">No
+			cadastral</label>
+		<div >
+			<input id="cadastralNb" name="cadastralNb" type="text"
+				class="form-control"
+				ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR" ng-readonly="!canEdit"
+				required>
+		</div>
+	</div>
+	<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
+		<label for="manager" class="control-label">Propriétaire</label>
+		<div>
+			<div 
+				hb-choose-actor 
+				hb-choose-actor-id-name="manager" 
+				hb-choose-actor-elfin-form="elfinForm"
+				hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE"
+				hb-choose-actor-tooltip="Recherche de propriétaire"
+				hb-choose-actor-role="Propriétaire"
+				hb-choose-actor-editable="{{canEdit}}"
+				></div>								
+		</div>
+	</div>
+	<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.alias)">
+		<label for="alias" class="control-label">Architecte</label>
+		<div>
+			<input id="alias" name="alias" type="text" class="form-control"
+				ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" ng-readonly="!canEdit"
+				required>
+		</div>
+	</div>
+	<div class="form-group" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L">
+		<!-- Provides converted.actor -->
+		<div hb-actor-line-converter hb-actor-line-converter-line-model="otherPartnerLine" hb-actor-line-converter-actor-model="convertedActor" hb-actor-line-converter-actor-role="actorRole">
+			<label for="otherPartner-{{$index}}" class="control-label">{{convertedActorElfin.IDENTIFIANT.QUALITE}}</label>
+			<div>
+				<div 
+					hb-choose-actor 
+					hb-choose-actor-id-name="otherPartner-{{$index}}" 
+					hb-choose-actor-elfin-form="elfinForm"
+					hb-choose-actor-model="convertedActor"
+					hb-choose-actor-elfin-model="convertedActorElfin"
+					hb-choose-actor-tooltip="Recherche de partenaire"
+					hb-choose-actor-role="!Entreprise,!Collaborateur,!Propriétaire"
+					hb-choose-actor-editable="{{canEditParteners}}"
+					></div>
+			</div>
+			<div>
+				<p id="telCellphone" class="form-control-static">{{convertedActorElfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}} <span ng-if="convertedActorElfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR.length > 0 && convertedActorElfin.CARACTERISTIQUE.CAR4.VALEUR.length > 0"> / </span>{{convertedActorElfin.CARACTERISTIQUE.CAR4.VALEUR}}</p>
+			</div>								
+		</div>
+	</div>
+	<div class="form-group has-feedback"
+		ng-class="getCssHasFeedback(elfinForm.locality)">
+		<label for="locality" class="control-label">Lieu-dit</label>
+		<div>
+			<input id="locality" name="locality" type="text"
+				class="form-control"
+				ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"
+				ng-readonly="!canEdit"
+				>
+		</div>
+	</div>
+	<div class="form-group has-feedback"
+		ng-class="getCssHasFeedback(elfinForm.remark)">
+		<label for="remark" class="control-label">Remarque</label>
+		<div>
+			<input id="remark" name="remark" type="text" class="form-control"
+				ng-model="elfin.DIVERS.REMARQUE" 
+				ng-readonly="!canEdit"
+				>
+		</div>
+	</div>
+</div>
+<div ng-show="!isMapToggled()" class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
 		<tabset> <!-- IMMEUBLE tab --> <tab> <tab-heading>Immeuble</tab-heading>
 		<div class="hb-tab">

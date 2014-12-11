@@ -87,6 +87,12 @@ td.number {
     float: right;
 }
 
+/** Override default Bootstrap control-label alignment behaviour */
+.summary .control-label {
+	text-align:left;
+}
+
+
 th.dashboard {
 	min-width: 180px;
 }
@@ -244,6 +250,13 @@ button:hover {
 	border-left: 1px solid #ddd;
 	border-right: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;	
+}
+
+.summary {
+	padding-top: 8px;
+	padding-right: 40px;
+	padding-bottom: 20px;
+	padding-left: 40px;
 }
 
 .hb-card {
@@ -562,5 +575,5 @@ div.col-xs-10.card-view.splitViewMargin {
 
 
 div.map-view-wrapper {
-    padding-top: 62px;
+    padding-top: 48px;
 }
