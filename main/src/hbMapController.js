@@ -61,29 +61,6 @@
                 }
             });
 
-//            //TODO: move to constants
-//            var MAP_DISPLAY_TYPE = {
-//            		"FULL": "FULL",
-//            		"SPLIT": "SPLIT"
-//            };
-            
-            // Default to SPLIT
-//            $scope.mapDisplayType = MAP_DISPLAY_TYPE.SPLIT;
-            
-//            //Only two type for the moment. PRINT might be another type.
-//            $scope.switchMapDisplayType = function () {
-//            	if ($scope.mapDisplayType === MAP_DISPLAY_TYPE.SPLIT) {
-//            		$scope.mapDisplayType = MAP_DISPLAY_TYPE.FULL;
-//            	} else if ($scope.mapDisplayType === MAP_DISPLAY_TYPE.FULL) {
-//            		$scope.mapDisplayType = MAP_DISPLAY_TYPE.SPLIT;
-//            	}
-//            };
-            
-//            var switchMapDisplayListener = $rootScope.$on('SWITCH_DISPLAY_TYPE', function (event, newDisplayType) {
-//            	$log.debug("switching current map display : " + $scope.mapDisplayType + " to " + $scope.switchMapDisplayType() + " " +  $scope.mapDisplayType);
-//            });
-            
-            
             /*
             Reference to current displayed object
              */
