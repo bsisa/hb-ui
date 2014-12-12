@@ -22,11 +22,12 @@
                             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                             type: 'xyz'
                         },
-                        black_white: {
-                            name: 'Noir et Blanc',
-                            url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
-                            type: 'xyz'
-                        },
+// www.toolserver.org moved and could not find resource anymore.
+//                        black_white: {
+//                            name: 'Noir et Blanc',
+//                            url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
+//                            type: 'xyz'
+//                        },
                         hot: {
                             name: 'HOT',
                             url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
