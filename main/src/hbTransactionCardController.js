@@ -26,7 +26,7 @@
 
 								$scope.reallocate = $routeParams.reallocate ? true:false;
 								
-								$log.debug("    >>>> Using HbTransactionCardController, reallocate = " + $scope.reallocate );
+								//$log.debug("    >>>> Using HbTransactionCardController, reallocate = " + $scope.reallocate );
 
 
 								
@@ -89,7 +89,7 @@
 											}
 										}
 									} else {
-										$log.debug(">>>> Using HbTransactionCardController - displayBuildingAddress: NULL parameter value !)");
+										//$log.debug(">>>> Using HbTransactionCardController - displayBuildingAddress: NULL parameter value !)");
 										// Reset selecteImmeuble in case no sai or owner is available.
 										$scope.selectedImmeuble = null;
 									}

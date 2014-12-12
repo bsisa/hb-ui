@@ -38,7 +38,7 @@
 					function($attrs, $scope, $modal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
-						$log.debug("    >>>> Using HbChooseActorController");
+						//$log.debug("    >>>> Using HbChooseActorController");
 
 						// Check if optional editable property if available
 						if ($scope.editable) {
@@ -113,10 +113,10 @@
 			        		var oldIdValue = (oldId === null) ? 'null' : (oldId === undefined) ? 'undefined' : (oldId.trim() === '' ? 'empty string' : oldId);
 			        		var newIdValue = (newId === null) ? 'null' : (newId === undefined) ? 'undefined' : (newId.trim() === '' ? 'empty string' : newId);
 			            	
-			        		$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: oldId = " + oldIdValue + " => newId = " + newIdValue);
+			        		//$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: oldId = " + oldIdValue + " => newId = " + newIdValue);
 			        		if (newId !== undefined) {
 			        			if (newId === null || newId.trim() === '' || newId.trim() === 'null') {
-				        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: EMPTY model");
+			        				//$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: EMPTY model");
 				        			
 				        			// No actorModel.Id set default by name if provided 
 									if ($scope.defaultByName) {
@@ -126,7 +126,7 @@
 				            		// Force validation in create mode as well
 				            		$scope.enableValidateActor();			        			
 				        		} else {
-				        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: DATA for model: newId = " + newId);
+				        			//$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: DATA for model: newId = " + newId);
 				        			// Make sure an actor reference is defined before trying to load actor elfin
 				        			$scope.getElfinActor($scope.actorModel.ID_G, $scope.actorModel.Id);
 
@@ -141,9 +141,9 @@
 			        			// Remove listener now that we tried loading the actor elfin object.
 			        			actorModelWatchDeregistration();
 			        		} else {
-			        			$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: UNDEFINED model");
+			        			//$log.debug(">>>>>>>>>>>> HbChooseActorController - 'actorModel.Id' LISTENER: UNDEFINED model");
 			            		// Keep on listening as long as newId is undefined
-			            		$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => Keep on listening as long as newId is undefined");
+			        			//$log.debug(">>>>>>>>>>>> HbChooseActorController $scope.$watch('actorModel.Id') => Keep on listening as long as newId is undefined");
 			            	}
 			            });			        	
 			        	
@@ -192,7 +192,7 @@
 							xpathForActor = "//ELFIN[@CLASSE='ACTEUR']";
 						}
 
-						$log.debug("xpathForActor = " + xpathForActor);
+						//$log.debug("xpathForActor = " + xpathForActor);
 						
 			            // Asychronous actors preloading
 			            hbQueryService.getActors(xpathForActor)		
@@ -217,10 +217,10 @@
 			            	// Proceed only if not the listener initialisation and we wait for default processing
 			            	if (!(newActors === oldActors )) {
 			            		if ($scope.defaultActorProcessWaiting && $scope.defaultActorProcessWaiting === true) {
-				            		$log.debug(">>>>>>>>>>>>>>>>>> actors LISTENER waiting to set default actor by name");
+				            		//$log.debug(">>>>>>>>>>>>>>>>>> actors LISTENER waiting to set default actor by name");
 				            		setDefaultActorByName();			            			
 			            		} else {
-			            			$log.debug(">>>>>>>>>>>>>>>>>> actors LISTENER NOT waiting to set default actor by name");
+			            			//$log.debug(">>>>>>>>>>>>>>>>>> actors LISTENER NOT waiting to set default actor by name");
 			            		}
 			            		// Stop listening to actors list initialisation
 			            		actorsListenerDeregistration();
@@ -274,11 +274,11 @@
 					            	$scope.elfinForm.$setDirty();			
 					            	
 				            	} else {
-				            		$log.debug("No selection returned!!!");				            		
+				            		//$log.debug("No selection returned!!!");				            		
 				            	}
 				            	
 				            }, function () {
-				                $log.debug('Choose params modal dismissed at: ' + new Date());
+				                //$log.debug('Choose params modal dismissed at: ' + new Date());
 				            });
 				        };
 				        

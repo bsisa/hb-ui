@@ -18,7 +18,7 @@
 									$routeParams, $location, $log, $timeout,
 									hbAlertMessages, hbUtil, hbQueryService) {
 
-								$log.debug("    >>>> Using HbSurfaceCardController");
+								//$log.debug("    >>>> Using HbSurfaceCardController");
 
 						    	// Check when elfin instance becomes available 
 						    	$scope.$watch('elfin.Id', function() { 

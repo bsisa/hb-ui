@@ -21,7 +21,7 @@
 					function($attrs, $rootScope, $scope, GeoxmlService, $modal, $routeParams,
 							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, HB_ROLE_FONCTION, userDetails, hbQueryService) {
 
-						$log.debug("    >>>> Using ConstatCardController ");
+						//$log.debug("    >>>> Using ConstatCardController ");
 
 						// Used to provide UNITE_LOCATION (apartements) selection list
 						$scope.locationUnits = null;

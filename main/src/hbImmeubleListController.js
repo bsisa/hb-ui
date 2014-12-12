@@ -2,7 +2,7 @@
 
     angular.module('hb5').controller('HbImmeubleListController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', '$timeout', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, $timeout, hbAlertMessages, hbUtil) {
     
-    	$log.debug("    >>>> HbImmeubleListController called...");
+    	//$log.debug("    >>>> HbImmeubleListController called...");
     	
     	// Default order is by "Building management" 
     	$scope.predicate = 'IDENTIFIANT.OBJECTIF';

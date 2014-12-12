@@ -14,7 +14,7 @@
 					function($scope, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil) {
 
-						$log.debug("    >>>> Using HbChooseOneController");	
+						//$log.debug("    >>>> Using HbChooseOneController");	
 	
 	
 						/**

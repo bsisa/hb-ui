@@ -10,7 +10,7 @@
 					'GeoxmlService',
 					function($scope, $log, $filter, hbUtil, GeoxmlService) {
 
-						$log.debug("    >>>> Using HbActorLineConverterController");						
+						//$log.debug("    >>>> Using HbActorLineConverterController");						
 						
 						$scope.actorModel = { 
 								Id : "",
@@ -25,7 +25,7 @@
 			        	 */
 						$scope.$watch('lineModel.C[2]', function (newValue, oldValue) {
 							
-							$log.debug("lineModel.C[2] >>>> lineModel.C.length: " + $scope.lineModel.C.length);
+							//$log.debug("lineModel.C[2] >>>> lineModel.C.length: " + $scope.lineModel.C.length);
 							
 							// C[@POS="1"] => C[0] is unused
 							// C[@POS='2'] contains ID_G

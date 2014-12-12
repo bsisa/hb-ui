@@ -18,7 +18,7 @@
 									$routeParams, $location, $log, $timeout,
 									hbAlertMessages, hbUtil, hbQueryService) {
 
-								$log.debug("    >>>> Using HbPrestationCardController");
+								//$log.debug("    >>>> Using HbPrestationCardController");
 								
 								/**
 								 * Selection lists
@@ -42,13 +42,13 @@
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
 						    	$scope.$watch('elfin.Id', function() { 
-						    		$log.debug("    >>>> Using HbPrestationCardController: elfin.Id watch triggered...");
+						    		//$log.debug("    >>>> Using HbPrestationCardController: elfin.Id watch triggered...");
 						    		if ($scope.elfin!=null) {
-							    		$log.debug("    >>>> Using HbPrestationCardController: elfin.Id NOT NULL");
+						    			//$log.debug("    >>>> Using HbPrestationCardController: elfin.Id NOT NULL");
 							    		if ($attrs.hbMode === "create") {
-							    			$log.debug("    >>>> Using HbPrestationCardController: CREATE MODE");
+							    			//$log.debug("    >>>> Using HbPrestationCardController: CREATE MODE");
 											if ($scope.elfin) {
-												$log.debug("    >>>> Using HbPrestationCardController: elfin defined");
+												//$log.debug("    >>>> Using HbPrestationCardController: elfin defined");
 												// Template fields clean up.
 												$scope.elfin.GROUPE = '';
 												// CAR2.NOM = 'Motif'

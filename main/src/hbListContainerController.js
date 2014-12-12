@@ -2,13 +2,13 @@
 
     angular.module('hb5').controller('HbListContainerController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$location', 'hbAlertMessages', 'hbUtil', 'MapService', 'HB_EVENTS', function($attrs, $scope, GeoxmlService, $routeParams, $log, $location, hbAlertMessages, hbUtil, MapService, HB_EVENTS) {
     
-    	$log.debug("    >>>> HbListContainerController called...");
+    	//$log.debug("    >>>> HbListContainerController called...");
     	
-    	if ($routeParams.xpath) {
-    		$log.debug("    >>>> XPATH parameter found:  " + $routeParams.xpath);	
-    	} else {
-    		$log.debug("    >>>> NO XPATH parameter found...");
-    	}
+//    	if ($routeParams.xpath) {
+//    		$log.debug("    >>>> XPATH parameter found:  " + $routeParams.xpath);	
+//    	} else {
+//    		$log.debug("    >>>> NO XPATH parameter found...");
+//    	}
     	
     	
     	// Collection id parameter obtained from hb5.config $routeProvider
@@ -40,10 +40,10 @@
         $scope.mapDisplayType = 'HIDDEN';
         
         $scope.switchMapDisplayType = function() {
-        	$log.debug("switchMapDisplayType current : " + $scope.mapDisplayType);
+        	//$log.debug("switchMapDisplayType current : " + $scope.mapDisplayType);
         	$scope.mapDisplayType = MapService.switchMapDisplayType($scope.mapDisplayType);
         	$scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, $scope.mapDisplayType !== 'HIDDEN');
-        	$log.debug("switchMapDisplayType new :     " + $scope.mapDisplayType);
+        	//$log.debug("switchMapDisplayType new :     " + $scope.mapDisplayType);
         };
 
         /**

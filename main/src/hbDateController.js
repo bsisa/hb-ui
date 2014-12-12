@@ -23,7 +23,7 @@
 							$scope.hbDateNgModelCtrl = ctrl;						
 						};
 						
-						$log.debug("    >>>> Using HbDateController");	
+						//$log.debug("    >>>> Using HbDateController");	
 
 						// datepicke-popup ng-model date
 						$scope.date = null;

@@ -2,7 +2,7 @@
 
     angular.module('hb5').controller('HbDashboardController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil) {
     
-    	$log.debug("    >>>> HbDashboardController called at " + new Date());
+    	//$log.debug("    >>>> HbDashboardController called at " + new Date());
     	
     	// ============================================================
     	// Buildings Section - IMMEUBLE

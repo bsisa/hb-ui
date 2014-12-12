@@ -9,7 +9,7 @@
 							'$log',
 							function($scope, $log) {
     
-									$log.debug("    >>>> Using HbFormeComponentController");
+									//$log.debug("    >>>> Using HbFormeComponentController");
 							        
 									// Manage geographic or schematic mode.
 									$scope.COORDINATE_TYPE = {

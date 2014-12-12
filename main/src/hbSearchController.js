@@ -2,7 +2,7 @@
 
     angular.module('hb5').controller('HbSearchController', ['$scope', 'GeoxmlService', '$log', '$filter', '$location', 'HB_COLLECTIONS', 'hbAlertMessages', function($scope, GeoxmlService, $log, $filter, $location, HB_COLLECTIONS, hbAlertMessages) {
     
-    	$log.debug("    >>>> HbSearchController called at " + new Date());
+    	//$log.debug("    >>>> HbSearchController called at " + new Date());
     	
     	// ============================================================
     	// Buildings Section - IMMEUBLE

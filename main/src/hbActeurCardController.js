@@ -15,7 +15,7 @@
 					function($attrs, $scope, GeoxmlService, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil) {
 
-						$log.debug("    >>>> Using HbActeurCardController ");
+						//$log.debug("    >>>> Using HbActeurCardController ");
 						
 						// Get available roles dynamically from HB5 catalogue
 				    	$scope.$watch('elfin.Id', function() { 

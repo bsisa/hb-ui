@@ -14,7 +14,7 @@
 					function($scope, GeoxmlService, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil) {
 
-						$log.debug("    >>>> Using HbRoleCardController ");
+						//$log.debug("    >>>> Using HbRoleCardController ");
 						
 						
 					} ]);

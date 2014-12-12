@@ -16,7 +16,7 @@
 					function($scope, GeoxmlService, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil, $rootScope, $timeout) {
 
-						$log.debug("    >>>> Using HbUserCardController ");
+						//$log.debug("    >>>> Using HbUserCardController ");
 						
 						// Plain text passwords used to obtain the encrypted password signature. 
 						// Must never be persisted nor logged.

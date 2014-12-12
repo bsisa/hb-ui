@@ -48,7 +48,7 @@
 	           }
 	           
 	           if (mainCardViewDiv.hasClass('splitViewMargin')) {
-	           	$log.debug(">>>>>> hbMapService mainCardViewDiv HAS Class splitViewMargin <<<<<<");
+	           	//$log.debug(">>>>>> hbMapService mainCardViewDiv HAS Class splitViewMargin <<<<<<");
 	               var bodyWidth = $('body').width();
 	               var windowHeight = $(window).height() - 100;
 	               var cardViewWidth = undefined;
@@ -65,7 +65,7 @@
 	               mainMapViewLeafletDiv.height(windowHeight + 'px');
 	               return true; // TODO: Legacy behaviour, no return result required, remove 
 	           } else {
-	           	$log.debug(">>>>>> hbMapService mainCardViewDiv DOES NOT HAVE Class splitViewMargin <<<<<<");
+	           	//$log.debug(">>>>>> hbMapService mainCardViewDiv DOES NOT HAVE Class splitViewMargin <<<<<<");
 	               mainMarginsDiv.width('');
 	               mainCardViewDiv.width('');
 	               return false; // TODO: Legacy behaviour, no return result required, remove

@@ -11,7 +11,7 @@
 							'hbUtil',
 							function($attrs, $scope, $log, hbUtil) {
     
-									$log.debug("    >>>> Using HbAnnexesComponentController");
+									//$log.debug("    >>>> Using HbAnnexesComponentController");
 							        
 						        	// Set a default to 0 before computation.
 						        	$scope.annexesNoPhotoNb = 0;
@@ -33,7 +33,7 @@
 									$scope.hbUtil = hbUtil;
 									
 							    	$scope.$watchCollection('elfin.ANNEXE.RENVOI', function(newRenvois, oldRenvois) {
-							    		$log.debug(">>>> elfin.ANNEXE.RENVOI: newRenvois = " + newRenvois + ", oldRenvois = " + oldRenvois);
+							    		//$log.debug(">>>> elfin.ANNEXE.RENVOI: newRenvois = " + newRenvois + ", oldRenvois = " + oldRenvois);
 										// We want at least one annex mandatory, except photo, although it should not apply to CONSTAT.
 							    		$scope.annexesWithoutPhoto = hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo');
 							    		// Preserve default 0 value if no annexesWithoutPhoto exists.

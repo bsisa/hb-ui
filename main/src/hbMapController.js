@@ -114,7 +114,7 @@
                 GeoxmlService.getCollection(layer.idg).getList({"xpath" : layer.xpath})
 				.then(
 						function(elfins) {
-            				$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " objects.");
+            				//$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " objects.");
 							var objects = [];
 		                    angular.forEach(elfins, function (elfin) {
 		                    	// layer.representationType
@@ -427,7 +427,7 @@
              * Clean up rootScope listeners explicitely (required). 
              */
             $scope.$on('$destroy', function(event, data){
-            	$log.debug(">>>>>>>>>> $destroy called for hbMapController ! <<<<<<<<<<");
+            	//$log.debug(">>>>>>>>>> $destroy called for hbMapController ! <<<<<<<<<<");
             	//switchMapDisplayListener;
             	displayMapViewListener();
             	displayMapContentListener();

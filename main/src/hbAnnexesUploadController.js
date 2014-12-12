@@ -14,7 +14,7 @@
 						function($attrs, $scope, GeoxmlService, $log, hbAlertMessages,
 								hbUtil) {
     
-									$log.debug("    >>>> Using HbAnnexesUploadController");
+									//$log.debug("    >>>> Using HbAnnexesUploadController");
 
 									var canSelectAnnexTypeBool = false;
 									

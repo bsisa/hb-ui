@@ -20,8 +20,7 @@
 									$routeParams, $location, $log, $timeout,
 									hbAlertMessages, hbUtil, hbQueryService) {
 
-								$log
-										.debug("    >>>> Using HbContratCardController");
+								//$log.debug("    >>>> Using HbContratCardController");
 
 								
 						    	// Check when elfin instance becomes available 

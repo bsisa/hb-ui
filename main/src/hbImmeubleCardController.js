@@ -27,7 +27,7 @@
 									$routeParams, $location, $log, $timeout, $filter,  $locale, hbAlertMessages,
 									hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API, HB_ROLE_FONCTION) {
     
-									$log.debug("    >>>> Using HbImmeubleCardController with $locale.id = " + $locale.id);
+									//$log.debug("    >>>> Using HbImmeubleCardController with $locale.id = " + $locale.id);
 									
 									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
 									//$scope.validateOwner = false;		
@@ -118,7 +118,7 @@
 							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
 								            var xpathForConstatsEncours = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"'][not(IDENTIFIANT/A) or IDENTIFIANT/A='']";
 								            // TODO: constatsCollectionId must come from server configuration resource.
-								            $log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
+								            //$log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
 								            var constatsCollectionId = 'G20060920171100001';
 								            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstatsEncours})
 												.then(function(elfins) {
@@ -130,7 +130,7 @@
 													});
 								            var xpathForConstatsClos = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"'][(IDENTIFIANT/A) and not(IDENTIFIANT/A='')]";
 								            // TODO: constatsCollectionId must come from server configuration resource.
-								            $log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
+								            //$log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
 								            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstatsClos})
 												.then(function(elfins) {
 														$scope.constatsClos = elfins;
@@ -150,11 +150,11 @@
 							    	 */
 							    	$scope.$watchCollection('[elfin.IDENTIFIANT.OBJECTIF,elfin.PARTENAIRE.PROPRIETAIRE.NOM]', function(newValues, oldValues) {							    		
 
-							    		$log.debug("$watchCollection for OBJECTIF, PROPRIETAIRE.NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
+							    		//$log.debug("$watchCollection for OBJECTIF, PROPRIETAIRE.NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 							    		
 							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
 								            // TODO: constatsCollectionId must come from server configuration resource.
-								            $log.debug("TODO: HbImmeubleCardController: prestationCollectionId must come from server configuration resource.");
+							    			//$log.debug("TODO: HbImmeubleCardController: prestationCollectionId must come from server configuration resource.");
 							    			// DONE: added restriction on PROPRIETAIRE, CLASSE. Strict restriction on OBJECTIF, starts-with is not correct in all cases.
 								            var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@NOM='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM+"' and @CLASSE='PRESTATION']";
 								            hbQueryService.getPrestations(xpathForPrestations)
@@ -222,7 +222,7 @@
 								            
 								            // Update path to local file system
 								            var fsURI = hbUtil.buildAnnexeFileSystemUri($scope.elfin);
-								            $log.debug(">>>> fsURI = " + fsURI);
+								            //$log.debug(">>>> fsURI = " + fsURI);
 								            $scope.annexeFileSystemUri = fsURI;
 								            
 							    		};
