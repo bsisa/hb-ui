@@ -48,7 +48,7 @@
         
         // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
-        
+
         // Proceed with initialisation tasks
         init();
         
@@ -84,21 +84,27 @@
         // ============================================================
         // Map related functionality
         // ============================================================        
-        /**
+
+    	/**
          *  Default to HIDDEN // TODO: USE CONSTANT: MAP_DISPLAY_TYPE.HIDDEN
          */
         $scope.mapDisplayType = 'HIDDEN';
-        
-        $scope.switchMapDisplayType = function() {
-        	$scope.mapDisplayType = MapService.switchMapDisplayType($scope.mapDisplayType);
-        	$scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, $scope.mapDisplayType !== 'HIDDEN');
-        };
-
+    	
         /**
          * Used to allow displaying different layout upon map visibility or not. 
          */
         $scope.isMapToggled = function() {
         	return MapService.isMapDisplayed();
+        };    	
+
+        // Initial state overrides when clicked from map
+        if ($scope.isMapToggled() && $scope.mapDisplayType) {
+        	$scope.mapDisplayType = 'SPLIT';
+        };        
+        
+        $scope.switchMapDisplayType = function() {
+        	$scope.mapDisplayType = MapService.switchMapDisplayType($scope.mapDisplayType);
+        	$scope.$emit(HB_EVENTS.DISPLAY_MAP_VIEW, $scope.mapDisplayType !== 'HIDDEN');
         };        
         
         // ============================================================
