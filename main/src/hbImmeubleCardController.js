@@ -107,6 +107,20 @@
 											var searchObj = {Id: $scope.elfin.Id, ID_G: $scope.elfin.ID_G}
 											$location.search(searchObj).path( "/elfin/create/PRESTATION" );
 										}
+									};
+									
+									
+									/**
+									 * Triggers a redirection to the CONTRAT creation URL with current
+									 * IMMEUBLE SAI number passed as parameter.
+									 * Must not be effective while in create mode (no association is 
+									 * relevant while the IMMEUBLE creation is ongoing/pending.)
+									 */ 
+									$scope.createNewContract = function() {
+										if ($attrs.hbMode != "create") {
+											var searchObj = {sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+											$location.search(searchObj).path( "/elfin/create/CONTRAT" );
+										}
 									};										
 									
 							    	/**
