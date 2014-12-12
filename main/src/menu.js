@@ -167,9 +167,11 @@
              * @param itemDefinition
              */
         $scope.displayMapContent = function(itemDefinition) {
-            if (!MapService.isMapDisplayed()) {
-            	$scope.switchMapDisplayType();
-            }
+        	// TODO: activating this lead to unwanted map display. 
+        	// Map display is only meaningful in Card or List contexts.
+            //if (!MapService.isMapDisplayed()) {
+        	//	$scope.switchMapDisplayType();
+            //}
 
             GeoxmlService.getElfin(itemDefinition.parameters[0].idg, itemDefinition.parameters[0].id).get()
                 .then(function(elfin) {
