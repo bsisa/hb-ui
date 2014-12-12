@@ -549,13 +549,12 @@
 													<th><a href=""
 														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
 													<th><a href=""
-														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a></th>
-																						<th><a href=""
+														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a> / <a href=""
+														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
+													<th><a href=""
 														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
 													<th><a href=""
 														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
 												</tr>
 											</thead>
 											<tbody ng-show="prestations">
@@ -567,10 +566,9 @@
 													</td>
 													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{prestation.GROUPE}}</span></td>
+													<td><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
 													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
-													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
 												</tr>
 											</tbody>
 										</table>
@@ -642,13 +640,12 @@
 													<th><a href=""
 														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
 													<th><a href=""
-														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a></th>
-																						<th><a href=""
+														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a> / <a href=""
+														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
+													<th><a href=""
 														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
 													<th><a href=""
 														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
 												</tr>
 											</thead>
 											<tbody ng-show="prestations">
@@ -660,10 +657,9 @@
 													</td>
 													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{prestation.GROUPE}}</span></td>
+													<td><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
 													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
-													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td>
 												</tr>
 											</tbody>
 										</table>
