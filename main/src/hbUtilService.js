@@ -14,7 +14,15 @@
 		 */
 		var getDateFromHbTextDateFormat = function(textDate) {
 			return moment(textDate, "YYYY-MM-DD").toDate();
-		};		
+		};
+		
+		var getMomentDateFromHbTextDateFormat = function(textDate) {
+			return moment(textDate, "YYYY-MM-DD");
+		};
+		
+		var isValidDateFromHbTextDateFormat = function(textDate) {
+			return moment(textDate, "YYYY-MM-DD").isValid();
+		};						
 		
 		
 		/**
@@ -329,7 +337,9 @@
         	getValueAtPath:getValueAtPath,
         	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault,
         	encodeUriParameter:encodeUriParameter,
+        	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	getDateInHbTextFormat:getDateInHbTextFormat,
+        	getMomentDateFromHbTextDateFormat:getMomentDateFromHbTextDateFormat,
         	getDateFromHbTextDateFormat:getDateFromHbTextDateFormat,
         	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue,
         	getLinkFileName:getLinkFileName,
