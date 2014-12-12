@@ -19,27 +19,31 @@
            var isMapDisplayed = function() {
                return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
            };
+
+           /**
+            * Code block dealing with div toggle operation
+            */
+           var toggle = function(mainMarginsDiv, mainCardViewDiv, mainMapViewDiv) {
+        	   mainMarginsDiv.toggleClass('splitViewMargin');
+	           mainCardViewDiv.toggleClass('splitViewMargin');
+	           mainMapViewDiv.toggle();
+           };
            
+           /**
+            * Refresh map layout dimensions, position and visibility 
+            * depending on display type and current visibility status.
+            */
            var refreshLayout = function(mapDisplayType) {
-	           var mainMarginsDiv = $('#views-wrapper div.margin');
+	           
+        	   var mainMarginsDiv = $('#views-wrapper div.margin');
 	           var mainCardViewDiv = $('#views-wrapper div.card-view');
 	           var mainMapViewDiv = $('#views-wrapper div.map-view');
 	           var mainMapViewLeafletDiv = $('#views-wrapper div.map-view-leaflet');
 	           
-	           // Trigger display if not yet the case for all display types except HIDDEN 
-	           if (!isMapDisplayed() && mapDisplayType !== MAP_DISPLAY_TYPE.HIDDEN) {
-	        	   $log.debug(">>>> mapDisplayType = "+mapDisplayType+" => Trigger display if not yet the case for all display types except HIDDEN");
-		           mainMarginsDiv.toggleClass('splitViewMargin');
-		           mainCardViewDiv.toggleClass('splitViewMargin');
-		           mainMapViewDiv.toggle();
-	           }
-	
-	           // Hide map if not yet the case for display type HIDDEN
-	           if (isMapDisplayed() && mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) {
-	        	   $log.debug(">>>> mapDisplayType = "+mapDisplayType+" => Hide map if not yet the case for display type HIDDEN");
-		           mainMarginsDiv.toggleClass('splitViewMargin');
-		           mainCardViewDiv.toggleClass('splitViewMargin');
-		           mainMapViewDiv.toggle();
+	           if (!isMapDisplayed() && mapDisplayType !== MAP_DISPLAY_TYPE.HIDDEN) { // Make map visible for all display types except HIDDEN 
+	        	   toggle(mainMarginsDiv, mainCardViewDiv, mainMapViewDiv);
+	           } else if (isMapDisplayed() && mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) { // Hide map for display type HIDDEN
+	        	   toggle(mainMarginsDiv, mainCardViewDiv, mainMapViewDiv);
 	           }
 	           
 	           if (mainCardViewDiv.hasClass('splitViewMargin')) {
@@ -58,50 +62,16 @@
 	               mainMapViewLeafletDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
 	               mainMapViewDiv.height(windowHeight + 'px');
 	               mainMapViewLeafletDiv.height(windowHeight + 'px');
-	               return true;
+	               return true; // TODO: Legacy behaviour, no return result required, remove 
 	           } else {
 	           	$log.debug(">>>>>> hbMapService mainCardViewDiv DOES NOT HAVE Class splitViewMargin <<<<<<");
 	               mainMarginsDiv.width('');
 	               mainCardViewDiv.width('');
-	               return false;
+	               return false; // TODO: Legacy behaviour, no return result required, remove
 	           }
            };
            
             return {
-                toggleMap: function(mapDisplayType) {
-                	$log.debug(">>>>>> hbMapService.toggleMap <<<<<<");
-                	
-                	return refreshLayout(true);
-
-//                    var mainMarginsDiv = $('#views-wrapper div.margin');
-//                    var mainCardViewDiv = $('#views-wrapper div.card-view');
-//                    var mainMapViewDiv = $('#views-wrapper div.map-view');
-//                    var mainMapViewLeafletDiv = $('#views-wrapper div.map-view-leaflet');
-//
-//                    // This tells us if the Map DIV is hidden
-//                    mainMarginsDiv.toggleClass('splitViewMargin');
-//                    mainCardViewDiv.toggleClass('splitViewMargin');
-//                    mainMapViewDiv.toggle();
-//
-//                    if (mainCardViewDiv.hasClass('splitViewMargin')) {
-//                    	$log.debug(">>>>>> hbMapService mainCardViewDiv HAS Class splitViewMargin <<<<<<");
-//                        var bodyWidth = $('body').width();
-//                        var windowHeight = $(window).height() - 100;
-//                        var cardViewWidth = 450;
-//                        mainMarginsDiv.width('10px');
-//                        mainCardViewDiv.width(cardViewWidth+'px');
-//                        mainMapViewDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
-//                        mainMapViewLeafletDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
-//                        mainMapViewDiv.height(windowHeight + 'px');
-//                        mainMapViewLeafletDiv.height(windowHeight + 'px');
-//                        return true;
-//                    } else {
-//                    	$log.debug(">>>>>> hbMapService mainCardViewDiv DOES NOT HAVE Class splitViewMargin <<<<<<");
-//                        mainMarginsDiv.width('');
-//                        mainCardViewDiv.width('');
-//                        return false;
-//                    }
-                },
 
                 /**
                  * Provides a function to test whether or not the map is currently displayed. 
