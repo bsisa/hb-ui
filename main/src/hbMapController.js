@@ -4,7 +4,6 @@
         function ($scope, $rootScope, $log, leafletData, MapService, $location, GeoxmlService, HB_EVENTS) {
 
 
-
             // Add Leaflet Directive scope extension
             angular.extend($scope, {
                 center: {
@@ -118,7 +117,10 @@
             				$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " objects.");
 							var objects = [];
 		                    angular.forEach(elfins, function (elfin) {
+		                    	// layer.representationType
+//TODO: 		                    	$log.debug("layer.representationType = " + layer.representationType);
 		                        var objectLayer = MapService.getObjectLayer(elfin, layer.representationType, layer.representationStyle);
+		                        
 		                        if (objectLayer !== null) {
 		                            objects.push(objectLayer);
 		                            var identifier = getElfinIdentifier(elfin);
@@ -214,6 +216,7 @@
 
 
                     angular.forEach(mapDef.CARACTERISTIQUE.FRACTION.L, function (layerDef) {
+//TODO:                     	$log.debug("layerDef = " + angular.toJson(layerDef));
                         displayLayer(map, mapDef.Id, layerDef);
                     });
 
