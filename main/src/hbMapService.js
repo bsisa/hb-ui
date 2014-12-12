@@ -42,7 +42,8 @@
 	           
 	           if (!isMapDisplayed() && mapDisplayType !== MAP_DISPLAY_TYPE.HIDDEN) { // Make map visible for all display types except HIDDEN 
 	        	   toggle(mainMarginsDiv, mainCardViewDiv, mainMapViewDiv);
-	           } else if (isMapDisplayed() && mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) { // Hide map for display type HIDDEN
+	           } 
+	           if (isMapDisplayed() && mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) { // Hide map for display type HIDDEN
 	        	   toggle(mainMarginsDiv, mainCardViewDiv, mainMapViewDiv);
 	           }
 	           
@@ -102,7 +103,7 @@
                     var popup = '<b>' + elfin.IDENTIFIANT.NOM + ' ' + elfin.IDENTIFIANT.ALIAS + '</b><br>';
                     popup += 'No SAI <b>' + elfin.IDENTIFIANT.OBJECTIF + '</b> - ' + elfin.CLASSE + '<br>';
                     popup += '<a href="/elfin/' + elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id + '">Détails</a>';
-
+//                    popup += '<a href="/elfin/' + elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id + '?mdt=SPLIT">Détails</a>';
                     return popup;
                 },
 
