@@ -158,6 +158,46 @@
 	        }
 	    };
 	}]);
+	
+	
+	/**
+     * Filter tailored to CONTRAT list requirements
+     * 
+	 */
+	angular.module('hb5').filter('contractTerminatedListFilter', ['hbUtil', function (hbUtil) {
+	
+		return function (contracts, isTerminated) {
+			
+			var testTerminated = true;
+			if (isTerminated && isTerminated === false) {
+				testTerminated = false;
+			}
+			
+	        if (!angular.isUndefined(contracts)) {
+		    	// Define current date to compare from
+		    	var currentDate = moment();
+	            // Temp array to store results to
+		    	var tempcontracts = [ ];
+	            
+	            angular.forEach(contracts, function (contract) {
+
+ 			   		// Get moment date from text date 
+ 		    		var checkedDate = moment(hbUtil.getDateFromHbTextDateFormat(contract.IDENTIFIANT.A));
+
+ 		    		// Compute number of days difference between checkedDate and current date.
+ 		    		var daysDiff = checkedDate.diff(currentDate, 'days');
+ 		    		
+ 		    		// Negative difference means date in the past
+ 		    		if (daysDiff < 0 && testTerminated || daysDiff >= 0 && !testTerminated) {
+ 		    			tempcontracts.push(contract);
+ 		    		}  		    		
+                });
+	            return tempcontracts;
+	        } else {
+	            return contracts;
+	        }
+	    };
+	}]);	
 
 	
 	/**
