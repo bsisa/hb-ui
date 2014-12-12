@@ -678,69 +678,159 @@
 			</div><!-- Prestation 1st level row div END -->
 			</div><!-- Prestation 1st level hb-tab container END -->
 		</tab> 
+		
+		
 		<!-- CONTRAT tab --> 
 		<tab>
 			<tab-heading>Contrats ({{contrats.length}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
 					<div class="col-sm-12">
-						<table class="table table-condensed table-bordered table-striped">
-							<thead>
-								<tr>
-									<th colspan="2">
-										<div class="input-group">
-											<div>Contrats</div>
-										</div>
-									</th>
-		
-									<th colspan="4">
-										<div class="input-group">
-		
-											<span class="input-group-btn"
-												tooltip="Créer un nouveau contrat relatif à l'objet courant">
-												<a class="btn btn-default" type="button"
-												ng-href="/elfin/create/CONTRAT?sai={{elfin.IDENTIFIANT.OBJECTIF}}">
-													<i class="icon-plus-sign"></i> Nouveau contrat
-											</a>
-											</span>
-		
-										</div>
-									</th>
-<!-- 									<th colspan="3"> -->
-<!-- 										<div class="input-group"></div> -->
-<!-- 									</th> -->
-		
-								</tr>
-								<tr>
-									<th>Contrat</th>
-									<th><a href=""
-										ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
-											I</a></th>
-									<th><a href=""
-										ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
-											II</a></th>
-									<th><a href=""
-										ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
-									<th><a href=""
-										ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
-								<th><a href=""
-										ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
-								</tr>
-							</thead>
-							<tbody ng-show="contrats">
-								<tr
-									ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse">
-									<td>
-										<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
-									</td>
-									<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-									<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-									<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-									<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
-									<td><span >{{contrat.GROUPE}}</span></td>
-								</tr>
-							</tbody>
-						</table>
+					
+					<tabset>  
+						<tab><!-- CONTRAT 1st sub tab -->
+							<tab-heading>Contrats actifs</tab-heading>
+							<div class="hb-tab">
+
+								<div class="row">
+									<div class="col-sm-12">
+									<!-- Table des contrats actifs -->
+									
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">
+														<div class="input-group">
+															<div>Contrats</div>
+														</div>
+													</th>
+						
+													<th colspan="4">
+														<div class="input-group">
+						
+															<span class="input-group-btn"
+																tooltip="Créer un nouveau contrat relatif à l'objet courant">
+																<a class="btn btn-default" type="button"
+																ng-href="/elfin/create/CONTRAT?sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+																	<i class="icon-plus-sign"></i> Nouveau contrat
+															</a>
+															</span>
+						
+														</div>
+													</th>
+				<!-- 									<th colspan="3"> -->
+				<!-- 										<div class="input-group"></div> -->
+				<!-- 									</th> -->
+						
+												</tr>
+												<tr>
+													<th>Contrat</th>
+													<th><a href=""
+														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
+															I</a></th>
+													<th><a href=""
+														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
+															II</a></th>
+													<th><a href=""
+														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
+													<th><a href=""
+														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
+												<th><a href=""
+														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
+												</tr>
+											</thead>
+											<tbody ng-show="contrats">
+												<tr
+													ng-repeat="contrat in contrats | contractTerminatedListFilter:false | orderBy:contractPredicate:contractReverse">
+													<td>
+														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
+													</td>
+													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
+													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
+													<td><span >{{contrat.GROUPE}}</span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</tab>
+						<tab><!-- CONTRAT 2nd sub tab -->
+							<tab-heading>Contrats dénoncés</tab-heading>
+							<div class="hb-tab">
+
+								<div class="row">
+									<div class="col-sm-12">
+									<!-- Table des contrats dénoncés -->
+									
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">
+														<div class="input-group">
+															<div>Contrats</div>
+														</div>
+													</th>
+						
+													<th colspan="4">
+														<div class="input-group">
+						
+															<span class="input-group-btn"
+																tooltip="Créer un nouveau contrat relatif à l'objet courant">
+																<a class="btn btn-default" type="button"
+																ng-href="/elfin/create/CONTRAT?sai={{elfin.IDENTIFIANT.OBJECTIF}}">
+																	<i class="icon-plus-sign"></i> Nouveau contrat
+															</a>
+															</span>
+						
+														</div>
+													</th>
+				<!-- 									<th colspan="3"> -->
+				<!-- 										<div class="input-group"></div> -->
+				<!-- 									</th> -->
+						
+												</tr>
+												<tr>
+													<th>Contrat</th>
+													<th><a href=""
+														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
+															I</a></th>
+													<th><a href=""
+														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
+															II</a></th>
+													<th><a href=""
+														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
+													<th><a href=""
+														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
+												<th><a href=""
+														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
+												</tr>
+											</thead>
+											<tbody ng-show="contrats">
+												<tr
+													ng-repeat="contrat in contrats | contractTerminatedListFilter:true | orderBy:contractPredicate:contractReverse">
+													<td>
+														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
+													</td>
+													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
+													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
+													<td><span >{{contrat.GROUPE}}</span></td>
+												</tr>
+											</tbody>
+										</table>									
+									
+									
+											
+									</div>
+								</div>
+							</div>
+						</tab>						
+					</tabset>			
+
 					</div>
 				</div>
 			</div>
