@@ -140,20 +140,20 @@
 								<td><span>{{transaction.IDENTIFIANT.DE}}</span></td>
 								<td><span>{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
 								<td><span>{{transaction.DIVERS.REMARQUE}}</span></td>
-								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
-								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
+								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR_A_NEUF | currency:CHF:'CHF'}}</span></td>
+								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR | currency:CHF:'CHF'}}</span></td>
 							</tr>
 							<tr class="subtotal">
 								<td colspan="5" >Sous total {{key | lowercase}}</td>
-								<td class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR_A_NEUF' | map: multiplyBy100 | sum ) / 100 ) | currency:'CHF' }} </td>
-								<td class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR' | map: multiplyBy100 | sum ) / 100 ) | currency :'CHF'}} </td>
+								<td class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR_A_NEUF' | map: multiplyBy100 | sum ) / 100 ) | currency:CHF:'CHF' }} </td>
+								<td class="total number">{{ (( value | map: 'IDENTIFIANT.VALEUR' | map: multiplyBy100 | sum ) / 100 ) | currency:CHF :'CHF'}} </td>
 							</tr>
 						</tbody>
 						<tfoot >
 							<tr class="grandtotal">
 								<td colspan="5" >Total</td>
-								<td class="total number">{{transactions | map: 'IDENTIFIANT.VALEUR_A_NEUF' | sum | currency :'CHF'}}</td>
-								<td class="total number">{{transactions | map: 'IDENTIFIANT.VALEUR' | sum | currency :'CHF'}}</td>
+								<td class="total number">{{transactions | map: 'IDENTIFIANT.VALEUR_A_NEUF' | sum | currency:CHF :'CHF'}}</td>
+								<td class="total number">{{transactions | map: 'IDENTIFIANT.VALEUR' | sum | currency:CHF :'CHF'}}</td>
 							</tr>						
 						</tfoot>
 					</table>
