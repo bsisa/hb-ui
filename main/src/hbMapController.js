@@ -117,11 +117,12 @@
             				//$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " objects.");
 							var objects = [];
 		                    angular.forEach(elfins, function (elfin) {
-		                    	// layer.representationType
-//TODO: 		                    	$log.debug("layer.representationType = " + layer.representationType);
 		                        var objectLayer = MapService.getObjectLayer(elfin, layer.representationType, layer.representationStyle);
-		                        
 		                        if (objectLayer !== null) {
+//			                    	if ($scope.elfin.Id === elfin.Id && layer.representationType.toLowerCase() == 'marker') {
+//			                    		// TODO: Customise marker icon background... in hbMapService getMarkerLayer...
+//			                    		// For possible solution, check http://stackoverflow.com/questions/23567203/leaflet-changing-marker-color
+//			                    	}		                        	
 		                            objects.push(objectLayer);
 		                            var identifier = getElfinIdentifier(elfin);
 		                            if (angular.isUndefined($scope.layerDictionary[identifier])) {
@@ -306,6 +307,7 @@
             // Elfin has been loaded
             var elfinLoadedListener = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
                 $scope.elfin = elfin;
+                $log.debug(">>>> elfinLoadedListener => " + elfin.IDENTIFIANT.OBJECTIF);
             });
 
             // Elfin has been unloaded, thus no more current elfin
