@@ -278,7 +278,7 @@
 				var prestationGroup = null;
 	    		if (transactionGroup === "Petite réparation") {
 	    			prestationGroup = 'Fonctionnement';
-	    		} else if (transactionGroup === "Frais fixes") {
+	    		} else if (transactionGroup === "Frais fixe") {
 	    			prestationGroup = "Fonctionnement";
 	    		} else if (transactionGroup === "Investissement pluriannuel") {
 	    			prestationGroup = "Investissement";
@@ -296,32 +296,37 @@
 		 */
 		var buildAnnexeFileSystemUri = function(elfin_p) {
 			if (elfin_p) {
-				var uri = undefined;
-				var owner = elfin_p.PARTENAIRE.PROPRIETAIRE.NOM; 
-				if (owner === "NE") {
-					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
-				} else if (owner === "FMPA") {
-					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\FMPA\\";
-				} else if (owner === "CDP") {
-					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\PREVOYANCE.NE\\";
-				} else if (owner === "DOM") {
-					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\DOMAINES\\";
-				} else if (owner === "ETAT") {
-					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
-				} else if (owner === "VITEOS") {
-					uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\VITEOS\\";
+				try {
+					var uri = undefined;
+					var owner = elfin_p.PARTENAIRE.PROPRIETAIRE.NOM; 
+					if (owner === "NE") {
+						uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
+					} else if (owner === "FMPA") {
+						uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\FMPA\\";
+					} else if (owner === "CDP") {
+						uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\PREVOYANCE.NE\\";
+					} else if (owner === "DOM") {
+						uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\DOMAINES\\";
+					} else if (owner === "ETAT") {
+						uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\BATIMENTS\\";
+					} else if (owner === "VITEOS") {
+						uri = "\\\\H\:\\3-BATIMENTS-DOSSIERS\\VITEOS\\";
+					}
+					var name = elfin_p.IDENTIFIANT.NOM; 
+					var address = elfin_p.IDENTIFIANT.ALIAS;
+				    address = address.replace(new RegExp("[àâä]","ig"),"a");
+				    address = address.replace(new RegExp("[éèêë]","ig"),"e");
+				    address = address.replace(new RegExp("[îï]","ig"),"i");
+				    address = address.replace(new RegExp("[ôö]","ig"),"o");
+				    address = address.replace(new RegExp("[ùûü]","ig"),"u");
+				    var street = "_" + address.split(', ')[1];
+				    if (street == "_undefined") street = "";
+				    uri += name + "_" + address.split(', ')[0] +  street;
+					return uri;
+				} catch (e) {
+					$log.debug("Non critical failure for buildAnnexeFileSystemUri(elfin_p.Id = " + elfin_p.Id +"). Exception: " + e);
+					return "";
 				}
-				var name = elfin_p.IDENTIFIANT.NOM; 
-				var address = elfin_p.IDENTIFIANT.ALIAS;
-			    address = address.replace(new RegExp("[àâä]","ig"),"a");
-			    address = address.replace(new RegExp("[éèêë]","ig"),"e");
-			    address = address.replace(new RegExp("[îï]","ig"),"i");
-			    address = address.replace(new RegExp("[ôö]","ig"),"o");
-			    address = address.replace(new RegExp("[ùûü]","ig"),"u");
-			    var street = "_" + address.split(', ')[1];
-			    if (street == "_undefined") street = "";
-			    uri += name + "_" + address.split(', ')[0] +  street;
-				return uri;											
 			} else {
 				return "";
 			}
