@@ -397,7 +397,7 @@
 								<td><span >{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
 								<td><span >{{constat.IDENTIFIANT.NOM}}</span></td>
 								<td class="number"><span>
-										{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI | currency : 'CHF'}}</span></td>
+										{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI | currency }}</span></td>
 								<td class="date"><span>
 									{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_DATE | date }}
 									</span></td>
@@ -436,7 +436,7 @@
 									<td><span >{{constat.PARTENAIRE.USAGER.VALUE}}</span></td>
 									<td><span >{{constat.IDENTIFIANT.NOM}}</span></td>
 									<td class="number"><span>
-										{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI | currency:'CHF'}}
+										{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI | currency }}
 										</span></td>
 									<td class="date"><span >{{constat.IDENTIFIANT.DE | date}}</span></td>
 									<td class="date"><span >{{constat.IDENTIFIANT.A | date}}</span></td>
@@ -568,7 +568,7 @@
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 													<td><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
-													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
+													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency }}</span></td>
 												</tr>
 											</tbody>
 										</table>
@@ -614,7 +614,7 @@
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 													<td><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
-													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
+													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency }}</span></td>
 <!-- 													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td> -->
 <!-- 													<td>{{getTransactions(prestation) | map: 'IDENTIFIANT.VALEUR' | sum | currency :'CHF'}}</td> -->
 <!-- 													<td>total payé...</td>													 -->
@@ -659,7 +659,7 @@
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 													<td><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
-													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
+													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency }}</span></td>
 												</tr>
 											</tbody>
 										</table>
@@ -722,7 +722,7 @@
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
+													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency }}</span></td>
 													<td><span >{{contrat.GROUPE}}</span></td>
 												</tr>
 											</tbody>
@@ -765,7 +765,7 @@
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
+													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency }}</span></td>
 													<td><span >{{contrat.GROUPE}}</span></td>
 												</tr>
 											</tbody>
@@ -810,7 +810,7 @@
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF'}}</span></td>
+													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency }}</span></td>
 													<td><span >{{contrat.GROUPE}}</span></td>
 												</tr>
 											</tbody>
