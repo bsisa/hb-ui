@@ -243,7 +243,7 @@
         $scope.delElfin = function (elfin) {
         	
         	var modalInstance = $modal.open({
-                templateUrl: 'deleteConfirmModalPanel.html',
+                templateUrl: '/assets/views/deleteConfirmModalPanel.html',
                 controller: DeleteConfirmCtrl,
                 scope: $scope,
                 backdrop: 'static'
