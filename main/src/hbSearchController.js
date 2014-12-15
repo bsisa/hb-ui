@@ -47,7 +47,8 @@
          * Either a list, a card or stay on current page if selection is 0. 
          */
         $scope.listOrViewImmeuble = function() {
-        	// 
+    		// Clean up any former irrelevant sticky search parameter such as ?xpath=...
+    		$location.search({}); 
         	if ($scope.filteredImmeubleElfins.length > 1) {
         		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE').search('search', $scope.immeubleSearch.text);
         	} else if ($scope.filteredImmeubleElfins.length == 1) {
