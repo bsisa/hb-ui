@@ -1,0 +1,12 @@
+<span>
+	<span ng-show="annexesNoPhoto.length > 1">
+		<a ng-href="{{link}}"><i tooltip="Plusieurs pièces jointes (voir annexes)" class="glyphicon glyphicon-eye-open"></i></a>
+	</span>
+	<span ng-show="annexesNoPhoto.length < 1">
+		<a ng-href="{{link}}"><i tooltip="Pas de pièce jointe (voir annexes)" class="glyphicon glyphicon-eye-open"></i></a>
+	</span>	
+	<span ng-show="annexesNoPhoto.length === 1">
+		<a target="_self" ng-href="{{link}}"><i tooltip="Ouvrir la pièce jointe" class="glyphicon glyphicon-paperclip"></i></a>
+	</span>
+</span>
+
