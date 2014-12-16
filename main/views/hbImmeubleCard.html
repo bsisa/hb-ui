@@ -934,6 +934,56 @@
 				</div>
 			</div>
 		</tab>		
+		<!-- VALEUR tab -->
+		<tab>
+			<tab-heading>Valeur</tab-heading>
+			<div class="hb-tab">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.ecapValue)">
+							<label for="ecapValue" class="col-md-4 control-label">Valeur ECAP</label>
+							<div class="col-md-8">
+								<input id="ecapValue" name="ecapValue" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_5.VALEUR" ng-readonly="!canEdit">
+<!-- 									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[4].VALEUR" ng-readonly="!canEdit"> -->
+									
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.constructionYear)">
+							<label for="constructionYear" class="col-md-4 control-label">Année estimation ECAP (aaaa)</label>
+							<div class="col-md-8" >
+								<input id="constructionYear" name="constructionYear" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_6.VALEUR" ng-readonly="!canEdit">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.exitYear)">
+							<label for="exitYear" class="col-md-4 control-label">Valeur cadastrale</label>
+							<div class="col-md-8" >
+								<input id="exitYear" name="exitYear" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_7.VALEUR" ng-readonly="!canEdit">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">					
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.censusNote)">
+							<label for="censusNote" class="col-md-4 control-label">Année estimation cadastrale (aaaa)</label>
+							<div class="col-md-8" >
+								<input id="censusNote" name="censusNote" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_8.VALEUR" ng-readonly="!canEdit">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</tab>				
 		<!-- EQUIPEMENT tab --> 
 		<tab> 
 			<tab-heading>Equipement</tab-heading>

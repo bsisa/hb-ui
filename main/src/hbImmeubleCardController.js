@@ -200,6 +200,24 @@
 							    		
 							    		if ($scope.elfin!=null) {
 								            
+											// ===========================================================
+											// Safe access to elfin.CARACTERISTIQUE.CARSET.CAR by POS 
+							    			// Relying on Js array position is not a safe option when 
+							    			// POS indexes are discontinuous. (i.e. POS="4" missing)
+							    			// JS misses XPath like: 
+							    			// 		ELFIN/CARACTERISTIQUE/CARSET/CAR[@POS='6']
+							    			// Hereafter using underscore.js to perform reference mapping
+											// ===========================================================
+											
+											$scope.CARSET_CAR_POS_5 = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === 5; });
+											$scope.CARSET_CAR_POS_6 = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === 6; });
+											$scope.CARSET_CAR_POS_7 = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === 7; });
+											$scope.CARSET_CAR_POS_8 = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === 8; });
+											
+											// ===========================================================							    			
+							    			
+							    			
+							    			
 							    			/**
 							    			 * Perform template clean up tasks while in create mode.
 							    			 */
