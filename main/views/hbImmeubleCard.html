@@ -842,6 +842,98 @@
 				</div>
 			</div>
 		</tab> 
+		<!-- CARACTERISTIQUE tab -->
+		<tab>
+			<tab-heading>Caractéristiques</tab-heading>
+			<div class="hb-tab">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.currentFunction)">
+							<label for="currentFunction" class="col-md-2 control-label">Fonction actuelle</label>
+							<div class="col-md-10">
+								<input id="currentFunction" name="currentFunction" type="text"
+									class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR" ng-readonly="!canEdit">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.constructionYear)">
+							<label for="constructionYear" class="col-md-4 control-label">Année de construction</label>
+							<div class="col-md-8" >
+								<input id="constructionYear" name="constructionYear" type="text"
+									class="form-control"
+									ng-model="elfin.IDENTIFIANT.DE" ng-readonly="!canEdit">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.exitYear)">
+							<label for="exitYear" class="col-md-4 control-label">Année de sortie</label>
+							<div class="col-md-8" >
+								<input id="exitYear" name="exitYear" type="text"
+									class="form-control"
+									ng-model="elfin.IDENTIFIANT.A" ng-readonly="!canEdit">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">					
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.censusNote)">
+							<label for="censusNote" class="col-md-4 control-label">Note de Recensement</label>
+							<div class="col-md-8" >
+								<input id="censusNote" name="censusNote" type="text"
+									class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR" ng-readonly="!canEdit">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.exitReason)">
+							<label for="exitReason" class="col-md-4 control-label">Cause de sortie</label>
+							<div class="col-md-8" >
+								<input id="exitReason" name="exitReason" type="text"
+									class="form-control"
+									ng-model="elfin.IDENTIFIANT.QUALITE" ng-readonly="!canEdit">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">						
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.housingNb)">
+							<label for="housingNb" class="col-md-4 control-label">Nombre de logement</label>
+							<div class="col-md-8" >
+								<input id="housingNb" name="housingNb" type="text"
+									class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR6.VALEUR" ng-readonly="!canEdit">
+							</div>
+						</div>
+					</div>
+<!-- Remark: No data found for classroomNb, housingNb in HB4. 
+     In addition these data structure conflict with dynamic "other partner" storage. 
+     If reactivated these field value should be stored elsewhere. 					 -->
+     
+<!-- 					<div class="col-xs-6">						 -->
+<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.classroomNb)"> -->
+<!-- 							<label for="classroomNb" class="col-md-4 control-label">Nombre de classe</label> -->
+<!-- 							<div class="col-md-8" > -->
+<!-- 								<input id="classroomNb" name="classroomNb" type="text" -->
+<!-- 									class="form-control" -->
+<!-- 									ng-model="elfin.CARACTERISTIQUE.FRACTION.L[2].C[0].VALEUR" ng-readonly="!canEdit"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-xs-6">						 -->
+<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.housingNb)"> -->
+<!-- 							<label for="housingNb" class="col-md-4 control-label">Nombre de place de travail</label> -->
+<!-- 							<div class="col-md-8" > -->
+<!-- 								<input id="housingNb" name="housingNb" type="text" -->
+<!-- 									class="form-control" -->
+<!-- 									ng-model="elfin.CARACTERISTIQUE.FRACTION.L[2].C[1].VALEUR" ng-readonly="!canEdit"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div>		 -->
+				</div>
+			</div>
+		</tab>		
 		<!-- EQUIPEMENT tab --> 
 		<tab> 
 			<tab-heading>Equipement</tab-heading>
@@ -849,17 +941,16 @@
 				<h5></h5>
 			</div>
 		</tab> 
-		<!-- Annexes tab -->
-		<tab> 
-			<tab-heading><div hb-annexes-number></div></tab-heading>
-			<div class="hb-tab"><div hb-annexes-component></div></div>
-		</tab>		
-			<!-- FORME tab -->
+		<!-- FORME tab -->
 		<tab> 
 			<tab-heading>Forme</tab-heading>
 			<div class="hb-tab"><div hb-forme-component></div></div>
 		</tab> 
-		
+		<!-- Annexes tab -->
+		<tab> 
+			<tab-heading><div hb-annexes-number></div></tab-heading>
+			<div class="hb-tab"><div hb-annexes-component></div></div>
+		</tab>				
 		</tabset>
 	</div>
 </div>
