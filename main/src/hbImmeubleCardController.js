@@ -194,6 +194,22 @@
 							    		
 							    	}, true);
 							    	
+
+							    	/**
+							    	 * Helper function to link and if necessary create CAR elements by position. 
+							    	 */
+							    	var linkCARByPos = function(pos) {
+							    		// Link CAR by pos to currentCAR variable. If not found currentCAR === undefined
+							    		var currentCAR = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === pos; });
+							    		// If currentCAR undefined
+							    		if (!currentCAR) {
+							    			// Create missing CAR for position pos
+							    			$scope.elfin.CARACTERISTIQUE.CARSET.CAR.push({"VALEUR":"","POS":pos});
+							    			// Link newly created CAR by pos to currentCAR variable
+							    			currentCAR = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === pos; });
+							    		}
+							    		return currentCAR;
+							    	};
 							    	
 							    	// Check when elfin instance becomes available 
 							    	$scope.$watch('elfin.Id', function() { 
@@ -209,15 +225,15 @@
 							    			// Hereafter using underscore.js to perform reference mapping
 											// ===========================================================
 											
-											$scope.CARSET_CAR_POS_5 = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === 5; });
-											$scope.CARSET_CAR_POS_6 = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === 6; });
-											$scope.CARSET_CAR_POS_7 = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === 7; });
-											$scope.CARSET_CAR_POS_8 = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === 8; });
-											
+											$scope.CARSET_CAR_POS_5 = linkCARByPos(5);
+											$scope.CARSET_CAR_POS_6 = linkCARByPos(6);
+											$scope.CARSET_CAR_POS_7 = linkCARByPos(7);
+											$scope.CARSET_CAR_POS_8 = linkCARByPos(8);
+											$scope.CARSET_CAR_POS_9 = linkCARByPos(9);
+											$scope.CARSET_CAR_POS_10 = linkCARByPos(10);
+
 											// ===========================================================							    			
-							    			
-							    			
-							    			
+
 							    			/**
 							    			 * Perform template clean up tasks while in create mode.
 							    			 */
