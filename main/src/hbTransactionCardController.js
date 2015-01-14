@@ -189,15 +189,25 @@
 						    	}, true);
 								
 						    	/**
+						    	 * TODO: review behaviour when prestations.length > 1 
 						    	 * Maintain helper for SAI updated ...
 						    	 */
 						    	$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() {
 						    		if ($scope.elfin!==null && $scope.elfin.IDENTIFIANT.OBJECTIF) {
 						    			$scope.helper.constatSelectionSai = $scope.elfin.IDENTIFIANT.OBJECTIF.split('.')[0];
 						    		}
+//						    		if ($scope.elfin!==null && $scope.elfin.IDENTIFIANT.OBJECTIF) {
+//						    			if (prestations.length > 1) {
+//						    				$log.debug(">>> several prestation for no SAI: " + $scope.elfin.IDENTIFIANT.OBJECTIF);
+//						    			} else {
+//						    				$scope.helper.constatSelectionSai = $scope.elfin.IDENTIFIANT.OBJECTIF.split('.')[0];
+//						    			}
+//						    		}
+						    		
 						    	}, true);
 						    	
 								/**
+								 * TODO: disable when prestations.length > 1 
 								 * Listen to informations required to find out related PRESTATION
 								 */
 								$scope.$watch('[helper.constatSelectionSai,elfin.CARACTERISTIQUE.CAR1.UNITE,elfin.IDENTIFIANT.PAR,searchOwner.Id]', function() {

@@ -59,7 +59,7 @@
 						</div>
 						<label for="objectif" class="col-sm-2 control-label">Prest.</label>
 						<div id="objectif" ng-show="elfin.IDENTIFIANT.OBJECTIF" class="col-sm-3 form-control-static"><span class="label label-success" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{elfin.IDENTIFIANT.OBJECTIF}}</span></div>
-					    <div ng-show="false"><input id="objectif" name="objectif" ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-required="true" ng-minlength="1"></div>
+					    <div ng-show="true"><input id="objectif" name="objectif" ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-required="true" ng-minlength="1"></div>
 						<div ng-show="!elfin.IDENTIFIANT.OBJECTIF" id="objectifStatus" class="col-sm-3 form-control-static"><span class="label label-warning" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{prestationStatus}}</span></div>						
 					</div>
 					<div class="form-group">
