@@ -39,8 +39,8 @@
      * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
     angular.module('hb5').controller('HbCardContainerController', [
-        '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'MapService',
-        function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS, MapService) {
+        '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'MapService','hbPrintService',
+        function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, hbAlertMessages, hbUtil, HB_EVENTS, MapService, hbPrintService) {
     
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
@@ -273,6 +273,15 @@
    				hbAlertMessages.addAlert("warning",message);
             });        	
         };
+        
+        /**
+         * Prints the default report for this ELFIN CLASSE/GROUPE
+         */
+        $scope.printReport = function (elfin) {
+       		$log.debug(">>>> printReport ACTIVE JOB FOUND: " + angular.toJson(hbPrintService.getActiveJob()));
+        	$log.debug(">>>> printReport for CLASSE: " + elfin.CLASSE + ", GROUPE: " + elfin.GROUPE);
+        };
+        
         
         
         $scope.elfinTypes = {
