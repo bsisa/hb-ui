@@ -278,7 +278,7 @@
          * Prints the default report for this ELFIN CLASSE/GROUPE
          */
         $scope.printReport = function (elfin) {
-       		$log.debug(">>>> printReport ACTIVE JOB FOUND: " + angular.toJson(hbPrintService.getActiveJob()));
+       		$log.debug(">>>> printReport ACTIVE JOB FOUND: " + angular.toJson(hbPrintService.getReportDefinitions()));
         	$log.debug(">>>> printReport for CLASSE: " + elfin.CLASSE + ", GROUPE: " + elfin.GROUPE);
         };
         

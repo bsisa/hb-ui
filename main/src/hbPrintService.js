@@ -11,11 +11,13 @@
 			[ '$log', 'GeoxmlService', 'hbUtil', function($log, GeoxmlService, hbUtil) {
 
 				var activeJob = null;
+				var reportDefinitions = [];
 
 				return {
 					setActiveJob : function(activeJob_p) {
 						
 						$log.debug(">>>> activeJob_p:  " + angular.toJson(activeJob_p));
+						var tempReportDefinitions = []; // set temporary new configuration
 						
 						// Search for IMPRESSION reference within the METIER elfin
 						var printElfinId = null;
@@ -25,7 +27,7 @@
 						for ( var i=0; i < activeJob_p.CARACTERISTIQUE.FRACTION.L.length; i++) {
 							var currL = activeJob_p.CARACTERISTIQUE.FRACTION.L[i];
 							// TODO: protect against non existing C...
-							//hbUtil.reorderArrayByPOS(currL.C);
+							hbUtil.reorderArrayByPOS(currL.C);
 							var currLPOS1Value = currL.C[0].VALUE;
 							if (currLPOS1Value === "IMPRESSION") {
 								printElfinId = currL.C[1].VALUE;
@@ -46,28 +48,59 @@
 	//				        	}
 															
 								$log.debug(">>>> PRINT ELFIN:  " + angular.toJson(printElfin));
-								
-//								if (printElfin) {
-//									for ( var i=0; i < printElfin.CARACTERISTIQUE.FRACTION.L.length; i++) {
-//										
-//									}
-//								} else {
-//									$log.warn("No print elfin defined");
-//								}
-					            
-					            
+								hbUtil.reorderArrayByPOS(printElfin['CARACTERISTIQUE']['FRACTION']['L']);
+								if (printElfin) {
+									for ( var i=0; i < printElfin.CARACTERISTIQUE.FRACTION.L.length; i++) {
+										if ( i > 0 ) { // Skip report description line
+											var currPrintElfinLine = printElfin.CARACTERISTIQUE.FRACTION.L[i]; 
+											hbUtil.reorderArrayByPOS(currPrintElfinLine.C);
+											/*
+												<C POS="1">Nom du rapport </C>
+												<C POS="2">CLASSE (classe à laquelle s'applique le rapport)</C>
+												<C POS="3">GROUPE (groupe à laquelle s'applique le rapport - si vide s'applique à tous les groupes)</C>
+												<C POS="4">IDG</C>
+												<C POS="5">RAPPORTId</C>
+												<C POS="5">Extra parameters</C>
+											*/
+											var reportTitle = currPrintElfinLine.C[0];
+											var reportClasse = currPrintElfinLine.C[1];
+											var reportGroupe = currPrintElfinLine.C[2];
+											var reportID_G = currPrintElfinLine.C[3];
+											var reportId = currPrintElfinLine.C[4];
+											var reportExtraParam = currPrintElfinLine.C[5];
+											
+											var currReportDefinition = {
+												"title" : reportTitle,
+												"CLASSE" : reportClasse, 
+												"GROUPE" : reportGroupe,
+												"ID_G" : reportID_G,
+												"Id" : reportId,
+												"Parameters" : reportExtraParam
+											};
+											
+											tempReportDefinitions.push(currReportDefinition);
+										}
+									}
+								} else {
+									$log.warn("No print elfin defined");
+								}
 					        	}, function(response) {
 					        		var message = "Le chargement des informations pour ELFIN IMPRESSION a échoué (statut de retour: " + response.status + ")";
 					        		$log.error(message);
 					        	}
 					        );
+							activeJob = activeJob_p; // update active job
+							reportDefinitions = tempReportDefinitions; // Set or reset reportDefinitions 
 						} else {
 							$log.info("No print elfin configuration found.");
 						}
-						activeJob = activeJob_p;
+						
 					},
 					getActiveJob : function() {
 						return activeJob;
+					},
+					getReportDefinitions : function() {
+						return reportDefinitions;
 					}
 				};
 			} ]);
