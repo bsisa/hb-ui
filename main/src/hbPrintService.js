@@ -28,6 +28,11 @@
 	        		return false; // no match found
 				};
 				
+				//TODO: Implement
+				var buildReportUrl = function(elfin) {
+					return "todo";
+				}
+				
 				
 				
 				return {
@@ -120,7 +125,7 @@
 						return hasReportDefinition(elfin);
 					},
 					getReportUrl : function(elfin) {
-						return "";
+						return buildReportUrl(elfin);
 					}
 				};
 			} ]);
