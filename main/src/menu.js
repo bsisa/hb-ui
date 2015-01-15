@@ -94,8 +94,8 @@
     
     
     angular.module('hb5').controller('MenuController', [
-        '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS', 'userDetails',
-        function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS, userDetails) {
+        '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS', 'userDetails','hbPrintService',
+        function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS, userDetails, hbPrintService) {
 
       	// Force service initialisation.
        	userDetails.getAbbreviation;  
@@ -659,6 +659,7 @@
         /* Change the job */
         $scope.activateJob = function(job) {
             $scope.activeJob = job;
+            hbPrintService.setActiveJob($scope.activeJob);
 
             /* Load the menus */
             var menuReferences = $scope.activeJob['CARACTERISTIQUE']['FRACTION']['L'];
