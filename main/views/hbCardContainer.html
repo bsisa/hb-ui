@@ -15,7 +15,7 @@
 					<span ng-show="!canSave()"><i class="glyphicon glyphicon-saved"></i></span>
 				</button>
 				<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="glyphicon glyphicon-remove-circle"></i></button>
-				<button class="btn btn-default" ng-click="printReport(elfin)" ng-disabled="false"><i class="glyphicon glyphicon-print"></i></button>
+				<button class="btn btn-default" ng-click="printReport(elfin)" ng-disabled="!canPrint()"><i class="glyphicon glyphicon-print"></i></button>
 				<button class="btn btn-danger" ng-click="switchMapDisplayType()"><i class="glyphicon glyphicon-picture"></i></button>
 	   		</div>    
 	    

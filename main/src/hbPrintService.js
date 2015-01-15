@@ -13,6 +13,23 @@
 				var activeJob = null;
 				var reportDefinitions = [];
 
+				var hasReportDefinition = function(elfin) {
+	        		$log.debug("Report definitions available.");
+	        		for (var i = 0; i < reportDefinitions.length ;i++) {
+	        			var reportDefinition = reportDefinitions[i];
+	        			$log.debug("Report reportDefinition CLASSE: " + reportDefinition.CLASSE);
+	        			if (reportDefinition.CLASSE === elfin.CLASSE) {
+	        				$log.debug("Report reportDefinition MATCH FOUND FOR " + reportDefinition.CLASSE);
+	        				return true;
+	        			} else {
+	        				// continue searching
+	        			}
+	        		}
+	        		return false; // no match found
+				};
+				
+				
+				
 				return {
 					setActiveJob : function(activeJob_p) {
 						
@@ -60,22 +77,19 @@
 												<C POS="3">GROUPE (groupe à laquelle s'applique le rapport - si vide s'applique à tous les groupes)</C>
 												<C POS="4">IDG</C>
 												<C POS="5">RAPPORTId</C>
-												<C POS="5">Extra parameters</C>
 											*/
-											var reportTitle = currPrintElfinLine.C[0];
-											var reportClasse = currPrintElfinLine.C[1];
-											var reportGroupe = currPrintElfinLine.C[2];
-											var reportID_G = currPrintElfinLine.C[3];
-											var reportId = currPrintElfinLine.C[4];
-											var reportExtraParam = currPrintElfinLine.C[5];
+											var reportTitle = currPrintElfinLine.C[0].VALUE;
+											var reportClasse = currPrintElfinLine.C[1].VALUE;
+											var reportGroupe = currPrintElfinLine.C[2].VALUE;
+											var reportID_G = currPrintElfinLine.C[3].VALUE;
+											var reportId = currPrintElfinLine.C[4].VALUE;
 											
 											var currReportDefinition = {
 												"title" : reportTitle,
 												"CLASSE" : reportClasse, 
 												"GROUPE" : reportGroupe,
 												"ID_G" : reportID_G,
-												"Id" : reportId,
-												"Parameters" : reportExtraParam
+												"Id" : reportId
 											};
 											
 											tempReportDefinitions.push(currReportDefinition);
@@ -101,6 +115,12 @@
 					},
 					getReportDefinitions : function() {
 						return reportDefinitions;
+					},
+					hasReportDefinition : function(elfin) {
+						return hasReportDefinition(elfin);
+					},
+					getReportUrl : function(elfin) {
+						return "";
 					}
 				};
 			} ]);

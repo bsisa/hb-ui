@@ -118,6 +118,17 @@
         	return $scope.elfinForm.$dirty && $scope.elfinForm.$valid;
         };
         
+        /**
+         * Help managing enable/disable state of ELFIN print button 
+         */        
+        $scope.canPrint = function() {
+        	if ($scope.elfin!=null) {
+	        	return hbPrintService.hasReportDefinition($scope.elfin);
+        	} else {
+        		return false;
+        	}
+        };      
+        
         /** 
          * Help manage button class depending on pristine/dirty
          * valid/invalid status
