@@ -13,27 +13,69 @@
 				var activeJob = null;
 				var reportDefinitions = [];
 
-				var hasReportDefinition = function(elfin) {
-	        		$log.debug("Report definitions available.");
+				var getReportMatchingReportDefinition = function(elfin) {
+	        		var reportDefinitionsForClasse = [];
 	        		for (var i = 0; i < reportDefinitions.length ;i++) {
 	        			var reportDefinition = reportDefinitions[i];
 	        			$log.debug("Report reportDefinition CLASSE: " + reportDefinition.CLASSE);
 	        			if (reportDefinition.CLASSE === elfin.CLASSE) {
+	        				// Add reportDefinition for this CLASSE. There can be several if defined for CLASSE/GROUPE.
+	        				reportDefinitionsForClasse.push(reportDefinition);
 	        				$log.debug("Report reportDefinition MATCH FOUND FOR " + reportDefinition.CLASSE);
-	        				return true;
+	        				//return true;
 	        			} else {
 	        				// continue searching
 	        			}
 	        		}
-	        		return false; // no match found
+	        		
+	        		// No definition found for this CLASSE
+	        		if (reportDefinitionsForClasse.length === 0) {
+	        			return undefined;
+	        		} else if (reportDefinitionsForClasse.length === 1) {
+	        			// GROUPE must be empty or match the current elfin.GROUPE
+	        			if (reportDefinitionsForClasse[0].GROUPE === elfin.GROUPE || reportDefinitionsForClasse[0].GROUPE === "") {
+	        				return reportDefinitionsForClasse[0];
+	        			} else {
+	        				return undefined;
+	        			}
+	        		} else if (reportDefinitionsForClasse.length > 1) {
+	        			var reportDefinitionForClasseWithoutGroupe = null;
+	        			for (var i = 0; i < reportDefinitionsForClasse.length; i++) {
+	        				var reportDefinitionForClasse = reportDefinitionsForClasse[i];
+		        			if (reportDefinitionForClasse.GROUPE === elfin.GROUPE) {
+		        				return reportDefinitionForClasse;
+		        			} else if (reportDefinitionForClasse.GROUPE === "") {
+		        				reportDefinitionForClasseWithoutGroupe = reportDefinitionForClasse;
+		        			}
+	        			}
+	        			if (reportDefinitionForClasseWithoutGroupe == null) {
+	        				return undefined;
+	        			} else {
+	        				return reportDefinitionForClasseWithoutGroupe;
+	        			}
+	        		}
 				};
 				
-				//TODO: Implement
+				
+				var hasReportDefinition = function(elfin) {
+	        		$log.debug("Report definitions available.");
+	        		var mrd = getReportMatchingReportDefinition(elfin);
+	        		if (mrd == undefined) {
+	        			return false;
+	        		} else {
+	        			return true;
+	        		}
+				};
+				
+				//TODO: Test and change API to deal with parameter in a generic way: requires original elfin ID_G,Id to be passed...
 				var buildReportUrl = function(elfin) {
-					return "todo";
-				}
-				
-				
+	        		var mrd = getReportMatchingReportDefinition(elfin);
+	        		if (mrd == undefined) {
+	        			return "";
+	        		} else {
+	        			return "api/melfin/report/"+mrd.ID_G+"/"+mrd.Id;;
+	        		}
+				};
 				
 				return {
 					setActiveJob : function(activeJob_p) {
