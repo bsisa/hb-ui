@@ -73,7 +73,7 @@
 	        		if (mrd == undefined) {
 	        			return "";
 	        		} else {
-	        			return "api/melfin/report/"+mrd.ID_G+"/"+mrd.Id;;
+	        			return "/api/melfin/report/"+mrd.ID_G+"/"+mrd.Id+"?col="+elfin.ID_G+"&id="+elfin.Id;
 	        		}
 				};
 				
