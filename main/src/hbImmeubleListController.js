@@ -24,6 +24,15 @@
     		$scope.search.text = $routeParams.search; 
     	}
     	
+
+    	/**
+    	 * Helper to access to place information by POS instead of array index.
+    	 */
+    	$scope.getPlace = function(elfin) {
+    		var place = hbUtil.getCARByPos(elfin, 1);
+    		return (place === undefined) ? "" : place;
+    	};
+    	
 		/**
 		 * Proceed to elfin_p collection `prestationListFilter` filtering and sorting
 		 * Moved from page defined filtering: 
