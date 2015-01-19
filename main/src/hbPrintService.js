@@ -17,11 +17,11 @@
 	        		var reportDefinitionsForClasse = [];
 	        		for (var i = 0; i < reportDefinitions.length ;i++) {
 	        			var reportDefinition = reportDefinitions[i];
-	        			$log.debug("Report reportDefinition CLASSE: " + reportDefinition.CLASSE);
+	        			//$log.debug("Report reportDefinition CLASSE: " + reportDefinition.CLASSE);
 	        			if (reportDefinition.CLASSE === elfin.CLASSE) {
 	        				// Add reportDefinition for this CLASSE. There can be several if defined for CLASSE/GROUPE.
 	        				reportDefinitionsForClasse.push(reportDefinition);
-	        				$log.debug("Report reportDefinition MATCH FOUND FOR " + reportDefinition.CLASSE);
+	        				//$log.debug("Report reportDefinition MATCH FOUND FOR " + reportDefinition.CLASSE);
 	        				//return true;
 	        			} else {
 	        				// continue searching
@@ -58,7 +58,7 @@
 				
 				
 				var hasReportDefinition = function(elfin) {
-	        		$log.debug("Report definitions available.");
+	        		//$log.debug("Report definitions available.");
 	        		var mrd = getReportMatchingReportDefinition(elfin);
 	        		if (mrd == undefined) {
 	        			return false;
