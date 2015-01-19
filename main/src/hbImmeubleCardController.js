@@ -200,13 +200,14 @@
 							    	 */
 							    	var linkCARByPos = function(pos) {
 							    		// Link CAR by pos to currentCAR variable. If not found currentCAR === undefined
-							    		var currentCAR = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === pos; });
+							    		var currentCAR = hbUtil.getCARByPos($scope.elfin,pos);
 							    		// If currentCAR undefined
 							    		if (!currentCAR) {
 							    			// Create missing CAR for position pos
-							    			$scope.elfin.CARACTERISTIQUE.CARSET.CAR.push({"VALEUR":"","POS":pos});
+							    			$log.debug(">>>> Create missing CAR for position pos = " + pos);
+							    			$scope.elfin.CARACTERISTIQUE.CARSET.CAR.splice(pos-1, 0, {"VALEUR":"","POS":pos});
 							    			// Link newly created CAR by pos to currentCAR variable
-							    			currentCAR = _.find($scope.elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === pos; });
+							    			currentCAR = hbUtil.getCARByPos($scope.elfin,pos);
 							    		}
 							    		return currentCAR;
 							    	};
@@ -224,12 +225,26 @@
 							    			// 		ELFIN/CARACTERISTIQUE/CARSET/CAR[@POS='6']
 							    			// Hereafter using underscore.js to perform reference mapping
 											// ===========================================================
-											
+
+							    			// Lieu-dit
+							    			$scope.CARSET_CAR_POS_1 = linkCARByPos(1);
+							    			// Unused (empty) 
+							    			$scope.CARSET_CAR_POS_2 = linkCARByPos(2);
+							    			// No ECAP
+							    			$scope.CARSET_CAR_POS_3 = linkCARByPos(3);
+							    			// Unused (empty) 
+							    			$scope.CARSET_CAR_POS_4 = linkCARByPos(4);
+							    			// Valeur ECAP
 											$scope.CARSET_CAR_POS_5 = linkCARByPos(5);
+											// Année estimation ECAP
 											$scope.CARSET_CAR_POS_6 = linkCARByPos(6);
+											// Valeur cadastrale
 											$scope.CARSET_CAR_POS_7 = linkCARByPos(7);
+											// Année estimation cadastrale
 											$scope.CARSET_CAR_POS_8 = linkCARByPos(8);
+											// Nombre de classe
 											$scope.CARSET_CAR_POS_9 = linkCARByPos(9);
+											// Nombre de place de travail
 											$scope.CARSET_CAR_POS_10 = linkCARByPos(10);
 
 											// ===========================================================							    			
