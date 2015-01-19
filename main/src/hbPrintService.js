@@ -80,7 +80,7 @@
 				return {
 					setActiveJob : function(activeJob_p) {
 						
-						$log.debug(">>>> activeJob_p:  " + angular.toJson(activeJob_p));
+						//$log.debug(">>>> activeJob_p:  " + angular.toJson(activeJob_p));
 						var tempReportDefinitions = []; // set temporary new configuration
 						
 						// Search for IMPRESSION reference within the METIER elfin
@@ -111,7 +111,7 @@
 	//				        		hbUtil.reorderArrayByPOS(elfin['CARACTERISTIQUE']['CARSET']['CAR']);
 	//				        	}
 															
-								$log.debug(">>>> PRINT ELFIN:  " + angular.toJson(printElfin));
+								//$log.debug(">>>> PRINT ELFIN:  " + angular.toJson(printElfin));
 								hbUtil.reorderArrayByPOS(printElfin['CARACTERISTIQUE']['FRACTION']['L']);
 								if (printElfin) {
 									for ( var i=0; i < printElfin.CARACTERISTIQUE.FRACTION.L.length; i++) {
