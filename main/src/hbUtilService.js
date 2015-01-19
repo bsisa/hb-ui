@@ -7,6 +7,19 @@
 	
 	angular.module('hb5').service('hbUtil', ['$log','$window','$filter','HB_API',function ($log,$window,$filter,HB_API) {
 
+		/**
+		 * Get ELFIN/CARACTERISTIQUE/CARSET/CAR by CAR.POS (CAR@POS)
+		 * instead of array position. If not found currentCAR === undefined
+		 *  
+		 * Note: Removing 1 from POS to get array pos is not 
+		 * enough. POS element are not necessarily contiguous, 
+		 * when a position is missing the following array 
+		 * positions do not match XML POS values reliably.
+		 */
+		var getCARByPos = function(elfin, pos) {
+    		var currentCAR = _.find(elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === pos; });
+    		return currentCAR;
+		};
 		
 		/**
 		 * Returns the date corresponding to the string date expected to have 
@@ -334,6 +347,7 @@
 		};		
         
         return {
+        	getCARByPos:getCARByPos,
         	reorderArrayByPOS:reorderArrayByPOS,
         	buildUrlQueryString:buildUrlQueryString,
         	buildKeyValueObject:buildKeyValueObject,
