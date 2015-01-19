@@ -225,16 +225,19 @@
 	 * Filter tailored to IMMEUBLE list requirements.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual immeuble list. 
 	 */
-	angular.module('hb5').filter('immeubleListFilter', [function () {
+	angular.module('hb5').filter('immeubleListFilter', ['$log','hbUtil', function ($log,hbUtil) {
 		
 		return function (immeubles, predicate) {
 	        if (!angular.isUndefined(immeubles) && !angular.isUndefined(predicate)) {
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
+	            	var immeublePlace = hbUtil.getCARByPos(immeuble, 1);
+	            	immeublePlace = (immeublePlace === undefined) ? {"VALEUR" : ""} : immeublePlace;
                     if ( 
                     	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.NOM, predicate.owner) &&
                     	 icontains(immeuble.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
-                    	 icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
+                    	 //icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
+                    	 icontains(immeublePlace.VALEUR, predicate.place) &&
                     	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
                     	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address)
                     ) {
@@ -253,15 +256,18 @@
 	 * Filter tailored to IMMEUBLE list single search criterion on `all fields`.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual immeuble list. 
 	 */
-	angular.module('hb5').filter('immeubleListAnyFilter', [function () {
+	angular.module('hb5').filter('immeubleListAnyFilter', ['$log','hbUtil', function ($log,hbUtil) {
 		
 		return function (immeubles, searchtext) {
 
 			var checkAnyField = function(immeuble,searchtext) {
+				var immeublePlace = hbUtil.getCARByPos(immeuble, 1);
+				immeublePlace = (immeublePlace === undefined) ? {"VALEUR" : ""} : immeublePlace;
 				return (
 					icontains(immeuble.PARTENAIRE.PROPRIETAIRE.NOM, searchtext) ||
 					icontains(immeuble.IDENTIFIANT.OBJECTIF, searchtext) ||
-					icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
+					//icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
+					icontains(immeublePlace.VALEUR, searchtext) ||
 //					icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
 					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext)
 				);		
