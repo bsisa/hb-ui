@@ -2,9 +2,9 @@
 <table class="table table-condensed table-bordered table-striped" >
 	<tbody>
 		<tr>
-			<th class="dashboard">Immeuble{{ immeubleElfins.length | plural }} <span class="badge">{{immeubleElfins.length}}</span></th>
+			<th class="dashboard" style="width: 33%;">Immeuble{{ immeubleElfins.length | plural }} <span class="badge">{{immeubleElfins.length}}</span></th>
 			<th class="dashboard">Unité{{ uniteLocElfins.length | plural }} locative{{ uniteLocElfins.length | plural }} <span class="badge">{{uniteLocElfins.length}}</span></th>
-			<th class="dashboard">Fontaine{{ fontaineElfins.length | plural }} et monument{{ fontaineElfins.length | plural }} <span class="badge">{{fontaineElfins.length}}</th>
+			<th class="dashboard" style="width: 33%;">Fontaine{{ fontaineElfins.length | plural }} et monument{{ fontaineElfins.length | plural }} <span class="badge">{{fontaineElfins.length}}</th>
 		</tr>
 		<tr>
 			<td ><img ng-click="listOrViewImmeuble()" src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
@@ -65,21 +65,21 @@
 <table class="table table-condensed table-bordered table-striped" >
 	<tbody>
 		<tr>
-			<th class="dashboard">WC <span class="badge">{{wcElfins.length}}</th>
+			<th class="dashboard" style="width: 33%;">WC <span class="badge">{{wcElfins.length}}</th>
 			<th class="dashboard">Horloge{{ horlogeElfins.length | plural }} <span class="badge">{{horlogeElfins.length}}</th>
-			<th class="dashboard">Abribus <span class="badge">{{abribusElfins.length}}</th>
+			<th class="dashboard" style="width: 33%;">Abribus <span class="badge">{{abribusElfins.length}}</th>
 		</tr>
-		<tr>			
+		<tr>
 			<td ><img ng-click="listOrViewWcs()" src="/assets/images/wc.jpeg" ng-src="/assets/images/wc.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img ng-click="listOrViewHorloges()" src="/assets/images/horloge.jpeg" ng-src="/assets/images/horloge.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img ng-click="listOrViewAbribus()" src="/assets/images/abribus.jpeg" ng-src="/assets/images/abribus.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>		
 		<tr>			
-			<th >Sélection  <span class="badge">{{wcElfins.length}}</span>
+			<th >Sélection  <span class="badge">{{filteredWcElfins.length}}</span>
 				<div class="right">
-					<button tabindex="8" class="btn btn-primary btn-xs" ng-click="listOrViewWcs()" ng-disabled="wcElfins.length < 1">
-						<span ng-show="wcElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
-						<span ng-show="wcElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					<button tabindex="8" class="btn btn-primary btn-xs" ng-click="listOrViewWcs()" ng-disabled="filteredWcElfins.length < 1">
+						<span ng-show="filteredWcElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredWcElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
 					</button>
 				</div>						
 			</th>
@@ -100,6 +100,27 @@
 				</div>							
 			</th>
 		</tr>
+		<tr>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewWcs()" tabindex="7" id="wcSearchTextInput" name="wcSearchTextInput" type="text" class="form-control" ng-model="wcSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+					</div>
+				</div>
+			</th>
+		</tr>		
 	</tbody>
 </table>
 

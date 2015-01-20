@@ -26,6 +26,7 @@
         GeoxmlService.getCollection(immeublesCollectionId).getList()
 	        .then(function(immeubleElfins) {
         		$scope.immeubleElfins = immeubleElfins;
+        		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
 	        }, function(response) {
 	            var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
 	            hbAlertMessages.addAlert("danger",message);
@@ -99,6 +100,7 @@
         GeoxmlService.getCollection(uniteLocCollectionId).getList()
 	        .then(function(uniteLocElfins) {
         		$scope.uniteLocElfins = uniteLocElfins;
+        		$scope.filteredUniteLocElfins = filterUniteLocElfins($scope.uniteLocElfins, $scope.uniteLocSearch);
 	        }, function(response) {
 	            var message = "Le chargement des unités locatives a échoué (statut de retour: " + response.status + ")";
 	            hbAlertMessages.addAlert("danger",message);
@@ -151,7 +153,7 @@
     	var fontaineCollectionId = HB_COLLECTIONS.FONTAINE_ID;
     	
 		/**
-		 *  Apply uniteLocativeListAnyFilter
+		 *  Apply fontaineListAnyFilter
 		 */
 		var filterFontaineElfins = function(elfins_p, search_p) {
 	    	var filteredSortedElfins = $filter('fontaineListAnyFilter')(elfins_p, search_p.text);
@@ -161,13 +163,14 @@
         /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
         $scope.fontaineElfins = null;
 
-        /** User entered IMMEUBLE search criterion */
+        /** User entered FONTAINE search criterion */
         $scope.fontaineSearch = { "text" : "" };             
         
-        /** Query all available buildings IMMEUBLE */ 
+        /** Query all available fountain FONTAINE */ 
         GeoxmlService.getCollection(fontaineCollectionId).getList()
 	        .then(function(fontaineElfins) {
         		$scope.fontaineElfins = fontaineElfins;
+        		$scope.filteredFontaineElfins = filterFontaineElfins($scope.fontaineElfins, $scope.fontaineSearch);
 	        }, function(response) {
 	            var message = "Le chargement des unités locatives a échoué (statut de retour: " + response.status + ")";
 	            hbAlertMessages.addAlert("danger",message);
@@ -219,13 +222,25 @@
     	// ==== Initialisation ========================================
     	var wcCollectionId = HB_COLLECTIONS.WC_ID;
     	
+		/**
+		 *  Apply wcListAnyFilter
+		 */
+		var filterWcElfins = function(elfins_p, search_p) {
+	    	var filteredSortedElfins = $filter('wcListAnyFilter')(elfins_p, search_p.text);
+	    	return filteredSortedElfins;
+		};    	    	
+    	
         /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
         $scope.wcElfins = null;
+        
+        /** User entered WC search criterion */
+        $scope.wcSearch = { "text" : "" };                    
 
         /** Query all available WC */ 
         GeoxmlService.getCollection(wcCollectionId).getList()
 	        .then(function(wcElfins) {
         		$scope.wcElfins = wcElfins;
+        		$scope.filteredWcElfins = filterWcElfins($scope.wcElfins, $scope.wcSearch);
 	        }, function(response) {
 	            var message = "Le chargement des WC a échoué (statut de retour: " + response.status + ")";
 	            hbAlertMessages.addAlert("danger",message);
@@ -236,15 +251,25 @@
         /**
          * Navigate to end user selected WC. 
          * Either a list, a card or stay on current page if selection is 0.
-         * (There are less than 50 WC. Do not provide extended search yet.) 
+         * (Although there are less than 50 WC extended search has been requested.) 
          */
         $scope.listOrViewWcs = function() {
         	if ($scope.wcElfins.length > 1) {
-            	$location.path('/elfin/'+wcCollectionId+'/WC');
+            	$location.path('/elfin/'+wcCollectionId+'/WC').search('search', $scope.wcSearch.text);
         	} else if ($scope.wcElfins.length == 1) {
             	$location.path('/elfin/'+wcCollectionId+'/WC/' + $scope.wcElfins[0].Id);	
         	}
         };      	
+        
+    	// ==== End user search related listener ==================        
+		/**
+		 * Update filtered collection when search or sorting criteria are modified. 
+		 */
+    	$scope.$watch('wcSearch', function(newSearch, oldSearch) {
+    		if ($scope.wcElfins!=null) {
+				$scope.filteredWcElfins = filterWcElfins($scope.wcElfins, $scope.wcSearch);
+    		}
+    	}, true);        
 			
     	// ============================================================
         // WC Section - end
