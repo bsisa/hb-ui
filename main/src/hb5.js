@@ -119,6 +119,9 @@
             .when('/elfin/:collectionId/USER/:elfinId', {
                 templateUrl: '/assets/views/USER_card_view.html'
             })            
+            .when('/elfin/:collectionId/WC', {
+                templateUrl: '/assets/views/WC_list_view.html'
+            })                        
             .when('/elfin/:collectionId/:classe/:elfinId', {
                 templateUrl: '/assets/views/default_card_view.html'
             })
