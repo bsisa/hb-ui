@@ -365,7 +365,11 @@
         	onRouteChangeOff = $rootScope.$on('$locationChangeStart', routeChange);
       	}
 
-        
+        /**
+         * tabState data structure is expected to be set by child controllers
+         * while hbTabCacheService is maintained hereafter from routeChange 
+         * function.
+         */
         $scope.tabState = {};
         
         /**
@@ -373,15 +377,23 @@
          */
         function routeChange(event, nextUrl, currentUrl) {
 
-        	$log.debug(">>>> ROUTE CHANGE EVENT:\ncurrentUrl = " + currentUrl + "\nnextUrl = " + nextUrl);
-        	$log.debug(">>>> ROUTE CHANGE EVENT:\n$scope.tabState = " + angular.toJson($scope.tabState));
+        	// Maintain tabState per URL
         	hbTabCacheService.setTabState(currentUrl, $scope.tabState);
-        	// Deregister rootScope listener. 
+
+        	/** Deregister rootScope listener, current scope shall be destroyed 
+        	 *  when actual location change succeeds. 
+        	 */ 
         	onRouteChangeOff();
         	
+        	// =======================================================================
+        	//                         Disabled feature 
+        	// Notify user if there is something to be saved, else navigate to nextUrl
+        	//     TODO: Investigations needed before re-activating this feature
+        	// =======================================================================
+  
+        	// Noticed unexpected behaviour in Windows IE context, need to be reproduced.
+        	
         	//Navigate to nextUrl if the form isn't dirty
-        	// TODO: Investigations needed before activation. Noticed poor behaviour on
-        	// Windows IE context...
 //        	// Notify user if there is something to be saved, else navigate to nextUrl  
 //        	if ($scope.canSave() == true) {
 //        		// Prevent default navigation to nextUrl to let end user decision happen
@@ -411,6 +423,10 @@
 //        	} else {
 //        		//$log.debug(' >>>>> ROOTSCOPE EVENT :::: with no pending change.');
 //        	}        	
+
+        	// =======================================================================
+        	//                         Disabled feature - end
+        	// =======================================================================        	
         }        
         
         

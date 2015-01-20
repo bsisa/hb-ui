@@ -29,33 +29,38 @@
 									hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API, HB_ROLE_FONCTION, hbTabCacheService) {
     
 									//$log.debug("    >>>> Using HbImmeubleCardController with $locale.id = " + $locale.id);
+					 			
+
+                                    // ================= Tab state management - start =============
+					 				/**
+					 				 * Check parent controller and hbTabStateService for complete overview.
+					 				 */
 					 				var cachedTab = hbTabCacheService.getTabState($location.absUrl());
+					 				
+					 				/** Create tabState object if not already available in cache,
+					 				 */
 					 				if (cachedTab === undefined) {
-					 					$log.debug(">>>> INITIALISING TAB SCOPE ");
-					 					// $scope.tabState is defined in $parent
-					 					if (!$scope.tabState) {
-					 						$log.debug(">>>> NO $scope.tabState !!! ");
-					 						if (!$parent.tabState) {
-						 						$log.debug(">>>> NO $parent.tabState !!! ");
-					 						} else {
-					 							$log.debug(">>>> FOUND $parent.tabState... ");
-					 						}
-					 					} else {
-					 						$log.debug(">>>> FOUND $scope.tabState ... ");
-					 					}
 					 					$scope.tabState = { 
 						 						"immeuble" : { "active" : false },
 						 						"unite_locative" : { "active" : false },
 						 						"prestation" : { "active" : true },
-						 						"contrat" : { "active" : false }
-						 				}; 	
-					 					$scope.$parent.tabState = $scope.tabState;
+						 						"contrat" : { "active" : false },
+						 						"caracteristique" : { "active" : false },
+						 						"valeur" : { "active" : false },
+						 						"equipement" : { "active" : false },
+						 						"forme" : { "active" : false },
+						 						"annexe" : { "active" : false }
+						 				};
 					 				} else {
-					 					$log.debug(">>>> LOADING TAB SCOPE FROM CACHE");
 					 					$scope.tabState = cachedTab;
-					 					$scope.$parent.tabState = $scope.tabState;
 					 				}
-					 			
+				 					/**
+				 					 * Link to $parent scope tabState reference.
+				 					 */
+					 				$scope.$parent.tabState = $scope.tabState;
+                                    // ================= Tab state management - end ===============
+
+					 				
 									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
 									//$scope.validateOwner = false;		
 									$scope.annexeFileSystemUri = "";
