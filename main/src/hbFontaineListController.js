@@ -4,8 +4,8 @@
     
     	$log.debug("    >>>> HbFontaineListController called...");
     	
-    	// Default order is by "Building management" 
-    	$scope.predicate = 'IDENTIFIANT.OBJECTIF';
+    	// FONTAINE default order is by "Address" stored in NOM field 
+    	$scope.predicate = 'IDENTIFIANT.NOM';
     	$scope.reverse = false;
 
     	// Object holding user entered search (filter) criteria 
