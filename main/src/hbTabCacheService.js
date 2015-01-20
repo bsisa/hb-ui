@@ -15,7 +15,7 @@
 				return {
 					setTabState : function(url, tabState) {
 						cache.put(url,tabState);
-						$log.debug(">>>> tabState: for URL: " + angular.toJson(cache.get(url)));
+						//$log.debug(">>>> tabState: for URL: " + angular.toJson(cache.get(url)));
 					},
 					getTabState : function(url) {
 						return cache.get(url);
