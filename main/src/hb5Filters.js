@@ -534,6 +534,68 @@
 	}]);	
 	
 	
+	
+		
+	/**
+	 * Filter tailored to WC list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual wc list. 
+	 */
+	angular.module('hb5').filter('wcListFilter', [function () {
+		
+		return function (wcs, search) {
+	        if (!angular.isUndefined(wcs) && !angular.isUndefined(search)) {
+	            var tempWcs = [ ];
+	            angular.forEach(wcs, function (wc) {
+                    if ( 
+                    	 icontains(wc.IDENTIFIANT.NOM, search.nom) &&
+                    	 icontains(wc.IDENTIFIANT.ALIAS, search.alias) &&
+                    	 icontains(wc.DIVERS.REMARQUE, search.remark)
+                    ) {
+                    	tempWcs.push(wc);
+                    }
+                });
+	            return tempWcs;
+	        } else {
+	            return wcs;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to WC list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual wc list. 
+	 */
+	angular.module('hb5').filter('wcListAnyFilter', [function () {
+		
+		return function (wcs, searchtext) {
+			
+			var checkWc = function(wc, searchtext) {
+				return (
+                	 icontains(wc.IDENTIFIANT.NOM, searchtext) ||
+                	 icontains(wc.IDENTIFIANT.ALIAS, searchtext) || 
+                	 icontains(wc.DIVERS.REMARQUE, searchtext)
+	    		);
+			};					
+			
+	        if (!angular.isUndefined(wcs) && !angular.isUndefined(searchtext)) {
+	            var tempWcs = [ ];
+	            angular.forEach(wcs, function (wc) {
+                    if ( checkAndForTokenisedSearchText(wc,searchtext,checkWc) ) {
+                    	tempWcs.push(wc);
+                    }
+                });
+	            return tempWcs;
+	        } else {
+	            return wcs;
+	        }
+	    };
+	}]);	
+	
+	
+	
+	
+	
 	/**
 	 * Filter returning all array elements except last one
 	 */
