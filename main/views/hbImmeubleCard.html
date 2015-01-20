@@ -710,7 +710,7 @@
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
-													<th>Contrat</th>
+													<th colspan="2">Contrat</th>
 													<th><a href=""
 														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
 															I</a></th>
@@ -728,9 +728,8 @@
 											<tbody ng-show="contrats">
 												<tr
 													ng-repeat="contrat in contrats | contractTerminatedListFilter:false | orderBy:contractPredicate:contractReverse">
-													<td>
-														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
-													</td>
+													<td><div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div></td>
+													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
@@ -753,7 +752,7 @@
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
-													<th>Contrat</th>
+													<th colspan="2">Contrat</th>
 													<th><a href=""
 														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
 															I</a></th>
@@ -774,6 +773,7 @@
 													<td>
 														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
 													</td>
+													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
@@ -797,7 +797,7 @@
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
-													<th>Contrat</th>
+													<th colspan="2">Contrat</th>
 													<th><a href=""
 														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
 															I</a></th>
@@ -819,6 +819,7 @@
 													<td>
 														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
 													</td>
+													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
 													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
