@@ -41,9 +41,9 @@
 					 				 */
 					 				if (cachedTab === undefined) {
 					 					$scope.tabState = { 
-						 						"immeuble" : { "active" : false },
+						 						"immeuble" : { "active" : true },
 						 						"unite_locative" : { "active" : false },
-						 						"prestation" : { "active" : true },
+						 						"prestation" : { "active" : false },
 						 						"contrat" : { "active" : false },
 						 						"caracteristique" : { "active" : false },
 						 						"valeur" : { "active" : false },
