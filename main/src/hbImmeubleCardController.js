@@ -242,7 +242,7 @@
 							    		// If currentCAR undefined
 							    		if (!currentCAR) {
 							    			// Create missing CAR for position pos
-							    			$log.debug(">>>> Create missing CAR for position pos = " + pos);
+							    			//$log.debug(">>>> Create missing CAR for position pos = " + pos);
 							    			$scope.elfin.CARACTERISTIQUE.CARSET.CAR.splice(pos-1, 0, {"VALEUR":"","POS":pos});
 							    			// Link newly created CAR by pos to currentCAR variable
 							    			currentCAR = hbUtil.getCARByPos($scope.elfin,pos);
