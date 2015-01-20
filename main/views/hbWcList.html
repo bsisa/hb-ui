@@ -25,13 +25,6 @@
 <!-- 					</div> -->
 <!-- 				</div> -->
 <!-- 			</th> -->
-			<th class="col-sm-3">
-				<div class="form-group">
-					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.nom" hb-no-dirty-check placeholder="">
-					</div>
-				</div>
-			</th>			
 			<th class="col-sm-2">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
@@ -39,6 +32,13 @@
 					</div>
 				</div>
 			</th>	
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.nom" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>		
 			<th class="col-sm-2">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
@@ -52,10 +52,10 @@
 <!-- 				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° de gérance</a>			 -->
 <!-- 			</th> -->
 			<th class="col-sm-2">
-				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">Adresse</a>
+				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a>
 			</th>
 			<th class="col-sm-2">
-				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Alias</a>
+				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">Nom</a>
 			</th>
 			<th class="col-sm-3">
 				<a href="" ng-click="predicate = 'DIVERS.REMARQUE'; reverse=!reverse">Remarque</a>
@@ -69,8 +69,8 @@
 				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
 			</td>
 <!-- 			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td> -->
-			<td>{{elfin.IDENTIFIANT.NOM}}</td>
 			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>
+			<td>{{elfin.IDENTIFIANT.NOM}}</td>
 			<td>{{elfin.DIVERS.REMARQUE}}</td>
 		</tr>
 	</tbody>
