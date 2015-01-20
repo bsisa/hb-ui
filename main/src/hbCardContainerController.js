@@ -502,7 +502,7 @@
         // When the card scope is destroyed, signal potential observers
         // That there is no more current elfin displayed
         $scope.$on('$destroy', function() {
-            $log.debug('Current elfin card closed (controller $destroy) for $location.url = ' + $location.url());
+            //$log.debug('Current elfin card closed (controller $destroy) for $location.url = ' + $location.url());
             // In create mode the elfin instance does not yet exist in the database, getElfin will fail. 
             // If elfin has been deleted getElfin will fail.
             if ( !($attrs.hbMode === "create") && !$scope.elfinDeleted ) {
