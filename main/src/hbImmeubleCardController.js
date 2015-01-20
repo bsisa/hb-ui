@@ -23,12 +23,39 @@
 							'HB_EVENTS',
 							'HB_API',
 							'HB_ROLE_FONCTION',
+							'hbTabCacheService',
 							function($attrs, $scope, $rootScope, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout, $filter,  $locale, hbAlertMessages,
-									hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API, HB_ROLE_FONCTION) {
+									hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API, HB_ROLE_FONCTION, hbTabCacheService) {
     
 									//$log.debug("    >>>> Using HbImmeubleCardController with $locale.id = " + $locale.id);
-									
+					 				var cachedTab = hbTabCacheService.getTabState($location.absUrl());
+					 				if (cachedTab === undefined) {
+					 					$log.debug(">>>> INITIALISING TAB SCOPE ");
+					 					// $scope.tabState is defined in $parent
+					 					if (!$scope.tabState) {
+					 						$log.debug(">>>> NO $scope.tabState !!! ");
+					 						if (!$parent.tabState) {
+						 						$log.debug(">>>> NO $parent.tabState !!! ");
+					 						} else {
+					 							$log.debug(">>>> FOUND $parent.tabState... ");
+					 						}
+					 					} else {
+					 						$log.debug(">>>> FOUND $scope.tabState ... ");
+					 					}
+					 					$scope.tabState = { 
+						 						"immeuble" : { "active" : false },
+						 						"unite_locative" : { "active" : false },
+						 						"prestation" : { "active" : true },
+						 						"contrat" : { "active" : false }
+						 				}; 	
+					 					$scope.$parent.tabState = $scope.tabState;
+					 				} else {
+					 					$log.debug(">>>> LOADING TAB SCOPE FROM CACHE");
+					 					$scope.tabState = cachedTab;
+					 					$scope.$parent.tabState = $scope.tabState;
+					 				}
+					 			
 									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
 									//$scope.validateOwner = false;		
 									$scope.annexeFileSystemUri = "";

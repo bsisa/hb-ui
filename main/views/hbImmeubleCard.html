@@ -149,7 +149,7 @@
 </div>
 <div ng-show="!isMapToggled()" class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
-		<tabset> <!-- IMMEUBLE tab --> <tab> <tab-heading>Immeuble</tab-heading>
+		<tabset> <!-- IMMEUBLE tab --> <tab active="tabState.immeuble.active" > <tab-heading>Immeuble</tab-heading>
 		<div class="hb-tab">
 			<!-- 1st tab 1st row -->
 			<div class="row">
@@ -470,7 +470,7 @@
 		</div>
 		</tab> 
 		<!-- SURFACE tab --> 
-		<tab> 
+		<tab active="tabState.unite_locative.active" > 
 			<tab-heading>Unités locatives ({{locationUnits.length}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
@@ -539,7 +539,7 @@
 			</div>
 		</tab> 
 		<!-- PRESTATION tab --> 
-		<tab> 
+		<tab active="tabState.prestation.active" >
 			<tab-heading>Prestations({{prestations.length}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">

@@ -96,6 +96,7 @@ module.exports = function(grunt) {
 								'src/hbSurfaceCardDirective.js',
 								'src/hbSingleSelectController.js',
 								'src/hbSingleSelectDirective.js',
+								'src/hbTabCacheService.js',
 								'src/hbTransactionCardController.js',
 								'src/hbTransactionCardDirective.js',
 								'src/hbTransactionCreateCardDirective.js',

@@ -39,8 +39,8 @@
      * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
     angular.module('hb5').controller('HbCardContainerController', [
-        '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', '$window', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'MapService','hbPrintService',
-        function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, $window, hbAlertMessages, hbUtil, HB_EVENTS, MapService, hbPrintService) {
+        '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', '$window', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'MapService','hbPrintService', 'hbTabCacheService',
+        function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, $window, hbAlertMessages, hbUtil, HB_EVENTS, MapService, hbPrintService, hbTabCacheService) {
     
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
@@ -362,43 +362,55 @@
         	// Trigger a warning dialogue to the end-user if there are pending changes.
         	// onRouteChangeOff is a function intended to turn listener off when called.
         	//onRouteChangeOff = $rootScope.$on('$locationChangeStart', routeChange);
+        	onRouteChangeOff = $rootScope.$on('$locationChangeStart', routeChange);
       	}
 
+        
+        $scope.tabState = {};
+        
         /**
          * Notify end-user of pending modifications if any.
          */
         function routeChange(event, nextUrl, currentUrl) {
-            //Navigate to nextUrl if the form isn't dirty
 
-        	// Notify user if there is something to be saved, else navigate to nextUrl  
-        	if ($scope.canSave() == true) {
-        		// Prevent default navigation to nextUrl to let end user decision happen
-    			if (event.preventDefault) {	event.preventDefault(); }
-
-            	var modalInstance = $modal.open({
-                    templateUrl: '/assets/views/unsavedWarnDialog.html',
-                    controller: UnsavedWarnDialogController,
-                    scope: $scope,
-                    backdrop: 'static'
-                });
-
-                modalInstance.result.then(function (nada) {
-                	// User wants to save modifications. Navigation cancellation is what we have and want.
-                	//$log.debug('Modal confirmed at: ' + new Date() + ' should stay on : ' + currentUrl);
-                }, function () {
-                	// The user accepts loosing modification and navigating further.
-                	//$log.debug('Modal dismissed at: ' + new Date() + ' should go to : ' + nextUrl);
-                	// Stop listening for location changes to prevent deadloop
-                	onRouteChangeOff();
-                	// Perform location change using nextUrl parameter.
-                	$location.$$parse(nextUrl);
-                	//$log.debug('Parsed URL: ' + nextUrl + "$location.absURL = " + $location.absUrl());
-                	
-                });	
-                
-        	} else {
-        		//$log.debug(' >>>>> ROOTSCOPE EVENT :::: with no pending change.');
-        	}        	
+        	$log.debug(">>>> ROUTE CHANGE EVENT:\ncurrentUrl = " + currentUrl + "\nnextUrl = " + nextUrl);
+        	$log.debug(">>>> ROUTE CHANGE EVENT:\n$scope.tabState = " + angular.toJson($scope.tabState));
+        	hbTabCacheService.setTabState(currentUrl, $scope.tabState);
+        	// Deregister rootScope listener. 
+        	onRouteChangeOff();
+        	
+        	//Navigate to nextUrl if the form isn't dirty
+        	// TODO: Investigations needed before activation. Noticed poor behaviour on
+        	// Windows IE context...
+//        	// Notify user if there is something to be saved, else navigate to nextUrl  
+//        	if ($scope.canSave() == true) {
+//        		// Prevent default navigation to nextUrl to let end user decision happen
+//    			if (event.preventDefault) {	event.preventDefault(); }
+//
+//            	var modalInstance = $modal.open({
+//                    templateUrl: '/assets/views/unsavedWarnDialog.html',
+//                    controller: UnsavedWarnDialogController,
+//                    scope: $scope,
+//                    backdrop: 'static'
+//                });
+//
+//                modalInstance.result.then(function (nada) {
+//                	// User wants to save modifications. Navigation cancellation is what we have and want.
+//                	//$log.debug('Modal confirmed at: ' + new Date() + ' should stay on : ' + currentUrl);
+//                }, function () {
+//                	// The user accepts loosing modification and navigating further.
+//                	//$log.debug('Modal dismissed at: ' + new Date() + ' should go to : ' + nextUrl);
+//                	// Stop listening for location changes to prevent deadloop
+//                	onRouteChangeOff();
+//                	// Perform location change using nextUrl parameter.
+//                	$location.$$parse(nextUrl);
+//                	//$log.debug('Parsed URL: ' + nextUrl + "$location.absURL = " + $location.absUrl());
+//                	
+//                });	
+//                
+//        	} else {
+//        		//$log.debug(' >>>>> ROOTSCOPE EVENT :::: with no pending change.');
+//        	}        	
         }        
         
         
@@ -468,11 +480,13 @@
 
         $scope.getElfin($scope.collectionId, $scope.elfinId, HB_EVENTS.ELFIN_LOADED);
 
+        
+//        $locationChangeSuccess
 
         // When the card scope is destroyed, signal potential observers
         // That there is no more current elfin displayed
         $scope.$on('$destroy', function() {
-            $log.debug('Current elfin card closed (controller $destroy)');
+            $log.debug('Current elfin card closed (controller $destroy) for $location.url = ' + $location.url());
             // In create mode the elfin instance does not yet exist in the database, getElfin will fail. 
             // If elfin has been deleted getElfin will fail.
             if ( !($attrs.hbMode === "create") && !$scope.elfinDeleted ) {
