@@ -65,6 +65,15 @@ input::-webkit-inner-spin-button {
 	font-weight:bold;
 }
 
+.invst {
+	color:black;
+	font-weight:bold;
+}
+.fctmt {
+	color:grey;
+	font-weight:bold;
+}
+
 tr.subtotal {
 	border-top: solid black 2px
 }

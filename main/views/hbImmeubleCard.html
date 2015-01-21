@@ -555,30 +555,36 @@
 											<thead>
 												<tr>
 													<th>Prestation</th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
-															SAI</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a> / <a href=""
-														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No -->
+<!-- 															SAI</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a> / <a href="" -->
+<!-- 														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th> -->
+													<th>No SAI</th>
+													<th>Année</th>
+													<th>Groupe / Remarque</th>
+													<th>Groupe comptable</th>
+													<th>Budget</th>														
 												</tr>
 											</thead>
 											<tbody ng-show="prestations">
 												<tr 
-													ng-repeat="prestation in prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate:prestaReverse">
+													ng-repeat="prestation in prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate">
+<!-- 													ng-repeat="prestation in prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate:prestaReverse"> -->
 													<td>
 														<div hb-card-view-link hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}"></div>													
 <!-- 														<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a> -->
 													</td>
 													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
+													<td ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}"><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
 													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}</span></td>
 												</tr>
@@ -599,32 +605,38 @@
 											<thead>
 												<tr>
 													<th>Prestation</th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
-															SAI</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a> / <a href=""
-														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
-																						<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No -->
+<!-- 															SAI</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a> / <a href="" -->
+<!-- 														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th> -->
+<!-- 																						<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th> -->
 <!-- 													<th>Total payé</th> -->
+													<th>No SAI</th>
+													<th>Année</th>
+													<th>Groupe / Remarque</th>
+													<th>Groupe comptable</th>
+													<th>Budget</th>
 													<th></th>
 												</tr>
 											</thead>
 											<tbody ng-show="prestations">
 												<tr
-													ng-repeat="prestation in prestations | prestationListFilter:nextYearPrestationSearch | orderBy:prestaPredicate:prestaReverse">
+														ng-repeat="prestation in prestations | prestationListFilter:nextYearPrestationSearch | orderBy:prestaPredicate">
+<!-- 													ng-repeat="prestation in prestations | prestationListFilter:nextYearPrestationSearch | orderBy:prestaPredicate:prestaReverse"> -->
 													<td>
 														<div hb-card-view-link hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}"></div>
 <!-- 														<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a> -->
 													</td>
 													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
+													<td ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}"><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
 													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}</span></td>
 <!-- 													<td><span >{{prestation.DIVERS.REMARQUE}}</span></td> -->
@@ -646,30 +658,37 @@
 											<thead>
 												<tr>
 													<th>Prestation</th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No
-															SAI</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a> / <a href=""
-														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th>
-													<th><a href=""
-														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th>
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.OBJECTIF'; prestaReverse=!prestaReverse">No -->
+<!-- 															SAI</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.DE'; prestaReverse=!prestaReverse">Année</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'GROUPE'; prestaReverse=!prestaReverse">Groupe</a> / <a href="" -->
+<!-- 														ng-click="prestaPredicate = 'DIVERS.REMARQUE'; prestaReverse=!prestaReverse">Remarque</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th> -->
+													<th>No SAI</th>
+													<th>Année</th>
+													<th>Groupe / Remarque</th>
+													<th>Groupe comptable</th>
+													<th>Budget</th>														
 												</tr>
 											</thead>
 											<tbody ng-show="prestations">
 												<tr
-													ng-repeat="prestation in prestations | orderBy:prestaPredicate:prestaReverse">
+													ng-repeat="prestation in prestations | orderBy:prestaPredicate">
+<!-- 													ng-repeat="prestation in prestations | orderBy:['-IDENTIFIANT.DE','GROUPE','DIVERS.REMARQUE']"> -->
+<!-- 													ng-repeat="prestation in prestations | orderBy:['','','']prestaPredicate:prestaReverse"> -->
 													<td>
 														<div hb-card-view-link hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}"></div>  
 														<!-- <a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a>  -->
 													</td>
 													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
+													<td ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}"><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
 													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}</span></td>
 												</tr>

@@ -114,8 +114,9 @@
 						            $scope.locUnitPredicate = 'IDENTIFIANT.DE';
 						            $scope.locUnitReverse = true;		
 						            
-						            $scope.prestaPredicate = 'IDENTIFIANT.DE';
-						            $scope.prestaReverse = true;
+						            //$scope.prestaPredicate = 'IDENTIFIANT.DE';
+						            $scope.prestaPredicate = ['-IDENTIFIANT.DE','GROUPE','DIVERS.REMARQUE'];
+						            //$scope.prestaReverse = true;
 						            
 						            $scope.contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE';
 						            $scope.contractReverse = false;
