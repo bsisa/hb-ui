@@ -262,7 +262,8 @@
 						// elfin.CARACTERISTIQUE.FRACTION.L
 						
 
-			            var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
+			            //var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
+						var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur' or IDENTIFIANT/QUALITE='Concierge']";
 			            var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
 
 			            // Asychronous entrepriseActors preloading
@@ -319,7 +320,8 @@
 			                        		   	 		   		];
 
 			            $scope.actorCompanyChooseOneColumnsDefinition = [
-				                        		   		            { field:"GROUPE", displayName: "Groupe"}
+				                        		   		            { field:"GROUPE", displayName: "Nom/Abréviation"},
+				                        		   		            { field:"IDENTIFIANT.QUALITE", displayName: "Role"},				                        		   		         
 				                        		   	 		   		];
 			            
 			            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';
