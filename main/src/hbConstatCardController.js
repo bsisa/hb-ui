@@ -268,8 +268,8 @@
 
 			            // Asychronous entrepriseActors preloading
 			            hbQueryService.getActors(xpathForReportedByList)
-						.then(function(entrepriseActors) {
-								$scope.entrepriseActors = _.sortBy(entrepriseActors, function(actor){ return actor.GROUPE });
+						.then(function(reportedByActors) {
+								$scope.reportedByActors = _.sortBy(reportedByActors, function(actor){ return actor.GROUPE });
 							},
 							function(response) {
 								var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "+ response.status+ ")";
@@ -319,7 +319,7 @@
 			                        		   		            { field:"IDENTIFIANT.ALIAS", displayName: "Prénom"}
 			                        		   	 		   		];
 
-			            $scope.actorCompanyChooseOneColumnsDefinition = [
+			            $scope.actorReportedByChooseOneColumnsDefinition = [
 				                        		   		            { field:"GROUPE", displayName: "Nom/Abréviation"},
 				                        		   		            { field:"IDENTIFIANT.QUALITE", displayName: "Role"},				                        		   		         
 				                        		   	 		   		];
