@@ -263,13 +263,13 @@
 						
 
 			            //var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
-						var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur' or IDENTIFIANT/QUALITE='Concierge']";
+						var xpathForReportedByList = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur' or IDENTIFIANT/QUALITE='Concierge']";
 			            var xpathForCollaborator = "//ELFIN[IDENTIFIANT/QUALITE='Collaborateur']";
 
 			            // Asychronous entrepriseActors preloading
-			            hbQueryService.getActors(xpathForEntreprises)
+			            hbQueryService.getActors(xpathForReportedByList)
 						.then(function(entrepriseActors) {
-								$scope.entrepriseActors = entrepriseActors;
+								$scope.entrepriseActors = _.sortBy(entrepriseActors, function(actor){ return actor.GROUPE });
 							},
 							function(response) {
 								var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "+ response.status+ ")";
