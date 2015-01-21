@@ -23,7 +23,7 @@
 
 						//$log.debug("    >>>> Using ConstatCardController ");
 
-						// Used to provide UNITE_LOCATION (apartements) selection list
+						// Used to provide UNITE_LOCATION (apartments) selection list
 						$scope.locationUnits = null;
 						// Used to provide navigation link back to IMMEUBLE link to this CONSTAT
 						$scope.immeubleRef = null;

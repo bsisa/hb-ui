@@ -6,9 +6,7 @@
 		est obligatoire!
 	</span> <span ng-show="elfinForm.status.$error.required">Le champs <strong>Statut</strong>
 		est obligatoire!
-	</span> <span ng-show="elfinForm.currentEventEParQui.$error.pattern">Le
-		montant estimé doit être <strong>un nombre</strong> valide!
-	</span>
+	</span> 
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -212,62 +210,19 @@
 						</div>
 					</div>
 				</div>
-				<!-- Messages -->
-				<div class="col-sm-12">
-					<div class="panel panel-default">
+				<!-- Evenements :: Validation messages contextual to new evenement creation -->
+				<div class="col-sm-12" ng-show="elfinForm.currentEventEPourQui.$error.pattern || elfinForm.currentEventEPourQui.$error.maxlength || elfinForm.currentEventEParQui.$error.pattern">
+					<div class="panel panel-danger">
 						<div class="panel-heading" style="padding: 0.3em;">
-							<div class="panel-title">
-								<button class="btn btn-default" type="button"
-									ng-click="addMessage()" tooltip="Nouveau message"
-									tooltip-popup-delay="1500">
-									<i class="icon-plus-sign"></i>
-								</button>
-								Messages
-							</div>
+							<div class="panel-title">Erreur de saisie de l'événements en cours</div>
 						</div>
-						<table class="table table-condensed table-bordered table-striped">
-							<thead>
-								<!-- 								<tr> -->
-								<!-- 									<th colspan="8"> -->
-								<!-- 										<button class="btn btn-default" type="button" -->
-								<!-- 											ng-click="addMessage()" tooltip="Nouveau message" -->
-								<!-- 											tooltip-popup-delay="1500"> -->
-								<!-- 											<i class="icon-plus-sign"></i> -->
-								<!-- 										</button> Messages -->
-								<!-- 								</tr> -->
-								<tr>
-									<th class="col-md-1">#</th>
-									<th class="col-md-2">Date</th>
-									<th class="col-md-2">Décision</th>
-									<th class="col-md-6">Message</th>
-									<th class="col-md-1">@</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="message in elfin.CARACTERISTIQUE.FRACTION.L">
-									<td>
-										<div class="form-control-static">{{message.POS}}</div>
-									</td>
-									<td>
-										<div hb-date ng-model="message.C[1].VALUE"></div>
-									</td>
-									<td><div>
-											<input id="message_c4" name="message_c4" type="text"
-												class="form-control" ng-model="message.C[2].VALUE">
-										</div></td>
-									<td><div>
-											<input id="message_c3" name="message_c3" type="text"
-												class="form-control" ng-model="message.C[3].VALUE">
-										</div></td>
-									<td><a
-										href="mailto:Valerie.Schindler@ne.ch;Veronique.Hengrave-Burnier@ne.ch;?subject=Gespatri - Constat : No SAI {{elfin.IDENTIFIANT.OBJECTIF}} (Id {{elfin.Id}})&amp;body=Prise en charge du constat : {{message.C[2].VALUE}} le {{message.C[1].VALUE}} %0D%0A %0D%0A Motif :%0D%0A {{message.C[3].VALUE}} %0D%0A"
-										target="_self"> <span class="btn btn-default">@</span></a></td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="panel-footer" style="padding: 0.3em;"></div>
+						<div class="panel-body">
+							<div><span ng-show="elfinForm.currentEventEParQui.$error.pattern">Le montant estimé doit être <strong>un nombre</strong> valide!</span></div>
+							<div><span ng-show="elfinForm.currentEventEPourQui.$error.pattern">L'année de prestation doit être <strong>un nombre</strong> à quatre positions!</span></div>
+							<div><span ng-show="elfinForm.currentEventEPourQui.$error.maxlength">L'année de prestation doit être un nombre <strong>à quatre positions!</strong></span></div>
+						</div>
 					</div>
-				</div>
+				</div>				
 				<!-- Evenements -->
 				<div class="col-sm-12">
 					<div class="panel panel-default">
@@ -371,8 +326,8 @@
 											<!-- 											</select> -->
 										</div>
 									</td>
-									<td><input id="currentEventEPourQui" type="text"
-										class="form-control" ng-model="currentEvent.E_POUR_QUI">
+									<td><input id="currentEventEPourQui" name="currentEventEPourQui" type="text"
+										class="form-control" ng-model="currentEvent.E_POUR_QUI" ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="4">
 									</td>
 									<td><input id="currentEventEParQui"
 										name="currentEventEParQui" type="text" class="form-control"
@@ -387,7 +342,7 @@
 							</tbody>
 						</table>
 						<div class="panel-footer" style="padding: 0.3em;"></div>
-					</div>
+					</div>					
 					<div class="panel panel-default">
 						<div class="panel-heading" style="padding: 0.3em;">
 							<div class="panel-title">
@@ -448,8 +403,73 @@
 				<!-- end of evenement class="col-sm-12" div -->
 			</div>
 			<!-- end of top level row div -->
-		</div>
-		<!-- end of hb-tab div --> </tab> <!-- Annexes tab --> <tab> <tab-heading>
+		</div><!-- end of hb-tab div -->
+		</tab><!-- end of constat tab -->
+		<tab><!-- Messages tab -->
+			<tab-heading><div>Messages</div></tab-heading>
+			<div class="hb-tab">
+				<div class="row">		
+				<!-- Messages -->
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading" style="padding: 0.3em;">
+							<div class="panel-title">
+								<button class="btn btn-default" type="button"
+									ng-click="addMessage()" tooltip="Nouveau message"
+									tooltip-popup-delay="1500">
+									<i class="icon-plus-sign"></i>
+								</button>
+								Messages
+							</div>
+						</div>
+						<table class="table table-condensed table-bordered table-striped">
+							<thead>
+								<!-- 								<tr> -->
+								<!-- 									<th colspan="8"> -->
+								<!-- 										<button class="btn btn-default" type="button" -->
+								<!-- 											ng-click="addMessage()" tooltip="Nouveau message" -->
+								<!-- 											tooltip-popup-delay="1500"> -->
+								<!-- 											<i class="icon-plus-sign"></i> -->
+								<!-- 										</button> Messages -->
+								<!-- 								</tr> -->
+								<tr>
+									<th class="col-md-1">#</th>
+									<th class="col-md-2">Date</th>
+									<th class="col-md-2">Décision</th>
+									<th class="col-md-6">Message</th>
+									<th class="col-md-1">@</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="message in elfin.CARACTERISTIQUE.FRACTION.L">
+									<td>
+										<div class="form-control-static">{{message.POS}}</div>
+									</td>
+									<td>
+										<div hb-date ng-model="message.C[1].VALUE"></div>
+									</td>
+									<td><div>
+											<input id="message_c4" name="message_c4" type="text"
+												class="form-control" ng-model="message.C[2].VALUE">
+										</div></td>
+									<td><div>
+											<input id="message_c3" name="message_c3" type="text"
+												class="form-control" ng-model="message.C[3].VALUE">
+										</div></td>
+									<td><a
+										href="mailto:Valerie.Schindler@ne.ch;Veronique.Hengrave-Burnier@ne.ch;?subject=Gespatri - Constat : No SAI {{elfin.IDENTIFIANT.OBJECTIF}} (Id {{elfin.Id}})&amp;body=Prise en charge du constat : {{message.C[2].VALUE}} le {{message.C[1].VALUE}} %0D%0A %0D%0A Motif :%0D%0A {{message.C[3].VALUE}} %0D%0A"
+										target="_self"> <span class="btn btn-default">@</span></a></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="panel-footer" style="padding: 0.3em;"></div>
+					</div>
+				</div>		
+			</div>
+			</div>
+		</tab><!-- End of Message tab --> 
+		<!-- Annexes tab -->
+		<tab> <tab-heading>
 		<div hb-annexes-number></div>
 		</tab-heading>
 		<div class="hb-tab">
