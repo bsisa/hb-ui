@@ -447,8 +447,12 @@
 										<div hb-date ng-model="message.C[1].VALUE"></div>
 									</td>
 									<td><div>
-											<input id="message_c4" name="message_c4" type="text"
-												class="form-control" ng-model="message.C[2].VALUE">
+<!-- 											<input id="message_c2" name="message_c2" type="text" -->
+<!-- 												class="form-control" ng-model="message.C[2].VALUE"> -->
+											<div hb-single-select
+												hb-single-select-options="messageDecisionList"
+												ng-model="message.C[2].VALUE">												
+												
 										</div></td>
 									<td><div>
 											<input id="message_c3" name="message_c3" type="text"

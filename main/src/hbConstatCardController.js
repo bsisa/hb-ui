@@ -33,6 +33,13 @@
 			        	// To allow negative values:
 			        	//$scope.numericOnlyRegexp = /^[-]?\d*\.?\d*$/;
 
+			        	
+			        	$scope.messageDecisionList = [{ "name" : "", "value" : ""} ,
+			        	                              { "name" : "Accepté", "value" : "Accepté"} ,
+			        	                              {	"name" : "En attente", "value" : "En attente"} ,
+			        	                              { "name" : "Refusé", "value" : "Refusé"}
+			        	                              ];
+			        	
 			        	// Navigate to IMMEUBLE linked to the current CONSTAT
 			        	$scope.viewImmeuble = function() {
 			        		$location.path('/elfin/'+$scope.immeubleRef.ID_G+'/IMMEUBLE/' + $scope.immeubleRef.Id);	
