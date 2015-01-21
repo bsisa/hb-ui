@@ -153,7 +153,15 @@
 								<td colspan="5" >Total</td>
 								<td class="total number">{{transactions | map: 'IDENTIFIANT.VALEUR_A_NEUF' | sum | currency:'CHF'}}</td>
 								<td class="total number">{{transactions | map: 'IDENTIFIANT.VALEUR' | sum | currency:'CHF'}}</td>
-							</tr>						
+							</tr>
+							<tr class="grandtotal">
+								<td colspan="6" >Budget</td>
+								<td class="total number">{{elfin.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</td>
+							</tr>
+							<tr class="grandtotal">
+								<td colspan="6" >Solde</td>
+								<td class="total number">{{elfin.IDENTIFIANT.VALEUR_A_NEUF - (transactions | map: 'IDENTIFIANT.VALEUR' | sum) | currency:'CHF'}}</td>
+							</tr>
 						</tfoot>
 					</table>
 				</div>
