@@ -210,9 +210,10 @@
 						</div>
 					</div>
 				</div>
+				<!-- Evenements -->
+				<div class="col-sm-12">
 				<!-- Evenements :: Validation messages contextual to new evenement creation -->
-				<div class="col-sm-12" ng-show="elfinForm.currentEventEPourQui.$error.pattern || elfinForm.currentEventEPourQui.$error.maxlength || elfinForm.currentEventEParQui.$error.pattern">
-					<div class="panel panel-danger">
+					<div class="panel panel-danger" ng-show="elfinForm.currentEventEPourQui.$error.pattern || elfinForm.currentEventEPourQui.$error.maxlength || elfinForm.currentEventEParQui.$error.pattern">
 						<div class="panel-heading" style="padding: 0.3em;">
 							<div class="panel-title">Erreur de saisie de l'événements en cours</div>
 						</div>
@@ -221,10 +222,7 @@
 							<div><span ng-show="elfinForm.currentEventEPourQui.$error.pattern">L'année de prestation doit être <strong>un nombre</strong> à quatre positions!</span></div>
 							<div><span ng-show="elfinForm.currentEventEPourQui.$error.maxlength">L'année de prestation doit être un nombre <strong>à quatre positions!</strong></span></div>
 						</div>
-					</div>
-				</div>				
-				<!-- Evenements -->
-				<div class="col-sm-12">
+					</div>				
 					<div class="panel panel-default">
 						<div class="panel-heading" style="padding: 0.3em;">
 							<div class="panel-title">
@@ -342,7 +340,7 @@
 							</tbody>
 						</table>
 						<div class="panel-footer" style="padding: 0.3em;"></div>
-					</div>					
+					</div>
 					<div class="panel panel-default">
 						<div class="panel-heading" style="padding: 0.3em;">
 							<div class="panel-title">
@@ -400,7 +398,7 @@
 						<div class="panel-footer" style="padding: 0.3em;"></div>						
 					</div>
 				</div>
-				<!-- end of evenement class="col-sm-12" div -->
+				<!-- end of evenement class="col-sm-12" div -->				
 			</div>
 			<!-- end of top level row div -->
 		</div><!-- end of hb-tab div -->
