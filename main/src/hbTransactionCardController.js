@@ -25,7 +25,7 @@
 									HB_EVENTS, userDetails, hbQueryService) {
 
 								$scope.reallocate = $routeParams.reallocate ? true:false;
-								
+								$scope.prestationSelection = false;
 								//$log.debug("    >>>> Using HbTransactionCardController, reallocate = " + $scope.reallocate );
 
 
@@ -115,6 +115,93 @@
 								};
 								
 								
+//								$scope.selectPrestation = function (size) {
+
+//
+								
+						            // Parameters to selectOnePrestation function for PRESTATION selection
+						            $scope.selectOnePrestationColumnsDefinition = [
+					                        		   		            { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI"}, 
+					                        		   		            { field:"IDENTIFIANT.DE", displayName: "Année"}, 
+					                        		   		            { field:"GROUPE", displayName: "Groupe"},
+					                        		   		            { field:"DIVERS.REMARQUE", displayName: "Remarque"}
+					                        		   	 		   		];
+					            
+					            	$scope.selectOnePrestationTemplate = '/assets/views/chooseOnePrestation.html';								
+								
+									
+									/**
+							         * Modal panel to select a prestation when more than one is available.
+							         */
+							        $scope.selectOnePrestation = function (targetElfin, targetPath, elfins, sourcePath, columnsDefinition, template) {
+							        	
+							        	$log.debug(">>>> selectPrestation = " + elfins.length);
+							        	
+							            var modalInstance = $modal.open({
+							                templateUrl: template, // TODO: define
+							                scope: $scope,
+							                controller: 'HbChooseOneModalController', // should be available
+							                resolve: {
+							                	elfins: function () {
+							                    	return elfins;
+							                    },
+							                    columnsDefinition: function() {
+							                    	return columnsDefinition;
+							                    },
+							                    sourcePath: function() {
+							                    	return sourcePath;
+							                    }
+							                },                
+							                backdrop: 'static'
+							            });
+							
+							            /**
+							             * Process modalInstance.close action
+							             */
+							            modalInstance.result.then(function (selectedElfins) {
+							            	if (selectedElfins && selectedElfins.length > 0) {
+							            		//var sourceElfin = selectedElfins[0];
+							            		//hbUtil.applyPaths(targetElfin, targetPath, sourceElfin, sourcePath);
+							            		
+												$scope.constatPrestation = selectedElfins[0];;
+												$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
+												$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
+												$scope.prestationStatus = null;							            		
+							            		
+							            		$scope.elfinForm.$setDirty();
+							            	} else {
+							            		$log.debug("No selection returned!!!");				            		
+							            	}
+							            	
+							            }, function () {
+							                $log.debug('Choose params modal dismissed at: ' + new Date());
+							            });
+							        };									
+								
+								
+								
+								/**
+								 * TODO: Do not use. User workflow might change actual expected PRESTATION from original calling one with ID_G, Id.
+								 */
+								$scope.getPrestationPerId = function(ID_G, Id) {
+									$log.debug(">>>>>> HbTransactionCardController - $scope.getPrestationPerId : ID_G / Id = " + ID_G + " / " + Id);
+									GeoxmlService.getElfin(ID_G,Id).get().then(
+											function(prestation) {
+												$scope.constatPrestation = prestation;
+												$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
+												$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
+												$scope.prestationStatus = null;
+												$scope.prestationStatusTooltips = "Prestation correspondant aux informations: ID_G / Id = " + ID_G + " / " + Id;
+												$log.debug(">>>>>> HbTransactionCardController - $scope.constatPrestation = " + $scope.constatPrestation);												
+											},
+											function(response) {
+												var message = "Le chargement de la PRESTATION correspondant aux informations: ID_G / Id = " + ID_G + " / " + Id + " a échoué (statut de retour: " + response.status + ")";
+												hbAlertMessages.addAlert(
+														"danger", message);
+											});
+								};
+								
+								
 								/**
 								 * Search existing PRESTATION for no SAI, groupe prestation, year, owner
 								 */
@@ -131,6 +218,9 @@
 										// Asychronous PRESTATIONS preloading
 										hbQueryService.getPrestations(xpathForPrestation).then(
 											function(prestations) {
+												// Need to expose prestations to scope for use 
+												// from hbTransactionCreateCard.html, hbTransactionCard.html views
+												$scope.prestations = prestations;
 												if (prestations.length === 1) {
 													$scope.constatPrestation = prestations[0];
 													$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
@@ -150,10 +240,13 @@
 													$scope.constatPrestation = null;
 													$scope.elfin.IDENTIFIANT.COMPTE = null;
 													$scope.elfin.IDENTIFIANT.OBJECTIF = null;
-													$scope.prestationStatus = "Plusieurs résultats!";
+													$scope.prestationStatus = "Sélectionnez!";
 													$scope.prestationStatusTooltips = "Plusieurs no prestations correspondent aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year;
-													hbAlertMessages.addAlert(
-															"warning", "Plusieurs prestations correspondent aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year);															
+													$scope.prestationSelection = true;
+//													hbAlertMessages.addAlert(
+//															"warning", "Plusieurs prestations correspondent aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year);
+													
+													$scope.selectOnePrestation($scope.elfin, 'IDENTIFIANT.OBJECTIF', prestations, 'IDENTIFIANT.OBJECTIF', $scope.selectOnePrestationColumnsDefinition, $scope.selectOnePrestationTemplate);
 												}
 											},
 											function(response) {
@@ -180,8 +273,9 @@
 						    	$scope.$watch('elfin.GROUPE', function() {
 						    		if ($scope.elfin!==null ) {
 						    			if ($scope.elfin.GROUPE!==null) {
-							    			$log.debug(">>>>>> HbTransactionCardController - ($watch('elfin.GROUPE') updating $scope.elfin.CARACTERISTIQUE.CAR1.UNITE = " + $scope.elfin.CARACTERISTIQUE.CAR1.UNITE + " to " + hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE));
-							    			$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE);						    				
+						    				var prestaGrp = hbUtil.getPrestationGroupForTransactionGroup($scope.elfin.GROUPE);
+							    			$log.debug(">>>>>> HbTransactionCardController - ($watch('elfin.GROUPE') updating $scope.elfin.CARACTERISTIQUE.CAR1.UNITE (PrestationGroupForTransactionGroup) from >" + $scope.elfin.CARACTERISTIQUE.CAR1.UNITE + "< to >" + prestaGrp +"<");
+							    			$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = prestaGrp;						    				
 						    			} else {
 							    			$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = '';
 							    		}
@@ -215,7 +309,24 @@
 									//if ($scope.elfin!==null && $scope.elfin.IDENTIFIANT.PAR.length === 4 && $scope.helper.constatSelectionSai.length > 0 && $scope.elfin.CARACTERISTIQUE.CAR1.UNITE.length > 0) {
 									if ($scope.elfin!==null) {
 										// TODO: review situation in which this resets the searchOwner to null values...
-										$scope.getPrestation($scope.helper.constatSelectionSai,$scope.elfin.CARACTERISTIQUE.CAR1.UNITE,$scope.elfin.IDENTIFIANT.PAR,$scope.searchOwner);
+										// $routeParams.Id && $routeParams.ID_G
+										$log.debug(">>>>                                    <<<<");
+										$log.debug(">>>> $routeParams.sai                        = " + $routeParams.sai);
+										$log.debug(">>>> $routeParams.Id                         = " + $routeParams.Id);
+										$log.debug(">>>> $routeParams.ID_G                       = " + $routeParams.ID_G);										
+										$log.debug(">>>> $scope.helper.constatSelectionSai       = " + $scope.helper.constatSelectionSai);
+										$log.debug(">>>> $scope.elfin.CARACTERISTIQUE.CAR1.UNITE = " + $scope.elfin.CARACTERISTIQUE.CAR1.UNITE);
+										$log.debug(">>>> $scope.elfin.IDENTIFIANT.PAR            = " + $scope.elfin.IDENTIFIANT.PAR);
+										$log.debug(">>>> $scope.searchOwner                      = " + $scope.searchOwner);
+										$log.debug(">>>>                                    <<<<");
+										
+//										if ($routeParams.ID_G && $routeParams.Id) {
+//											$log.debug(">>>> getPrestationPerId <<<<");
+//											$scope.getPrestationPerId($routeParams.ID_G, $routeParams.Id);
+//										} else {
+											$log.debug(">>>> getPrestation <<<<");
+											$scope.getPrestation($scope.helper.constatSelectionSai,$scope.elfin.CARACTERISTIQUE.CAR1.UNITE,$scope.elfin.IDENTIFIANT.PAR,$scope.searchOwner);											
+//										}
 									}
 									//}
 								}, true);
