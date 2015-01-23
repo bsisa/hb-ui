@@ -46,9 +46,17 @@
 						<input id="objectifSearchHelper" name="objectifSearchHelper" type="text" class="form-control" ng-model="helper.constatSelectionSai" hb-no-dirty-check >
 					</div>
 					<label for="objectif" class="col-sm-2 control-label">Prest.</label>
-					<div id="objectif" ng-show="elfin.IDENTIFIANT.OBJECTIF" class="col-sm-3 form-control-static"><span class="label label-success" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{elfin.IDENTIFIANT.OBJECTIF}}</span></div>
+					<span id="objectif" ng-show="elfin.IDENTIFIANT.OBJECTIF" class="col-sm-2 form-control-static"><span class="label label-success" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{elfin.IDENTIFIANT.OBJECTIF}}</span></span>
 					<div ng-show="false"><input name="objectif" ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-required="true" ng-minlength="1"></div>  
-					<div ng-show="!elfin.IDENTIFIANT.OBJECTIF" id="objectifStatus" class="col-sm-3 form-control-static"><span class="label label-warning" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{prestationStatus}}</span></div>
+					<span ng-show="!elfin.IDENTIFIANT.OBJECTIF" id="objectifStatus" class="col-sm-2 form-control-static">
+						<span class="label label-warning" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{prestationStatus}}</span>
+					</span>
+					<div style="border: none;text-align: left;" ng-show="prestationSelection" id="prestationSelection" class="col-sm-1"> 
+						<button style="float:right;" class="btn btn-default" type="button" tooltip="Sélection de prestation"
+							ng-click="selectOnePrestation(elfin, 'IDENTIFIANT.OBJECTIF', prestations, 'IDENTIFIANT.OBJECTIF', selectOnePrestationColumnsDefinition, selectOnePrestationTemplate);">
+							<i class="glyphicon glyphicon-list-alt"></i>
+						</button>						
+					</div>					
 				</div>				
 
 				<div ng-show="reallocate" class="form-group">
