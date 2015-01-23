@@ -53,7 +53,13 @@
 						 						"contrat_subtab_tous" : { "active" : false },
 						 						"caracteristique" : { "active" : false },
 						 						"valeur" : { "active" : false },
-						 						"equipement" : { "active" : false },
+						 						"equipements_tech" : { "active" : false },
+						 						"equipements_tech_subtab_prod_chaleur" : { "active" : true },
+						 						"equipements_tech_subtab_prod_froid" : { "active" : false },
+						 						"equipements_tech_subtab_ventilation" : { "active" : false },
+						 						"equipements_tech_subtab_citerne" : { "active" : false },
+						 						"equipements_tech_subtab_intro_elec" : { "active" : false },
+						 						"equipements_tech_subtab_equipement" : { "active" : false },
 						 						"forme" : { "active" : false },
 						 						"annexe" : { "active" : false }
 						 				};
