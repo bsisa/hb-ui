@@ -66,6 +66,11 @@
 			return getList(HB_COLLECTIONS.PRESTATION_ID,xpath);
 		};
 		
+		
+		var getProductionChaleurList = function(xpath) {
+			return getList(HB_COLLECTIONS.PRODUCTION_CHALEUR_ID,xpath);
+		}
+		
 		/**
 		 * `transactionsCollectionId`: Identifies collection for ELFIN objects of CLASSE TRANSACTION
 		 *  `xpath`: Optional XPath restriction
@@ -82,6 +87,7 @@
         	getImmeubles:getImmeubles,
         	getLocationUnits:getLocationUnits,
         	getPrestations:getPrestations,
+        	getProductionChaleurList:getProductionChaleurList,
         	getTransactions:getTransactions
         };
 

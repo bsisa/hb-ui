@@ -1019,31 +1019,24 @@
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
-													<th colspan="2">PROD.CHALEUR</th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
-															I</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
-															II</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
-												<th><a href=""
-														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
+													<th colspan="2">PROD. CHALEUR</th>
+													<th>Modèle</th>
+													<th>Année</th>
+													<th>Puissance</th>
+													<th>Energie</th>
+													<th>Fournisseur</th>
 												</tr>
 											</thead>
-											<tbody ng-show="contrats">
+											<tbody ng-show="productionChaleurList">
 												<tr
-													ng-repeat="contrat in contrats | contractTerminatedListFilter:false | orderBy:contractPredicate:contractReverse">
-													<td><div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div></td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td>
-													<td><span >{{contrat.GROUPE}}</span></td>
+													ng-repeat="productionChaleur in productionChaleurList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+													<td><div hb-card-view-link hb-href="/elfin/{{productionChaleur.ID_G}}/PRODUCTION_CHALEUR/{{productionChaleur.Id}}"></div></td>
+													<td><div hb-annexes-link hb-annexes-link-elfin="productionChaleur"></div></td>
+													<td><span >{{productionChaleur.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+													<td><span >{{productionChaleur.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{productionChaleur.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+													<td><span >{{productionChaleur.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+													<td><span >{{productionChaleur.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
 												</tr>
 											</tbody>
 										</table>
@@ -1058,39 +1051,39 @@
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des PRODUCTION FROID -->
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="2">PROD. FROID</th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
-															I</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
-															II</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
-												<th><a href=""
-														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
-												</tr>
-											</thead>
-											<tbody ng-show="contrats">
-												<tr
-													ng-repeat="contrat in contrats | contractTerminatedListFilter:true | orderBy:contractPredicate:contractReverse">													
-													<td>
-														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
-													</td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td>
-													<td><span >{{contrat.GROUPE}}</span></td>
-												</tr>
-											</tbody>
-										</table>									
+<!-- 										<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 											<thead> -->
+<!-- 												<tr> -->
+<!-- 													<th colspan="2">PROD. FROID</th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation -->
+<!-- 															I</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation -->
+<!-- 															II</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th> -->
+<!-- 												<th><a href="" -->
+<!-- 														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th> -->
+<!-- 												</tr> -->
+<!-- 											</thead> -->
+<!-- 											<tbody ng-show="contrats"> -->
+<!-- 												<tr -->
+<!-- 													ng-repeat="contrat in contrats | contractTerminatedListFilter:true | orderBy:contractPredicate:contractReverse">													 -->
+<!-- 													<td> -->
+<!-- 														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div> -->
+<!-- 													</td> -->
+<!-- 													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td> -->
+<!-- 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td> -->
+<!-- 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td> -->
+<!-- 													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td> -->
+<!-- 													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td> -->
+<!-- 													<td><span >{{contrat.GROUPE}}</span></td> -->
+<!-- 												</tr> -->
+<!-- 											</tbody> -->
+<!-- 										</table>									 -->
 									</div>
 								</div>
 							</div>
@@ -1102,41 +1095,7 @@
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des VENTILATION -->
-									
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="2">VENTILATION</th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
-															I</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
-															II</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
-												<th><a href=""
-														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
-												</tr>
-											</thead>
-											<tbody ng-show="contrats">
-												<tr
-													ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse">
-<!-- 													ng-repeat="contrat in contrats | contractTerminatedListFilter:true | orderBy:contractPredicate:contractReverse">													 -->
-													<td>
-														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
-													</td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td>
-													<td><span >{{contrat.GROUPE}}</span></td>
-												</tr>
-											</tbody>
-										</table>									
+									<!-- TODO -->									
 									</div>
 								</div>
 							</div>
@@ -1148,41 +1107,7 @@
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des CITERNE -->
-									
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="2">CITERNE</th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
-															I</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
-															II</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
-												<th><a href=""
-														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
-												</tr>
-											</thead>
-											<tbody ng-show="contrats">
-												<tr
-													ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse">
-<!-- 													ng-repeat="contrat in contrats | contractTerminatedListFilter:true | orderBy:contractPredicate:contractReverse">													 -->
-													<td>
-														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
-													</td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td>
-													<td><span >{{contrat.GROUPE}}</span></td>
-												</tr>
-											</tbody>
-										</table>									
+									<!-- TODO -->
 									</div>
 								</div>
 							</div>
@@ -1194,41 +1119,7 @@
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des INTRODUCTION ELECTRIQUE -->
-									
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="2">INTRO. ELECTRIQUE</th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
-															I</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
-															II</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
-												<th><a href=""
-														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
-												</tr>
-											</thead>
-											<tbody ng-show="contrats">
-												<tr
-													ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse">
-<!-- 													ng-repeat="contrat in contrats | contractTerminatedListFilter:true | orderBy:contractPredicate:contractReverse">													 -->
-													<td>
-														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
-													</td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td>
-													<td><span >{{contrat.GROUPE}}</span></td>
-												</tr>
-											</tbody>
-										</table>									
+									<!-- TODO -->									
 									</div>
 								</div>
 							</div>
@@ -1240,41 +1131,7 @@
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des EQUIPEMENT -->
-									
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="2">EQUIPEMENT</th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
-															I</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
-															II</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
-													<th><a href=""
-														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
-												<th><a href=""
-														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
-												</tr>
-											</thead>
-											<tbody ng-show="contrats">
-												<tr
-													ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse">
-<!-- 													ng-repeat="contrat in contrats | contractTerminatedListFilter:true | orderBy:contractPredicate:contractReverse">													 -->
-													<td>
-														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div>
-													</td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
-													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td>
-													<td><span >{{contrat.GROUPE}}</span></td>
-												</tr>
-											</tbody>
-										</table>									
+									<!-- TODO -->
 									</div>
 								</div>
 							</div>
