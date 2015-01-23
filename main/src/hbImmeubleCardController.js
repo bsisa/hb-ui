@@ -89,6 +89,10 @@
 							        $scope.constatsEncours = null;
 							        $scope.constatsClos = null;
 							        $scope.prestations = null;
+							        
+							        $scope.productionChaleurList = null;
+							        
+							        
 							        var currentYear = moment().year();
 							        var lastYear = currentYear - 1;
 							        var nextYear = currentYear + 1;
@@ -240,6 +244,36 @@
 							    	}, true);
 							    	
 
+							    	/**
+							    	 * Listener used to load PRODUCTION CHALEUR, PRODUCTION FROID, VENTILATION, CITERNE, 
+							    	 * INTRODUCTION ELECTRIQUE, EQUIPEMENT related to this IMMEUBLE.
+							    	 * We link all the above CLASSE by their IDENTIFIANT.OBJECTIF/IDENTIFIANT.NOM (No SAI/No de constr.)
+							    	 *  
+							    	 * Only relevant while not in create mode.
+							    	 */
+							    	$scope.$watchCollection('[elfin.IDENTIFIANT.OBJECTIF,elfin.IDENTIFIANT.NOM]', function(newValues, oldValues) {							    		
+
+							    		$log.debug("$watchCollection for OBJECTIF, NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
+							    		
+//							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
+//								            // TODO: productionChaleurCollectionId must come from server configuration resource.
+//							    			// DONE: added restriction on PROPRIETAIRE, CLASSE. Strict restriction on OBJECTIF, starts-with is not correct in all cases.
+//								            var xpathForProductionChaleur = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and IDENTIFIANT/NOM='"+$scope.elfin.IDENTIFIANT.NOM+"' and @CLASSE='PRODUCTION_CHALEUR']";
+//								            hbQueryService.getProductionChaleurList(xpathForProductionChaleur)
+//												.then(function(elfins) {
+//														$scope.productionChaleurList = elfins;
+//													},
+//													function(response) {
+//														var message = "Le chargement des PRODUCTION_CHALEURs a échoué (statut de retour: "+ response.status+ ")";
+//											            hbAlertMessages.addAlert("danger",message);
+//													});
+//								            
+//							    	
+//							    		}
+							    		
+							    	}, true);							    	
+							    	
+							    	
 							    	/**
 							    	 * Helper function to link and if necessary create CAR elements by position. 
 							    	 */
