@@ -226,6 +226,7 @@
 													$scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
 													$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
 													$scope.prestationStatus = null;
+													$scope.prestationSelection = false;
 													$scope.prestationStatusTooltips = "Prestation correspondant aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year;
 													$log.debug(">>>>>> HbTransactionCardController - $scope.constatPrestation = " + $scope.constatPrestation);
 												} else if (prestations.length < 1) {
@@ -234,6 +235,7 @@
 													$scope.elfin.IDENTIFIANT.OBJECTIF = null;
 													$scope.prestationStatus = "Aucun résultat";
 													$scope.prestationStatusTooltips = "Pas de prestation correspondant aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year;
+													$scope.prestationSelection = false;
 //													hbAlertMessages.addAlert(
 //															"warning", "Pas de prestation correspondant aux informations: SAI = " + sai + ", propriétaire: " + $scope.searchOwner.NOM + ", groupe de prestation = " + groupePrestation + ", année = " + year);
 												} else if (prestations.length > 1) {
@@ -262,6 +264,7 @@
 										$scope.elfin.IDENTIFIANT.COMPTE = null;
 										$scope.elfin.IDENTIFIANT.OBJECTIF = null;
 										$scope.prestationStatus = "Aucun résultat";
+										$scope.prestationSelection = false;
 									}
 									
 								};				
