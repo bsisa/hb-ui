@@ -1113,13 +1113,35 @@
 							</div>
 						</tab>
 						<tab active="tabState.equipements_tech_subtab_citerne.active"><!-- EQ.TECH 4th sub tab -->
-							<tab-heading>CITERNE</tab-heading>
+							<tab-heading>Citerne</tab-heading>
 							<div class="hb-tab">
-
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des CITERNE -->
-									<!-- TODO -->
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">Détail</th>
+													<th>Modèle</th>
+													<th>Année</th>
+													<th>Puissance (kW)</th>
+													<th>Energie</th>
+													<th>Fournisseur</th>
+												</tr>
+											</thead>
+											<tbody ng-show="citerneList">
+												<tr
+													ng-repeat="citerne in citerneList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+													<td><div hb-card-view-link hb-href="/elfin/{{citerne.ID_G}}/CITERNE/{{citerne.Id}}"></div></td>
+													<td><div hb-annexes-link hb-annexes-link-elfin="citerne"></div></td>
+													<td><span >{{citerne.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+													<td><span >{{citerne.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{citerne.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+													<td><span >{{citerne.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+													<td><span >{{citerne.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>

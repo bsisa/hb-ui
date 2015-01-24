@@ -33,6 +33,16 @@
 		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *  
+		 * `HB_COLLECTIONS.CITERNE_ID` constant identifies collection containing ELFIN objects of CLASSE CITERNE.
+		 *  @see getList
+		 */		
+		var getCiterneList = function(xpath) {
+			return getList(HB_COLLECTIONS.CITERNE_ID,xpath);
+		};			
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *   
 		 * `HB_COLLECTIONS.CONTRAT_ID` identifies collection containing ELFIN objects of CLASSE CONTRAT.  
 		 *  @see getList
@@ -114,6 +124,7 @@
 	
         return {
         	getActors:getActors,
+        	getCiterneList:getCiterneList,
         	getContrats:getContrats,
         	getImmeubles:getImmeubles,
         	getLocationUnits:getLocationUnits,

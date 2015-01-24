@@ -93,6 +93,8 @@
 							        // Arrays containing lists of technical equipment related CLASSE.
 							        $scope.productionChaleurList = null;
 							        $scope.productionFroidList = null;
+							        $scope.ventilationList = null;
+							        $scope.citerneList = null;
 							        
 							        var currentYear = moment().year();
 							        var lastYear = currentYear - 1;
@@ -304,6 +306,22 @@
 														var message = "Le chargement des VENTILATIONs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});	
+								            
+								            
+								            var xpathForCiterne = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='CITERNE']";								            
+								            hbQueryService.getCiterneList(xpathForCiterne)
+												.then(function(elfins) {
+														$scope.citerneList = elfins;
+														if ($scope.citerneList) {
+															$log.debug(">>>> $scope.citerneList.length" + $scope.citerneList.length);
+														} else {
+															$log.debug(">>>> $scope.citerneList.length SEEMS EMPTY...");
+														}
+													},
+													function(response) {
+														var message = "Le chargement des CITERNEs a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});
 							    		}
 							    		
 							    	}, true);							    	
