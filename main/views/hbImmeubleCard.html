@@ -1147,13 +1147,35 @@
 							</div>
 						</tab>
 						<tab active="tabState.equipements_tech_subtab_intro_elec.active"><!-- EQ.TECH 5th sub tab -->
-							<tab-heading>INTRODUCTION ELECTRIQUE</tab-heading>
+							<tab-heading>Introduction électricité</tab-heading>
 							<div class="hb-tab">
-
 								<div class="row">
 									<div class="col-sm-12">
-									<!-- Table des INTRODUCTION ELECTRIQUE -->
-									<!-- TODO -->									
+									<!-- Table des INTRODUCTION_ELECTRICITE -->
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">Détail</th>
+													<th>Modèle</th>
+													<th>Année</th>
+													<th>Puissance (kW)</th>
+													<th>Energie</th>
+													<th>Fournisseur</th>
+												</tr>
+											</thead>
+											<tbody ng-show="introductionElectriciteList">
+												<tr
+													ng-repeat="introductionElectricite in introductionElectriciteList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+													<td><div hb-card-view-link hb-href="/elfin/{{introductionElectricite.ID_G}}/INTRODUCTION_ELECTRICITE/{{introductionElectricite.Id}}"></div></td>
+													<td><div hb-annexes-link hb-annexes-link-elfin="introductionElectricite"></div></td>
+													<td><span >{{introductionElectricite.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+													<td><span >{{introductionElectricite.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{introductionElectricite.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+													<td><span >{{introductionElectricite.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+													<td><span >{{introductionElectricite.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>

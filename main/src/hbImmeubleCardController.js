@@ -95,6 +95,7 @@
 							        $scope.productionFroidList = null;
 							        $scope.ventilationList = null;
 							        $scope.citerneList = null;
+							        $scope.introductionElectriciteList = null;
 							        
 							        var currentYear = moment().year();
 							        var lastYear = currentYear - 1;
@@ -267,7 +268,7 @@
 												.then(function(elfins) {
 														$scope.productionChaleurList = elfins;
 														if ($scope.productionChaleurList) {
-															$log.debug(">>>> $scope.productionChaleurList.length" + $scope.productionChaleurList.length);
+															$log.debug(">>>> $scope.productionChaleurList.length = " + $scope.productionChaleurList.length);
 														} else {
 															$log.debug(">>>> $scope.productionChaleurList.length SEEMS EMPTY...");
 														}
@@ -282,7 +283,7 @@
 												.then(function(elfins) {
 														$scope.productionFroidList = elfins;
 														if ($scope.productionFroidList) {
-															$log.debug(">>>> $scope.productionFroidList.length" + $scope.productionFroidList.length);
+															$log.debug(">>>> $scope.productionFroidList.length = " + $scope.productionFroidList.length);
 														} else {
 															$log.debug(">>>> $scope.productionFroidList.length SEEMS EMPTY...");
 														}
@@ -297,7 +298,7 @@
 												.then(function(elfins) {
 														$scope.ventilationList = elfins;
 														if ($scope.ventilationList) {
-															$log.debug(">>>> $scope.ventilationList.length" + $scope.ventilationList.length);
+															$log.debug(">>>> $scope.ventilationList.length = " + $scope.ventilationList.length);
 														} else {
 															$log.debug(">>>> $scope.ventilationList.length SEEMS EMPTY...");
 														}
@@ -307,13 +308,12 @@
 											            hbAlertMessages.addAlert("danger",message);
 													});	
 								            
-								            
 								            var xpathForCiterne = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='CITERNE']";								            
 								            hbQueryService.getCiterneList(xpathForCiterne)
 												.then(function(elfins) {
 														$scope.citerneList = elfins;
 														if ($scope.citerneList) {
-															$log.debug(">>>> $scope.citerneList.length" + $scope.citerneList.length);
+															$log.debug(">>>> $scope.citerneList.length = " + $scope.citerneList.length);
 														} else {
 															$log.debug(">>>> $scope.citerneList.length SEEMS EMPTY...");
 														}
@@ -322,6 +322,21 @@
 														var message = "Le chargement des CITERNEs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
+								            
+								            var xpathForIntroductionElectricite = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='INTRODUCTION_ELECTRICITE']";								            
+								            hbQueryService.getIntroductionElectriciteList(xpathForIntroductionElectricite)
+												.then(function(elfins) {
+														$scope.introductionElectriciteList = elfins;
+														if ($scope.introductionElectriciteList) {
+															$log.debug(">>>> $scope.introductionElectriciteList.length = " + $scope.introductionElectriciteList.length);
+														} else {
+															$log.debug(">>>> $scope.introductionElectriciteList.length SEEMS EMPTY...");
+														}
+													},
+													function(response) {
+														var message = "Le chargement des INTRODUCTION_ELECTRICITEs a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});								            
 							    		}
 							    		
 							    	}, true);							    	

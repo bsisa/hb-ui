@@ -155,7 +155,7 @@
                             "C":"Introduction électrique",
                             "POS":"2"
                         },{
-                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/INTRODUCTION_ELECTRIQUE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
+                            "C":"getHB_Fiche().loadAndDisplayXML('../../HB4-Catalogue/INTRODUCTION_ELECTRICITE.xml', './stylesheets/Format.xsl');getHB_Fiche().setNewId('G20020412202247000');",
                             "POS":"3"
                         },{
                             "POS":"4"

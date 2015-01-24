@@ -64,6 +64,17 @@
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *   
+		 * `HB_COLLECTIONS.INTRODUCTION_ELECTRICITE_ID` identifies collection containing ELFIN objects of CLASSE INTRODUCTION_ELECTRICITE.  
+		 *  @see getList  
+		 */
+		var getIntroductionElectriciteList = function(xpath) {
+	        return getList(HB_COLLECTIONS.INTRODUCTION_ELECTRICITE_ID,xpath);
+		};	
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
 		 * `HB_COLLECTIONS.UNITE_LOCATIVE_ID` identifies collection containing ELFIN objects of CLASSE UNITE_LOCATIVE.
 		 *  @see getList
 		 */
@@ -127,6 +138,7 @@
         	getCiterneList:getCiterneList,
         	getContrats:getContrats,
         	getImmeubles:getImmeubles,
+        	getIntroductionElectriciteList:getIntroductionElectriciteList,
         	getLocationUnits:getLocationUnits,
         	getPrestations:getPrestations,
         	getProductionChaleurList:getProductionChaleurList,
