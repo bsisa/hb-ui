@@ -68,6 +68,7 @@
 					            .then(function(prodChaleur) {
 					            		// Get list from catalogue default
 					            		//$scope.xxx = hbUtil.buildArrayFromCatalogueDefault(prodChaleur.IDENTIFIANT.QUALITE);
+					            		$scope.groupeChoices = hbUtil.buildArrayFromCatalogueDefault(prodChaleur.GROUPE);
 									},
 									function(response) {
 										var message = "Les valeurs par défaut pour la CLASSE PRODUCTION_CHALEUR n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
