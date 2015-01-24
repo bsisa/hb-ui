@@ -101,6 +101,16 @@
 			return getList(HB_COLLECTIONS.TRANSACTION_ID,xpath);
 		};
         
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *  
+		 * `HB_COLLECTIONS.VENTILATION_ID` constant identifies collection containing ELFIN objects of CLASSE VENTILATION.
+		 *  @see getList
+		 */		
+		var getVentilationList = function(xpath) {
+			return getList(HB_COLLECTIONS.VENTILATION_ID,xpath);
+		};			
+		
 	
         return {
         	getActors:getActors,
@@ -110,7 +120,8 @@
         	getPrestations:getPrestations,
         	getProductionChaleurList:getProductionChaleurList,
         	getProductionFroidList:getProductionFroidList,
-        	getTransactions:getTransactions
+        	getTransactions:getTransactions,
+        	getVentilationList:getVentilationList
         };
 
     }]);

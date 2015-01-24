@@ -288,7 +288,22 @@
 													function(response) {
 														var message = "Le chargement des PRODUCTION_FROIDs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
-													});								            
+													});
+
+								            var xpathForVentilation = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='VENTILATION']";								            
+								            hbQueryService.getProductionFroidList(xpathForVentilation)
+												.then(function(elfins) {
+														$scope.ventilationList = elfins;
+														if ($scope.ventilationList) {
+															$log.debug(">>>> $scope.ventilationList.length" + $scope.ventilationList.length);
+														} else {
+															$log.debug(">>>> $scope.ventilationList.length SEEMS EMPTY...");
+														}
+													},
+													function(response) {
+														var message = "Le chargement des VENTILATIONs a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});	
 							    		}
 							    		
 							    	}, true);							    	

@@ -1049,7 +1049,7 @@
 							<div class="hb-tab">
 								<div class="row">
 									<div class="col-sm-12">
-									<!-- Table des PRODUCTION_CHALEUR -->
+									<!-- Table des PRODUCTION_FROID -->
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
@@ -1079,13 +1079,35 @@
 							</div>
 						</tab>						
 						<tab active="tabState.equipements_tech_subtab_ventilation.active"><!-- EQ.TECH 3rd sub tab -->
-							<tab-heading>VENTILATION</tab-heading>
+							<tab-heading>Ventilation</tab-heading>
 							<div class="hb-tab">
-
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des VENTILATION -->
-									<!-- TODO -->									
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">Détail</th>
+													<th>Modèle</th>
+													<th>Année</th>
+													<th>Puissance (kW)</th>
+													<th>Energie</th>
+													<th>Fournisseur</th>
+												</tr>
+											</thead>
+											<tbody ng-show="ventilationList">
+												<tr
+													ng-repeat="ventilation in ventilationList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+													<td><div hb-card-view-link hb-href="/elfin/{{ventilation.ID_G}}/VENTILATION/{{ventilation.Id}}"></div></td>
+													<td><div hb-annexes-link hb-annexes-link-elfin="ventilation"></div></td>
+													<td><span >{{ventilation.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+													<td><span >{{ventilation.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{ventilation.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+													<td><span >{{ventilation.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+													<td><span >{{ventilation.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
