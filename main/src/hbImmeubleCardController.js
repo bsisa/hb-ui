@@ -90,8 +90,9 @@
 							        $scope.constatsClos = null;
 							        $scope.prestations = null;
 							        
+							        // Arrays containing lists of technical equipment related CLASSE.
 							        $scope.productionChaleurList = null;
-							        
+							        $scope.productionFroidList = null;
 							        
 							        var currentYear = moment().year();
 							        var lastYear = currentYear - 1;
@@ -273,6 +274,21 @@
 														var message = "Le chargement des PRODUCTION_CHALEURs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
+								            
+								            var xpathForProductionFroid = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='PRODUCTION_FROID']";								            
+								            hbQueryService.getProductionFroidList(xpathForProductionFroid)
+												.then(function(elfins) {
+														$scope.productionFroidList = elfins;
+														if ($scope.productionFroidList) {
+															$log.debug(">>>> $scope.productionFroidList.length" + $scope.productionFroidList.length);
+														} else {
+															$log.debug(">>>> $scope.productionFroidList.length SEEMS EMPTY...");
+														}
+													},
+													function(response) {
+														var message = "Le chargement des PRODUCTION_FROIDs a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});								            
 							    		}
 							    		
 							    	}, true);							    	

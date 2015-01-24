@@ -1006,12 +1006,12 @@
 		<!-- EQUIPEMENT technique tab --> 
 		<tab active="tabState.equipements_tech.active"> 
 			<tab-heading>Equipements techniques</tab-heading>
-<div class="hb-tab">
+			<div class="hb-tab">
 				<div class="row">
 					<div class="col-sm-12">
 					<tabset>  
 						<tab active="tabState.equipements_tech_subtab_prod_chaleur.active"><!-- EQ.TECH. 1st sub tab -->
-							<tab-heading>PRODUCTION CHALEUR</tab-heading>
+							<tab-heading>Production Chaleur</tab-heading>
 							<div class="hb-tab">
 								<div class="row">
 									<div class="col-sm-12">
@@ -1019,10 +1019,10 @@
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
-													<th colspan="2">PROD. CHALEUR</th>
+													<th colspan="2">Détail</th>
 													<th>Modèle</th>
 													<th>Année</th>
-													<th>Puissance</th>
+													<th>Puissance (kW)</th>
 													<th>Energie</th>
 													<th>Fournisseur</th>
 												</tr>
@@ -1045,45 +1045,35 @@
 							</div>
 						</tab>
 						<tab active="tabState.equipements_tech_subtab_prod_froid.active"><!-- EQ.TECH 2nd sub tab -->
-							<tab-heading>PRODUCTION FROID</tab-heading>
+							<tab-heading>Production Froid</tab-heading>
 							<div class="hb-tab">
-
 								<div class="row">
 									<div class="col-sm-12">
-									<!-- Table des PRODUCTION FROID -->
-<!-- 										<table class="table table-condensed table-bordered table-striped"> -->
-<!-- 											<thead> -->
-<!-- 												<tr> -->
-<!-- 													<th colspan="2">PROD. FROID</th> -->
-<!-- 													<th><a href="" -->
-<!-- 														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation -->
-<!-- 															I</a></th> -->
-<!-- 													<th><a href="" -->
-<!-- 														ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation -->
-<!-- 															II</a></th> -->
-<!-- 													<th><a href="" -->
-<!-- 														ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th> -->
-<!-- 													<th><a href="" -->
-<!-- 														ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th> -->
-<!-- 												<th><a href="" -->
-<!-- 														ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th> -->
-<!-- 												</tr> -->
-<!-- 											</thead> -->
-<!-- 											<tbody ng-show="contrats"> -->
-<!-- 												<tr -->
-<!-- 													ng-repeat="contrat in contrats | contractTerminatedListFilter:true | orderBy:contractPredicate:contractReverse">													 -->
-<!-- 													<td> -->
-<!-- 														<div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div> -->
-<!-- 													</td> -->
-<!-- 													<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td> -->
-<!-- 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td> -->
-<!-- 													<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td> -->
-<!-- 													<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td> -->
-<!-- 													<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td> -->
-<!-- 													<td><span >{{contrat.GROUPE}}</span></td> -->
-<!-- 												</tr> -->
-<!-- 											</tbody> -->
-<!-- 										</table>									 -->
+									<!-- Table des PRODUCTION_CHALEUR -->
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">Détail</th>
+													<th>Modèle</th>
+													<th>Année</th>
+													<th>Puissance (kW)</th>
+													<th>Energie</th>
+													<th>Fournisseur</th>
+												</tr>
+											</thead>
+											<tbody ng-show="productionFroidList">
+												<tr
+													ng-repeat="productionFroid in productionFroidList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+													<td><div hb-card-view-link hb-href="/elfin/{{productionFroid.ID_G}}/PRODUCTION_FROID/{{productionFroid.Id}}"></div></td>
+													<td><div hb-annexes-link hb-annexes-link-elfin="productionFroid"></div></td>
+													<td><span >{{productionFroid.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+													<td><span >{{productionFroid.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{productionFroid.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+													<td><span >{{productionFroid.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+													<td><span >{{productionFroid.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>
