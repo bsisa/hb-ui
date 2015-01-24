@@ -72,7 +72,19 @@
 									function(response) {
 										var message = "Les valeurs par défaut pour la CLASSE PRODUCTION_CHALEUR n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
 										hbAlertMessages.addAlert("danger",message);
-									});				    			
+									});		
+					            
+					            
+					            var xpathForProviders = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
+					            // Asychronous collaboratorActors preloading
+					            hbQueryService.getActors(xpathForProviders)
+								.then(function(providers) {
+										$scope.providers = providers;
+									},
+									function(response) {
+										var message = "Le chargement des ACTEURS Entreprise a échoué (statut de retour: "+ response.status+ ")";
+							            hbAlertMessages.addAlert("danger",message);
+									});
 					            
 								if ( $attrs.hbMode === "create" ) {
 									// Reset default xxx from catalogue
@@ -84,7 +96,17 @@
 								
 								
 				    		};	
-				    	}, true);												
+				    	}, true);			
+
+				    	$scope.actorProvidersChooseOneColumnsDefinition = [
+						                        		   		            { field:"GROUPE", displayName: "Nom/Abréviation"},
+						                        		   		            { field:"IDENTIFIANT.QUALITE", displayName: "Role"},				                        		   		         
+						                        		   	 		   		];
+					            
+					    $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';				    	
+				    	
+				    	
+				    	
 					} ]);
 	
 

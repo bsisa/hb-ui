@@ -68,6 +68,22 @@
 								ng-model="elfin.CARACTERISTIQUE['CAR2'].VALEUR">
 						</div>
 					</div>	
+					<div class="form-group">
+						<label for="from" class="col-sm-4 control-label">Fournisseur</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input id="provider" type="text" class="form-control"
+									autocomplete="off"
+									typeahead="actor.GROUPE for actor in providers | filter:{GROUPE: $viewValue} | limitTo:8" 
+									ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" > 
+								<span class="input-group-btn" tooltip="Recherche d'entreprise" tooltip-popup-delay="1500" >
+									<button class="btn btn-default" type="button" hb-choose-one ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', providers, 'GROUPE', actorProvidersChooseOneColumnsDefinition, actorChooseOneTemplate )" >
+										<i class="glyphicon glyphicon-list-alt"></i>
+									</button>
+								</span>
+							</div>								
+						</div>
+					</div>							
 				</div>
 			</div>	
 		</div>
