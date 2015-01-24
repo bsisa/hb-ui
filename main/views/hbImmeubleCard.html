@@ -1181,13 +1181,35 @@
 							</div>
 						</tab>
 						<tab active="tabState.equipements_tech_subtab_equipement.active"><!-- EQ.TECH 6th sub tab -->
-							<tab-heading>EQUIPEMENT</tab-heading>
+							<tab-heading>Equipement</tab-heading>
 							<div class="hb-tab">
-
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des EQUIPEMENT -->
-									<!-- TODO -->
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th colspan="2">Détail</th>
+													<th>Modèle</th>
+													<th>Année</th>
+													<th>Puissance (kW)</th>
+													<th>Energie</th>
+													<th>Fournisseur</th>
+												</tr>
+											</thead>
+											<tbody ng-show="equipementList">
+												<tr
+													ng-repeat="equipement in equipementList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+													<td><div hb-card-view-link hb-href="/elfin/{{equipement.ID_G}}/EQUIPEMENT/{{equipement.Id}}"></div></td>
+													<td><div hb-annexes-link hb-annexes-link-elfin="equipement"></div></td>
+													<td><span >{{equipement.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+													<td><span >{{equipement.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{equipement.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+													<td><span >{{equipement.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+													<td><span >{{equipement.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 								</div>
 							</div>

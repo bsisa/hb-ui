@@ -51,6 +51,19 @@
 	        return getList(HB_COLLECTIONS.CONTRAT_ID,xpath);
 		};		
 		
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.EQUIPEMENT_ID` identifies collection containing ELFIN objects of CLASSE EQUIPEMENT.  
+		 *  @see getList
+		 */		
+		var getEquipementList = function(xpath) {		
+	        return getList(HB_COLLECTIONS.EQUIPEMENT_ID,xpath);
+		};	
+		
+		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *   
@@ -137,6 +150,7 @@
         	getActors:getActors,
         	getCiterneList:getCiterneList,
         	getContrats:getContrats,
+        	getEquipementList:getEquipementList,
         	getImmeubles:getImmeubles,
         	getIntroductionElectriciteList:getIntroductionElectriciteList,
         	getLocationUnits:getLocationUnits,

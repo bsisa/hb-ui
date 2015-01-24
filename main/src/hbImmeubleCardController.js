@@ -96,6 +96,7 @@
 							        $scope.ventilationList = null;
 							        $scope.citerneList = null;
 							        $scope.introductionElectriciteList = null;
+							        $scope.equipementList = null;
 							        
 							        var currentYear = moment().year();
 							        var lastYear = currentYear - 1;
@@ -336,7 +337,22 @@
 													function(response) {
 														var message = "Le chargement des INTRODUCTION_ELECTRICITEs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
-													});								            
+													});
+								            
+								            var xpathForEquipement = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='EQUIPEMENT']";								            
+								            hbQueryService.getEquipementList(xpathForEquipement)
+												.then(function(elfins) {
+														$scope.equipementList = elfins;
+														if ($scope.equipementList) {
+															$log.debug(">>>> $scope.equipementList.length = " + $scope.equipementList.length);
+														} else {
+															$log.debug(">>>> $scope.equipementList.length SEEMS EMPTY...");
+														}
+													},
+													function(response) {
+														var message = "Le chargement des EQUIPEMENTs a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});									            
 							    		}
 							    		
 							    	}, true);							    	
