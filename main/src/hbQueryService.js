@@ -22,8 +22,9 @@
 		};
 		
 		/**
-		 * `actorsCollectionId`: Identifies collection for ELFIN objects of CLASSE ACTEUR
-		 *  `xpath`: Optional XPath restriction
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.ACTEUR_ID` identifies collection containing ELFIN objects of CLASSE ACTEUR.  
 		 *  @see getList
 		 */		
 		var getActors = function(xpath) {
@@ -31,8 +32,9 @@
 		};		
 		
 		/**
-		 * `contratsCollectionId`: Identifies collection for ELFIN objects of CLASSE CONTRAT
-		 *  `xpath`: Optional XPath restriction
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.CONTRAT_ID` identifies collection containing ELFIN objects of CLASSE CONTRAT.  
 		 *  @see getList
 		 */		
 		var getContrats = function(xpath) {		
@@ -40,8 +42,9 @@
 		};		
 		
 		/**
-		 * `immeublesCollectionId`: Identifies collection for ELFIN objects of CLASSE IMMEUBLE
-		 *  `xpath`: Optional XPath restriction
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.IMMEUBLE_ID` identifies collection containing ELFIN objects of CLASSE IMMEUBLE.  
 		 *  @see getList  
 		 */
 		var getImmeubles = function(xpath) {
@@ -49,8 +52,9 @@
 		};		
 		
 		/**
-		 * `locationUnitsCollectionId`: Identifies collection for ELFIN objects of CLASSE UNITE_LOCATIVE
-		 *  `xpath`: Optional XPath restriction
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.UNITE_LOCATIVE_ID` identifies collection containing ELFIN objects of CLASSE UNITE_LOCATIVE.
 		 *  @see getList
 		 */
 		var getLocationUnits = function(xpath) {
@@ -58,22 +62,39 @@
 		};
         
 		/**
-		 * `prestationsCollectionId`: Identifies collection for ELFIN objects of CLASSE PRESTATION
-		 *  `xpath`: Optional XPath restriction
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.PRESTATION_ID` identifies collection containing ELFIN objects of CLASSE PRESTATION. 
 		 *  @see getList
 		 */
 		var getPrestations = function(xpath) {
 			return getList(HB_COLLECTIONS.PRESTATION_ID,xpath);
 		};
 		
-		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.PRODUCTION_CHALEUR_ID` identifies collection containing ELFIN objects of CLASSE PRODUCTION_CHALEUR.
+		 *  @see getList
+		 */
 		var getProductionChaleurList = function(xpath) {
 			return getList(HB_COLLECTIONS.PRODUCTION_CHALEUR_ID,xpath);
-		}
+		};
 		
 		/**
-		 * `transactionsCollectionId`: Identifies collection for ELFIN objects of CLASSE TRANSACTION
-		 *  `xpath`: Optional XPath restriction
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *  
+		 * `HB_COLLECTIONS.PRODUCTION_FROID_ID` constant identifies collection containing ELFIN objects of CLASSE PRODUCTION_FROID.
+		 *  @see getList
+		 */		
+		var getProductionFroidList = function(xpath) {
+			return getList(HB_COLLECTIONS.PRODUCTION_FROID_ID,xpath);
+		};		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "". 
+		 * 
+		 * `HB_COLLECTIONS.TRANSACTION_ID` constant identifies collection containing ELFIN objects of CLASSE TRANSACTION.
 		 *  @see getList
 		 */
 		var getTransactions = function(xpath) {
@@ -88,6 +109,7 @@
         	getLocationUnits:getLocationUnits,
         	getPrestations:getPrestations,
         	getProductionChaleurList:getProductionChaleurList,
+        	getProductionFroidList:getProductionFroidList,
         	getTransactions:getTransactions
         };
 
