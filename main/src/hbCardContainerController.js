@@ -49,6 +49,13 @@
         // The ELFIN to be edited once obtained from REST API.
         $scope.elfin = null;
 
+        // ELFIN.FORM element can contain very large amount of information
+        // creating DOM related information even when hidden to the end user
+        // by tab is very counter productive in term of GUI reactivity.
+        // The following boolean is set to false by default and can be 
+        // changed to true by end user activity only when relevant.
+		$scope.eagerDomCreation = {"FORM" : false };
+        
         // Proceed with initialisation tasks
         init();
         

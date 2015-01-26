@@ -13,6 +13,9 @@
 	<!-- POINTS -->
 	<div class="well well-lg">
 		<div hb-collapse hb-collapse-title="Point" hb-collapse-init-collapsed="true">
+		
+		<div ng-if="eagerDomCreation.FORM">
+		
 		<table class="table table-condensed table-bordered table-striped">
 			<thead>
 				<tr>
@@ -63,12 +66,18 @@
 				<tr>
 			</tbody>
 		</table>
+		
+		</div>
+		
 		</div>
 		</div>
 		
 		<!-- LIGNES -->
 		<div class="well well-lg">
 		<div hb-collapse hb-collapse-title="Lignes" hb-collapse-init-collapsed="true">
+		
+		<div ng-if="eagerDomCreation.FORM" >
+		
 		<table class="table table-condensed table-bordered table-striped">
 			<thead>
 				<tr>
@@ -114,7 +123,10 @@
 					</td>
 				</tr>
 			</tbody>
-		</table>	
+		</table>
+		
+		</div>
+			
 		</div>	
 		</div>
 		
