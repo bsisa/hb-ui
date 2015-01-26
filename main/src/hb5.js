@@ -280,6 +280,11 @@
     	          return false; // stops the promise chain
     	      });        		
         
+
+        
+// ====================================================================
+//      Restangular interceptors tests
+//====================================================================        
         
     	/**
     	 *  Please note that ResponseInterceptor is never called when ErrorInterceptor is called,
@@ -294,21 +299,37 @@
     	 */
     	// Note: use addResponseInterceptor with newer restangular versions
     	// Configurer.addResponseInterceptor(
-        Restangular.setResponseInterceptor(
-    			function(data,operation,what,url,response,deferred) {
+//        Restangular.setResponseInterceptor(
+//    			function(data,operation,what,url,response,deferred) {
 //    	          $log.debug("Restangular response interceptor caught: status: " + response.status + 
 //    	        		  ", operation: " + operation + 
 //    	        		  ", what: " + what + 
 //    	        		  ", url: " + url);
-    				
-    	          // Important: The responseInterceptor must return the restangularized data element.
-    	          // https://github.com/mgonto/restangular#seterrorinterceptor
-    	          return data; 
-    		});        
+//    				
+//    	          $log.debug(url + " - response : "+ new Date());
+//    	          
+//    	          // Important: The responseInterceptor must return the restangularized data element.
+//    	          // https://github.com/mgonto/restangular#seterrorinterceptor
+//    	          return data; 
+//    		});        
         
-        // Note: only for tests purposes.
-        //Restangular.setDefaultHttpFields({cache: true});
+//        Restangular.setFullRequestInterceptor(
+//    			function(element, operation, what, url,  headers, params) {
+//    				$log.debug(new Date() + " - Restangular FullRequestInterceptor : \n" + 
+//    					"element: " + angular.toJson(element) + "\n" +
+//    					"operation: " + operation + "\n" +
+//      	        		", what: " + what + "\n" +
+//      	        		", url: " + url  + "\n" +
+//      	        		", headers: " + angular.toJson(headers) + "\n" +
+//      	        		", params: " + angular.toJson(params));
+//    				$log.debug(url + " - request  : "+ new Date());    				
+//    			}
+//    		);
         
+
+//        Restangular.setDefaultHttpFields({cache: true});
+
+// ====================================================================
         
     }]);	
     
