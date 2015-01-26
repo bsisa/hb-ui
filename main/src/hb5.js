@@ -306,6 +306,10 @@
     	          return data; 
     		});        
         
+        // Note: only for tests purposes.
+        //Restangular.setDefaultHttpFields({cache: true});
+        
+        
     }]);	
     
    
