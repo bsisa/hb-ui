@@ -22,6 +22,26 @@
 		};
 		
 		/**
+		 * Get ELFIN/CARACTERISTIQUE/FRACTION/L/C by L.POS C.POS (L@POS, CAR@POS)
+		 * instead of array position. If not found currentC === undefined
+		 *  
+		 * Note: @see getCARByPos
+		 */
+		var getFractionLCByPos = function(elfin, LPos, CPos) {
+    		var currentL = _.find(elfin.CARACTERISTIQUE.FRACTION.L, function(L){ return L.POS === LPos; });
+    		if (currentL) {
+    			var currentC = _.find(currentL.C, function(C){ return C.POS === CPos; });
+    			if (currentC) {
+    				return currentC;
+    			} else {
+    				return undefined;	
+    			}
+    		} else {
+    			return undefined;	
+    		}
+		};		
+		
+		/**
 		 * Returns the date corresponding to the string date expected to have 
 		 * YYYY-MM-DD format
 		 */
@@ -348,6 +368,7 @@
         
         return {
         	getCARByPos:getCARByPos,
+        	getFractionLCByPos:getFractionLCByPos,
         	reorderArrayByPOS:reorderArrayByPOS,
         	buildUrlQueryString:buildUrlQueryString,
         	buildKeyValueObject:buildKeyValueObject,
