@@ -48,8 +48,10 @@
 		
 		
 		// ============================================================
-		// Date, date and time utilities
+		// Date and time utilities
 		// ============================================================
+		
+		// Date utilities =============================================
 		
 		var ISO_8601_DATE_FORMAT = "YYYY-MM-DD";
 		
@@ -74,7 +76,7 @@
 		
 		/**
 		 * Returns a string in ISO_8601_DATE_FORMAT: YYYY-MM-DD 
-		 * corresponding to the provided date parameter
+		 * corresponding to the provided JavaScript date parameter
 		 */
 		var getDateInHbTextFormat = function(date) {
 			return moment(date).format(ISO_8601_DATE_FORMAT);
@@ -90,6 +92,50 @@
 		var getMomentDateFromHbTextDateFormat = function(textDate) {
 			return moment(textDate, ISO_8601_DATE_FORMAT);
 		};
+		
+		
+		// DateTime utilities =============================================
+		
+		var ISO_8601_DATE_TIME_IN_UTC_FORMAT = "YYYY-MM-DDTHH:mm:ssZ";		
+		
+		/**
+		 * Returns JavaScript date corresponding to the `textDateTime`.
+		 * 
+		 * `textDateTime` parameter is a string expected to match 
+		 * ISO_8601_DATE_TIME_IN_UTC_FORMAT: YYYY-MM-DDTHH:mm:ssZ 
+		 * 
+		 */
+		var getDateTimeFromHbTextDateTimeFormat = function(textDateTime) {
+			return moment(textDateTime, ISO_8601_DATE_TIME_IN_UTC_FORMAT).toDate();
+		};
+
+		/**
+		 * Returns a boolean result indicating whether `textDateTime`
+		 * parameter is a valid string matching ISO_8601_DATE_TIME_IN_UTC_FORMAT 
+		 */
+		var isValidDateTimeFromHbTextDateTimeFormat = function(textDateTime) {
+			return moment(textDateTime, ISO_8601_DATE_TIME_IN_UTC_FORMAT).isValid();
+		};			
+		
+		/**
+		 * Returns a string in ISO_8601_DATE_TIME_IN_UTC_FORMAT: YYYY-MM-DDTHH:mm:ssZ
+		 * corresponding to the provided JavaScript date parameter
+		 */
+		var getDateTimeInHbTextFormat = function(date) {
+			return moment(date).format(ISO_8601_DATE_TIME_IN_UTC_FORMAT);
+		};		
+		
+		
+		/**
+		 * Returns MomentJS date corresponding to the `textDateTime`.
+		 * 
+		 * `textDateTime` parameter is a string expected to match 
+		 * ISO_8601_DATE_TIME_IN_UTC_FORMAT: YYYY-MM-DDTHH:mm:ssZ 
+		 * 
+		 */		
+		var getMomentDateFromHbTextDateTimeFormat = function(textDateTime) {
+			return moment(textDateTime, ISO_8601_DATE_TIME_IN_UTC_FORMAT);
+		};		
 		
 		
 		// ============================================================
@@ -422,28 +468,31 @@
 		
         
         return {
-        	deepCopy:deepCopy,
-        	getCARByPos:getCARByPos,
-        	getFractionLCByPos:getFractionLCByPos,
-        	reorderArrayByPOS:reorderArrayByPOS,
-        	buildUrlQueryString:buildUrlQueryString,
-        	buildKeyValueObject:buildKeyValueObject,
         	applyPath:applyPath,
         	applyPaths:applyPaths,
-        	getValueAtPath:getValueAtPath,
+        	buildAnnexeFileSystemUri:buildAnnexeFileSystemUri,
         	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault,
+        	buildKeyValueObject:buildKeyValueObject,
+        	buildUrlQueryString:buildUrlQueryString,
+        	deepCopy:deepCopy,
         	encodeUriParameter:encodeUriParameter,
-        	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
+        	getAnnexesExcludingTag:getAnnexesExcludingTag,
+        	getCARByPos:getCARByPos,
         	getDateInHbTextFormat:getDateInHbTextFormat,
-        	getMomentDateFromHbTextDateFormat:getMomentDateFromHbTextDateFormat,
+        	getDateTimeInHbTextFormat:getDateTimeInHbTextFormat,
         	getDateFromHbTextDateFormat:getDateFromHbTextDateFormat,
+        	getDateTimeFromHbTextDateTimeFormat:getDateTimeFromHbTextDateTimeFormat,
         	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue,
+        	getFractionLCByPos:getFractionLCByPos,
         	getLinkFileName:getLinkFileName,
         	getLinkFileApiUrl:getLinkFileApiUrl,
-        	getAnnexesExcludingTag:getAnnexesExcludingTag,
+        	getMomentDateFromHbTextDateFormat:getMomentDateFromHbTextDateFormat,
+        	getMomentDateFromHbTextDateTimeFormat:getMomentDateFromHbTextDateTimeFormat,
         	getPrestationGroupForTransactionGroup:getPrestationGroupForTransactionGroup,
-        	buildAnnexeFileSystemUri:buildAnnexeFileSystemUri
-        	
+        	getValueAtPath:getValueAtPath,
+        	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
+        	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
+        	reorderArrayByPOS:reorderArrayByPOS        	
         };
     }]);
 	
