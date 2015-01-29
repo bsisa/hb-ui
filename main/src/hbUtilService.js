@@ -56,6 +56,14 @@
 		var ISO_8601_DATE_FORMAT = "YYYY-MM-DD";
 		
 		/**
+		 * Provide DateFormat for use by other libraries.
+		 */
+		var getDateFormat = function() {
+			// Prevent modification by reference due to missing JS true constant.
+			return deepCopy(ISO_8601_DATE_FORMAT);
+		};		
+		
+		/**
 		 * Returns JavaScript date corresponding to the `textDate`.
 		 * 
 		 * `textDate` parameter is a string expected to match 
@@ -97,6 +105,15 @@
 		// DateTime utilities =============================================
 		
 		var ISO_8601_DATE_TIME_IN_UTC_FORMAT = "YYYY-MM-DDTHH:mm:ssZ";		
+		
+		
+		/**
+		 * Provide DateTimeFormat for use by other libraries.
+		 */
+		var getDateTimeFormat = function() {
+			// Prevent modification by reference due to missing JS true constant.
+			return deepCopy(ISO_8601_DATE_TIME_IN_UTC_FORMAT);
+		};
 		
 		/**
 		 * Returns JavaScript date corresponding to the `textDateTime`.
@@ -478,7 +495,9 @@
         	encodeUriParameter:encodeUriParameter,
         	getAnnexesExcludingTag:getAnnexesExcludingTag,
         	getCARByPos:getCARByPos,
+        	getDateFormat:getDateFormat,
         	getDateInHbTextFormat:getDateInHbTextFormat,
+        	getDateTimeFormat:getDateTimeFormat,
         	getDateTimeInHbTextFormat:getDateTimeInHbTextFormat,
         	getDateFromHbTextDateFormat:getDateFromHbTextDateFormat,
         	getDateTimeFromHbTextDateTimeFormat:getDateTimeFromHbTextDateTimeFormat,
