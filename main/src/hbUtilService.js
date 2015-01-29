@@ -7,12 +7,10 @@
 	
 	angular.module('hb5').service('hbUtil', ['$log','$window','$filter','HB_API',function ($log,$window,$filter,HB_API) {
 
-		/**
-		 * Provides object deep copy with type loss for date. 
-		 */
-		var deepCopy = function(object) {
-			return angular.fromJson(angular.toJson(object));
-		};
+		
+		// ============================================================
+		// HyperBird GeoXML data structure to JSON utilities
+		// ============================================================
 		
 		/**
 		 * Get ELFIN/CARACTERISTIQUE/CARSET/CAR by CAR.POS (CAR@POS)
@@ -50,7 +48,7 @@
 		
 		
 		// ============================================================
-		// Date, date and time management
+		// Date, date and time utilities
 		// ============================================================
 		
 		var ISO_8601_DATE_FORMAT = "YYYY-MM-DD";
@@ -92,7 +90,19 @@
 		var getMomentDateFromHbTextDateFormat = function(textDate) {
 			return moment(textDate, ISO_8601_DATE_FORMAT);
 		};
-	
+		
+		
+		// ============================================================
+		// JavaScript data structures utilities
+		// ============================================================
+
+		/**
+		 * Provides object deep copy with type loss for date. 
+		 */
+		var deepCopy = function(object) {
+			return angular.fromJson(angular.toJson(object));
+		};
+		
 		
         /**
          * Sort any array by its elements POS property.
@@ -103,55 +113,7 @@
                 return parseInt(a.POS) - parseInt(b.POS);
             });
         };		
-		
-        
-        /**
-         * Encode a URL parameter with notable exception of single quote '.
-         * 
-         * Use encodeURIComponent to encode a URL parameter.
-         * Do not use this on a full URL it will break it escaping forward slashes,...
-         * encodeURI() can be used on URL instead.
-         */
-        var encodeUriParameter = function(uriParameter) {
-        	return $window.encodeURIComponent(uriParameter);
-        };
-        
-        /**
-         * Builds a URL query string such as "?FIRST_PARAM=test&SECOND_PARAM=xxx"
-         * where parameters is expected to be an array of objects with 
-         * name and value properties.
-         * 
-         * The parameters are encoded. 
-         */
-        var buildUrlQueryString = function(parameters) {
-
-	        var queryString = "";
-	    	for (var i=0; i < parameters.length; i++) {
-	    		var field = parameters[i];
-	    		if (i===0) {
-	    			queryString += "?" + field.name + "=" + encodeUriParameter(field.value);
-	    		} else {
-	    			queryString += "&" + field.name + "=" + encodeUriParameter(field.value);
-	    		}
-	    	}
-	    	return queryString;
-        };
-        
-        /**
-         * Transforms parameters array of objects with properties {label,name,value}
-         * to a single object with {key1:value1, key2:value2, key3,value3} 
-         * where names are mapped to keys and values to values.
-         */
-        var buildKeyValueObject = function(parameters) {
-	        var keyValueObj = {};
-	    	for (var i=0; i < parameters.length; i++) {
-	    		var field = parameters[i];
-	    		keyValueObj[field.name] = field.value;
-	    	}
-	    	return keyValueObj;
-        };        
-
-
+                
         /**
          * Reads a source object property value defined at sourcePath.
          * Example: getValueAtPath(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE')
@@ -173,8 +135,7 @@
             }
             return value;
         };        
-        
-        
+                
         /**
          * Performs update of 'target' object property at 'path' with newValue 
          * given a target object a path defined JSON path as string and a new 
@@ -233,7 +194,62 @@
                 }
             }
         };
+                
+
+		// ============================================================
+		// URI, URL utilities 
+		// ============================================================
         
+        /**
+         * Encode a URL parameter with notable exception of single quote '.
+         * 
+         * Use encodeURIComponent to encode a URL parameter.
+         * Do not use this on a full URL it will break it escaping forward slashes,...
+         * encodeURI() can be used on URL instead.
+         */
+        var encodeUriParameter = function(uriParameter) {
+        	return $window.encodeURIComponent(uriParameter);
+        };
+        
+        /**
+         * Builds a URL query string such as "?FIRST_PARAM=test&SECOND_PARAM=xxx"
+         * where parameters is expected to be an array of objects with 
+         * name and value properties.
+         * 
+         * The parameters are encoded. 
+         */
+        var buildUrlQueryString = function(parameters) {
+
+	        var queryString = "";
+	    	for (var i=0; i < parameters.length; i++) {
+	    		var field = parameters[i];
+	    		if (i===0) {
+	    			queryString += "?" + field.name + "=" + encodeUriParameter(field.value);
+	    		} else {
+	    			queryString += "&" + field.name + "=" + encodeUriParameter(field.value);
+	    		}
+	    	}
+	    	return queryString;
+        };
+        
+        
+		// ============================================================
+		// HyperBird catalog data conversion utilities
+		// ============================================================
+
+        /**
+         * Transforms parameters array of objects with properties {label,name,value}
+         * to a single object with {key1:value1, key2:value2, key3,value3} 
+         * where names are mapped to keys and values to values.
+         */
+        var buildKeyValueObject = function(parameters) {
+	        var keyValueObj = {};
+	    	for (var i=0; i < parameters.length; i++) {
+	    		var field = parameters[i];
+	    		keyValueObj[field.name] = field.value;
+	    	}
+	    	return keyValueObj;
+        };          
         
         /**
          * HyperBird catalogue default format is as follow: 
@@ -276,28 +292,9 @@
         };
         
         
-        /**
-         * Copy ECHEANCE object from catalogueConstat return it with default values set. 
-         */
-        var getEcheanceTemplateFromCatalogue = function(catalogueConstat) {
-	        var constatEcheanceTemplate = catalogueConstat.ACTIVITE.EVENEMENT.ECHEANCE[0];
-	        var currentDateHbTextFormat = getDateInHbTextFormat(new Date());
-	        constatEcheanceTemplate.DATE=currentDateHbTextFormat;
-	        constatEcheanceTemplate.ACTION=""; 
-	        constatEcheanceTemplate.PAR_QUI="EN COURS"; 
-	        constatEcheanceTemplate.POUR_QUI="";
-	        constatEcheanceTemplate.E_DATE=currentDateHbTextFormat;;
-	        constatEcheanceTemplate.E_ACTION="";
-	        constatEcheanceTemplate.E_PAR_QUI="0";
-	        constatEcheanceTemplate.E_POUR_QUI="";
-	        constatEcheanceTemplate.E_STATUT="OK";
-	        constatEcheanceTemplate.REMARQUE="";
-	        // TODO: manage POS value at insert time (.length + 1) and possibly at delete time (more complicated :) )
-	        constatEcheanceTemplate.POS=1;	
-	        
-	        return constatEcheanceTemplate;
-        };
-        
+		// ============================================================
+		// Utilities related to ANNEXES
+		// ============================================================        
         
         var getAnnexesExcludingTag = function(elfin, excludeTag) {
         	if (!(angular.isUndefined(elfin) || elfin===null) && !angular.isUndefined(elfin.ANNEXE) && !angular.isUndefined(elfin.ANNEXE.RENVOI)) {
@@ -326,6 +323,34 @@
 			var url = HB_API.ANNEXE_URL+elfinID_G+"/"+elfinId+"/"+ getLinkFileName(link);
 			return url;		
 		};
+        
+
+		// ============================================================
+		// Gespatri related utilities 
+		// TODO: move to hbGespatriUtilService
+		// ============================================================		
+		
+        /**
+         * Copy ECHEANCE object from catalogueConstat return it with default values set. 
+         */
+        var getEcheanceTemplateFromCatalogue = function(catalogueConstat) {
+	        var constatEcheanceTemplate = catalogueConstat.ACTIVITE.EVENEMENT.ECHEANCE[0];
+	        var currentDateHbTextFormat = getDateInHbTextFormat(new Date());
+	        constatEcheanceTemplate.DATE=currentDateHbTextFormat;
+	        constatEcheanceTemplate.ACTION=""; 
+	        constatEcheanceTemplate.PAR_QUI="EN COURS"; 
+	        constatEcheanceTemplate.POUR_QUI="";
+	        constatEcheanceTemplate.E_DATE=currentDateHbTextFormat;;
+	        constatEcheanceTemplate.E_ACTION="";
+	        constatEcheanceTemplate.E_PAR_QUI="0";
+	        constatEcheanceTemplate.E_POUR_QUI="";
+	        constatEcheanceTemplate.E_STATUT="OK";
+	        constatEcheanceTemplate.REMARQUE="";
+	        // TODO: manage POS value at insert time (.length + 1) and possibly at delete time (more complicated :) )
+	        constatEcheanceTemplate.POS=1;	
+	        
+	        return constatEcheanceTemplate;
+        };
         
 		/**
 		 * Maps TRANSACTION.GROUPE to PRESTATION.GROUPE
@@ -393,6 +418,8 @@
 			}
 
 		};		
+		
+		
         
         return {
         	deepCopy:deepCopy,
