@@ -8,6 +8,13 @@
 	angular.module('hb5').service('hbUtil', ['$log','$window','$filter','HB_API',function ($log,$window,$filter,HB_API) {
 
 		/**
+		 * Provides object deep copy with type loss for date. 
+		 */
+		var deepCopy = function(object) {
+			return angular.fromJson(angular.toJson(object));
+		};
+		
+		/**
 		 * Get ELFIN/CARACTERISTIQUE/CARSET/CAR by CAR.POS (CAR@POS)
 		 * instead of array position. If not found currentCAR === undefined
 		 *  
@@ -41,30 +48,51 @@
     		}
 		};		
 		
+		
+		// ============================================================
+		// Date, date and time management
+		// ============================================================
+		
+		var ISO_8601_DATE_FORMAT = "YYYY-MM-DD";
+		
 		/**
-		 * Returns the date corresponding to the string date expected to have 
-		 * YYYY-MM-DD format
+		 * Returns JavaScript date corresponding to the `textDate`.
+		 * 
+		 * `textDate` parameter is a string expected to match 
+		 * ISO_8601_DATE_FORMAT: YYYY-MM-DD 
+		 * 
 		 */
 		var getDateFromHbTextDateFormat = function(textDate) {
-			return moment(textDate, "YYYY-MM-DD").toDate();
+			return moment(textDate, ISO_8601_DATE_FORMAT).toDate();
 		};
-		
-		var getMomentDateFromHbTextDateFormat = function(textDate) {
-			return moment(textDate, "YYYY-MM-DD");
-		};
-		
+
+		/**
+		 * Returns a boolean result indicating whether `textDate`
+		 * parameter is a valid string matching ISO_8601_DATE_FORMAT 
+		 */
 		var isValidDateFromHbTextDateFormat = function(textDate) {
-			return moment(textDate, "YYYY-MM-DD").isValid();
-		};						
-		
+			return moment(textDate, ISO_8601_DATE_FORMAT).isValid();
+		};			
 		
 		/**
-		 * Returns the YYYY-MM-DD string corresponding to the date parameter
+		 * Returns a string in ISO_8601_DATE_FORMAT: YYYY-MM-DD 
+		 * corresponding to the provided date parameter
 		 */
 		var getDateInHbTextFormat = function(date) {
-			return moment(date).format("YYYY-MM-DD");
+			return moment(date).format(ISO_8601_DATE_FORMAT);
 		};
 		
+		/**
+		 * Returns MomentJS date corresponding to the `textDate`.
+		 * 
+		 * `textDate` parameter is a string expected to match 
+		 * ISO_8601_DATE_FORMAT: YYYY-MM-DD 
+		 * 
+		 */		
+		var getMomentDateFromHbTextDateFormat = function(textDate) {
+			return moment(textDate, ISO_8601_DATE_FORMAT);
+		};
+	
 		
         /**
          * Sort any array by its elements POS property.
@@ -367,6 +395,7 @@
 		};		
         
         return {
+        	deepCopy:deepCopy,
         	getCARByPos:getCARByPos,
         	getFractionLCByPos:getFractionLCByPos,
         	reorderArrayByPOS:reorderArrayByPOS,
