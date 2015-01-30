@@ -15,6 +15,32 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 
+
+				<!-- 2nd col first tab first row start -->
+				<div class="col-xs-12" style="text-align: center; height: 100%">
+					
+					<!-- If no photo is available show upload function while using room left empty with fixed size table. -->
+					<table ng-if="!photoSrc"
+						style="border: solid 4px #F0F0F0; width: 180px; height: 198px; margin: 0 auto;">
+						<tr>
+							<td style="vertical-align: middle; text-align: center"><i
+								class="glyphicon glyphicon-upload" style="font-size: 4em;"></i></td>
+						</tr>
+					</table> 
+					<!-- If a photo is available show it forcing width ratio. -->
+<!-- 					<div ng-if="photoSrc" style="height:198px; border:solid red 1px;">					 -->
+					<div ng-if="photoSrc" >
+						<img ng-src="{{photoSrc}}" width="180px" class="img-thumbnail" />
+					</div>
+					
+					<p>
+<!-- 						<div ng-if="canEdit" hb-annexes-upload hb-annexes-upload-annex-type="photo"></div> -->
+						<div hb-annexes-upload hb-annexes-upload-annex-type="photo"></div>
+					</p>
+
+				</div><!-- 2nd col first tab first row end -->
+
+
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label for="author" class="col-sm-4 control-label">Auteur</label>
