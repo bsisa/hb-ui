@@ -198,15 +198,28 @@
 								if ($scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE) {
 									// Manage POS 
 									$scope.constatEcheanceTemplate.POS = $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.length+1;
-									// Copy some information from preceeding event (still available as currentEvent)
-									// Copy Manager (Responsable)
-									$scope.constatEcheanceTemplate.POUR_QUI = $scope.currentEvent.POUR_QUI;
-									// Copy prestation group
-									$scope.constatEcheanceTemplate.E_ACTION = $scope.currentEvent.E_ACTION;
-									// Copy prestation year
-									$scope.constatEcheanceTemplate.E_POUR_QUI = $scope.currentEvent.E_POUR_QUI;
-									// Copy estimated amount
-									$scope.constatEcheanceTemplate.E_PAR_QUI = $scope.currentEvent.E_PAR_QUI;
+									// If a preceeding event existed, copy some information from preceeding event 
+									// (still available as currentEvent)
+									if ($scope.currentEvent) {
+										// Copy Manager (Responsable)
+										$scope.constatEcheanceTemplate.POUR_QUI = $scope.currentEvent.POUR_QUI;
+										// Copy prestation group
+										$scope.constatEcheanceTemplate.E_ACTION = $scope.currentEvent.E_ACTION;
+										// Copy prestation year
+										$scope.constatEcheanceTemplate.E_POUR_QUI = $scope.currentEvent.E_POUR_QUI;
+										// Copy estimated amount
+										$scope.constatEcheanceTemplate.E_PAR_QUI = $scope.currentEvent.E_PAR_QUI;
+									} else {
+										// Copy Manager (Responsable)
+										$scope.constatEcheanceTemplate.POUR_QUI = userDetails.getAbbreviation();
+										// Copy prestation group
+										$scope.constatEcheanceTemplate.E_ACTION = "";
+										// Copy prestation year
+										$scope.constatEcheanceTemplate.E_POUR_QUI = moment().format("YYYY"); // Current year
+										// estimated amount
+										//$scope.constatEcheanceTemplate.E_PAR_QUI; 
+										$scope.constatEcheanceTemplate.ACTION = "Analyse"; // first step
+									}
 								} else {
 									// Manage POS 
 									$scope.constatEcheanceTemplate.POS = 1;
