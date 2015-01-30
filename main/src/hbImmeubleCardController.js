@@ -151,6 +151,19 @@
 									};
 									
 									/**
+									 * Triggers a redirection to the PRODUCTION_CHALEUR creation URL with current
+									 * IMMEUBLE building number and SAI number passed as parameters.
+									 * Must not be effective while in create mode (no association is 
+									 * relevant while the IMMEUBLE creation is ongoing/pending.)
+									 */
+									$scope.createNewProductionChaleur  = function() {
+										if ($attrs.hbMode != "create") {
+											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+											$location.search(searchObj).path( "/elfin/create/PRODUCTION_CHALEUR" );
+										}
+									};
+									
+									/**
 									 * Triggers a redirection to the PRESTATION creation URL with current
 									 * IMMEUBLE Id and ID_G passed as parameters.
 									 * Must not be effective while in create mode (no association is 

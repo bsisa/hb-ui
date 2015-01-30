@@ -90,7 +90,11 @@
 					            
 								if ( $attrs.hbMode === "create" ) {
 									// Reset default xxx from catalogue
-								    //$scope.elfin.IDENTIFIANT.QUALITE = "";
+									$scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
+									$scope.elfin.IDENTIFIANT.ORIGINE = $routeParams.nocons;
+									$scope.elfin.GROUPE = "";
+									$scope.elfin.CARACTERISTIQUE['CAR3'].VALEUR = "";
+									
 								} else {
 									// Do nothing
 									

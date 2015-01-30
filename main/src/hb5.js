@@ -119,6 +119,9 @@
             .when('/elfin/:collectionId/USER/:elfinId', {
                 templateUrl: '/assets/views/USER_card_view.html'
             })
+            .when('/elfin/create/PRODUCTION_CHALEUR', {
+                templateUrl: '/assets/views/PRODUCTION_CHALEUR_card_new_view.html'
+            })                                    
             .when('/elfin/:collectionId/PRODUCTION_CHALEUR/:elfinId', {
                 templateUrl: '/assets/views/PRODUCTION_CHALEUR_card_view.html'
             })                        
