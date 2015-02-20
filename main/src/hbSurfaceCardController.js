@@ -20,6 +20,32 @@
 
 								//$log.debug("    >>>> Using HbSurfaceCardController");
 
+								$scope.getMomentDateFromHbTextDateFormat = hbUtil.getMomentDateFromHbTextDateFormat;
+								
+								$scope.canArchive = function() {
+									// If the form is not pristine we could have a valid archiveMoment which is not
+									// persisted to database letting us move on to archiveLocationUnit process.
+									if ($scope.elfin && $attrs.hbMode !== "create" && $scope.elfinForm.$pristine) {
+										var currentMoment = moment();
+										var archiveMoment = hbUtil.getMomentDateFromHbTextDateFormat($scope.elfin.IDENTIFIANT.A);
+										var canArchive = ( archiveMoment.isAfter(currentMoment) || archiveMoment.isSame(currentMoment, 'day') );
+										return canArchive;
+									} else {
+										return false;
+									}
+								};
+								
+								
+								$scope.archiveLocationUnit = function() {
+									if ($scope.canArchive) {
+										// Save current archived LOCATION UNIT
+										$scope.saveElfin($scope.elfin);
+										// Create new LOCATION_UNIT FROM current one
+										var searchObj = {Id: $scope.elfin.Id, ID_G: $scope.elfin.ID_G};
+										$location.search(searchObj).path( "/elfin/create/SURFACE" );										
+									}
+								};
+								
 						    	// Check when elfin instance becomes available 
 						    	$scope.$watch('elfin.Id', function() { 
 						    		
@@ -29,6 +55,42 @@
 						    			 */
 							    		if ($attrs.hbMode === "create") {
 							    			$scope.elfin.GROUPE = "";
+							    			// Get archived SURFACE if any
+							    			if ($routeParams.ID_G && $routeParams.Id) {
+
+								    			GeoxmlService.getElfin($routeParams.ID_G, $routeParams.Id).get()
+									            .then(function(archivedLocationUnit) {
+									            	// Preserve new Id, ID_G
+									            	var newId = angular.copy($scope.elfin.Id);
+									            	var newID_G = angular.copy($scope.elfin.ID_G); 
+									            	// Copy property value from archived to new
+									            	$scope.elfin.IDENTIFIANT = angular.copy(archivedLocationUnit.IDENTIFIANT);
+									            	$scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
+									            	$scope.elfin.IDENTIFIANT.A = "";
+									            	
+									            	$scope.elfin.PARTENAIRE = angular.copy(archivedLocationUnit.PARTENAIRE);
+									            	$scope.elfin.PARTENAIRE.USAGER.VALUE = "";
+									            	
+									            	$scope.elfin.CARACTERISTIQUE = angular.copy(archivedLocationUnit.CARACTERISTIQUE);
+									            	$scope.elfin.ACTIVITE = angular.copy(archivedLocationUnit.ACTIVITE);
+									            	$scope.elfin.GROUPE  = angular.copy(archivedLocationUnit.GROUPE);
+									            	$scope.elfin.NATURE  = angular.copy(archivedLocationUnit.NATURE);
+									            	$scope.elfin.TYPE  = angular.copy(archivedLocationUnit.TYPE);
+
+									            	// Force creation of new UNITE LOCATION.
+									            	$scope.saveElfin($scope.elfin);
+									            	
+//									            	$scope.elfin.Id = newId; 
+//									            	$scope.elfin.ID_G = newID_G;
+
+
+												},
+												function(response) {
+													var message = "Les valeurs par défaut pour la CLASSE UNITE_LOCATIVE n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
+													hbAlertMessages.addAlert("danger",message);
+												});		
+							    			}
+							    			 
 							    		} 
 						    		};
 						    		

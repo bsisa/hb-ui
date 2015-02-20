@@ -43,6 +43,8 @@
 					 					$scope.tabState = { 
 						 						"immeuble" : { "active" : true },
 						 						"unite_locative" : { "active" : false },
+						 						"unite_locative_subtab_current.active" : { "active" : false },
+						 						"unite_locative_subtab_archived.active" : { "active" : false },
 						 						"prestation" : { "active" : false },
 						 						"prestation_subtab_annee_moins1" : { "active" : true },
 						 						"prestation_subtab_annee_plus1" : { "active" : false },
@@ -129,6 +131,12 @@
 						            $scope.locUnitPredicate = 'IDENTIFIANT.DE';
 						            $scope.locUnitReverse = true;		
 						            
+						            $scope.locationUnitsArchived = null;
+						            
+						            $scope.locUnitArchivedPredicate = 'IDENTIFIANT.DE';
+						            $scope.locUnitArchivedReverse = true;			
+						            
+						            
 						            //$scope.prestaPredicate = 'IDENTIFIANT.DE';
 						            $scope.prestaPredicate = ['-IDENTIFIANT.DE','GROUPE','DIVERS.REMARQUE'];
 						            //$scope.prestaReverse = true;
@@ -188,7 +196,24 @@
 											var searchObj = {sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
 											$location.search(searchObj).path( "/elfin/create/CONTRAT" );
 										}
+									};			
+									
+									
+									/**
+									 * Triggers a redirection to the SURFACE (=> UNITA_LOCATIVE) creation URL with current
+									 * IMMEUBLE SAI number and NAME passed as parameters.
+									 * Must not be effective while in create mode (no association is 
+									 * relevant while the IMMEUBLE creation is ongoing/pending.)
+									 *
+									 * /elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}
+									 */
+									$scope.createNewUniteLocative = function() {
+										if ($attrs.hbMode != "create") {
+											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM,sai: $scope.elfin.IDENTIFIANT.OBJECTIF};
+											$location.search(searchObj).path( "/elfin/create/SURFACE" );
+										}
 									};										
+									
 									
 							    	/**
 							    	 * Listener used to load CONSTAT list related to this IMMEUBLE
@@ -443,9 +468,14 @@
 							    				$scope.elfin.PARTENAIRE.FOURNISSEUR = {"Id":"null","ID_G":"null","NOM":"null","GROUPE":"null","VALUE":"-"};
 							    				$scope.elfinForm.$setDirty();
 							    			}
+
+							    			// Current time in text format
+								            var currentHbTextDate = hbUtil.getDateInHbTextFormat(new Date());							    			
 							    			
 							    			// Get UNITE_LOCATIVE corresponding to current ELFIN.Id
-								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
+								            //var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
+								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"' and not(string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() "+hbUtil.encodeUriParameter(" <= ") + "'"+currentHbTextDate+"')]";								            
+								            
 								            hbQueryService.getLocationUnits(xpathForSurfaces)
 												.then(function(elfins) {
 														$scope.locationUnits = elfins;
@@ -454,6 +484,21 @@
 														var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
+								            
+								            
+							    			// Get archived UNITE_LOCATIVE corresponding to current ELFIN.Id
+
+								            // Note we exclude date string not equal to 10 characters to avoid having '' empty string 
+								            // considered as a date smaller than any other regular 10 char dates.
+								            var xpathForArchivedSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"' and string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() "+hbUtil.encodeUriParameter(" <= ") + "'"+currentHbTextDate+"']";
+								            hbQueryService.getLocationUnits(xpathForArchivedSurfaces)
+												.then(function(elfins) {
+														$scope.locationUnitsArchived = elfins;
+													},
+													function(response) {
+														var message = "Le chargement des SURFACEs archivées a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});								            
 								            
 								            // Make IMMEUBLE photo available
 								            $scope.updatePhotoSrc();
