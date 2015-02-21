@@ -64,7 +64,16 @@
             })
             .when('/elfin/:collectionId/FONTAINE', {
                 templateUrl: '/assets/views/FONTAINE_list_view.html'
-            })            
+            })
+            .when('/elfin/create/HORLOGE', {
+                templateUrl: '/assets/views/HORLOGE_card_new_view.html'
+            })
+            .when('/elfin/:collectionId/HORLOGE/:elfinId', {
+                templateUrl: '/assets/views/HORLOGE_card_view.html'
+            })
+            .when('/elfin/:collectionId/HORLOGE', {
+                templateUrl: '/assets/views/HORLOGE_list_view.html'
+            })
             .when('/elfin/create/IMMEUBLE', {
                 templateUrl: '/assets/views/IMMEUBLE_card_new_view.html'
             })            
