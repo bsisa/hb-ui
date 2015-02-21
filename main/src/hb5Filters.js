@@ -535,6 +535,65 @@
 	
 	
 	
+	/**
+	 * Filter tailored to HORLOGE list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual horloge list. 
+	 */
+	angular.module('hb5').filter('horlogeListFilter', [function () {
+		
+		return function (horloges, search) {
+	        if (!angular.isUndefined(horloges) && !angular.isUndefined(search)) {
+	            var tempHorloges = [ ];
+	            angular.forEach(horloges, function (horloge) {
+                    if ( 
+                    	 icontains(horloge.IDENTIFIANT.NOM, search.nom) &&
+                    	 icontains(horloge.IDENTIFIANT.ALIAS, search.alias) &&
+                    	 icontains(horloge.DIVERS.REMARQUE, search.remark)
+                    ) {
+                    	tempHorloges.push(horloge);
+                    }
+                });
+	            return tempHorloges;
+	        } else {
+	            return horloges;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to HORLOGE list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual horloge list. 
+	 */
+	angular.module('hb5').filter('horlogeListAnyFilter', [function () {
+		
+		return function (horloges, searchtext) {
+			
+			var checkHorloge = function(horloge, searchtext) {
+				return (
+                	 icontains(horloge.IDENTIFIANT.NOM, searchtext) ||
+                	 icontains(horloge.IDENTIFIANT.ALIAS, searchtext) || 
+                	 icontains(horloge.DIVERS.REMARQUE, searchtext)
+	    		);
+			};					
+			
+	        if (!angular.isUndefined(horloges) && !angular.isUndefined(searchtext)) {
+	            var tempHorloges = [ ];
+	            angular.forEach(horloges, function (horloge) {
+                    if ( checkAndForTokenisedSearchText(horloge,searchtext,checkHorloge) ) {
+                    	tempHorloges.push(horloge);
+                    }
+                });
+	            return tempHorloges;
+	        } else {
+	            return horloges;
+	        }
+	    };
+	}]);	
+	
+	
+	
+	
 		
 	/**
 	 * Filter tailored to WC list requirements.
