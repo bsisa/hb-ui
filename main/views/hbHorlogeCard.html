@@ -1,0 +1,221 @@
+<div hb-card-header>
+	<!-- Custom validation message to be defined here -->
+</div>
+<div class="row" style="padding-top: 8px;">
+	<div class="col-xs-12">
+		<tabset>
+		<!-- IDENTIFIANT tab -->
+		<tab> <tab-heading>Identifiant</tab-heading>
+		<div class="hb-tab">
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="author" class="col-md-3 control-label">Auteur</label>
+							<div class="col-md-9">
+								<input id="author" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.AUT">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="goal" class="col-md-3 control-label">Objectif</label>
+							<div class="col-md-9">
+								<input id="goal" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.OBJECTIF">
+							</div>
+						</div>					
+				
+						<div class="form-group">
+							<label for="value" class="col-md-3 control-label">Valeur</label>
+							<div class="col-md-9">
+								<input id="value" type="number" class="form-control"
+									ng-model="elfin.IDENTIFIANT.VALEUR">
+							</div>
+						</div>				
+						<div class="form-group">
+							<label for="value_new" class="col-md-3 control-label">Valeur
+								à neuf</label>
+							<div class="col-md-9">
+								<input id="value_new" type="number" class="form-control"
+									ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
+							</div>
+						</div>								
+						<div class="form-group">
+							<label for="quality" class="col-md-3 control-label">Qualité</label>
+							<div class="col-md-9">
+								<input id="quality" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.QUALITE">
+							</div>
+						</div>
+									
+					</div>
+					<!-- image start -->
+					<div class="col-sm-4" style="text-align: center; height: 100%">
+						
+						<!-- If no photo is available show upload function while using room left empty with fixed size table. -->
+						<table ng-if="!photoSrc"
+							style="border: solid 4px #F0F0F0; width: 180px; height: 198px; margin: 0 auto;">
+							<tr>
+								<td style="vertical-align: middle; text-align: center"><i
+									class="glyphicon glyphicon-upload" style="font-size: 4em;"></i></td>
+							</tr>
+						</table> 
+						<!-- If a photo is available show it forcing width ratio. -->
+	<!-- 					<div ng-if="photoSrc" style="height:198px; border:solid red 1px;">					 -->
+						<div ng-if="photoSrc" >
+							<img ng-src="{{photoSrc}}" width="180px" class="img-thumbnail" />
+						</div>
+						
+						<p>
+	<!-- 						<div ng-if="canEdit" hb-annexes-upload hb-annexes-upload-annex-type="photo"></div> -->
+							<div hb-annexes-upload hb-annexes-upload-annex-type="photo"></div>
+						</p>
+	
+					</div><!-- image end -->					
+					
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="name" class="col-md-3 control-label">Nom</label>
+							<div class="col-md-9">
+								<input id="name" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.NOM">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="alias" class="col-md-3 control-label">Alias</label>
+							<div class="col-md-9">
+								<input id="alias" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.ALIAS">
+							</div>
+						</div>						
+						<div class="form-group">
+							<label for="from" class="col-md-3 control-label">De</label>
+							<div class="col-md-9">
+								<input id="from" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.DE">
+							</div>
+						</div>						
+						<div class="form-group">
+							<label for="to" class="col-md-3 control-label">A</label>
+							<div class="col-md-9">
+								<input id="to" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.A">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="manager" class="col-md-3 control-label">Gérant</label>
+							<div class="col-md-9">
+								<input id="manager" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.GER">
+							</div>
+						</div>
+					</div>
+
+				<div class="col-sm-12">
+					<div class="form-group">
+					<!-- Vertical label/textarea. Requires additional div with bootstrap col to have correct alignment with other labels/inputs -->
+<!-- 						<div class="col-xs-12"> -->
+<!-- 							<label for="remark" >Remarque xs-12</label> -->
+<!-- 							<textarea id="remark" rows="2" class="form-control" ng-model="elfin.DIVERS.REMARQUE" ></textarea> -->
+<!-- 						</div>						 -->
+					<!-- Horizontal label/text area -->
+						<label for="remark" class="col-md-1 control-label">Remarque</label>
+						<div class="col-md-11">
+							<textarea id="remark" rows="4" class="form-control" ng-model="elfin.DIVERS.REMARQUE" ></textarea>
+						</div>						
+					</div>
+				</div>
+
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="responsible" class="col-md-3 control-label">Responsable</label>
+							<div class="col-md-9">
+								<input id="responsible" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.RES">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="origin" class="col-md-3 control-label">Origine</label>
+							<div class="col-md-9">
+								<input id="origin" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.ORIGINE">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="account" class="col-md-3 control-label">Compte</label>
+							<div class="col-md-9">
+								<input id="account" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.COMPTE">
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="by" class="col-md-3 control-label">Par</label>
+							<div class="col-md-9">
+								<input id="by" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.PAR">
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+		</tab> 
+		<!-- CARACTERISTIQUE tab --> 
+		<tab>
+			<tab-heading>Caractéristiques</tab-heading>
+			<div class="hb-tab">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="col-sm-12">
+							<table class="table table-condensed table-bordered table-striped"
+								ng-init="carIndexes = [1, 2, 3, 4, 5, 6]">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Nom</th>
+										<th>Unité</th>
+										<th>Valeur</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tr ng-repeat="carIndex in carIndexes">
+									<td>{{'CAR' + carIndex}}</td>
+									<td><input type="text" class="form-control"
+										ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].NOM"></td>
+									<td><input type="text" class="form-control"
+										ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE"></td>
+									<td><input type="text" class="form-control"
+										ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR"></td>
+								</tr>
+							</table>
+						</div>
+	
+					</div>
+				</div>
+			</div>
+		</tab>
+		<!-- Annexes tab -->
+		<tab> <tab-heading>
+		<div hb-annexes-number></div>
+		</tab-heading>
+		<div class="hb-tab">
+			<div hb-annexes-component></div>
+		</div>
+		</tab> 
+	</div>
+</div>
