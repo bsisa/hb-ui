@@ -56,6 +56,60 @@
 									});								
 								
 								
+						    	// ===================== PROOF OF CONCEPT START ======================================						    	
+						    	
+						    	/**
+						    	 * Build dependent options lists from the following LISTE definition: 
+						    	 */
+						    	// ELFIN Id="G20090113093730441" ID_G="G20060705000012345" CLASSE="LISTE" GROUPE="Prestation type" TYPE="DOCUMENT" NATURE="Management"
+						    	var prestationsOptionsData = {
+						    			"name" : "Prestation",
+						    			"value" : "Prestation",
+						    			"options" : [
+						    			                  { "name" : "Toiture" ,
+						    			                	"value" : "Toiture" ,
+						    			                	"options" : [
+										    			                  { "name" : "Couverture" , "value" : "Couverture" },
+										    			                  { "name" : "Etanchéité" , "value" : "Etanchéité" },
+										    			                  { "name" : "Ferblanterie" , "value" : "Ferblanterie" }
+						    			                	]  
+						    			                  },
+						    			                  { "name" : "Sanitaire" ,
+						    			                	"value" : "Sanitaire" ,
+						    			                	"options" : [
+						    			                	             { "name" : "Pompe de relevage" , "value" : "Pompe de relevage" },
+						    			                	             { "name" : "Boiler/Production" , "value" : "Boiler/Production" },
+						    			                	             { "name" : "Traitement d'eau" , "value" : "Traitement d'eau" },
+						    			                	             { "name" : "Séparateur de graisse/hydrocarbure" , "value" : "Séparateur de graisse/hydrocarbure" }
+						    			                	]
+							    			              }						    			                  
+						    			]
+						    	};
+						    	
+						    	var buildLevel = function(options) {
+						    		var jsonString = '[';
+									for (var i = 0; i < options.length; i++) {
+										var option = options[i];
+										jsonString += '{"name" : "' + option.name + '", "value":' + '"' + option.value + '"}';  
+										if (i < (options.length - 1)) {
+											jsonString += ',';
+										}
+									};
+						    	};
+						    	
+						    	$scope.prestation_IChoicesNew = buildLevel(prestationsOptionsData);
+						    	
+						    	$scope.$watch('elfin.CARACTERISTIQUE.CAR1.UNITE', function() { 
+						    		
+						    		// On CAR1.UNITE change select the correct contextual sub-menu (sub options) if possible
+						    		// keep it empty otherwise. 
+						    		// To deal with: ? earase the dependent value on master one change!?
+						    		// Does any inconsistency exist in production data?
+						    		
+						    	}, true);						    	
+						    	
+						    	// ===================== PROOF OF CONCEPT END ==========================================
+						    	
 								var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
 								$scope.entrepriseActors = null;
 								hbQueryService.getActors(xpathForEntreprises)
