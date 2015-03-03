@@ -63,29 +63,32 @@
 						    	 */
 						    	// ELFIN Id="G20090113093730441" ID_G="G20060705000012345" CLASSE="LISTE" GROUPE="Prestation type" TYPE="DOCUMENT" NATURE="Management"
 						    	var prestationsOptionsData = {
-						    			"name" : "Prestation",
-						    			"value" : "Prestation",
-						    			"options" : [
-						    			                  { "name" : "Toiture" ,
-						    			                	"value" : "Toiture" ,
-						    			                	"options" : [
-										    			                  { "name" : "Couverture" , "value" : "Couverture" },
-										    			                  { "name" : "Etanchéité" , "value" : "Etanchéité" },
-										    			                  { "name" : "Ferblanterie" , "value" : "Ferblanterie" }
+						    			name : "Prestation",
+						    			value : "Prestation",
+						    			options : [
+						    			                  { name : "Toiture" ,
+						    			                	value : "Toiture" ,
+						    			                	options : [
+										    			                  { name : "Couverture" , value : "Couverture" },
+										    			                  { name : "Etanchéité" , value : "Etanchéité" },
+										    			                  { name : "Ferblanterie" , value : "Ferblanterie" }
 						    			                	]  
 						    			                  },
-						    			                  { "name" : "Sanitaire" ,
-						    			                	"value" : "Sanitaire" ,
-						    			                	"options" : [
-						    			                	             { "name" : "Pompe de relevage" , "value" : "Pompe de relevage" },
-						    			                	             { "name" : "Boiler/Production" , "value" : "Boiler/Production" },
-						    			                	             { "name" : "Traitement d'eau" , "value" : "Traitement d'eau" },
-						    			                	             { "name" : "Séparateur de graisse/hydrocarbure" , "value" : "Séparateur de graisse/hydrocarbure" }
+						    			                  { name : "Sanitaire" ,
+						    			                	value : "Sanitaire" ,
+						    			                	options : [
+						    			                	             { name : "Pompe de relevage" , value : "Pompe de relevage" },
+						    			                	             { name : "Boiler/Production" , value : "Boiler/Production" },
+						    			                	             { name : "Traitement d'eau" , value : "Traitement d'eau" },
+						    			                	             { name : "Séparateur de graisse/hydrocarbure" , value : "Séparateur de graisse/hydrocarbure" }
 						    			                	]
 							    			              }						    			                  
 						    			]
 						    	};
 						    	
+						    	/**
+						    	 * Extracts name values from options data structure
+						    	 */
 						    	var buildLevel = function(options) {
 						    		var jsonString = '[';
 									for (var i = 0; i < options.length; i++) {
@@ -95,17 +98,34 @@
 											jsonString += ',';
 										}
 									};
+									jsonString += ']';
+									return angular.fromJson(jsonString);
 						    	};
 						    	
-						    	$scope.prestation_IChoicesNew = buildLevel(prestationsOptionsData);
+						    	$scope.testI = '';
+						    	$scope.testII = '';
 						    	
-						    	$scope.$watch('elfin.CARACTERISTIQUE.CAR1.UNITE', function() { 
+						    	$scope.prestation_IChoicesNew = buildLevel(prestationsOptionsData.options);
+						    	$log.debug("prestation_IChoicesNew = " + angular.toJson($scope.prestation_IChoicesNew));
+						    	
+						    	$scope.$watch('elfin.CARACTERISTIQUE.CAR1.UNITE', function(newPrestationsI, oldPrestationsI) { 
+						    		$log.debug(">>>> watched CAR1.UNITE: oldPrestationsI = "+oldPrestationsI + " => newPrestationsI = " + newPrestationsI);
 						    		
-						    		// On CAR1.UNITE change select the correct contextual sub-menu (sub options) if possible
-						    		// keep it empty otherwise. 
-						    		// To deal with: ? earase the dependent value on master one change!?
-						    		// Does any inconsistency exist in production data?
+						    		if (newPrestationsI) {
 						    		
+							    		for (var i = 0; i < prestationsOptionsData.options.length; i++) {
+							    			var option = prestationsOptionsData.options[i];
+							    			if (option.value === newPrestationsI) {
+							    				$scope.prestation_IIChoicesNew = buildLevel(option.options);
+							    				break;
+							    			}
+							    		}
+							    		// On CAR1.UNITE change select the correct contextual sub-menu (sub options) if possible
+							    		// keep it empty otherwise. 
+							    		// To deal with: ? earase the dependent value on master one change!?
+							    		// Does any inconsistency exist in production data?
+							    		$log.debug("prestation_IIChoicesNew = " + angular.toJson($scope.prestation_IIChoicesNew));							    		
+						    		}
 						    	}, true);						    	
 						    	
 						    	// ===================== PROOF OF CONCEPT END ==========================================
