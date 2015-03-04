@@ -62,7 +62,26 @@
 						    	 * Build dependent options lists from the following LISTE definition: 
 						    	 */
 						    	// ELFIN Id="G20090113093730441" ID_G="G20060705000012345" CLASSE="LISTE" GROUPE="Prestation type" TYPE="DOCUMENT" NATURE="Management"
-						    	var prestationsOptionsData = {
+						    	
+						    	var PRESTATION_TYPE_LIST_ID_G = "G20060705000012345";
+						    	var PRESTATION_TYPE_LIST_Id = "G20090113093730441";
+						    		
+						    	
+						    	GeoxmlService.getElfin(PRESTATION_TYPE_LIST_ID_G, PRESTATION_TYPE_LIST_Id).get().then(function(elfin) {
+						    		// Given elfin build data object
+						    		$log.debug("LISTE Prestation type = \n" + angular.toJson(elfin) );
+						    		// TODO: create build function in hbUtil
+						    		// $scope.prestationsOptionsData =
+						    		
+						    		
+							    	$scope.prestation_IChoicesNew = buildLevel($scope.prestationsOptionsData.options);
+							    	$log.debug("prestation_IChoicesNew = " + angular.toJson($scope.prestation_IChoicesNew));						    		
+						    		
+					            }, function() {
+					            	
+					            });						    	
+						    	
+						    	$scope.prestationsOptionsData = {
 						    			name : "Prestation",
 						    			value : "Prestation",
 						    			options : [
@@ -105,16 +124,14 @@
 						    	$scope.testI = '';
 						    	$scope.testII = '';
 						    	
-						    	$scope.prestation_IChoicesNew = buildLevel(prestationsOptionsData.options);
-						    	$log.debug("prestation_IChoicesNew = " + angular.toJson($scope.prestation_IChoicesNew));
 						    	
 						    	$scope.$watch('elfin.CARACTERISTIQUE.CAR1.UNITE', function(newPrestationsI, oldPrestationsI) { 
 						    		$log.debug(">>>> watched CAR1.UNITE: oldPrestationsI = "+oldPrestationsI + " => newPrestationsI = " + newPrestationsI);
 						    		
 						    		if (newPrestationsI) {
 						    		
-							    		for (var i = 0; i < prestationsOptionsData.options.length; i++) {
-							    			var option = prestationsOptionsData.options[i];
+							    		for (var i = 0; i < $scope.prestationsOptionsData.options.length; i++) {
+							    			var option = $scope.prestationsOptionsData.options[i];
 							    			if (option.value === newPrestationsI) {
 							    				$scope.prestation_IIChoicesNew = buildLevel(option.options);
 							    				break;
