@@ -38,6 +38,8 @@
 							    				$scope.elfin.CARACTERISTIQUE.CAR1.VALEUR = '';
 							    			}
 							    			$scope.elfin.GROUPE = "";
+							    		} else {
+						    				updatePrestationIIOptions($scope.prestationsOptionsData, $scope.elfin.CARACTERISTIQUE.CAR1.UNITE, $scope.prestation_IIChoicesNew);
 							    		}
 							    		
 						    		};
@@ -59,6 +61,52 @@
 						    	// ===================== PROOF OF CONCEPT START ======================================						    	
 						    	
 						    	/**
+						    	 * Extracts name values from options data structure
+						    	 */
+						    	var buildLevel = function(options) {
+						    		var jsonString = '[';
+									for (var i = 0; i < options.length; i++) {
+										var option = options[i];
+										jsonString += '{"name" : "' + option.name + '", "value":' + '"' + option.value + '"}';  
+										if (i < (options.length - 1)) {
+											jsonString += ',';
+										}
+									};
+									jsonString += ']';
+									return angular.fromJson(jsonString);
+						    	};						    	
+						    	
+						    	/**
+						    	 * Updates prestations II options list by reference.
+						    	 */
+						    	var updatePrestationIIOptions = function(prestationsOptionsData, prestationI, prestationsIIOptions) {
+						    		$log.debug(">>>> updatePrestationIIOptions START : prestationI = " + prestationI);
+						    		if (prestationsOptionsData && prestationI && prestationI.trim().length > 0) {
+
+						    			for (var i = 0; i < prestationsOptionsData.options.length; i++) {
+							    			var option = prestationsOptionsData.options[i];
+							    			if (option.value === prestationI) {
+							    				// Update options by reference
+							    				if (option.options) {
+							    					$log.debug(">>>> Options found for option.value = " + option.value);
+								    				//prestationsIIOptions = buildLevel(option.options);
+								    				$scope.prestation_IIChoicesNew = buildLevel(option.options);
+							    				} else {
+							    					$log.debug(">>>> No options found for option.value = " + option.value);
+							    				}
+
+							    				break;
+							    			} else {
+							    				$log.debug(">>>>>> option.value = "+option.value+" !== prestationI = " + prestationI);
+							    			}
+							    		}						    			
+						    		}
+						    		$log.debug(">>>> updatePrestationIIOptions DONE  : prestationI = " + prestationI + ", prestationsIIOptions = " + angular.toJson(prestationsIIOptions));
+						    	};
+						    							    	
+						    	
+						    	
+						    	/**
 						    	 * Build dependent options lists from the following LISTE definition: 
 						    	 */
 						    	// ELFIN Id="G20090113093730441" ID_G="G20060705000012345" CLASSE="LISTE" GROUPE="Prestation type" TYPE="DOCUMENT" NATURE="Management"
@@ -68,13 +116,65 @@
 
 						    	
 						    	// Collect `level` elements matching previous level `key` in elfin of CLASSE LISTE
-						    	var collectNextLevelMatchingKey = function(elfin, key, level) {
-						    		var matchingL = _.filter(elfin.CARACTERISTIQUE.FRACTION.L, function(L) { return (L.C[level-1] && L.C[level-1].VALUE.trim() === key);} );
-						    		//matchingL.sort();
-						    		var matchingKeys = _.map(matchingL, function(L, i, FRACTION) { return L.C[level].VALUE.trim();} );
-						    		matchingKeys.sort();
-						    		return _.uniq(matchingKeys, true);
+						    	var collectLevelMatchingKey = function(elfin, key, level) {
+
+						    		// Collect level 0 keys
+						    		if (level === 0) {
+							    		var optionsDataLevel0Keys = _.map(elfin.CARACTERISTIQUE.FRACTION.L, function(L, i, FRACTION) { return L.C[0].VALUE.trim();} );
+							    		// Remove empty elements and duplicate elements
+							    		optionsDataLevel0Keys =  _.uniq(_.filter(optionsDataLevel0Keys, function(element){ return element !== ""; }));
+							    		//$log.debug("optionsDataLevel0Keys = " + angular.toJson(optionsDataLevel0Keys));
+						    			return optionsDataLevel0Keys;
+						    		} else if (level > 0) {
+							    		var matchingL = _.filter(elfin.CARACTERISTIQUE.FRACTION.L, function(L) { return (L.C[level-1] && L.C[level-1].VALUE.trim() === key);} );
+							    		//matchingL.sort();
+							    		var matchingKeys = _.map(matchingL, function(L, i, FRACTION) { return L.C[level].VALUE.trim();} );
+							    		matchingKeys.sort();
+							    		return _.uniq(matchingKeys, true);						    			
+						    		} else {
+						    			// Unsupported state
+						    			return undefined;
+						    		}
 						    	};						    	
+						    	
+						    	/**
+						    	 * For `level` === 0 `key` parameter value is not taken into account
+						    	 */
+						    	var getLevelOptions = function(elfin, key, level) {
+						    		var levelOptions = [];
+						    		var levelMatchingKeys = collectLevelMatchingKey(elfin,key,level);
+						    		for (var i = 0; i < levelMatchingKeys.length ; i++) {
+						    			var currentKey = levelMatchingKeys[i];						    
+						    			if (level === 0) {
+						    				levelOptions.push( 
+							    				{
+									    			name : currentKey,
+									    			value : currentKey,
+									    			options : getLevelOptions(elfin, currentKey, level+1)
+							    				}
+						    				);
+						    			} else if (level === 1) {
+						    				levelOptions.push( 
+							    				{
+									    			name : currentKey,
+									    			value : currentKey,
+									    			options : getLevelOptions(elfin, currentKey, level+1)
+							    				}
+							    			);						    				
+						    			} else if (level === 2) {
+						    				levelOptions.push( 
+							    				{
+									    			name : currentKey,
+									    			value : currentKey
+							    				}
+							    			);							    				
+						    			} else {
+						    				// Unsupported situation
+						    			}
+						    		}
+						    		return levelOptions;
+						    	};
+						    	
 						    	
 						    	GeoxmlService.getElfin(PRESTATION_TYPE_LIST_ID_G, PRESTATION_TYPE_LIST_Id).get().then(function(elfin) {
 						    		// Given elfin build data object
@@ -91,39 +191,16 @@
 						    			//$log.debug("sorted C   = " + angular.toJson(L));
 						    		}
 
-						    		// Transform FACTION.L to optionsData
-						    		// Level1 stored at L.C.POS=1 => L.C[0]
-						    		
-						    		// Collect level k keys
-						    		var k = 0;
-						    		var optionsDataLevel1Keys = _.map(elfin.CARACTERISTIQUE.FRACTION.L, function(L, i, FRACTION) { return L.C[k].VALUE.trim();} );
-						    		// Remove empty elements and duplicate elements
-						    		optionsDataLevel1Keys =  _.uniq(_.filter(optionsDataLevel1Keys, function(element){ return element !== ""; }));
-						    		$log.debug("optionsDataLevel1Keys = " + angular.toJson(optionsDataLevel1Keys));
-						    		
-						    		
-						    		// Collect level k+1 keys matching k key
-						    		for (var i = 0; i < optionsDataLevel1Keys.length ; i++) {
-						    			var currentKey = optionsDataLevel1Keys[i];
-						    			var optionsDataLevel2Keys = collectNextLevelMatchingKey(elfin,currentKey,k+1);
-							    		$log.debug("optionsDataLevel2Keys = " + angular.toJson(optionsDataLevel2Keys));
-							    		// Collect level k+1 keys matching k key
-							    		for (var j = 0; j < optionsDataLevel2Keys.length ; j++) {
-							    			var currentLevel2Key = optionsDataLevel2Keys[j];
-							    			var optionsDataLevel3Keys = collectNextLevelMatchingKey(elfin,currentLevel2Key,k+2);
-								    		$log.debug("optionsDataLevel3Keys = " + angular.toJson(optionsDataLevel3Keys));
-							    		}
-						    		}
-						    		
-						    		
-						    		// Level2 stored at L.C.POS=2 => L.C[1]
-						    		//var optionsDataLevel2 = 
-						    		// Level3 stored at L.C.POS=3 => L.C[2]
-						    		//var optionsDataLevel3 = 
+						    		$scope.prestationsOptionsData = getLevelOptions(elfin, undefined, 0)[0];
 
-						    		//var optionsData =
+						    		$log.debug("$scope.prestationsOptionsData.options = " + angular.toJson($scope.prestationsOptionsData.options));						    		
 						    		
-							    	$scope.prestation_IChoicesNew = buildLevel($scope.prestationsOptionsData.options);
+					    			$scope.prestation_IChoicesNew = buildLevel($scope.prestationsOptionsData.options);
+							    	
+							    	if ($scope.elfin) {
+							    		updatePrestationIIOptions($scope.prestationsOptionsData, $scope.elfin.CARACTERISTIQUE.CAR1.UNITE, $scope.prestation_IIChoicesNew);
+							    	}
+							    	
 							    	$log.debug("prestation_IChoicesNew = " + angular.toJson($scope.prestation_IChoicesNew));						    		
 						    		
 					            }, function() {
@@ -131,67 +208,44 @@
 					            });						    	
 						    	
 						    	
-						    	$scope.prestationsOptionsData = {
-						    			name : "Prestation",
-						    			value : "Prestation",
-						    			options : [
-						    			                  { name : "Toiture" ,
-						    			                	value : "Toiture" ,
-						    			                	options : [
-										    			                  { name : "Couverture" , value : "Couverture" },
-										    			                  { name : "Etanchéité" , value : "Etanchéité" },
-										    			                  { name : "Ferblanterie" , value : "Ferblanterie" }
-						    			                	]  
-						    			                  },
-						    			                  { name : "Sanitaire" ,
-						    			                	value : "Sanitaire" ,
-						    			                	options : [
-						    			                	             { name : "Pompe de relevage" , value : "Pompe de relevage" },
-						    			                	             { name : "Boiler/Production" , value : "Boiler/Production" },
-						    			                	             { name : "Traitement d'eau" , value : "Traitement d'eau" },
-						    			                	             { name : "Séparateur de graisse/hydrocarbure" , value : "Séparateur de graisse/hydrocarbure" }
-						    			                	]
-							    			              }						    			                  
-						    			]
-						    	};
+//						    	$scope.prestationsOptionsData = {
+//						    			name : "Prestation",
+//						    			value : "Prestation",
+//						    			options : [
+//						    			                  { name : "Toiture" ,
+//						    			                	value : "Toiture" ,
+//						    			                	options : [
+//										    			                  { name : "Couverture" , value : "Couverture" },
+//										    			                  { name : "Etanchéité" , value : "Etanchéité" },
+//										    			                  { name : "Ferblanterie" , value : "Ferblanterie" }
+//						    			                	]  
+//						    			                  },
+//						    			                  { name : "Sanitaire" ,
+//						    			                	value : "Sanitaire" ,
+//						    			                	options : [
+//						    			                	             { name : "Pompe de relevage" , value : "Pompe de relevage" },
+//						    			                	             { name : "Boiler/Production" , value : "Boiler/Production" },
+//						    			                	             { name : "Traitement d'eau" , value : "Traitement d'eau" },
+//						    			                	             { name : "Séparateur de graisse/hydrocarbure" , value : "Séparateur de graisse/hydrocarbure" }
+//						    			                	]
+//							    			              }						    			                  
+//						    			]
+//						    	};
 						    	
-						    	/**
-						    	 * Extracts name values from options data structure
-						    	 */
-						    	var buildLevel = function(options) {
-						    		var jsonString = '[';
-									for (var i = 0; i < options.length; i++) {
-										var option = options[i];
-										jsonString += '{"name" : "' + option.name + '", "value":' + '"' + option.value + '"}';  
-										if (i < (options.length - 1)) {
-											jsonString += ',';
-										}
-									};
-									jsonString += ']';
-									return angular.fromJson(jsonString);
-						    	};
 						    	
 						    	$scope.testI = '';
 						    	$scope.testII = '';
 						    	
 						    	
 						    	$scope.$watch('elfin.CARACTERISTIQUE.CAR1.UNITE', function(newPrestationsI, oldPrestationsI) { 
-						    		$log.debug(">>>> watched CAR1.UNITE: oldPrestationsI = "+oldPrestationsI + " => newPrestationsI = " + newPrestationsI);
+//						    		$log.debug(">>>> watched CAR1.UNITE: oldPrestationsI = "+oldPrestationsI + " => newPrestationsI = " + newPrestationsI);
 						    		
-						    		if (newPrestationsI) {
-						    		
-							    		for (var i = 0; i < $scope.prestationsOptionsData.options.length; i++) {
-							    			var option = $scope.prestationsOptionsData.options[i];
-							    			if (option.value === newPrestationsI) {
-							    				$scope.prestation_IIChoicesNew = buildLevel(option.options);
-							    				break;
-							    			}
-							    		}
-							    		// On CAR1.UNITE change select the correct contextual sub-menu (sub options) if possible
-							    		// keep it empty otherwise. 
-							    		// To deal with: ? earase the dependent value on master one change!?
-							    		// Does any inconsistency exist in production data?
-							    		$log.debug("prestation_IIChoicesNew = " + angular.toJson($scope.prestation_IIChoicesNew));							    		
+						    		if (newPrestationsI && $scope.prestationsOptionsData) {
+						    			// Update dependent prestation II list of options
+						    			updatePrestationIIOptions($scope.prestationsOptionsData, newPrestationsI, $scope.prestation_IIChoicesNew);
+
+						    			// Reset dependant prestation II field value which lost its meaning in the new prestation I context.
+						    			$scope.elfin.CARACTERISTIQUE.CAR1.VALEUR = '';							    		
 						    		}
 						    	}, true);						    	
 						    	
