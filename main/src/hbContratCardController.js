@@ -39,7 +39,7 @@
 							    			}
 							    			$scope.elfin.GROUPE = "";
 							    		} else {
-						    				updatePrestationIIOptions($scope.prestationsOptionsData, $scope.elfin.CARACTERISTIQUE.CAR1.UNITE, $scope.prestation_IIChoicesNew);
+						    				updatePrestationIIOptions($scope.prestationsOptionsData, $scope.elfin.CARACTERISTIQUE.CAR1.UNITE);
 							    		}
 							    		
 						    		};
@@ -50,7 +50,10 @@
 					            .then(function(contrat) {
 					            		// Get groupeChoices from catalogue default
 					            	    $scope.groupeChoices = hbUtil.buildArrayFromCatalogueDefault(contrat.GROUPE);
-					            	    $scope.prestation_IChoices = hbUtil.buildArrayFromCatalogueDefault(contrat.CARACTERISTIQUE.CAR1.UNITE);
+					            	    
+					            	    // Prestation I choices are defined in an ELFIN of CLASSE='LISTE' together with Prestation II dependent choices.
+					            	    //$scope.prestation_IChoices = hbUtil.buildArrayFromCatalogueDefault(contrat.CARACTERISTIQUE.CAR1.UNITE);
+					            	    
 									},
 									function(response) {
 										var message = "Les valeurs par défaut pour la CLASSE CONTRAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
@@ -79,7 +82,7 @@
 						    	/**
 						    	 * Updates prestations II options list by reference.
 						    	 */
-						    	var updatePrestationIIOptions = function(prestationsOptionsData, prestationI, prestationsIIOptions) {
+						    	var updatePrestationIIOptions = function(prestationsOptionsData, prestationI) {
 						    		$log.debug(">>>> updatePrestationIIOptions START : prestationI = " + prestationI);
 						    		if (prestationsOptionsData && prestationI && prestationI.trim().length > 0) {
 
@@ -88,9 +91,7 @@
 							    			if (option.value === prestationI) {
 							    				// Update options by reference
 							    				if (option.options) {
-							    					$log.debug(">>>> Options found for option.value = " + option.value);
-								    				//prestationsIIOptions = buildLevel(option.options);
-								    				$scope.prestation_IIChoicesNew = buildLevel(option.options);
+								    				$scope.prestation_IIChoices = buildLevel(option.options);
 							    				} else {
 							    					$log.debug(">>>> No options found for option.value = " + option.value);
 							    				}
@@ -101,7 +102,7 @@
 							    			}
 							    		}						    			
 						    		}
-						    		$log.debug(">>>> updatePrestationIIOptions DONE  : prestationI = " + prestationI + ", prestationsIIOptions = " + angular.toJson(prestationsIIOptions));
+						    		$log.debug(">>>> updatePrestationIIOptions DONE  : prestationI = " + prestationI + ", prestationsIIOptions = " + angular.toJson($scope.prestation_IIChoices));
 						    	};
 						    							    	
 						    	
@@ -193,15 +194,13 @@
 
 						    		$scope.prestationsOptionsData = getLevelOptions(elfin, undefined, 0)[0];
 
-						    		$log.debug("$scope.prestationsOptionsData.options = " + angular.toJson($scope.prestationsOptionsData.options));						    		
-						    		
-					    			$scope.prestation_IChoicesNew = buildLevel($scope.prestationsOptionsData.options);
+						    		// Initialise prestation I options list.
+					    			$scope.prestation_IChoices = buildLevel($scope.prestationsOptionsData.options);
 							    	
+					    			// Update presation II list of choices given prestation I value if available (elfin loaded).
 							    	if ($scope.elfin) {
-							    		updatePrestationIIOptions($scope.prestationsOptionsData, $scope.elfin.CARACTERISTIQUE.CAR1.UNITE, $scope.prestation_IIChoicesNew);
+							    		updatePrestationIIOptions($scope.prestationsOptionsData, $scope.elfin.CARACTERISTIQUE.CAR1.UNITE);
 							    	}
-							    	
-							    	$log.debug("prestation_IChoicesNew = " + angular.toJson($scope.prestation_IChoicesNew));						    		
 						    		
 					            }, function() {
 					            	// TODO: log exception, feedback to end-user?
@@ -233,17 +232,13 @@
 //						    	};
 						    	
 						    	
-						    	$scope.testI = '';
-						    	$scope.testII = '';
-						    	
+
 						    	
 						    	$scope.$watch('elfin.CARACTERISTIQUE.CAR1.UNITE', function(newPrestationsI, oldPrestationsI) { 
-//						    		$log.debug(">>>> watched CAR1.UNITE: oldPrestationsI = "+oldPrestationsI + " => newPrestationsI = " + newPrestationsI);
 						    		
 						    		if (newPrestationsI && $scope.prestationsOptionsData) {
 						    			// Update dependent prestation II list of options
-						    			updatePrestationIIOptions($scope.prestationsOptionsData, newPrestationsI, $scope.prestation_IIChoicesNew);
-
+						    			updatePrestationIIOptions($scope.prestationsOptionsData, newPrestationsI);
 						    			// Reset dependant prestation II field value which lost its meaning in the new prestation I context.
 						    			$scope.elfin.CARACTERISTIQUE.CAR1.VALEUR = '';							    		
 						    		}
