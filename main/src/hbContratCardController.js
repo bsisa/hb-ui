@@ -65,7 +65,16 @@
 						    	
 						    	var PRESTATION_TYPE_LIST_ID_G = "G20060705000012345";
 						    	var PRESTATION_TYPE_LIST_Id = "G20090113093730441";
-						    		
+
+						    	
+						    	// Collect `level` elements matching previous level `key` in elfin of CLASSE LISTE
+						    	var collectNextLevelMatchingKey = function(elfin, key, level) {
+						    		var matchingL = _.filter(elfin.CARACTERISTIQUE.FRACTION.L, function(L) { return (L.C[level-1] && L.C[level-1].VALUE.trim() === key);} );
+						    		//matchingL.sort();
+						    		var matchingKeys = _.map(matchingL, function(L, i, FRACTION) { return L.C[level].VALUE.trim();} );
+						    		matchingKeys.sort();
+						    		return _.uniq(matchingKeys, true);
+						    	};						    	
 						    	
 						    	GeoxmlService.getElfin(PRESTATION_TYPE_LIST_ID_G, PRESTATION_TYPE_LIST_Id).get().then(function(elfin) {
 						    		// Given elfin build data object
@@ -73,13 +82,54 @@
 						    		// TODO: create build function in hbUtil
 						    		// $scope.prestationsOptionsData =
 						    		
+						    		// Update sorted CARACTERISTIQUE.FRACTION.L by reference.
+						    		for (var i = 0 ; i < elfin.CARACTERISTIQUE.FRACTION.L.length ;i++) {
+						    			var L = elfin.CARACTERISTIQUE.FRACTION.L[i];
+						    			//$log.debug("unsorted C = " + angular.toJson(L));
+						    			var sortedC = _.sortBy(L.C, 'POS');
+						    			L.C = sortedC;
+						    			//$log.debug("sorted C   = " + angular.toJson(L));
+						    		}
+
+						    		// Transform FACTION.L to optionsData
+						    		// Level1 stored at L.C.POS=1 => L.C[0]
+						    		
+						    		// Collect level k keys
+						    		var k = 0;
+						    		var optionsDataLevel1Keys = _.map(elfin.CARACTERISTIQUE.FRACTION.L, function(L, i, FRACTION) { return L.C[k].VALUE.trim();} );
+						    		// Remove empty elements and duplicate elements
+						    		optionsDataLevel1Keys =  _.uniq(_.filter(optionsDataLevel1Keys, function(element){ return element !== ""; }));
+						    		$log.debug("optionsDataLevel1Keys = " + angular.toJson(optionsDataLevel1Keys));
+						    		
+						    		
+						    		// Collect level k+1 keys matching k key
+						    		for (var i = 0; i < optionsDataLevel1Keys.length ; i++) {
+						    			var currentKey = optionsDataLevel1Keys[i];
+						    			var optionsDataLevel2Keys = collectNextLevelMatchingKey(elfin,currentKey,k+1);
+							    		$log.debug("optionsDataLevel2Keys = " + angular.toJson(optionsDataLevel2Keys));
+							    		// Collect level k+1 keys matching k key
+							    		for (var j = 0; j < optionsDataLevel2Keys.length ; j++) {
+							    			var currentLevel2Key = optionsDataLevel2Keys[j];
+							    			var optionsDataLevel3Keys = collectNextLevelMatchingKey(elfin,currentLevel2Key,k+2);
+								    		$log.debug("optionsDataLevel3Keys = " + angular.toJson(optionsDataLevel3Keys));
+							    		}
+						    		}
+						    		
+						    		
+						    		// Level2 stored at L.C.POS=2 => L.C[1]
+						    		//var optionsDataLevel2 = 
+						    		// Level3 stored at L.C.POS=3 => L.C[2]
+						    		//var optionsDataLevel3 = 
+
+						    		//var optionsData =
 						    		
 							    	$scope.prestation_IChoicesNew = buildLevel($scope.prestationsOptionsData.options);
 							    	$log.debug("prestation_IChoicesNew = " + angular.toJson($scope.prestation_IChoicesNew));						    		
 						    		
 					            }, function() {
-					            	
+					            	// TODO: log exception, feedback to end-user?
 					            });						    	
+						    	
 						    	
 						    	$scope.prestationsOptionsData = {
 						    			name : "Prestation",
