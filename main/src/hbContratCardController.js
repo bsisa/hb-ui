@@ -46,6 +46,7 @@
 						    		
 						    	}, true);								
 								
+						    	// Manage defaults from catalog
 						    	GeoxmlService.getNewElfin("CONTRAT").get()
 					            .then(function(contrat) {
 					            		// Get groupeChoices from catalogue default
@@ -53,7 +54,6 @@
 					            	    
 					            	    // Prestation I choices are defined in an ELFIN of CLASSE='LISTE' together with Prestation II dependent choices.
 					            	    //$scope.prestation_IChoices = hbUtil.buildArrayFromCatalogueDefault(contrat.CARACTERISTIQUE.CAR1.UNITE);
-					            	    
 									},
 									function(response) {
 										var message = "Les valeurs par défaut pour la CLASSE CONTRAT n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
@@ -61,7 +61,7 @@
 									});								
 								
 								
-						    	// ===================== PROOF OF CONCEPT START ======================================						    	
+						    	// ==== Manage ELFIN @CLASSE='LISTE' for dependent prestation types I and II ==========
 						    	
 						    	/**
 						    	 * Extracts name values from options data structure
@@ -80,10 +80,10 @@
 						    	};						    	
 						    	
 						    	/**
-						    	 * Updates prestations II options list by reference.
+						    	 * Updates prestations II options list given `prestationI` value
 						    	 */
 						    	var updatePrestationIIOptions = function(prestationsOptionsData, prestationI) {
-						    		$log.debug(">>>> updatePrestationIIOptions START : prestationI = " + prestationI);
+
 						    		if (prestationsOptionsData && prestationI && prestationI.trim().length > 0) {
 
 						    			for (var i = 0; i < prestationsOptionsData.options.length; i++) {
@@ -93,29 +93,16 @@
 							    				if (option.options) {
 								    				$scope.prestation_IIChoices = buildLevel(option.options);
 							    				} else {
-							    					$log.debug(">>>> No options found for option.value = " + option.value);
+							    					$log.warn(">>>> No options found for option.value = " + option.value);
 							    				}
-
 							    				break;
-							    			} else {
-							    				$log.debug(">>>>>> option.value = "+option.value+" !== prestationI = " + prestationI);
 							    			}
 							    		}						    			
 						    		}
-						    		$log.debug(">>>> updatePrestationIIOptions DONE  : prestationI = " + prestationI + ", prestationsIIOptions = " + angular.toJson($scope.prestation_IIChoices));
+
 						    	};
 						    							    	
-						    	
-						    	
-						    	/**
-						    	 * Build dependent options lists from the following LISTE definition: 
-						    	 */
-						    	// ELFIN Id="G20090113093730441" ID_G="G20060705000012345" CLASSE="LISTE" GROUPE="Prestation type" TYPE="DOCUMENT" NATURE="Management"
-						    	
-						    	var PRESTATION_TYPE_LIST_ID_G = "G20060705000012345";
-						    	var PRESTATION_TYPE_LIST_Id = "G20090113093730441";
 
-						    	
 						    	// Collect `level` elements matching previous level `key` in elfin of CLASSE LISTE
 						    	var collectLevelMatchingKey = function(elfin, key, level) {
 
@@ -139,6 +126,13 @@
 						    	};						    	
 						    	
 						    	/**
+						    	 * getLevelOptions returns the expected prestationsOptionsData data structure 
+						    	 * enclosed within an array to keep the return type consistent.
+						    	 * Note that in the current usage you need to get the single first array element
+						    	 * such as: 
+						    	 *  // Given elfin build data object
+                                 *  $scope.prestationsOptionsData = getLevelOptions(elfin, undefined, 0)[0];
+						    	 * 
 						    	 * For `level` === 0 `key` parameter value is not taken into account
 						    	 */
 						    	var getLevelOptions = function(elfin, key, level) {
@@ -170,19 +164,23 @@
 							    				}
 							    			);							    				
 						    			} else {
-						    				// Unsupported situation
+						    				// Unsupported state
 						    			}
 						    		}
 						    		return levelOptions;
 						    	};
 						    	
 						    	
+						    	/**
+						    	 * Get the ELFIN LISTE containing the prestation I, II types and initialise the lists.
+						    	 * ELFIN Id="G20090113093730441" ID_G="G20060705000012345" CLASSE="LISTE" GROUPE="Prestation type" TYPE="DOCUMENT" NATURE="Management"
+						    	 */
+
+						    	var PRESTATION_TYPE_LIST_ID_G = "G20060705000012345";
+						    	var PRESTATION_TYPE_LIST_Id = "G20090113093730441";
+						    	
 						    	GeoxmlService.getElfin(PRESTATION_TYPE_LIST_ID_G, PRESTATION_TYPE_LIST_Id).get().then(function(elfin) {
-						    		// Given elfin build data object
-						    		$log.debug("LISTE Prestation type = \n" + angular.toJson(elfin) );
-						    		// TODO: create build function in hbUtil
-						    		// $scope.prestationsOptionsData =
-						    		
+
 						    		// Update sorted CARACTERISTIQUE.FRACTION.L by reference.
 						    		for (var i = 0 ; i < elfin.CARACTERISTIQUE.FRACTION.L.length ;i++) {
 						    			var L = elfin.CARACTERISTIQUE.FRACTION.L[i];
@@ -192,48 +190,55 @@
 						    			//$log.debug("sorted C   = " + angular.toJson(L));
 						    		}
 
+						    		// Given elfin build data object
 						    		$scope.prestationsOptionsData = getLevelOptions(elfin, undefined, 0)[0];
 
 						    		// Initialise prestation I options list.
 					    			$scope.prestation_IChoices = buildLevel($scope.prestationsOptionsData.options);
 							    	
-					    			// Update presation II list of choices given prestation I value if available (elfin loaded).
+					    			// Update prestation II options list given prestation I value, if available (elfin loaded).
 							    	if ($scope.elfin) {
 							    		updatePrestationIIOptions($scope.prestationsOptionsData, $scope.elfin.CARACTERISTIQUE.CAR1.UNITE);
 							    	}
 						    		
 					            }, function() {
-					            	// TODO: log exception, feedback to end-user?
+					            	var message = "Le chargement de la LISTE des types de prestations (I,II) a échoué. Un ajustement des configurations peut être nécessaire. Veuillez contacter votre administrateur système. (statut de retour: "+ response.status+ ")";
+						            hbAlertMessages.addAlert("warning",message);
 					            });						    	
 						    	
-						    	
-//						    	$scope.prestationsOptionsData = {
-//						    			name : "Prestation",
-//						    			value : "Prestation",
-//						    			options : [
-//						    			                  { name : "Toiture" ,
-//						    			                	value : "Toiture" ,
-//						    			                	options : [
-//										    			                  { name : "Couverture" , value : "Couverture" },
-//										    			                  { name : "Etanchéité" , value : "Etanchéité" },
-//										    			                  { name : "Ferblanterie" , value : "Ferblanterie" }
-//						    			                	]  
-//						    			                  },
-//						    			                  { name : "Sanitaire" ,
-//						    			                	value : "Sanitaire" ,
-//						    			                	options : [
-//						    			                	             { name : "Pompe de relevage" , value : "Pompe de relevage" },
-//						    			                	             { name : "Boiler/Production" , value : "Boiler/Production" },
-//						    			                	             { name : "Traitement d'eau" , value : "Traitement d'eau" },
-//						    			                	             { name : "Séparateur de graisse/hydrocarbure" , value : "Séparateur de graisse/hydrocarbure" }
-//						    			                	]
-//							    			              }						    			                  
-//						    			]
-//						    	};
-						    	
-						    	
+						    	/**
+						    	 * prestationsOptionsData expected data structure is as follow 
+						    	 */
+						    	/*
+						    	$scope.prestationsOptionsData = {
+						    			name : "Prestation",
+						    			value : "Prestation",
+						    			options : [
+						    			                  { name : "Toiture" ,
+						    			                	value : "Toiture" ,
+						    			                	options : [
+										    			                  { name : "Couverture" , value : "Couverture" },
+										    			                  { name : "Etanchéité" , value : "Etanchéité" },
+										    			                  { name : "Ferblanterie" , value : "Ferblanterie" }
+						    			                	]  
+						    			                  },
+						    			                  { name : "Sanitaire" ,
+						    			                	value : "Sanitaire" ,
+						    			                	options : [
+						    			                	             { name : "Pompe de relevage" , value : "Pompe de relevage" },
+						    			                	             { name : "Boiler/Production" , value : "Boiler/Production" },
+						    			                	             { name : "Traitement d'eau" , value : "Traitement d'eau" },
+						    			                	             { name : "Séparateur de graisse/hydrocarbure" , value : "Séparateur de graisse/hydrocarbure" }
+						    			                	]
+							    			              }						    			                  
+						    			]
+						    	};
+						    	 */
 
 						    	
+						    	/**
+						    	 * Listen to prestation I value change.
+						    	 */
 						    	$scope.$watch('elfin.CARACTERISTIQUE.CAR1.UNITE', function(newPrestationsI, oldPrestationsI) { 
 						    		
 						    		if (newPrestationsI && $scope.prestationsOptionsData) {
@@ -243,9 +248,9 @@
 						    			$scope.elfin.CARACTERISTIQUE.CAR1.VALEUR = '';							    		
 						    		}
 						    	}, true);						    	
-						    	
-						    	// ===================== PROOF OF CONCEPT END ==========================================
-						    	
+						    	// ==== Manage ELFIN @CLASSE='LISTE' for dependent prestation types I and II - End ====
+
+
 								var xpathForEntreprises = "//ELFIN[IDENTIFIANT/QUALITE='Entreprise']";
 								$scope.entrepriseActors = null;
 								hbQueryService.getActors(xpathForEntreprises)
