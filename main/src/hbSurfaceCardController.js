@@ -89,6 +89,8 @@
 													var message = "Les valeurs par défaut pour la CLASSE UNITE_LOCATIVE n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
 													hbAlertMessages.addAlert("danger",message);
 												});		
+							    			} else if ($routeParams.ORIGINE) {
+								    			$scope.elfin.IDENTIFIANT.ORIGINE = $routeParams.ORIGINE;
 							    			}
 							    			 
 							    		} 

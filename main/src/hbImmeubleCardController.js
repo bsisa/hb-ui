@@ -209,7 +209,7 @@
 									 */
 									$scope.createNewUniteLocative = function() {
 										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM,sai: $scope.elfin.IDENTIFIANT.OBJECTIF};
+											var searchObj = {ORIGINE: $scope.elfin.Id};
 											$location.search(searchObj).path( "/elfin/create/SURFACE" );
 										}
 									};										
