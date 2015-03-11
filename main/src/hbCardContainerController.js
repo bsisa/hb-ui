@@ -169,11 +169,11 @@
 		$scope.getCssHasFeedback = function (ngModelController) {
 			if (ngModelController) {
 				return {
-					"has-error" : ngModelController.$dirty && ngModelController.$invalid,
-					"has-success" : ngModelController.$dirty && ngModelController.$valid, 
-					"has-error" : ngModelController.$pristine && ngModelController.$invalid // unexpected situation
-					// has-warning is also available but error seem more appropriate/clearer to the end-user.
+					"has-error" : ngModelController.$invalid,
+					"has-success" : ngModelController.$dirty && ngModelController.$valid
 				};
+				//"has-error" : ngModelController.$pristine && ngModelController.$invalid // unexpected situation
+				// has-warning is also available but error seem more appropriate/clearer to the end-user.				
 			} else {
 				return {};
 			}
