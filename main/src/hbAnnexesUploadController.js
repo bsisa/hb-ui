@@ -110,8 +110,7 @@
 								            				return false;
 								            			}
 								            		}
-									            	}
-								            	$log.debug("<<<< $scope.elfinForm.$error \n");
+									            }
 								            	return true;
 						            		} else { // Valid form: Ok
 						            			return true;
