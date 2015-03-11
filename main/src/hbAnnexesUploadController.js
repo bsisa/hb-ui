@@ -89,6 +89,41 @@
 						            	// for special validation case such as mandatory annex validation in TRANSACTION form.
 						            	// Indeed in that situation only annex uploading can let the user solve the validation
 						            	// error linked to the missing annex.
+						            	
+						            	// Fix upload creating invalid objects by checking only THE "annexlength" validation 
+						            	// error is present when activating "canUpload" with "hbAnnexesUploadNoValidation" set
+						            	// to true
+						            	
+						            	if ($attrs.hbAnnexesUploadNoValidation === 'true' && $scope.elfinForm.$invalid) {
+							            	//$log.debug(">>>> $scope.elfinForm.$error : \n" + angular.toJson($scope.elfinForm.$error));
+						            		
+						            		var ERROR_PROPERTY_NAME = "$error";
+						            		var IS_EXPECTED_INVALID_PROPERTY_NAME = "annexlength";
+						            		var IS_INVALID_PROPERTY_NAME = "$invalid";
+						            		
+							            	for (var property in $scope.elfinForm) {
+							            		if ( property.lastIndexOf("$", 0) !== 0 && property !== IS_EXPECTED_INVALID_PROPERTY_NAME) {
+							            			if ($scope.elfinForm[property][IS_INVALID_PROPERTY_NAME]) {
+							            				$log.debug(">>>> CANNOT UPLOAD: property " +property+ " is not valid");
+							            			}
+//							            			
+//							            			
+//							            			
+//								            		$log.debug(">>> Property name: " + property + ", value: " + angular.toJson($scope.elfinForm[property]));
+//								            		if ($scope.elfinForm[property].hasOwnProperty(ERROR_PROPERTY_NAME)) {
+//								            			$log.debug("Property "+ property +" "+ERROR_PROPERTY_NAME+" = " + angular.toJson($scope.elfinForm[property][ERROR_PROPERTY_NAME]));
+//								            		}
+//								            		for (var subproperty in $scope.elfinForm[property]) {
+//								            			$log.debug("Sub-Property name: " + subproperty + ", value: " + angular.toJson($scope.elfinForm[property][subproperty]));
+//								            		}
+//								            		$log.debug("<<<< Property name\n");
+							            		}
+
+							            	}
+							            	$log.debug("<<<< $scope.elfinForm.$error \n");
+						            	}
+						            	
+						            	
 						            	if ($attrs.hbAnnexesUploadNoValidation === 'true' || $scope.canSave() || ($scope.elfinForm.$pristine && $scope.elfinForm.$valid ) ) {
 						            		return true;
 						            	} else {
