@@ -1,15 +1,17 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
-	<span ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.destinataire.$error.required">Le champs <strong>Destinataire</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.resp.$error.required">Le champs <strong>Responsable visa de facture</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.annexlength.$error.min"><strong>L'annexe</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.groupeTrans.$error.required">Le <strong>Groupe Transaction</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.objectif.$error.required">Le <strong>numéro de prestation {SAI}.{index}</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.objectif.$error.minlength">Le <strong>numéro de prestation {SAI}.{index}</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.year.$error.required"><strong>L'année</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.year.$error.minlength"><strong>L'année</strong> doit être composée de quatre positions.</span>
-	<span ng-show="elfinForm.year.$error.maxlength"><strong>L'année</strong> doit être composée de quatre positions.</span>
+	<ul>
+<!-- 	<li ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.groupeTrans.$error.required">Le <strong>Groupe Transaction</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.year.$error.required"><strong>L'année</strong> est obligatoire!</li> -->
+	<li ng-show="elfinForm.year.$error.minlength"><strong>L'année</strong> doit être composée de quatre positions.</li>
+	<li ng-show="elfinForm.year.$error.maxlength"><strong>L'année</strong> doit être composée de quatre positions.</li>
+	<li ng-show="elfinForm.objectif.$error.required">Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Transaction', 'Année'} est obligatoire!</li>	
+<!-- 	<li ng-show="elfinForm.destinataire.$error.required">Le champs <strong>Destinataire</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.resp.$error.required">Le champs <strong>Responsable visa de facture</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.objectif.$error.minlength">Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Transaction', 'Année'} est obligatoire!</li> -->
+	<li ng-show="elfinForm.annexlength.$error.min"><strong>L'annexe</strong> est obligatoire!</li>
+	</ul>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -60,8 +62,12 @@
 						<label for="objectif" class="col-sm-2 control-label">Prest.</label>
 						<span id="objectif" ng-show="elfin.IDENTIFIANT.OBJECTIF" class="col-sm-2 form-control-static" ><span class="label label-success" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{elfin.IDENTIFIANT.OBJECTIF}}</span></span>
 						<span  ng-show="!elfin.IDENTIFIANT.OBJECTIF" id="objectifStatus" class="col-sm-2 form-control-static">
-							<span class="label label-warning" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{prestationStatus}}</span>
+							<span class="label label-danger" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{prestationStatus}}</span>
 						</span>
+						<!-- 
+						This input field model is updated programatically by getPrestation = function(sai,groupePrestation,year,owner) 
+						and is never shown to the end-user. Its sole purpose is triggering required validation rule. -->
+						<input id="objectif" name="objectif" ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-required="true" ng-show="false">
 						<div style="border: none;text-align: left;" ng-show="prestationSelection" id="prestationSelection" class="col-sm-1"> 
 							<button style="float:right;" class="btn btn-default" type="button" tooltip="Sélection de prestation"
 								ng-click="selectOnePrestation(elfin, 'IDENTIFIANT.OBJECTIF', prestations, 'IDENTIFIANT.OBJECTIF', selectOnePrestationColumnsDefinition, selectOnePrestationTemplate);">
@@ -70,7 +76,7 @@
 						</div>
 										
 					</div>
-					<div  class="form-group">
+					<div class="form-group">
 						<label class="col-sm-4 control-label"><em>Adresse</em></label>
 						<div ng-show="selectedImmeuble && selectedImmeuble.Id" class="col-sm-8">
 							<p class="form-control-static"><span ng-bind="selectedImmeuble.IDENTIFIANT.ALIAS" ></span></p>
@@ -79,7 +85,7 @@
 							<p class="form-control-static"><span>Pas d'immeuble pour Propriétaire/No SAI</span></p>
 						</div>						
 					</div>
-					<div class="form-group">
+					<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.groupeTrans)">
 						<label for="groupeTrans" class="col-sm-4 control-label">Groupe Transaction</label>
 						<div class="col-sm-8">
 							<select id="groupeTrans" name="groupeTrans" class="form-control" chosen
@@ -95,10 +101,10 @@
 					<div class="form-group">
 						<label for="groupe-prest" class="col-sm-4 control-label">Groupe Prestation</label>
 						<div class="col-sm-8">
-							<p class="form-control-static"><span ng-bind="elfin.CARACTERISTIQUE.CAR1.UNITE" ></p>				
+							<p class="form-control-static"><span ng-bind="elfin.CARACTERISTIQUE.CAR1.UNITE" ></span></p>				
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.year)">
 						<label for="year" class="col-sm-4 control-label">Année</label>
 						<div class="col-sm-3">
 							<input id="year" name="year" type="text" class="form-control"
@@ -113,8 +119,8 @@
 			</div>
 			<!-- 2nd column -->
 			<div class="col-sm-6">
-				<div class="form-group">
-					<label for="type" class="col-sm-4 control-label">Resp. visa de facture</label>
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.resp)">
+					<label for="resp" class="col-sm-4 control-label">Resp. visa de facture</label>
 					<div class="col-sm-8">
 						<div class="input-group">
 							<input id="resp" name="resp" type="text" class="form-control"
@@ -132,12 +138,12 @@
 						</div>
 					</div>
 				</div>			
-				<div class="form-group">				
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.date)">				
 					<label for="date" class="col-sm-4 control-label">Date</label>
 					<div class="col-sm-4">
-						<input id="date" type="text" class="form-control"
+						<input id="date" name="date" type="text" class="form-control"
 							ng-model="elfin.IDENTIFIANT.DE"
-							hb-no-dirty-check >
+							hb-no-dirty-check ng-required="true">
 					</div>
 					<label for="auteur" class="col-sm-2 control-label">Auteur</label>
 					<div class="col-sm-2">
@@ -154,8 +160,8 @@
 							hb-no-dirty-check >
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="type" class="col-sm-4 control-label">Destinataire</label>
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.destinataire)">
+					<label for="destinataire" class="col-sm-4 control-label">Destinataire</label>
 					<div class="col-sm-8">
 						<div class="input-group">
 							<input id="destinataire" name="destinataire" type="text" class="form-control"
@@ -163,7 +169,7 @@
 								autocomplete="off"
 								typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8"
 								ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
-								required>
+								ng-required="true">
 								<span
 								class="input-group-btn" tooltip="Recherche d'entreprise"
 								 >
