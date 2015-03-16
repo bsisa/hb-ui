@@ -113,6 +113,9 @@
                 getElfin: function(collectionId, elfinId) {
                     return _geoxmlService.one(collectionId, elfinId);
                 },
+                getElfinById: function(elfinId) {
+                    return _geoxmlService.one("collections",elfinId);
+                },                
                 getNewElfin: function(elfinClasse) {
                     return _geoxmlService.one("catalogue", elfinClasse);
                 }, 
