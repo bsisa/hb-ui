@@ -183,6 +183,49 @@
             $log.debug(itemDefinition);
         };
 
+
+        /**
+         * Directs to hb card corresponding to ELFIN with Id param 
+         */
+        $scope.findById = function (itemDefinition) {
+        	
+            var modalInstance = $modal.open({
+                templateUrl: '/assets/views/chooseParams.html',
+                scope: $scope,
+                controller: 'ChooseParamsCtrl',
+                resolve: {
+                	itemDefinition: function () {
+                    	return itemDefinition;
+                    }               
+                },                
+                backdrop: 'static'
+            });
+
+            /**
+             * Process modalInstance.close action
+             */
+            modalInstance.result.then(function (modalModel) {
+                
+            	var idParam = modalModel[0].value;
+            	
+                /* Load global configuration */
+                GeoxmlService.getElfinById(idParam).get()      
+                  .then(function(elfin) {
+                	  var redirectUrl = "/elfin/"+ elfin.ID_G +"/"+elfin.CLASSE+"/"+elfin.Id;
+                	  //$location.path(redirectUrl);
+                	  $location.path(redirectUrl);
+                  }, function(response) {
+                  	var errorMessage = (response.status === 404) ? "Aucun objet trouvé pour l'identifiant `Id` = " + idParam : "Error with status code " + response.status + " while getting object for Id = " + idParam;
+                   	$log.error(errorMessage);
+                    hbAlertMessages.addAlert("danger",errorMessage);
+                  }
+                );            	
+            }, function () {
+            	$log.debug('Choose params modal dismissed at: ' + new Date());
+            });        	
+
+        };
+        
         
         /**
          * Directs to itemDefinition.url link in a new window if required 
