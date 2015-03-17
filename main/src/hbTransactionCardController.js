@@ -469,6 +469,9 @@
 																	"danger", message);
 															$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 														});													
+												} else {
+													// Fix #9 reallocation owner selection not effective when elfin.IDENTIFIANT has no OBJECTIF field. 
+													$scope.searchOwner = {Id : "", ID_G : "", GROUPE : "", NOM : ""};
 												}										    				
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
