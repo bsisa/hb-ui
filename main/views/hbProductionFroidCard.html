@@ -1,0 +1,89 @@
+<div hb-card-header>
+	<!-- Custom validation message to be defined here -->
+</div>
+<div class="row" style="padding-top: 8px;">
+	<div class="col-xs-12">
+		<tabset>
+		<!-- IDENTIFIANT tab -->
+		<tab> <tab-heading>Identification</tab-heading>
+		<div class="hb-tab">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="goal" class="col-sm-2 control-label">No SAI</label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input readonly id="goal" type="text" class="form-control"
+									ng-model="elfin.IDENTIFIANT.OBJECTIF"> <span
+									class="input-group-btn"
+									tooltip="Consultation de l'immeuble {{elfin.IDENTIFIANT.OBJECTIF}}"
+									tooltip-popup-delay="1500">
+									<button class="btn btn-default" type="button"
+										ng-click="viewImmeuble()" ng-disabled="!immeubleRef">
+										<i class="glyphicon glyphicon-eye-open"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+						<label for="origin" class="col-sm-2 control-label">No construction</label>
+						<div class="col-sm-4">
+							<input id="origin" type="text" class="form-control"
+								ng-model="elfin.IDENTIFIANT.ORIGINE">
+						</div>
+					</div>					
+					<div class="form-group">
+						<label for="groupe" class="col-sm-2 control-label">Groupe</label>
+						<div class="col-sm-4">
+							<div hb-single-select hb-single-select-options="groupeChoices" ng-model="elfin.GROUPE" ></div>
+						</div>
+						<label for="origin" class="col-sm-2 control-label">Energie</label>
+						<div class="col-sm-4">
+							<div hb-single-select hb-single-select-options="energyChoices" ng-model="elfin.CARACTERISTIQUE['CAR3'].VALEUR" ></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="origin" class="col-sm-2 control-label">Puissance (kW)</label>
+						<div class="col-sm-4">
+							<input id="origin" type="text" class="form-control"
+								ng-model="elfin.CARACTERISTIQUE['CAR1'].VALEUR">
+						</div>
+						<label for="from" class="col-sm-2 control-label">Date de fabrication</label>
+						<div class="col-sm-4">
+							<div hb-date id="date_constat" name="dateFrom"
+								ng-model="elfin.IDENTIFIANT.DE"></div>								
+						</div>
+					</div>						
+					<div class="form-group">
+						<label for="origin" class="col-sm-2 control-label">Modèle</label>
+						<div class="col-sm-4">
+							<input id="origin" type="text" class="form-control"
+								ng-model="elfin.CARACTERISTIQUE['CAR2'].VALEUR">
+						</div>
+						<label for="from" class="col-sm-2 control-label">Fournisseur</label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input id="provider" type="text" class="form-control"
+									autocomplete="off"
+									typeahead="actor.GROUPE for actor in providers | filter:{GROUPE: $viewValue} | limitTo:8" 
+									ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE" > 
+								<span class="input-group-btn" tooltip="Recherche d'entreprise" tooltip-popup-delay="1500" >
+									<button class="btn btn-default" type="button" hb-choose-one ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', providers, 'GROUPE', actorProvidersChooseOneColumnsDefinition, actorChooseOneTemplate )" >
+										<i class="glyphicon glyphicon-list-alt"></i>
+									</button>
+								</span>
+							</div>								
+						</div>
+					</div>							
+				</div>
+			</div>	
+		</div>
+		</tab> 
+		<tab> <tab-heading>
+		<div hb-annexes-number></div>
+		</tab-heading>
+		<div class="hb-tab">
+			<div hb-annexes-component></div>
+		</div>
+		</tab>
+	</div>
+</div>

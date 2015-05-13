@@ -93,6 +93,10 @@ module.exports = function(grunt) {
 								'src/hbPrintService.js',
 								'src/hbProductionChaleurCardController.js',
 								'src/hbProductionChaleurCardDirective.js',
+								
+								'src/hbProductionFroidCardController.js',
+								'src/hbProductionFroidCardDirective.js',
+								
 								'src/hbQueryService.js',
 								'src/hbRoleCardController.js',
 								'src/hbRoleCardDirective.js',

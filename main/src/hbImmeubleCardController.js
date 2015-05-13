@@ -171,6 +171,14 @@
 										}
 									};
 									
+									$scope.createNewProductionFroid  = function() {
+										if ($attrs.hbMode != "create") {
+											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+											$location.search(searchObj).path( "/elfin/create/PRODUCTION_FROID" );
+										}
+									};									
+									
+									
 									/**
 									 * Triggers a redirection to the PRESTATION creation URL with current
 									 * IMMEUBLE Id and ID_G passed as parameters.

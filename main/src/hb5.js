@@ -133,7 +133,13 @@
             })                                    
             .when('/elfin/:collectionId/PRODUCTION_CHALEUR/:elfinId', {
                 templateUrl: '/assets/views/PRODUCTION_CHALEUR_card_view.html'
-            })                        
+            })
+            .when('/elfin/create/PRODUCTION_FROID', {
+                templateUrl: '/assets/views/PRODUCTION_FROID_card_new_view.html'
+            })                                    
+            .when('/elfin/:collectionId/PRODUCTION_FROID/:elfinId', {
+                templateUrl: '/assets/views/PRODUCTION_FROID_card_view.html'
+            })                                    
             .when('/elfin/:collectionId/WC', {
                 templateUrl: '/assets/views/WC_list_view.html'
             })                        

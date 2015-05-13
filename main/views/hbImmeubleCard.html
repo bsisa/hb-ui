@@ -1041,15 +1041,26 @@
 			<div class="hb-tab">
 				<div class="row">
 					<div class="col-sm-12">
-					<tabset>  
-						<tab active="tabState.equipements_tech_subtab_prod_chaleur.active"><!-- EQ.TECH. 1st sub tab -->
-							<tab-heading>Production Chaleur</tab-heading>
-							<div class="hb-tab">
+					
+<!-- 					<tabset>   -->
+<!-- 						<tab active="tabState.equipements_tech_subtab_prod_chaleur.active">EQ.TECH. 1st sub tab -->
+<!-- 							<tab-heading>Production Chaleur</tab-heading> -->
+<!-- 							<div class="hb-tab"> -->
+							
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des PRODUCTION_CHALEUR -->
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
+												<tr>
+													<th colspan="7">
+														<a class="btn btn-default" type="button" tooltip="Créer une nouvelle PRODUCTION_CHALEUR relative à l'objet courant" tooltip-popup-delay="1000"
+																	ng-click="createNewProductionChaleur()">
+															<i class="icon-plus-sign"></i>
+														</a>
+														Production Chaleur
+													</th>
+												</tr>
 												<tr>
 													<th colspan="2">Détail</th>
 													<th>Modèle</th>
@@ -1074,21 +1085,30 @@
 										</table>
 									</div>
 								</div>
-							</div>
-						</tab>
-						<tab select="createNewProductionChaleur()">
-							<tab-heading tooltip="Créer une nouvelle PRODUCTION_CHALEUR relative à l'objet courant" tooltip-popup-delay="1000">Production Chaleur<i class="icon-plus-sign"></i></tab-heading>
-							<div class="hb-tab">
-							</div>
-						</tab>
-						<tab active="tabState.equipements_tech_subtab_prod_froid.active"><!-- EQ.TECH 2nd sub tab -->
-							<tab-heading>Production Froid</tab-heading>
-							<div class="hb-tab">
+<!-- 							</div> -->
+<!-- 						</tab> -->
+<!-- 						<tab select="createNewProductionChaleur()"> -->
+<!-- 							<tab-heading tooltip="Créer une nouvelle PRODUCTION_CHALEUR relative à l'objet courant" tooltip-popup-delay="1000">Production Chaleur<i class="icon-plus-sign"></i></tab-heading> -->
+<!-- 							<div class="hb-tab"> -->
+<!-- 							</div> -->
+<!-- 						</tab> -->
+<!-- 						<tab active="tabState.equipements_tech_subtab_prod_froid.active">EQ.TECH 2nd sub tab -->
+<!-- 							<tab-heading>Production Froid</tab-heading> -->
+<!-- 							<div class="hb-tab"> -->
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des PRODUCTION_FROID -->
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
+												<tr>
+													<th colspan="7">
+														<a class="btn btn-default" type="button" tooltip="Créer une nouvelle PRODUCTION_FROID relative à l'objet courant" tooltip-popup-delay="1000"
+																	ng-click="createNewProductionFroid()">
+															<i class="icon-plus-sign"></i>
+														</a>													
+														Production Froid
+													</th>
+												</tr>
 												<tr>
 													<th colspan="2">Détail</th>
 													<th>Modèle</th>
@@ -1113,16 +1133,19 @@
 										</table>
 									</div>
 								</div>
-							</div>
-						</tab>						
-						<tab active="tabState.equipements_tech_subtab_ventilation.active"><!-- EQ.TECH 3rd sub tab -->
-							<tab-heading>Ventilation</tab-heading>
-							<div class="hb-tab">
+<!-- 							</div> -->
+<!-- 						</tab>						 -->
+<!-- 						<tab active="tabState.equipements_tech_subtab_ventilation.active">EQ.TECH 3rd sub tab -->
+<!-- 							<tab-heading>Ventilation</tab-heading> -->
+<!-- 							<div class="hb-tab"> -->
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des VENTILATION -->
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
+												<tr>
+													<th colspan="7">Ventilation</th>
+												</tr>
 												<tr>
 													<th colspan="2">Détail</th>
 													<th>Modèle</th>
@@ -1147,16 +1170,19 @@
 										</table>
 									</div>
 								</div>
-							</div>
-						</tab>
-						<tab active="tabState.equipements_tech_subtab_citerne.active"><!-- EQ.TECH 4th sub tab -->
-							<tab-heading>Citerne</tab-heading>
-							<div class="hb-tab">
+<!-- 							</div> -->
+<!-- 						</tab> -->
+<!-- 						<tab active="tabState.equipements_tech_subtab_citerne.active">EQ.TECH 4th sub tab -->
+<!-- 							<tab-heading>Citerne</tab-heading> -->
+<!-- 							<div class="hb-tab"> -->
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des CITERNE -->
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
+												<tr>
+													<th colspan="7">Citerne</th>
+												</tr>
 												<tr>
 													<th colspan="2">Détail</th>
 													<th>Modèle</th>
@@ -1181,16 +1207,19 @@
 										</table>
 									</div>
 								</div>
-							</div>
-						</tab>
-						<tab active="tabState.equipements_tech_subtab_intro_elec.active"><!-- EQ.TECH 5th sub tab -->
-							<tab-heading>Introduction électricité</tab-heading>
-							<div class="hb-tab">
+<!-- 							</div> -->
+<!-- 						</tab> -->
+<!-- 						<tab active="tabState.equipements_tech_subtab_intro_elec.active">EQ.TECH 5th sub tab -->
+<!-- 							<tab-heading>Introduction électricité</tab-heading> -->
+<!-- 							<div class="hb-tab"> -->
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des INTRODUCTION_ELECTRICITE -->
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
+												<tr>
+													<th colspan="7">Introduction électricité</th>
+												</tr>
 												<tr>
 													<th colspan="2">Détail</th>
 													<th>Modèle</th>
@@ -1215,16 +1244,19 @@
 										</table>
 									</div>
 								</div>
-							</div>
-						</tab>
-						<tab active="tabState.equipements_tech_subtab_equipement.active"><!-- EQ.TECH 6th sub tab -->
-							<tab-heading>Equipement</tab-heading>
-							<div class="hb-tab">
+<!-- 							</div> -->
+<!-- 						</tab> -->
+<!-- 						<tab active="tabState.equipements_tech_subtab_equipement.active">EQ.TECH 6th sub tab -->
+<!-- 							<tab-heading>Equipement</tab-heading> -->
+<!-- 							<div class="hb-tab"> -->
 								<div class="row">
 									<div class="col-sm-12">
 									<!-- Table des EQUIPEMENT -->
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
+												<tr>
+													<th colspan="7">Equipement</th>
+												</tr>
 												<tr>
 													<th colspan="2">Détail</th>
 													<th>Modèle</th>
@@ -1249,14 +1281,16 @@
 										</table>
 									</div>
 								</div>
-							</div>
-						</tab>
+						
 <!-- 						<tab select="createNewContract()" ng-show="!createMode">  -->
 <!-- 							<tab-heading tooltip="Créer un nouveau contrat relatif à l'objet courant" tooltip-popup-delay="1000">Créer un nouveau contrat <i class="icon-plus-sign"></i></tab-heading> -->
 <!-- 							<div class="hb-tab"> -->
 <!-- 							</div> -->
 <!-- 						</tab>								 -->
-					</tabset>			
+
+<!-- 							</div> -->
+<!-- 						</tab> -->
+<!-- 					</tabset>			 -->
 
 					</div>
 				</div>
