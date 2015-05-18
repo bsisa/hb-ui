@@ -36,15 +36,15 @@
 						<div class="col-sm-4">
 							<div hb-single-select hb-single-select-options="groupeChoices" ng-model="elfin.GROUPE" ></div>
 						</div>
-						<label for="origin" class="col-sm-2 control-label">Energie</label>
+						<label for="car3" class="col-sm-2 control-label">Produit</label>
 						<div class="col-sm-4">
 							<div hb-single-select hb-single-select-options="energyChoices" ng-model="elfin.CARACTERISTIQUE['CAR3'].VALEUR" ></div>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="origin" class="col-sm-2 control-label">Puissance (kW)</label>
+						<label for="car1" class="col-sm-2 control-label">Volume (l)</label>
 						<div class="col-sm-4">
-							<input id="origin" type="text" class="form-control"
+							<input id="car1" type="text" class="form-control"
 								ng-model="elfin.CARACTERISTIQUE['CAR1'].VALEUR">
 						</div>
 						<label for="from" class="col-sm-2 control-label">Date de fabrication</label>
@@ -52,7 +52,17 @@
 							<div hb-date id="date_constat" name="dateFrom"
 								ng-model="elfin.IDENTIFIANT.DE"></div>								
 						</div>
-					</div>						
+					</div>					
+					<div class="form-group">
+						<label for="car4" class="col-sm-2 control-label">Double-peau</label>
+						<div class="col-sm-4">
+							<div hb-single-select hb-single-select-options="doubleSkinChoices" ng-model="elfin.CARACTERISTIQUE['CAR4'].VALEUR" ></div>
+						</div>
+						<label for="car5" class="col-sm-2 control-label">Vacuum</label>
+						<div class="col-sm-4">
+							<div hb-single-select hb-single-select-options="vacuumChoices" ng-model="elfin.CARACTERISTIQUE['CAR5'].VALEUR" ></div>
+						</div>
+					</div>		
 					<div class="form-group">
 						<label for="origin" class="col-sm-2 control-label">Modèle</label>
 						<div class="col-sm-4">
