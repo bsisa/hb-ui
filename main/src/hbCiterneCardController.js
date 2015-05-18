@@ -96,6 +96,8 @@
 									$scope.elfin.IDENTIFIANT.ORIGINE = $routeParams.nocons;
 									$scope.elfin.GROUPE = "";
 									$scope.elfin.CARACTERISTIQUE['CAR3'].VALEUR = "";
+									$scope.elfin.CARACTERISTIQUE['CAR4'].VALEUR = "";
+									$scope.elfin.CARACTERISTIQUE['CAR5'].VALEUR = "";
 									
 								} else {
 									// Do nothing
