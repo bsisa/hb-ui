@@ -41,6 +41,12 @@
             .when('/elfin/:collectionId/ACTEUR', {
                 templateUrl: '/assets/views/ACTEUR_list_view.html'
             })
+            .when('/elfin/create/CITERNE', {
+                templateUrl: '/assets/views/CITERNE_card_new_view.html'
+            })                                    
+            .when('/elfin/:collectionId/CITERNE/:elfinId', {
+                templateUrl: '/assets/views/CITERNE_card_view.html'
+            })                                  
             .when('/elfin/create/CONSTAT', {
                 templateUrl: '/assets/views/CONSTAT_card_new_view.html'
             })

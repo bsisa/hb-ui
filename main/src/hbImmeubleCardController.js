@@ -184,7 +184,13 @@
 											$location.search(searchObj).path( "/elfin/create/VENTILATION" );
 										}
 									};	
-									
+																		
+									$scope.createNewCiterne  = function() {
+										if ($attrs.hbMode != "create") {
+											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+											$location.search(searchObj).path( "/elfin/create/CITERNE" );
+										}
+									};										
 									
 									/**
 									 * Triggers a redirection to the PRESTATION creation URL with current
