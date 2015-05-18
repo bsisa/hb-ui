@@ -1041,269 +1041,222 @@
 			<div class="hb-tab">
 				<div class="row">
 					<div class="col-sm-12">
-					
-<!-- 					<tabset>   -->
-<!-- 						<tab active="tabState.equipements_tech_subtab_prod_chaleur.active">EQ.TECH. 1st sub tab -->
-<!-- 							<tab-heading>Production Chaleur</tab-heading> -->
-<!-- 							<div class="hb-tab"> -->
-							
-								<div class="row">
-									<div class="col-sm-12">
-									<!-- Table des PRODUCTION_CHALEUR -->
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="7">
-														<a class="btn btn-default" type="button" tooltip="Créer une nouvelle PRODUCTION_CHALEUR relative à l'objet courant" tooltip-popup-delay="1000"
-																	ng-click="createNewProductionChaleur()">
-															<i class="icon-plus-sign"></i>
-														</a>
-														Production Chaleur
-													</th>
-												</tr>
-												<tr>
-													<th colspan="2">Détail</th>
-													<th>Modèle</th>
-													<th>Année</th>
-													<th>Puissance (kW)</th>
-													<th>Energie</th>
-													<th>Fournisseur</th>
-												</tr>
-											</thead>
-											<tbody ng-show="productionChaleurList">
-												<tr
-													ng-repeat="productionChaleur in productionChaleurList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
-													<td><div hb-card-view-link hb-href="/elfin/{{productionChaleur.ID_G}}/PRODUCTION_CHALEUR/{{productionChaleur.Id}}"></div></td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="productionChaleur"></div></td>
-													<td><span >{{productionChaleur.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
-													<td><span >{{productionChaleur.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{productionChaleur.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{productionChaleur.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
-													<td><span >{{productionChaleur.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-<!-- 							</div> -->
-<!-- 						</tab> -->
-<!-- 						<tab select="createNewProductionChaleur()"> -->
-<!-- 							<tab-heading tooltip="Créer une nouvelle PRODUCTION_CHALEUR relative à l'objet courant" tooltip-popup-delay="1000">Production Chaleur<i class="icon-plus-sign"></i></tab-heading> -->
-<!-- 							<div class="hb-tab"> -->
-<!-- 							</div> -->
-<!-- 						</tab> -->
-<!-- 						<tab active="tabState.equipements_tech_subtab_prod_froid.active">EQ.TECH 2nd sub tab -->
-<!-- 							<tab-heading>Production Froid</tab-heading> -->
-<!-- 							<div class="hb-tab"> -->
-								<div class="row">
-									<div class="col-sm-12">
-									<!-- Table des PRODUCTION_FROID -->
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="7">
-														<a class="btn btn-default" type="button" tooltip="Créer une nouvelle PRODUCTION_FROID relative à l'objet courant" tooltip-popup-delay="1000"
-																	ng-click="createNewProductionFroid()">
-															<i class="icon-plus-sign"></i>
-														</a>													
-														Production Froid
-													</th>
-												</tr>
-												<tr>
-													<th colspan="2">Détail</th>
-													<th>Modèle</th>
-													<th>Année</th>
-													<th>Puissance (kW)</th>
-													<th>Energie</th>
-													<th>Fournisseur</th>
-												</tr>
-											</thead>
-											<tbody ng-show="productionFroidList">
-												<tr
-													ng-repeat="productionFroid in productionFroidList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
-													<td><div hb-card-view-link hb-href="/elfin/{{productionFroid.ID_G}}/PRODUCTION_FROID/{{productionFroid.Id}}"></div></td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="productionFroid"></div></td>
-													<td><span >{{productionFroid.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
-													<td><span >{{productionFroid.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{productionFroid.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{productionFroid.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
-													<td><span >{{productionFroid.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-<!-- 							</div> -->
-<!-- 						</tab>						 -->
-<!-- 						<tab active="tabState.equipements_tech_subtab_ventilation.active">EQ.TECH 3rd sub tab -->
-<!-- 							<tab-heading>Ventilation</tab-heading> -->
-<!-- 							<div class="hb-tab"> -->
-								<div class="row">
-									<div class="col-sm-12">
-									<!-- Table des VENTILATION -->
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="7">
-														<a class="btn btn-default" type="button" tooltip="Créer une nouvelle VEMTILATION relative à l'objet courant" tooltip-popup-delay="1000"
-																	ng-click="createNewVentilation()">
-															<i class="icon-plus-sign"></i>
-														</a>													
-														Ventilation
-													</th>
-												</tr>
-												<tr>
-													<th colspan="2">Détail</th>
-													<th>Modèle</th>
-													<th>Année</th>
-													<th>Puissance (kW)</th>
-													<th>Energie</th>
-													<th>Fournisseur</th>
-												</tr>
-											</thead>
-											<tbody ng-show="ventilationList">
-												<tr
-													ng-repeat="ventilation in ventilationList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
-													<td><div hb-card-view-link hb-href="/elfin/{{ventilation.ID_G}}/VENTILATION/{{ventilation.Id}}"></div></td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="ventilation"></div></td>
-													<td><span >{{ventilation.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
-													<td><span >{{ventilation.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{ventilation.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{ventilation.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
-													<td><span >{{ventilation.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-<!-- 							</div> -->
-<!-- 						</tab> -->
-<!-- 						<tab active="tabState.equipements_tech_subtab_citerne.active">EQ.TECH 4th sub tab -->
-<!-- 							<tab-heading>Citerne</tab-heading> -->
-<!-- 							<div class="hb-tab"> -->
-								<div class="row">
-									<div class="col-sm-12">
-									<!-- Table des CITERNE -->
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="7">
-														<a class="btn btn-default" type="button" tooltip="Créer une nouvelle CITERNE relative à l'objet courant" tooltip-popup-delay="1000"
-																	ng-click="createNewCiterne()">
-															<i class="icon-plus-sign"></i>
-														</a>													
-														Citerne
-													</th>
-												</tr>
-												<tr>
-													<th colspan="2">Détail</th>
-													<th>Modèle</th>
-													<th>Année</th>
-													<th>Puissance (kW)</th>
-													<th>Energie</th>
-													<th>Fournisseur</th>
-												</tr>
-											</thead>
-											<tbody ng-show="citerneList">
-												<tr
-													ng-repeat="citerne in citerneList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
-													<td><div hb-card-view-link hb-href="/elfin/{{citerne.ID_G}}/CITERNE/{{citerne.Id}}"></div></td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="citerne"></div></td>
-													<td><span >{{citerne.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
-													<td><span >{{citerne.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{citerne.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{citerne.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
-													<td><span >{{citerne.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-<!-- 							</div> -->
-<!-- 						</tab> -->
-<!-- 						<tab active="tabState.equipements_tech_subtab_intro_elec.active">EQ.TECH 5th sub tab -->
-<!-- 							<tab-heading>Introduction électricité</tab-heading> -->
-<!-- 							<div class="hb-tab"> -->
-								<div class="row">
-									<div class="col-sm-12">
-									<!-- Table des INTRODUCTION_ELECTRICITE -->
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="7">Introduction électricité</th>
-												</tr>
-												<tr>
-													<th colspan="2">Détail</th>
-													<th>Modèle</th>
-													<th>Année</th>
-													<th>Puissance (kW)</th>
-													<th>Energie</th>
-													<th>Fournisseur</th>
-												</tr>
-											</thead>
-											<tbody ng-show="introductionElectriciteList">
-												<tr
-													ng-repeat="introductionElectricite in introductionElectriciteList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
-													<td><div hb-card-view-link hb-href="/elfin/{{introductionElectricite.ID_G}}/INTRODUCTION_ELECTRICITE/{{introductionElectricite.Id}}"></div></td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="introductionElectricite"></div></td>
-													<td><span >{{introductionElectricite.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
-													<td><span >{{introductionElectricite.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{introductionElectricite.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{introductionElectricite.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
-													<td><span >{{introductionElectricite.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-<!-- 							</div> -->
-<!-- 						</tab> -->
-<!-- 						<tab active="tabState.equipements_tech_subtab_equipement.active">EQ.TECH 6th sub tab -->
-<!-- 							<tab-heading>Equipement</tab-heading> -->
-<!-- 							<div class="hb-tab"> -->
-								<div class="row">
-									<div class="col-sm-12">
-									<!-- Table des EQUIPEMENT -->
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="7">Equipement</th>
-												</tr>
-												<tr>
-													<th colspan="2">Détail</th>
-													<th>Modèle</th>
-													<th>Année</th>
-													<th>Puissance (kW)</th>
-													<th>Energie</th>
-													<th>Fournisseur</th>
-												</tr>
-											</thead>
-											<tbody ng-show="equipementList">
-												<tr
-													ng-repeat="equipement in equipementList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
-													<td><div hb-card-view-link hb-href="/elfin/{{equipement.ID_G}}/EQUIPEMENT/{{equipement.Id}}"></div></td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="equipement"></div></td>
-													<td><span >{{equipement.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
-													<td><span >{{equipement.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{equipement.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-													<td><span >{{equipement.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
-													<td><span >{{equipement.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-						
-<!-- 						<tab select="createNewContract()" ng-show="!createMode">  -->
-<!-- 							<tab-heading tooltip="Créer un nouveau contrat relatif à l'objet courant" tooltip-popup-delay="1000">Créer un nouveau contrat <i class="icon-plus-sign"></i></tab-heading> -->
-<!-- 							<div class="hb-tab"> -->
-<!-- 							</div> -->
-<!-- 						</tab>								 -->
-
-<!-- 							</div> -->
-<!-- 						</tab> -->
-<!-- 					</tabset>			 -->
-
+						<div class="row">
+							<div class="col-sm-12">
+							<!-- Table des PRODUCTION_CHALEUR -->
+								<table class="table table-condensed table-bordered table-striped">
+									<thead>
+										<tr>
+											<th colspan="7">
+												<a class="btn btn-default" type="button" tooltip="Créer une nouvelle PRODUCTION_CHALEUR relative à l'objet courant" tooltip-popup-delay="1000"
+															ng-click="createNewProductionChaleur()">
+													<i class="icon-plus-sign"></i>
+												</a>
+												Production Chaleur
+											</th>
+										</tr>
+										<tr>
+											<th colspan="2">Détail</th>
+											<th>Modèle</th>
+											<th>Année</th>
+											<th>Puissance (kW)</th>
+											<th>Energie</th>
+											<th>Fournisseur</th>
+										</tr>
+									</thead>
+									<tbody ng-show="productionChaleurList">
+										<tr
+											ng-repeat="productionChaleur in productionChaleurList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+											<td><div hb-card-view-link hb-href="/elfin/{{productionChaleur.ID_G}}/PRODUCTION_CHALEUR/{{productionChaleur.Id}}"></div></td>
+											<td><div hb-annexes-link hb-annexes-link-elfin="productionChaleur"></div></td>
+											<td><span >{{productionChaleur.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+											<td><span >{{productionChaleur.IDENTIFIANT.DE}}</span></td>
+											<td><span >{{productionChaleur.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+											<td><span >{{productionChaleur.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+											<td><span >{{productionChaleur.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+							<!-- Table des PRODUCTION_FROID -->
+								<table class="table table-condensed table-bordered table-striped">
+									<thead>
+										<tr>
+											<th colspan="7">
+												<a class="btn btn-default" type="button" tooltip="Créer une nouvelle PRODUCTION_FROID relative à l'objet courant" tooltip-popup-delay="1000"
+															ng-click="createNewProductionFroid()">
+													<i class="icon-plus-sign"></i>
+												</a>													
+												Production Froid
+											</th>
+										</tr>
+										<tr>
+											<th colspan="2">Détail</th>
+											<th>Modèle</th>
+											<th>Année</th>
+											<th>Puissance (kW)</th>
+											<th>Energie</th>
+											<th>Fournisseur</th>
+										</tr>
+									</thead>
+									<tbody ng-show="productionFroidList">
+										<tr
+											ng-repeat="productionFroid in productionFroidList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+											<td><div hb-card-view-link hb-href="/elfin/{{productionFroid.ID_G}}/PRODUCTION_FROID/{{productionFroid.Id}}"></div></td>
+											<td><div hb-annexes-link hb-annexes-link-elfin="productionFroid"></div></td>
+											<td><span >{{productionFroid.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+											<td><span >{{productionFroid.IDENTIFIANT.DE}}</span></td>
+											<td><span >{{productionFroid.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+											<td><span >{{productionFroid.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+											<td><span >{{productionFroid.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+							<!-- Table des VENTILATION -->
+								<table class="table table-condensed table-bordered table-striped">
+									<thead>
+										<tr>
+											<th colspan="7">
+												<a class="btn btn-default" type="button" tooltip="Créer une nouvelle VEMTILATION relative à l'objet courant" tooltip-popup-delay="1000"
+															ng-click="createNewVentilation()">
+													<i class="icon-plus-sign"></i>
+												</a>													
+												Ventilation
+											</th>
+										</tr>
+										<tr>
+											<th colspan="2">Détail</th>
+											<th>Modèle</th>
+											<th>Année</th>
+											<th>Puissance (kW)</th>
+											<th>Energie</th>
+											<th>Fournisseur</th>
+										</tr>
+									</thead>
+									<tbody ng-show="ventilationList">
+										<tr
+											ng-repeat="ventilation in ventilationList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+											<td><div hb-card-view-link hb-href="/elfin/{{ventilation.ID_G}}/VENTILATION/{{ventilation.Id}}"></div></td>
+											<td><div hb-annexes-link hb-annexes-link-elfin="ventilation"></div></td>
+											<td><span >{{ventilation.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+											<td><span >{{ventilation.IDENTIFIANT.DE}}</span></td>
+											<td><span >{{ventilation.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+											<td><span >{{ventilation.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+											<td><span >{{ventilation.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+							<!-- Table des CITERNE -->
+								<table class="table table-condensed table-bordered table-striped">
+									<thead>
+										<tr>
+											<th colspan="7">
+												<a class="btn btn-default" type="button" tooltip="Créer une nouvelle CITERNE relative à l'objet courant" tooltip-popup-delay="1000"
+															ng-click="createNewCiterne()">
+													<i class="icon-plus-sign"></i>
+												</a>													
+												Citerne
+											</th>
+										</tr>
+										<tr>
+											<th colspan="2">Détail</th>
+											<th>Modèle</th>
+											<th>Année</th>
+											<th>Puissance (kW)</th>
+											<th>Energie</th>
+											<th>Fournisseur</th>
+										</tr>
+									</thead>
+									<tbody ng-show="citerneList">
+										<tr
+											ng-repeat="citerne in citerneList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+											<td><div hb-card-view-link hb-href="/elfin/{{citerne.ID_G}}/CITERNE/{{citerne.Id}}"></div></td>
+											<td><div hb-annexes-link hb-annexes-link-elfin="citerne"></div></td>
+											<td><span >{{citerne.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+											<td><span >{{citerne.IDENTIFIANT.DE}}</span></td>
+											<td><span >{{citerne.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+											<td><span >{{citerne.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+											<td><span >{{citerne.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+							<!-- Table des INTRODUCTION_ELECTRICITE -->
+								<table class="table table-condensed table-bordered table-striped">
+									<thead>
+										<tr>
+											<th colspan="7">Introduction électricité</th>
+										</tr>
+										<tr>
+											<th colspan="2">Détail</th>
+											<th>Modèle</th>
+											<th>Année</th>
+											<th>Puissance (kW)</th>
+											<th>Energie</th>
+											<th>Fournisseur</th>
+										</tr>
+									</thead>
+									<tbody ng-show="introductionElectriciteList">
+										<tr
+											ng-repeat="introductionElectricite in introductionElectriciteList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+											<td><div hb-card-view-link hb-href="/elfin/{{introductionElectricite.ID_G}}/INTRODUCTION_ELECTRICITE/{{introductionElectricite.Id}}"></div></td>
+											<td><div hb-annexes-link hb-annexes-link-elfin="introductionElectricite"></div></td>
+											<td><span >{{introductionElectricite.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+											<td><span >{{introductionElectricite.IDENTIFIANT.DE}}</span></td>
+											<td><span >{{introductionElectricite.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+											<td><span >{{introductionElectricite.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+											<td><span >{{introductionElectricite.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+							<!-- Table des EQUIPEMENT -->
+								<table class="table table-condensed table-bordered table-striped">
+									<thead>
+										<tr>
+											<th colspan="7">Equipement</th>
+										</tr>
+										<tr>
+											<th colspan="2">Détail</th>
+											<th>Modèle</th>
+											<th>Année</th>
+											<th>Puissance (kW)</th>
+											<th>Energie</th>
+											<th>Fournisseur</th>
+										</tr>
+									</thead>
+									<tbody ng-show="equipementList">
+										<tr
+											ng-repeat="equipement in equipementList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
+											<td><div hb-card-view-link hb-href="/elfin/{{equipement.ID_G}}/EQUIPEMENT/{{equipement.Id}}"></div></td>
+											<td><div hb-annexes-link hb-annexes-link-elfin="equipement"></div></td>
+											<td><span >{{equipement.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
+											<td><span >{{equipement.IDENTIFIANT.DE}}</span></td>
+											<td><span >{{equipement.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+											<td><span >{{equipement.CARACTERISTIQUE.CAR3.VALEUR}}</span></td>
+											<td><span >{{equipement.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
