@@ -1047,7 +1047,7 @@
 								<table class="table table-condensed table-bordered table-striped">
 									<thead>
 										<tr>
-											<th colspan="7">
+											<th colspan="8">
 												<a class="btn btn-default" type="button" tooltip="Créer une nouvelle PRODUCTION_CHALEUR relative à l'objet courant" tooltip-popup-delay="1000"
 															ng-click="createNewProductionChaleur()">
 													<i class="icon-plus-sign"></i>
@@ -1057,8 +1057,9 @@
 										</tr>
 										<tr>
 											<th width="10%" colspan="2">Détail</th>
+											<th width="15%">Groupe</th>
 											<th width="15%">Modèle</th>
-											<th width="15%">Année</th>
+											<th width="15%">Date de fabrication</th>
 											<th width="15%">Puissance (kW)</th>
 											<th width="15%">Energie</th>
 											<th>Fournisseur</th>
@@ -1069,6 +1070,7 @@
 											ng-repeat="productionChaleur in productionChaleurList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
 											<td><div hb-card-view-link hb-href="/elfin/{{productionChaleur.ID_G}}/PRODUCTION_CHALEUR/{{productionChaleur.Id}}"></div></td>
 											<td><div hb-annexes-link hb-annexes-link-elfin="productionChaleur"></div></td>
+											<td><span >{{productionChaleur.GROUPE}}</span></td>
 											<td><span >{{productionChaleur.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
 											<td><span >{{productionChaleur.IDENTIFIANT.DE}}</span></td>
 											<td><span >{{productionChaleur.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
@@ -1085,7 +1087,7 @@
 								<table class="table table-condensed table-bordered table-striped">
 									<thead>
 										<tr>
-											<th colspan="7">
+											<th colspan="8">
 												<a class="btn btn-default" type="button" tooltip="Créer une nouvelle PRODUCTION_FROID relative à l'objet courant" tooltip-popup-delay="1000"
 															ng-click="createNewProductionFroid()">
 													<i class="icon-plus-sign"></i>
@@ -1095,6 +1097,7 @@
 										</tr>
 										<tr>
 											<th width="10%" colspan="2">Détail</th>
+											<th width="15%">Groupe</th>
 											<th width="15%">Modèle</th>
 											<th width="15%">Année</th>
 											<th width="15%">Puissance (kW)</th>
@@ -1107,6 +1110,7 @@
 											ng-repeat="productionFroid in productionFroidList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
 											<td><div hb-card-view-link hb-href="/elfin/{{productionFroid.ID_G}}/PRODUCTION_FROID/{{productionFroid.Id}}"></div></td>
 											<td><div hb-annexes-link hb-annexes-link-elfin="productionFroid"></div></td>
+											<td><span >{{productionFroid.GROUPE}}</span></td>
 											<td><span >{{productionFroid.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
 											<td><span >{{productionFroid.IDENTIFIANT.DE}}</span></td>
 											<td><span >{{productionFroid.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
@@ -1123,7 +1127,7 @@
 								<table class="table table-condensed table-bordered table-striped">
 									<thead>
 										<tr>
-											<th colspan="7">
+											<th colspan="8">
 												<a class="btn btn-default" type="button" tooltip="Créer une nouvelle VEMTILATION relative à l'objet courant" tooltip-popup-delay="1000"
 															ng-click="createNewVentilation()">
 													<i class="icon-plus-sign"></i>
@@ -1133,6 +1137,7 @@
 										</tr>
 										<tr>
 											<th width="10%" colspan="2">Détail</th>
+											<th width="15%">Groupe</th>
 											<th width="15%">Modèle</th>
 											<th width="15%">Année</th>
 											<th width="15%">Puissance (kW)</th>
@@ -1145,6 +1150,7 @@
 											ng-repeat="ventilation in ventilationList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
 											<td><div hb-card-view-link hb-href="/elfin/{{ventilation.ID_G}}/VENTILATION/{{ventilation.Id}}"></div></td>
 											<td><div hb-annexes-link hb-annexes-link-elfin="ventilation"></div></td>
+											<td><span >{{ventilation.GROUPE}}</span></td>
 											<td><span >{{ventilation.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
 											<td><span >{{ventilation.IDENTIFIANT.DE}}</span></td>
 											<td><span >{{ventilation.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
@@ -1161,7 +1167,7 @@
 								<table class="table table-condensed table-bordered table-striped">
 									<thead>
 										<tr>
-											<th colspan="7">
+											<th colspan="8">
 												<a class="btn btn-default" type="button" tooltip="Créer une nouvelle CITERNE relative à l'objet courant" tooltip-popup-delay="1000"
 															ng-click="createNewCiterne()">
 													<i class="icon-plus-sign"></i>
@@ -1171,6 +1177,7 @@
 										</tr>
 										<tr>
 											<th width="10%" colspan="2">Détail</th>
+											<th width="15%">Groupe</th>
 											<th width="15%">Modèle</th>
 											<th width="15%">Année</th>
 											<th width="15%">Puissance (kW)</th>
@@ -1183,6 +1190,7 @@
 											ng-repeat="citerne in citerneList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']">
 											<td><div hb-card-view-link hb-href="/elfin/{{citerne.ID_G}}/CITERNE/{{citerne.Id}}"></div></td>
 											<td><div hb-annexes-link hb-annexes-link-elfin="citerne"></div></td>
+											<td><span >{{citerne.GROUPE}}</span></td>
 											<td><span >{{citerne.CARACTERISTIQUE.CAR2.VALEUR}}</span></td>													
 											<td><span >{{citerne.IDENTIFIANT.DE}}</span></td>
 											<td><span >{{citerne.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
