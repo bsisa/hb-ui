@@ -1,7 +1,7 @@
 (function() {
 
 	angular.module('hb5').controller(
-			'HbProductionFroidCardController',
+			'HbVentilationCardController',
 			[
 			 		'$attrs',
 					'$scope',
@@ -16,12 +16,12 @@
 					function($attrs, $scope, GeoxmlService, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil, hbQueryService) {
 
-						$log.debug("    >>>> Using HbProductionFroidCardController ");
+						$log.debug("    >>>> Using HbVentilationCardController ");
 						
-						// Used to provide navigation link back to IMMEUBLE link to this PRODUCTION_FROID
+						// Used to provide navigation link back to IMMEUBLE link to this VENTILATION
 						$scope.immeubleRef = null;			 			
 			 			
-			        	// Navigate to IMMEUBLE linked to the current PRODUCTION_FROID
+			        	// Navigate to IMMEUBLE linked to the current VENTILATION
 			        	$scope.viewImmeuble = function() {
 			        		$location.path('/elfin/'+$scope.immeubleRef.ID_G+'/IMMEUBLE/' + $scope.immeubleRef.Id);	
 			        	};
@@ -34,23 +34,23 @@
 				    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
 					    		var saiNb = $scope.elfin.IDENTIFIANT.OBJECTIF;
 								var buildingNb = $scope.elfin.IDENTIFIANT.ORIGINE;
-								xpathForImmeubleLinkedToCurrentProdFroid = "//ELFIN[IDENTIFIANT/OBJECTIF='"+saiNb+"' and IDENTIFIANT/NOM='"+buildingNb+"']";
-								hbQueryService.getImmeubles(xpathForImmeubleLinkedToCurrentProdFroid)
+								xpathForImmeubleLinkedToCurrentVentilation = "//ELFIN[IDENTIFIANT/OBJECTIF='"+saiNb+"' and IDENTIFIANT/NOM='"+buildingNb+"']";
+								hbQueryService.getImmeubles(xpathForImmeubleLinkedToCurrentVentilation)
 									.then(function(immeubles) {
 										// Expected case
 										if (immeubles.length === 1) {
 											var immeuble = immeubles[0];
 											$scope.immeubleRef = { "Id" : immeuble.Id,  "ID_G" : immeuble.ID_G , "address": immeuble.IDENTIFIANT.ALIAS, "owner": immeuble.PARTENAIRE.PROPRIETAIRE.NOM};
 										} else if (immeubles.length < 1) { 
-											var message = "L'IMMEUBLE correspondant à la PRODUCTION_FROID courrante pour le no de construction "+ buildingNb +" et no SAI "+ saiNb +" n'a pas pu être trouvé dans la base de donnée!";
+											var message = "L'IMMEUBLE correspondant à la VENTILATION courrante pour le no de construction "+ buildingNb +" et no SAI "+ saiNb +" n'a pas pu être trouvé dans la base de donnée!";
 								            hbAlertMessages.addAlert("danger",message);
 										} else {
-											var message = "Plusieurs IMMEUBLE correspondent à la PRODUCTION_FROID courrante pour le no de construction: " + buildingNb +" et no SAI "+ saiNb +". Le résultat devrait être unique.";
+											var message = "Plusieurs IMMEUBLE correspondent à la VENTILATION courrante pour le no de construction: " + buildingNb +" et no SAI "+ saiNb +". Le résultat devrait être unique.";
 								            hbAlertMessages.addAlert("danger",message);
 										}
 									},
 									function(response) {
-										var message = "Le chargement de l'IMMEUBLE lié à la PRODUCTION_FROID courrante pour le no de construction "+ buildingNb +" et no SAI "+ saiNb + " a échoué (statut de retour: "+ response.status+ ")";
+										var message = "Le chargement de l'IMMEUBLE lié à la VENTILATION courrante pour le no de construction "+ buildingNb +" et no SAI "+ saiNb + " a échoué (statut de retour: "+ response.status+ ")";
 							            hbAlertMessages.addAlert("danger",message);
 									});										
 				    			
@@ -63,8 +63,8 @@
 
 				    		if ($scope.elfin!=null) {
 
-					            // Asychronous PRODUCTION_FROID template preloading
-					            GeoxmlService.getNewElfin("PRODUCTION_FROID").get()
+					            // Asychronous VENTILATION template preloading
+					            GeoxmlService.getNewElfin("VENTILATION").get()
 					            .then(function(prodChaleur) {
 					            		// Get list from catalogue default
 					            		//$scope.xxx = hbUtil.buildArrayFromCatalogueDefault(prodChaleur.IDENTIFIANT.QUALITE);
@@ -72,7 +72,7 @@
 					            		$scope.energyChoices = hbUtil.buildArrayFromCatalogueDefault(prodChaleur.CARACTERISTIQUE.CAR3.VALEUR);
 									},
 									function(response) {
-										var message = "Les valeurs par défaut pour la CLASSE PRODUCTION_FROID n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
+										var message = "Les valeurs par défaut pour la CLASSE VENTILATION n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
 										hbAlertMessages.addAlert("danger",message);
 									});		
 					            
