@@ -104,7 +104,7 @@
 													}
 												);
 										} else if (immeubles.length < 1) { 
-											var message = "L'IMMEUBLE correspondant au CONSTAT courrant pour le no de construction "+ buildingNb +" n'a pas pu être trouvé dans la base de donnée! (statut de retour: "+ response.status+ ")";
+											var message = "L'IMMEUBLE correspondant au CONSTAT courrant pour le no de construction "+ buildingNb +" n'a pas pu être trouvé dans la base de donnée!";
 								            hbAlertMessages.addAlert("danger",message);
 										} else {
 											var message = "Plusieurs IMMEUBLE correspondent au CONSTAT courrant pour le no de construction: " + buildingNb + ". Le résultat devrait être unique.";
