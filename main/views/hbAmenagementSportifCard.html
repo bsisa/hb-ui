@@ -165,18 +165,27 @@
 								required>
 						</div>
 					</div>
+					
 						<div class="form-group has-feedback"
-							ng-class="getCssHasFeedback(elfinForm.author)">
-							<label for="author" class="col-lg-3 col-md-2 control-label">No
-								ECAP</label>
+						ng-class="getCssHasFeedback(elfinForm.groupe)">
+							<label for="groupe" class="col-lg-3 col-md-2 control-label">Groupe</label>
 							<div class="col-lg-9 col-md-10">
-								<input id="author" name="author" type="text"
-									class="form-control"
-									ng-model="CARSET_CAR_POS_3.VALEUR"
-									ng-readonly="!canEdit"
-									required>
+								<div hb-single-select hb-single-select-options="groupeChoices" ng-model="elfin.GROUPE" ></div>
 							</div>
-						</div>
+						</div>					
+					
+<!-- 						<div class="form-group has-feedback" -->
+<!-- 							ng-class="getCssHasFeedback(elfinForm.author)"> -->
+<!-- 							<label for="author" class="col-lg-3 col-md-2 control-label">No -->
+<!-- 								ECAP</label> -->
+<!-- 							<div class="col-lg-9 col-md-10"> -->
+<!-- 								<input id="author" name="author" type="text" -->
+<!-- 									class="form-control" -->
+<!-- 									ng-model="CARSET_CAR_POS_3.VALEUR" -->
+<!-- 									ng-readonly="!canEdit" -->
+<!-- 									required> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 						<div class="form-group has-feedback"
 							ng-class="getCssHasFeedback(elfinForm.nom)">
 							<label for="nom" class="col-lg-3 col-md-2 control-label">No de

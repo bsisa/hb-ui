@@ -441,6 +441,18 @@
 							    		
 							    		if ($scope.elfin!=null) {
 								            
+							    			// Asychronous PRODUCTION_CHALEUR template preloading
+								            GeoxmlService.getNewElfin("AMENAGEMENT_SPORTIF").get()
+								            .then(function(amenagementSportifTemplate) {
+								            		// Get list from catalogue default
+								            		//$scope.xxx = hbUtil.buildArrayFromCatalogueDefault(prodChaleur.IDENTIFIANT.QUALITE);
+								            		$scope.groupeChoices = hbUtil.buildArrayFromCatalogueDefault(amenagementSportifTemplate.GROUPE);
+												},
+												function(response) {
+													var message = "Les valeurs par défaut pour la CLASSE AMENAGEMENT_SPORTIF n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
+													hbAlertMessages.addAlert("danger",message);
+												});								    			
+							    			
 											// ===========================================================
 											// Safe access to elfin.CARACTERISTIQUE.CARSET.CAR by POS 
 							    			// Relying on Js array position is not a safe option when 
@@ -477,6 +489,9 @@
 							    			 * Perform template clean up tasks while in create mode.
 							    			 */
 								    		if ($attrs.hbMode === "create") {
+								    			
+								    			$scope.elfin.GROUPE = '';
+								    			
 								    			$scope.elfin.IDENTIFIANT.NOM = '';
 								    			$scope.elfin.IDENTIFIANT.OBJECTIF = '';
 								    			$scope.elfin.IDENTIFIANT.QUALITE = '';
