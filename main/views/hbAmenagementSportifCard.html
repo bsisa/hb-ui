@@ -466,110 +466,110 @@
 		</div>
 		</tab> 
 		<!-- SURFACE tab --> 
-		<tab active="tabState.unite_locative.active" > 
-			<tab-heading>Unités locatives ({{locationUnits.length}})</tab-heading>
-			<div class="hb-tab">
-				<div class="row">
-					<div class="col-sm-12">
-						<tabset>
-							<tab active="tabState.unite_locative_subtab_current.active"><!-- UNITE_LOCATIVE 1st sub tab -->
-								<tab-heading>Unités locatives courantes</tab-heading>
-								<div class="hb-tab">
+<!-- 		<tab active="tabState.unite_locative.active" >  -->
+<!-- 			<tab-heading>Unités locatives ({{locationUnits.length}})</tab-heading> -->
+<!-- 			<div class="hb-tab"> -->
+<!-- 				<div class="row"> -->
+<!-- 					<div class="col-sm-12"> -->
+<!-- 						<tabset> -->
+<!-- 							<tab active="tabState.unite_locative_subtab_current.active">UNITE_LOCATIVE 1st sub tab -->
+<!-- 								<tab-heading>Unités locatives courantes</tab-heading> -->
+<!-- 								<div class="hb-tab"> -->
 	
-									<div class="row">
-										<div class="col-sm-12">
-										<!-- Table des unités locatives actives -->
+<!-- 									<div class="row"> -->
+<!-- 										<div class="col-sm-12"> -->
+<!-- 										Table des unités locatives actives -->
 						
-											<table class="table table-condensed table-bordered table-striped">
-												<thead>
-													<tr>
-														<th>Unité locative</th>
-														<th><a href=""
-															ng-click="locUnitPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitReverse=!locUnitReverse">No
-																SAI</a></th>
-														<th><a href=""
-															ng-click="locUnitPredicate = 'GROUPE'; locUnitReverse=!locUnitReverse">Groupe</a></th>
-														<th><a href=""
-															ng-click="locUnitPredicate = 'PARTENAIRE.USAGER.VALUE'; locUnitReverse=!locUnitReverse">Locataire</a></th>
-													<th><a href=""
-															ng-click="locUnitPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; locUnitReverse=!locUnitReverse">Surface (m2)</a></th>
-														<th><a href=""
-															ng-click="locUnitPredicate = 'DIVERS.REMARQUE'; locUnitReverse=!locUnitReverse">Remarque</a></th>
-													</tr>
-												</thead>
-												<tbody ng-show="locationUnits">
-													<tr
-														ng-repeat="locationUnit in locationUnits | orderBy:locUnitPredicate:locUnitReverse">
-														<td>
-															<div hb-card-view-link hb-href="/elfin/{{locationUnit.ID_G}}/SURFACE/{{locationUnit.Id}}"></div>
-														</td>
-														<td><span >{{locationUnit.IDENTIFIANT.OBJECTIF}}</span></td>
-														<td><span >{{locationUnit.GROUPE}}</span></td>
-														<td><span >{{locationUnit.PARTENAIRE.USAGER.VALUE}}</span></td>
-														<td class="number"><span >{{locationUnit.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-														<td><span >{{locationUnit.DIVERS.REMARQUE}}</span></td>
-													</tr>
-												</tbody>
-											</table>
+<!-- 											<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 												<thead> -->
+<!-- 													<tr> -->
+<!-- 														<th>Unité locative</th> -->
+<!-- 														<th><a href="" -->
+<!-- 															ng-click="locUnitPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitReverse=!locUnitReverse">No -->
+<!-- 																SAI</a></th> -->
+<!-- 														<th><a href="" -->
+<!-- 															ng-click="locUnitPredicate = 'GROUPE'; locUnitReverse=!locUnitReverse">Groupe</a></th> -->
+<!-- 														<th><a href="" -->
+<!-- 															ng-click="locUnitPredicate = 'PARTENAIRE.USAGER.VALUE'; locUnitReverse=!locUnitReverse">Locataire</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 															ng-click="locUnitPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; locUnitReverse=!locUnitReverse">Surface (m2)</a></th> -->
+<!-- 														<th><a href="" -->
+<!-- 															ng-click="locUnitPredicate = 'DIVERS.REMARQUE'; locUnitReverse=!locUnitReverse">Remarque</a></th> -->
+<!-- 													</tr> -->
+<!-- 												</thead> -->
+<!-- 												<tbody ng-show="locationUnits"> -->
+<!-- 													<tr -->
+<!-- 														ng-repeat="locationUnit in locationUnits | orderBy:locUnitPredicate:locUnitReverse"> -->
+<!-- 														<td> -->
+<!-- 															<div hb-card-view-link hb-href="/elfin/{{locationUnit.ID_G}}/SURFACE/{{locationUnit.Id}}"></div> -->
+<!-- 														</td> -->
+<!-- 														<td><span >{{locationUnit.IDENTIFIANT.OBJECTIF}}</span></td> -->
+<!-- 														<td><span >{{locationUnit.GROUPE}}</span></td> -->
+<!-- 														<td><span >{{locationUnit.PARTENAIRE.USAGER.VALUE}}</span></td> -->
+<!-- 														<td class="number"><span >{{locationUnit.CARACTERISTIQUE.CAR1.VALEUR}}</span></td> -->
+<!-- 														<td><span >{{locationUnit.DIVERS.REMARQUE}}</span></td> -->
+<!-- 													</tr> -->
+<!-- 												</tbody> -->
+<!-- 											</table> -->
 							
-										</div>
-									</div>
-								</div>
-							</tab>
-							<tab active="tabState.unite_locative_subtab_archived.active"><!-- UNITE_LOCATIVE 2nd sub tab -->
-								<tab-heading>Unités locatives archivées</tab-heading>
-								<div class="hb-tab">
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</tab> -->
+<!-- 							<tab active="tabState.unite_locative_subtab_archived.active">UNITE_LOCATIVE 2nd sub tab -->
+<!-- 								<tab-heading>Unités locatives archivées</tab-heading> -->
+<!-- 								<div class="hb-tab"> -->
 	
-									<div class="row">
-										<div class="col-sm-12">
-										<!-- Table des unités locatives archived -->
+<!-- 									<div class="row"> -->
+<!-- 										<div class="col-sm-12"> -->
+<!-- 										Table des unités locatives archived -->
 						
-											<table class="table table-condensed table-bordered table-striped">
-												<thead>
-													<tr>
-														<th>Unité locative</th>
-														<th><a href=""
-															ng-click="locUnitArchivedPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitArchivedReverse=!locUnitArchivedReverse">No
-																SAI</a></th>
-														<th><a href=""
-															ng-click="locUnitArchivedPredicate = 'GROUPE'; locUnitArchivedReverse=!locUnitArchivedReverse">Groupe</a></th>
-														<th><a href=""
-															ng-click="locUnitArchivedPredicate = 'PARTENAIRE.USAGER.VALUE'; locUnitArchivedReverse=!locUnitArchivedReverse">Locataire</a></th>
-													<th><a href=""
-															ng-click="locUnitArchivedPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; locUnitArchivedReverse=!locUnitArchivedReverse">Surface (m2)</a></th>
-														<th><a href=""
-															ng-click="locUnitArchivedPredicate = 'DIVERS.REMARQUE'; locUnitArchivedReverse=!locUnitArchivedReverse">Remarque</a></th>
-													</tr>
-												</thead>
-												<tbody ng-show="locationUnits">
-													<tr
-														ng-repeat="locationUnit in locationUnitsArchived | orderBy:locUnitArchivedPredicate:locUnitArchivedReverse">
-														<td>
-															<div hb-card-view-link hb-href="/elfin/{{locationUnit.ID_G}}/SURFACE/{{locationUnit.Id}}"></div>
-														</td>
-														<td><span >{{locationUnit.IDENTIFIANT.OBJECTIF}}</span></td>
-														<td><span >{{locationUnit.GROUPE}}</span></td>
-														<td><span >{{locationUnit.PARTENAIRE.USAGER.VALUE}}</span></td>
-														<td class="number"><span >{{locationUnit.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
-														<td><span >{{locationUnit.DIVERS.REMARQUE}}</span></td>
-													</tr>
-												</tbody>
-											</table>
+<!-- 											<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 												<thead> -->
+<!-- 													<tr> -->
+<!-- 														<th>Unité locative</th> -->
+<!-- 														<th><a href="" -->
+<!-- 															ng-click="locUnitArchivedPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitArchivedReverse=!locUnitArchivedReverse">No -->
+<!-- 																SAI</a></th> -->
+<!-- 														<th><a href="" -->
+<!-- 															ng-click="locUnitArchivedPredicate = 'GROUPE'; locUnitArchivedReverse=!locUnitArchivedReverse">Groupe</a></th> -->
+<!-- 														<th><a href="" -->
+<!-- 															ng-click="locUnitArchivedPredicate = 'PARTENAIRE.USAGER.VALUE'; locUnitArchivedReverse=!locUnitArchivedReverse">Locataire</a></th> -->
+<!-- 													<th><a href="" -->
+<!-- 															ng-click="locUnitArchivedPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; locUnitArchivedReverse=!locUnitArchivedReverse">Surface (m2)</a></th> -->
+<!-- 														<th><a href="" -->
+<!-- 															ng-click="locUnitArchivedPredicate = 'DIVERS.REMARQUE'; locUnitArchivedReverse=!locUnitArchivedReverse">Remarque</a></th> -->
+<!-- 													</tr> -->
+<!-- 												</thead> -->
+<!-- 												<tbody ng-show="locationUnits"> -->
+<!-- 													<tr -->
+<!-- 														ng-repeat="locationUnit in locationUnitsArchived | orderBy:locUnitArchivedPredicate:locUnitArchivedReverse"> -->
+<!-- 														<td> -->
+<!-- 															<div hb-card-view-link hb-href="/elfin/{{locationUnit.ID_G}}/SURFACE/{{locationUnit.Id}}"></div> -->
+<!-- 														</td> -->
+<!-- 														<td><span >{{locationUnit.IDENTIFIANT.OBJECTIF}}</span></td> -->
+<!-- 														<td><span >{{locationUnit.GROUPE}}</span></td> -->
+<!-- 														<td><span >{{locationUnit.PARTENAIRE.USAGER.VALUE}}</span></td> -->
+<!-- 														<td class="number"><span >{{locationUnit.CARACTERISTIQUE.CAR1.VALEUR}}</span></td> -->
+<!-- 														<td><span >{{locationUnit.DIVERS.REMARQUE}}</span></td> -->
+<!-- 													</tr> -->
+<!-- 												</tbody> -->
+<!-- 											</table> -->
 							
-										</div>
-									</div>
-								</div>
-							</tab>							
-							<tab select="createNewUniteLocative()" ng-show="!createMode"> 
-								<tab-heading tooltip="Créer une nouvelle unité locative relative à l'objet courant" tooltip-popup-delay="1000">Créer une nouvelle unité locative <i class="icon-plus-sign"></i></tab-heading>
-								<div class="hb-tab">
-								</div>
-							</tab>
-						</tabset>
-					</div>
-				</div>
-			</div>
-		</tab> 
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</tab>							 -->
+<!-- 							<tab select="createNewUniteLocative()" ng-show="!createMode">  -->
+<!-- 								<tab-heading tooltip="Créer une nouvelle unité locative relative à l'objet courant" tooltip-popup-delay="1000">Créer une nouvelle unité locative <i class="icon-plus-sign"></i></tab-heading> -->
+<!-- 								<div class="hb-tab"> -->
+<!-- 								</div> -->
+<!-- 							</tab> -->
+<!-- 						</tabset> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</tab>  -->
 		<!-- PRESTATION tab --> 
 		<tab active="tabState.prestation.active" >
 			<tab-heading>Prestations({{prestations.length}})</tab-heading>
@@ -986,55 +986,53 @@
 			</div>
 		</tab>		
 		<!-- VALEUR tab -->
-		<tab active="tabState.valeur.active">
-			<tab-heading>Valeur ECAP</tab-heading>
-			<div class="hb-tab">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.ecapValue)">
-							<label for="ecapValue" class="col-md-4 control-label">Valeur ECAP</label>
-							<div class="col-md-8">
-								<input id="ecapValue" name="ecapValue" type="text"
-									class="form-control"
-									ng-model="CARSET_CAR_POS_5.VALEUR" ng-readonly="!canEdit">
-<!-- 									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[4].VALEUR" ng-readonly="!canEdit"> -->
-									
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.constructionYear)">
-							<label for="constructionYear" class="col-md-4 control-label">Année estimation ECAP</label>
-							<div class="col-md-8" >
-								<input id="constructionYear" name="constructionYear" type="text"
-									class="form-control"
-									ng-model="CARSET_CAR_POS_6.VALEUR" ng-readonly="!canEdit">
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralValue)">
-							<label for="cadastralValue" class="col-md-4 control-label">Valeur cadastrale</label>
-							<div class="col-md-8" >
-								<input id="cadastralValue" name="cadastralValue" type="text"
-									class="form-control"
-									ng-model="CARSET_CAR_POS_7.VALEUR" ng-readonly="!canEdit">
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">					
-						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralEvaluationYear)">
-							<label for="cadastralEvaluationYear" class="col-md-4 control-label">Année estimation cadastrale</label>
-							<div class="col-md-8" >
-								<input id="cadastralEvaluationYear" name="cadastralEvaluationYear" type="text"
-									class="form-control"
-									ng-model="CARSET_CAR_POS_8.VALEUR" ng-readonly="!canEdit">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</tab>				
+<!-- 		<tab active="tabState.valeur.active"> -->
+<!-- 			<tab-heading>Valeur ECAP</tab-heading> -->
+<!-- 			<div class="hb-tab"> -->
+<!-- 				<div class="row"> -->
+<!-- 					<div class="col-md-6"> -->
+<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.ecapValue)"> -->
+<!-- 							<label for="ecapValue" class="col-md-4 control-label">Valeur ECAP</label> -->
+<!-- 							<div class="col-md-8"> -->
+<!-- 								<input id="ecapValue" name="ecapValue" type="text" -->
+<!-- 									class="form-control" -->
+<!-- 									ng-model="CARSET_CAR_POS_5.VALEUR" ng-readonly="!canEdit"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-6"> -->
+<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.constructionYear)"> -->
+<!-- 							<label for="constructionYear" class="col-md-4 control-label">Année estimation ECAP</label> -->
+<!-- 							<div class="col-md-8" > -->
+<!-- 								<input id="constructionYear" name="constructionYear" type="text" -->
+<!-- 									class="form-control" -->
+<!-- 									ng-model="CARSET_CAR_POS_6.VALEUR" ng-readonly="!canEdit"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-6"> -->
+<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralValue)"> -->
+<!-- 							<label for="cadastralValue" class="col-md-4 control-label">Valeur cadastrale</label> -->
+<!-- 							<div class="col-md-8" > -->
+<!-- 								<input id="cadastralValue" name="cadastralValue" type="text" -->
+<!-- 									class="form-control" -->
+<!-- 									ng-model="CARSET_CAR_POS_7.VALEUR" ng-readonly="!canEdit"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-6">					 -->
+<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralEvaluationYear)"> -->
+<!-- 							<label for="cadastralEvaluationYear" class="col-md-4 control-label">Année estimation cadastrale</label> -->
+<!-- 							<div class="col-md-8" > -->
+<!-- 								<input id="cadastralEvaluationYear" name="cadastralEvaluationYear" type="text" -->
+<!-- 									class="form-control" -->
+<!-- 									ng-model="CARSET_CAR_POS_8.VALEUR" ng-readonly="!canEdit"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</tab>				 -->
 		<!-- EQUIPEMENT technique tab --> 
 		<tab active="tabState.equipements_tech.active"> 
 			<tab-heading>Equipements techniques</tab-heading>
