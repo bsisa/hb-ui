@@ -220,6 +220,72 @@
 	    };
 	}]);	
 
+	/**
+	 * Filter tailored to AMENAGEMENT_SPORTIF list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual amenagementSportif list. 
+	 */
+	angular.module('hb5').filter('amenagementSportifListFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (amenagementSportifs, predicate) {
+	        if (!angular.isUndefined(amenagementSportifs) && !angular.isUndefined(predicate)) {
+	            var tempAmenagementSportifs = [ ];
+	            angular.forEach(amenagementSportifs, function (amenagementSportif) {
+	            	var amenagementSportifPlace = hbUtil.getCARByPos(amenagementSportif, 1);
+	            	amenagementSportifPlace = (amenagementSportifPlace === undefined) ? {"VALEUR" : ""} : amenagementSportifPlace;
+                    if ( 
+                    	 icontains(amenagementSportif.PARTENAIRE.PROPRIETAIRE.NOM, predicate.owner) &&
+                    	 icontains(amenagementSportif.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
+                    	 //icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
+                    	 icontains(amenagementSportifPlace.VALEUR, predicate.place) &&
+                    	 icontains(amenagementSportif.IDENTIFIANT.NOM, predicate.buildingNb) &&
+                    	 icontains(amenagementSportif.IDENTIFIANT.ALIAS, predicate.address)
+                    ) {
+                    	tempAmenagementSportifs.push(amenagementSportif);
+                    }
+                });
+	            return tempAmenagementSportifs;
+	        } else {
+	            return amenagementSportifs;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to AMENAGEMENT_SPORTIF list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual amenagementSportif list. 
+	 */
+	angular.module('hb5').filter('amenagementSportifListAnyFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (amenagementSportifs, searchtext) {
+
+			var checkAnyField = function(amenagementSportif,searchtext) {
+				var amenagementSportifPlace = hbUtil.getCARByPos(amenagementSportif, 1);
+				amenagementSportifPlace = (amenagementSportifPlace === undefined) ? {"VALEUR" : ""} : amenagementSportifPlace;
+				return (
+					icontains(amenagementSportif.PARTENAIRE.PROPRIETAIRE.NOM, searchtext) ||
+					icontains(amenagementSportif.IDENTIFIANT.OBJECTIF, searchtext) ||
+					//icontains(amenagementSportif.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
+					icontains(amenagementSportifPlace.VALEUR, searchtext) ||
+//					icontains(amenagementSportif.IDENTIFIANT.NOM, searchtext) ||
+					icontains(amenagementSportif.IDENTIFIANT.ALIAS, searchtext)
+				);		
+			};			
+
+	        if (!angular.isUndefined(amenagementSportifs) && !angular.isUndefined(searchtext)) {
+	            var tempAmenagementSportifs = [ ];
+	            angular.forEach(amenagementSportifs, function (amenagementSportif) {
+                    if ( checkAndForTokenisedSearchText(amenagementSportif,searchtext,checkAnyField) ) {
+                    	tempAmenagementSportifs.push(amenagementSportif);
+                    }
+                });
+	            return tempAmenagementSportifs;
+	        } else {
+	            return amenagementSportifs;
+	        }
+	    };
+	}]);	
+	
 	
 	/**
 	 * Filter tailored to IMMEUBLE list requirements.

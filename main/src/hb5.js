@@ -41,6 +41,15 @@
             .when('/elfin/:collectionId/ACTEUR', {
                 templateUrl: '/assets/views/ACTEUR_list_view.html'
             })
+            .when('/elfin/create/AMENAGEMENT_SPORTIF', {
+                templateUrl: '/assets/views/AMENAGEMENT_SPORTIF_card_new_view.html'
+            })            
+            .when('/elfin/:collectionId/AMENAGEMENT_SPORTIF/:elfinId', {
+                templateUrl: '/assets/views/AMENAGEMENT_SPORTIF_card_view.html'
+            })
+            .when('/elfin/:collectionId/AMENAGEMENT_SPORTIF', {
+                templateUrl: '/assets/views/AMENAGEMENT_SPORTIF_list_view.html'
+            })            
             .when('/elfin/create/CITERNE', {
                 templateUrl: '/assets/views/CITERNE_card_new_view.html'
             })                                    

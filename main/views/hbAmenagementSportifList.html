@@ -1,0 +1,91 @@
+<table class="table table-condensed table-bordered table-striped"
+	ng-show="elfins">
+	<thead>
+		<tr>
+			<th colspan="6"><span class="badge">{{filteredElfins.length}} / {{elfinsCount}}</span> amenagement{{ elfinsCount | plural }} sportif{{ elfinsCount | plural }} trouvé{{ elfinsCount | plural
+				}}</th>
+		</tr>
+		<tr>
+			<th rowspan="3" class="col-sm-1" />
+			<th colspan="10">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input id="globalSearchField" name="globalSearchField" type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.owner" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.registerNb" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-4">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.address" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>		
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.buildingNb" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>	
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.place" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>		
+		</tr>
+		<tr>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.NOM'; reverse=!reverse">Propriétaire</a>
+			</th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">No SAI</a>			
+			</th>
+			<th class="col-sm-4">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a></th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">No construction</a></th>
+			<th class="col-sm-3">
+				<a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th>				
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="elfin in filteredElfins">
+		
+			<td>
+				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
+			</td>
+			<!-- Remark: always empty on tested data -->
+			<!-- <td>{{elfin.GROUPE}}</td>  -->
+			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
+			<td>
+<!-- 				{{elfin.PARTENAIRE.PROPRIETAIRE.GROUPE}} -->
+				{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}
+			</td>
+			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>			
+			<td>{{elfin.IDENTIFIANT.NOM}}</td>
+			<td>{{getPlace(elfin).VALEUR}}</td>
+<!-- 			<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td> -->
+		</tr>
+	</tbody>
+</table>
+

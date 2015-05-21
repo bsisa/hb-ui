@@ -33,6 +33,12 @@ module.exports = function(grunt) {
 								'src/hbActorLineConverterController.js',
 								'src/hbActorLineConverterDirective.js',
 								'src/hbAlertMessagesService.js',
+								
+								'src/hbAmenagementSportifCardDirective.js', 
+								'src/hbAmenagementSportifCardController.js',
+								'src/hbAmenagementSportifListController.js',
+								'src/hbAmenagementSportifListDirective.js',								
+								
 								'src/hbAnnexesLinkController.js',
 								'src/hbAnnexesLinkDirective.js',
 								'src/hbAnnexesComponentController.js',
