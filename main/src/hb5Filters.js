@@ -367,13 +367,21 @@
 	            var tempUniteLocatives = [ ];
 	            angular.forEach(uniteLocatives, function (uniteLocative) {
 	            	var currentOwner = undefined;
-	            	if ( !angular.isUndefined(uniteLocative.PARTENAIRE) && 
-            			 !angular.isUndefined(uniteLocative.PARTENAIRE.PROPRIETAIRE) ) {
-	            		currentOwner = uniteLocative.PARTENAIRE.PROPRIETAIRE.VALUE;
+	            	var currentTenant = undefined;
+	            	if ( !angular.isUndefined(uniteLocative.PARTENAIRE) 
+            			  ) {
+	            		if ( !angular.isUndefined(uniteLocative.PARTENAIRE.PROPRIETAIRE) ) {
+	            			currentOwner = uniteLocative.PARTENAIRE.PROPRIETAIRE.VALUE;	            			
+	            		}
+	            		if ( !angular.isUndefined(uniteLocative.PARTENAIRE.USAGER) ) {
+	            			currentTenant = uniteLocative.PARTENAIRE.USAGER.VALUE
+	            		}	
 	            	}
                     if ( 
                     	 icontains(currentOwner, predicate.owner) &&
-                    	 icontains(uniteLocative.IDENTIFIANT.OBJECTIF, predicate.registerNb) 
+                    	 icontains(currentTenant, predicate.tenant) &&
+                    	 icontains(uniteLocative.IDENTIFIANT.OBJECTIF, predicate.registerNb)
+                    	 
                     ) {
                     	tempUniteLocatives.push(uniteLocative);
                     }
@@ -401,7 +409,13 @@
 	    				!angular.isUndefined(uniteLocative.PARTENAIRE) && 
 	    				!angular.isUndefined(uniteLocative.PARTENAIRE.PROPRIETAIRE) && 
 	    				icontains(uniteLocative.PARTENAIRE.PROPRIETAIRE.VALUE, searchtext)
-						) || icontains(uniteLocative.IDENTIFIANT.OBJECTIF, searchtext)
+						) || 
+						(
+			    		!angular.isUndefined(uniteLocative.PARTENAIRE) && 
+			    		!angular.isUndefined(uniteLocative.PARTENAIRE.USAGER) && 
+			    		icontains(uniteLocative.PARTENAIRE.USAGER.VALUE, searchtext)
+						) 						
+						|| icontains(uniteLocative.IDENTIFIANT.OBJECTIF, searchtext)
 	    		);
 			};			
 			

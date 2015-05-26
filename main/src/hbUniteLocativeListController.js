@@ -10,12 +10,14 @@
 
     	// Object holding user entered search (filter) criteria 
     	$scope.search = {
-    			"owner" : "",
     			"registerNb" : "",
+    			"tenant" : "",
+    			"owner" : "",
     			"place" : "",
     			"buildingNb" : "",
     			"address" : "",
     			"text" : ""
+
     	};
 
     	// Initialise general search text with search request parameter if defined.
