@@ -42,8 +42,8 @@
 								
 								if (isoTextDate !== $scope.hbDateNgModelCtrl.$modelValue) {
 									// Simulate user entry...
-									$scope.hbDateNgModelCtrl.$viewValue = isoTextDate;
-									$scope.hbDateNgModelCtrl.$commitViewValue();									
+									$scope.hbDateNgModelCtrl.$setViewValue(isoTextDate);
+									$scope.hbDateNgModelCtrl.$render();									
 								} else {
 									//$log.debug(">>>> ALREADY IN SYNC: $date and hbDateNgModelCtrl.$modelValue ");
 								}
