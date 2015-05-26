@@ -1,9 +1,9 @@
 {
   "name": "hb5",
-  "version": "0.1",
+  "version": "0.1.1",
   "main": [
-    "dist/hb5-0.1.0.js",
-    "dist/hb5-0.1.0.css"
+    "dist/hb5-0.1.1.js",
+    "dist/hb5-0.1.1.css"
   ],
   "homepage": "https://github.com/bsisa/hb-ui",
   "authors": [
@@ -39,7 +39,7 @@
     "angular-chosen-localytics": "~1.0.3",
     "ngUpload": "~0.5.8",
     "angular-animate": "~1.2.16",
-    "angular-grid": "2.0.11",
+    "angular-grid": "2.0.14",
     "leaflet": "0.7.3",
     "leaflet-providers": "1.0.5",
     "leaflet.draw": "0.2.3",
