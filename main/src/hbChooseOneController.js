@@ -95,6 +95,8 @@
 							
 							$scope.$watch('search.text', function() { 
 								$scope.gridOptions.filterOptions.filterText = $scope.search.text;
+								// TODO: build fields with columnsDefinition... Test with PRODUCTION_CHALEUR...
+								//$scope.gridOptions.sortInfo = { fields: ['GROUPE','IDENTIFIANT.QUALITE'], directions: ['asc', 'asc']}
 								}, true);
 							// ============================================================
 							
