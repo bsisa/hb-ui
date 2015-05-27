@@ -26,15 +26,8 @@
 						 */
 						$scope.selectOption = function(option) {
 							// Reflect user selection to model.
-
-							// TODO: review behaviour: Supported in hb5 not in patman
-							$scope.ngModelCtrl.$viewValue = option.name;
-							$scope.ngModelCtrl.$commitViewValue();
-							
-							// TODO: review behaviour: Supported in patman
-//							$scope.ngModelCtrl.$setViewValue(option.name);
-//							$scope.ngModelCtrl.$render();							
-							
+							$scope.ngModelCtrl.$setViewValue(option.name);
+							$scope.ngModelCtrl.$render();													
 						};
 
 						/**
