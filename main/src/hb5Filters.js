@@ -176,6 +176,7 @@
 				testTerminated = true;
 			}
 
+
 	        if (!angular.isUndefined(contracts)) {
 		    	// Define current date to compare from
 		    	var currentDate = moment();
@@ -184,7 +185,7 @@
 	            
 	            angular.forEach(contracts, function (contract) {
 
-	            	if (angular.isDefined(contract.IDENTIFIANT.A) && !(contract.IDENTIFIANT.A == null)) {
+	            	if (angular.isDefined(contract.IDENTIFIANT.A) && !(contract.IDENTIFIANT.A == null) ) {
 	 			   		// Get moment date from text date 
 	 		    		var trimmedDate = contract.IDENTIFIANT.A.trim();
 	 		    		// Check text date valid
@@ -200,13 +201,16 @@
 	 	 		    			tempcontracts.push(contract);
 	 	 		    		}
 	 		    		} else {
-		            		// This is correct for non-terminated contracts
+		            		// Non-terminated contracts may have no date defined and are thus expected to fail 
+	 		    			// hbUtil.isValidDateFromHbTextDateFormat test and be part of the result list.
+	 		    			// Intended side effect is that contracts with other type of invalid date are also 
+	 		    			// kept visible in the list of non terminated contracts for end user to review.
 		            		if (!testTerminated) {
 		            			tempcontracts.push(contract);
 		            		}
 	 		    		}
 	            	} else {
-	            		// This is correct for non-terminated contracts
+	            		// Non terminated contracts may not have any A field defined.
 	            		if (!testTerminated) {
 	            			tempcontracts.push(contract);
 	            		}
