@@ -138,12 +138,12 @@
 						</div>
 					</div>
 				</div>			
+				
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.date)">				
 					<label for="date" class="col-sm-4 control-label">Date</label>
 					<div class="col-sm-4">
-						<input id="date" name="date" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.DE"
-							 ng-required="true">
+						<div hb-date id="date" name="date"
+								ng-model="elfin.IDENTIFIANT.DE"></div>
 					</div>
 					<label for="auteur" class="col-sm-2 control-label">Auteur</label>
 					<div class="col-sm-2">
