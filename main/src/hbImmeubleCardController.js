@@ -74,6 +74,8 @@
 					 				$scope.$parent.tabState = $scope.tabState;
                                     // ================= Tab state management - end ===============
 
+						        	// Expression used by ng-pattern for numeric only validation.
+						        	$scope.numericOnlyRegexp = /^\d*\.?\d*$/;
 					 				
 									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
 									//$scope.validateOwner = false;		
