@@ -136,7 +136,7 @@
 									<div hb-card-view-link hb-href="/elfin/{{transaction.ID_G}}/TRANSACTION/{{transaction.Id}}"></div>
 								</td>
 								<td><div hb-annexes-link hb-annexes-link-elfin="transaction"></div></td>
-								<td><span>{{transaction.IDENTIFIANT.DE}}</span></td>
+								<td><span>{{transaction.IDENTIFIANT.DE | date}}</span></td>
 								<td><span>{{transaction.PARTENAIRE.PROPRIETAIRE.VALUE}}</span></td>
 								<td><span>{{transaction.DIVERS.REMARQUE}}</span></td>
 								<td class="number"><span>{{transaction.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF'}}</span></td>
