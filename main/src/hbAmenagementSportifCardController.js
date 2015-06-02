@@ -55,13 +55,7 @@
 						 						"contrat_subtab_tous" : { "active" : false },
 						 						"caracteristique" : { "active" : false },
 						 						"valeur" : { "active" : false },
-						 						"equipements_tech" : { "active" : false },
-						 						"equipements_tech_subtab_prod_chaleur" : { "active" : true },
-						 						"equipements_tech_subtab_prod_froid" : { "active" : false },
-						 						"equipements_tech_subtab_ventilation" : { "active" : false },
-						 						"equipements_tech_subtab_citerne" : { "active" : false },
-						 						"equipements_tech_subtab_intro_elec" : { "active" : false },
-						 						"equipements_tech_subtab_equipement" : { "active" : false },
+						 						"installations_sportives" : { "active" : false },
 						 						"forme" : { "active" : false },
 						 						"annexe" : { "active" : false }
 						 				};
@@ -92,13 +86,8 @@
 							        $scope.constatsClos = null;
 							        $scope.prestations = null;
 							        
-							        // Arrays containing lists of technical equipment related CLASSE.
-							        $scope.productionChaleurList = null;
-							        $scope.productionFroidList = null;
-							        $scope.ventilationList = null;
-							        $scope.citerneList = null;
-							        $scope.introductionElectriciteList = null;
-							        $scope.equipementList = null;
+							        // Array containing list of installations sportives.
+							        // TODO
 							        
 							        var currentYear = moment().year();
 							        var lastYear = currentYear - 1;
@@ -160,39 +149,6 @@
 										}
 									};
 									
-									/**
-									 * Triggers a redirection to the PRODUCTION_CHALEUR creation URL with current
-									 * AMENAGEMENT_SPORTIF building number and SAI number passed as parameters.
-									 * Must not be effective while in create mode (no association is 
-									 * relevant while the AMENAGEMENT_SPORTIF creation is ongoing/pending.)
-									 */
-									$scope.createNewProductionChaleur  = function() {
-										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
-											$location.search(searchObj).path( "/elfin/create/PRODUCTION_CHALEUR" );
-										}
-									};
-									
-									$scope.createNewProductionFroid  = function() {
-										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
-											$location.search(searchObj).path( "/elfin/create/PRODUCTION_FROID" );
-										}
-									};									
-									
-									$scope.createNewVentilation  = function() {
-										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
-											$location.search(searchObj).path( "/elfin/create/VENTILATION" );
-										}
-									};	
-																		
-									$scope.createNewCiterne  = function() {
-										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
-											$location.search(searchObj).path( "/elfin/create/CITERNE" );
-										}
-									};										
 									
 									/**
 									 * Triggers a redirection to the PRESTATION creation URL with current
@@ -221,21 +177,6 @@
 										}
 									};			
 									
-									
-									/**
-									 * Triggers a redirection to the SURFACE (=> UNITA_LOCATIVE) creation URL with current
-									 * AMENAGEMENT_SPORTIF SAI number and NAME passed as parameters.
-									 * Must not be effective while in create mode (no association is 
-									 * relevant while the AMENAGEMENT_SPORTIF creation is ongoing/pending.)
-									 *
-									 * /elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}
-									 */
-									$scope.createNewUniteLocative = function() {
-										if ($attrs.hbMode != "create") {
-											var searchObj = {ORIGINE: $scope.elfin.Id};
-											$location.search(searchObj).path( "/elfin/create/SURFACE" );
-										}
-									};										
 									
 									
 							    	/**
@@ -312,115 +253,7 @@
 							    		
 							    	}, true);
 							    	
-
-							    	/**
-							    	 * Listener used to load PRODUCTION CHALEUR, PRODUCTION FROID, VENTILATION, CITERNE, 
-							    	 * INTRODUCTION ELECTRIQUE, EQUIPEMENT related to this AMENAGEMENT_SPORTIF.
-							    	 * We link all the above CLASSE by their IDENTIFIANT.OBJECTIF/IDENTIFIANT.NOM (No SAI/No de constr.)
-							    	 *  
-							    	 * Only relevant while not in create mode.
-							    	 */
-							    	$scope.$watchCollection('[elfin.IDENTIFIANT.OBJECTIF,elfin.IDENTIFIANT.NOM]', function(newValues, oldValues) {							    		
-
-							    		$log.debug("$watchCollection for OBJECTIF, NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
-							    		
-							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
-								            // TODO: productionChaleurCollectionId must come from server configuration resource.
-							    			// DONE: added restriction on PROPRIETAIRE, CLASSE. Strict restriction on OBJECTIF, starts-with is not correct in all cases.
-								            var xpathForProductionChaleur = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and IDENTIFIANT/ORIGINE='"+$scope.elfin.IDENTIFIANT.NOM+"' and @CLASSE='PRODUCTION_CHALEUR']";
-								            hbQueryService.getProductionChaleurList(xpathForProductionChaleur)
-												.then(function(elfins) {
-														$scope.productionChaleurList = elfins;
-														if ($scope.productionChaleurList) {
-															$log.debug(">>>> $scope.productionChaleurList.length = " + $scope.productionChaleurList.length);
-														} else {
-															$log.debug(">>>> $scope.productionChaleurList.length SEEMS EMPTY...");
-														}
-													},
-													function(response) {
-														var message = "Le chargement des PRODUCTION_CHALEURs a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});
-								            
-								            var xpathForProductionFroid = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='PRODUCTION_FROID']";								            
-								            hbQueryService.getProductionFroidList(xpathForProductionFroid)
-												.then(function(elfins) {
-														$scope.productionFroidList = elfins;
-														if ($scope.productionFroidList) {
-															$log.debug(">>>> $scope.productionFroidList.length = " + $scope.productionFroidList.length);
-														} else {
-															$log.debug(">>>> $scope.productionFroidList.length SEEMS EMPTY...");
-														}
-													},
-													function(response) {
-														var message = "Le chargement des PRODUCTION_FROIDs a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});
-
-								            var xpathForVentilation = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='VENTILATION']";								            
-								            hbQueryService.getProductionFroidList(xpathForVentilation)
-												.then(function(elfins) {
-														$scope.ventilationList = elfins;
-														if ($scope.ventilationList) {
-															$log.debug(">>>> $scope.ventilationList.length = " + $scope.ventilationList.length);
-														} else {
-															$log.debug(">>>> $scope.ventilationList.length SEEMS EMPTY...");
-														}
-													},
-													function(response) {
-														var message = "Le chargement des VENTILATIONs a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});	
-								            
-								            var xpathForCiterne = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='CITERNE']";								            
-								            hbQueryService.getCiterneList(xpathForCiterne)
-												.then(function(elfins) {
-														$scope.citerneList = elfins;
-														if ($scope.citerneList) {
-															$log.debug(">>>> $scope.citerneList.length = " + $scope.citerneList.length);
-														} else {
-															$log.debug(">>>> $scope.citerneList.length SEEMS EMPTY...");
-														}
-													},
-													function(response) {
-														var message = "Le chargement des CITERNEs a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});
-								            
-								            var xpathForIntroductionElectricite = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='INTRODUCTION_ELECTRICITE']";								            
-								            hbQueryService.getIntroductionElectriciteList(xpathForIntroductionElectricite)
-												.then(function(elfins) {
-														$scope.introductionElectriciteList = elfins;
-														if ($scope.introductionElectriciteList) {
-															$log.debug(">>>> $scope.introductionElectriciteList.length = " + $scope.introductionElectriciteList.length);
-														} else {
-															$log.debug(">>>> $scope.introductionElectriciteList.length SEEMS EMPTY...");
-														}
-													},
-													function(response) {
-														var message = "Le chargement des INTRODUCTION_ELECTRICITEs a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});
-								            
-								            var xpathForEquipement = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='EQUIPEMENT']";								            
-								            hbQueryService.getEquipementList(xpathForEquipement)
-												.then(function(elfins) {
-														$scope.equipementList = elfins;
-														if ($scope.equipementList) {
-															$log.debug(">>>> $scope.equipementList.length = " + $scope.equipementList.length);
-														} else {
-															$log.debug(">>>> $scope.equipementList.length SEEMS EMPTY...");
-														}
-													},
-													function(response) {
-														var message = "Le chargement des EQUIPEMENTs a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});									            
-							    		}
-							    		
-							    	}, true);							    	
-							    	
-							    	
+		    	
 							    	/**
 							    	 * Helper function to link and if necessary create CAR elements by position. 
 							    	 */
@@ -443,11 +276,10 @@
 							    		
 							    		if ($scope.elfin!=null) {
 								            
-							    			// Asychronous PRODUCTION_CHALEUR template preloading
+							    			// Asychronous AMENAGEMENT_SPORTIF template preloading
 								            GeoxmlService.getNewElfin("AMENAGEMENT_SPORTIF").get()
 								            .then(function(amenagementSportifTemplate) {
 								            		// Get list from catalogue default
-								            		//$scope.xxx = hbUtil.buildArrayFromCatalogueDefault(prodChaleur.IDENTIFIANT.QUALITE);
 								            		$scope.groupeChoices = hbUtil.buildArrayFromCatalogueDefault(amenagementSportifTemplate.GROUPE);
 												},
 												function(response) {
@@ -489,6 +321,7 @@
 
 							    			/**
 							    			 * Perform template clean up tasks while in create mode.
+							    			 * TODO: review for AMENAGEMENT_SPORTIF.
 							    			 */
 								    		if ($attrs.hbMode === "create") {
 								    			
@@ -510,36 +343,16 @@
 							    				$scope.elfinForm.$setDirty();
 							    			}
 
+							    			// TODO: manage links to buildings
+											// CARSET/CAR from position 11 on.
+							    			
+							    			
+							    			
+							    			
+							    			
 							    			// Current time in text format
 								            var currentHbTextDate = hbUtil.getDateInHbTextFormat(new Date());							    			
 							    			
-							    			// Get UNITE_LOCATIVE corresponding to current ELFIN.Id
-								            //var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
-								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"' and not(string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() "+hbUtil.encodeUriParameter(" <= ") + "'"+currentHbTextDate+"')]";								            
-								            
-								            hbQueryService.getLocationUnits(xpathForSurfaces)
-												.then(function(elfins) {
-														$scope.locationUnits = elfins;
-													},
-													function(response) {
-														var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});
-								            
-								            
-							    			// Get archived UNITE_LOCATIVE corresponding to current ELFIN.Id
-
-								            // Note we exclude date string not equal to 10 characters to avoid having '' empty string 
-								            // considered as a date smaller than any other regular 10 char dates.
-								            var xpathForArchivedSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"' and string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() "+hbUtil.encodeUriParameter(" <= ") + "'"+currentHbTextDate+"']";
-								            hbQueryService.getLocationUnits(xpathForArchivedSurfaces)
-												.then(function(elfins) {
-														$scope.locationUnitsArchived = elfins;
-													},
-													function(response) {
-														var message = "Le chargement des SURFACEs archivées a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});								            
 								            
 								            // Make AMENAGEMENT_SPORTIF photo available
 								            $scope.updatePhotoSrc();
