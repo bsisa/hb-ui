@@ -122,6 +122,23 @@
 							            hbAlertMessages.addAlert("danger",message);
 									});
 								
+								
+								// Override function definition if SOURCE info is available - support for SSPO. 
+								if ($scope.elfin.SOURCE) {
+									
+									var splittedSource = $scope.elfin.SOURCE.split('/');
+									if (splittedSource.length === 3) {
+										var idg = splittedSource[0]
+										var classe = splittedSource[1] 
+										var id = splittedSource[2]
+										var path = '/elfin/'+splittedSource[0]+'/'+classe+'/' + id;	
+							        
+										$log.debug(">>>> found SOURCE, override viewImmeuble with path = " + path);
+								        $scope.viewImmeuble = function() {$location.path(path)};
+								        //TODO: should be renamed to parentRef/sourceRef
+								        $scope.immeubleRef = { "Id" : id,  "ID_G" : idg , "address": '', "owner": ''};
+									}
+								}
 
 				    		};
 				    		
