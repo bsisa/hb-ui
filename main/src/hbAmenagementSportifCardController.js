@@ -151,9 +151,11 @@
 									 * Must not be effective while in create mode (no association is 
 									 * relevant while the AMENAGEMENT_SPORTIF creation is ongoing/pending.)
 									 */ 
-									$scope.createNewConstat = function() {
+									$scope.createNewConstat = function() {										
 										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+//											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+									        // Added id,classe,idg for generic link to creation source/parent prototype - done for SSPO.
+											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF, id: $scope.elfin.Id, classe: $scope.elfin.CLASSE, idg: $scope.elfin.ID_G }
 											$location.search(searchObj).path( "/elfin/create/CONSTAT" );
 										}
 									};
