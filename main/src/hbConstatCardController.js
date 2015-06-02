@@ -61,6 +61,10 @@
 								        $scope.saiNb = $routeParams.sai;
 								        $scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
 								        $scope.elfin.IDENTIFIANT.COMPTE = $routeParams.nocons;
+								        
+								        // Prototype generic link to creation source/parent - done for SSPO.
+								        $scope.elfin.SOURCE = $routeParams.idg +"/"+$routeParams.classe+"/"+$routeParams.id;
+								        
 								        $scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
 								        // Default value from catalogue contains statusTypes list: Reset it. 
 								        $scope.elfin.IDENTIFIANT.QUALITE = "";
