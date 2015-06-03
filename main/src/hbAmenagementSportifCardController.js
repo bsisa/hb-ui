@@ -42,9 +42,7 @@
 					 				if (cachedTab === undefined) {
 					 					$scope.tabState = { 
 						 						"amenagement_sportif" : { "active" : true },
-						 						"unite_locative" : { "active" : false },
-						 						"unite_locative_subtab_current.active" : { "active" : false },
-						 						"unite_locative_subtab_archived.active" : { "active" : false },
+						 						"buildings" : {"active" : false}, 
 						 						"prestation" : { "active" : false },
 						 						"prestation_subtab_annee_moins1" : { "active" : true },
 						 						"prestation_subtab_annee_plus1" : { "active" : false },
