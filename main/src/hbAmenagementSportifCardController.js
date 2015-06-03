@@ -42,7 +42,7 @@
 					 				if (cachedTab === undefined) {
 					 					$scope.tabState = { 
 						 						"amenagement_sportif" : { "active" : true },
-						 						"buildings" : {"active" : false}, 
+						 						"buildings" : { "active" : false }, 
 						 						"prestation" : { "active" : false },
 						 						"prestation_subtab_annee_moins1" : { "active" : true },
 						 						"prestation_subtab_annee_plus1" : { "active" : false },
@@ -65,7 +65,6 @@
 				 					 */
 					 				$scope.$parent.tabState = $scope.tabState;
                                     // ================= Tab state management - end ===============
-
 					 				
 									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
 									//$scope.validateOwner = false;		
@@ -343,7 +342,21 @@
 
 							    			// TODO: manage links to buildings
 											// CARSET/CAR from position 11 on.
-							    			
+
+							 				// Process selectionImmeuble if available
+											// $scope.addBuilding need to be defined before the current call
+											//var processSelectionImmeuble = function() {
+												if ($routeParams.selectionImmeuble) {
+								 					$log.debug("$routeParams.selectionImmeuble = " + $routeParams.selectionImmeuble);
+								 					var selectionImmeubleStrSplit = $routeParams.selectionImmeuble.split('/');
+								 					$scope.selectionImmeuble = {
+								 						"ID_G" : selectionImmeubleStrSplit[0],
+								 						"CLASSE" : selectionImmeubleStrSplit[1],
+								 						"Id" : selectionImmeubleStrSplit[2]
+								 					}
+								 					$scope.addBuilding($scope.selectionImmeuble);
+								 				}									
+											//}							    			
 							    			
 							    			
 							    			
@@ -428,6 +441,79 @@
 											}
 										}
 									};
+									
+									
+									
+									/**
+									 * Add IMMEUBLE linked to this AMENAGEMENT_SPORTIF as: CARACTERISTIQUE.FRACTION.L.{
+									 * [
+									 *  C = 'IMMEUBLE' , (CLASSE information)
+ 									 *  C = Building.ID_G,
+									 *  C = Building.Id,
+									 *  C = Building.GROUPE,
+									 *  C = Building.NOM
+									 *  ]
+									 * }
+									 */
+									$scope.addBuilding = function(buildingSelection) {
+										
+										$log.debug(">>>> addBuilding for buildingSelection = " + buildingSelection);
+										$log.debug(">>>> $scope.elfin.CARACTERISTIQUE.FRACTION.L before = " + angular.toJson($scope.elfin.CARACTERISTIQUE.FRACTION.L) );
+										
+										
+										var emptyFractionTemplate = { "L": [  ] };
+										var buildingCellTemplate = { "C": [ 
+										                               { "POS": 1, "VALUE": buildingSelection.CLASSE},
+										                               { "POS": 2, "VALUE": buildingSelection.ID_G},
+										                               { "POS": 3, "VALUE": buildingSelection.Id},
+										                               { "POS": 4, "VALUE": ""},
+										                               { "POS": 5, "VALUE": ""}
+										                               ]
+																		,
+																"POS": 1 };
+										
+										if ($scope.elfin.CARACTERISTIQUE) {
+											if ($scope.elfin.CARACTERISTIQUE.FRACTION) {
+												if ($scope.elfin.CARACTERISTIQUE.FRACTION.L) {
+													buildingCellTemplate.POS = $scope.elfin.CARACTERISTIQUE.FRACTION.L.length+1;
+													$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', buildingCellTemplate);
+												} else {
+													// FRACTION with no lines
+													$scope.elfin.CARACTERISTIQUE.FRACTION = emptyFractionTemplate;
+													$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', buildingCellTemplate);
+												}
+											} else {
+												// Missing properties are created automatically in JS, thus same code as for empty FRACTION.
+												$scope.elfin.CARACTERISTIQUE.FRACTION = emptyFractionTemplate;
+												$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', buildingCellTemplate);									
+											}
+										} else {
+											// always available in catalogue
+										}
+										
+										$log.debug(">>>> $scope.elfin.CARACTERISTIQUE.FRACTION.L after = " + angular.toJson($scope.elfin.CARACTERISTIQUE.FRACTION.L) );
+										
+									};
+									// elfin.CARACTERISTIQUE.FRACTION.L							    	
+
+									/**
+									 * Remove an existing `building reference`
+									 */
+									$scope.removeBuilding = function(index) {
+										
+										if ($scope.elfin.CARACTERISTIQUE) {
+											if ($scope.elfin.CARACTERISTIQUE.FRACTION) {
+												if ($scope.elfin.CARACTERISTIQUE.FRACTION.L) {
+													// Remove one element at index
+													$scope.elfin.CARACTERISTIQUE.FRACTION.L.splice(index,1);
+													// Allow user saving the new data structure following above element deletion
+													$scope.elfinForm.$setDirty();
+													// Deal with POS numbering.
+													GeoxmlService.renumberPos($scope.elfin.CARACTERISTIQUE.FRACTION.L);
+												}
+											}
+										}
+									};									
 									
 									
 									/**

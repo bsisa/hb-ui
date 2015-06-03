@@ -24,6 +24,12 @@
     		$scope.search.text = $routeParams.search; 
     	}
     	
+    	// Support for IMMEUBLE selection
+    	if ($routeParams.source) {
+    		$scope.source = $routeParams.source
+    		$log.debug("$scope.source = " + $scope.source);
+    	}
+    	
 
     	/**
     	 * Helper to access to place information by POS instead of array index.

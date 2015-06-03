@@ -72,6 +72,7 @@
 		<tr ng-repeat="elfin in filteredElfins">
 		
 			<td>
+				<div style="width: 38px;"><a class="btn btn-default btn-xs btn-block" href="/elfin/{{source}}?selectionImmeuble={{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" role="button"><i class="glyphicon glyphicon-plus-sign"></i></a></div>
 				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
 			</td>
 			<!-- Remark: always empty on tested data -->
