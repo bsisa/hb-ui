@@ -304,11 +304,11 @@
 	 */
 	angular.module('hb5').filter('fractionElfinRefFilter', ['$log','hbUtil', function ($log,hbUtil) {
 		
-		return function (fractionLs, classe, withEmptyClasse) {
+		return function (fractionLs, classe) {
 	        if (!angular.isUndefined(fractionLs) && !angular.isUndefined(classe)) {
 	            var tempFractionLs = [ ];
 	            angular.forEach(fractionLs, function (fractionL) {
-                    if ( hbUtil.getCByPos(fractionL.C, 1) === classe ) {
+                    if ( hbUtil.getCByPos(fractionL.C, 1).VALUE === classe ) {
                     	tempFractionLs.push(fractionL);
                     }
                 });
