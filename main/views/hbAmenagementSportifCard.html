@@ -104,7 +104,7 @@
 				required>
 		</div>
 	</div>
-	<div class="form-group" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L">
+	<div class="form-group" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'ACTEUR':true">
 		<!-- Provides converted.actor -->
 <!-- 		TODO: Check hb-actor-line-converter-actor-role is not used -->
 <!-- 		<div hb-actor-line-converter hb-actor-line-converter-line-model="otherPartnerLine" hb-actor-line-converter-actor-model="convertedActor" hb-actor-line-converter-actor-role="actorRole"> -->
@@ -283,7 +283,7 @@
 						</div>
 <!-- 					</div> -->
 <!-- 					<div class="col-xs-12"> -->
-						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.otherPartner-{{$index}})" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.otherPartner-{{$index}})" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'ACTEUR':true">
 						<!-- Provides converted.actor -->
 							<div hb-actor-line-converter hb-actor-line-converter-line-model="otherPartnerLine" hb-actor-line-converter-actor-model="convertedActor" hb-actor-line-converter-actor-role="actorRole">
 								<label for="otherPartner-{{$index}}" class="col-lg-3 col-md-2 control-label">{{convertedActorElfin.IDENTIFIANT.QUALITE}}</label>
@@ -485,21 +485,29 @@
 					<div class="col-sm-12">
 					
 						<div style="width: 180px;" hb-building-select-link hb-building-select-source="elfin"></div>
-					
-<!-- 						<div>Current IMMEUBLE sélection:  -->
-<!-- 						ID_G = {{selectionImmeuble.ID_G}} -->
-<!-- 						CLASSE = {{selectionImmeuble.CLASSE}} -->
-<!-- 						Id = {{selectionImmeuble.Id}} -->
-<!-- 						</div> -->
 
-
-
-
-
+						<table>
+							<thead>
+								<tr>
+									<th class="col-sm-2">classe</th>
+									<th class="col-sm-3">ID_G</th>
+									<th class="col-sm-3">Id</th>
+									<th class="col-sm-2">GROUPE</th>
+									<th class="col-sm-2">NOM</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="buildingRefLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'IMMEUBLE'">
+									<td>{{getCByPos(buildingRefLine.C, 1)}}</td>
+									<td>{{getCByPos(buildingRefLine.C, 2)}}</td>
+									<td>{{getCByPos(buildingRefLine.C, 3)}}</td>
+									<td>{{getCByPos(buildingRefLine.C, 4)}}</td>
+									<td>{{getCByPos(buildingRefLine.C, 5)}}</td>
+								</tr>
+							</tbody>
+						</table>
+												
 					</div>
-					
-				
-					
 				</div>
 			</div>
 		</tab> 		
