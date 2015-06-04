@@ -30,6 +30,13 @@
     
 									//$log.debug("    >>>> Using HbAmenagementSportifCardController with $locale.id = " + $locale.id);
 					 			
+					 				/**
+					 				 *  Expose hbUtil.getCByPos function to scope.
+					 				 */
+					 				$scope.getCByPos = function(Cs, CPos) {
+					 					return hbUtil.getCByPos(Cs, CPos);
+					 				};
+					 			
 
                                     // ================= Tab state management - start =============
 					 				/**
@@ -340,26 +347,17 @@
 							    				$scope.elfinForm.$setDirty();
 							    			}
 
-							    			// TODO: manage links to buildings
-											// CARSET/CAR from position 11 on.
-
-							 				// Process selectionImmeuble if available
-											// $scope.addBuilding need to be defined before the current call
-											//var processSelectionImmeuble = function() {
-												if ($routeParams.selectionImmeuble) {
-								 					$log.debug("$routeParams.selectionImmeuble = " + $routeParams.selectionImmeuble);
-								 					var selectionImmeubleStrSplit = $routeParams.selectionImmeuble.split('/');
-								 					$scope.selectionImmeuble = {
-								 						"ID_G" : selectionImmeubleStrSplit[0],
-								 						"CLASSE" : selectionImmeubleStrSplit[1],
-								 						"Id" : selectionImmeubleStrSplit[2]
-								 					}
-								 					$scope.addBuilding($scope.selectionImmeuble);
-								 				}									
-											//}							    			
-							    			
-							    			
-							    			
+							    			// Links to buildings - Process selectionImmeuble if available
+											if ($routeParams.selectionImmeuble) {
+							 					$log.debug("$routeParams.selectionImmeuble = " + $routeParams.selectionImmeuble);
+							 					var selectionImmeubleStrSplit = $routeParams.selectionImmeuble.split('/');
+							 					$scope.selectionImmeuble = {
+							 						"ID_G" : selectionImmeubleStrSplit[0],
+							 						"CLASSE" : selectionImmeubleStrSplit[1],
+							 						"Id" : selectionImmeubleStrSplit[2]
+							 					}
+							 					$scope.addBuilding($scope.selectionImmeuble);
+							 				}									
 							    			
 							    			// Current time in text format
 								            var currentHbTextDate = hbUtil.getDateInHbTextFormat(new Date());							    			
@@ -475,17 +473,36 @@
 										if ($scope.elfin.CARACTERISTIQUE) {
 											if ($scope.elfin.CARACTERISTIQUE.FRACTION) {
 												if ($scope.elfin.CARACTERISTIQUE.FRACTION.L) {
-													buildingCellTemplate.POS = $scope.elfin.CARACTERISTIQUE.FRACTION.L.length+1;
-													$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', buildingCellTemplate);
+													// Do not add a duplicate reference
+													var isDuplicateRef = false;
+													angular.forEach($scope.elfin.CARACTERISTIQUE.FRACTION.L, function (fractionL) {
+									                    if ( hbUtil.getCByPos(fractionL.C, 2).VALUE === buildingSelection.ID_G && hbUtil.getCByPos(fractionL.C, 3).VALUE === buildingSelection.Id ) {
+									                    	$log.debug("Duplicate reference for : " + buildingSelection.CLASSE + " " + buildingSelection.ID_G+ "/" +buildingSelection.Id);
+									                    	isDuplicateRef = true;
+									                    }
+									                });													
+													if (!isDuplicateRef) {
+														buildingCellTemplate.POS = $scope.elfin.CARACTERISTIQUE.FRACTION.L.length+1;
+														$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', buildingCellTemplate);
+														// Allow user saving the new data structure following above element insertion
+														$scope.elfinForm.$setDirty();														
+													} else {
+										            	var message = "Opération annuléé - L'objet " + buildingSelection.CLASSE + " - " + buildingSelection.ID_G + "/" + buildingSelection.Id + " fait déjà partie de votre liste d'" + buildingSelection.CLASSE +"s";
+										   				hbAlertMessages.addAlert("warning",message);
+													}											
 												} else {
 													// FRACTION with no lines
 													$scope.elfin.CARACTERISTIQUE.FRACTION = emptyFractionTemplate;
 													$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', buildingCellTemplate);
+													// Allow user saving the new data structure following above element insertion
+													$scope.elfinForm.$setDirty();
 												}
 											} else {
 												// Missing properties are created automatically in JS, thus same code as for empty FRACTION.
 												$scope.elfin.CARACTERISTIQUE.FRACTION = emptyFractionTemplate;
-												$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', buildingCellTemplate);									
+												$scope.addRow($scope.elfin, 'CARACTERISTIQUE.FRACTION.L', buildingCellTemplate);
+												// Allow user saving the new data structure following above element insertion
+												$scope.elfinForm.$setDirty();
 											}
 										} else {
 											// always available in catalogue
