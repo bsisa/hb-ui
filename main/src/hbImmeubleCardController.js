@@ -508,7 +508,7 @@
 									/**
 									 * Add other partner as: CARACTERISTIQUE.FRACTION.L.{
 									 * [
-									 *  C = ??? ,
+									 *  C = Actor CLASSE = 'ACTEUR' , (Information used by fractionElfinRefFilter in SSPO ctxt.)
 									 *  C = Actor.ID_G,
 									 *  C = Actor.Id,
 									 *  C = Actor.GROUPE,
@@ -520,7 +520,7 @@
 										
 										var emptyFractionTemplate = { "L": [  ] };
 										var actorCellTemplate = { "C": [ 
-										                               { "POS": 1, "VALUE": ""},
+										                               { "POS": 1, "VALUE": "ACTEUR"},
 										                               { "POS": 2, "VALUE": ""},
 										                               { "POS": 3, "VALUE": ""},
 										                               { "POS": 4, "VALUE": ""},
