@@ -50,6 +50,9 @@ module.exports = function(grunt) {
 								
 								'src/hbBuildingSelectLinkDirective.js',
 								
+								'src/hbBuildingLineConverterController.js',
+								'src/hbBuildingLineConverterDirective.js',
+								
 								'src/hbCardContainerDirective.js',
 								'src/hbCardContainerController.js',
 								'src/hbCardHeaderDirective.js',
