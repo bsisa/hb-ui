@@ -77,8 +77,6 @@
 						        	// Expression used by ng-pattern for numeric only validation.
 						        	$scope.numericOnlyRegexp = /^\d*\.?\d*$/;
 					 				
-									// Wait for the owner actor to have a chance to load before displaying annoying validation error.
-									//$scope.validateOwner = false;		
 									$scope.annexeFileSystemUri = "";
 									
 									// Expose current hbMode in scope for use by ng-show in HTML view.
@@ -86,9 +84,6 @@
 									// Manage FONCTION level access rights
 									$scope.canEdit = ($scope.createMode || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT));
 									$scope.canEditParteners = ($scope.createMode || $scope.canEdit || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT_OTHER_PARTNERS));
-									
-									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
-									//$scope.selected = { "owner" : null , "ownerDisplay" : null};
 									
 							        $scope.constatsEncours = null;
 							        $scope.constatsClos = null;
@@ -155,7 +150,6 @@
 									 */ 
 									$scope.createNewConstat = function() {
 										if ($attrs.hbMode != "create") {
-//											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
 									        // Added id,classe,idg for generic link to creation source/parent prototype - done for SSPO.
 											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF, id: $scope.elfin.Id, classe: $scope.elfin.CLASSE, idg: $scope.elfin.ID_G }
 											$location.search(searchObj).path( "/elfin/create/CONSTAT" );
@@ -387,36 +381,7 @@
 														var message = "Le chargement des CITERNEs a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});
-								            
-//								            var xpathForIntroductionElectricite = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='INTRODUCTION_ELECTRICITE']";								            
-//								            hbQueryService.getIntroductionElectriciteList(xpathForIntroductionElectricite)
-//												.then(function(elfins) {
-//														$scope.introductionElectriciteList = elfins;
-//														if ($scope.introductionElectriciteList) {
-//															$log.debug(">>>> $scope.introductionElectriciteList.length = " + $scope.introductionElectriciteList.length);
-//														} else {
-//															$log.debug(">>>> $scope.introductionElectriciteList.length SEEMS EMPTY...");
-//														}
-//													},
-//													function(response) {
-//														var message = "Le chargement des INTRODUCTION_ELECTRICITEs a échoué (statut de retour: "+ response.status+ ")";
-//											            hbAlertMessages.addAlert("danger",message);
-//													});
-//								            
-//								            var xpathForEquipement = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='EQUIPEMENT']";								            
-//								            hbQueryService.getEquipementList(xpathForEquipement)
-//												.then(function(elfins) {
-//														$scope.equipementList = elfins;
-//														if ($scope.equipementList) {
-//															$log.debug(">>>> $scope.equipementList.length = " + $scope.equipementList.length);
-//														} else {
-//															$log.debug(">>>> $scope.equipementList.length SEEMS EMPTY...");
-//														}
-//													},
-//													function(response) {
-//														var message = "Le chargement des EQUIPEMENTs a échoué (statut de retour: "+ response.status+ ")";
-//											            hbAlertMessages.addAlert("danger",message);
-//													});									            
+ 
 							    		}
 							    		
 							    	}, true);							    	
@@ -583,8 +548,8 @@
 											// always available in catalogue
 										}
 									};
-									// elfin.CARACTERISTIQUE.FRACTION.L							    	
 
+									
 									/**
 									 * Remove an existing `other partner`
 									 */
@@ -603,25 +568,7 @@
 											}
 										}
 									};
-									
-									
-									/**
-									 * Get transactions for prestation
-									 */
-//									$scope.getTransactions = function(prestation) {
-//							            var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='"+prestation.IDENTIFIANT.OBJECTIF+"']";
-//							            hbQueryService.getTransactions(xpathForTransactions).$object
-////											.then(function(transactions) {
-////													return transactions;
-////												},
-////												function(response) {
-////													// TODO: Check if there is a better way
-////													return undefined;
-////												});
-//									};
-									
-									
-									
+								
 									
 							    } ]);
 
