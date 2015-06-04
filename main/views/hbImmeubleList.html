@@ -72,21 +72,19 @@
 		<tr ng-repeat="elfin in filteredElfins">
 		
 			<td>
-				<div style="width: 38px;"><a class="btn btn-default btn-xs btn-block" href="/elfin/{{source}}?selectionImmeuble={{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" role="button"><i class="glyphicon glyphicon-plus-sign"></i></a></div>
-				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
+			<!-- Only display the 'selection' button if there is 'source' information defined. -->
+				<div ng-show="source" style="width: 38px;" tooltip="Sélectionner" tooltip-popup-delay="1500">
+					<a class="btn btn-default btn-xs btn-block" href="/elfin/{{source}}?selectionImmeuble={{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" role="button">
+						<i class="glyphicon glyphicon-plus-sign"></i>
+					</a>
+				</div>
+				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" ></div>
 			</td>
-			<!-- Remark: always empty on tested data -->
-			<!-- <td>{{elfin.GROUPE}}</td>  -->
-			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
-			<td>
-<!-- 				{{elfin.PARTENAIRE.PROPRIETAIRE.GROUPE}} -->
-				{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}
-			</td>
+			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}</td>
 			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
 			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>			
 			<td>{{elfin.IDENTIFIANT.NOM}}</td>
 			<td>{{getPlace(elfin).VALEUR}}</td>
-<!-- 			<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td> -->
 		</tr>
 	</tbody>
 </table>
