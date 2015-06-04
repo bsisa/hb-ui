@@ -292,6 +292,34 @@
 	
 	
 	/**
+     * Filter tailored to ELFIN/CARACTERISTIQUE/FRACTION/L elements used to store ELFIN references as:
+     * 
+     * <L>
+     *       <C POS="1">ELFIN@CLASSE</C>
+     *       <C POS="2">ELFIN@ID_G</C>
+     *       <C POS="3">ELFIN@Id</C>
+     *       <C POS="4">ELFIN@GROUPE</C>
+     *       <C POS="5">ELFIN/IDENTIFIANT/NOM</C>
+     * </L>
+	 */
+	angular.module('hb5').filter('fractionElfinRefFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (fractionLs, classe, withEmptyClasse) {
+	        if (!angular.isUndefined(fractionLs) && !angular.isUndefined(classe)) {
+	            var tempFractionLs = [ ];
+	            angular.forEach(fractionLs, function (fractionL) {
+                    if ( hbUtil.getCByPos(fractionL.C, 1) === classe ) {
+                    	tempFractionLs.push(fractionL);
+                    }
+                });
+	            return tempFractionLs;
+	        } else {
+	            return fractionLs;
+	        }
+	    };
+	}]);	
+	
+	/**
 	 * Filter tailored to IMMEUBLE list requirements.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual immeuble list. 
 	 */
