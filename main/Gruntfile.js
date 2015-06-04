@@ -47,6 +47,9 @@ module.exports = function(grunt) {
 								'src/hbAnnexesNumberDirective.js',
 								'src/hbAnnexesUploadController.js',
 								'src/hbAnnexesUploadDirective.js',
+								
+								'src/hbBuildingSelectLinkDirective.js',
+								
 								'src/hbCardContainerDirective.js',
 								'src/hbCardContainerController.js',
 								'src/hbCardHeaderDirective.js',
