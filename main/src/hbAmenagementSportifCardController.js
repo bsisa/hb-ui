@@ -379,7 +379,7 @@
 									/**
 									 * Add other partner as: CARACTERISTIQUE.FRACTION.L.{
 									 * [
-									 *  C = ??? ,
+									 *  C = Actor CLASSE = 'ACTEUR' , (Information used by fractionElfinRefFilter in SSPO ctxt.)
 									 *  C = Actor.ID_G,
 									 *  C = Actor.Id,
 									 *  C = Actor.GROUPE,
@@ -391,7 +391,7 @@
 										
 										var emptyFractionTemplate = { "L": [  ] };
 										var actorCellTemplate = { "C": [ 
-										                               { "POS": 1, "VALUE": ""},
+										                               { "POS": 1, "VALUE": "ACTEUR"},
 										                               { "POS": 2, "VALUE": ""},
 										                               { "POS": 3, "VALUE": ""},
 										                               { "POS": 4, "VALUE": ""},
@@ -419,7 +419,7 @@
 											// always available in catalogue
 										}
 									};
-									// elfin.CARACTERISTIQUE.FRACTION.L							    	
+					    	
 
 									/**
 									 * Remove an existing `other partner`
@@ -511,7 +511,7 @@
 										$log.debug(">>>> $scope.elfin.CARACTERISTIQUE.FRACTION.L after = " + angular.toJson($scope.elfin.CARACTERISTIQUE.FRACTION.L) );
 										
 									};
-									// elfin.CARACTERISTIQUE.FRACTION.L							    	
+						    	
 
 									/**
 									 * Remove an existing `building reference`
@@ -531,25 +531,7 @@
 											}
 										}
 									};									
-									
-									
-									/**
-									 * Get transactions for prestation
-									 */
-//									$scope.getTransactions = function(prestation) {
-//							            var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='"+prestation.IDENTIFIANT.OBJECTIF+"']";
-//							            hbQueryService.getTransactions(xpathForTransactions).$object
-////											.then(function(transactions) {
-////													return transactions;
-////												},
-////												function(response) {
-////													// TODO: Check if there is a better way
-////													return undefined;
-////												});
-//									};
-									
-									
-									
+
 									
 							    } ]);
 
