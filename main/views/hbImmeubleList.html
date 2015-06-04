@@ -69,22 +69,31 @@
 	</thead>
 	<tbody>
 <!-- 		<tr ng-repeat="elfin in elfins | immeubleListFilter:search | immeubleListAnyFilter:search.text | orderBy:predicate:reverse"> -->
-		<tr ng-repeat="elfin in filteredElfins">
-		
-			<td>
-			<!-- Only display the 'selection' button if there is 'source' information defined. -->
-				<div ng-show="source" style="width: 38px;" tooltip="Sélectionner" tooltip-popup-delay="1500">
-					<a class="btn btn-default btn-xs btn-block" href="/elfin/{{source}}?selectionImmeuble={{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" role="button">
-						<i class="glyphicon glyphicon-plus-sign"></i>
-					</a>
-				</div>
-				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" ></div>
+		<tr ng-repeat="elfin in filteredElfins" >
+			<td class="col-sm-1" >
+				<!-- Ugly 90s table style layout that works. -->			
+				<table width="100%" height="100%">
+					<tr>
+						<td style="text-align: center; vertical-align: middle;">
+							<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" ></div>
+						</td>
+						<td ng-if="source" style="text-align: center; vertical-align: middle;">
+							<div tooltip="Sélectionner" tooltip-popup-delay="1500">
+								<div style="width: 38px;">
+									<a class="btn btn-default btn-xs btn-block" href="/elfin/{{source}}?selectionImmeuble={{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" role="button">
+										<i class="glyphicon glyphicon-plus-sign"></i>
+									</a>
+								</div>
+							</div>						
+						</td>
+					</tr>
+				</table>
 			</td>
-			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}</td>
-			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
-			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>			
-			<td>{{elfin.IDENTIFIANT.NOM}}</td>
-			<td>{{getPlace(elfin).VALEUR}}</td>
+			<td class="col-sm-1">{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}</td>
+			<td class="col-sm-1">{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<td class="col-sm-4">{{elfin.IDENTIFIANT.ALIAS}}</td>			
+			<td class="col-sm-2">{{elfin.IDENTIFIANT.NOM}}</td>
+			<td class="col-sm-3">{{getPlace(elfin).VALEUR}}</td>
 		</tr>
 	</tbody>
 </table>
