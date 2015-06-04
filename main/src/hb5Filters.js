@@ -301,14 +301,34 @@
      *       <C POS="4">ELFIN@GROUPE</C>
      *       <C POS="5">ELFIN/IDENTIFIANT/NOM</C>
      * </L>
+     * 
+     * Example usage: 
+     * 
+     * fractionElfinRefFilter:'IMMEUBLE'
+     * Only L with <C POS="1">IMMEUBLE</C> will match
+     * 
+     * 
+     * fractionElfinRefFilter:'IMMEUBLE':false
+     * Only L with <C POS="1">IMMEUBLE</C> will match
+     * 
+     * 
+     * fractionElfinRefFilter:'IMMEUBLE':true
+     * L with <C POS="1">IMMEUBLE</C> or empty <C POS="1"></C> will match
+     * 
+     * 
+     * fractionElfinRefFilter:''
+     * L with empty <C POS="1"></C> will match
+     * 
 	 */
 	angular.module('hb5').filter('fractionElfinRefFilter', ['$log','hbUtil', function ($log,hbUtil) {
 		
-		return function (fractionLs, classe) {
+		return function (fractionLs, classe, includeEmptyClasse) {
 	        if (!angular.isUndefined(fractionLs) && !angular.isUndefined(classe)) {
 	            var tempFractionLs = [ ];
 	            angular.forEach(fractionLs, function (fractionL) {
                     if ( hbUtil.getCByPos(fractionL.C, 1).VALUE === classe ) {
+                    	tempFractionLs.push(fractionL);
+                    } else if ( includeEmptyClasse && ( angular.isUndefined(hbUtil.getCByPos(fractionL.C, 1)) || hbUtil.getCByPos(fractionL.C, 1).VALUE === '' ) ) {
                     	tempFractionLs.push(fractionL);
                     }
                 });
