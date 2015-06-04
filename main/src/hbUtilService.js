@@ -26,6 +26,20 @@
     		return currentCAR;
 		};
 		
+		
+		/**
+		 * Get C element given its position C.POS in the context of ELFIN/CARACTERISTIQUE/FRACTION/L/C 
+		 * where Cs is an array of C elements/objects. 
+		 */
+		var getCByPos = function(Cs, CPos) {
+			var searchedC = _.find(Cs, function(C){ return C.POS === CPos; });
+			if (searchedC) {
+				return searchedC;
+			} else {
+				return undefined;	
+			}
+		};
+		
 		/**
 		 * Get ELFIN/CARACTERISTIQUE/FRACTION/L/C by L.POS C.POS (L@POS, CAR@POS)
 		 * instead of array position. If not found currentC === undefined
@@ -35,12 +49,7 @@
 		var getFractionLCByPos = function(elfin, LPos, CPos) {
     		var currentL = _.find(elfin.CARACTERISTIQUE.FRACTION.L, function(L){ return L.POS === LPos; });
     		if (currentL) {
-    			var currentC = _.find(currentL.C, function(C){ return C.POS === CPos; });
-    			if (currentC) {
-    				return currentC;
-    			} else {
-    				return undefined;	
-    			}
+    			return getCByPos(currentL.C);
     		} else {
     			return undefined;	
     		}
@@ -495,6 +504,7 @@
         	encodeUriParameter:encodeUriParameter,
         	getAnnexesExcludingTag:getAnnexesExcludingTag,
         	getCARByPos:getCARByPos,
+        	getCByPos:getCByPos,
         	getDateFormat:getDateFormat,
         	getDateInHbTextFormat:getDateInHbTextFormat,
         	getDateTimeFormat:getDateTimeFormat,
