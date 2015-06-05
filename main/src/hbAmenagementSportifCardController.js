@@ -560,14 +560,9 @@
 									var setActiveTabState = function(tabState, activePropertyName) {
 	
 										for ( var property in tabState) {
-											console.log("Property name: "
-													+ property + ", value: "
-													+ tabState[property]);
 											if (property === activePropertyName) {
-												$log.debug("Active property name   = " + property);
 												tabState[property].active = true;
 											} else {
-												$log.debug("Inactive property name = " + property);
 												tabState[property].active = false;
 											}
 										}
@@ -589,6 +584,18 @@
 							    		}
 							    	};									
 									
+							    	
+							    	$scope.isSelectedImmeuble = function(buildingElfin) {
+
+							    		if (buildingElfin && $scope.selectionImmeuble) {
+											$log.debug("isSelectedImmeuble buildingElfin.Id = " + buildingElfin.Id + ", $scope.selectionImmeuble.Id = " + $scope.selectionImmeuble.Id);
+							    			return (buildingElfin.Id === $scope.selectionImmeuble.Id);
+							    		} else {
+											$log.debug("isSelectedImmeuble buildingElfin or $scope.selectionImmeuble missing...");
+							    			return false;
+							    		}
+							    	};
+							    	
 							    } ]);
 
 })();

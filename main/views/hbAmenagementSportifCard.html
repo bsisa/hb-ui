@@ -496,7 +496,7 @@
 							</div>
 							<div class="row hb-row-{{ ($index % 2) === 0 ? 'even' : 'odd' }}" ng-repeat="buildingRefLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'IMMEUBLE'">
 								<div hb-building-line-converter hb-building-line-converter-line-model="buildingRefLine" hb-building-line-converter-building-elfin="buildingElfin">
-									<div class="col-sm-2 hb-cell-row">
+									<div class="col-sm-2 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">
 										<div class="col-xs-6" hb-card-view-link hb-href="/elfin/{{buildingElfin.ID_G}}/{{buildingElfin.CLASSE}}/{{buildingElfin.Id}}" ></div>
 										<div class="col-xs-6 btn btn-default btn-xs" style="width: 38px;" ng-click="removeBuilding($index)" tooltip="Supprimer"><i class="glyphicon glyphicon-remove-circle"></i></div>
 									</div>
