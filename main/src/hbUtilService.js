@@ -82,12 +82,41 @@
 			return -1;
 		};
 		
+		/**
+		 * Removes L entry having POS attribute value LPos from elfin.CARACTERISTIQUE.FRACTION.L
+		 * Takes care of POS renumbering to avoid discontinuous POS values. 
+		 */
 		var removeFractionLByPos = function(elfin, LPos) {
 			var index = getFractionLIndexByPos(elfin, LPos);
+			// Proceed only if we found a match for LPos
 			if (index != -1) {
+				// Remove L entry at index corresponding to LPos
 				elfin.CARACTERISTIQUE.FRACTION.L.splice(index,1);
+				// Renumber all POS of elfin.CARACTERISTIQUE.FRACTION.L array.
+				renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
 			}
 		};			
+		
+		
+        /**
+         * Function used to renumber POS attributes for instance when element removal takes place.
+         */
+        var renumberPos = function(array) {
+            if (!angular.isArray(array)) {
+                return;
+            }
+            // Check every element has a POS property abort process otherwise.
+            var haveAllPos = _.reduce(array, function(memo, element){ return (memo && (!_.isUndefined(element.POS)) ); }, true);
+            if (!haveAllPos) {
+            	return;
+            } else {
+                for (var i = 0; i < array.length; i++) {
+                	var currentElement = array[i];
+                	currentElement.POS = i+1; 
+                }
+            }
+        }		
+		
 		
 		
 		// ============================================================
@@ -558,6 +587,7 @@
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
         	removeFractionLByPos:removeFractionLByPos,
+        	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS        	
         };
     }]);
