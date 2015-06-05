@@ -429,16 +429,20 @@
 									 * Remove an existing `other partner`
 									 */
 									$scope.removeOtherPartner = function(index) {
-										
+
 										if ($scope.elfin.CARACTERISTIQUE) {
 											if ($scope.elfin.CARACTERISTIQUE.FRACTION) {
 												if ($scope.elfin.CARACTERISTIQUE.FRACTION.L) {
+										
+													var filteredFraction = $filter('fractionElfinRefFilter')($scope.elfin.CARACTERISTIQUE.FRACTION.L, 'ACTEUR', false);
+													
 													// Remove one element at index
-													$scope.elfin.CARACTERISTIQUE.FRACTION.L.splice(index,1);
+													// The provided index is only valid in the context of the filtered array it was computed.
+													// Thus to remove the correct entry from the array the same filter rules must be applied.
+													hbUtil.removeFractionLByPos($scope.elfin, filteredFraction[index].POS)
+													
 													// Allow user saving the new data structure following above element deletion
 													$scope.elfinForm.$setDirty();
-													// Deal with POS numbering.
-													GeoxmlService.renumberPos($scope.elfin.CARACTERISTIQUE.FRACTION.L);
 												}
 											}
 										}
@@ -519,18 +523,31 @@
 
 									/**
 									 * Remove an existing `building reference`
+									 *
 									 */
 									$scope.removeBuilding = function(index) {
 										
 										if ($scope.elfin.CARACTERISTIQUE) {
 											if ($scope.elfin.CARACTERISTIQUE.FRACTION) {
 												if ($scope.elfin.CARACTERISTIQUE.FRACTION.L) {
+
+													var filteredFraction = $filter('fractionElfinRefFilter')($scope.elfin.CARACTERISTIQUE.FRACTION.L, 'IMMEUBLE', false)
+													//$log.debug("BEFORE removeBuilding(index="+index+") filteredFraction = " + angular.toJson(filteredFraction));
+										
 													// Remove one element at index
-													$scope.elfin.CARACTERISTIQUE.FRACTION.L.splice(index,1);
+													// The provided index is only valid in the context of the filtered array it was computed.
+													// Thus to remove the correct entry from the array the same filter rules must be applied. 
+													var lPos = filteredFraction[index].POS
+													//$log.debug("filteredFraction POS for index ("+index+") = " + lPos);
+													// Find L index in non filtered array by POS
+													var lIndex = hbUtil.getFractionLIndexByPos($scope.elfin, lPos)
+													//$log.debug("FractionLIndexByPos true index = "+lIndex);
+													// Delete by L POS
+													hbUtil.removeFractionLByPos($scope.elfin, lPos)
+													//$log.debug("AFTER  removeBuilding(index="+index+") filteredFraction = " + angular.toJson(filteredFraction));													
+													
 													// Allow user saving the new data structure following above element deletion
 													$scope.elfinForm.$setDirty();
-													// Deal with POS numbering.
-													GeoxmlService.renumberPos($scope.elfin.CARACTERISTIQUE.FRACTION.L);
 												}
 											}
 										}
