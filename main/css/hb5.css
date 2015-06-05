@@ -90,6 +90,29 @@ td.number {
     text-align: right;
 }
 
+.hb-row-header {
+	background-color: white;
+}
+
+.hb-cell-header {
+	border: 1px solid #DDD;
+	padding: 5px;
+	min-height: 34px;
+}
+
+.hb-row-even {
+	background-color: #F9F9F9;
+}
+.hb-row-odd {
+	background-color: white;
+}
+
+.hb-cell-row {
+	border: 1px solid #DDD;
+	padding: 5px;
+	min-height: 34px;
+}
+
 
 /* Align right */
 .right {

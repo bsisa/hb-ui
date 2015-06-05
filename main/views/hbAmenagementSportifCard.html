@@ -485,26 +485,27 @@
 					<div class="col-sm-12">
 						<div style="width: 180px;" hb-building-select-link hb-building-select-source="elfin"></div>
 						<br />
-						<div class="row">
-							<div class="col-sm-2"></div>
-							<div class="col-sm-1" style="font-weight: bold;">Propriétaire</div>
-							<div class="col-sm-1" style="font-weight: bold;">No SAI</div>
-							<div class="col-sm-3" style="font-weight: bold;">Adresse</div>
-							<div class="col-sm-2" style="font-weight: bold;">No construction</div>
-							<div class="col-sm-3" style="font-weight: bold;">Lieu-dit</div>
-						</div>
-						<div class="row" ng-repeat="buildingRefLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'IMMEUBLE'">
-							<div hb-building-line-converter hb-building-line-converter-line-model="buildingRefLine" hb-building-line-converter-building-elfin="buildingElfin">
-<!-- 								<div class="col-sm-1" hb-card-view-link hb-href="/elfin/{{buildingElfin.ID_G}}/{{buildingElfin.CLASSE}}/{{buildingElfin.Id}}" > -->
-								<div class="col-sm-2">
-									<div class="col-xs-6" hb-card-view-link hb-href="/elfin/{{buildingElfin.ID_G}}/{{buildingElfin.CLASSE}}/{{buildingElfin.Id}}" ></div>
-									<div class="col-xs-6 btn btn-default btn-xs" style="width: 38px;" ng-click="removeBuilding($index)" tooltip="Supprimer"><i class="glyphicon glyphicon-remove-circle"></i></div>
+						<div class="container-fluid">
+							<div class="row hb-row-header">
+								<div class="col-sm-2 hb-cell-header"></div>
+								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">Propriétaire</div>
+								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">No SAI</div>
+								<div class="col-sm-3 hb-cell-header" style="font-weight: bold;">Adresse</div>
+								<div class="col-sm-2 hb-cell-header" style="font-weight: bold;">No construction</div>
+								<div class="col-sm-3 hb-cell-header" style="font-weight: bold;">Lieu-dit</div>
+							</div>
+							<div class="row hb-row-{{ ($index % 2) === 0 ? 'even' : 'odd' }}" ng-repeat="buildingRefLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'IMMEUBLE'">
+								<div hb-building-line-converter hb-building-line-converter-line-model="buildingRefLine" hb-building-line-converter-building-elfin="buildingElfin">
+									<div class="col-sm-2 hb-cell-row">
+										<div class="col-xs-6" hb-card-view-link hb-href="/elfin/{{buildingElfin.ID_G}}/{{buildingElfin.CLASSE}}/{{buildingElfin.Id}}" ></div>
+										<div class="col-xs-6 btn btn-default btn-xs" style="width: 38px;" ng-click="removeBuilding($index)" tooltip="Supprimer"><i class="glyphicon glyphicon-remove-circle"></i></div>
+									</div>
+									<div class="col-sm-1 hb-cell-row">{{buildingElfin.PARTENAIRE.PROPRIETAIRE.NOM}}</div>
+									<div class="col-sm-1 hb-cell-row">{{buildingElfin.IDENTIFIANT.OBJECTIF}}</div>
+									<div class="col-sm-3 hb-cell-row">{{buildingElfin.IDENTIFIANT.ALIAS}}</div>
+									<div class="col-sm-2 hb-cell-row">{{buildingElfin.IDENTIFIANT.NOM}}</div>
+									<div class="col-sm-3 hb-cell-row">{{getPlace(buildingElfin).VALEUR}}</div>
 								</div>
-								<div class="col-sm-1">{{buildingElfin.PARTENAIRE.PROPRIETAIRE.NOM}}</div>
-								<div class="col-sm-1">{{buildingElfin.IDENTIFIANT.OBJECTIF}}</div>
-								<div class="col-sm-3">{{buildingElfin.IDENTIFIANT.ALIAS}}</div>
-								<div class="col-sm-2">{{buildingElfin.IDENTIFIANT.NOM}}</div>
-								<div class="col-sm-3">{{getPlace(buildingElfin).VALEUR}}</div>
 							</div>
 						</div>
 <!-- 						<table class="table table-condensed table-bordered table-striped"> -->
