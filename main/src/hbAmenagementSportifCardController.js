@@ -349,6 +349,10 @@
 
 							    			// Links to buildings - Process selectionImmeuble if available
 											if ($routeParams.selectionImmeuble) {
+												
+												// Set active tab to building
+												setActiveTabState($scope.tabState,"buildings");
+												
 							 					$log.debug("$routeParams.selectionImmeuble = " + $routeParams.selectionImmeuble);
 							 					var selectionImmeubleStrSplit = $routeParams.selectionImmeuble.split('/');
 							 					$scope.selectionImmeuble = {
@@ -455,8 +459,8 @@
 									 */
 									$scope.addBuilding = function(buildingSelection) {
 										
-										$log.debug(">>>> addBuilding for buildingSelection = " + buildingSelection);
-										$log.debug(">>>> $scope.elfin.CARACTERISTIQUE.FRACTION.L before = " + angular.toJson($scope.elfin.CARACTERISTIQUE.FRACTION.L) );
+//										$log.debug(">>>> addBuilding for buildingSelection = " + buildingSelection);
+//										$log.debug(">>>> $scope.elfin.CARACTERISTIQUE.FRACTION.L before = " + angular.toJson($scope.elfin.CARACTERISTIQUE.FRACTION.L) );
 										
 										
 										var emptyFractionTemplate = { "L": [  ] };
@@ -508,7 +512,7 @@
 											// always available in catalogue
 										}
 										
-										$log.debug(">>>> $scope.elfin.CARACTERISTIQUE.FRACTION.L after = " + angular.toJson($scope.elfin.CARACTERISTIQUE.FRACTION.L) );
+//										$log.debug(">>>> $scope.elfin.CARACTERISTIQUE.FRACTION.L after = " + angular.toJson($scope.elfin.CARACTERISTIQUE.FRACTION.L) );
 										
 									};
 						    	
@@ -532,6 +536,26 @@
 										}
 									};
 
+									
+									/**
+									 * Sets mutually exclusive active state for tabState for provided activePropertyName
+									 */
+									var setActiveTabState = function(tabState, activePropertyName) {
+	
+										for ( var property in tabState) {
+											console.log("Property name: "
+													+ property + ", value: "
+													+ tabState[property]);
+											if (property === activePropertyName) {
+												$log.debug("Active property name   = " + property);
+												tabState[property].active = true;
+											} else {
+												$log.debug("Inactive property name = " + property);
+												tabState[property].active = false;
+											}
+										}
+	
+									};
 									
 							    } ]);
 
