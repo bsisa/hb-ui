@@ -73,6 +73,7 @@
                     root.push(row);
                 },
                 /**
+                 * @deprecated - Please use identical function located in hbUtil.
                  * Function used to renumber POS attributes for instance when element removal takes place.
                  */
                 renumberPos: function(array) {
