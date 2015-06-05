@@ -104,7 +104,7 @@
 				required>
 		</div>
 	</div>
-	<div class="form-group" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'ACTEUR':true">
+	<div class="form-group" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'ACTEUR':false">
 		<!-- Provides converted.actor -->
 <!-- 		TODO: Check hb-actor-line-converter-actor-role is not used -->
 <!-- 		<div hb-actor-line-converter hb-actor-line-converter-line-model="otherPartnerLine" hb-actor-line-converter-actor-model="convertedActor" hb-actor-line-converter-actor-role="actorRole"> -->
@@ -283,7 +283,7 @@
 						</div>
 <!-- 					</div> -->
 <!-- 					<div class="col-xs-12"> -->
-						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.otherPartner-{{$index}})" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'ACTEUR':true">
+						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.otherPartner-{{$index}})" ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'ACTEUR':false">
 						<!-- Provides converted.actor -->
 							<div hb-actor-line-converter hb-actor-line-converter-line-model="otherPartnerLine" hb-actor-line-converter-actor-model="convertedActor" hb-actor-line-converter-actor-role="actorRole">
 								<label for="otherPartner-{{$index}}" class="col-lg-3 col-md-2 control-label">{{convertedActorElfin.IDENTIFIANT.QUALITE}}</label>
@@ -484,20 +484,25 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div style="width: 180px;" hb-building-select-link hb-building-select-source="elfin"></div>
-					<div class="row">
-						<div class="col-sm-1"></div>
-						<div class="col-sm-1" style="font-weight: bold;">Propriétaire</div>
-						<div class="col-sm-1" style="font-weight: bold;">No SAI</div>
-						<div class="col-sm-4" style="font-weight: bold;">Adresse</div>
-						<div class="col-sm-2" style="font-weight: bold;">No construction</div>
-						<div class="col-sm-3" style="font-weight: bold;">Lieu-dit</div>
-					</div>
-					<div class="row" ng-repeat="buildingRefLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'IMMEUBLE'">
+						<br />
+						<div class="row">
+							<div class="col-sm-2"></div>
+							<div class="col-sm-1" style="font-weight: bold;">Propriétaire</div>
+							<div class="col-sm-1" style="font-weight: bold;">No SAI</div>
+							<div class="col-sm-3" style="font-weight: bold;">Adresse</div>
+							<div class="col-sm-2" style="font-weight: bold;">No construction</div>
+							<div class="col-sm-3" style="font-weight: bold;">Lieu-dit</div>
+						</div>
+						<div class="row" ng-repeat="buildingRefLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'IMMEUBLE'">
 							<div hb-building-line-converter hb-building-line-converter-line-model="buildingRefLine" hb-building-line-converter-building-elfin="buildingElfin">
-								<div class="col-sm-1" hb-card-view-link hb-href="/elfin/{{buildingElfin.ID_G}}/{{buildingElfin.CLASSE}}/{{buildingElfin.Id}}" ></div>
+<!-- 								<div class="col-sm-1" hb-card-view-link hb-href="/elfin/{{buildingElfin.ID_G}}/{{buildingElfin.CLASSE}}/{{buildingElfin.Id}}" > -->
+								<div class="col-sm-2">
+									<div class="col-xs-6" hb-card-view-link hb-href="/elfin/{{buildingElfin.ID_G}}/{{buildingElfin.CLASSE}}/{{buildingElfin.Id}}" ></div>
+									<div class="col-xs-6 btn btn-default btn-xs" style="width: 38px;" ng-click="removeBuilding($index)" tooltip="Supprimer"><i class="glyphicon glyphicon-remove-circle"></i></div>
+								</div>
 								<div class="col-sm-1">{{buildingElfin.PARTENAIRE.PROPRIETAIRE.NOM}}</div>
 								<div class="col-sm-1">{{buildingElfin.IDENTIFIANT.OBJECTIF}}</div>
-								<div class="col-sm-4">{{buildingElfin.IDENTIFIANT.ALIAS}}</div>
+								<div class="col-sm-3">{{buildingElfin.IDENTIFIANT.ALIAS}}</div>
 								<div class="col-sm-2">{{buildingElfin.IDENTIFIANT.NOM}}</div>
 								<div class="col-sm-3">{{getPlace(buildingElfin).VALEUR}}</div>
 							</div>
