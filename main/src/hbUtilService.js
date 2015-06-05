@@ -53,7 +53,41 @@
     		} else {
     			return undefined;	
     		}
-		};		
+		};
+		
+		
+		/**
+		 * Get ELFIN/CARACTERISTIQUE/FRACTION/L by L.POS (L@POS)
+		 * instead of array position. If not found currentL === undefined
+		 *  
+		 * Note: @see getCARByPos
+		 */
+		var getFractionLByPos = function(elfin, LPos) {
+    		var currentL = _.find(elfin.CARACTERISTIQUE.FRACTION.L, function(L){ return L.POS === LPos; });
+    		if (currentL) {
+    			return currentL;
+    		} else {
+    			return undefined;	
+    		}
+		};			
+		
+		var getFractionLIndexByPos = function(elfin, LPos) {
+			
+			for (var i=0; i < elfin.CARACTERISTIQUE.FRACTION.L.length; i++) {
+				var currL = elfin.CARACTERISTIQUE.FRACTION.L[i];
+				if (currL.POS === LPos) {
+					return i;
+				}
+			}
+			return -1;
+		};
+		
+		var removeFractionLByPos = function(elfin, LPos) {
+			var index = getFractionLIndexByPos(elfin, LPos);
+			if (index != -1) {
+				elfin.CARACTERISTIQUE.FRACTION.L.splice(index,1);
+			}
+		};			
 		
 		
 		// ============================================================
@@ -512,6 +546,8 @@
         	getDateFromHbTextDateFormat:getDateFromHbTextDateFormat,
         	getDateTimeFromHbTextDateTimeFormat:getDateTimeFromHbTextDateTimeFormat,
         	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue,
+        	getFractionLByPos:getFractionLByPos,
+        	getFractionLIndexByPos:getFractionLIndexByPos,
         	getFractionLCByPos:getFractionLCByPos,
         	getLinkFileName:getLinkFileName,
         	getLinkFileApiUrl:getLinkFileApiUrl,
@@ -521,6 +557,7 @@
         	getValueAtPath:getValueAtPath,
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
+        	removeFractionLByPos:removeFractionLByPos,
         	reorderArrayByPOS:reorderArrayByPOS        	
         };
     }]);
