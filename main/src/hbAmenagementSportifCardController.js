@@ -574,6 +574,21 @@
 	
 									};
 									
+
+									/**
+							    	 * Helper to safely access place information by POS instead of array index.
+									 * Indeed relying on array element sort order might not match POS value,
+									 * even taking 0 based array, 1 based POS numbering into account.
+							    	 */
+							    	$scope.getPlace = function(elfin) {
+							    		if (elfin) {
+								    		var place = hbUtil.getCARByPos(elfin, 1);
+								    		return (place === undefined) ? "" : place;
+							    		} else {
+							    			return "";
+							    		}
+							    	};									
+									
 							    } ]);
 
 })();
