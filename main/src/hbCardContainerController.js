@@ -211,6 +211,20 @@
     		$scope.elfin.IDENTIFIANT.MOTCLE.splice(index,1);
     	};
     	
+    	
+    	/** 
+    	 * Extension point to be overridden by child controller to add custom logic
+    	 * following common saveElfin behaviour. 
+    	 * This is expected to be used to manipulate $location.path/search...
+    	 * but can be used for other purposes. 
+    	 * 
+    	 *  See a working example in hbAmenagementSportifCardController.js: 
+    	 *  $scope.$parent.saveElfinPostCallback = function() { ... };
+    	 */ 
+    	$scope.saveElfinPostCallback = function () {
+    	    $log.debug("HbCardContainerController saveElfinPostCallback() NOT overridden.");
+    	};
+    	
     	/**
     	 * Wrapper for ELFIN create or update (HTTP POST or HTTP PUT) operations.
     	 */
@@ -226,7 +240,6 @@
     	       				$scope.elfin = elfin;
     	                    $scope.elfinForm.$setPristine();
     	                   	var redirUrl = '/elfin/'+elfin.ID_G+'/'+$attrs.hbElfinClasse+'/'+elfin.Id;
-    	                   	$log.debug(">>>>> redirUrl: " + redirUrl);
     	                   	$location.path( redirUrl );
     	       			}, 
     	       			function(response) { 
@@ -244,6 +257,7 @@
                				// Considered good practice to reload the actual elfin state from db after successful PUT unless server load is a concern.
                				$scope.getElfin(elfin.ID_G,elfin.Id, HB_EVENTS.ELFIN_UPDATED);
                             $scope.elfinForm.$setPristine();
+                            $scope.saveElfinPostCallback();
                             // Notify other controllers this elfin has been updated (used by map)
                             //$scope.$emit(HB_EVENTS.ELFIN_UPDATED, elfin);
                			}, 
@@ -522,7 +536,10 @@
 	            }, function() {
 	                $rootScope.$emit(HB_EVENTS.ELFIN_UNLOADED);
 	            });
-            }            
+            }
+            
+            // TODO: To evaluate 
+            // elfinUpdatedListenerUnregister();
         });
 
 
@@ -530,6 +547,8 @@
          * React to elfin update done elsewhere than through the current controller, 
          * for instance via the map.
          */
+        // TODO: To evaluate 
+        // var elfinUpdatedListenerUnregister = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
         $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
 
             /**
