@@ -90,8 +90,11 @@ td.number {
     text-align: right;
 }
 
+/*
+	Same background-color as input.ng-dirty.ng-valid
+*/
 .hb-dirty {
-	background-color: red !important;  
+	background-color: #CFC !important;  
 }
 
 .hb-row-header {

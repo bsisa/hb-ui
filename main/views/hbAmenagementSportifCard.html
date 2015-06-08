@@ -500,11 +500,11 @@
 										<div class="col-xs-6" hb-card-view-link hb-href="/elfin/{{buildingElfin.ID_G}}/{{buildingElfin.CLASSE}}/{{buildingElfin.Id}}" ></div>
 										<div class="col-xs-6 btn btn-default btn-xs" style="width: 38px;" ng-click="removeBuilding($index)" tooltip="Supprimer"><i class="glyphicon glyphicon-remove-circle"></i></div>
 									</div>
-									<div class="col-sm-1 hb-cell-row">{{buildingElfin.PARTENAIRE.PROPRIETAIRE.NOM}}</div>
-									<div class="col-sm-1 hb-cell-row">{{buildingElfin.IDENTIFIANT.OBJECTIF}}</div>
-									<div class="col-sm-3 hb-cell-row">{{buildingElfin.IDENTIFIANT.ALIAS}}</div>
-									<div class="col-sm-2 hb-cell-row">{{buildingElfin.IDENTIFIANT.NOM}}</div>
-									<div class="col-sm-3 hb-cell-row">{{getPlace(buildingElfin).VALEUR}}</div>
+									<div class="col-sm-1 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{buildingElfin.PARTENAIRE.PROPRIETAIRE.NOM}}</div>
+									<div class="col-sm-1 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{buildingElfin.IDENTIFIANT.OBJECTIF}}</div>
+									<div class="col-sm-3 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{buildingElfin.IDENTIFIANT.ALIAS}}</div>
+									<div class="col-sm-2 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{buildingElfin.IDENTIFIANT.NOM}}</div>
+									<div class="col-sm-3 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{getPlace(buildingElfin).VALEUR}}</div>
 								</div>
 							</div>
 						</div>
