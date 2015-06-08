@@ -497,6 +497,10 @@
 													} else {
 										            	var message = "Opération annuléé - L'objet " + buildingSelection.CLASSE + " - " + buildingSelection.ID_G + "/" + buildingSelection.Id + " fait déjà partie de votre liste d'" + buildingSelection.CLASSE +"s";
 										   				hbAlertMessages.addAlert("warning",message);
+										   				// Reset $scope.selectionImmeuble 
+										   				$scope.selectionImmeuble = undefined;
+										   				// Remove selectionImmeuble URL param
+										   				$location.search({}).path( $location.path() );
 													}											
 												} else {
 													// FRACTION with no lines
@@ -584,17 +588,48 @@
 							    		}
 							    	};									
 									
-							    	
+							    	/**
+							    	 * UI support function helping customise CSS for selected building row.
+							    	 */
 							    	$scope.isSelectedImmeuble = function(buildingElfin) {
 
 							    		if (buildingElfin && $scope.selectionImmeuble) {
-											$log.debug("isSelectedImmeuble buildingElfin.Id = " + buildingElfin.Id + ", $scope.selectionImmeuble.Id = " + $scope.selectionImmeuble.Id);
+											//$log.debug("isSelectedImmeuble buildingElfin.Id = " + buildingElfin.Id + ", $scope.selectionImmeuble.Id = " + $scope.selectionImmeuble.Id);
 							    			return (buildingElfin.Id === $scope.selectionImmeuble.Id);
 							    		} else {
-											$log.debug("isSelectedImmeuble buildingElfin or $scope.selectionImmeuble missing...");
+											//$log.debug("isSelectedImmeuble buildingElfin or $scope.selectionImmeuble missing...");
 							    			return false;
 							    		}
 							    	};
+							    	
+//							    	$scope.inheritedSaveElfinBehaviour = $scope.$parent.saveElfin;
+//							    	
+//							    	$scope.$parent.saveElfin = function (elfin) {
+//							    		// Preserve inherited behaviour...
+//							    		$scope.inheritedSaveElfinBehaviour(elfin);
+//							    		// Perform additional tasks...
+//							    		$log.debug(">>>> HbAmenagementSportifCardController $scope.saveElfin called...");
+//
+//							    		// Reset $scope.selectionImmeuble 
+//						   				$scope.selectionImmeuble = undefined;
+//						   				// Remove selectionImmeuble URL param
+//						   				$location.search({}).path( $location.path() );
+//							    	};
+							    	
+							    	
+							    	$scope.$parent.saveElfinPostCallback = function() {
+							    		
+							    		$log.debug(">>>> HbAmenagementSportifCardController $scope.saveElfinPostCallback called...");
+
+							    		// Reset $scope.selectionImmeuble 
+						   				$scope.selectionImmeuble = undefined;
+						   				// Remove selectionImmeuble URL param
+						   				$location.search({}).path( $location.path() );							    		
+							    		
+							    	};
+							    	
+							    	
+							    	
 							    	
 							    } ]);
 
