@@ -98,6 +98,9 @@
             .when('/elfin/:collectionId/IMMEUBLE', {
                 templateUrl: '/assets/views/IMMEUBLE_list_view.html'
             })
+            .when('/elfin/create/INSTALLATION_SPORTIVE', {
+                templateUrl: '/assets/views/INSTALLATION_SPORTIVE_card_new_view.html'
+            })            
             .when('/elfin/create/PRESTATION', {
                 templateUrl: '/assets/views/PRESTATION_card_new_view.html'
             })            
