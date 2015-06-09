@@ -137,6 +137,21 @@
 						            $scope.contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE';
 						            $scope.contractReverse = false;
 							        
+						            
+									/**
+									 * Triggers a redirection to the INSTALLATION_SPORTIVE creation URL with current
+									 * AMENAGEMENT_SPORTIF building number and SAI number passed as parameters.
+									 * Must not be effective while in create mode (no association is 
+									 * relevant while the AMENAGEMENT_SPORTIF creation is ongoing/pending.)
+									 */ 
+									$scope.createNewInstallationSportive = function() {										
+										if ($attrs.hbMode != "create") {
+									        // id,classe,idg provide generic link to creation source/parent
+											var searchObj = {id: $scope.elfin.Id, classe: $scope.elfin.CLASSE, idg: $scope.elfin.ID_G }
+											$location.search(searchObj).path( "/elfin/create/INSTALLATION_SPORTIVE" );
+										}
+									};						            
+						            
 							        
 									/**
 									 * Triggers a redirection to the CONSTAT creation URL with current

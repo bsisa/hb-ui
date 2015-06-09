@@ -1006,11 +1006,59 @@
 			<tab-heading>Installations sportives</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
-					<div class="col-sm-12">
-						TODO
-					</div>
-				</div>
-			</div>
+					<div class="col-sm-12">			
+					<tabset>  
+						<tab active="tabState.prestation_subtab_annee_moins1.active"><!-- INSTALLATION_SPORTIVE 1st tab -->
+							<tab-heading>Installations sportives</tab-heading>
+							<div class="hb-tab">
+								<div class="row">
+									<div class="col-sm-12">
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th>Installations sportives</th>
+													<th>No SAI</th>
+													<th>Année</th>
+													<th>Groupe / Remarque</th>
+													<th>Groupe comptable</th>
+													<th>Budget</th>														
+												</tr>
+											</thead>
+											<tbody ng-show="prestations">
+												<tr 
+													ng-repeat="prestation in prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate">
+													<td>
+														<div hb-card-view-link hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}"></div>													
+													</td>
+													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
+													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
+													<td ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}"><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
+													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
+													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}</span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+			
+							</div>
+						</tab>
+						<tab select="createNewInstallationSportive()" ng-show="!createMode"> 
+							<tab-heading tooltip="Créer une nouvelle installation sportive relative à l'objet courant" tooltip-popup-delay="1000">Créer une nouvelle installation sportive <i class="glyphicon glyphicon-plus-sign"></i></tab-heading>
+							<div class="hb-tab">
+							</div>
+						</tab>						
+							
+				</tabset>						
+			</div><!-- Installation sportive 12 col div END -->
+			</div><!-- Installation sportive 1st level row div END -->
+			</div><!-- Installation sportive 1st level hb-tab container END -->			
+			
+			
+			
+<!-- DRAFT -->			
+			
+			
 		</tab> 
 		<!-- FORME tab -->
 		<tab active="tabState.forme.active" select="eagerDomCreation.FORM = true"> 
