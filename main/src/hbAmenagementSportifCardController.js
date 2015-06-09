@@ -353,7 +353,22 @@
 								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = '';
 								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE = '';
 								    			$scope.elfin.CARACTERISTIQUE.CAR2.VALEUR = '';
-								    		} 
+								    		} else {
+								    			// Try loading linked INSTALLATION_SPORTIVES only if not in create mode.
+ 
+								    				
+								    			var xpathForInstallationsSportives = "//ELFIN[@CLASSE='INSTALLATION_SPORTIVE' and @SOURCE='"+$scope.elfin.ID_G+"/"+$scope.elfin.CLASSE + "/" +$scope.elfin.Id +"']";
+									            hbQueryService.getInstallationsSportives(xpathForInstallationsSportives)
+													.then(function(elfins) {
+										    			$scope.installationsSportives = elfins;
+														},
+														function(response) {
+															var message = "Le chargement des INSATALLATION_SPORTIVEs a échoué (statut de retour: "+ response.status+ ")";
+												            hbAlertMessages.addAlert("danger",message);
+														});								    				
+								    				
+								    			
+								    		}
 							    			// Data correction - if no elfin.PARTENAIRE.FOURNISSEUR.VALUE datastructure exist creates it
 							    			// TODO: evaluate batch data update. 
 							    			if (!$scope.elfin.PARTENAIRE.FOURNISSEUR) {
