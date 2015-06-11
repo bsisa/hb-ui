@@ -3,13 +3,9 @@
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
-		<tabset><!-- ui.bootstrap AngularJS UI tabset --> <!-- MUTATIONS tab -->
-		<!-- 		<tab> --> <!-- 		<tab-heading>Mutations</tab-heading> --> <!-- 		<table class="table table-condensed table-bordered table-striped"> -->
-		<!-- 			<thead> --> <!-- 				<tr> --> <!-- 					<th>Date</th> --> <!-- 					<th>Utilisateur</th> -->
-		<!-- 					<th>Rôle</th> --> <!-- 				</tr> --> <!-- 			</thead> --> <!-- 			<tr ng-repeat="mutation in elfin.MUTATIONS"> -->
-		<!-- 				<td>{{mutation.DATE}}</td> --> <!-- 				<td>{{mutation.UTILISATEUR}}</td> -->
-		<!-- 				<td>{{mutation.ROLE}}</td> --> <!-- 			</tr> --> <!-- 		</table> -->
-		<!-- 		</tab>  --> <!-- IDENTIFIANT tab --> <tab> <tab-heading>Identifiant</tab-heading>
+		<tabset>
+		<!-- IDENTIFIANT tab -->
+		<tab> <tab-heading>Identifiant</tab-heading>
 		<div class="hb-tab">
 
 			<div class="panel panel-default">
@@ -45,8 +41,8 @@
 						<div class="form-group">
 							<label for="author" class="col-sm-4 control-label">Auteur</label>
 							<div class="col-sm-8">
-								<input id="author" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.AUT">
+								<div class="form-control-static">{{elfin.IDENTIFIANT.AUT}}</div>
+<!-- 							<input id="author" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.AUT"> -->
 							</div>
 						</div>
 					</div>
@@ -255,15 +251,6 @@
 							<div class="col-sm-8">
 								<input id="nature" type="text" class="form-control"
 									ng-model="elfin.NATURE">
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="source" class="col-sm-4 control-label">Source</label>
-							<div class="col-sm-8">
-								<input id="source" type="text" class="form-control"
-									ng-model="elfin.SOURCE">
 							</div>
 						</div>
 					</div>
