@@ -42,6 +42,10 @@
         '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', '$window', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'MapService','hbPrintService', 'hbTabCacheService',
         function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, $window, hbAlertMessages, hbUtil, HB_EVENTS, MapService, hbPrintService, hbTabCacheService) {
     
+        	
+        // Expose hbUtil.containsStandardSourceURI function to scope
+        $scope.containsStandardSourceURI = hbUtil.containsStandardSourceURI;	
+        
     	// Parameters extracted from the URL and identifying the ELFIN to be edited  
         $scope.elfinId = $routeParams.elfinId;
         $scope.collectionId = $routeParams.collectionId;
