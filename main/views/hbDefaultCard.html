@@ -271,19 +271,35 @@
 				<div class="panel-body">
 					<div class="col-sm-12">
 						<div class="container-fluid" ng-init="carIndexes = [1, 2, 3, 4, 5, 6]">
-							<div class="row hb-row-header">
-								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">#</div>
-								<div class="col-sm-3 hb-cell-header" style="font-weight: bold;">Nom</div>
-								<div class="col-sm-7 hb-cell-header" style="font-weight: bold;">Valeur</div>
-								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">Unité</div>
-							</div>
-							<div class="row hb-row-{{ ($index % 2) === 0 ? 'even' : 'odd' }}"
-								ng-repeat="carIndex in carIndexes">
-
-								<div class="col-sm-1 hb-cell-row" style="min-height: 46px;line-height: 2;">{{'CAR' + carIndex}}</div>
-								<div class="col-sm-3 hb-cell-row" style="min-height: 46px;line-height: 2;">{{elfin.CARACTERISTIQUE['CAR' + carIndex].NOM}}</div>
-								<div class="col-sm-7 hb-cell-row"><input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR"></div>
-								<div class="col-sm-1 hb-cell-row"><input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE"></div>
+<!-- 							<div class="row hb-row-header"> -->
+<!-- 								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">#</div> -->
+<!-- 								<div class="col-sm-3 hb-cell-header" style="font-weight: bold;">Nom</div> -->
+<!-- 								<div class="col-sm-7 hb-cell-header" style="font-weight: bold;">Valeur</div> -->
+<!-- 								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">Unité</div> -->
+<!-- 							</div> -->
+							<div class="row" ng-repeat="carIndex in carIndexes">
+								<div class="form-group" >
+									<label class="col-sm-2 control-label" >{{elfin.CARACTERISTIQUE['CAR' + carIndex].NOM}}</label>
+									<div ng-if="(elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE).length === 0" class="col-sm-8">
+									  <input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR">									      
+									</div>									
+									<div ng-if="(elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE).length > 0" class="col-sm-8">
+										<div class="input-group">
+<!-- 									      <div class="input-group-addon">$</div> -->
+										  <input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR">									      
+									      <div class="input-group-addon">{{elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE}}</div>
+										</div>					
+									</div>				
+<!-- 									<div class="col-sm-8"><input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR"></div> -->
+<!-- 									<div class="col-sm-2 "> -->
+<!-- 										<p class="form-control-static" >{{elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE}}</p> -->
+<!-- 									</div> -->
+								</div>							
+<!-- 								<div class="col-sm-1 "><input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE"></div> -->
+<!-- 								<div class="col-sm-1 hb-cell-row" style="min-height: 46px;line-height: 2;">{{'CAR' + carIndex}}</div> -->
+<!-- 								<div class="col-sm-3 hb-cell-row" style="min-height: 46px;line-height: 2;">{{elfin.CARACTERISTIQUE['CAR' + carIndex].NOM}}</div> -->
+<!-- 								<div class="col-sm-7 hb-cell-row"><input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR"></div> -->
+<!-- 								<div class="col-sm-1 hb-cell-row"><input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE"></div> -->
 							</div>
 						</div>
 					</div>
