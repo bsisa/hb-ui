@@ -270,27 +270,23 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="col-sm-12">
-						<table class="table table-condensed table-bordered table-striped"
-							ng-init="carIndexes = [1, 2, 3, 4, 5, 6]">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Nom</th>
-									<th>Unité</th>
-									<th>Valeur</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tr ng-repeat="carIndex in carIndexes">
-								<td>{{'CAR' + carIndex}}</td>
-								<td><input type="text" class="form-control"
-									ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].NOM"></td>
-								<td><input type="text" class="form-control"
-									ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE"></td>
-								<td><input type="text" class="form-control"
-									ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR"></td>
-							</tr>
-						</table>
+						<div class="container-fluid">
+							<div class="row hb-row-header">
+								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">#</div>
+								<div class="col-sm-3 hb-cell-header" style="font-weight: bold;">Nom</div>
+								<div class="col-sm-7 hb-cell-header" style="font-weight: bold;">Valeur</div>
+								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">Unité</div>
+							</div>
+							<div class="row hb-row-{{ ($index % 2) === 0 ? 'even' : 'odd' }}"
+								ng-init="carIndexes = [1, 2, 3, 4, 5, 6]"
+								ng-repeat="carIndex in carIndexes">
+
+								<div class="col-sm-1 hb-cell-row" style="min-height: 46px;line-height: 2;">{{'CAR' + carIndex}}</div>
+								<div class="col-sm-3 hb-cell-row" style="min-height: 46px;line-height: 2;">{{elfin.CARACTERISTIQUE['CAR' + carIndex].NOM}}</div>
+								<div class="col-sm-7 hb-cell-row"><input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR"></div>
+								<div class="col-sm-1 hb-cell-row"><input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE"></div>
+							</div>
+						</div>						
 					</div>
 <!-- 					<div class="col-sm-6"> -->
 <!-- 						<h5>Carset</h5> -->
