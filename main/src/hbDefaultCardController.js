@@ -12,8 +12,9 @@
 					'$log',
 					'hbAlertMessages',
 					'hbUtil',
+					'userDetails',					
 					function($attrs, $scope, GeoxmlService, $modal, $routeParams,
-							$location, $log, hbAlertMessages, hbUtil) {
+							$location, $log, hbAlertMessages, hbUtil, userDetails) {
 
 						//$log.debug("    >>>> Using HbDefaultCardController ");
 						
@@ -41,6 +42,8 @@
 										// Generic link to creation source/parent if such information is provided
 										$scope.elfin.SOURCE = $routeParams.idg +"/"+$routeParams.classe+"/"+$routeParams.id;
 									}
+									// Get user abbreviation from userDetails service
+									$scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();
 									$scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
 								} else {
 
