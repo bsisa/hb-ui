@@ -1,14 +1,22 @@
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-4">
-		<div style="padding-left: 15px;" tooltip="{{elfin.ID_G}}/{{elfin.Id}}">
+		<div ng-if="containsStandardSourceURI(elfin.SOURCE)" class="col-xs-1" style="padding-left: 4px;">
+			<div  hb-card-view-link hb-href="/elfin/{{elfin.SOURCE}}"></div>
+		</div>
+		<div ng-if="!containsStandardSourceURI(elfin.SOURCE)" class="col-xs-1" style="padding-left: 4px;">
+			<div style="width: 38px;"><a class="btn btn-default btn-xs btn-block disabled" href="#" role="button" ><i class="glyphicon glyphicon-eye-close"></i></a></div>
+		</div>		
+		<div class="col-xs-11" style="padding-left: 15px;" tooltip="{{elfin.ID_G}}/{{elfin.Id}}" >
 			<span class="h4">
 				<span class="label label-primary" ng-class="getCssLabelFeedback(elfinForm)">
 					<i class="icon-tag"></i> <span ng-bind="elfin.CLASSE"></span> - <span ng-bind="elfin.IDENTIFIANT.OBJECTIF"></span>
 				</span>
 			</span>
 			<span ng-if="elfin.CLASSE==='IMMEUBLE' || elfin.CLASSE==='WC'">&nbsp;{{elfin.IDENTIFIANT.ALIAS}}</span>
-			<span ng-if="elfin.CLASSE==='FONTAINE' || elfin.CLASSE==='ABRIBUS'">&nbsp;{{elfin.IDENTIFIANT.NOM}}</span>			
+			<span ng-if="elfin.CLASSE==='FONTAINE' || elfin.CLASSE==='ABRIBUS'">&nbsp;{{elfin.IDENTIFIANT.NOM}}</span>
 		</div>
+
+<!-- <span style="width: 38px;"><a class="btn btn-default btn-xs btn-block" href="/elfin/{{elfin.SOURCE}}" role="button" tooltip="Consulter" tooltip-popup-delay="1500"><i class="glyphicon glyphicon-eye-open"></i></a></span>		 -->
 	</div>
 	<div class="col-xs-1">
 		<span ng-show="elfinForm.$invalid && elfinForm.$dirty" class="text-danger"><i class="glyphicon glyphicon-warning-sign" style="font-size: 1.2em;"></i></span>
