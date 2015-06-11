@@ -11,7 +11,7 @@
 		// ============================================================
 		// HyperBird GeoXML data structure to JSON utilities
 		// ============================================================
-		
+
 		/**
 		 * Get ELFIN/CARACTERISTIQUE/CARSET/CAR by CAR.POS (CAR@POS)
 		 * instead of array position. If not found currentCAR === undefined
@@ -367,6 +367,25 @@
 	    	return queryString;
         };
         
+        /**
+         * Returns true if the provided 'sourceURI' string matches the rules
+         * to consider it a valid sourceURI.
+         * Note: rules are basic at the moment but the value of this function
+         * is to centralise this logic in a single location.
+         */
+        var containsStandardSourceURI = function(sourceURI) {
+        	if (sourceURI) {
+        		var sourceURITokensArray = sourceURI.split('/');
+        		if (sourceURITokensArray.length === 3) {
+        			return true;
+        		} else {
+        			return false;
+        		}
+        	} else {
+        		return false;
+        	}
+        };
+        
         
 		// ============================================================
 		// HyperBird catalog data conversion utilities
@@ -563,6 +582,7 @@
         	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault,
         	buildKeyValueObject:buildKeyValueObject,
         	buildUrlQueryString:buildUrlQueryString,
+        	containsStandardSourceURI:containsStandardSourceURI,
         	deepCopy:deepCopy,
         	encodeUriParameter:encodeUriParameter,
         	getAnnexesExcludingTag:getAnnexesExcludingTag,
