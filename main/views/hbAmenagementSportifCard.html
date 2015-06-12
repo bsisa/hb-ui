@@ -1003,20 +1003,20 @@
 <!-- 		</tab>				 -->
 		<!-- INSTALLATION_SPORTIVE tab --> 
 		<tab active="tabState.installations_sportives.active"> 
-			<tab-heading>Installations sportives</tab-heading>
+			<tab-heading>Installation{{installationsSportives | plural}} sportive{{installationsSportives | plural}} ({{installationsSportives.length}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
 					<div class="col-sm-12">			
 					<tabset>  
 						<tab active="tabState.prestation_subtab_annee_moins1.active"><!-- INSTALLATION_SPORTIVE 1st tab -->
-							<tab-heading>Installations sportives</tab-heading>
+							<tab-heading>Installation{{installationsSportives | plural}} sportive{{installationsSportives | plural}}</tab-heading>
 							<div class="hb-tab">
 								<div class="row">
 									<div class="col-sm-12">
 										<table class="table table-condensed table-bordered table-striped">
 											<thead>
 												<tr>
-													<th>Installations sportives</th>
+													<th></th>
 													<th>No SAI</th>
 													<th>Année</th>
 													<th>Groupe / Remarque</th>
