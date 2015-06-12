@@ -320,12 +320,54 @@
 		<tab> 
 			<tab-heading>Equipements sportif</tab-heading>
 			<div class="hb-tab">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						TODO...
-					</div>
-				</div>
-			</div>
+				<div class="row">
+					<div class="col-sm-12">			
+					<tabset>  
+						<tab active="tabState.prestation_subtab_annee_moins1.active"><!-- INSTALLATION_SPORTIVE 1st tab -->
+							<tab-heading>Equipements sportif</tab-heading>
+							<div class="hb-tab">
+								<div class="row">
+									<div class="col-sm-12">
+										<table class="table table-condensed table-bordered table-striped">
+											<thead>
+												<tr>
+													<th>Installations sportives</th>
+													<th>No SAI</th>
+													<th>Année</th>
+													<th>Groupe / Remarque</th>
+													<th>Groupe comptable</th>
+													<th>Budget</th>														
+												</tr>
+											</thead>
+											<tbody ng-show="equipementsSportifs">
+												<tr 
+													ng-repeat="equipementSportif in equipementsSportifs">
+													<td>
+														<div hb-card-view-link hb-href="/elfin/{{equipementSportif.ID_G}}/INSTALLATION_SPORTIVE/{{equipementSportif.Id}}"></div>													
+													</td>
+													<td><span >{{equipementSportif.IDENTIFIANT.OBJECTIF}}</span></td>
+													<td class="date"><span >{{equipementSportif.IDENTIFIANT.DE}}</span></td>
+													<td><span >{{equipementSportif.GROUPE}} / {{equipementSportif.DIVERS.REMARQUE}}</span></td>
+													<td><span >{{equipementSportif.IDENTIFIANT.ORIGINE}}</span></td>
+													<td class="number"><span >{{equipementSportif.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}</span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+			
+							</div>
+						</tab>
+						<tab select="createNewEquipementSportif()" ng-show="!createMode"> 
+							<tab-heading tooltip="Créer un nouvel équipement sportif relatif à l'objet courant" tooltip-popup-delay="1000">Créer un nouvel équipement sportif <i class="glyphicon glyphicon-plus-sign"></i></tab-heading>
+							<div class="hb-tab">
+							</div>
+						</tab>						
+							
+				</tabset>						
+			</div><!-- Installation sportive 12 col div END -->
+			</div><!-- Installation sportive 1st level row div END -->
+			</div><!-- Installation sportive 1st level hb-tab container END -->
 		</tab>
 		<tab> <tab-heading>
 		<div hb-annexes-number></div>
