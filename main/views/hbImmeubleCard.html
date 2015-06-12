@@ -1059,7 +1059,9 @@
 		</tab>				
 		<!-- EQUIPEMENT technique tab --> 
 		<tab active="tabState.equipements_tech.active"> 
-			<tab-heading>Equipements techniques</tab-heading>
+		
+		
+			<tab-heading ng-init="{{equipementsCount = (productionChaleurList.length + productionFroidList.length + ventilationList.length + citerneList.length)}}">Equipement{{equipementsCount | plural}} technique{{equipementsCount | plural}} ({{equipementsCount}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
 					<div class="col-sm-12">
