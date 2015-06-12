@@ -67,6 +67,17 @@
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *   
+		 * `HB_COLLECTIONS.EQUIPEMENT_SPORTIF_ID` identifies collection containing ELFIN objects of CLASSE EQUIPEMENT_SPORTIF.  
+		 *  @see getList
+		 */
+		var getEquipementsSportifs = function(xpath) {
+			return getList(HB_COLLECTIONS.EQUIPEMENT_SPORTIF_ID,xpath);
+		};	
+
+
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
 		 * `HB_COLLECTIONS.IMMEUBLE_ID` identifies collection containing ELFIN objects of CLASSE IMMEUBLE.  
 		 *  @see getList  
 		 */
@@ -163,6 +174,7 @@
         	getCiterneList:getCiterneList,
         	getContrats:getContrats,
         	getEquipementList:getEquipementList,
+        	getEquipementsSportifs:getEquipementsSportifs,
         	getImmeubles:getImmeubles,
         	getInstallationsSportives:getInstallationsSportives,
         	getIntroductionElectriciteList:getIntroductionElectriciteList,
