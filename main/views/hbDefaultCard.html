@@ -5,7 +5,7 @@
 	<div class="col-xs-12">
 		<tabset>
 		<!-- IDENTIFIANT tab -->
-		<tab> <tab-heading>Identifiant</tab-heading>
+		<tab active="tabState.identifiant.active"> <tab-heading>Identifiant</tab-heading>
 		<div class="hb-tab">
 
 			<div class="panel panel-default">
@@ -249,7 +249,8 @@
 		</div>
 		</tab> 
 		<!-- CARACTERISTIQUE tab --> 
-		<tab> <tab-heading>Caractéristiques</tab-heading>
+		<tab active="tabState.characteristics.active" >
+		<tab-heading>Caractéristiques</tab-heading>
 		<div class="hb-tab">
 			<div class="panel panel-default">
 				<div class="panel-body">
@@ -504,7 +505,7 @@
 		<!-- 							class="icon-remove-sign"></i></a></td> --> <!-- 				</tr> -->
 		<!-- 			</table> --> <!-- 		</tab> --> <!-- End of ACTIVITE tab --> <!-- Annexes tab -->
 		<!-- ATTRIBUTS tab --> 
-		<tab> 
+		<tab active="tabState.attributes.active" > 
 			<tab-heading>Attributs<!-- <i class="icon-tag"></i> <b>Attributs</b> --></tab-heading>
 			<div class="hb-tab">
 				<div class="panel panel-default">
@@ -544,13 +545,16 @@
 			</div>
 		</tab> 
 
-		<tab> <tab-heading>
+		<tab active="tabState.annexe.active"> <tab-heading>
 		<div hb-annexes-number></div>
 		</tab-heading>
 		<div class="hb-tab">
 			<div hb-annexes-component></div>
 		</div>
-		</tab> <!-- FORME tab --> <tab> <tab-heading>Forme</tab-heading>
+		</tab>
+		<!-- FORME tab -->
+		<tab active="tabState.forme.active">
+		<tab-heading>Forme</tab-heading>
 		<div class="hb-tab">
 			<div hb-forme-component></div>
 		</div>
