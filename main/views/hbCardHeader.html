@@ -1,10 +1,10 @@
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-4">
 		<div ng-if="containsStandardSourceURI(elfin.SOURCE)" class="col-xs-1" style="padding-left: 4px;">
-			<div  hb-card-view-link hb-href="/elfin/{{elfin.SOURCE}}"></div>
+			<div  hb-card-view-link hb-href="/elfin/{{elfin.SOURCE}}" hb-tooltip="Consulter l'objet parent"></div>
 		</div>
 		<div ng-if="!containsStandardSourceURI(elfin.SOURCE)" class="col-xs-1" style="padding-left: 4px;">
-			<div style="width: 38px;"><a class="btn btn-default btn-xs btn-block disabled" href="#" role="button" ><i class="glyphicon glyphicon-eye-close"></i></a></div>
+			<div style="width: 38px;" tooltip="Pas d'objet parent" tooltip-popup-delay="1500"><a class="btn btn-default btn-xs btn-block disabled" href="#" role="button"><i class="glyphicon glyphicon-eye-close"></i></a></div>
 		</div>		
 		<div class="col-xs-11" style="padding-left: 15px;" tooltip="{{elfin.ID_G}}/{{elfin.Id}}" >
 			<span class="h4">
