@@ -291,11 +291,18 @@
                			function() { 
                         	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
                				hbAlertMessages.addAlert("success",message);
+
                				// Flag information useful not to perform GET on deleted resource.
                				$scope.elfinDeleted = true;
-               				// Go to the list corresponding to the deleted ELFIN collection filtered by CLASSE.
-               				//$location.path("/elfin/" + elfin.ID_G + "/" + elfin.CLASSE);
-               				$location.path("/");
+
+               				// If the current deleted ELFIN contains a valid link to a parent object redirect to the parent object 
+               				// else redirect to the root navigation path
+               				if (hbUtil.containsStandardSourceURI(elfin.SOURCE) ) {
+               					$location.path("/elfin/" + elfin.SOURCE);
+               				} else {
+               					$location.path("/");	
+               				}
+               				
                				// Notify other controllers this elfin has been deleted (used by map)
                             $scope.$emit(HB_EVENTS.ELFIN_DELETED, elfin);
                         },
@@ -522,15 +529,17 @@
 
         $scope.getElfin($scope.collectionId, $scope.elfinId, HB_EVENTS.ELFIN_LOADED);
 
-        
-//        $locationChangeSuccess
-
-        // When the card scope is destroyed, signal potential observers
-        // That there is no more current elfin displayed
+       
+        /** 
+         * When the card scope is destroyed, signal potential observers
+         * That there is no more current elfin displayed
+         */
         $scope.$on('$destroy', function() {
             //$log.debug('Current elfin card closed (controller $destroy) for $location.url = ' + $location.url());
-            // In create mode the elfin instance does not yet exist in the database, getElfin will fail. 
-            // If elfin has been deleted getElfin will fail.
+        	
+            // Get elfin will fail if: 
+        	// 1) In create mode the elfin instance does not yet exist in the database 
+            // 2) Elfin has been deleted
             if ( !($attrs.hbMode === "create") && !$scope.elfinDeleted ) {
 	            // Reload the last saved state and propagate to give chance
 	            // to any other observer to update eventually their scope
