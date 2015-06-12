@@ -96,6 +96,10 @@ module.exports = function(grunt) {
 								'src/hbImmeubleCardController.js',
 								'src/hbImmeubleListController.js',
 								'src/hbImmeubleListDirective.js',
+								
+								'src/hbInstallationSportiveCardController.js',
+								'src/hbInstallationSportiveCardDirective.js',
+								
 								'src/hbListContainerController.js',
 								'src/hbListContainerDirective.js',
 								'src/hbMapController.js',

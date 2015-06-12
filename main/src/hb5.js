@@ -103,6 +103,9 @@
             })
             .when('/elfin/create/INSTALLATION_SPORTIVE', {
                 templateUrl: '/assets/views/INSTALLATION_SPORTIVE_card_new_view.html'
+            })
+            .when('/elfin/:collectionId/INSTALLATION_SPORTIVE/:elfinId', {
+                templateUrl: '/assets/views/INSTALLATION_SPORTIVE_card_view.html'
             })            
             .when('/elfin/create/PRESTATION', {
                 templateUrl: '/assets/views/PRESTATION_card_new_view.html'
