@@ -11,7 +11,8 @@
 			restrict: 'A',
 		    templateUrl : "/assets/views/hbCardViewLink.html",
 		    scope: {
-		    	hbHref: "@hbHref"
+		    	hbHref: "@hbHref",
+		    	hbTooltip: "@hbTooltip"
 	        }
 		    
 		    
