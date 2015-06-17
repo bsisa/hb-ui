@@ -704,6 +704,35 @@
             $scope.activeJob = job;
             hbPrintService.setActiveJob($scope.activeJob);
 
+            // Check if data manager rights are defined for this job/business  
+            if ($scope.activeJob['CARACTERISTIQUE'].hasOwnProperty('CARSET')) {
+            	if ($scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'].length > 0) {
+                    var jobCarsetCar = $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'];
+                    reorderArrayByPOS(jobCarsetCar);
+                    
+                    $log.debug(">>>> MENU : jobCarsetCar = " + angular.toJson(jobCarsetCar));
+                    
+                    var dataManagerAccessRightsCreateUpdate = $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR;
+                    
+                    var dataManagerAccessRightsRead = "";
+                    // We start at 1 as position 0 is reserved for above dataManagerAccessRightsCreateUpdate
+                    for (var i = 1; $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'].length > i ; i++ ) {
+                		dataManagerAccessRightsRead = dataManagerAccessRightsRead + $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'][i].VALEUR
+                    	if (i !== ($scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'].length - 1) ) {
+                    		dataManagerAccessRightsRead = dataManagerAccessRightsRead + ";"
+                    	}
+                    }
+                    
+                	GeoxmlService.setDataManager(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead);            		
+            	} else {
+                	$log.debug(">>>> MENU : CARACTERISTIQUE NO CARSET.CAR Length > 0 !!!");
+            		GeoxmlService.setDataManager("","");
+            	}
+            } else {
+            	$log.debug(">>>> MENU : CARACTERISTIQUE NO CARSET !!!");
+            	GeoxmlService.setDataManager("","");
+            }
+
             /* Load the menus */
             var menuReferences = $scope.activeJob['CARACTERISTIQUE']['FRACTION']['L'];
             reorderArrayByPOS(menuReferences);

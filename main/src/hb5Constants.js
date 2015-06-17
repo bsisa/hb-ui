@@ -55,7 +55,9 @@ angular.module('hb5').constant('HB_EVENTS', {
 angular.module('hb5').constant('HB_API', {
 	ANNEXE_URL : "/api/melfin/annex/",
 	ANNEXE_URL_PREFIX : "annex",
-	ANNEXE_UPLOAD_URL : "/api/melfin/annex/upload"
+	ANNEXE_UPLOAD_URL : "/api/melfin/annex/upload",
+	HTTP_HEADER_DATA_MANAGER_ACCESS_RIGHTS_CREATE_UPDATE : "HyperBird-Data-Manager-Access-Rights-Create-Update",
+	HTTP_HEADER_DATA_MANAGER_ACCESS_RIGHTS_READ : "HyperBird-Data-Manager-Access-Rights-Read"
 });
 
 

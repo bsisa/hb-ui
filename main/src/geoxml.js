@@ -24,28 +24,45 @@
     angular.module('geoxml', ['restangular']).factory('GeoxmlService', [
         'Restangular', '$log', 'HB_API', function(Restangular, $log, HB_API) {
 
-            var restGeoxml = Restangular.withConfig(function(Configurer) {
-            	/*
-            	   To allow single configuration point on the server side 
-            	   apiBaseUrl variable is contained in conf.js file dynamically 
-            	   created by the server.
-            	*/
-            	if (apiBaseUrl==null) {
-            		$log.error("GeoxmlService required apiBaseUrl information missing. This information is served dynamically by the HyperBird server, please make sure it is running.");
-            	}
-            	/* Local hb-ui only test base URL */
-            	//var apiBaseUrl = 'api-mocks';
-             	Configurer.setBaseUrl(apiBaseUrl);
-             	
-             	// Default restangular behaviour assuming id field is id not suitable with ELFIN.Id
-            	// Helpful reference: 
-            	// https://github.com/mgonto/restangular#i-use-mongo-and-the-id-of-the-elements-is-_id-not-id-as-the-default-therefore-requests-are-sent-to-undefined-routes
-            	Configurer.setRestangularFields({ id: "Id" });
-            	
-            });
+        	var restGeoxml = undefined;
+            var _geoxmlService = undefined;
+        	
+        	var setRestGeoxml = function(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead) {
+        		
+        		restGeoxml = Restangular.withConfig(function(Configurer) {
+                	/*
+                	   To allow single configuration point on the server side 
+                	   apiBaseUrl variable is contained in conf.js file dynamically 
+                	   created by the server.
+                	*/
+                	if (apiBaseUrl==null) {
+                		$log.error("GeoxmlService required apiBaseUrl information missing. This information is served dynamically by the HyperBird server, please make sure it is running.");
+                	}
+                	/* Local hb-ui only test base URL */
+                	//var apiBaseUrl = 'api-mocks';
+                 	Configurer.setBaseUrl(apiBaseUrl);
+                 	
+                 	// Default restangular behaviour assuming id field is id not suitable with ELFIN.Id
+                	// Helpful reference: 
+                	// https://github.com/mgonto/restangular#i-use-mongo-and-the-id-of-the-elements-is-_id-not-id-as-the-default-therefore-requests-are-sent-to-undefined-routes
+                	Configurer.setRestangularFields({ id: "Id" });
 
-            var _geoxmlService = restGeoxml.all('');
+                	// Add HyperBird specific HTTP headers field if available
+                	var defaultHeadersObj = {};
+                	defaultHeadersObj[HB_API.HTTP_HEADER_DATA_MANAGER_ACCESS_RIGHTS_CREATE_UPDATE] = dataManagerAccessRightsCreateUpdate;
+                	defaultHeadersObj[HB_API.HTTP_HEADER_DATA_MANAGER_ACCESS_RIGHTS_READ] = dataManagerAccessRightsRead;
+                	
+                	Configurer.setDefaultHeaders( defaultHeadersObj );
+                	
+                });
+        		
+        		_geoxmlService = restGeoxml.all('');
+        		
+        	};
+        	
+        	setRestGeoxml("","");
 
+            $log.debug("GeoxmlService service factory executed.");
 
             return {
 
@@ -128,6 +145,11 @@
                 },
                 getAnnex: function(collectionId, elfinId, fileName) {
                 	return _geoxmlService.one(HB_API.ANNEXE_URL_PREFIX+"/"+collectionId+"/"+elfinId, fileName);
+                },
+                setDataManager: function(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead) {
+                	// Set Restangular service with provided dataManagerToken and refreshes _geoxmlService 
+                	setRestGeoxml(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead);
+                    $log.debug("GeoxmlService setDataManager run with dataManagerAccessRightsCreateUpdate = >" + dataManagerAccessRightsCreateUpdate +"< , dataManagerAccessRightsRead = >" + dataManagerAccessRightsRead +"<");
                 }
                 
             };
