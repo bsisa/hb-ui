@@ -701,7 +701,12 @@
 
         /* Change the job */
         $scope.activateJob = function(job) {
-            $scope.activeJob = job;
+            
+        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called <<<<<<<<<<<<<<<<<<<<");
+        	$log.debug(">>>>>>>>>>>>>>>>> "+ angular.toJson(job) +" <<<<<<<<<<<<<<<<<<<<");
+        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called <<<<<<<<<<<<<<<<<<<<");
+        	
+        	$scope.activeJob = job;
             hbPrintService.setActiveJob($scope.activeJob);
 
             // Check if data manager rights are defined for this job/business  
@@ -780,6 +785,8 @@
                         hbAlertMessages.addAlert("danger",errorMessage);
                 });
             });
+            
+            $location.path('/');
         };
     }]);
 

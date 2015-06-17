@@ -21,17 +21,52 @@
     hb5.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: '/assets/views/welcome.html'
-//                controller: function($scope, $location, $timeout, $log) {
-//                	$scope.postWelcome = function() {
-//                		$timeout(function() {
-//                			// TODO: create a CONSTANT service using angular .constant
-//                    		var IMMEUBLE_COLLECTION_ID = 'G20040930101030005';
-//                    		$location.path( '/elfin/'+IMMEUBLE_COLLECTION_ID+'/IMMEUBLE' );	
-//                    	}, 1250, true);     
-//                	};
-//                }
+                templateUrl: '/assets/views/welcome.html',
+                controller: [ '$scope', '$location', '$timeout', '$log', 'hbPrintService', function($scope, $location, $timeout, $log, hbPrintService) {
+
+                	$scope.selectedBusinessName = "";
+                	var businessDashboardLoadWaitTimeMillisec = 2500;
+                	var activeJob = hbPrintService.getActiveJob();
+                	
+                	$scope.postWelcome = function() {
+                		$log.debug(">>>> postWelcome function called <<<<");
+                		
+                		$timeout(function() {
+                			activeJob = hbPrintService.getActiveJob();
+                    	}, 500, true); 
+
+                    	// Set job / business name to display to end user during 
+                    	// businessDashboardLoadWaitTimeMillisec time
+                    	if (activeJob) {
+                    		$scope.selectedBusinessName = activeJob['IDENTIFIANT']['NOM'];
+                    	} else {
+                    		$scope.selectedBusinessName = "";
+                    	}
+                		
+                		$timeout(function() {
+                			$log.debug(">>>> $timeout ran ... <<<<");
+                			activeJob = hbPrintService.getActiveJob();
+                    		if (activeJob['CARACTERISTIQUE']['CARSET'] && activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR) {
+                    			$location.path( '/' + activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR);
+                    		} else {
+                    			$location.path( '/SBAT' );
+                    		}
+                    	}, 2500, true);     
+                	};
+                	
+                	$scope.postWelcome();
+                	$log.debug(">>>> / controller loaded END <<<<");
+                }]
             })
+            .when('/SSPO', {
+                templateUrl: '/assets/views/indexSspo.html'
+            })
+            .when('/SBAT', {
+                templateUrl: '/assets/views/indexSbat.html'
+            })            
+            .when('/elfin/create/ACTEUR', {
+                templateUrl: '/assets/views/ACTEUR_card_new_view.html'
+            })            
             .when('/elfin/create/ACTEUR', {
                 templateUrl: '/assets/views/ACTEUR_card_new_view.html'
             })
