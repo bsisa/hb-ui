@@ -90,12 +90,17 @@
 							        $scope.prestations = null;
 							        
 							        // Arrays containing lists of technical equipment related CLASSE.
-							        $scope.productionChaleurList = null;
-							        $scope.productionFroidList = null;
-							        $scope.ventilationList = null;
-							        $scope.citerneList = null;
+							        $scope.productionChaleurList = [];
+							        $scope.productionFroidList = [];
+							        $scope.ventilationList = [];
+							        $scope.citerneList = [];
 							        $scope.introductionElectriciteList = null;
 							        $scope.equipementList = null;
+							        
+							        var computeEquipementsCount = function() {
+							        	$scope.equipementsCount = ($scope.productionChaleurList.length + $scope.productionFroidList.length + $scope.ventilationList.length + $scope.citerneList.length);							        	
+							        };
+							        computeEquipementsCount();
 							        
 							        var currentYear = moment().year();
 							        var lastYear = currentYear - 1;
@@ -326,6 +331,7 @@
 								            hbQueryService.getProductionChaleurList(xpathForProductionChaleur)
 												.then(function(elfins) {
 														$scope.productionChaleurList = elfins;
+														computeEquipementsCount();
 														if ($scope.productionChaleurList) {
 															$log.debug(">>>> $scope.productionChaleurList.length = " + $scope.productionChaleurList.length);
 														} else {
@@ -341,6 +347,7 @@
 								            hbQueryService.getProductionFroidList(xpathForProductionFroid)
 												.then(function(elfins) {
 														$scope.productionFroidList = elfins;
+														computeEquipementsCount();
 														if ($scope.productionFroidList) {
 															$log.debug(">>>> $scope.productionFroidList.length = " + $scope.productionFroidList.length);
 														} else {
@@ -356,6 +363,7 @@
 								            hbQueryService.getProductionFroidList(xpathForVentilation)
 												.then(function(elfins) {
 														$scope.ventilationList = elfins;
+														computeEquipementsCount();
 														if ($scope.ventilationList) {
 															$log.debug(">>>> $scope.ventilationList.length = " + $scope.ventilationList.length);
 														} else {
@@ -371,6 +379,7 @@
 								            hbQueryService.getCiterneList(xpathForCiterne)
 												.then(function(elfins) {
 														$scope.citerneList = elfins;
+														computeEquipementsCount();
 														if ($scope.citerneList) {
 															$log.debug(">>>> $scope.citerneList.length = " + $scope.citerneList.length);
 														} else {
