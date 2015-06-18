@@ -786,8 +786,33 @@
                 });
             });
             
-            $location.path('/');
+            // TODO: path should come from selected job configuration
+            // to avoid an unnecessary loop to welcome page and associated
+            // "loading selected business..." message and wait time.
+            var dashboardUri = getDashboarUri(job);
+
+            $location.path(dashboardUri);
         };
+        
+        /**
+         * Returns the dashboard URI in provided 'job' parameter if present and valid, '/' otherwise.
+         */
+        var getDashboarUri = function(job) {
+        	// Check presence of dashboard URI in job configuration
+        	if (job['CARACTERISTIQUE'] && job['CARACTERISTIQUE']['CAR2'] && job['CARACTERISTIQUE']['CAR2']['VALEUR']) {
+        		var dashboardUriConfigValue = job['CARACTERISTIQUE']['CAR2']['VALEUR'];
+        		// Check content of existing dashboard URI job configuration
+        		if (dashboardUriConfigValue.startsWith('/') && (dashboardUriConfigValue.trim().length > 1) ) {
+        			return dashboardUriConfigValue.trim();
+        		} else {
+        			return "/";
+        		}
+        	} else {
+        		return "/";
+        	}
+        	
+        };
+        
     }]);
 
 })();

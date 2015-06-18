@@ -54,7 +54,11 @@
                     	}, 2500, true);     
                 	};
                 	
-                	$scope.postWelcome();
+                	//TODO: Evaluation for SSPO: Call postWelcome() from welcome.html page 
+                	// to avoid execution at controller creation time while route is not '/' 
+                	// although usually when controller is being created the default job 
+                	// is being triggered as well... which leads to the same behaviour.
+                	//$scope.postWelcome();
                 	$log.debug(">>>> / controller loaded END <<<<");
                 }]
             })
