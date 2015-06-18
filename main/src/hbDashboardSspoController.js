@@ -36,7 +36,7 @@
 		 */
     	$scope.$watch('asElfins', function() { 
     		if ($scope.asElfins!=null) {
-				$scope.filteredAsElfins = filterAmenagementSportifElfins($scope.asElfins, $scope.immeubleSearch);										
+				$scope.filteredAsElfins = filterAmenagementSportifElfins($scope.asElfins, $scope.asSearch);										
     		}
     	});	        
 
