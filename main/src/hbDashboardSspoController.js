@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbDashboardSspoController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbDashboardSspoController', ['$attrs', '$scope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', function($attrs, $scope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil, hbQueryService) {
     
     	$log.debug("    >>>> HbDashboardSspoController called at " + new Date());
     	
@@ -9,7 +9,6 @@
     	// ============================================================    	
     	
     	// ==== Initialisation ========================================
-    	var asCollectionId = HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID;
     	
 		/**
 		 *  Apply amenagementSportifListAnyFilter
@@ -19,12 +18,11 @@
 	    	return filteredSortedElfins;
 		};    	
     	
-        // Contains ELFINs JSON Array resulting from the GeoxmlService query   
+        // Contains ELFINs JSON Array resulting from the hbQueryService   
         $scope.asElfins = null;
         
-        // Query all available buildings IMMEUBLE 
-        // TODO: move to hbQueryService
-        GeoxmlService.getCollection(asCollectionId).getList()
+        // Query all available AMENAGEMENT_SPORTIF 
+        hbQueryService.getAmenagementSportifs()
 	        .then(function(asElfins) {
         		$scope.asElfins = asElfins;
         		$scope.filteredAsElfins = filterAmenagementSportifElfins($scope.asElfins, $scope.asSearch);
@@ -49,11 +47,11 @@
          * Either a list, a card or stay on current page if selection is 0. 
          */
         $scope.listOrViewAs = function() {
-        	// 
+        	
         	if ($scope.filteredAsElfins.length > 1) {
-        		$location.path('/elfin/'+asCollectionId+'/AMENAGEMENT_SPORTIF').search('search', $scope.asSearch.text);
+        		$location.path('/elfin/'+HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID+'/AMENAGEMENT_SPORTIF').search('search', $scope.asSearch.text);
         	} else if ($scope.filteredAsElfins.length == 1) {
-        		$location.path('/elfin/'+asCollectionId+'/AMENAGEMENT_SPORTIF/' + $scope.filteredAsElfins[0].Id);	
+        		$location.path('/elfin/'+HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID+'/AMENAGEMENT_SPORTIF/' + $scope.filteredAsElfins[0].Id);	
         	}
         };                
 

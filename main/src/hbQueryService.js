@@ -31,6 +31,19 @@
 	        return getList(HB_COLLECTIONS.ACTOR_ID,xpath);
 		};		
 		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID` identifies collection containing ELFIN objects of CLASSE AMENAGEMENT_SPORTIF.  
+		 *  @see getList
+		 */		
+		var getAmenagementSportifs = function(xpath) {
+	        return getList(HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID,xpath);
+		};			
+		
+				
+		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *  
@@ -171,6 +184,7 @@
 	
         return {
         	getActors:getActors,
+        	getAmenagementSportifs:getAmenagementSportifs,
         	getCiterneList:getCiterneList,
         	getContrats:getContrats,
         	getEquipementList:getEquipementList,
