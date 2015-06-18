@@ -1,0 +1,64 @@
+
+<table class="table table-condensed table-bordered table-striped" >
+	<tbody>
+		<tr>
+			<th class="dashboard" style="width: 33%;">Aménagement{{ asElfins.length | plural }} sportif{{ asElfins.length | plural }} <span class="badge">{{asElfins.length}}</span></th>
+			<th class="dashboard">INSTALLATION_SPORTIVE</th>
+			<th class="dashboard" style="width: 33%;">EQUIPEMENT_SPORTIF</th>
+		</tr>
+		<tr>
+			<td ><img ng-click="listOrViewAs()" src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td >...</td>
+			<td >...</td>
+		</tr>
+		<tr>
+			<th >Sélection  <span class="badge">{{filteredAsElfins.length}}</span>
+				<div class="right">
+					<button tabindex="2" class="btn btn-primary btn-xs" ng-click="listOrViewAs()" ng-disabled="filteredAsElfins.length < 1">
+						<span ng-show="filteredAsElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+			<th >Sélection  <span class="badge">xxx</span>
+				<div class="right">
+					<button tabindex="4" class="btn btn-primary btn-xs" ng-click="xxx" ng-disabled="xxx < 1">
+						<span ng-show="xxx > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="xxx <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>						
+					</button>
+				</div>			
+			</th>
+			<th >Sélection  <span class="badge">xxx</span>
+				<div class="right">
+					<button tabindex="4" class="btn btn-primary btn-xs" ng-click="xxx" ng-disabled="xxx < 1">
+						<span ng-show="xxx > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="xxx <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>						
+					</button>
+				</div>			
+			</th>
+		</tr>
+		<tr>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewAs()" tabindex="1" id="asSearchTextInput" name="asSearchTextInput" type="text" class="form-control" ng-model="asSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="xxx" tabindex="3" type="text" class="form-control" ng-model="xxx" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="xxx" tabindex="5" type="text" class="form-control" ng-model="xxx" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+	</tbody>
+</table>
