@@ -1,0 +1,26 @@
+<div class="col-xs-12" style="padding: 0px 0px 0px 0px; margin: 0px">
+<!-- Preserve room by removing the search icon -->
+<!-- 	<div class="col-sm-1" style="padding: 4px 0px 4px; color: grey;"> -->
+<!-- 		<i class="glyphicon glyphicon-search"></i> -->
+<!-- 	</div> -->
+	<div class="col-xs-9 form-group" style="padding: 0px;">
+		<div class="col-xs-12 input-group" style="padding: 0px 0px 0px 4px;">
+			<input class="form-control input-sm" hb-enter="listOrViewAs()"
+				id="hbSearchTextInput"
+				name="hbSearchTextInput" type="text" class="form-control"
+				ng-model="asSearch.text" hb-no-dirty-check placeholder="">
+		
+			<span class="input-group-btn">
+				<button class="btn btn-default btn-sm"
+					ng-click="listOrViewAs()"
+					ng-disabled="filteredAsElfins.length < 1">
+					<span ng-show="filteredAsElfins.length > 1 || !filteredAsElfins"><i class="glyphicon glyphicon-list-alt"></i></span>
+					<span ng-show="filteredAsElfins.length <= 1"><i	class="glyphicon glyphicon-eye-open"></i></span>
+				</button>				
+			</span>
+		</div>
+	</div>
+	<div class="col-xs-3" style="padding: 6px 0px 4px 0px; text-align: center;">
+		<span class="badge">{{filteredAsElfins.length}}</span>
+	</div>
+</div>

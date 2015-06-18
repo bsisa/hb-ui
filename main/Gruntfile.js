@@ -122,6 +122,10 @@ module.exports = function(grunt) {
 								'src/hbRoleCardDirective.js',
 								'src/hbSearchController.js',
 								'src/hbSearchDirective.js',
+
+								'src/hbSearchSspoController.js',
+								'src/hbSearchSspoDirective.js',
+								
 								'src/hbSurfaceCardController.js',
 								'src/hbSurfaceCardDirective.js',
 								'src/hbSingleSelectController.js',
