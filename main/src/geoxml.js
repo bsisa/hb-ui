@@ -62,8 +62,6 @@
         	
         	setRestGeoxml("","");
 
-            $log.debug("GeoxmlService service factory executed.");
-
             return {
 
             	// TODO: Review: angular does not detect model modifications performed using this function.

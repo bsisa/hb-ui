@@ -730,11 +730,9 @@
                     
                 	GeoxmlService.setDataManager(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead);            		
             	} else {
-                	$log.debug(">>>> MENU : CARACTERISTIQUE NO CARSET.CAR Length > 0 !!!");
             		GeoxmlService.setDataManager("","");
             	}
             } else {
-            	$log.debug(">>>> MENU : CARACTERISTIQUE NO CARSET !!!");
             	GeoxmlService.setDataManager("","");
             }
 
