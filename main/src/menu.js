@@ -702,9 +702,9 @@
         /* Change the job */
         $scope.activateJob = function(job) {
             
-        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called <<<<<<<<<<<<<<<<<<<<");
-        	$log.debug(">>>>>>>>>>>>>>>>> "+ angular.toJson(job) +" <<<<<<<<<<<<<<<<<<<<");
-        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called <<<<<<<<<<<<<<<<<<<<");
+//        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called <<<<<<<<<<<<<<<<<<<<");
+//        	$log.debug(">>>>>>>>>>>>>>>>> "+ angular.toJson(job) +" <<<<<<<<<<<<<<<<<<<<");
+//        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called <<<<<<<<<<<<<<<<<<<<");
         	
         	$scope.activeJob = job;
             hbPrintService.setActiveJob($scope.activeJob);
@@ -786,32 +786,17 @@
                 });
             });
             
-            // TODO: path should come from selected job configuration
-            // to avoid an unnecessary loop to welcome page and associated
-            // "loading selected business..." message and wait time.
-            var dashboardUri = getDashboarUri(job);
+            // Get path from selected job configuration
+            var dashboardUri = hbUtil.getDashboarUri(job);
 
-            $location.path(dashboardUri);
+   			// Redefine searchObj as empty to get rid of sticky URL parameters 
+   			// Note former solution $location.url($location.path(dashboardUri)); 
+   			// to this problem triggers an unwanted reload of welcome page
+    		var searchObj = {};
+			$location.search(searchObj).path( dashboardUri );
         };
         
-        /**
-         * Returns the dashboard URI in provided 'job' parameter if present and valid, '/' otherwise.
-         */
-        var getDashboarUri = function(job) {
-        	// Check presence of dashboard URI in job configuration
-        	if (job['CARACTERISTIQUE'] && job['CARACTERISTIQUE']['CAR2'] && job['CARACTERISTIQUE']['CAR2']['VALEUR']) {
-        		var dashboardUriConfigValue = job['CARACTERISTIQUE']['CAR2']['VALEUR'];
-        		// Check content of existing dashboard URI job configuration
-        		if (dashboardUriConfigValue.startsWith('/') && (dashboardUriConfigValue.trim().length > 1) ) {
-        			return dashboardUriConfigValue.trim();
-        		} else {
-        			return "/";
-        		}
-        	} else {
-        		return "/";
-        	}
-        	
-        };
+
         
     }]);
 

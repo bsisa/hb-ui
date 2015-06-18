@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbListContainerController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$location', 'hbAlertMessages', 'hbUtil', 'MapService', 'HB_EVENTS', function($attrs, $scope, GeoxmlService, $routeParams, $log, $location, hbAlertMessages, hbUtil, MapService, HB_EVENTS) {
+    angular.module('hb5').controller('HbListContainerController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$location', 'hbAlertMessages', 'hbUtil', 'MapService', 'HB_EVENTS', 'hbPrintService', function($attrs, $scope, GeoxmlService, $routeParams, $log, $location, hbAlertMessages, hbUtil, MapService, HB_EVENTS, hbPrintService) {
     
     	//$log.debug("    >>>> HbListContainerController called...");
     	
@@ -26,9 +26,13 @@
          * Go home navigation function
          */
     	$scope.home = function() {
-    		// Need to encapsulate location path in location url 
-    		// to reset any possibly existing search parameters from URL. 
-    		$location.url($location.path('/'));
+    		var activeJob = hbPrintService.getActiveJob();
+    		var dashboardUri = hbUtil.getDashboarUri(activeJob);
+    		// Redefine searchObj as empty to get rid of sticky URL parameters 
+   			// Note former solution $location.url($location.path(dashboardUri)); 
+   			// to this problem triggers an unwanted reload of welcome page
+    		var searchObj = {};
+			$location.search(searchObj).path( dashboardUri );
     	};
         
         // ============================================================

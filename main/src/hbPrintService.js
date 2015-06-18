@@ -154,7 +154,7 @@
 						
 					},
 					getActiveJob : function() {
-						$log.debug(">>>>>>>>>>> GET ACTIVE JOB RETURNS: " + angular.toJson(activeJob));
+//						$log.debug(">>>>>>>>>>> GET ACTIVE JOB RETURNS: " + angular.toJson(activeJob));
 						return activeJob;
 					},
 					getReportDefinitions : function() {

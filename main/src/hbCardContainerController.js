@@ -85,10 +85,13 @@
          * Go home navigation function
          */
     	$scope.home = function() {
-    		$log.debug("$scope.home...");
-    		// Need to encapsulate location path in location url 
-    		// to reset any possibly existing search parameters from URL. 
-    		$location.url($location.path('/'));
+    		var activeJob = hbPrintService.getActiveJob();
+    		var dashboardUri = hbUtil.getDashboarUri(activeJob);
+    		// Redefine searchObj as empty to get rid of sticky URL parameters 
+   			// Note former solution $location.url($location.path(dashboardUri)); 
+   			// to this problem triggers an unwanted reload of welcome page
+    		var searchObj = {};
+			$location.search(searchObj).path( dashboardUri );    		
     	};
         
               

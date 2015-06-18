@@ -387,6 +387,25 @@
         };
         
         
+        /**
+         * Returns the dashboard URI in provided 'job' parameter if present and valid, '/' otherwise.
+         */
+        var getDashboarUri = function(job) {
+        	// Check presence of dashboard URI in job configuration
+        	if (job['CARACTERISTIQUE'] && job['CARACTERISTIQUE']['CAR2'] && job['CARACTERISTIQUE']['CAR2']['VALEUR']) {
+        		var dashboardUriConfigValue = job['CARACTERISTIQUE']['CAR2']['VALEUR'];
+        		// Check content of existing dashboard URI job configuration
+        		if (dashboardUriConfigValue.startsWith('/') && (dashboardUriConfigValue.trim().length > 1) ) {
+        			return dashboardUriConfigValue.trim();
+        		} else {
+        			return "/";
+        		}
+        	} else {
+        		return "/";
+        	}
+        	
+        };        
+        
 		// ============================================================
 		// HyperBird catalog data conversion utilities
 		// ============================================================
@@ -583,6 +602,7 @@
         	buildKeyValueObject:buildKeyValueObject,
         	buildUrlQueryString:buildUrlQueryString,
         	containsStandardSourceURI:containsStandardSourceURI,
+        	getDashboarUri:getDashboarUri,
         	deepCopy:deepCopy,
         	encodeUriParameter:encodeUriParameter,
         	getAnnexesExcludingTag:getAnnexesExcludingTag,
