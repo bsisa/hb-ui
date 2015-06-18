@@ -28,12 +28,15 @@
                 	var businessDashboardLoadWaitTimeMillisec = 2500;
                 	var activeJob = hbPrintService.getActiveJob();
                 	
-                	$scope.postWelcome = function() {
-                		$log.debug(">>>> postWelcome function called <<<<");
-                		
+                	$scope.init = function() {
                 		$timeout(function() {
                 			activeJob = hbPrintService.getActiveJob();
                     	}, 500, true); 
+                		
+                		$scope.redirectToDashboard();                		
+                	};
+                	
+                	$scope.redirectToDashboard = function() {
 
                     	// Set job / business name to display to end user during 
                     	// businessDashboardLoadWaitTimeMillisec time
@@ -41,24 +44,24 @@
                     		$scope.selectedBusinessName = activeJob['IDENTIFIANT']['NOM'];
                     	} else {
                     		$scope.selectedBusinessName = "";
-                    	}
+                    	}                		
                 		
                 		$timeout(function() {
-                			$log.debug(">>>> $timeout ran ... <<<<");
+                			$log.debug(">>>> businessDashboardLoadWaitTimeMillisec = "+businessDashboardLoadWaitTimeMillisec+" <<<<");
                 			activeJob = hbPrintService.getActiveJob();
                     		if (activeJob['CARACTERISTIQUE']['CARSET'] && activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR) {
                     			$location.path( '/' + activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR);
                     		} else {
                     			$location.path( '/SBAT' );
                     		}
-                    	}, 2500, true);     
-                	};
+                    		// We want value > 0 only a controller initialisation time.
+                    		businessDashboardLoadWaitTimeMillisec = 0;
+                    	}, businessDashboardLoadWaitTimeMillisec, true);                    	
+                    	
+                	};                	
                 	
-                	//TODO: Evaluation for SSPO: Call postWelcome() from welcome.html page 
-                	// to avoid execution at controller creation time while route is not '/' 
-                	// although usually when controller is being created the default job 
-                	// is being triggered as well... which leads to the same behaviour.
-                	//$scope.postWelcome();
+                	$scope.init();
+                	
                 	$log.debug(">>>> / controller loaded END <<<<");
                 }]
             })
