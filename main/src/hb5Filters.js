@@ -241,6 +241,7 @@
                     	 icontains(amenagementSportif.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
                     	 //icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
                     	 icontains(amenagementSportifPlace.VALEUR, predicate.place) &&
+                    	 icontains(amenagementSportif.GROUPE, predicate.group) &&
                     	 icontains(amenagementSportif.IDENTIFIANT.NOM, predicate.buildingNb) &&
                     	 icontains(amenagementSportif.IDENTIFIANT.ALIAS, predicate.address)
                     ) {
