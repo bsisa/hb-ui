@@ -17,12 +17,18 @@
 	    	var filteredSortedElfins = $filter('amenagementSportifListAnyFilter')(elfins_p, search_p.text);
 	    	return filteredSortedElfins;
 		};    	
+		
+		var filterAmenagementSportifStadeElfins = function(elfins_p) {
+	    	var filteredSortedElfins = $filter('amenagementSportifListFilter')(elfins_p, { "group" : "Stades et terrains" } );
+	    	return filteredSortedElfins;
+		};    			
     	
         // Contains ELFINs JSON Array resulting from the hbQueryService   
         $scope.asElfins = null;
         
         // Query all available AMENAGEMENT_SPORTIF 
-        hbQueryService.getAmenagementSportifs()
+        //hbQueryService.getAmenagementSportifs("//ELFIN[@CLASSE='AMENAGEMENT_SPORTIF' and @GROUPE='Stades et terrains']")
+        hbQueryService.getAmenagementSportifs()        
 	        .then(function(asElfins) {
         		$scope.asElfins = asElfins;
         		$scope.filteredAsElfins = filterAmenagementSportifElfins($scope.asElfins, $scope.asSearch);
@@ -36,7 +42,7 @@
 		 */
     	$scope.$watch('asElfins', function() { 
     		if ($scope.asElfins!=null) {
-				$scope.filteredAsElfins = filterAmenagementSportifElfins($scope.asElfins, $scope.asSearch);										
+				$scope.filteredAsElfins = filterAmenagementSportifElfins(filterAmenagementSportifStadeElfins($scope.asElfins), $scope.asSearch);										
     		}
     	});	        
 
@@ -49,7 +55,10 @@
         $scope.listOrViewAs = function() {
         	
         	if ($scope.filteredAsElfins.length > 1) {
-        		$location.path('/elfin/'+HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID+'/AMENAGEMENT_SPORTIF').search('search', $scope.asSearch.text);
+        		var searchObj = { 'search' : $scope.asSearch.text, 'group' : 'Stades et terrains'};
+        		$location.path('/elfin/'+HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID+'/AMENAGEMENT_SPORTIF').search(searchObj);
+        		//$location.path('/elfin/'+HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID+'/AMENAGEMENT_SPORTIF').search('search', $scope.asSearch.text);
+        		
         	} else if ($scope.filteredAsElfins.length == 1) {
         		$location.path('/elfin/'+HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID+'/AMENAGEMENT_SPORTIF/' + $scope.filteredAsElfins[0].Id);	
         	}
@@ -65,7 +74,7 @@
 		 */
     	$scope.$watch('asSearch', function(newSearch, oldSearch) {
     		if ($scope.asElfins!=null) {
-				$scope.filteredAsElfins = filterAmenagementSportifElfins($scope.asElfins, $scope.asSearch);
+				$scope.filteredAsElfins = filterAmenagementSportifElfins(filterAmenagementSportifStadeElfins($scope.asElfins), $scope.asSearch);
     		}
     	}, true);								
 			
@@ -73,7 +82,6 @@
         // AMENAGEMENT_SPORTIF search - end
     	// ============================================================    	
 		
-    	    	
         
         
     	var focusOnSearchField = function() {
