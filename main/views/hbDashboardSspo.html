@@ -1,15 +1,23 @@
 
+<!-- 
+Stades et terrains
+Piscines
+Patinoires
+Salles
+Places de sport
+Droits de superficie et autres
+ -->
 <table class="table table-condensed table-bordered table-striped" >
 	<tbody>
 		<tr>
-			<th class="dashboard" style="width: 33%;">Aménagement{{ asElfins.length | plural }} sportif{{ asElfins.length | plural }} <span class="badge">{{asElfins.length}}</span></th>
-			<th class="dashboard">INSTALLATION_SPORTIVE</th>
-			<th class="dashboard" style="width: 33%;">EQUIPEMENT_SPORTIF</th>
+			<th class="dashboard" style="width: 33%;">Stade{{ asElfins.length | plural }} et terrain{{ asElfins.length | plural }} <span class="badge">{{asElfins.length}}</span></th>
+			<th class="dashboard" >Piscine{{ asElfins.length | plural }} <span class="badge">{{asElfins.length}}</span></th>
+			<th class="dashboard" style="width: 33%;">Patinoire{{ asElfins.length | plural }} <span class="badge">{{asElfins.length}}</span></th>
 		</tr>
 		<tr>
 			<td ><img ng-click="listOrViewAs()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td >...</td>
-			<td >...</td>
+			<td ><img ng-click="listOrViewAs()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewAs()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>
 		<tr>
 			<th >Sélection  <span class="badge">{{filteredAsElfins.length}}</span>
@@ -20,20 +28,20 @@
 					</button>
 				</div>			
 			</th>
-			<th >Sélection  <span class="badge">xxx</span>
+			<th >Sélection  <span class="badge">{{filteredAsElfins.length}}</span>
 				<div class="right">
-<!-- 					<button tabindex="4" class="btn btn-primary btn-xs" ng-click="xxx" ng-disabled="xxx < 1"> -->
-<!-- 						<span ng-show="xxx > 1"><i class="glyphicon glyphicon-list-alt"></i></span> -->
-<!-- 						<span ng-show="xxx <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>						 -->
-<!-- 					</button> -->
+					<button tabindex="4" class="btn btn-primary btn-xs" ng-click="listOrViewAs()" ng-disabled="filteredAsElfins.length < 1">
+						<span ng-show="filteredAsElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
 				</div>			
 			</th>
-			<th >Sélection  <span class="badge">xxx</span>
+			<th >Sélection  <span class="badge">{{filteredAsElfins.length}}</span>
 				<div class="right">
-<!-- 					<button tabindex="4" class="btn btn-primary btn-xs" ng-click="xxx" ng-disabled="xxx < 1"> -->
-<!-- 						<span ng-show="xxx > 1"><i class="glyphicon glyphicon-list-alt"></i></span> -->
-<!-- 						<span ng-show="xxx <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>						 -->
-<!-- 					</button> -->
+					<button tabindex="6" class="btn btn-primary btn-xs" ng-click="listOrViewAs()" ng-disabled="filteredAsElfins.length < 1">
+						<span ng-show="filteredAsElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
 				</div>			
 			</th>
 		</tr>
@@ -48,17 +56,81 @@
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-<!-- 						<input hb-enter="xxx" tabindex="3" type="text" class="form-control" ng-model="xxx" hb-no-dirty-check placeholder=""> -->
+						<input hb-enter="listOrViewAs()" tabindex="3" id="asSearchTextInput" name="asSearchTextInput" type="text" class="form-control" ng-model="asSearch.text" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-<!-- 						<input hb-enter="xxx" tabindex="5" type="text" class="form-control" ng-model="xxx" hb-no-dirty-check placeholder=""> -->
+						<input hb-enter="listOrViewAs()" tabindex="5" id="asSearchTextInput" name="asSearchTextInput" type="text" class="form-control" ng-model="asSearch.text" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
 		</tr>
 	</tbody>
 </table>
+<table class="table table-condensed table-bordered table-striped" >
+	<tbody>
+		<tr>
+			<th class="dashboard" style="width: 33%;">Salle{{ asElfins.length | plural }} <span class="badge">{{asElfins.length}}</span></th>
+			<th class="dashboard" >Place{{ asElfins.length | plural }} de sport <span class="badge">{{asElfins.length}}</span></th>
+			<th class="dashboard" style="width: 33%;">Droits de superficie et autres <span class="badge">{{asElfins.length}}</span></th>
+		</tr>
+		<tr>
+			<td ><img ng-click="listOrViewAs()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewAs()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewAs()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+		</tr>
+		<tr>
+			<th >Sélection  <span class="badge">{{filteredAsElfins.length}}</span>
+				<div class="right">
+					<button tabindex="8" class="btn btn-primary btn-xs" ng-click="listOrViewAs()" ng-disabled="filteredAsElfins.length < 1">
+						<span ng-show="filteredAsElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+			<th >Sélection  <span class="badge">{{filteredAsElfins.length}}</span>
+				<div class="right">
+					<button tabindex="10" class="btn btn-primary btn-xs" ng-click="listOrViewAs()" ng-disabled="filteredAsElfins.length < 1">
+						<span ng-show="filteredAsElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+			<th >Sélection  <span class="badge">{{filteredAsElfins.length}}</span>
+				<div class="right">
+					<button tabindex="12" class="btn btn-primary btn-xs" ng-click="listOrViewAs()" ng-disabled="filteredAsElfins.length < 1">
+						<span ng-show="filteredAsElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+		</tr>
+		<tr>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewAs()" tabindex="7" id="asSearchTextInput" name="asSearchTextInput" type="text" class="form-control" ng-model="asSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewAs()" tabindex="9" id="asSearchTextInput" name="asSearchTextInput" type="text" class="form-control" ng-model="asSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewAs()" tabindex="11" id="asSearchTextInput" name="asSearchTextInput" type="text" class="form-control" ng-model="asSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+	</tbody>
+</table>
+
