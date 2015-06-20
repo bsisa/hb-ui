@@ -243,7 +243,9 @@
         		var restGeoxml = GeoxmlService.getService();
         		$log.debug(">>>>> create mode: perform POST to: elfin.ID_G/elfin.Id = " + elfin.ID_G+ '/' + elfin.Id);
         		restGeoxml.all(elfin.ID_G+ '/' + elfin.Id).post(elfin).then( 
-               			function() { 
+               			function() {
+               				// TODO: SDS
+               				//elfin.IDENTIFIANT.GER = hbPrintService.getActiveJob()
     	       				$scope.elfin = elfin;
     	                    $scope.elfinForm.$setPristine();
     	                   	var redirUrl = '/elfin/'+elfin.ID_G+'/'+$attrs.hbElfinClasse+'/'+elfin.Id;
