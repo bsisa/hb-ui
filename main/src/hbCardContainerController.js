@@ -259,10 +259,13 @@
 
         		var restGeoxml = GeoxmlService.getService();
         		$log.debug(">>>>> create mode: perform POST to: elfin.ID_G/elfin.Id = " + elfin.ID_G+ '/' + elfin.Id);
+        		
+  				// Override IDENTIFIANT/GER with current data manager access rights. 
+   				// If no IDENTIFIANT/GER exists it will be created
+   				elfin.IDENTIFIANT.GER = GeoxmlService.getCurrentDataManagerAccessRightsCreateUpdate();
+        		
         		restGeoxml.all(elfin.ID_G+ '/' + elfin.Id).post(elfin).then( 
                			function() {
-               				// TODO: SDS
-               				//elfin.IDENTIFIANT.GER = hbPrintService.getActiveJob()
     	       				$scope.elfin = elfin;
     	                    $scope.elfinForm.$setPristine();
     	                   	var redirUrl = '/elfin/'+elfin.ID_G+'/'+$attrs.hbElfinClasse+'/'+elfin.Id;
@@ -322,7 +325,7 @@
                				if (hbUtil.containsStandardSourceURI(elfin.SOURCE) ) {
                					$location.path("/elfin/" + elfin.SOURCE);
                				} else {
-               					$location.path("/");	
+               					$scope.home();
                				}
                				
                				// Notify other controllers this elfin has been deleted (used by map)
