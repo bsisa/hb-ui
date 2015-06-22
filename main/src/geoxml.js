@@ -26,8 +26,12 @@
 
         	var restGeoxml = undefined;
             var _geoxmlService = undefined;
+            var currentDataManagerAccessRightsCreateUpdate = undefined;
         	
         	var setRestGeoxml = function(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead) {
+        		
+        		currentDataManagerAccessRightsCreateUpdate = dataManagerAccessRightsCreateUpdate;
+        		$log.debug("GeoxmlService: currentDataManagerAccessRightsCreateUpdate set to : " + currentDataManagerAccessRightsCreateUpdate);
         		
         		restGeoxml = Restangular.withConfig(function(Configurer) {
                 	/*
@@ -51,6 +55,8 @@
                 	var defaultHeadersObj = {};
                 	defaultHeadersObj[HB_API.HTTP_HEADER_DATA_MANAGER_ACCESS_RIGHTS_CREATE_UPDATE] = dataManagerAccessRightsCreateUpdate;
                 	defaultHeadersObj[HB_API.HTTP_HEADER_DATA_MANAGER_ACCESS_RIGHTS_READ] = dataManagerAccessRightsRead;
+                	
+                	
                 	
                 	Configurer.setDefaultHeaders( defaultHeadersObj );
                 	
@@ -148,6 +154,10 @@
                 	// Set Restangular service with provided dataManagerToken and refreshes _geoxmlService 
                 	setRestGeoxml(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead);
                     $log.debug("GeoxmlService setDataManager run with dataManagerAccessRightsCreateUpdate = >" + dataManagerAccessRightsCreateUpdate +"< , dataManagerAccessRightsRead = >" + dataManagerAccessRightsRead +"<");
+                },
+                getCurrentDataManagerAccessRightsCreateUpdate: function() {
+                	$log.debug("GeoxmlService: getCurrentDataManagerAccessRightsCreateUpdate() set to : " + currentDataManagerAccessRightsCreateUpdate);
+                	return currentDataManagerAccessRightsCreateUpdate;
                 }
                 
             };
