@@ -75,6 +75,7 @@ angular.module('hb5').constant('HB_API', {
 angular.module('hb5').constant('HB_ROLE_FONCTION', {
 	ADMIN : "admin",
 	DELETE : "delete",
+	DEV : "dev",	
 	VALIDATION : "validation",
 	BUILDING_EDIT : "immeuble-edit",
 	BUILDING_EDIT_OTHER_PARTNERS : "immeuble-edit-autres-partenaires"
