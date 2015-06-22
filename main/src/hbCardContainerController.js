@@ -39,9 +39,12 @@
      * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
     angular.module('hb5').controller('HbCardContainerController', [
-        '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', '$window', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'MapService','hbPrintService', 'hbTabCacheService',
-        function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, $window, hbAlertMessages, hbUtil, HB_EVENTS, MapService, hbPrintService, hbTabCacheService) {
+        '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', '$window', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'HB_ROLE_FONCTION', 'MapService','hbPrintService', 'hbTabCacheService', 'userDetails',
+        function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, $window, hbAlertMessages, hbUtil, HB_EVENTS, HB_ROLE_FONCTION, MapService, hbPrintService, hbTabCacheService, userDetails) {
     
+        	
+        // Provide dev access rights information to scope
+        $scope.devRights = _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.DEV);
         	
         // Expose hbUtil.containsStandardSourceURI function to scope
         $scope.containsStandardSourceURI = hbUtil.containsStandardSourceURI;	
@@ -154,10 +157,8 @@
          * there to help prevent operations errors. It is also easier
          * to track objects modifications than objects deletions.
          */
-        $scope.canDelete = function() {
-			// Only users with global delete role can delete data
-        	return _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.DELETE);
-        };        
+        $scope.canDelete = _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.DELETE);
+
         
         /** 
          * Help manage button class depending on pristine/dirty
@@ -346,6 +347,27 @@
         	$window.open(hbPrintService.getReportUrl(elfin), "Impression rapport");
         };
         
+        
+        /**
+         * Display JSON data for 'elfin' - Only allowed to 'admin' users
+         */
+        $scope.displayJson = function (elfin) {
+        	if (_.contains(userDetails.getRoles(),HB_ROLE_FONCTION.ADMIN)) {
+	        	var apiCallForJs = "/api/melfin/"+elfin.ID_G+"/"+elfin.Id+"?format=json-pretty";
+	        	$window.open(apiCallForJs, "Javascript format");
+        	}
+        	 
+        };
+
+        /**
+         * Display XML data for 'elfin' - Only allowed to 'admin' users
+         */
+        $scope.displayXml = function (elfin) {
+        	if (_.contains(userDetails.getRoles(),HB_ROLE_FONCTION.ADMIN)) {
+	        	var apiCallForXml = "/api/melfin/"+elfin.ID_G+"/"+elfin.Id+"?format=xml";
+	        	$window.open(apiCallForXml, "Javascript format");
+        	}
+        };
         
         
         $scope.elfinTypes = {

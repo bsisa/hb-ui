@@ -10,7 +10,9 @@
 			<span class="h4">
 				<span class="label label-primary" ng-class="getCssLabelFeedback(elfinForm)">
 					<i class="icon-tag"></i> <span ng-bind="elfin.CLASSE"></span> - <span ng-bind="elfin.IDENTIFIANT.OBJECTIF"></span>
-				</span>
+					<button ng-if="devRights" class="btn btn-primary btn-xs" ng-click="displayJson(elfin)">JS</button>
+					<button ng-if="devRights" class="btn btn-primary btn-xs" ng-click="displayXml(elfin)">XML</button>
+				</span>				
 			</span>
 			<span ng-if="elfin.CLASSE==='IMMEUBLE' || elfin.CLASSE==='WC'">&nbsp;{{elfin.IDENTIFIANT.ALIAS}}</span>
 			<span ng-if="elfin.CLASSE==='FONTAINE' || elfin.CLASSE==='ABRIBUS'">&nbsp;{{elfin.IDENTIFIANT.NOM}}</span>
