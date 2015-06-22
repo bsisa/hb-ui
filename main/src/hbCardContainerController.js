@@ -132,6 +132,7 @@
         	return $scope.elfinForm.$dirty && $scope.elfinForm.$valid;
         };
         
+        
         /**
          * Help managing enable/disable state of ELFIN print button 
          */        
@@ -141,7 +142,22 @@
         	} else {
         		return false;
         	}
-        };      
+        };
+        
+        /**
+         * Returns true if current user has global delete role
+         * Please note: Unlike canSave canDelete is an ACCESS RIGHT 
+         * thin layer on top of CREATE,UPDATE rights to restrain 
+         * user with CREATE,UPDATE access rights to DELETE an object,
+         * although with update right the whole information of an 
+         * object can well be deleted. Forbidding DELETE operation is
+         * there to help prevent operations errors. It is also easier
+         * to track objects modifications than objects deletions.
+         */
+        $scope.canDelete = function() {
+			// Only users with global delete role can delete data
+        	return _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.DELETE);
+        };        
         
         /** 
          * Help manage button class depending on pristine/dirty
