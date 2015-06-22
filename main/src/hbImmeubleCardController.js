@@ -155,7 +155,7 @@
 									 */ 
 									$scope.createNewConstat = function() {
 										if ($attrs.hbMode != "create") {
-									        // Added id,classe,idg for generic link to creation source/parent prototype - done for SSPO.
+									        // Added id,classe,idg for generic link to creation source/parent prototype - done for SDS.
 											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF, id: $scope.elfin.Id, classe: $scope.elfin.CLASSE, idg: $scope.elfin.ID_G }
 											$location.search(searchObj).path( "/elfin/create/CONSTAT" );
 										}
@@ -517,7 +517,7 @@
 									/**
 									 * Add other partner as: CARACTERISTIQUE.FRACTION.L.{
 									 * [
-									 *  C = Actor CLASSE = 'ACTEUR' , (Information used by fractionElfinRefFilter in SSPO ctxt.)
+									 *  C = Actor CLASSE = 'ACTEUR' , (Information used by fractionElfinRefFilter in SDS ctxt.)
 									 *  C = Actor.ID_G,
 									 *  C = Actor.Id,
 									 *  C = Actor.GROUPE,

@@ -65,7 +65,7 @@
                 	$log.debug(">>>> / controller loaded END <<<<");
                 }]
             })
-            .when('/SSPO', {
+            .when('/SDS', {
                 templateUrl: '/assets/views/indexSspo.html'
             })
             .when('/SBAT', {
