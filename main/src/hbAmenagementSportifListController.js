@@ -10,6 +10,7 @@
 
     	// Object holding user entered search (filter) criteria 
     	$scope.search = {
+    			"group" :"",
     			"owner" : "",
     			"registerNb" : "",
     			"place" : "",
@@ -23,6 +24,9 @@
     	if ($routeParams.search) {
     		$scope.search.text = $routeParams.search; 
     	}
+    	if ($routeParams.group) {
+    		$scope.search.group = $routeParams.group; 
+    	}    	
     	
 
     	/**
