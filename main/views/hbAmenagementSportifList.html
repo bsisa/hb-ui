@@ -19,7 +19,7 @@
 			<th class="col-sm-1">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.owner" hb-no-dirty-check placeholder="">
+						<input type="text" class="form-control" ng-model="search.group" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
@@ -54,7 +54,7 @@
 		</tr>
 		<tr>
 			<th class="col-sm-1">
-				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.NOM'; reverse=!reverse">Propriétaire</a>
+				<a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Groupe</a>
 			</th>
 			<th class="col-sm-1">
 				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">No SAI</a>			
@@ -78,7 +78,7 @@
 			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
 			<td>
 <!-- 				{{elfin.PARTENAIRE.PROPRIETAIRE.GROUPE}} -->
-				{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}
+				{{elfin.GROUPE}}
 			</td>
 			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
 			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>			
