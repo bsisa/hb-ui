@@ -10,14 +10,14 @@ Droit de superficie et autre infra./ surface right
 <table class="table table-condensed table-bordered table-striped" >
 	<tbody>
 		<tr>
-			<th class="dashboard" style="width: 33%;">Stade{{ asElfins.length | plural }} et terrain{{ asElfins.length | plural }} <span class="badge">{{asStadiumElfins.length}}</span></th>
-			<th class="dashboard" >Piscine{{ asElfins.length | plural }} <span class="badge">{{asPoolElfins.length}}</span></th>			
-			<th class="dashboard" style="width: 33%;">Patinoire{{ asElfins.length | plural }} <span class="badge">{{asRinkElfins.length}}</span></th>
+			<th class="dashboard" style="width: 33%;">Stade{{ asStadiumElfinsLength | plural }} et terrain{{ asStadiumElfinsLength | plural }} <span class="badge">{{asStadiumElfinsLength}}</span></th>
+			<th class="dashboard" >Piscine{{ asPoolElfinsLength | plural }} <span class="badge">{{asPoolElfinsLength}}</span></th>			
+			<th class="dashboard" style="width: 33%;">Patinoire{{ asRinkElfinsLength | plural }} <span class="badge">{{asRinkElfinsLength}}</span></th>
 		</tr>
 		<tr>
-			<td ><img ng-click="listOrViewStadium()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img ng-click="listOrViewPool()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img ng-click="listOrViewRink()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewStadium()" src="/assets/images/sds_stadium.jpeg" ng-src="/assets/images/sds_stadium.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewPool()" src="/assets/images/sds_pool.jpeg" ng-src="/assets/images/sds_pool.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewRink()" src="/assets/images/sds_rink.jpeg" ng-src="/assets/images/sds_rink.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>
 		<tr>
 			<th >Sélection  <span class="badge">{{filteredAsStadiumElfins.length}}</span>
@@ -73,14 +73,14 @@ Droit de superficie et autre infra./ surface right
 <table class="table table-condensed table-bordered table-striped" >
 	<tbody>
 		<tr>
-			<th class="dashboard" style="width: 33%;">Salle{{ asElfins.length | plural }} <span class="badge">{{asElfins.length}}</span></th>
-			<th class="dashboard" >Place{{ asElfins.length | plural }} de sport <span class="badge">{{asElfins.length}}</span></th>
-			<th class="dashboard" style="width: 33%;">Droits de superficie et autres <span class="badge">{{asElfins.length}}</span></th>
+			<th class="dashboard" style="width: 33%;">Salle{{ asHallElfinsLength | plural }} <span class="badge">{{asHallElfinsLength}}</span></th>
+			<th class="dashboard" >Place{{ asSportsAreaElfinsLength | plural }} de sport <span class="badge">{{asSportsAreaElfinsLength}}</span></th>
+			<th class="dashboard" style="width: 33%;">Droit{{ asSurfaceRightElfinsLength | plural }} de superficie et autre{{ asSurfaceRightElfinsLength | plural }} <span class="badge">{{asSurfaceRightElfinsLength}}</span></th>
 		</tr>
 		<tr>
-			<td ><img ng-click="listOrViewHall()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img ng-click="listOrViewSportsArea()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img ng-click="listOrViewSurfaceRight()" src="/assets/images/stade_foot.jpeg" ng-src="/assets/images/stade_foot.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewHall()" src="/assets/images/sds_hall.jpeg" ng-src="/assets/images/sds_hall.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewSportsArea()" src="/assets/images/sds_sports_area.jpeg" ng-src="/assets/images/sds_sports_area.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewSurfaceRight()" src="/assets/images/sds_surface_right.jpeg" ng-src="/assets/images/sds_surface_right.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>
 		<tr>
 			<th >Sélection  <span class="badge">{{filteredAsHallElfins.length}}</span>

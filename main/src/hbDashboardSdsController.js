@@ -82,7 +82,8 @@
 	        .then(function(asElfins) {
         		
 	        	$scope.asElfins = asElfins;
-        		
+        		// Here above asElfins is a promise an might not be fully loaded 
+	        	// when hereafter calls are performed. Reason for asElfins $watch.
         		refreshFilteredAsStadiumElfins();
         		refreshFilteredAsPoolElfins();
         		refreshFilteredAsRinkElfins();
@@ -100,6 +101,16 @@
 		 */
     	$scope.$watch('asElfins', function() { 
     		if ($scope.asElfins!=null) {
+    			
+    			// Initialise AMENAGEMENT_SPORTIF per GROUPE without filtering.
+    			$scope.asStadiumElfinsLength = filterAmenagementSportifStadiumElfins($scope.asElfins).length;
+    			$scope.asPoolElfinsLength = filterAmenagementSportifPoolElfins($scope.asElfins).length;
+    			$scope.asRinkElfinsLength = filterAmenagementSportifRinkElfins($scope.asElfins).length;
+    			$scope.asHallElfinsLength = filterAmenagementSportifHallElfins($scope.asElfins).length;
+    			$scope.asSportsAreaElfinsLength = filterAmenagementSportifSportsAreaElfins($scope.asElfins).length;
+    			$scope.asSurfaceRightElfinsLength = filterAmenagementSportifSurfaceRightElfins($scope.asElfins).length;
+    			
+    			// Refresh AMENAGEMENT_SPORTIF per GROUPE with filtering.
         		refreshFilteredAsStadiumElfins();
         		refreshFilteredAsPoolElfins();
         		refreshFilteredAsRinkElfins();
