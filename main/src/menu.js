@@ -500,38 +500,40 @@
 		                }
 		            });
 		            
-		            $log.debug(">>>> allowedJobReferences (defaultJobPosAllowed="+defaultJobPosAllowed+") = " + angular.toJson(allowedJobReferences));
-		             
     	            // User is not granted the right to access job at defaultJobPos 
-		            // set fall back to first available job.
-		            if (!defaultJobPosAllowed) {
-		            	// POS are 1 based not 0 based
-		            	defaultJobPos = 1; 
+		            // set fall back to first available job.POS
+		            if (!defaultJobPosAllowed && allowedJobReferences.length > 0) {
+		            	// Set first allowed job as defaultJos by POS
+		            	defaultJobPos = allowedJobReferences[0].POS; 
 		            }
 		            
 		            // Guarantees allowedJobReferences ordering by POS attribute
 		            reorderArrayByPOS(allowedJobReferences);
 
-		            
+		            // Used as $scope.jobs array index
+		            var j = 0;
 		            angular.forEach(allowedJobReferences, function(job) {
-		
+		            	
 		                /* Sort cells C by C.POS is mandatory to guarantee correct results. */
 		                var jobCells = job.C;
 		                reorderArrayByPOS(jobCells);            	
 		            	
 	            		// Initialise the jobs array with METIER elfin.Id as index lookup value
 	                	// solving asynchronous response processing while preserving METIER menu ordering.
-	                	// POS are 1 based while jobs array is 0 based.
-	            		$scope.jobs[job.POS-2] = job.C[1].VALUE; 	
-			                
+	                	// /!\ POS are 1 based while jobs array is 0 based /!\
+			            $scope.jobs[j] = job.C[1].VALUE;
+			            // Increment j for next loop
+			            j = j+1;
+            		
 		                GeoxmlService.getElfin(jobCells[2].VALUE, jobCells[1].VALUE).get()
 		                    .then(function(elfin) {
-		                    	$log.debug("<<<<<< OBTAINED elfin job Id:   " + elfin.Id + " / name: " + elfin.IDENTIFIANT.NOM);
+//		                    	$log.debug(">>>>>> OBTAINED elfin job Id :   " + elfin.Id + " / name: " + elfin.IDENTIFIANT.NOM);
+//		                    	$log.debug(">>>>>> OBTAINED elfin job.POS:   " + job.POS + " / defaultJobPos: " + defaultJobPos);
 		                    	
 		                    	// Solves unsorted asynchronous responses pushed to sorted METIER menu. 
 		                    	var jobPosition = $scope.jobs.indexOf(elfin.Id);
 		                    	$scope.jobs[jobPosition] = elfin;
-		                    	
+
 		                        // Set active job using provided default job position
 		                        if (job.POS === defaultJobPos) {
 		                            $scope.activateJob(elfin);
@@ -705,7 +707,7 @@
         /* Change the job */
         $scope.activateJob = function(job) {
             
-        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called " + job.IDENTIFIANT.NOM +" <<<<<<<<<<<<<<<<<<<<");
+        	//$log.debug(">>>>>>>>>>>>>>>>> activateJob called " + job.IDENTIFIANT.NOM +" <<<<<<<<<<<<<<<<<<<<");
         	
         	$scope.activeJob = job;
             hbPrintService.setActiveJob($scope.activeJob);
@@ -716,7 +718,7 @@
                     var jobCarsetCar = $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'];
                     reorderArrayByPOS(jobCarsetCar);
                     
-                    $log.debug(">>>> MENU : jobCarsetCar = " + angular.toJson(jobCarsetCar));
+                    //$log.debug(">>>> MENU : jobCarsetCar = " + angular.toJson(jobCarsetCar));
                     
                     var dataManagerAccessRightsCreateUpdate = $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR;
                     
