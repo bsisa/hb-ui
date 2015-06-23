@@ -2,7 +2,7 @@
 
     angular.module('hb5').controller('HbDashboardSdsController', ['$attrs', '$scope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', function($attrs, $scope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil, hbQueryService) {
     
-    	$log.debug("    >>>> HbDashboardSdsController called at " + new Date());
+    	//$log.debug("    >>>> HbDashboardSdsController called at " + new Date());
     	
     	var AMENAGEMENT_SPORTIF_GROUPE_STADIUM = "Stade et terrain";
     	var AMENAGEMENT_SPORTIF_GROUPE_POOL = "Piscine";
