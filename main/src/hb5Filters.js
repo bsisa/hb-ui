@@ -268,6 +268,7 @@
 				var amenagementSportifPlace = hbUtil.getCARByPos(amenagementSportif, 1);
 				amenagementSportifPlace = (amenagementSportifPlace === undefined) ? {"VALEUR" : ""} : amenagementSportifPlace;
 				return (
+					icontains(amenagementSportif.GROUPE, searchtext) ||
 					icontains(amenagementSportif.PARTENAIRE.PROPRIETAIRE.NOM, searchtext) ||
 					icontains(amenagementSportif.IDENTIFIANT.OBJECTIF, searchtext) ||
 					//icontains(amenagementSportif.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
