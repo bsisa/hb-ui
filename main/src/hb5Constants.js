@@ -79,5 +79,7 @@ angular.module('hb5').constant('HB_ROLE_FONCTION', {
 	VALIDATION : "validation",
 	BUILDING_EDIT : "immeuble-edit",
 	BUILDING_EDIT_OTHER_PARTNERS : "immeuble-edit-autres-partenaires",
-	AMENAGEMENT_SPORTIF_EDIT_BUILDING : "amenagement_sportif-edit-immeuble"
+	AMENAGEMENT_SPORTIF_EDIT : "amenagement_sportif-edit",
+	AMENAGEMENT_SPORTIF_EDIT_OTHER_PARTNERS : "amenagement_sportif-edit-autres-partenaires",	
+	AMENAGEMENT_SPORTIF_EDIT_BUILDINGS_LIST : "amenagement_sportif-edit-immeubles-list"
 });

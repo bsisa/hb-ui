@@ -32,7 +32,7 @@
 					 			
 					 			
 					 				// Provide ability to select and add buildings to amenagement sportif 
-					 	        	$scope.addBuildingRight = _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.AMENAGEMENT_SPORTIF_EDIT_BUILDING);
+					 	        	$scope.addBuildingRight = _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.AMENAGEMENT_SPORTIF_EDIT_BUILDINGS_LIST);
 					 			
 					 				/**
 					 				 *  Expose hbUtil.getCByPos function to scope.
@@ -84,8 +84,8 @@
 									// Expose current hbMode in scope for use by ng-show in HTML view.
 									$scope.createMode = ($attrs.hbMode === "create");
 									// Manage FONCTION level access rights
-									$scope.canEdit = ($scope.createMode || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT));
-									$scope.canEditParteners = ($scope.createMode || $scope.canEdit || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT_OTHER_PARTNERS));
+									$scope.canEdit = ($scope.createMode || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.AMENAGEMENT_SPORTIF_EDIT));
+									$scope.canEditParteners = ($scope.createMode || $scope.canEdit || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.AMENAGEMENT_SPORTIF_EDIT_OTHER_PARTNERS));
 									
 									// Owner Actor (ACTEUR role=Propriétaire)  linked to the current building.
 									//$scope.selected = { "owner" : null , "ownerDisplay" : null};
