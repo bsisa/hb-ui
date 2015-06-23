@@ -1,17 +1,17 @@
 (function() {
 
     /**
-     * hb-search-sspo directive provides AMENAGEMENT_SPORTIF quick search similar to 
-     * the one found in the DashboardSspo entry page. It is meant to be
+     * hb-search-sds directive provides AMENAGEMENT_SPORTIF quick search similar to 
+     * the one found in the DashboardSds entry page. It is meant to be
      * accessible from every page.
-     * <div hb-search-sspo > </div>
+     * <div hb-search-sds > </div>
      */
-    angular.module('hb5').directive('hbSearchSspo', function () {
+    angular.module('hb5').directive('hbSearchSds', function () {
 
     	return {
 			restrict: 'A',
-			templateUrl : "/assets/views/hbSearchSspo.html",
-			controller: 'HbSearchSspoController',
+			templateUrl : "/assets/views/hbSearchSds.html",
+			controller: 'HbSearchSdsController',
 			scope: true
 		};
 	
