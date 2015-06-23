@@ -483,8 +483,8 @@
 			<div class="hb-tab">
 				<div class="row">
 					<div class="col-sm-12">
-						<div style="width: 180px;" hb-building-select-link hb-building-select-source="elfin"></div>
-						<br />
+						<div ng-if="addBuildingRight" style="width: 180px;" hb-building-select-link hb-building-select-source="elfin"></div>
+						<br ng-if="addBuildingRight" />
 						<div class="container-fluid">
 							<div class="row hb-row-header">
 								<div class="col-sm-2 hb-cell-header"></div>

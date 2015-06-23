@@ -30,6 +30,10 @@
     
 									//$log.debug("    >>>> Using HbAmenagementSportifCardController with $locale.id = " + $locale.id);
 					 			
+					 			
+					 				// Provide ability to select and add buildings to amenagement sportif 
+					 	        	$scope.addBuildingRight = _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.AMENAGEMENT_SPORTIF_EDIT_BUILDING);
+					 			
 					 				/**
 					 				 *  Expose hbUtil.getCByPos function to scope.
 					 				 */
