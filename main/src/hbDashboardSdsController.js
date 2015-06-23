@@ -19,7 +19,7 @@
 		};    	
 		
 		var filterAmenagementSportifStadeElfins = function(elfins_p) {
-	    	var filteredSortedElfins = $filter('amenagementSportifListFilter')(elfins_p, { "group" : "Stades et terrains" } );
+	    	var filteredSortedElfins = $filter('amenagementSportifListFilter')(elfins_p, { "group" : "Stade et terrain" } );
 	    	return filteredSortedElfins;
 		};    			
     	
