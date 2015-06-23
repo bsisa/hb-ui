@@ -14,7 +14,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="elfin in elfins">
+			<tr ng-repeat="elfin in elfins | orderBy:'IDENTIFIANT.NOM'">
 				<td>
 					<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
 				</td>
