@@ -484,7 +484,8 @@
 		                	// Get menu access rights
 			            	var jobAccessRights = job.C[5].VALUE.split(",");
 			            	// Check whether user is granted necessary role
-			            	angular.forEach(jobAccessRights, function(jobAccessRight) {
+			            	for (var i = 0; i < jobAccessRights.length; i++) {
+			            		var jobAccessRight = jobAccessRights[i];
 			            		// If user allowed add menu and break out of this menu item loop
 			            		if (_.contains(userDetails.roles,jobAccessRight) ) {
 				            		allowedJobReferences.push(job);
@@ -493,12 +494,13 @@
 				            		if (job.POS === defaultJobPos) {
 				            			defaultJobPosAllowed = true;
 				            		}
-				            		return;
-				            	};
-				            });
+				            		break;
+				            	};			            		
+			            	}
 		                }
 		            });
 		            
+		            $log.debug(">>>> allowedJobReferences (defaultJobPosAllowed="+defaultJobPosAllowed+") = " + angular.toJson(allowedJobReferences));
 		             
     	            // User is not granted the right to access job at defaultJobPos 
 		            // set fall back to first available job.
@@ -524,7 +526,7 @@
 			                
 		                GeoxmlService.getElfin(jobCells[2].VALUE, jobCells[1].VALUE).get()
 		                    .then(function(elfin) {
-		                    	//console.log("<<<<<< OBTAINED elfin job Id:   " + elfin.Id + " / name: " + elfin.IDENTIFIANT.NOM);
+		                    	$log.debug("<<<<<< OBTAINED elfin job Id:   " + elfin.Id + " / name: " + elfin.IDENTIFIANT.NOM);
 		                    	
 		                    	// Solves unsorted asynchronous responses pushed to sorted METIER menu. 
 		                    	var jobPosition = $scope.jobs.indexOf(elfin.Id);
@@ -703,9 +705,7 @@
         /* Change the job */
         $scope.activateJob = function(job) {
             
-//        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called <<<<<<<<<<<<<<<<<<<<");
-//        	$log.debug(">>>>>>>>>>>>>>>>> "+ angular.toJson(job) +" <<<<<<<<<<<<<<<<<<<<");
-//        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called <<<<<<<<<<<<<<<<<<<<");
+        	$log.debug(">>>>>>>>>>>>>>>>> activateJob called " + job.IDENTIFIANT.NOM +" <<<<<<<<<<<<<<<<<<<<");
         	
         	$scope.activeJob = job;
             hbPrintService.setActiveJob($scope.activeJob);
