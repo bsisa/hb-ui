@@ -78,5 +78,6 @@ angular.module('hb5').constant('HB_ROLE_FONCTION', {
 	DEV : "dev",	
 	VALIDATION : "validation",
 	BUILDING_EDIT : "immeuble-edit",
-	BUILDING_EDIT_OTHER_PARTNERS : "immeuble-edit-autres-partenaires"
+	BUILDING_EDIT_OTHER_PARTNERS : "immeuble-edit-autres-partenaires",
+	AMENAGEMENT_SPORTIF_EDIT_BUILDING : "amenagement_sportif-edit-immeuble"
 });
