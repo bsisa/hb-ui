@@ -61,8 +61,6 @@
                 	};                	
                 	
                 	$scope.init();
-                	
-                	$log.debug(">>>> / controller loaded END <<<<");
                 }]
             })
             .when('/SDS', {
