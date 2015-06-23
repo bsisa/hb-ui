@@ -97,9 +97,10 @@
         '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS', 'userDetails','hbPrintService',
         function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS, userDetails, hbPrintService) {
 
-      	// Force service initialisation.
-       	userDetails.getAbbreviation;  
-        	
+      	// Force service initialisation 
+        // Check $$activeConfiguration watch for actual initialisation).
+       	userDetails.getAbbreviation;
+       	
     	// Functions used in alert ui.bootstrap component found in menu.html
     	$scope.getAlerts = hbAlertMessages.getAlerts();
     	$scope.removeAlert = hbAlertMessages.removeAlert;
@@ -464,9 +465,9 @@
 	            reorderArrayByPOS(jobReferences);
 	            
 	            /* Obtain user details from GeoxmlService */
-	            // TODO: make use of userDetails service
+	            // TODO: Review: Use of userDetails service fails due to asynchronous initialisation. 
 	            GeoxmlService.getWhoAmI().get().then(function(userDetails) {
-
+ 
 	            	// Make user details available to MenuController scope 
 	            	// to display user name, family name, surname in menu bar. 
 	            	$scope.userDetails = userDetails;
