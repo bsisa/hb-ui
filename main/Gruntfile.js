@@ -74,8 +74,8 @@ module.exports = function(grunt) {
                                 'src/hbDashboardDirective.js',
                                 'src/hbDashboardController.js',
                                 
-                                'src/hbDashboardSspoDirective.js',
-                                'src/hbDashboardSspoController.js',
+                                'src/hbDashboardSdsDirective.js',
+                                'src/hbDashboardSdsController.js',
                                 
 								'src/hbDateDirective.js',
 								'src/hbDateController.js',
@@ -123,8 +123,8 @@ module.exports = function(grunt) {
 								'src/hbSearchController.js',
 								'src/hbSearchDirective.js',
 
-								'src/hbSearchSspoController.js',
-								'src/hbSearchSspoDirective.js',
+								'src/hbSearchSdsController.js',
+								'src/hbSearchSdsDirective.js',
 								
 								'src/hbSurfaceCardController.js',
 								'src/hbSurfaceCardDirective.js',

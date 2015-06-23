@@ -1,8 +1,8 @@
 (function() {
 
-    angular.module('hb5').controller('HbDashboardSspoController', ['$attrs', '$scope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', function($attrs, $scope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil, hbQueryService) {
+    angular.module('hb5').controller('HbDashboardSdsController', ['$attrs', '$scope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', function($attrs, $scope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil, hbQueryService) {
     
-    	$log.debug("    >>>> HbDashboardSspoController called at " + new Date());
+    	$log.debug("    >>>> HbDashboardSdsController called at " + new Date());
     	
     	// ============================================================
     	// Section - AMENAGEMENT_SPORTIF

@@ -62,7 +62,7 @@
 								        $scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
 								        $scope.elfin.IDENTIFIANT.COMPTE = $routeParams.nocons;
 								        
-								        // Prototype generic link to creation source/parent - done for SSPO.
+								        // Prototype generic link to creation source/parent - done for SDS.
 								        $scope.elfin.SOURCE = $routeParams.idg +"/"+$routeParams.classe+"/"+$routeParams.id;
 								        
 								        $scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(new Date());
@@ -123,7 +123,7 @@
 									});
 								
 								
-								// Override function definition if SOURCE info is available - support for SSPO. 
+								// Override function definition if SOURCE info is available - support for SDS. 
 								if ($scope.elfin.SOURCE) {
 									
 									var splittedSource = $scope.elfin.SOURCE.split('/');

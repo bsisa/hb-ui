@@ -66,7 +66,7 @@
                 }]
             })
             .when('/SDS', {
-                templateUrl: '/assets/views/indexSspo.html'
+                templateUrl: '/assets/views/indexSds.html'
             })
             .when('/SBAT', {
                 templateUrl: '/assets/views/indexSbat.html'
