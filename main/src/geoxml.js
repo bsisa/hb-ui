@@ -31,7 +31,7 @@
         	var setRestGeoxml = function(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead) {
         		
         		currentDataManagerAccessRightsCreateUpdate = dataManagerAccessRightsCreateUpdate;
-        		$log.debug("GeoxmlService: currentDataManagerAccessRightsCreateUpdate set to : " + currentDataManagerAccessRightsCreateUpdate);
+        		//$log.debug("GeoxmlService: currentDataManagerAccessRightsCreateUpdate set to : " + currentDataManagerAccessRightsCreateUpdate);
         		
         		restGeoxml = Restangular.withConfig(function(Configurer) {
                 	/*
@@ -153,10 +153,10 @@
                 setDataManager: function(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead) {
                 	// Set Restangular service with provided dataManagerToken and refreshes _geoxmlService 
                 	setRestGeoxml(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead);
-                    $log.debug("GeoxmlService setDataManager run with dataManagerAccessRightsCreateUpdate = >" + dataManagerAccessRightsCreateUpdate +"< , dataManagerAccessRightsRead = >" + dataManagerAccessRightsRead +"<");
+                    //$log.debug("GeoxmlService setDataManager run with dataManagerAccessRightsCreateUpdate = >" + dataManagerAccessRightsCreateUpdate +"< , dataManagerAccessRightsRead = >" + dataManagerAccessRightsRead +"<");
                 },
                 getCurrentDataManagerAccessRightsCreateUpdate: function() {
-                	$log.debug("GeoxmlService: getCurrentDataManagerAccessRightsCreateUpdate() set to : " + currentDataManagerAccessRightsCreateUpdate);
+                	//$log.debug("GeoxmlService: getCurrentDataManagerAccessRightsCreateUpdate() set to : " + currentDataManagerAccessRightsCreateUpdate);
                 	return currentDataManagerAccessRightsCreateUpdate;
                 }
                 
