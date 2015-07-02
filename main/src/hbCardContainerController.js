@@ -130,6 +130,9 @@
         
         /**
          * Help managing enable/disable state of ELFIN save button 
+         * Please note: canSave is not about ACCESS RIGHT to save.
+         * Create/Update ACCESS RIGHT verification is done server side 
+         * with feedback to user if forbidden. 
          */
         $scope.canSave = function() {
         	return $scope.elfinForm.$dirty && $scope.elfinForm.$valid;
