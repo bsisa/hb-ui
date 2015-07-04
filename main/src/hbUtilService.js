@@ -117,7 +117,16 @@
             }
         }		
 		
-		
+    	/**
+    	 * Sort elfins by IDENTIFIANT.DE
+    	 */
+    	var sortElfinByDEDescending = function(elfins) {
+    		elfins.sort(function(a, b) {
+				return a.IDENTIFIANT.DE > b.IDENTIFIANT.DE ? -1 :
+					a.IDENTIFIANT.DE < b.IDENTIFIANT.DE ? 1 : 0;
+            });
+    	};
+    	
 		
 		// ============================================================
 		// Date and time utilities
@@ -214,6 +223,13 @@
 			return moment(date).format(ISO_8601_DATE_TIME_IN_UTC_FORMAT);
 		};		
 		
+		/**
+		 * Returns a string in ISO_8601_DATE_TIME_IN_UTC_FORMAT: YYYY-MM-DDTHH:mm:ssZ
+		 * corresponding to the provided MomentJS moment object `theMoment`
+		 */
+		var getMomentInHbTextFormat = function(theMoment) {
+			return theMoment.format(ISO_8601_DATE_TIME_IN_UTC_FORMAT);
+		};			
 		
 		/**
 		 * Returns MomentJS date corresponding to the `textDateTime`.
@@ -406,6 +422,32 @@
         	
         };        
         
+        /**
+         * To use for XPath queries defined as Javascript string in angular/restangular 
+         * context.
+         * 
+         * `+` sign can be found in XPath parameters such as ISO date string 
+         * with time zone where separator is `+`.
+         * 
+         * This happen to be a problem as `+` corresponds to white space encoding thus if 
+         * present in query such as:
+         *  
+         * ?_query=(...)+and+IDENTIFIANT/DE=%272015-02-01T22:00:00+01:00%27%5D
+         * 
+         * Where:                 %272015-02-01T22:00:00+01:00%27%5D
+         * should be decoded to   : '2015-02-01T22:00:00+01:00']
+         * but will be decoded to : '2015-02-01T22:00:00 01:00']
+         * 
+         * Note the plus sign being converted to white space which is wrong.
+         * 
+         * Pre-encoding the plus sign with escapePlusSign will solve the problem.
+         * 
+         */
+        var escapePlusSign = function(string) {
+			var plusSignEscapeChar = "%2B";
+        	return string.replace("+", plusSignEscapeChar);
+        };        
+        
 		// ============================================================
 		// HyperBird catalog data conversion utilities
 		// ============================================================
@@ -464,6 +506,21 @@
 			return catalogueDefaultNameValueArray;
         };
         
+        
+        var buildDependencyArrayFromCatalogueDefault= function(catalogueDefaultString) {
+			var catalogueDefaultValuesArray = catalogueDefaultString.split("|");
+			var jsonString = '[';
+			for (var i = 0; i < catalogueDefaultValuesArray.length; i++) {
+				var catalogueDependencyToValueArray = catalogueDefaultValuesArray[i].split('::::');
+				jsonString += '{"name" : "' + catalogueDependencyToValueArray[0] + '", "value":' + '"' + catalogueDependencyToValueArray[1] + '"}';  
+				if (i < (catalogueDefaultValuesArray.length - 1)) {
+					jsonString += ',';
+				}
+			};
+			jsonString += ']';
+			var catalogueDefaultNameValueArray = angular.fromJson(jsonString);    
+			return catalogueDefaultNameValueArray;
+        };                
         
 		// ============================================================
 		// Utilities related to ANNEXES
@@ -599,6 +656,7 @@
         	applyPaths:applyPaths,
         	buildAnnexeFileSystemUri:buildAnnexeFileSystemUri,
         	buildArrayFromCatalogueDefault:buildArrayFromCatalogueDefault,
+        	buildDependencyArrayFromCatalogueDefault:buildDependencyArrayFromCatalogueDefault,
         	buildKeyValueObject:buildKeyValueObject,
         	buildUrlQueryString:buildUrlQueryString,
         	containsStandardSourceURI:containsStandardSourceURI,
@@ -622,13 +680,16 @@
         	getLinkFileApiUrl:getLinkFileApiUrl,
         	getMomentDateFromHbTextDateFormat:getMomentDateFromHbTextDateFormat,
         	getMomentDateFromHbTextDateTimeFormat:getMomentDateFromHbTextDateTimeFormat,
+        	getMomentInHbTextFormat:getMomentInHbTextFormat,
         	getPrestationGroupForTransactionGroup:getPrestationGroupForTransactionGroup,
         	getValueAtPath:getValueAtPath,
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
         	removeFractionLByPos:removeFractionLByPos,
         	renumberPos:renumberPos,
-        	reorderArrayByPOS:reorderArrayByPOS        	
+        	reorderArrayByPOS:reorderArrayByPOS,
+        	sortElfinByDEDescending:sortElfinByDEDescending
+        	
         };
     }]);
 	
