@@ -64,7 +64,7 @@
 		var filterSortElfins = function(elfins_p, search_p, predicate_p, reverse_p) {
 			// Apply prestationListFilter
 	    	var filteredSortedElfins = $filter('uniteLocativeListFilter')(elfins_p, search_p, $scope.buildingElfins);
-	    	filteredSortedElfins = $filter('uniteLocativeListAnyFilter')(filteredSortedElfins, search_p.text);
+	    	filteredSortedElfins = $filter('uniteLocativeListAnyFilter')(filteredSortedElfins, search_p.text, $scope.buildingElfins);
 	    	// Apply predicate, reverse sorting
 	    	filteredSortedElfins = $filter('orderBy')(filteredSortedElfins, predicate_p, reverse_p);
 	    	return filteredSortedElfins;
