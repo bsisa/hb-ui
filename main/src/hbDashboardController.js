@@ -86,7 +86,7 @@
 		 *  Apply uniteLocativeListAnyFilter
 		 */
 		var filterUniteLocElfins = function(elfins_p, search_p) {
-	    	var filteredSortedElfins = $filter('uniteLocativeListAnyFilter')(elfins_p, search_p.text);
+	    	var filteredSortedElfins = $filter('uniteLocativeListAnyFilter')(elfins_p, search_p.text, $scope.immeubleElfins);
 	    	return filteredSortedElfins;
 		};    	
     	
