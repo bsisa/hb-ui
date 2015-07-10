@@ -476,8 +476,21 @@
 	 */
 	angular.module('hb5').filter('uniteLocativeListAnyFilter', [function () {
 
-		return function (uniteLocatives, searchtext) {
+		return function (uniteLocatives, searchtext, buildingElfins) {
 			
+            /**
+             * Find address for location unit
+             */
+            var getAddress = function (buildingElfins, locationUnitOrigine) {
+            	var matchingBuilding = _.find(buildingElfins, function(e){ return e.Id === locationUnitOrigine; } );
+            	if (matchingBuilding) {
+            		return matchingBuilding.IDENTIFIANT.ALIAS;
+            	} else {
+            		return "";	
+            	}
+            };	
+			
+
 			var checkUniteLocative = function(uniteLocative, searchtext) {
 				return (
 						(
@@ -491,12 +504,20 @@
 			    		icontains(uniteLocative.PARTENAIRE.USAGER.VALUE, searchtext)
 						) 						
 						|| icontains(uniteLocative.IDENTIFIANT.OBJECTIF, searchtext)
+						|| icontains(uniteLocative.WRAPPED_ADDRESS, searchtext)
 	    		);
 			};			
 			
 	        if (!angular.isUndefined(uniteLocatives) && !angular.isUndefined(searchtext)) {
 	            var tempUniteLocatives = [ ];
 	            angular.forEach(uniteLocatives, function (uniteLocative) {
+	            	
+	            	// Address information is contained in IMMEUBLE parent of UNITE_LOCATIVE
+	            	var currentBuildingAddress = getAddress(buildingElfins, uniteLocative.IDENTIFIANT.ORIGINE);
+
+	            	// Augment UNITE_LOCATIVE with IMMEUBLE address
+	            	uniteLocative.WRAPPED_ADDRESS = currentBuildingAddress;
+	            	
                     if ( checkAndForTokenisedSearchText(uniteLocative,searchtext,checkUniteLocative) ) {
                     	tempUniteLocatives.push(uniteLocative);
                     }
