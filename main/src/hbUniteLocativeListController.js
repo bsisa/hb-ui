@@ -1,9 +1,38 @@
 (function() {
 
-    angular.module('hb5').controller('HbUniteLocativeListController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', '$timeout', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, $timeout, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbUniteLocativeListController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', '$timeout', 'hbAlertMessages', 'hbUtil', 'HB_COLLECTIONS', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, $timeout, hbAlertMessages, hbUtil, HB_COLLECTIONS) {
     
     	$log.debug("    >>>> HbUniteLocativeListController called...");
     	
+    	// ============================================================
+		// Enable search on data linked to location unit entries
+    	// ============================================================
+		
+		/** 
+		 * Fetch all buildings (IMMEUBLE)
+		 */ 
+        GeoxmlService.getCollection(HB_COLLECTIONS.IMMEUBLE_ID).getList()
+        .then(function(elfins) {
+        	$scope.buildingElfins = elfins;
+        }, function(response) {
+            var message = "Le chargement des immeubles correspondants aux locataires a échoué (statut de retour: " + response.status + ")";
+            hbAlertMessages.addAlert("danger",message);
+        });
+    	
+        /**
+         * Find address for location unit
+         */
+        $scope.getAddress = function (locationUnitOrigine) {
+        	var matchingBuilding = _.find($scope.buildingElfins, function(e){ return e.Id === locationUnitOrigine; } );
+        	if (matchingBuilding) {
+        		return matchingBuilding.IDENTIFIANT.ALIAS;
+        	} else {
+        		return "";	
+        	}
+        };    	
+        
+    	// ============================================================        
+        
     	// Default order is by "Building management" 
     	$scope.predicate = 'IDENTIFIANT.OBJECTIF';
     	$scope.reverse = false;
@@ -34,7 +63,7 @@
 		 */
 		var filterSortElfins = function(elfins_p, search_p, predicate_p, reverse_p) {
 			// Apply prestationListFilter
-	    	var filteredSortedElfins = $filter('uniteLocativeListFilter')(elfins_p, search_p);
+	    	var filteredSortedElfins = $filter('uniteLocativeListFilter')(elfins_p, search_p, $scope.buildingElfins);
 	    	filteredSortedElfins = $filter('uniteLocativeListAnyFilter')(filteredSortedElfins, search_p.text);
 	    	// Apply predicate, reverse sorting
 	    	filteredSortedElfins = $filter('orderBy')(filteredSortedElfins, predicate_p, reverse_p);
@@ -70,8 +99,8 @@
     	var focusOnSearchField = function() {
 			$('#globalSearchField').focus();	
 		};        
-		$timeout(focusOnSearchField, 450, false);
-    	
+		$timeout(focusOnSearchField, 450, false);       
+        
     }]);
 
 

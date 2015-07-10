@@ -26,6 +26,13 @@
 			<th class="col-sm-4">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.address" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-4">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.tenant" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
@@ -51,17 +58,13 @@
 	<!-- 					</div> -->
 	<!-- 				</div> -->
 	<!-- 			</th>	 -->
-				<th class="col-sm-4">
-					<div class="form-group">
-						<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-							<input type="text" class="form-control" ng-model="search.address" hb-no-dirty-check placeholder="">
-						</div>
-					</div>
-				</th>					
 		</tr>
 		<tr>
 			<th class="col-sm-2">
 				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° de gérance</a>			
+			</th>
+			<th class="col-sm-4">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a>
 			</th>
 			<th class="col-sm-4">
 				<a href="" ng-click="predicate = 'PARTENAIRE.USAGER.VALUE'; reverse=!reverse">Locataire</a>
@@ -74,9 +77,6 @@
 	<!-- 				<a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th> -->
 	<!-- 			<th class="col-sm-2"> -->
 	<!-- 				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">N° de construction</a></th> -->
-			<th class="col-sm-4">
-				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a>
-			</th>
 		</tr>
 	</thead>		
 	<tbody>
@@ -88,11 +88,11 @@
 			<!-- <td>{{elfin.GROUPE}}</td>  -->
 			<!-- Remark: NOM always empty on tested data replaced by VALUE-->
 			<td>{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<td>{{getAddress(elfin.IDENTIFIANT.ORIGINE)}}</td>
 			<td>{{elfin.PARTENAIRE.USAGER.VALUE}}</td>			
 			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.VALUE}}</td>
 	<!-- 				<td>{{elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}</td> -->
 	<!-- 				<td>{{elfin.IDENTIFIANT.NOM}}</td> -->
-			<td>{{elfin.IDENTIFIANT.ALIAS}}</td>
 		</tr>
 	</tbody>
 </table>
