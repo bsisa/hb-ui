@@ -412,12 +412,28 @@
 		
 	/**
 	 * Filter tailored to UNITE_LOCATIVE (SURFACE) list requirements.
+	 * `buildingElfins` third parameter is only required if predicate.address is specified.
+	 * Indeed the address information is contained in the UNITE_LOCATIVE parent entry IMMEUBLE.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual uniteLocative list. 
 	 */
-	angular.module('hb5').filter('uniteLocativeListFilter', [function () {
+	angular.module('hb5').filter('uniteLocativeListFilter', ['$log', function ($log) {
 		
-		return function (uniteLocatives, predicate) {
+		return function (uniteLocatives, predicate, buildingElfins) {
+			
 	        if (!angular.isUndefined(uniteLocatives) && !angular.isUndefined(predicate)) {
+	        	
+	            /**
+	             * Find address for location unit
+	             */
+	            var getAddress = function (buildingElfins, locationUnitOrigine) {
+	            	var matchingBuilding = _.find(buildingElfins, function(e){ return e.Id === locationUnitOrigine; } );
+	            	if (matchingBuilding) {
+	            		return matchingBuilding.IDENTIFIANT.ALIAS;
+	            	} else {
+	            		return "";	
+	            	}
+	            };	        	
+	        	
 	            var tempUniteLocatives = [ ];
 	            angular.forEach(uniteLocatives, function (uniteLocative) {
 	            	var currentOwner = undefined;
@@ -431,11 +447,16 @@
 	            			currentTenant = uniteLocative.PARTENAIRE.USAGER.VALUE
 	            		}	
 	            	}
+	            	// Address information is contained in IMMEUBLE parent of UNITE_LOCATIVE
+	            	var currentBuildingAddress = undefined;
+	            	if ( !angular.isUndefined(predicate.address) ) {
+	            		currentBuildingAddress = getAddress(buildingElfins, uniteLocative.IDENTIFIANT.ORIGINE);
+	            	}
                     if ( 
                     	 icontains(currentOwner, predicate.owner) &&
                     	 icontains(currentTenant, predicate.tenant) &&
-                    	 icontains(uniteLocative.IDENTIFIANT.OBJECTIF, predicate.registerNb)
-                    	 
+                    	 icontains(uniteLocative.IDENTIFIANT.OBJECTIF, predicate.registerNb) && 
+                    	 icontains(currentBuildingAddress, predicate.address)
                     ) {
                     	tempUniteLocatives.push(uniteLocative);
                     }
