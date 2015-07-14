@@ -8,23 +8,31 @@
     		      require: 'ngModel',
     		      link: function(scope, elem, attr, ngModel) {
     		    	    		          
+    		    	  /**
+    		    	   * Function to check the current value for ROLE is not already used except if 
+    		    	   * the existing value corresponds to the current edited ROLE.
+    		    	   */
+    		    	  var checkValid = function(rolesList, value) {
+    		             var matchingRoleDistinctFromCurrent = _.find(rolesList, function(role){ return ( role.IDENTIFIANT.NOM === value && role.Id !== scope.elfin.Id); });
+    		             var valid = (matchingRoleDistinctFromCurrent === undefined);
+    		             return valid;
+    		    	  };
+    		    	  
 			          // Asychronous existing ROLEs preloading
 			          var xpathForRoles = "//ELFIN[@CLASSE='ROLE']";
 			          hbQueryService.getRoleList(xpathForRoles).then(
-		        		  function(roles) {
-							var rolesList = _.map(roles, function(role){ return role.IDENTIFIANT.NOM; });
-							$log.debug(">>>> hbUniqueRole: rolesList = " + angular.toJson(rolesList));
-							
-		    		          // DOM to model validation
+		        		  function(rolesList) {
+
+		        			  // DOM to model validation
 		    		          ngModel.$parsers.unshift(function(value) {
-		    		             var valid = rolesList.indexOf(value) === -1;
-		    		             ngModel.$setValidity('hbUniqueRole', valid);
-		    		             return valid ? value : undefined;
+		    		        	  var valid = checkValid(rolesList, value);
+		    		        	  ngModel.$setValidity('hbUniqueRole', valid);
+		    		        	  return valid ? value : undefined;
 		    		          });
 	
 		    		          // Model to DOM validation
 		    		          ngModel.$formatters.unshift(function(value) {
-		    		             ngModel.$setValidity('hbUniqueRole', rolesList.indexOf(value) === -1);
+		    		             ngModel.$setValidity('hbUniqueRole', checkValid(rolesList, value));
 		    		             return value;
 		    		          });								
 		        		  },
