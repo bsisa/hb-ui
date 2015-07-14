@@ -56,14 +56,20 @@
 									$log.debug(">>>> HbUserCardController: loaded availableRoles.");
 
 									// Get available role name
-									var availableRoleNames = _.chain(availableRoles).pluck('IDENTIFIANT').pluck('NOM').value();
+									//var availableRoleNames = _.chain(availableRoles).pluck('IDENTIFIANT').pluck('NOM').value();
 									
 									$scope.availableRolesCheckboxModel = [];
 
-									for (var i = 0; i < availableRoleNames.length; i++) {
+									for (var i = 0; i < availableRoles.length; i++) {
+										var currentRole = availableRoles[i];
 										//$log.debug("availableRoleNames["+i+"] = " + availableRoleNames[i]);	
-										$scope.availableRolesCheckboxModel.push({"id":i,"name": availableRoleNames[i] , "state" : false});
-									}
+										$scope.availableRolesCheckboxModel.push({"id":i,"name": currentRole.IDENTIFIANT.NOM , "group" : currentRole.GROUPE, "state" : false});
+									}									
+									
+//									for (var i = 0; i < availableRoleNames.length; i++) {
+//										//$log.debug("availableRoleNames["+i+"] = " + availableRoleNames[i]);	
+//										$scope.availableRolesCheckboxModel.push({"id":i,"name": availableRoleNames[i] , "state" : false});
+//									}
 
 									// Expose availableRoles to scope for use by $scope.updateUserRoles create operation,
 									// only once $scope.availableRolesCheckboxModel update is complete as $scope.availableRoles is checked 

@@ -12,52 +12,80 @@
 					<span class="has-feedback"
 							ng-class="getCssHasFeedback(elfinForm.nom)">
 						<label for="username" class="col-sm-2 control-label">Nom d'utilisateur</label>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<input id="username" name="username" type="text" class="form-control"
 								ng-model="elfin.IDENTIFIANT.NOM" ng-required="true"
 								tooltip="elfin.IDENTIFIANT.NOM" hb-unique-user >
 						</div>
 					</span>			
-			</div>
-			<div class="form-group" >					
+<!-- 			</div> -->
+<!-- 			<div class="form-group" >					 -->
 					<span class="has-feedback"
 						ng-class="getCssHasFeedback(elfinForm.dateFrom)">
 						<label for="date_valid_from" class="col-sm-2 control-label">Valide du</label>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<div hb-date id="date_valid_from" name="dateFrom"
 								ng-model="elfin.IDENTIFIANT.DE" ></div>
 						</div>
 					</span>
-			</div>
-			<div class="form-group" >
+<!-- 			</div> -->
+<!-- 			<div class="form-group" > -->
 					<span class="has-feedback"
 						ng-class="getCssHasFeedback(elfinForm.dateTo)">
 						<label for="date_valid_to" class="col-sm-2 control-label">au</label>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<div hb-date id="date_valid_to" name="dateTo"
 								ng-model="elfin.IDENTIFIANT.A"></div>
 						</div>
 					</span>
-			</div>
-			<div class="form-group">
-				<span class="has-feedback">
-					<div class="col-sm-12">
-<!-- 						<h4>Roles</h4> -->
-						<label class="col-sm-2 control-label">Roles</label>
-<!-- 						<pre>{{availableRolesCheckboxModel}}</pre> -->
-						<div class="btn-group">
-<!-- 							<label name="keyword{$index}" ng-repeat="availableRole in availableRolesCheckboxModel" class="btn btn-primary" ng-model="availableRole.state"  -->
-<!-- 								btn-checkbox >{{availableRole.name}}</label> -->
-							<button 
-								ng-click="updateUserRoles(availableRole)" 
-								name="keyword{$index}" 
-								ng-repeat="availableRole in availableRolesCheckboxModel" 
-								class="btn btn-primary" 
-								ng-model="availableRole.state" 
-								btn-checkbox>{{availableRole.name}}</button> 								 
+					
+					
+				<div class="col-md-4 col-xs-12" style="border: solid 1px red">
+					<div class="col-xs-12">
+						<div>CLASSE</div>
+						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'CLASSE'}">
+							<div class="form-group">
+								<span class="has-feedback">
+									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
+								 	<div class="col-sm-2" >
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  >
+								 	</div>
+								</span>
+							</div>
 						</div>
 					</div>
-				</span>
+				</div>
+				<div class="col-md-4 col-xs-12" style="border: solid 1px red">
+					<div class="col-xs-12">
+						<div>FONCTIONNALITE</div>
+						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'FONCTIONNALITE'}">
+							<div class="form-group">
+								<span class="has-feedback">
+									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
+								 	<div class="col-sm-2" >
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  >
+								 	</div>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-xs-12" style="border: solid 1px red">
+					<div class="col-xs-12">
+						<div>METIER</div>
+						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'METIER'}">
+							<div class="form-group">
+								<span class="has-feedback">
+									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
+								 	<div class="col-sm-2" >
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  >
+								 	</div>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>					
+					
 			</div>
 		</div>
 		</tab> 
