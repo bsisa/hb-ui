@@ -5,6 +5,7 @@
 			[
 					'$scope',
 					'GeoxmlService',
+					'hbQueryService',
 					'$modal',
 					'$routeParams',
 					'$location',
@@ -13,7 +14,7 @@
 					'hbUtil', 
 					'$rootScope',
 					'$timeout',
-					function($scope, GeoxmlService, $modal, $routeParams,
+					function($scope, GeoxmlService, hbQueryService, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil, $rootScope, $timeout) {
 
 						//$log.debug("    >>>> Using HbUserCardController ");
@@ -48,12 +49,9 @@
 			        	// Load available roles
 				        $scope.getAvailableRoles = function () {
 				        	
-				            var xpathForRoles = "//ELFIN[@CLASSE='ROLE']";
-				            // TODO: rolesCollectionId must come from server configuration resource.
-				            var rolesCollectionId = 'G10000101010101000';			        	
-
 				            // Asychronous roles preloading
-				            GeoxmlService.getCollection(rolesCollectionId).getList({"xpath" : xpathForRoles})
+				        	var xpathForRoles = "//ELFIN[@CLASSE='ROLE']";
+				            hbQueryService.getRoleList(xpathForRoles)
 							.then(function(availableRoles) {
 									$log.debug(">>>> HbUserCardController: loaded availableRoles.");
 
