@@ -1,5 +1,6 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
+	<span ng-show="elfinForm.username.$error.hbUniqueUser" >Le champs <strong>Nom d'utilisateur</strong> doit être unique!</span>
 	<span ng-show="elfinForm.username.$error.required" >Le champs <strong>Nom d'utilisateur</strong> est obligatoire!</span>
 	<span ng-show="elfinForm.collaborator_name.$error.required" >Un <strong>collaborateur</strong> doit obligatoirement être associé à un compte utilisateur</span>
 </div>
@@ -14,7 +15,7 @@
 						<div class="col-sm-3">
 							<input id="username" name="username" type="text" class="form-control"
 								ng-model="elfin.IDENTIFIANT.NOM" ng-required="true"
-								tooltip="elfin.IDENTIFIANT.NOM">
+								tooltip="elfin.IDENTIFIANT.NOM" hb-unique-user >
 						</div>
 					</span>			
 			</div>
