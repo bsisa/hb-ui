@@ -185,6 +185,21 @@
 			return getList(HB_COLLECTIONS.TRANSACTION_ID,xpath);
 		};
         
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *  
+		 * `HB_COLLECTIONS.USER_ID` constant identifies collection containing ELFIN objects of CLASSE USER.
+		 * 
+		 * Beware that collection containing USER does also contain other CLASSE objects and therefore xpath expression 
+		 * should at least specify //ELFIN[@CLASSE='USER'] restriction. 
+		 *  @see getList
+		 */		
+		var getUserList = function(xpath) {
+			return getList(HB_COLLECTIONS.USER_ID,xpath);
+		};			
+		
+		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *  
@@ -212,6 +227,7 @@
         	getProductionFroidList:getProductionFroidList,
         	getRoleList:getRoleList,
         	getTransactions:getTransactions,
+        	getUserList:getUserList,
         	getVentilationList:getVentilationList
         };
 
