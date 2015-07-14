@@ -162,6 +162,20 @@
 		};		
 		
 		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *  
+		 * `HB_COLLECTIONS.ROLE_ID` constant identifies collection containing ELFIN objects of CLASSE ROLE.
+		 * 
+		 * Beware that collection containing ROLE does also contain other CLASSE objects and therefore xpath expression 
+		 * should at least specify //ELFIN[@CLASSE='ROLE'] restriction. 
+		 *  @see getList
+		 */		
+		var getRoleList = function(xpath) {
+			return getList(HB_COLLECTIONS.ROLE_ID,xpath);
+		};			
+		
+		
+		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "". 
 		 * 
 		 * `HB_COLLECTIONS.TRANSACTION_ID` constant identifies collection containing ELFIN objects of CLASSE TRANSACTION.
@@ -196,6 +210,7 @@
         	getPrestations:getPrestations,
         	getProductionChaleurList:getProductionChaleurList,
         	getProductionFroidList:getProductionFroidList,
+        	getRoleList:getRoleList,
         	getTransactions:getTransactions,
         	getVentilationList:getVentilationList
         };
