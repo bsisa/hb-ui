@@ -306,8 +306,9 @@
 
             // Elfin has been loaded
             var elfinLoadedListener = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
+            	// TODO: review: not relevant for all ELFIN@CLASSE !
                 $scope.elfin = elfin;
-                $log.debug(">>>> elfinLoadedListener => " + elfin.IDENTIFIANT.OBJECTIF);
+                $log.debug(">>>> elfinLoadedListener => " + elfin.CLASSE);
             });
 
             // Elfin has been unloaded, thus no more current elfin
