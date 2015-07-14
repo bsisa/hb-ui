@@ -134,6 +134,9 @@ module.exports = function(grunt) {
 								'src/hbTransactionCardController.js',
 								'src/hbTransactionCardDirective.js',
 								'src/hbTransactionCreateCardDirective.js',
+								
+								'src/hbUniqueRoleDirective.js',
+								
 								'src/hbUniteLocativeListController.js',
 								'src/hbUniteLocativeListDirective.js',								
 								'src/hbUtilService.js',
