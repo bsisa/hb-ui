@@ -43,12 +43,12 @@
 				<div class="col-md-4 col-xs-12" style="border: solid 1px red">
 					<div class="col-xs-12">
 						<div>CLASSE</div>
-						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'CLASSE'}">
+						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'CLASSE'} | orderBy: 'name'">
 							<div class="form-group">
 								<span class="has-feedback">
 									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
 								 	<div class="col-sm-2" >
-								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  >
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  ng-click="updateUserRoles(availableRole)" >
 								 	</div>
 								</span>
 							</div>
@@ -58,12 +58,12 @@
 				<div class="col-md-4 col-xs-12" style="border: solid 1px red">
 					<div class="col-xs-12">
 						<div>FONCTIONNALITE</div>
-						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'FONCTIONNALITE'}">
+						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'FONCTIONNALITE' | orderBy: 'name'}">
 							<div class="form-group">
 								<span class="has-feedback">
 									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
 								 	<div class="col-sm-2" >
-								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  >
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  ng-click="updateUserRoles(availableRole)" >
 								 	</div>
 								</span>
 							</div>
@@ -73,12 +73,12 @@
 				<div class="col-md-4 col-xs-12" style="border: solid 1px red">
 					<div class="col-xs-12">
 						<div>METIER</div>
-						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'METIER'}">
+						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'METIER' | orderBy: 'name'}">
 							<div class="form-group">
 								<span class="has-feedback">
 									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
 								 	<div class="col-sm-2" >
-								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  >
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state" ng-click="updateUserRoles(availableRole)" >
 								 	</div>
 								</span>
 							</div>
