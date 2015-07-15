@@ -8,8 +8,10 @@
 							'$attrs',
 							'$scope',
 							'$log',
+							'$modal',
 							'hbUtil',
-							function($attrs, $scope, $log, hbUtil) {
+							'hbAlertMessages', 
+							function($attrs, $scope, $log, $modal, hbUtil, hbAlertMessages) {
     
 									//$log.debug("    >>>> Using HbAnnexesComponentController");
 							        
@@ -41,7 +43,35 @@
 											// Property bound to elfinForm to make at least one annex mandatory.
 							    			$scope.annexesNoPhotoNb = $scope.annexesWithoutPhoto.length;
 							    		}
-							        });									
+							        });	
+							    	
+							    	/**
+							    	 * Delete the corresponding RENVOI node from ELFIN.
+							    	 * Note: delete is a reserved Javascript keyword. Do not name function `delete`
+							    	 */
+							    	$scope.deleteRenvoi = function(renvoi) {
+							    		$log.debug("Perform RENVOI deletion.");
+							    		
+							        	var modalInstance = $modal.open({
+							                templateUrl: '/assets/views/deleteAnnexeConfirmModalPanel.html',
+							                controller: 'DeleteConfirmController',
+							                scope: $scope,
+							                backdrop: 'static'
+							            });
+
+							            modalInstance.result.then(function () {
+							            	// Update elfin model
+							            	hbUtil.removeAnnexeRenvoiByPos($scope.elfin, renvoi.POS);
+								            // Automatically save elfin to server (we already ask for user confirmation). 
+							            	$scope.saveElfin($scope.elfin);
+							            }, function () {
+							            	// Do not annoy end-user with more messages.
+							            	//var message = "Suppression de l'annexe " + hbUtil.getLinkFileName(renvoi.LIEN) + " annulée.";
+							   				//hbAlertMessages.addAlert("warning",message);
+							            });        								    		
+
+							    	};
+							    	
 									        
 							    } ]);
 
