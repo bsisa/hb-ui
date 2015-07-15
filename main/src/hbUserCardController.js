@@ -53,45 +53,40 @@
 				        	var xpathForRoles = "//ELFIN[@CLASSE='ROLE']";
 				            hbQueryService.getRoleList(xpathForRoles)
 							.then(function(availableRoles) {
-									$log.debug(">>>> HbUserCardController: loaded availableRoles.");
 
-									// Get available role name
-									//var availableRoleNames = _.chain(availableRoles).pluck('IDENTIFIANT').pluck('NOM').value();
-									
-									$scope.availableRolesCheckboxModel = [];
+								$log.debug(">>>> HbUserCardController: loaded availableRoles.");
 
-									for (var i = 0; i < availableRoles.length; i++) {
-										var currentRole = availableRoles[i];
-										//$log.debug("availableRoleNames["+i+"] = " + availableRoleNames[i]);	
-										$scope.availableRolesCheckboxModel.push({"id":i,"name": currentRole.IDENTIFIANT.NOM , "group" : currentRole.GROUPE, "state" : false});
-									}									
-									
-//									for (var i = 0; i < availableRoleNames.length; i++) {
-//										//$log.debug("availableRoleNames["+i+"] = " + availableRoleNames[i]);	
-//										$scope.availableRolesCheckboxModel.push({"id":i,"name": availableRoleNames[i] , "state" : false});
-//									}
+								// Map available roles to checkbox dedicated model
+								$scope.availableRolesCheckboxModel = [];
 
-									// Expose availableRoles to scope for use by $scope.updateUserRoles create operation,
-									// only once $scope.availableRolesCheckboxModel update is complete as $scope.availableRoles is checked 
-									// against in $watch('elfin.Id') listener. (Fix #5)
-									$scope.availableRoles = availableRoles;									
-									
-									$log.debug(">>>> HbUserCardController: $scope.availableRolesCheckboxModel.length = " + $scope.availableRolesCheckboxModel.length);
-									// Only proceed with user roles initialisation if USER elfin is available (Fix #5)
-									if ($scope.elfin) {
-										$log.debug(">>>> HbUserCardController: PERFORM $scope.initWithUserRoles() in getAvailableRoles, OK");
-										$scope.initWithUserRoles();										
-									} else {
-										$log.debug(">>>> HbUserCardController: DELAY   $scope.initWithUserRoles() in getAvailableRoles, current USER elfin not yet available, PENDING.");	
-									}
-								},
-								function(response) {
-									var message = "Le chargement des roles a échoué (statut de retour: "+ response.status+ ")";
-						            hbAlertMessages.addAlert("danger",message);
-								});				
+								for (var i = 0; i < availableRoles.length; i++) {
+									var currentRole = availableRoles[i];
+									$scope.availableRolesCheckboxModel.push({"id":i,"name": currentRole.IDENTIFIANT.NOM , "group" : currentRole.GROUPE, "state" : false});
+								}									
+
+								// Expose availableRoles to scope for use by $scope.updateUserRoles create operation,
+								// only once $scope.availableRolesCheckboxModel update is complete as $scope.availableRoles is checked 
+								// against in $watch('elfin.Id') listener. (Fix #5)
+								$scope.availableRoles = availableRoles;									
+								
+								// Only proceed with user roles initialisation if USER elfin is available (Fix #5)
+								if ($scope.elfin) {
+									$log.debug(">>>> HbUserCardController: PERFORM $scope.initWithUserRoles() in getAvailableRoles, OK");
+									$scope.initWithUserRoles();										
+								} else {
+									$log.debug(">>>> HbUserCardController: DELAY   $scope.initWithUserRoles() in getAvailableRoles, current USER elfin not yet available, PENDING.");	
+								}
+							},
+							function(response) {
+								var message = "Le chargement des roles a échoué (statut de retour: "+ response.status+ ")";
+					            hbAlertMessages.addAlert("danger",message);
+							});				
 
 			        	};
 
+			        	/**
+			        	 * Performs match of user roles against available roles to initialise check boxes state. 
+			        	 */
 			        	$scope.initWithUserRoles = function () {
 			        		
 			        		if ($scope.elfin) {
@@ -100,8 +95,6 @@
 			        			$log.debug(">>>> HbUserCardController: initWithUserRoles - DAMNED!!! elfin  NOT AVAILABLE");
 			        		}
 			        		
-			        		//var userRoleNames = _.chain($scope.elfin).pluck('CARACTERISTIQUE').pluck('FRACTION').pluck('L').C[2].value();
-			        		//var userRoleNames = angular.toJson($scope.elfin['CARACTERISTIQUE']['FRACTION'], true);
 			        		var userRoleNames = [];
 			        		var userRolesRef = $scope.elfin['CARACTERISTIQUE']['FRACTION']['L'];
 			            	/* Sort menu lines by POS */
@@ -135,24 +128,31 @@
 			        	$scope.updateUserRoles = function (role) {
 
 			        		$log.debug("      >>>>>>>>>>>> updateUserRoles for name / state "+ role.name +" / "+role.state+" called <<<<<<<<<<<<");
+			        		
+			        		// If role.state is true remove this role
 			        		if (role.state) {
 			        			$log.debug("      >>>>>>>>>>>> DELETE ROLE <<<<<<<<<<<<");
-			        			// Loop backward while deleting possibly more than a single element (should not happen)
-			        			for (var i = $scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].length-1; i >=0; i--) {
+			        			var deletePosition = undefined;
+			        			for (var i = 0; i < $scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].length; i++) {
 									var L = $scope.elfin['CARACTERISTIQUE']['FRACTION']['L'][i];
 									var currRoleName = L.C[2].VALUE;
 									if (role.name == currRoleName) {
 										$log.debug("      >>>>>>>>>>>> DELETE ROLE at position "+i+" <<<<<<<<<<<<");
-										//TODO: manage POS values while removing an entry.
-										$scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].splice(i,1);
-									} else {
-										$log.debug("      >>>>>>>>>>>> NO DELETE at position "+i+" <<<<<<<<<<<<");	
+										// POS are 1 based not 0 based like array, thus +1
+										deletePosition = i+1;
+										break;
 									}
 								}
-			        		} else {
+								// Preserves continuous POS values in addition to perform splicing.
+			        			hbUtil.removeFractionLByPos($scope.elfin, deletePosition);
+			        			
+			        		} else { // If the role.state is false create this role
 			        			$log.debug("      >>>>>>>>>>>> CREATE ROLE <<<<<<<<<<<<");
+			        			// Search the available roles for the matching definition
 			        			var roleDefinition = _.find($scope.availableRoles, function(roleDef){ return roleDef['IDENTIFIANT']['NOM'] == role.name; } );
+			        			// Obtain the number of roles defined for the user
 			        			var nbUserRole = $scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].length;
+			        			// Add the new role at the end of the list of existing user roles
 			        			$scope.elfin['CARACTERISTIQUE']['FRACTION']['L'].push($scope.createRole(roleDefinition['ID_G'],roleDefinition['Id'],role.name, nbUserRole+1));
 			        		}
 			        	};			        	
