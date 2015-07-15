@@ -95,6 +95,35 @@
 				// Renumber all POS of elfin.CARACTERISTIQUE.FRACTION.L array.
 				renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
 			}
+		};
+		
+		
+		
+		var getAnnexeRenvoiIndexByPos = function(elfin, RenvoiPos) {
+			
+			for (var i=0; i < elfin.ANNEXE.RENVOI.length; i++) {
+				var currRenvoi = elfin.ANNEXE.RENVOI[i];
+				if (currRenvoi.POS === RenvoiPos) {
+					return i;
+				}
+			}
+			return -1;
+		};		
+		
+		
+		/**
+		 * Removes RENVOI entry having POS attribute value RenvoiPos from elfin.ANNEXE.RENVOI
+		 * Takes care of POS renumbering to avoid discontinuous POS values. 
+		 */
+		var removeAnnexeRenvoiByPos = function(elfin, RenvoiPos) {
+			var index = getAnnexeRenvoiIndexByPos(elfin, RenvoiPos);
+			// Proceed only if we found a match for RenvoiPos
+			if (index != -1) {
+				// Remove RENVOI entry at index corresponding to RenvoiPos
+				elfin.ANNEXE.RENVOI.splice(index,1);
+				// Renumber all POS of elfin.ANNEXE.RENVOI array.
+				renumberPos(elfin.ANNEXE.RENVOI);
+			}
 		};			
 		
 		
@@ -685,6 +714,7 @@
         	getValueAtPath:getValueAtPath,
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
+        	removeAnnexeRenvoiByPos:removeAnnexeRenvoiByPos,
         	removeFractionLByPos:removeFractionLByPos,
         	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS,
