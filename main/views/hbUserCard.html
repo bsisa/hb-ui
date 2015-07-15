@@ -9,40 +9,40 @@
 		<tabset> <!-- USER tab --> <tab> <tab-heading>Identifications</tab-heading>
 		<div class="hb-tab">
 			<div class="form-group" >
-					<span class="has-feedback"
-							ng-class="getCssHasFeedback(elfinForm.nom)">
-						<label for="username" class="col-sm-2 control-label">Nom d'utilisateur</label>
-						<div class="col-sm-2">
-							<input id="username" name="username" type="text" class="form-control"
-								ng-model="elfin.IDENTIFIANT.NOM" ng-required="true"
-								tooltip="elfin.IDENTIFIANT.NOM" hb-unique-user >
-						</div>
-					</span>			
-<!-- 			</div> -->
-<!-- 			<div class="form-group" >					 -->
-					<span class="has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.dateFrom)">
-						<label for="date_valid_from" class="col-sm-2 control-label">Valide du</label>
-						<div class="col-sm-2">
-							<div hb-date id="date_valid_from" name="dateFrom"
-								ng-model="elfin.IDENTIFIANT.DE" ></div>
-						</div>
-					</span>
-<!-- 			</div> -->
-<!-- 			<div class="form-group" > -->
-					<span class="has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.dateTo)">
-						<label for="date_valid_to" class="col-sm-2 control-label">au</label>
-						<div class="col-sm-2">
-							<div hb-date id="date_valid_to" name="dateTo"
-								ng-model="elfin.IDENTIFIANT.A"></div>
-						</div>
-					</span>
+			
+				<span class="has-feedback"
+						ng-class="getCssHasFeedback(elfinForm.nom)">
+					<label for="username" class="col-md-2 control-label">Nom d'utilisateur</label>
+					<div class="col-md-2">
+						<input id="username" name="username" type="text" class="form-control"
+							ng-model="elfin.IDENTIFIANT.NOM" ng-required="true"
+							tooltip="elfin.IDENTIFIANT.NOM" hb-unique-user >
+					</div>
+				</span>			
+				<span class="has-feedback"
+					ng-class="getCssHasFeedback(elfinForm.dateFrom)">
+					<label for="date_valid_from" class="col-md-2 control-label">Valide du</label>
+					<div class="col-md-2">
+						<div hb-date id="date_valid_from" name="dateFrom"
+							ng-model="elfin.IDENTIFIANT.DE" ></div>
+					</div>
+				</span>
+				<span class="has-feedback"
+					ng-class="getCssHasFeedback(elfinForm.dateTo)">
+					<label for="date_valid_to" class="col-md-2 control-label">au</label>
+					<div class="col-md-2">
+						<div hb-date id="date_valid_to" name="dateTo"
+							ng-model="elfin.IDENTIFIANT.A"></div>
+					</div>
+				</span>
 					
-					
-				<div class="col-md-4 col-xs-12" style="border: solid 1px red">
-					<div class="col-xs-12">
-						<div>CLASSE</div>
+				<div class="col-md-4 col-xs-12">
+					<br />
+					<div class="panel panel-default clearfix">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Roles de type CLASSE</h3>
+					  </div>
+					  <div class="panel-body">
 						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'CLASSE'} | orderBy: 'name'">
 							<div class="form-group">
 								<span class="has-feedback">
@@ -53,11 +53,16 @@
 								</span>
 							</div>
 						</div>
+					  </div>
 					</div>
 				</div>
-				<div class="col-md-4 col-xs-12" style="border: solid 1px red">
-					<div class="col-xs-12">
-						<div>FONCTIONNALITE</div>
+				<div class="col-md-4 col-xs-12" >
+					<br />
+					<div class="panel panel-default clearfix">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Roles de type FONCTIONNALITE</h3>
+					  </div>
+					  <div class="panel-body">
 						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'FONCTIONNALITE'} | orderBy: 'name'">
 							<div class="form-group">
 								<span class="has-feedback">
@@ -68,24 +73,29 @@
 								</span>
 							</div>
 						</div>
+					  </div>
 					</div>
 				</div>
-				<div class="col-md-4 col-xs-12" style="border: solid 1px red">
-					<div class="col-xs-12">
-						<div>METIER</div>
-						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'METIER'}  | orderBy: 'name'">
+				<div class="col-md-4 col-xs-12" >
+					<br />
+					<div class="panel panel-default clearfix">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Roles de type METIER</h3>
+					  </div>
+					  <div class="panel-body">
+						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'METIER'} | orderBy: 'name'">
 							<div class="form-group">
 								<span class="has-feedback">
 									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
 								 	<div class="col-sm-2" >
-								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state" ng-click="updateUserRoles(availableRole)" >
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  ng-click="updateUserRoles(availableRole)" >
 								 	</div>
 								</span>
 							</div>
 						</div>
+					  </div>
 					</div>
-				</div>					
-					
+				</div>
 			</div>
 		</div>
 		</tab> 
