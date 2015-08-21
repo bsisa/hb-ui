@@ -32,13 +32,13 @@
 						// Update ngModel on user date change
 						$scope.$watch('date', function (newDate, oldDate) {
 
-							//$log.debug("Date change from " + oldDate + " to " + newDate);
+							$log.debug("Date change from " + oldDate + " to " + newDate);
 							
 							if (newDate && (newDate !== null)) {
 								// Convert $scope.date to GeoXML string format suitable for hbDateNgModelCtrl
 								var isoTextDate = $filter('date')($scope.date, GEOXML_DATE_FORMAT);
 							
-								//$log.debug(">>>> isoTextDate: " + isoTextDate);
+								$log.debug(">>>> isoTextDate: " + isoTextDate);
 								
 								if (isoTextDate !== $scope.hbDateNgModelCtrl.$modelValue) {
 									// Simulate user entry...
@@ -46,6 +46,16 @@
 									$scope.hbDateNgModelCtrl.$render();									
 								} else {
 									//$log.debug(">>>> ALREADY IN SYNC: $date and hbDateNgModelCtrl.$modelValue ");
+								}
+							} else {
+								// Allow user to reset an existing date value to null.
+								if (oldDate != newDate) {
+									//$log.debug(">>>> oldDate changed to newDate NULL... let's update the model...");
+									// Simulate user entry...
+									$scope.hbDateNgModelCtrl.$setViewValue(null);
+									$scope.hbDateNgModelCtrl.$render();
+								} else {
+									//$log.debug(">>>> oldDate === newDate and is NULL... do nothing...");
 								}
 							}
 						}, true);
