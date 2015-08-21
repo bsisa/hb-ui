@@ -377,7 +377,7 @@
 							</thead>
 							<tbody>
 								<tr
-									ng-repeat-start="formerEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | notLast ">
+									ng-repeat-start="formerEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | notLast | orderBy:'-DATE'">
 									<td rowspan="2"><span
 										ng-show="formerEvent.PAR_QUI === 'EN COURS'"
 										tooltip="Statut en cours"><i
