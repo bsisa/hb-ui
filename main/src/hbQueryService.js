@@ -41,7 +41,6 @@
 		var getAmenagementSportifs = function(xpath) {
 	        return getList(HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID,xpath);
 		};			
-		
 				
 		
 		/**
@@ -53,6 +52,18 @@
 		var getCiterneList = function(xpath) {
 			return getList(HB_COLLECTIONS.CITERNE_ID,xpath);
 		};			
+
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.CONSTAT_ID` identifies collection containing ELFIN objects of CLASSE CONSTAT.  
+		 *  @see getList
+		 */		
+		var getConstats = function(xpath) {		
+	        return getList(HB_COLLECTIONS.CONSTAT_ID,xpath);
+		};	
+		
 		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
@@ -63,7 +74,6 @@
 		var getContrats = function(xpath) {		
 	        return getList(HB_COLLECTIONS.CONTRAT_ID,xpath);
 		};		
-		
 		
 		
 		/**
@@ -215,6 +225,7 @@
         	getActors:getActors,
         	getAmenagementSportifs:getAmenagementSportifs,
         	getCiterneList:getCiterneList,
+        	getConstats:getConstats,
         	getContrats:getContrats,
         	getEquipementList:getEquipementList,
         	getEquipementsSportifs:getEquipementsSportifs,

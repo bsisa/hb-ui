@@ -247,10 +247,7 @@
 
 							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
 								            var xpathForConstatsEncours = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"'][not(IDENTIFIANT/A) or IDENTIFIANT/A='']";
-								            // TODO: constatsCollectionId must come from server configuration resource.
-								            //$log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
-								            var constatsCollectionId = 'G20060920171100001';
-								            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstatsEncours})
+								            hbQueryService.getConstats(xpathForConstatsEncours)
 												.then(function(elfins) {
 														$scope.constatsEncours = elfins;
 													},
@@ -259,19 +256,15 @@
 											            hbAlertMessages.addAlert("danger",message);
 													});
 								            var xpathForConstatsClos = "//ELFIN[IDENTIFIANT/COMPTE='"+$scope.elfin.IDENTIFIANT.NOM+"'][(IDENTIFIANT/A) and not(IDENTIFIANT/A='')]";
-								            // TODO: constatsCollectionId must come from server configuration resource.
-								            //$log.debug("TODO: HbImmeubleCardController: constatsCollectionId must come from server configuration resource.");
-								            GeoxmlService.getCollection(constatsCollectionId).getList({"xpath" : xpathForConstatsClos})
+								            hbQueryService.getConstats(xpathForConstatsClos)
 												.then(function(elfins) {
 														$scope.constatsClos = elfins;
 													},
 													function(response) {
 														var message = "Le chargement des CONSTATs clos a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
-													});
-								            
+													});								            
 								            	}
-							    		
 							    	}, true);     
 							    	
 							    	/**
