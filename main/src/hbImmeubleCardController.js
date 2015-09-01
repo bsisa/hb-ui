@@ -283,9 +283,7 @@
 							    		//$log.debug("$watchCollection for OBJECTIF, PROPRIETAIRE.NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 							    		
 							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
-								            // TODO: constatsCollectionId must come from server configuration resource.
-							    			//$log.debug("TODO: HbImmeubleCardController: prestationCollectionId must come from server configuration resource.");
-							    			// DONE: added restriction on PROPRIETAIRE, CLASSE. Strict restriction on OBJECTIF, starts-with is not correct in all cases.
+							    			// Restriction on PROPRIETAIRE, CLASSE is mandatory. Restriction on OBJECTIF starts-with only is not sufficient in all cases.
 								            var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@NOM='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM+"' and @CLASSE='PRESTATION']";
 								            // TODO: evaluate replacing the above by the following.
 								            //var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@Id='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id+"' and PARTENAIRE/PROPRIETAIRE/@ID_G='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G+"' and @CLASSE='PRESTATION']";
@@ -325,8 +323,6 @@
 							    		$log.debug("$watchCollection for OBJECTIF, NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 							    		
 							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
-								            // TODO: productionChaleurCollectionId must come from server configuration resource.
-							    			// DONE: added restriction on PROPRIETAIRE, CLASSE. Strict restriction on OBJECTIF, starts-with is not correct in all cases.
 								            var xpathForProductionChaleur = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and IDENTIFIANT/ORIGINE='"+$scope.elfin.IDENTIFIANT.NOM+"' and @CLASSE='PRODUCTION_CHALEUR']";
 								            hbQueryService.getProductionChaleurList(xpathForProductionChaleur)
 												.then(function(elfins) {
