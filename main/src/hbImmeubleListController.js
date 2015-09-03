@@ -10,7 +10,7 @@
 
     	// Object holding user entered search (filter) criteria 
     	$scope.search = {
-    			"active" : "yes",
+    			"active" : "any",
     			"owner" : "",
     			"registerNb" : "",
     			"place" : "",
