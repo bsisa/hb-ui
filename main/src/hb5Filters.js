@@ -341,6 +341,19 @@
 	    };
 	}]);	
 	
+	
+	/** 
+	 * Encapsulate test to find out if a given IMMEUBLE is retired or not.
+	 */
+	var immeubleIsActive = function (immeuble) {
+		if (immeuble.IDENTIFIANT.A && immeuble.IDENTIFIANT.A.trim().length > 0) { 
+			return false 
+		} else {
+			return true
+		}
+	};	
+	
+	
 	/**
 	 * Filter tailored to IMMEUBLE list requirements.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual immeuble list. 
@@ -359,7 +372,11 @@
                     	 //icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
                     	 icontains(immeublePlace.VALEUR, predicate.place) &&
                     	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
-                    	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address)
+                    	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address) &&
+                    	 ( 
+                    			 predicate.active === "yes" && immeubleIsActive(immeuble) || 
+                    			 predicate.active === "no" && !immeubleIsActive(immeuble) || 
+                    			 predicate.active === "any")  
                     ) {
                     	tempImmeubles.push(immeuble);
                     }
@@ -378,8 +395,14 @@
 	 */
 	angular.module('hb5').filter('immeubleListAnyFilter', ['$log','hbUtil', function ($log,hbUtil) {
 		
-		return function (immeubles, searchtext) {
+		return function (immeubles, searchtext, active) {
 
+			if (active) {
+				$log.debug("immeubleListAnyFilter, active = " + active);
+			} else {
+				$log.debug("immeubleListAnyFilter, active = UNDEFINED");
+			}
+			
 			var checkAnyField = function(immeuble,searchtext) {
 				var immeublePlace = hbUtil.getCARByPos(immeuble, 1);
 				immeublePlace = (immeublePlace === undefined) ? {"VALEUR" : ""} : immeublePlace;
@@ -389,7 +412,7 @@
 					//icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
 					icontains(immeublePlace.VALEUR, searchtext) ||
 //					icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
-					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext)
+					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext)   
 				);		
 			};			
 
@@ -397,7 +420,16 @@
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
                     if ( checkAndForTokenisedSearchText(immeuble,searchtext,checkAnyField) ) {
-                    	tempImmeubles.push(immeuble);
+                    	if ( !angular.isUndefined(active) ) {
+                    		if ( active === "any" || 
+                    			   active === "yes" && immeubleIsActive(immeuble) || 
+                              	   active === "no" && !immeubleIsActive(immeuble) 
+                              	) {
+                    			tempImmeubles.push(immeuble);
+                    		}
+                    	} else { 
+                    		tempImmeubles.push(immeuble);	
+                    	}                    	
                     }
                 });
 	            return tempImmeubles;
