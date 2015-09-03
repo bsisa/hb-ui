@@ -10,6 +10,7 @@
 
     	// Object holding user entered search (filter) criteria 
     	$scope.search = {
+    			"active" : "yes",
     			"owner" : "",
     			"registerNb" : "",
     			"place" : "",
@@ -23,6 +24,11 @@
     	if ($routeParams.search) {
     		$scope.search.text = $routeParams.search; 
     	}
+    	
+    	// Support for including/excluding retired buildings.
+    	if ($routeParams.active) {
+    		$scope.search.active = $routeParams.active; 
+    	}    	
     	
     	// Support for IMMEUBLE selection
     	if ($routeParams.source) {
@@ -48,7 +54,7 @@
 		var filterSortElfins = function(elfins_p, search_p, predicate_p, reverse_p) {
 			// Apply prestationListFilter
 	    	var filteredSortedElfins = $filter('immeubleListFilter')(elfins_p, search_p);
-	    	filteredSortedElfins = $filter('immeubleListAnyFilter')(filteredSortedElfins, search_p.text);
+	    	filteredSortedElfins = $filter('immeubleListAnyFilter')(filteredSortedElfins, search_p.text, search_p.active);
 	    	// Apply predicate, reverse sorting
 	    	filteredSortedElfins = $filter('orderBy')(filteredSortedElfins, predicate_p, reverse_p);
 	    	return filteredSortedElfins;
