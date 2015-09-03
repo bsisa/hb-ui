@@ -12,8 +12,19 @@
 			<td ><img ng-click="listOrViewFontaines()" src="/assets/images/fontaine.jpeg" ng-src="/assets/images/fontaine.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>
 		<tr>
-			<th >Sélection  <span class="badge">{{filteredImmeubleElfins.length}}</span>
+			<th >		
+				Sélection <span class="badge">{{filteredImmeubleElfins.length}}</span>
 				<div class="right">
+					<div class="btn-group">	
+					<label ng-repeat="immeublesActiveState in immeublesActiveStates" for="{{immeublesActiveState.value}}">
+	     						{{immeublesActiveState.label}}
+						<input type="radio"
+							ng-value="immeublesActiveState.value"
+	            					id="{{immeublesActiveState.value}}"
+	            					name="immeubleActiveState.value" 
+							ng-model="immeubleSearch.active" >&nbsp;&nbsp;
+					</label>
+					</div>				
 					<button tabindex="2" class="btn btn-primary btn-xs" ng-click="listOrViewImmeuble()" ng-disabled="filteredImmeubleElfins.length < 1">
 						<span ng-show="filteredImmeubleElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
 						<span ng-show="filteredImmeubleElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
@@ -42,6 +53,7 @@
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input hb-enter="listOrViewImmeuble()" tabindex="1" id="immeubleSearchTextInput" name="immeubleSearchTextInput" type="text" class="form-control" ng-model="immeubleSearch.text" hb-no-dirty-check placeholder="">
+<!-- 						<input hb-enter="listOrViewImmeuble()" tabindex="1" id="immeubleSearchActiveInput" name="immeubleSearchActiveInput" type="text" class="form-control" ng-model="immeubleSearch.active" hb-no-dirty-check placeholder=""> -->
 					</div>
 				</div>
 			</th>

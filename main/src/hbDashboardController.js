@@ -9,13 +9,20 @@
     	// ============================================================    	
     	
     	// ==== Initialisation ========================================
+    	
+    	$scope.immeublesActiveStates = [
+    	                                {label:'Actifs', value: 'yes'},
+    	                                {label:'Sortis', value: 'no'},
+    	                                {label:'Tous', value: 'any'}
+    	                               ];
+    	
     	var immeublesCollectionId = HB_COLLECTIONS.IMMEUBLE_ID;
     	
 		/**
 		 *  Apply immeubleListAnyFilter
 		 */
 		var filterImmeubleElfins = function(elfins_p, search_p) {
-	    	var filteredSortedElfins = $filter('immeubleListAnyFilter')(elfins_p, search_p.text);
+	    	var filteredSortedElfins = $filter('immeubleListAnyFilter')(elfins_p, search_p.text, search_p.active);
 	    	return filteredSortedElfins;
 		};    	
     	
@@ -50,7 +57,7 @@
         $scope.listOrViewImmeuble = function() {
         	// 
         	if ($scope.filteredImmeubleElfins.length > 1) {
-        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE').search('search', $scope.immeubleSearch.text);
+        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE').search('search', $scope.immeubleSearch.text).search('active', $scope.immeubleSearch.active);
         	} else if ($scope.filteredImmeubleElfins.length == 1) {
         		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE/' + $scope.filteredImmeubleElfins[0].Id);	
         	}
@@ -59,7 +66,10 @@
         
     	// ==== End user search and related listener ==================        
         /** User entered IMMEUBLE search criterion */
-        $scope.immeubleSearch = { "text" : "" };
+        $scope.immeubleSearch = { 
+        		"active" : "yes",
+        		"text" : ""
+        };
 		
 		/**
 		 * Update filtered collection when search or sorting criteria are modified. 
