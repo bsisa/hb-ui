@@ -283,6 +283,30 @@
 								            hbQueryService.getPrestations(xpathForPrestations)
 												.then(function(elfins) {
 														$scope.prestations = elfins;
+
+														var filteredPrestations = $filter('prestationListFilter')($scope.prestations, $scope.currentYearAndFormerPrestationSearch, true);
+														// Store transactions for current year and previous year prestations.
+														$scope.transactions = [];
+														for (var i = 0; i < filteredPrestations.length; i++) {
+															var currPrestation = filteredPrestations[i]
+												            var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='"+currPrestation.IDENTIFIANT.OBJECTIF+"']";
+												            hbQueryService.getTransactions(xpathForTransactions)
+																.then(function(transactionElfins) {
+																	var transactionElfinsMap = $filter('map')(transactionElfins,'IDENTIFIANT.VALEUR');
+																	var transactionElfinsSum = $filter('sum')(transactionElfinsMap);
+																	// Manualy flatten $scope.transactions 
+																	for (var j = 0; j < transactionElfins.length; j++) {
+																		var currTrans = transactionElfins[j];
+																		// Add single depth property copy of OBJECTIF to allow $filter usage (see: hbImmeubleCard.html)
+																		currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF 
+																		$scope.transactions.push(currTrans);
+																	}
+																},
+																function(response) {
+																	var message = "Le chargement des TRANSACTIONs a échoué (statut de retour: "+ response.status+ ")";
+														            hbAlertMessages.addAlert("danger",message);
+																});																
+														}
 													},
 													function(response) {
 														var message = "Le chargement des PRESTATIONs a échoué (statut de retour: "+ response.status+ ")";
@@ -489,7 +513,7 @@
 														var message = "Le chargement des SURFACEs archivées a échoué (statut de retour: "+ response.status+ ")";
 											            hbAlertMessages.addAlert("danger",message);
 													});								            
-								            
+
 								            // Make IMMEUBLE photo available
 								            $scope.updatePhotoSrc();
 								            

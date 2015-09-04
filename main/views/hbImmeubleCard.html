@@ -617,7 +617,8 @@
 													<th>Année</th>
 													<th>Groupe / Remarque</th>
 													<th>Groupe comptable</th>
-													<th>Budget</th>														
+													<th>Budget</th>
+													<th>Dépenses</th>
 												</tr>
 											</thead>
 											<tbody ng-show="prestations">
@@ -633,6 +634,7 @@
 													<td ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}"><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
 													<td class="number"><span >{{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}</span></td>
+													<td class="number"><span >{{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}</span></td>
 												</tr>
 											</tbody>
 										</table>
