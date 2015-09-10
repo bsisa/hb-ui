@@ -95,7 +95,16 @@
             })                                    
             .when('/elfin/:collectionId/CITERNE/:elfinId', {
                 templateUrl: '/assets/views/CITERNE_card_view.html'
-            })                                  
+            })
+            .when('/elfin/create/COMMANDE', {
+                templateUrl: '/assets/views/COMMANDE_card_new_view.html'
+            })
+            .when('/elfin/:collectionId/COMMANDE/:elfinId', {
+                templateUrl: '/assets/views/COMMANDE_card_view.html'
+            })
+            .when('/elfin/:collectionId/COMMANDE', {
+                templateUrl: '/assets/views/COMMANDE_list_view.html'
+            })
             .when('/elfin/create/CONSTAT', {
                 templateUrl: '/assets/views/CONSTAT_card_new_view.html'
             })
@@ -105,7 +114,7 @@
             .when('/elfin/:collectionId/CONSTAT', {
                 templateUrl: '/assets/views/CONSTAT_list_view.html'
             })
-           .when('/elfin/create/CONTRAT', {
+            .when('/elfin/create/CONTRAT', {
                 templateUrl: '/assets/views/CONTRAT_card_new_view.html'
             })
             .when('/elfin/:collectionId/CONTRAT/:elfinId', {
@@ -114,7 +123,7 @@
             .when('/elfin/:collectionId/CONTRAT', {
                 templateUrl: '/assets/views/CONTRAT_list_view.html'
             })
-           .when('/elfin/create/EQUIPEMENT_SPORTIF', {
+            .when('/elfin/create/EQUIPEMENT_SPORTIF', {
                 templateUrl: '/assets/views/EQUIPEMENT_SPORTIF_card_new_view.html'
             })            
             .when('/elfin/:collectionId/FONTAINE/:elfinId', {

@@ -1,0 +1,233 @@
+<div hb-card-header>
+	<!-- Custom validation message to be defined here -->
+	<ul>
+<!-- 	<li ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.groupeTrans.$error.required">Le <strong>Groupe Transaction</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.year.$error.required"><strong>L'année</strong> est obligatoire!</li> -->
+	<li ng-show="elfinForm.year.$error.minlength"><strong>L'année</strong> doit être composée de quatre positions.</li>
+	<li ng-show="elfinForm.year.$error.maxlength"><strong>L'année</strong> doit être composée de quatre positions.</li>
+	<li ng-show="elfinForm.objectif.$error.required">Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Transaction', 'Année'} est obligatoire!</li>	
+<!-- 	<li ng-show="elfinForm.destinataire.$error.required">Le champs <strong>Destinataire</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.resp.$error.required">Le champs <strong>Responsable visa de facture</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.objectif.$error.minlength">Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Transaction', 'Année'} est obligatoire!</li> -->
+	<li ng-show="elfinForm.annexlength.$error.min"><strong>L'annexe</strong> est obligatoire!</li>
+	</ul>
+</div>
+<div class="row" style="padding-top: 8px;">
+	<div class="col-xs-12">
+		<tabset><!-- ui.bootstrap AngularJS UI tabset -->
+		<!-- Transaction tab -->
+		<tab> <tab-heading>Transaction</tab-heading>
+		<div class="hb-tab">
+		<div class="row">
+			<!-- 1st column -->
+			<div class="col-sm-6">
+			
+				<div  class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.manager)">
+					<label for="manager" class="col-sm-4 control-label"><em>Propriétaire</em></label>
+					<div class="col-sm-8">
+						<div 
+							hb-choose-actor 
+							hb-choose-actor-id-name="manager" 
+							hb-choose-actor-elfin-form="elfinForm"
+							hb-choose-actor-model="searchOwner"
+							hb-choose-actor-tooltip="Recherche de propriétaire"
+							hb-choose-actor-role="Propriétaire"
+							hb-choose-actor-default-by-name="NE"
+							></div>					
+					</div>
+				</div>			
+			
+					<div  class="form-group">
+						<label for="objectifSearchHelper" class="col-sm-4 control-label"><em>No SAI</em></label>
+						<div class="col-sm-3">
+						<!-- Kept as reminder - Suggestion de saisie inutile et coute 2 tabs	
+						<div class="input-group">
+								<input id="objectif" name="objectif" type="text" class="form-control" 
+									hb-no-dirty-check 
+									ng-blur="displayBuildingAddress(elfin.IDENTIFIANT.OBJECTIF)"
+									autocomplete="off"
+									typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{registerNb : $viewValue }"
+									ng-model="elfin.IDENTIFIANT.OBJECTIF"
+									tooltip="elfin.IDENTIFIANT.OBJECTIF">  <span
+									class="input-group-btn" tooltip="Recherche de SAI">
+									<button class="btn btn-default" type="button" hb-choose-one
+										ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
+										<i class="glyphicon glyphicon-list-alt"></i>
+									</button> 
+								</span>  
+							</div>		-->
+							<input id="objectifSearchHelper" name="objectifSearchHelper" type="text" class="form-control" ng-model="helper.constatSelectionSai" hb-no-dirty-check>
+						</div>
+						<label for="objectif" class="col-sm-2 control-label">Prest.</label>
+						<span id="objectif" ng-show="elfin.IDENTIFIANT.OBJECTIF" class="col-sm-2 form-control-static" ><span class="label label-success" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{elfin.IDENTIFIANT.OBJECTIF}}</span></span>
+						<span  ng-show="!elfin.IDENTIFIANT.OBJECTIF" id="objectifStatus" class="col-sm-2 form-control-static">
+							<span class="label label-danger" style="font-size: 1em;" tooltip="{{prestationStatusTooltips}}">{{prestationStatus}}</span>
+						</span>
+						<!-- 
+						This input field model is updated programatically by getPrestation = function(sai,groupePrestation,year,owner) 
+						and is never shown to the end-user. Its sole purpose is triggering required validation rule. -->
+						<input id="objectif" name="objectif" ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-required="true" ng-minlength="1" ng-show="false">
+						<div style="border: none;text-align: left;" ng-show="prestationSelection" id="prestationSelection" class="col-sm-1"> 
+							<button style="float:right;" class="btn btn-default" type="button" tooltip="Sélection de prestation"
+								ng-click="selectOnePrestation(elfin, 'IDENTIFIANT.OBJECTIF', prestations, 'IDENTIFIANT.OBJECTIF', selectOnePrestationColumnsDefinition, selectOnePrestationTemplate);">
+								<i class="glyphicon glyphicon-list-alt"></i>
+							</button>						
+						</div>
+										
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><em>Adresse</em></label>
+						<div ng-show="selectedImmeuble && selectedImmeuble.Id" class="col-sm-8">
+							<p class="form-control-static"><span ng-bind="selectedImmeuble.IDENTIFIANT.ALIAS" ></span></p>
+						</div>
+						<div ng-show="!selectedImmeuble || !selectedImmeuble.Id" class="col-sm-8">
+							<p class="form-control-static"><span>Pas d'immeuble pour Propriétaire/No SAI</span></p>
+						</div>						
+					</div>
+					<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.groupeTrans)">
+						<label for="groupeTrans" class="col-sm-4 control-label">Groupe Transaction</label>
+						<div class="col-sm-8">
+							<select id="groupeTrans" name="groupeTrans" class="form-control" chosen
+								data-placeholder=" " disable-search="false"
+								allow-single-deselect="true"
+								ng-model="elfin.GROUPE"
+								ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes"
+								ng-required="true">
+								<option value=''></option>
+							</select>							
+						</div>
+					</div>							
+					<div class="form-group">
+						<label for="groupe-prest" class="col-sm-4 control-label">Groupe Prestation</label>
+						<div class="col-sm-8">
+							<p class="form-control-static"><span ng-bind="elfin.CARACTERISTIQUE.CAR1.UNITE" ></span></p>				
+						</div>
+					</div>
+					<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.year)">
+						<label for="year" class="col-sm-4 control-label">Année</label>
+						<div class="col-sm-3">
+							<input id="year" name="year" type="text" class="form-control"
+								ng-model="elfin.IDENTIFIANT.PAR" 
+								 ng-maxlength="4" ng-minlength="4" ng-required="true">
+						</div>
+						<label for="compte" class="col-sm-2 control-label" style="color: black;">Compte</label>
+						<div class="col-sm-3">
+							<p id="compte" class="form-control-static">{{elfin.IDENTIFIANT.COMPTE}}</p>
+						</div>
+					</div>
+			</div>
+			<!-- 2nd column -->
+			<div class="col-sm-6">
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.resp)">
+					<label for="resp" class="col-sm-4 control-label">Resp. visa de facture</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input id="resp" name="resp" type="text" class="form-control"
+								 
+								autocomplete="off"
+								typeahead="resp.GROUPE for resp in collaboratorActors | filter:$viewValue | limitTo:8"
+								ng-model="elfin.IDENTIFIANT.RES"
+								required>
+							<span class="input-group-btn" tooltip="Recherche de collaborateur">
+								<button class="btn btn-default" type="button" hb-choose-one
+									ng-click="hbChooseOne(elfin, 'IDENTIFIANT.RES', collaboratorActors, 'GROUPE', collaboratorActorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+									<i class="glyphicon glyphicon-list-alt"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>			
+				
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.date)">				
+					<label for="date" class="col-sm-4 control-label">Date</label>
+					<div class="col-sm-4">
+						<div hb-date id="date" name="date"
+								ng-model="elfin.IDENTIFIANT.DE"></div>
+					</div>
+					<label for="auteur" class="col-sm-2 control-label">Auteur</label>
+					<div class="col-sm-2">
+						<p class="form-control-static">{{elfin.IDENTIFIANT.AUT}}</p>
+					</div>
+				</div>
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.repartition)">				
+					<label for="repartition" class="col-sm-4 control-label">Répartition</label>
+					<div class="col-sm-8">
+						<input id="repartition" name="repartition" type="text" class="form-control"
+							autocomplete="off"
+							typeahead="repartition.name as repartition.value for repartition in repartitions | filter:$viewValue | limitTo:8" 
+							ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR" 
+							 >
+					</div>
+				</div>
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.destinataire)">
+					<label for="destinataire" class="col-sm-4 control-label">Destinataire</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+							<input id="destinataire" name="destinataire" type="text" class="form-control"
+								autocomplete="off"
+								typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8"
+								ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE"
+								ng-required="true">
+								<span
+								class="input-group-btn" tooltip="Recherche d'entreprise"
+								 >
+								<button class="btn btn-default" type="button" hb-choose-one
+									ng-click="hbChooseOne(elfin, 'PARTENAIRE.PROPRIETAIRE.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+									<i class="glyphicon glyphicon-list-alt"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group has-feedback">
+					<label for="valeur_a_neuf" class="col-sm-4 control-label">Facturé</label>
+					<div class="col-sm-3">
+						<input id="valeur_a_neuf" type="number" class="form-control" ng-blur="copyValeur_a_Neuf2Valeur(elfin.IDENTIFIANT.VALEUR_A_NEUF)"
+							ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF" 
+							 >
+					</div>
+					<label for="valeur" class="col-sm-2 control-label">Payé</label>
+					<div class="col-sm-3">
+						<input id="valeur" type="number" class="form-control"
+							ng-model="elfin.IDENTIFIANT.VALEUR" 
+							 >
+					</div>
+				</div>			
+			</div>
+			<!-- Last line spanning two columns (col-sm-6) -->
+			<div class="col-sm-12">
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.remark)">
+					<label for="remark" class="col-sm-2 control-label" >Remarque</label>
+					<div class="col-sm-10" >
+						<input id="remark" name="remark" type="text" class="form-control"
+							 
+							autocomplete="off"
+							ng-model="elfin.DIVERS.REMARQUE">
+					</div>
+				</div>		
+			</div>
+			
+			<!-- Last line spanning two columns (col-sm-6) -->
+			<div class="col-sm-12">
+				<div class="form-group">			
+					<label for="remark" class="col-sm-2 control-label" ><span hb-annexes-number></span></label>
+					<div class="col-sm-10">				
+						<div class="col-sm-4">
+							<div hb-annexes-component hb-annexes-upload-annex-type="file" hb-annexes-upload-no-validation="true"></div>
+						</div>
+						<div class="col-sm-8"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</tab> 
+		<!-- Annexes tab -->
+<!-- 		<tab>  -->
+<!-- 			<tab-heading><div hb-annexes-number></div></tab-heading> -->
+<!-- 			<div class="hb-tab"><div hb-annexes-component hb-annexes-upload-no-validation="true"></div></div> -->
+<!-- 		</tab>		 -->
+		</tabset>
+	</div>
+</div>

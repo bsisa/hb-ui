@@ -1,0 +1,42 @@
+<div hb-list-container hb-elfin-classe='COMMANDE'>
+	<table class="table table-condensed table-bordered table-striped"
+		ng-show="elfins">
+		<thead>
+			<tr>
+				<th colspan="8"><span class="badge">{{elfinsCount}}</span> transaction{{ elfinsCount | plural }} trouvée{{ elfinsCount | plural}}</th>
+			</tr>
+			<tr>
+				<th />
+				<th>Code CFC</th>
+				<th>N° SAI</th>
+				<th>Date commande</th>
+				<th>Montant</th>
+				<th>Fournisseur</th>
+				<th>Propriétaire</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="elfin in elfins">
+				<td>
+					<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>				
+				</td>
+				<!-- CFC code -->
+				<td>{{elfin.GROUPE}}</td> 
+				<!-- SAI nb -->
+				<td>{{elfin.IDENTIFIANT.ORIGINE}}</td>
+				<!-- Estimation/Quote date -->
+				<td>{{elfin.IDENTIFIANT.DE}}</td>
+				<!-- Amount -->
+				<td>{{elfin.IDENTIFIANT.VALEUR}}</td>
+				<!-- Enterprise name -->
+				<td>{{elfin.PARTENAIRE.FOURNISSEUR.GROUPE}}</td>				
+				<!-- Owner at order time / Building owner -->
+				<td>{{elfin.PARTENAIRE.PROPRIETAIRE.GROUPE}}</td>			
+				<!-- Order description... -->
+				<td>{{elfin.DIVERS.REMARQUE}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
