@@ -64,14 +64,16 @@
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)">
 					<label for="cfcCode" class="col-sm-4 control-label">Code CFC</label>
 					<div class="col-sm-8">
-						<select id="cfcCode" name="cfcCode" class="form-control" chosen
-							data-placeholder=" " disable-search="false"
-							allow-single-deselect="true"
-							ng-model="elfin.GROUPE"
-							ng-options="cfcCode.name as cfcCode.value for cfcCode in cfcCodes"
-							ng-required="true">
-							<option value=''></option>
-						</select>							
+						<input id="cfcCode" name="cfcCode" type="text" class="form-control" ng-model="elfin.GROUPE" > 
+					
+<!-- 						<select id="cfcCode" name="cfcCode" class="form-control" chosen -->
+<!-- 							data-placeholder=" " disable-search="false" -->
+<!-- 							allow-single-deselect="true" -->
+<!-- 							ng-model="elfin.GROUPE" -->
+<!-- 							ng-options="cfcCode.name as cfcCode.value for cfcCode in cfcCodes" -->
+<!-- 							ng-required="true"> -->
+<!-- 							<option value=''></option> -->
+<!-- 						</select>							 -->
 					</div>
 				</div>
 
