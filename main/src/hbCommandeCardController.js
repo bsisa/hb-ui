@@ -193,7 +193,7 @@
 						                        		   		            { field:"GROUPE", displayName: "Groupe"}
 						                        		   	 		   		];					            
 					            
-					            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';									
+					            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor2.html';									
 
 					            
 								// Allow direct call to new TRANSACTION creation without going through menus items.
