@@ -24,11 +24,44 @@
 									$timeout, hbAlertMessages, hbUtil,
 									HB_EVENTS, userDetails, hbQueryService) {
 
+						
+								$scope.selected = { 
+										"owner" : {},
+										"initialised" : false
+									};
+								
+								$scope.$watch('selected.owner', function(newPartner, oldPartner) { 
+									if ($scope.selected.initialised === true ) {
+										if ($scope.selected.owner) {
+											$log.debug("owner : " + angular.toJson($scope.selected.owner));											
+											var owner = {
+											      "Id" : $scope.selected.owner.Id,
+											      "ID_G" : $scope.selected.owner.ID_G,
+											      "NOM" : "",
+											      "GROUPE" : $scope.selected.owner.GROUPE,
+											      "VALUE" : ""
+											};
+											$scope.elfin.PARTENAIRE.PROPRIETAIRE = owner;
+										} else {
+											$log.debug("owner has been reset... ");											
+											var owner = {
+												      "Id" : "",
+												      "ID_G" : "",
+												      "NOM" : "",
+												      "GROUPE" : "",
+												      "VALUE" : ""
+												};
+											$scope.elfin.PARTENAIRE.PROPRIETAIRE = owner;											
+										}
+									} else {
+										$log.debug("owner : " + angular.toJson($scope.selected.owner) + "WAIING for initialisation...");
+									}
+								}, true);
 								
 								$scope.cfcCodes = [
-								                   {"name" : 001, "value" : "001 - lalalère"},
-								                   {"name" : 002, "value" : "002 - lalalère"},								                   
-								                   {"name" : 003, "value" : "003 - lalalère"}
+								                   {"name" : "001", "value" : "001 - lalalère"},
+								                   {"name" : "002", "value" : "002 - lalalère"},								                   
+								                   {"name" : "003", "value" : "003 - lalalère"}
 								                   ];
 							
 								// Benefit from server side cache...
@@ -55,6 +88,15 @@
 
 						    		if ($scope.elfin!==null) {
 
+						    			$scope.selected.owner = {
+											      "Id" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.Id,
+											      "ID_G" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G,
+											      "NOM" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM,
+											      "GROUPE" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE,
+											      "VALUE" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE
+											    };
+						    			
+						    			$scope.selected.initialised = true;
 						    			
 										// Update elfin properties from catalogue while in create mode
 										if ($attrs.hbMode === "create") {
