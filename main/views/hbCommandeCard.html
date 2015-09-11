@@ -42,7 +42,7 @@
 						<div class="input-group">
 								<input id="objectif" name="objectif" type="text" class="form-control"  
 									autocomplete="off"
-									typeahead="immeuble.IDENTIFIANT.OBJECTIF as immeuble.IDENTIFIANT.ALIAS for immeuble in immeubles | immeubleListFilter:{'registerNb' : $viewValue , 'address' : $viewValue,'active' : 'any'}"
+									typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{'registerNb' : $viewValue , 'active' : 'any'}"
 									typeahead-editable="false"
 									ng-model="elfin.IDENTIFIANT.OBJECTIF"
 									ng-required="true"
