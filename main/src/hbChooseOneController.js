@@ -95,11 +95,11 @@
 							
 							$scope.$watch('search.text', function() { 
 								$scope.gridOptions.filterOptions.filterText = $scope.search.text;
-								// TODO: build fields with columnsDefinition... Test with PRODUCTION_CHALEUR...
-								//$scope.gridOptions.sortInfo = { fields: ['GROUPE','IDENTIFIANT.QUALITE'], directions: ['asc', 'asc']}
 								}, true);
 							// ============================================================
 							
+							// sortFields automatically build from columnsDefinition
+							$scope.sortFields = _.pluck(columnsDefinition, 'field');
 							
 							// ============================================================
 							// Manage user selection
@@ -148,6 +148,7 @@
 							        selectedItems: $scope.selectedElfins,
 							        showColumnMenu: false, // Useful for grouping 
 							        showFilter: false, // Ugly look, redefine our own search field
+							        sortInfo:{ fields: $scope.sortFields, directions: ['asc']}, // sortFields automatically build from columnsDefinition
 							        filterOptions : { filterText: '', useExternalFilter: false },
 							        doubleClickFunction: $scope.doubleClickListener,
 							        plugins: [ngGridDoubleClickPluginInstance]
