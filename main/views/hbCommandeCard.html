@@ -42,20 +42,18 @@
 						<div class="input-group">
 								<input id="objectif" name="objectif" type="text" class="form-control"  
 									autocomplete="off"
-									typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{registerNb : $viewValue }"
+									typeahead="immeuble.IDENTIFIANT.OBJECTIF as immeuble.IDENTIFIANT.ALIAS for immeuble in immeubles | immeubleListFilter:{'registerNb' : $viewValue , 'address' : $viewValue,'active' : 'any'}"
+									typeahead-editable="false"
 									ng-model="elfin.IDENTIFIANT.OBJECTIF"
 									ng-required="true"
 									>  
-									
-								
-<!-- 								<span -->
-<!-- 									class="input-group-btn" tooltip="Recherche de SAI"> -->
-<!-- 									<button class="btn btn-default" type="button" hb-choose-one -->
-<!-- 										ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )"> -->
-<!-- 										<i class="glyphicon glyphicon-list-alt"></i> -->
-<!-- 									</button>  -->
-<!-- 								</span> -->
-								  
+								<span
+									class="input-group-btn" tooltip="Recherche de SAI">
+									<button class="btn btn-default" type="button" hb-choose-one
+										ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
+										<i class="glyphicon glyphicon-list-alt"></i>
+									</button> 
+								</span>
 							</div>		
 						</div>
 					</div>
@@ -64,16 +62,22 @@
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)">
 					<label for="cfcCode" class="col-sm-4 control-label">Code CFC</label>
 					<div class="col-sm-8">
-						<input id="cfcCode" name="cfcCode" type="text" class="form-control" ng-model="elfin.GROUPE" > 
-					
-						<select id="cfcCode" name="cfcCode" class="form-control" chosen
-							data-placeholder=" " disable-search="false"
-							allow-single-deselect="true"
-							ng-model="elfin.GROUPE"
-							ng-options="cfcCode.name as cfcCode.value for cfcCode in cfcCodes"
-							ng-required="true">
-							<option value=''></option>
-						</select>							
+						<div class="input-group">
+							<input id="cfcCode" name="cfcCode" type="text" class="form-control"
+								autocomplete="off"
+								typeahead="cfcCode.name as cfcCode.value for cfcCode in cfcCodes | filter:$viewValue"
+								typeahead-editable="false"
+								ng-model="elfin.GROUPE"
+								ng-required="true">
+								<span
+								class="input-group-btn" tooltip="Recherche de code CFC"
+								 >
+								<button class="btn btn-default" type="button" hb-choose-one
+									ng-click="hbChooseOne(selected, 'owner', entrepriseActors, '', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+									<i class="glyphicon glyphicon-list-alt"></i>
+								</button>
+							</span>
+						</div>						
 					</div>
 				</div>
 
@@ -92,20 +96,16 @@
 								 >
 								<button class="btn btn-default" type="button" hb-choose-one
 									ng-click="hbChooseOne(selected, 'owner', entrepriseActors, '', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
-<!--
-  									ng-click="hbChooseOne(elfin, 'PARTENAIRE.PROPRIETAIRE.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
--->									
 									<i class="glyphicon glyphicon-list-alt"></i>
 								</button>
 							</span>
 						</div>
 					</div>
-					<div>Source: elfin.PARTENAIRE = {{elfin.PARTENAIRE}}</div>
-					
+<!-- 					<div>Source: elfin.PARTENAIRE = {{elfin.PARTENAIRE}}</div> -->
 				</div>
 				<div class="form-group has-feedback">
-					<label for="valeur" class="col-sm-2 control-label">Montant</label>
-					<div class="col-sm-3">
+					<label for="valeur" class="col-sm-4 control-label">Montant</label>
+					<div class="col-sm-8">
 						<input id="valeur" type="number" class="form-control"
 							ng-model="elfin.IDENTIFIANT.VALEUR" 
 							 >
