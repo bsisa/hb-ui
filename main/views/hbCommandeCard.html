@@ -38,19 +38,26 @@
 					<div  class="form-group">
 						<label for="objectifSearchHelper" class="col-sm-4 control-label"><em>No SAI</em></label>
 						<div class="col-sm-3">
-						<!-- Kept as reminder - Suggestion de saisie inutile et coute 2 tabs -->	
+						<!-- Kept as reminder - Suggestion de saisie inutile et coute 2 tabs -->
+<!--
+ 						typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{'registerNb' : $viewValue , 'active' : 'any'}"
+									ng-model="elfin.IDENTIFIANT.OBJECTIF"
+
+										ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">									
+ -->	
 						<div class="input-group">
 								<input id="objectif" name="objectif" type="text" class="form-control"  
 									autocomplete="off"
-									typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{'registerNb' : $viewValue , 'active' : 'any'}"
+									typeahead="immeuble.IDENTIFIANT.MERGED_PROPS for immeuble in immeubles | immeubleListAnyFilter:$viewValue | orderBy:'IDENTIFIANT.MERGED_PROPS'"
+									immeubleListAnyFilter
 									typeahead-editable="false"
-									ng-model="elfin.IDENTIFIANT.OBJECTIF"
+									ng-model="selected.buildingMergedProps"
 									ng-required="true"
 									>  
 								<span
 									class="input-group-btn" tooltip="Recherche de SAI">
 									<button class="btn btn-default" type="button" hb-choose-one
-										ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
+										ng-click="hbChooseOne(selected, 'building', immeubles, '', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
 										<i class="glyphicon glyphicon-list-alt"></i>
 									</button> 
 								</span>

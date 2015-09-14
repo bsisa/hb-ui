@@ -26,9 +26,28 @@
 
 						
 								$scope.selected = { 
+										"building" : {},
 										"owner" : {},
 										"initialised" : false
 									};
+								
+								
+								$scope.$watch('selected.building', function(newBuilding, oldBuilding) { 
+									if ($scope.selected.initialised === true ) {
+										if ($scope.selected.building) {
+											$log.debug("building : " + angular.toJson($scope.selected.building));											
+											$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;
+											$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.Id;
+										} else {
+											$log.debug("building has been reset... ");											
+											$scope.elfin.SOURCE = "";
+											$scope.elfin.IDENTIFIANT.OBJECTIF = "";
+										}
+									} else {
+										$log.debug("building : " + angular.toJson($scope.selected.building) + "WAITING for initialisation...");
+									}
+								}, true);								
+								
 								
 								$scope.$watch('selected.owner', function(newOwner, oldOwner) { 
 									if ($scope.selected.initialised === true ) {
@@ -77,6 +96,10 @@
 								hbQueryService.getImmeubles(xpathForImmeubles)
 									.then(
 											function(immeubles) {
+												for (var i = 0; i < immeubles.length; i++) {
+													var currImmeuble = immeubles[i];
+													currImmeuble.IDENTIFIANT.MERGED_PROPS = currImmeuble.IDENTIFIANT.OBJECTIF + "-" + currImmeuble.IDENTIFIANT.ALIAS
+												}
 												$scope.immeubles = immeubles;
 												$log.debug(">>> IMMEUBLES: " + immeubles.length);
 											},
