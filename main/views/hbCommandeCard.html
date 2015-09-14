@@ -7,7 +7,7 @@
 <!-- 	<li ng-show="elfinForm.year.$error.minlength"><strong>L'année</strong> doit être composée de quatre positions.</li> -->
 <!-- 	<li ng-show="elfinForm.year.$error.maxlength"><strong>L'année</strong> doit être composée de quatre positions.</li> -->
 <!-- 	<li ng-show="elfinForm.objectif.$error.required">Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Commande', 'Année'} est obligatoire!</li>	 -->
-<!-- 	<li ng-show="elfinForm.destinataire.$error.required">Le champs <strong>Destinataire</strong> est obligatoire!</li> -->
+	<li ng-show="elfinForm.fournisseur.$error.required">Le champs <strong>Fournisseur</strong> est obligatoire!</li>
 <!-- 	<li ng-show="elfinForm.resp.$error.required">Le champs <strong>Responsable visa de facture</strong> est obligatoire!</li> -->
 <!-- 	<li ng-show="elfinForm.objectif.$error.minlength">Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Commande', 'Année'} est obligatoire!</li> -->
 <!-- 	<li ng-show="elfinForm.annexlength.$error.min"><strong>L'annexe</strong> est obligatoire!</li> -->
@@ -81,11 +81,11 @@
 					</div>
 				</div>
 
-				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.destinataire)">
-					<label for="destinataire" class="col-sm-4 control-label">Fournisseur</label>
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.fournisseur)">
+					<label for="fournisseur" class="col-sm-4 control-label">Fournisseur</label>
 					<div class="col-sm-8">
 						<div class="input-group">
-							<input id="destinataire" name="destinataire" type="text" class="form-control"
+							<input id="fournisseur" name="fournisseur" type="text" class="form-control"
 								autocomplete="off"
 								typeahead="actor as actor.GROUPE for actor in entrepriseActors | filter:$viewValue"
 								typeahead-editable="false"
@@ -101,7 +101,9 @@
 							</span>
 						</div>
 					</div>
-<!-- 					<div>Source: elfin.PARTENAIRE = {{elfin.PARTENAIRE}}</div> -->
+<!-- 					<div class="form-control-static">Model u.by.ctrl: elfin.PARTENAIRE = <br />{{elfin.PARTENAIRE}}</div> -->
+<!-- 					<div class="form-control-static">Model u.by.form: selected.owner = <br />{{selected.owner}}</div> -->
+<!-- 					<div class="form-control-static">elfinForm = <br />{{elfinForm.fournisseur.$error.editable}}</div> -->
 				</div>
 				<div class="form-group has-feedback">
 					<label for="valeur" class="col-sm-4 control-label">Montant</label>

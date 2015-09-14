@@ -48,7 +48,7 @@
 											// typeahead manual typing, then solving selection through hbChooseOne selection.
 											// The latter selection will not be noticed by the view model and thus not reset
 											// the field validity state correctly.
-											$scope.elfinForm.destinataire.$setValidity('editable', true)
+											$scope.elfinForm.fournisseur.$setValidity('editable', true)
 										} else {
 											$log.debug("owner has been reset... ");											
 											var owner = {
