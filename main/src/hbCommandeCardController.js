@@ -30,7 +30,7 @@
 										"initialised" : false
 									};
 								
-								$scope.$watch('selected.owner', function(newPartner, oldPartner) { 
+								$scope.$watch('selected.owner', function(newOwner, oldOwner) { 
 									if ($scope.selected.initialised === true ) {
 										if ($scope.selected.owner) {
 											$log.debug("owner : " + angular.toJson($scope.selected.owner));											
@@ -42,6 +42,13 @@
 											      "VALUE" : ""
 											};
 											$scope.elfin.PARTENAIRE.PROPRIETAIRE = owner;
+											// Updating $scope.selected.owner model from hbChooseOne controller is not 
+											// visible to the view model thus requires manual update.
+											// This is necessary when the validity state has been set to invalid using 
+											// typeahead manual typing, then solving selection through hbChooseOne selection.
+											// The latter selection will not be noticed by the view model and thus not reset
+											// the field validity state correctly.
+											$scope.elfinForm.destinataire.$setValidity('editable', true)
 										} else {
 											$log.debug("owner has been reset... ");											
 											var owner = {
