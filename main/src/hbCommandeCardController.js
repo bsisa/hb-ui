@@ -125,8 +125,30 @@
 											      "GROUPE" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE,
 											      "VALUE" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE
 											    };
+						    			var selectedBuildingIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.SOURCE);
 						    			
-						    			$scope.selected.initialised = true;
+						    			if (selectedBuildingIds) {
+
+						    				GeoxmlService.getElfin(selectedBuildingIds.ID_G, selectedBuildingIds.Id).get()
+									        .then(function(buildingElfin) {
+									        	// Force CAR array sorting by POS attribute
+									        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
+									        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
+									        	//       Need review of other similar operations
+									        	if ( buildingElfin['CARACTERISTIQUE'] != null && buildingElfin['CARACTERISTIQUE']['CARSET'] != null && buildingElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+									        		hbUtil.reorderArrayByPOS(buildingElfin['CARACTERISTIQUE']['CARSET']['CAR']);
+									        	}
+								    			$scope.selected.building = buildingElfin;
+								    			// Wait for building initialisation if one if referenced
+								    			$scope.selected.initialised = true;
+									        }, function(response) {
+									        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + selectedBuildingIds.ID_G + " et l'identifiant: " + selectedBuildingIds.Id + ".";
+									        	$log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
+									        });							    				
+						    			} else {
+							    			// If not reference to building exists confirm initialisation is complete.
+							    			$scope.selected.initialised = true;
+						    			}
 						    			
 										// Update elfin properties from catalogue while in create mode
 										if ($attrs.hbMode === "create") {

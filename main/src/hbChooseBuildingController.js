@@ -104,47 +104,28 @@
 			        		
 			        	};							
 
+			        	
+			        	
+			        	
+			        	
 			        	/**
 			        	 * buildingModel references an ELFIN property with Id, ID_G, GROUPE and NOM properties.
 			        	 * This listener is used only for building initialisation 
 			        	 */
-			        	var buildingModelWatchDeregistration = $scope.$watch('buildingModel.Id', function(newId, oldId) {
+			        	var buildingElfinModelWatchDeregistration = $scope.$watch('buildingElfinModel.Id', function(newId, oldId) {
 			        		
-			        		var oldIdValue = (oldId === null) ? 'null' : (oldId === undefined) ? 'undefined' : (oldId.trim() === '' ? 'empty string' : oldId);
-			        		var newIdValue = (newId === null) ? 'null' : (newId === undefined) ? 'undefined' : (newId.trim() === '' ? 'empty string' : newId);
-			            	
-			        		//$log.debug(">>>>>>>>>>>> HbChooseBuildingController - 'buildingModel.Id' LISTENER: oldId = " + oldIdValue + " => newId = " + newIdValue);
-			        		if (newId !== undefined) {
-			        			if (newId === null || newId.trim() === '' || newId.trim() === 'null') {
-			        				//$log.debug(">>>>>>>>>>>> HbChooseBuildingController - 'buildingModel.Id' LISTENER: EMPTY model");
-				        			
-				        			// No buildingModel.Id set default by name if provided 
-//									if ($scope.defaultByName) {
-//										setDefaultBuildingByName();
-//									}				        			
-				        			
-				            		// Force validation in create mode as well
-				            		$scope.enableValidateBuilding();			        			
-				        		} else {
-				        			//$log.debug(">>>>>>>>>>>> HbChooseBuildingController - 'buildingModel.Id' LISTENER: DATA for model: newId = " + newId);
-				        			// Make sure an building reference is defined before trying to load building elfin
-				        			$scope.getElfinBuilding($scope.buildingModel.ID_G, $scope.buildingModel.Id);
-
-				        			// Special case when for instance expected building 'role' does not exist in the system.
-					            	if (!$scope.buildingModel == undefined && $scope.buildingModel == null) {
-					            		var roleStr = $scope.buildingRole ? $scope.buildingRole : "";
-					            		var message = "La sauvegarde du champs lié à la donnée d'acteur " + roleStr + " n'est pas possible. Veuillez notifier votre administrateur de base de données.";
-					            		hbAlertMessages.addAlert("danger",message);
-					            		$log.error(">>>>>>>>>>>> HbChooseBuildingController - 'buildingModel.Id' LISTENER: - MISSING MANDATORY buildingModel OBJECT found !");
-					            	}
-				        		}
+			        		$log.debug(">>>>>>>>>>>> HbChooseBuildingController - 'buildingElfinModel.Id' LISTENER: oldId = " + oldId + " => newId = " + newId);
+			        		
+			        		if (!angular.isUndefined($scope.buildingElfinModel) && newId !== oldId) {
+					        	selectedBuildingUpdate($scope.buildingElfinModel);
+					        	buildingModelsUpdate($scope.buildingElfinModel);
+			            		// Force validation in create mode as well
+			            		$scope.enableValidateBuilding();
 			        			// Remove listener now that we tried loading the building elfin object.
-			        			buildingModelWatchDeregistration();
-			        		} else {
-			        			//$log.debug(">>>>>>>>>>>> HbChooseBuildingController - 'buildingModel.Id' LISTENER: UNDEFINED model");
-			            		// Keep on listening as long as newId is undefined
-			        			//$log.debug(">>>>>>>>>>>> HbChooseBuildingController $scope.$watch('buildingModel.Id') => Keep on listening as long as newId is undefined");
-			            	}
+			            		buildingElfinModelWatchDeregistration();			            		
+			        		}
+
+
 			            });			        	
 			        	
 			        	/** ==================================================================
@@ -290,16 +271,19 @@
 				         * Update bound buildingModel, buildingElfinModel provided elfinBuilding
 				         */
 				        var buildingModelsUpdate = function(elfinBuilding) {
-			            	// Update the new ACTOR ids
-			            	$scope.buildingModel.ID_G = elfinBuilding.ID_G;
-			            	$scope.buildingModel.Id = elfinBuilding.Id;
-			            	// According to the GeoXML Schema GROUP and NOM are part of USAGER.
-			            	$scope.buildingModel.GROUPE = elfinBuilding.GROUPE;
-			            	$scope.buildingModel.NOM = elfinBuilding.IDENTIFIANT.NOM;			            		
-		            		
-			            	// Reset VALUE which should no more be used.
-			            	$scope.buildingModel.VALUE = "";		
-			            	
+				        	if ($scope.buildingModel) {
+				            	// Update the new ACTOR ids
+				            	$scope.buildingModel.ID_G = elfinBuilding.ID_G;
+				            	$scope.buildingModel.Id = elfinBuilding.Id;
+				            	// According to the GeoXML Schema GROUP and NOM are part of USAGER.
+				            	$scope.buildingModel.GROUPE = elfinBuilding.GROUPE;
+				            	$scope.buildingModel.NOM = elfinBuilding.IDENTIFIANT.NOM;			            		
+			            		
+				            	// Reset VALUE which should no more be used.
+				            	$scope.buildingModel.VALUE = "";		
+				        	} else {
+				        		$log.debug("Optional buildingModel not set.");
+				        	}
 			            	// Provide access to full ACTOR ELFIN model to provide 
 			            	// all properties to external scope for display without 
 			            	// requiring extra API call.  

@@ -63,7 +63,7 @@
 			restrict: 'A',
 			scope : {
 				'elfinForm' : '=hbChooseBuildingElfinForm',
-				'buildingModel' : '=hbChooseBuildingModel',
+				'buildingModel' : '=?hbChooseBuildingModel',
 				'buildingElfinModel' : '=?hbChooseBuildingElfinModel',
 				'buildingIdName' : '@hbChooseBuildingIdName', 
 				'buildingRole' : '@?hbChooseBuildingRole',

@@ -446,6 +446,26 @@
         
         
         /**
+         * If the provided 'sourceURI' satisfies containsStandardSourceURI() check then
+         * it returns a result object with Id, ID_G, CLASSE properties set. 
+         * Otherwise it returns undefined.
+         */
+        var getIdentifiersFromStandardSourceURI = function(sourceURI) {
+        	if (containsStandardSourceURI(sourceURI)) {
+        		var sourceURITokensArray = sourceURI.split('/');
+        		var result = { 
+        				"ID_G" : sourceURITokensArray[0],
+        				"CLASSE" : sourceURITokensArray[1],
+        				"Id" : sourceURITokensArray[2] 
+        			};
+        		return result;
+    		} else {
+    			return undefined;
+    		}
+        };        
+        
+        
+        /**
          * Returns the dashboard URI in provided 'job' parameter if present and valid, '/' otherwise.
          */
         var getDashboarUri = function(job) {
@@ -718,6 +738,7 @@
         	getFractionLByPos:getFractionLByPos,
         	getFractionLIndexByPos:getFractionLIndexByPos,
         	getFractionLCByPos:getFractionLCByPos,
+        	getIdentifiersFromStandardSourceURI:getIdentifiersFromStandardSourceURI,
         	getLinkFileName:getLinkFileName,
         	getLinkFileApiUrl:getLinkFileApiUrl,
         	getMomentDateFromHbTextDateFormat:getMomentDateFromHbTextDateFormat,

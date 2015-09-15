@@ -37,12 +37,12 @@
 
 					<div  class="form-group">
 						<label for="objectifSearchHelper" class="col-sm-4 control-label"><em>No SAI</em></label>
-						<div class="col-sm-3">
+						<div class="col-sm-8">
 						
 						<div hb-choose-building 
 							 hb-choose-building-id-name="building"
 							 hb-choose-building-elfin-form="elfinForm"
-							 hb-choose-building-model="selected.building"
+							 hb-choose-building-elfin-model="selected.building"
 							 hb-choose-building-tooltip="Recherche d'immeuble"
 							 hb-choose-building-editable="{{canEdit}}" 
 							 ></div>
@@ -56,23 +56,23 @@
 
 										ng-click="hbChooseOne(elfin, 'IDENTIFIANT.OBJECTIF', immeubles, 'IDENTIFIANT.OBJECTIF', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">									
  -->	
-						<div class="input-group">
-								<input id="objectif" name="objectif" type="text" class="form-control"  
-									autocomplete="off"
-									typeahead="immeuble.IDENTIFIANT.MERGED_PROPS for immeuble in immeubles | immeubleListAnyFilter:$viewValue | orderBy:'IDENTIFIANT.MERGED_PROPS'"
-									immeubleListAnyFilter
-									typeahead-editable="false"
-									ng-model="selected.buildingMergedProps"
-									ng-required="true"
-									>  
-								<span
-									class="input-group-btn" tooltip="Recherche de SAI">
-									<button class="btn btn-default" type="button" hb-choose-one
-										ng-click="hbChooseOne(selected, 'building', immeubles, '', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )">
-										<i class="glyphicon glyphicon-list-alt"></i>
-									</button> 
-								</span>
-							</div>		
+<!-- 						<div class="input-group"> -->
+<!-- 								<input id="objectif" name="objectif" type="text" class="form-control"   -->
+<!-- 									autocomplete="off" -->
+<!-- 									typeahead="immeuble.IDENTIFIANT.MERGED_PROPS for immeuble in immeubles | immeubleListAnyFilter:$viewValue | orderBy:'IDENTIFIANT.MERGED_PROPS'" -->
+<!-- 									immeubleListAnyFilter -->
+<!-- 									typeahead-editable="false" -->
+<!-- 									ng-model="selected.buildingMergedProps" -->
+<!-- 									ng-required="true" -->
+<!-- 									>   -->
+<!-- 								<span -->
+<!-- 									class="input-group-btn" tooltip="Recherche de SAI"> -->
+<!-- 									<button class="btn btn-default" type="button" hb-choose-one -->
+<!-- 										ng-click="hbChooseOne(selected, 'building', immeubles, '', immeubleChooseOneColumnsDefinition, immeubleChooseOneTemplate )"> -->
+<!-- 										<i class="glyphicon glyphicon-list-alt"></i> -->
+<!-- 									</button>  -->
+<!-- 								</span> -->
+<!-- 							</div>		 -->
 						</div>
 					</div>
 
