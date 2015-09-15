@@ -8,7 +8,7 @@
      * 
      * elfinForm
      * 
-     * Is a reference to the current form the selection will be used to update to.
+     * Is a reference to the current form the selection might update. Used to set dirty state.
      * 
      * 
      * actorModel 
