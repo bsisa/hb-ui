@@ -31,8 +31,8 @@
      * 
      * actorRole
      * 
-     * Optional property used to narrow the available ACTEUR list to for instance with
-     * commas separated values corresponding to ACTEUR IDENTIFIANT/QUALITE values. 
+     * Optional property used to narrow the available ACTEUR list.
+     * It supports commas separated values corresponding to ACTEUR IDENTIFIANT/QUALITE values. 
      * For instance: 
      * To restrict ACTEUR to type 'owner': hb-choose-actor-role="owner"
      * To restrict ACTEUR to type 'owner' and 'company': hb-choose-actor-role="owner, company"
@@ -45,7 +45,16 @@
      * For instance: hb-choose-actor-default-by-name="NE" provided an ACTEUR for which
      * INDENTIFIANT/NAME matches 'NE'. 
      * 
-     * tooltop, editable: straight forward.
+     * 
+     * tooltip
+     * 
+     * A text for the tooltip
+     * 
+     * 
+     * editable { true / false }
+     * 
+     * If false the button to access the actor selection is disabled. 
+     * The current widget only provides read only access to the `actorDisplay` information. 
      */
     angular.module('hb5').directive('hbChooseActor', function () {
 
