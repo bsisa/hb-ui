@@ -316,7 +316,7 @@
 				        	// Update selected building instance in scope
 				        	$scope.selected.building = selectedBuilding;
 				        	// Update selected building display string
-				        	$scope.selected.buildingDisplay = $scope.selected.building.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.building.IDENTIFIANT.ALIAS;
+				        	$scope.selected.buildingDisplay = $scope.selected.building.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.building.IDENTIFIANT.ALIAS + " - " + $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM;
 				        };
 				        
 				        /**
