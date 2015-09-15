@@ -4,23 +4,6 @@
 	/**
 	 * HbChooseBuildingController definition.
 	 * 
-	 * To achieve correct behaviour for this controller is non trivial  
-	 * due to inherent asynchronous nature of data loading.
-	 * It must be correctly identified whether the $scope.buildingModel is:
-	 * empty, non-empty or not yet initialised.
-	 * 
-	 * If initialised and empty then we set it to a default value otherwise its
-	 * value must be preserved and selection state: $scope.selected.{building, buildingDisplay}
-	 * be updated accordingly.
-	 * 
-	 * As long as the model initialisation has not completed no update should 
-	 * be performed to selection state: $scope.selected.{building, buildingDisplay}
-	 * 
-	 * The value of $scope.buildingModel is considered not initialised if equal
-	 * to undefined.
-	 * If equal to null, empty string '' or string 'null' it is considered empty
-	 * Any other value is considered non-empty.
-	 * 
 	 */
 	angular.module('hb5').controller(
 			'HbChooseBuildingController',
@@ -38,8 +21,6 @@
 					function($attrs, $scope, $modal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
-						//$log.debug("    >>>> Using HbChooseBuildingController");
-
 						// Check if optional editable property is available
 						if ($scope.editable) {
 							// We need to deal with text values, make it explicit rather than use == operator.
@@ -52,10 +33,9 @@
 							$scope.cannotEdit = false;
 						}
 
-						// ========================================================================
-						// NEW IMPLEMENTATION START
-						// ========================================================================
-						
+						/**
+						 * Initialisation state information
+						 */
 						$scope.modelInitialised = false;
 						
 						/**
@@ -104,13 +84,9 @@
 			        		
 			        	};							
 
-			        	
-			        	
-			        	
-			        	
 			        	/**
-			        	 * buildingModel references an ELFIN property with Id, ID_G, GROUPE and NOM properties.
-			        	 * This listener is used only for building initialisation 
+			        	 * buildingElfinModel references an ELFIN of CLASSE IMMEUBLE
+			        	 * This listener is used only for building initialisation from model binding.
 			        	 */
 			        	var buildingElfinModelWatchDeregistration = $scope.$watch('buildingElfinModel.Id', function(newId, oldId) {
 			        		
@@ -125,61 +101,11 @@
 			            		buildingElfinModelWatchDeregistration();			            		
 			        		}
 
-
 			            });			        	
-			        	
-			        	/** ==================================================================
-			        	 * Build XPath restriction definition for buildings selection list query
-			        	 * Supports commas separated list of values to include or if preceded
-			        	 * by a ! sign, to exclude. 
-			        	 * ===================================================================
-			        	 */
-			        	var buildXPathForBuilding = function(roleString) {
-			        		
-			        		var rolesArray = roleString.split(",");
-			        	    var includeRolesArray = new Array();
-			        	    var excludeRolesArray = new Array();
-			        	    
-			        	    for (var i = 0; i < rolesArray.length; i++) {
-			        	        var role = rolesArray[i].trim();
-			        	        if (role.indexOf('!') == 0) {
-			        	            excludeRolesArray.push(role.substring(1, role.length).trim());
-			        	        } else {
-			        	            includeRolesArray.push(role.trim());
-			        	        }
-			        	    }
-			        	    
-			        		var xpathForBuilding = "//ELFIN[@CLASSE='IMMEUBLE' ";
-			        		for (var i = 0; i < includeRolesArray.length; i++) {
-			        	        if (i === 0 ) {xpathForBuilding += " and ( ";}
-			        			xpathForBuilding += "IDENTIFIANT/QUALITE='"+includeRolesArray[i]+"'";
-			        			xpathForBuilding += (i===(includeRolesArray.length-1)) ? " ) " : " or ";
-			        		}
-			        	    for (var i = 0; i < excludeRolesArray.length; i++) {
-			        	        if (i === 0 ) {xpathForBuilding += " and ( ";}
-			        			xpathForBuilding += "IDENTIFIANT/QUALITE!='"+excludeRolesArray[i]+"'";
-			        			xpathForBuilding += (i===(excludeRolesArray.length-1)) ? ") " : " and ";
-			        		}    
-			        	    xpathForBuilding += "]";
-			        	    return xpathForBuilding;
-			        	};
-			        	
-						var xpathForBuilding = null;
-						
-						// Restrict to provided hb-choose-building-role 
-						if ($scope.buildingRole) {
-							xpathForBuilding = buildXPathForBuilding($scope.buildingRole);
-						} else { // Select all buildings 
-							xpathForBuilding = "//ELFIN[@CLASSE='IMMEUBLE']";
-						}
 
-						//$log.debug("xpathForBuilding = " + xpathForBuilding);
-						
-			            // Asychronous buildings preloading
-			            hbQueryService.getImmeubles(xpathForBuilding)		
+			            // Asychronous buildings preloading and sorting
+			            hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE']")		
 						.then(function(buildings) {
-							$log.debug("xpathForBuilding = " + xpathForBuilding);
-							$log.debug("Loaded buildings count = " + buildings.length);
 								// order buildings by IDENTIFIANT.OBJECTIF, ALIAS
 								buildings.sort(function(a, b) {
 									return a.IDENTIFIANT.OBJECTIF < b.IDENTIFIANT.OBJECTIF ? -1 :
@@ -188,29 +114,12 @@
 												a.IDENTIFIANT.ALIAS > b.IDENTIFIANT.ALIAS ? 1 : 0;
 					            });
 								$scope.buildings =  buildings;
-								$log.debug("Loaded $scope.buildings count = " + $scope.buildings.length);
 							},
 							function(response) {
 								var message = "Le chargement des IMMEUBLEs a échoué (statut de retour: "+ response.status+ ")";
 					            hbAlertMessages.addAlert("danger",message);
 							});								
-						
-						
-			            // Wait for buildings list to be loaded before selecting default from it
-//			            var buildingsListenerDeregistration = $scope.$watchCollection('buildings', function(newBuildings, oldBuildings) {
-//			            	// Proceed only if not the listener initialisation and we wait for default processing
-//			            	if (!(newBuildings === oldBuildings )) {
-//			            		if ($scope.defaultBuildingProcessWaiting && $scope.defaultBuildingProcessWaiting === true) {
-//				            		//$log.debug(">>>>>>>>>>>>>>>>>> buildings LISTENER waiting to set default building by name");
-//				            		setDefaultBuildingByName();			            			
-//			            		} else {
-//			            			//$log.debug(">>>>>>>>>>>>>>>>>> buildings LISTENER NOT waiting to set default building by name");
-//			            		}
-//			            		// Stop listening to buildings list initialisation
-//			            		buildingsListenerDeregistration();
-//			            	}
-//			            }, true);
-			            
+
 			            
 						/**
 				         * Modal panel to update an elfin reference with the selection from a list of buildings.
@@ -227,9 +136,6 @@
 				                    },
 				                    columnsDefinition: function() {
 				                    	return [ { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI"}, { field:"IDENTIFIANT.ALIAS", displayName: "Adresse"}, { field:"PARTENAIRE.PROPRIETAIRE.NOM", displayName: "Propriétaire"} ];
-				                    },
-				                    role: function () {
-				                    	return $scope.buildingRole;
 				                    }
 				                },                
 				                backdrop: 'static'
@@ -239,17 +145,10 @@
 				             * Process modalInstance.close action
 				             */
 				            modalInstance.result.then(function (selectedElfins) {
+
 				            	if (selectedElfins && selectedElfins.length > 0) {
-						        	/**
-						        	 * building model type relates to geoXml.xsd definition.
-						        	 * Currently buildings references are stored in dedicated 
-						        	 * PARTENAIRE elements all of them of 'PERSONNEType' 
-						        	 * as well as in line element ('L') of generic FRACTION
-						        	 * of 'MATRICEType' element.
-						        	 * For use with line element ('L') of generic FRACTION
-						        	 * of 'MATRICEType' element use hb-building-line-converter 
-						        	 * directive.
-						        	 */
+
+				            		// We deal with single selection only
 				            		var selectedElfin = selectedElfins[0];
 				            		selectedBuildingUpdate(selectedElfin);
 					        		buildingModelsUpdate(selectedElfin);
@@ -268,27 +167,10 @@
 				        
 				        
 				        /**
-				         * Update bound buildingModel, buildingElfinModel provided elfinBuilding
+				         * Update bound buildingElfinModel
 				         */
 				        var buildingModelsUpdate = function(elfinBuilding) {
-				        	if ($scope.buildingModel) {
-				            	// Update the new ACTOR ids
-				            	$scope.buildingModel.ID_G = elfinBuilding.ID_G;
-				            	$scope.buildingModel.Id = elfinBuilding.Id;
-				            	// According to the GeoXML Schema GROUP and NOM are part of USAGER.
-				            	$scope.buildingModel.GROUPE = elfinBuilding.GROUPE;
-				            	$scope.buildingModel.NOM = elfinBuilding.IDENTIFIANT.NOM;			            		
-			            		
-				            	// Reset VALUE which should no more be used.
-				            	$scope.buildingModel.VALUE = "";		
-				        	} else {
-				        		$log.debug("Optional buildingModel not set.");
-				        	}
-			            	// Provide access to full ACTOR ELFIN model to provide 
-			            	// all properties to external scope for display without 
-			            	// requiring extra API call.  
 			            	$scope.buildingElfinModel = elfinBuilding;
-			            	
 			            	// Let the scope know the building model update has completed
 			            	$scope.modelInitialised = true;
 				        };				        
@@ -302,36 +184,6 @@
 				        	// Update selected building display string
 				        	$scope.selected.buildingDisplay = $scope.selected.building.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.building.IDENTIFIANT.ALIAS + " - " + $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM;
 				        };
-				        
-				        /**
-				         * Procedure to set default building by name
-				         */
-//				        var setDefaultBuildingByName = function() {
-//				        	if ($scope.buildings) {
-//								var defaultBuildingIsSet = false;
-//								for (var i=0; $scope.buildings.length; i++) {
-//									var building = $scope.buildings[i];
-//									if (building.IDENTIFIANT.NOM == $scope.defaultByName) {
-//										//$scope.selected.building = building;
-//										selectedBuildingUpdate(building);
-//										buildingModelsUpdate(building);
-//						        		//defaultModelUpdate();			
-//						        		//defaultModelDisplayUpdate();
-//										defaultBuildingIsSet = true;
-//										break;
-//									}
-//								}
-//								// Done searching for default
-//								$scope.defaultBuildingProcessWaiting = false;
-//								// Notify user if the search did not succeed.
-//								if (!defaultBuildingIsSet) {
-//									var message = "L'ACTEUR par défaut correspondant au nom: " + $scope.defaultByName + " n'a pas pu être trouvé parmi les " + buildings.length + " acteurs disponibles.";
-//						            hbAlertMessages.addAlert("warning",message);
-//								}
-//				        	} else {
-//				        		$scope.defaultBuildingProcessWaiting = true;
-//				        	}
-//				        };
 
 					} ]); // End of HbChooseBuildingController definition
 	
@@ -353,18 +205,15 @@
 						'hbUtil',
 						'elfins',
 						'columnsDefinition',
-						'role',
 						function($scope, $modalInstance, $filter, $log,
 								$timeout, hbUtil, elfins,
-								columnsDefinition, role) {
+								columnsDefinition) {
 							
 							// ============================================================
 							// Custom search field used to filter elfins
 							// ============================================================    	
 							// Default ng-grid showFilter box requires an extra click 
 							// to be accessed and is ugly. Let's define our own 
-							
-							$scope.role = role;
 							
 							$scope.search = { text: ""};
 							
