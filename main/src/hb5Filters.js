@@ -397,11 +397,11 @@
 		
 		return function (immeubles, searchtext, active) {
 
-			if (active) {
-				$log.debug("immeubleListAnyFilter, active = " + active);
-			} else {
-				$log.debug("immeubleListAnyFilter, active = UNDEFINED");
-			}
+//			if (!angular.isUndefined(active) && ( active === 'any' || active === 'yes' || active === 'no' )) {
+//				$log.debug("immeubleListAnyFilter, active = " + active);
+//			} else {
+//				$log.debug("immeubleListAnyFilter, active = UNDEFINED");
+//			}
 			
 			var checkAnyField = function(immeuble,searchtext) {
 				var immeublePlace = hbUtil.getCARByPos(immeuble, 1);
@@ -420,7 +420,7 @@
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
                     if ( checkAndForTokenisedSearchText(immeuble,searchtext,checkAnyField) ) {
-                    	if ( !angular.isUndefined(active) ) {
+                    	if ( !angular.isUndefined(active) && ( active === 'any' || active === 'yes' || active === 'no' ) ) {
                     		if ( active === "any" || 
                     			   active === "yes" && immeubleIsActive(immeuble) || 
                               	   active === "no" && !immeubleIsActive(immeuble) 
