@@ -40,7 +40,7 @@
 
 						//$log.debug("    >>>> Using HbChooseActorController");
 
-						// Check if optional editable property if available
+						// Check if optional editable property is available
 						if ($scope.editable) {
 							// We need to deal with text values, make it explicit rather than use == operator.
 							if (($scope.editable === 'true') || ($scope.editable === true)) {
