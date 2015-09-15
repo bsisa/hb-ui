@@ -245,7 +245,7 @@
 				                    	return $scope.buildings;
 				                    },
 				                    columnsDefinition: function() {
-				                    	return [ { field:"IDENTIFIANT.QUALITE", displayName: "Role"}, { field:"IDENTIFIANT.NOM", displayName: "Nom"},{ field:"IDENTIFIANT.ALIAS", displayName: "Prénom"},{ field:"GROUPE", displayName: "Abréviation"} ];
+				                    	return [ { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI"}, { field:"IDENTIFIANT.ALIAS", displayName: "Adresse"}, { field:"PARTENAIRE.PROPRIETAIRE.NOM", displayName: "Propriétaire"} ];
 				                    },
 				                    role: function () {
 				                    	return $scope.buildingRole;
