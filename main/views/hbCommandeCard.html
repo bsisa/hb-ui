@@ -38,7 +38,18 @@
 					<div  class="form-group">
 						<label for="objectifSearchHelper" class="col-sm-4 control-label"><em>No SAI</em></label>
 						<div class="col-sm-3">
-						<!-- Kept as reminder - Suggestion de saisie inutile et coute 2 tabs -->
+						
+						<div hb-choose-building 
+							 hb-choose-building-id-name="building"
+							 hb-choose-building-elfin-form="elfinForm"
+							 hb-choose-building-model="selected.building"
+							 hb-choose-building-tooltip="Recherche d'immeuble"
+							 hb-choose-building-editable="{{canEdit}}" 
+							 ></div>
+
+<!-- 							 hb-choose-building-role="Propriétaire" -->
+
+							<!-- Kept as reminder - Suggestion de saisie inutile et coute 2 tabs -->
 <!--
  						typeahead="immeuble.IDENTIFIANT.OBJECTIF for immeuble in immeubles | immeubleListFilter:{'registerNb' : $viewValue , 'active' : 'any'}"
 									ng-model="elfin.IDENTIFIANT.OBJECTIF"

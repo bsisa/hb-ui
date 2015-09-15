@@ -33,12 +33,12 @@ module.exports = function(grunt) {
 								'src/hbActorLineConverterController.js',
 								'src/hbActorLineConverterDirective.js',
 								'src/hbAlertMessagesService.js',
-								
+
 								'src/hbAmenagementSportifCardDirective.js', 
 								'src/hbAmenagementSportifCardController.js',
 								'src/hbAmenagementSportifListController.js',
 								'src/hbAmenagementSportifListDirective.js',								
-								
+
 								'src/hbAnnexesLinkController.js',
 								'src/hbAnnexesLinkDirective.js',
 								'src/hbAnnexesComponentController.js',
@@ -47,12 +47,15 @@ module.exports = function(grunt) {
 								'src/hbAnnexesNumberDirective.js',
 								'src/hbAnnexesUploadController.js',
 								'src/hbAnnexesUploadDirective.js',
-								
+
+								'src/hbChooseBuildingController.js',
+								'src/hbChooseBuildingDirective.js',
+
 								'src/hbBuildingSelectLinkDirective.js',
-								
+
 								'src/hbBuildingLineConverterController.js',
 								'src/hbBuildingLineConverterDirective.js',
-								
+
 								'src/hbCardContainerDirective.js',
 								'src/hbCardContainerController.js',
 								'src/hbCardHeaderDirective.js',
@@ -65,10 +68,10 @@ module.exports = function(grunt) {
 								'src/hbCiterneCardDirective.js',
 								'src/hbCollapseController.js',
 								'src/hbCollapseDirective.js',
-								
+
 								'src/hbCommandeCardController.js',
 								'src/hbCommandeCardDirective.js',
-								
+
 								'src/hbConstatCardDirective.js',
 								'src/hbConstatCardController.js',
 								'src/hbConstatListController.js',
@@ -77,10 +80,10 @@ module.exports = function(grunt) {
 								'src/hbContratCardDirective.js',
                                 'src/hbDashboardDirective.js',
                                 'src/hbDashboardController.js',
-                                
+
                                 'src/hbDashboardSdsDirective.js',
                                 'src/hbDashboardSdsController.js',
-                                
+
 								'src/hbDateDirective.js',
 								'src/hbDateController.js',
 								'src/hbDateParserDirective.js',
@@ -104,10 +107,10 @@ module.exports = function(grunt) {
 								'src/hbImmeubleCardController.js',
 								'src/hbImmeubleListController.js',
 								'src/hbImmeubleListDirective.js',
-								
+
 								'src/hbInstallationSportiveCardController.js',
 								'src/hbInstallationSportiveCardDirective.js',
-								
+
 								'src/hbListContainerController.js',
 								'src/hbListContainerDirective.js',
 								'src/hbMapController.js',
@@ -129,7 +132,7 @@ module.exports = function(grunt) {
 
 								'src/hbSearchSdsController.js',
 								'src/hbSearchSdsDirective.js',
-								
+
 								'src/hbSurfaceCardController.js',
 								'src/hbSurfaceCardDirective.js',
 								'src/hbSingleSelectController.js',
@@ -138,10 +141,10 @@ module.exports = function(grunt) {
 								'src/hbTransactionCardController.js',
 								'src/hbTransactionCardDirective.js',
 								'src/hbTransactionCreateCardDirective.js',
-								
+
 								'src/hbUniqueRoleDirective.js',
 								'src/hbUniqueUserDirective.js',
-								
+
 								'src/hbUniteLocativeListController.js',
 								'src/hbUniteLocativeListDirective.js',								
 								'src/hbUtilService.js',
