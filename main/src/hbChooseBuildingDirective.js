@@ -20,7 +20,7 @@
      * 
      * buildingElfinModel 
      * 
-     * Is an optional reference to the ELFIN of class ACTEUR
+     * Is an optional reference to the ELFIN of class IMMEUBLE
      * corresponding to the buildingModel ID_G/Id identifier. 
      * 
      * 
