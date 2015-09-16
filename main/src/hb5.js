@@ -344,12 +344,18 @@
     	        			errMsg += "( " + response.data.DESCRIPTION +" )"; 
     	        		} 
     	        		$log.error(errMsg);
+    	        		// NOTE: reactivated for extensive testing. The former problem
+    	        		// was most certainly due to the "Java date parser wrong usage"
+    	        		// fixed issue.
+    	        		// 
+    	        		// The following comment is deprecated but currently kept as reminder: 
+    	        		// 
     	        		// Error 500 sometime shows up on xhr "wake up" without affecting 
     	        		// the application behaviour to the end-user. Thus stop launching 
     	        		// annoying dialog to the end-user with information he cannot act
     	        		// upon. Keep logging error in case annother true exception case 
     	        		// need investigations.
-    	        		//hbAlertMessages.addAlert("danger",errMsg);
+    	        		hbAlertMessages.addAlert("danger",errMsg);
     	        	} else if (response.status == 566) { // 566 - Custom code for connect exception
     	        		var errMsg = "La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur. ( " + response.data.DESCRIPTION +" )";
     	        		$log.error(errMsg);
