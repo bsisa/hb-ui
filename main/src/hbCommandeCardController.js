@@ -27,7 +27,7 @@
 						
 								$scope.selected = { 
 										"building" : {},
-										"owner" : {},
+										"provider" : {},
 										"initialised" : false
 									};
 								
@@ -37,7 +37,8 @@
 										if ($scope.selected.building) {
 											$log.debug("building : " + angular.toJson($scope.selected.building));											
 											$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;
-											$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.Id;
+											// TODO: get building object and set its OBJECTIF to the COMMANDE OBJECTIF (no SAI instead of Id)
+											$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.IDENTIFIANT.OBJECTIF;
 										} else {
 											$log.debug("building has been reset... ");											
 											$scope.elfin.SOURCE = "";
@@ -49,19 +50,19 @@
 								}, true);								
 								
 								
-								$scope.$watch('selected.owner', function(newOwner, oldOwner) { 
+								$scope.$watch('selected.provider', function(newProvider, oldProvider) { 
 									if ($scope.selected.initialised === true ) {
-										if ($scope.selected.owner) {
-											$log.debug("owner : " + angular.toJson($scope.selected.owner));											
-											var owner = {
-											      "Id" : $scope.selected.owner.Id,
-											      "ID_G" : $scope.selected.owner.ID_G,
+										if ($scope.selected.provider) {
+											$log.debug("provider : " + angular.toJson($scope.selected.provider));											
+											var provider = {
+											      "Id" : $scope.selected.provider.Id,
+											      "ID_G" : $scope.selected.provider.ID_G,
 											      "NOM" : "",
-											      "GROUPE" : $scope.selected.owner.GROUPE,
+											      "GROUPE" : $scope.selected.provider.GROUPE,
 											      "VALUE" : ""
 											};
-											$scope.elfin.PARTENAIRE.PROPRIETAIRE = owner;
-											// Updating $scope.selected.owner model from hbChooseOne controller is not 
+											$scope.elfin.PARTENAIRE.FOURNISSEUR = provider;
+											// Updating $scope.selected.provider model from hbChooseOne controller is not 
 											// visible to the view model thus requires manual update.
 											// This is necessary when the validity state has been set to invalid using 
 											// typeahead manual typing, then solving selection through hbChooseOne selection.
@@ -69,18 +70,18 @@
 											// the field validity state correctly.
 											$scope.elfinForm.fournisseur.$setValidity('editable', true)
 										} else {
-											$log.debug("owner has been reset... ");											
-											var owner = {
+											$log.debug("provider has been reset... ");											
+											var provider = {
 												      "Id" : "",
 												      "ID_G" : "",
 												      "NOM" : "",
 												      "GROUPE" : "",
 												      "VALUE" : ""
 												};
-											$scope.elfin.PARTENAIRE.PROPRIETAIRE = owner;											
+											$scope.elfin.PARTENAIRE.FOURNISSEUR = provider;											
 										}
 									} else {
-										$log.debug("owner : " + angular.toJson($scope.selected.owner) + "WAIING for initialisation...");
+										$log.debug("provider : " + angular.toJson($scope.selected.provider) + "WAIING for initialisation...");
 									}
 								}, true);
 								
@@ -90,16 +91,17 @@
 								                   {"name" : "003", "value" : "003 - lalalère"}
 								                   ];
 							
-								// Benefit from server side cache...
+								// Benefits from server side cache...
 								var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
 								// Asychronous buildings preloading
 								hbQueryService.getImmeubles(xpathForImmeubles)
 									.then(
 											function(immeubles) {
-												for (var i = 0; i < immeubles.length; i++) {
-													var currImmeuble = immeubles[i];
-													currImmeuble.IDENTIFIANT.MERGED_PROPS = currImmeuble.IDENTIFIANT.OBJECTIF + "-" + currImmeuble.IDENTIFIANT.ALIAS
-												}
+												// Adds computed properties for read only usage.
+//												for (var i = 0; i < immeubles.length; i++) {
+//													var currImmeuble = immeubles[i];
+//													currImmeuble.IDENTIFIANT.MERGED_PROPS = currImmeuble.IDENTIFIANT.OBJECTIF + "-" + currImmeuble.IDENTIFIANT.ALIAS
+//												}
 												$scope.immeubles = immeubles;
 												$log.debug(">>> IMMEUBLES: " + immeubles.length);
 											},
@@ -118,12 +120,12 @@
 
 						    		if ($scope.elfin!==null) {
 
-						    			$scope.selected.owner = {
-											      "Id" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.Id,
-											      "ID_G" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G,
-											      "NOM" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM,
-											      "GROUPE" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE,
-											      "VALUE" : $scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE
+						    			$scope.selected.provider = {
+											      "Id" : $scope.elfin.PARTENAIRE.FOURNISSEUR.Id,
+											      "ID_G" : $scope.elfin.PARTENAIRE.FOURNISSEUR.ID_G,
+											      "NOM" : $scope.elfin.PARTENAIRE.FOURNISSEUR.NOM,
+											      "GROUPE" : $scope.elfin.PARTENAIRE.FOURNISSEUR.GROUPE,
+											      "VALUE" : $scope.elfin.PARTENAIRE.FOURNISSEUR.VALUE
 											    };
 						    			var selectedBuildingIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.SOURCE);
 						    			
@@ -146,7 +148,7 @@
 									        	$log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
 									        });							    				
 						    			} else {
-							    			// If not reference to building exists confirm initialisation is complete.
+							    			// If no reference to building exists confirm initialisation is complete.
 							    			$scope.selected.initialised = true;
 						    			}
 						    			
@@ -179,7 +181,7 @@
 												$scope.elfin.PARTENAIRE.FOURNISSEUR.NOM=""; 
 												$scope.elfin.PARTENAIRE.FOURNISSEUR.GROUPE="";
 															
-												// Reset building owner 
+												// Reset building provider 
 												$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id="";
 												$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G="";
 												$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM=""; 
