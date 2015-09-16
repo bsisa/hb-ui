@@ -107,17 +107,12 @@
 								                   {"name" : "003", "value" : "003 - lalalère"}
 								                   ];
 							
-								// Benefits from server side cache...
+								// Select all IMMEUBLE
 								var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
 								// Asychronous buildings preloading
 								hbQueryService.getImmeubles(xpathForImmeubles)
 									.then(
 											function(immeubles) {
-												// Adds computed properties for read only usage.
-//												for (var i = 0; i < immeubles.length; i++) {
-//													var currImmeuble = immeubles[i];
-//													currImmeuble.IDENTIFIANT.MERGED_PROPS = currImmeuble.IDENTIFIANT.OBJECTIF + "-" + currImmeuble.IDENTIFIANT.ALIAS
-//												}
 												$scope.immeubles = immeubles;
 												$log.debug(">>> IMMEUBLES: " + immeubles.length);
 											},
@@ -129,6 +124,26 @@
 											}
 										);
 						    	
+								
+								
+								// Select all CODE where GROUPE = 'CFC'
+								var xpathForCfcCodes = "//ELFIN[@CLASSE='CODE' and @GROUPE='CFC']";
+								// Asychronous buildings preloading
+								hbQueryService.getCodes(xpathForCfcCodes)
+									.then(
+											function(cfcCodes) {
+												$scope.cfcCodes = cfcCodes;
+												$log.debug(">>> CODES.CFC: " + cfcCodes.length);
+											},
+											function(response) {
+												var message = "Le chargement de la liste de CODE CFC a échoué (statut de retour: "
+														+ response.status
+														+ ")";
+												hbAlertMessages.addAlert("danger", message);
+											}
+										);								
+								
+								
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
@@ -254,6 +269,14 @@
 												"danger", message);
 									});
 
+								
+					            // Parameters to hbChooseOne service function for ACTOR selection
+					            $scope.codeChooseOneColumnsDefinition = [
+						                        		   		            { field:"IDENTIFIANT.NOM", displayName: "Code CFC"},
+						                        		   		            { field:"DIVERS.REMARQUE", displayName: "Description"}
+						                        		   	 		   		];								
+					            $scope.codeChooseOneTemplate = '/assets/views/chooseOneCode.html';
+					            
 								
 					            // Parameters to hbChooseOne service function for ACTOR selection
 					            $scope.actorChooseOneColumnsDefinition = [

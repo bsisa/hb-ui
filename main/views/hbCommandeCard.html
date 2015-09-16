@@ -39,8 +39,8 @@
 						<label for="objectifSearchHelper" class="col-sm-4 control-label"><em>No SAI</em></label>
 						<div class="col-sm-8">
 						
-						<div hb-card-view-link hb-href="/elfin/G20150910130000002/CODE">code</div>
-						<div hb-card-view-link hb-href="/elfin/G20150910110000001/COMMANDE">commande</div>
+<!-- 						<div hb-card-view-link hb-href="/elfin/G20150910130000002/CODE">code</div> -->
+<!-- 						<div hb-card-view-link hb-href="/elfin/G20150910110000001/COMMANDE">commande</div> -->
 						
 						<div hb-choose-building 
 							 hb-choose-building-id-name="building"
@@ -94,7 +94,7 @@
 								class="input-group-btn" tooltip="Recherche de code CFC"
 								 >
 								<button class="btn btn-default" type="button" hb-choose-one
-									ng-click="hbChooseOne(selected, 'provider', entrepriseActors, '', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
+									ng-click="hbChooseOne(elfin, 'GROUPE', cfcCodes, 'IDENTIFIANT.NOM', codeChooseOneColumnsDefinition, codeChooseOneTemplate )">
 									<i class="glyphicon glyphicon-list-alt"></i>
 								</button>
 							</span>

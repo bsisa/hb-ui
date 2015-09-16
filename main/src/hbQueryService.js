@@ -54,6 +54,29 @@
 		};			
 
 		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.CODE_ID` identifies collection containing ELFIN objects of CLASSE CODE.  
+		 *  @see getList
+		 */		
+		var getCodes = function(xpath) {		
+	        return getList(HB_COLLECTIONS.CODE_ID,xpath);
+		};
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.COMMANDE_ID` identifies collection containing ELFIN objects of CLASSE COMMANDE.  
+		 *  @see getList
+		 */		
+		var getCommandes = function(xpath) {		
+	        return getList(HB_COLLECTIONS.COMMANDE_ID,xpath);
+		};			
+		
+		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *   
@@ -225,6 +248,8 @@
         	getActors:getActors,
         	getAmenagementSportifs:getAmenagementSportifs,
         	getCiterneList:getCiterneList,
+        	getCodes:getCodes,
+        	getCommandes:getCommandes,
         	getConstats:getConstats,
         	getContrats:getContrats,
         	getEquipementList:getEquipementList,
