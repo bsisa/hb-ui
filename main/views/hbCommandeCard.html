@@ -1,17 +1,10 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
-	<ul>
-<!-- 	<li ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire!</li> -->
-<!-- 	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>Groupe Commande</strong> est obligatoire!</li> -->
-<!-- 	<li ng-show="elfinForm.year.$error.required"><strong>L'année</strong> est obligatoire!</li> -->
-<!-- 	<li ng-show="elfinForm.year.$error.minlength"><strong>L'année</strong> doit être composée de quatre positions.</li> -->
-<!-- 	<li ng-show="elfinForm.year.$error.maxlength"><strong>L'année</strong> doit être composée de quatre positions.</li> -->
-<!-- 	<li ng-show="elfinForm.objectif.$error.required">Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Commande', 'Année'} est obligatoire!</li>	 -->
-	<li ng-show="elfinForm.fournisseur.$error.required">Le champs <strong>Fournisseur</strong> est obligatoire!</li>
-<!-- 	<li ng-show="elfinForm.resp.$error.required">Le champs <strong>Responsable visa de facture</strong> est obligatoire!</li> -->
-<!-- 	<li ng-show="elfinForm.objectif.$error.minlength">Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Commande', 'Année'} est obligatoire!</li> -->
-<!-- 	<li ng-show="elfinForm.annexlength.$error.min"><strong>L'annexe</strong> est obligatoire!</li> -->
-	</ul>
+<!-- 	<ul> -->
+<!-- 	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.fournisseur.$error.required">Le <strong>fournisseur</strong> est obligatoire!</li> -->
+<!-- 	<li ng-show="elfinForm.building.$error.required">Le <strong>No SAI</strong> est obligatoire!</li> -->
+<!-- 	</ul> -->
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -54,13 +47,10 @@
 						<div class="input-group">
 							<input id="cfcCode" name="cfcCode" type="text" class="form-control"
 								autocomplete="off"
-								typeahead="cfcCode.name as cfcCode.value for cfcCode in cfcCodes | filter:$viewValue"
+								typeahead="cfcCode.IDENTIFIANT.NOM for cfcCode in cfcCodes | filter:$viewValue"
 								typeahead-editable="false"
-								ng-model="elfin.GROUPE"
-								ng-required="true">
-								<span
-								class="input-group-btn" tooltip="Recherche de code CFC"
-								 >
+								ng-model="elfin.GROUPE">
+							<span class="input-group-btn" tooltip="Recherche de code CFC" >
 								<button class="btn btn-default" type="button" hb-choose-one
 									ng-click="hbChooseOne(elfin, 'GROUPE', cfcCodes, 'IDENTIFIANT.NOM', codeChooseOneColumnsDefinition, codeChooseOneTemplate )">
 									<i class="glyphicon glyphicon-list-alt"></i>
@@ -78,8 +68,7 @@
 								autocomplete="off"
 								typeahead="actor as actor.GROUPE for actor in entrepriseActors | filter:$viewValue"
 								typeahead-editable="false"
-								ng-model="selected.provider"
-								ng-required="true">
+								ng-model="selected.provider">
 								<span
 								class="input-group-btn" tooltip="Recherche d'entreprise"
 								 >
@@ -92,9 +81,9 @@
 					</div>
 				</div>
 				<div class="form-group has-feedback">
-					<label for="valeur" class="col-sm-4 control-label">Montant</label>
+					<label for="amount" class="col-sm-4 control-label">Montant</label>
 					<div class="col-sm-8">
-						<input id="valeur" type="number" class="form-control"
+						<input id="amount" name="amount" type="number" class="form-control"
 							ng-model="elfin.IDENTIFIANT.VALEUR" 
 							 >
 					</div>
