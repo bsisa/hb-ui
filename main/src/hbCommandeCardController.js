@@ -272,6 +272,7 @@
 								
 					            // Parameters to hbChooseOne service function for ACTOR selection
 					            $scope.codeChooseOneColumnsDefinition = [
+					                                                     	{ field:"CARACTERISTIQUE.CAR1.VALEUR", displayName: "Ordre de tri"},
 						                        		   		            { field:"IDENTIFIANT.NOM", displayName: "Code CFC"},
 						                        		   		            { field:"DIVERS.REMARQUE", displayName: "Description"}
 						                        		   	 		   		];								
