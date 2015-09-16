@@ -39,10 +39,26 @@
 											$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;
 											// TODO: get building object and set its OBJECTIF to the COMMANDE OBJECTIF (no SAI instead of Id)
 											$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.IDENTIFIANT.OBJECTIF;
+											var buildingOwner = {
+													 "Id" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.Id,
+												      "ID_G" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.ID_G,
+												      "NOM" : "",
+												      "GROUPE" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.GROUPE,
+												      "VALUE" : ""
+												};
+											$scope.elfin.PARTENAIRE.PROPRIETAIRE = buildingOwner; 
 										} else {
 											$log.debug("building has been reset... ");											
 											$scope.elfin.SOURCE = "";
 											$scope.elfin.IDENTIFIANT.OBJECTIF = "";
+											var buildingOwner = {
+													 "Id" : "",
+												      "ID_G" : "",
+												      "NOM" : "",
+												      "GROUPE" : "",
+												      "VALUE" : ""
+												};
+											$scope.elfin.PARTENAIRE.PROPRIETAIRE = buildingOwner;
 										}
 									} else {
 										$log.debug("building : " + angular.toJson($scope.selected.building) + "WAITING for initialisation...");
@@ -123,10 +139,11 @@
 						    			$scope.selected.provider = {
 											      "Id" : $scope.elfin.PARTENAIRE.FOURNISSEUR.Id,
 											      "ID_G" : $scope.elfin.PARTENAIRE.FOURNISSEUR.ID_G,
-											      "NOM" : $scope.elfin.PARTENAIRE.FOURNISSEUR.NOM,
+											      "NOM" : "",
 											      "GROUPE" : $scope.elfin.PARTENAIRE.FOURNISSEUR.GROUPE,
-											      "VALUE" : $scope.elfin.PARTENAIRE.FOURNISSEUR.VALUE
+											      "VALUE" : ""
 											    };
+						    			//$scope.elfin.PARTENAIRE.FOURNISSEUR.VALUE
 						    			var selectedBuildingIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.SOURCE);
 						    			
 						    			if (selectedBuildingIds) {
@@ -176,16 +193,18 @@
 												$scope.elfin.IDENTIFIANT.NOM = "";
 												
 												// Reset entreprise service provider 
-												$scope.elfin.PARTENAIRE.FOURNISSEUR.Id="";
-												$scope.elfin.PARTENAIRE.FOURNISSEUR.ID_G="";
-												$scope.elfin.PARTENAIRE.FOURNISSEUR.NOM=""; 
-												$scope.elfin.PARTENAIRE.FOURNISSEUR.GROUPE="";
+												$scope.elfin.PARTENAIRE.FOURNISSEUR.Id = "";
+												$scope.elfin.PARTENAIRE.FOURNISSEUR.ID_G = "";
+												$scope.elfin.PARTENAIRE.FOURNISSEUR.NOM = ""; 
+												$scope.elfin.PARTENAIRE.FOURNISSEUR.GROUPE = "";
+												$scope.elfin.PARTENAIRE.FOURNISSEUR.VALUE = "";
 															
 												// Reset building provider 
-												$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id="";
-												$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G="";
-												$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM=""; 
-												$scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE="";
+												$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id = "";
+												$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G = "";
+												$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = ""; 
+												$scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE = "";
+												$scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE = "";
 												
 												$scope.elfin.DIVERS.REMARQUE = "";
 												
