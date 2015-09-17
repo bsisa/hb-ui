@@ -1,10 +1,12 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
-<!-- 	<ul> -->
+	<ul>
+	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire!</li>
+	<li ng-show="elfinForm.cfcCode.$error.hbValidCode">Le <strong>code CFC</strong> n'est pas valide!</li>
 <!-- 	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire!</li> -->
 <!-- 	<li ng-show="elfinForm.fournisseur.$error.required">Le <strong>fournisseur</strong> est obligatoire!</li> -->
 <!-- 	<li ng-show="elfinForm.building.$error.required">Le <strong>No SAI</strong> est obligatoire!</li> -->
-<!-- 	</ul> -->
+	</ul>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -41,18 +43,18 @@
 					</div>
 				</div>
 
-				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)">
-					<label for="code" class="col-sm-4 control-label">Code CFC (choose)</label>
-					<div class="col-sm-8">
-						<div hb-choose-code 
-							 hb-choose-code-id-name="code"
-							 hb-choose-code-elfin-form="elfinForm"
-							 hb-choose-code-elfin-model="selected.code"
-							 hb-choose-code-tooltip="Recherche de code CFC"
-							 hb-choose-code-editable="{{canEdit}}" 
-							 ></div>					
-					</div>
-				</div>
+<!-- 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)"> -->
+<!-- 					<label for="code" class="col-sm-4 control-label">Code CFC (choose)</label> -->
+<!-- 					<div class="col-sm-8"> -->
+<!-- 						<div hb-choose-code  -->
+<!-- 							 hb-choose-code-id-name="code" -->
+<!-- 							 hb-choose-code-elfin-form="elfinForm" -->
+<!-- 							 hb-choose-code-elfin-model="selected.code" -->
+<!-- 							 hb-choose-code-tooltip="Recherche de code CFC" -->
+<!-- 							 hb-choose-code-editable="{{canEdit}}"  -->
+<!-- 							 ></div>					 -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)">
 					<label for="cfcCode" class="col-sm-4 control-label">Code CFC (type)</label>
@@ -62,7 +64,8 @@
 							 hb-typeahead-code-elfin-form="elfinForm"
 							 hb-typeahead-code-elfin-model="selected.code"
 							 hb-typeahead-code-tooltip="Recherche de code CFC"
-							 hb-typeahead-code-editable="{{canEdit}}" 
+							 hb-typeahead-code-editable="{{canEdit}}"
+							 hb-typeahead-code-validate-code="true"  
 							 ></div>					
 					</div>
 				</div>				

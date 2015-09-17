@@ -157,6 +157,9 @@ module.exports = function(grunt) {
 								'src/hbUtilService.js',
 								'src/hbUserCardController.js',
 								'src/hbUserCardDirective.js',
+								
+								'src/hbValidCodeDirective.js',
+								
 								'src/hbVentilationCardController.js',
 								'src/hbVentilationCardDirective.js',
 								'src/hbWcListDirective.js',
