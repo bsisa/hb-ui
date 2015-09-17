@@ -383,7 +383,7 @@
 							
 							$scope.$watch('search.text', function() { 
 								//$scope.gridOptions.filterOptions.filterText = $scope.search.text;
-								$scope.elfins = $filter('actorListFilter')(elfins, $scope.search.text , false);
+								$scope.elfins = $filter('actorListAnyFilter')(elfins, $scope.search.text , false);
 							}, true);
 							// ============================================================
 							

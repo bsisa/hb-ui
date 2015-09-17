@@ -28,7 +28,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="elfin in elfins | actorListFilter:search.text | orderBy:predicate:reverse">
+		<tr ng-repeat="elfin in elfins | actorListAnyFilter:search.text | orderBy:predicate:reverse">
 			<td>
 				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>			
 			</td>
