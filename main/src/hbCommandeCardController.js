@@ -27,7 +27,7 @@
 						
 								$scope.selected = { 
 										"building" : {},
-										"code" : {},
+										"code" : null,
 										"provider" : {},
 										"initialised" : false
 									};
