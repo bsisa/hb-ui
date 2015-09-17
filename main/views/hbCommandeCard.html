@@ -42,7 +42,7 @@
 				</div>
 
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)">
-					<label for="cfcCode" class="col-sm-4 control-label">Code CFC</label>
+					<label for="code" class="col-sm-4 control-label">Code CFC (choose)</label>
 					<div class="col-sm-8">
 						<div hb-choose-code 
 							 hb-choose-code-id-name="code"
@@ -51,21 +51,21 @@
 							 hb-choose-code-tooltip="Recherche de code CFC"
 							 hb-choose-code-editable="{{canEdit}}" 
 							 ></div>					
-<!-- 						<div class="input-group"> -->
-<!-- 							<input id="cfcCode" name="cfcCode" type="text" class="form-control" -->
-<!-- 								autocomplete="off" -->
-<!-- 								typeahead="cfcCode.IDENTIFIANT.NOM for cfcCode in cfcCodes | filter:$viewValue" -->
-<!-- 								typeahead-editable="false" -->
-<!-- 								ng-model="elfin.GROUPE"> -->
-<!-- 							<span class="input-group-btn" tooltip="Recherche de code CFC" > -->
-<!-- 								<button class="btn btn-default" type="button" hb-choose-one -->
-<!-- 									ng-click="hbChooseOne(elfin, 'GROUPE', cfcCodes, 'IDENTIFIANT.NOM', codeChooseOneColumnsDefinition, codeChooseOneTemplate )"> -->
-<!-- 									<i class="glyphicon glyphicon-list-alt"></i> -->
-<!-- 								</button> -->
-<!-- 							</span> -->
-<!-- 						</div>						 -->
 					</div>
 				</div>
+				
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)">
+					<label for="cfcCode" class="col-sm-4 control-label">Code CFC (type)</label>
+					<div class="col-sm-8">
+						<div hb-typeahead-code 
+							 hb-typeahead-code-id-name="cfcCode"
+							 hb-typeahead-code-elfin-form="elfinForm"
+							 hb-typeahead-code-elfin-model="selected.code"
+							 hb-typeahead-code-tooltip="Recherche de code CFC"
+							 hb-typeahead-code-editable="{{canEdit}}" 
+							 ></div>					
+					</div>
+				</div>				
 
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.fournisseur)">
 					<label for="fournisseur" class="col-sm-4 control-label">Fournisseur</label>
