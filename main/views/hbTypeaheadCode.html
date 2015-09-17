@@ -1,0 +1,14 @@
+
+<input 
+	id="{{codeIdName}}" 
+	hb-dynamic-name="codeIdName"
+	type="text" 
+	class="form-control" 
+	ng-model="codeElfinModel"
+	ng-readonly="false"
+	ng-required="validateCode"
+	autocomplete="off"
+	typeahead="code as (code.IDENTIFIANT.NOM + ' - '  + code.DIVERS.REMARQUE) for code in codes | codeListAnyFilter:$viewValue | limitTo:16"
+	typeahead-editable="false"
+	>
+	
