@@ -27,6 +27,7 @@
 						
 								$scope.selected = { 
 										"building" : {},
+										"code" : {},
 										"provider" : {},
 										"initialised" : false
 									};
@@ -35,7 +36,7 @@
 								$scope.$watch('selected.building', function(newBuilding, oldBuilding) { 
 									if ($scope.selected.initialised === true ) {
 										if ($scope.selected.building) {
-											$log.debug("building : " + angular.toJson($scope.selected.building));											
+											//$log.debug("building : " + angular.toJson($scope.selected.building));											
 											$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;
 											// TODO: get building object and set its OBJECTIF to the COMMANDE OBJECTIF (no SAI instead of Id)
 											$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.IDENTIFIANT.OBJECTIF;
@@ -48,7 +49,7 @@
 												};
 											$scope.elfin.PARTENAIRE.PROPRIETAIRE = buildingOwner; 
 										} else {
-											$log.debug("building has been reset... ");											
+											//$log.debug("building has been reset... ");											
 											$scope.elfin.SOURCE = "";
 											$scope.elfin.IDENTIFIANT.OBJECTIF = "";
 											var buildingOwner = {
@@ -61,15 +62,29 @@
 											$scope.elfin.PARTENAIRE.PROPRIETAIRE = buildingOwner;
 										}
 									} else {
-										$log.debug("building : " + angular.toJson($scope.selected.building) + "WAITING for initialisation...");
+										$log.debug("building : " + angular.toJson($scope.selected.building) + " ... WAITING for initialisation...");
 									}
 								}, true);								
 								
 								
+								$scope.$watch('selected.code', function(newCode, oldCode) { 
+									if ($scope.selected.initialised === true ) {
+										if ($scope.selected.code) {
+											$log.debug("selected.code : " + angular.toJson($scope.selected.code));											
+											$scope.elfin.GROUPE = $scope.selected.code.IDENTIFIANT.NOM;
+										} else {
+											//$log.debug("building has been reset... ");											
+											$scope.elfin.GROUPE = "";
+										}
+									} else {
+										$log.debug("selected.code : " + angular.toJson($scope.selected.code) + " ... WAITING for initialisation...");
+									}
+								}, true);								
+								
 								$scope.$watch('selected.provider', function(newProvider, oldProvider) { 
 									if ($scope.selected.initialised === true ) {
 										if ($scope.selected.provider) {
-											$log.debug("provider : " + angular.toJson($scope.selected.provider));											
+											//$log.debug("provider : " + angular.toJson($scope.selected.provider));											
 											var provider = {
 											      "Id" : $scope.selected.provider.Id,
 											      "ID_G" : $scope.selected.provider.ID_G,
@@ -86,7 +101,7 @@
 											// the field validity state correctly.
 											$scope.elfinForm.fournisseur.$setValidity('editable', true)
 										} else {
-											$log.debug("provider has been reset... ");											
+											//$log.debug("provider has been reset... ");											
 											var provider = {
 												      "Id" : "",
 												      "ID_G" : "",
@@ -97,16 +112,11 @@
 											$scope.elfin.PARTENAIRE.FOURNISSEUR = provider;											
 										}
 									} else {
-										$log.debug("provider : " + angular.toJson($scope.selected.provider) + "WAIING for initialisation...");
+										$log.debug("provider : " + angular.toJson($scope.selected.provider) + " ... WAIING for initialisation...");
 									}
 								}, true);
 								
-								$scope.cfcCodes = [
-								                   {"name" : "001", "value" : "001 - lalalère"},
-								                   {"name" : "002", "value" : "002 - lalalère"},								                   
-								                   {"name" : "003", "value" : "003 - lalalère"}
-								                   ];
-							
+
 								// Select all IMMEUBLE
 								var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
 								// Asychronous buildings preloading
@@ -132,7 +142,7 @@
 								hbQueryService.getCodes(xpathForCfcCodes)
 									.then(
 											function(cfcCodes) {
-												$scope.cfcCodes = cfcCodes;
+												$scope.cfcCodes = _.sortBy(cfcCodes, function(cfcCode){ return cfcCode.CARACTERISTIQUE.CAR1.VALEUR });
 												$log.debug(">>> CODES.CFC: " + cfcCodes.length);
 											},
 											function(response) {
@@ -182,6 +192,30 @@
 						    			} else {
 							    			// If no reference to building exists confirm initialisation is complete.
 							    			$scope.selected.initialised = true;
+						    			}
+						    			
+						    			// Initialise selected.code from elfin.GROUPE value.
+						    			if ($scope.elfin.GROUPE && $scope.elfin.GROUPE.trim().length > 0) {
+						    				
+											// Select the CODE where GROUPE = 'CFC' and number matches IDENTIFIANT.NOM
+											var xpathForCfcCode = "//ELFIN[@CLASSE='CODE' and @GROUPE='CFC' and IDENTIFIANT/NOM='"+$scope.elfin.GROUPE+"']";
+											// Asychronous buildings preloading
+											hbQueryService.getCodes(xpathForCfcCode)
+												.then(
+														function(cfcCodes) {
+															$log.debug(">>> cfcCodes.length MUST equal 1 : " + cfcCodes.length);
+															if (cfcCodes.length === 1) {
+																$scope.selected.code = cfcCodes[0];																
+															} else {
+																var message = "Le code CFC " + $scope.elfin.GROUPE + " n'est pas valide, veuillez s.v.p. effectuer une sélection parmi les codes existants.";
+																hbAlertMessages.addAlert("danger", message);
+															}
+														},
+														function(response) {
+															var message = "La recherche du code CFC "+ $scope.elfin.GROUPE + " a échoué (statut de retour: " + response.status + ")";
+															hbAlertMessages.addAlert("danger", message);
+														}
+													);						    				
 						    			}
 						    			
 										// Update elfin properties from catalogue while in create mode
@@ -271,12 +305,12 @@
 
 								
 					            // Parameters to hbChooseOne service function for ACTOR selection
-					            $scope.codeChooseOneColumnsDefinition = [
-					                                                     	{ field:"CARACTERISTIQUE.CAR1.VALEUR", displayName: "Ordre de tri"},
-						                        		   		            { field:"IDENTIFIANT.NOM", displayName: "Code CFC"},
-						                        		   		            { field:"DIVERS.REMARQUE", displayName: "Description"}
-						                        		   	 		   		];								
-					            $scope.codeChooseOneTemplate = '/assets/views/chooseOneCode.html';
+                             	//{ field:"CARACTERISTIQUE.CAR1.VALEUR", displayName: "Ordre de tri"},
+//					            $scope.codeChooseOneColumnsDefinition = [
+//						                        		   		            { field:"IDENTIFIANT.NOM", displayName: "Code CFC"},
+//						                        		   		            { field:"DIVERS.REMARQUE", displayName: "Description"}
+//						                        		   	 		   		];								
+//					            $scope.codeChooseOneTemplate = '/assets/views/chooseOneCode.html';
 					            
 								
 					            // Parameters to hbChooseOne service function for ACTOR selection
