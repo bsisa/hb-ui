@@ -39,7 +39,7 @@
 			restrict: 'A',
 			scope : {
 				'elfinForm' : '=hbChooseCodeElfinForm',
-				'codeElfinModel' : '=?hbChooseCodeElfinModel',
+				'codeElfinModel' : '=hbChooseCodeElfinModel',
 				'codeIdName' : '@hbChooseCodeIdName', 
 				'tooltip' : '@?hbChooseCodeTooltip',
 				'editable' : '@?hbChooseCodeEditable'
