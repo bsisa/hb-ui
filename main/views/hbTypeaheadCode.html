@@ -9,6 +9,6 @@
 	ng-required="validateCode"
 	autocomplete="off"
 	typeahead="code as (code.IDENTIFIANT.NOM + ' - '  + code.DIVERS.REMARQUE) for code in codes | codeListAnyFilter:$viewValue | limitTo:16"
-	typeahead-editable="false"
+	typeahead-editable="true"
 	>
 	
