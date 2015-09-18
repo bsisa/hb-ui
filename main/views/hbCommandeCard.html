@@ -1,8 +1,10 @@
 <div hb-card-header>
 	<!-- Custom validation message to be defined here -->
 	<ul>
-	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire!</li>
-	<li ng-show="elfinForm.cfcCode.$error.hbValidCode">Le <strong>code CFC</strong> n'est pas valide!</li>
+	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire</li>
+	<li ng-show="elfinForm.cfcCode.$error.hbValidCode">Le <strong>code CFC</strong> n'est pas valide</li>
+	<li ng-show="elfinForm.fournisseur.$error.required">Le <strong>fournisseur</strong> est obligatoire</li>
+	<li ng-show="elfinForm.fournisseur.$error.editable">Le <strong>fournisseur</strong> doit être saisi à partir de la liste de sélection</li>
 <!-- 	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire!</li> -->
 <!-- 	<li ng-show="elfinForm.fournisseur.$error.required">Le <strong>fournisseur</strong> est obligatoire!</li> -->
 <!-- 	<li ng-show="elfinForm.building.$error.required">Le <strong>No SAI</strong> est obligatoire!</li> -->
@@ -43,51 +45,54 @@
 					</div>
 				</div>
 
-<!-- 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)"> -->
-<!-- 					<label for="code" class="col-sm-4 control-label">Code CFC (choose)</label> -->
-<!-- 					<div class="col-sm-8"> -->
-<!-- 						<div hb-choose-code  -->
-<!-- 							 hb-choose-code-id-name="code" -->
-<!-- 							 hb-choose-code-elfin-form="elfinForm" -->
-<!-- 							 hb-choose-code-elfin-model="selected.code" -->
-<!-- 							 hb-choose-code-tooltip="Recherche de code CFC" -->
-<!-- 							 hb-choose-code-editable="{{canEdit}}"  -->
-<!-- 							 ></div>					 -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-				
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)">
-					<label for="cfcCode" class="col-sm-4 control-label">Code CFC (type)</label>
+					<label for="code" class="col-sm-4 control-label">Code CFC</label>
 					<div class="col-sm-8">
-						<div hb-typeahead-code 
-							 hb-typeahead-code-id-name="cfcCode"
-							 hb-typeahead-code-elfin-form="elfinForm"
-							 hb-typeahead-code-elfin-model="selected.code"
-							 hb-typeahead-code-tooltip="Recherche de code CFC"
-							 hb-typeahead-code-editable="{{canEdit}}"
-							 hb-typeahead-code-validate-code="true"  
+						<div hb-choose-code 
+							 hb-choose-code-id-name="code"
+							 hb-choose-code-elfin-form="elfinForm"
+							 hb-choose-code-elfin-model="selected.code"
+							 hb-choose-code-tooltip="Recherche de code CFC"
+							 hb-choose-code-editable="{{canEdit}}" 
 							 ></div>					
 					</div>
-				</div>				
+				</div>
+				
+<!-- 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)"> -->
+<!-- 					<label for="cfcCode" class="col-sm-4 control-label">Code CFC</label> -->
+<!-- 					<div class="col-sm-8"> -->
+<!-- 					<pre>{{ elfinForm.cfcCode.$error | json }}</pre> -->
+<!-- 						<div hb-typeahead-code  -->
+<!-- 							 hb-typeahead-code-id-name="cfcCode" -->
+<!-- 							 hb-typeahead-code-elfin-form="elfinForm" -->
+<!-- 							 hb-typeahead-code-elfin-model="selected.code" -->
+<!-- 							 hb-typeahead-code-tooltip="Recherche de code CFC" -->
+<!-- 							 hb-typeahead-code-editable="{{canEdit}}" -->
+<!-- 							 hb-typeahead-code-validate-code="true"   -->
+<!-- 							 ></div>					 -->
+<!-- 					</div> -->
+<!-- 				</div>				 -->
 
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.fournisseur)">
 					<label for="fournisseur" class="col-sm-4 control-label">Fournisseur</label>
 					<div class="col-sm-8">
-						<div class="input-group">
+<!-- 						<pre>{{ elfinForm.fournisseur.$error | json }}</pre> -->
+<!-- 						<div class="input-group"> -->
 							<input id="fournisseur" name="fournisseur" type="text" class="form-control"
 								autocomplete="off"
-								typeahead="actor as actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:12"
+								typeahead="actor as actor.GROUPE for actor in entrepriseActors | orderBy:'GROUPE' | actorListFilter:{'groupe': $viewValue} | limitTo:18"
 								typeahead-editable="false"
-								ng-model="selected.provider">
-								<span
-								class="input-group-btn" tooltip="Recherche d'entreprise"
-								 >
-								<button class="btn btn-default" type="button" hb-choose-one
-									ng-click="hbChooseOne(selected, 'provider', entrepriseActors, '', actorChooseOneColumnsDefinition, actorChooseOneTemplate )">
-									<i class="glyphicon glyphicon-list-alt"></i>
-								</button>
-							</span>
-						</div>
+								ng-model="selected.provider"
+								ng-required="true">
+<!-- 								<span -->
+<!-- 								class="input-group-btn" tooltip="Recherche d'entreprise" -->
+<!-- 								 > -->
+<!-- 								<button class="btn btn-default" type="button" hb-choose-one -->
+<!-- 									ng-click="hbChooseOne(selected, 'provider', entrepriseActors, '', actorChooseOneColumnsDefinition, actorChooseOneTemplate )"> -->
+<!-- 									<i class="glyphicon glyphicon-list-alt"></i> -->
+<!-- 								</button> -->
+<!-- 							</span> -->
+<!-- 						</div> -->
 					</div>
 				</div>
 				<div class="form-group has-feedback">
