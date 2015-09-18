@@ -5,7 +5,7 @@
 	type="text" 
 	class="form-control" 
 	ng-model="codeElfinModel"
-	ng-readonly="false"
+	ng-readonly="{{cannotEdit}}"
 	hb-valid-code
 	ng-required="validateCode"
 	autocomplete="off"
