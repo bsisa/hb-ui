@@ -19,7 +19,7 @@
 						// We want to test the NOM corresponding to the CODE numeric value.
 						var valueToCheck = value.split(" ", 1)[0];
 						var matchingValidCode = _.find(codesList, function(code){ return ( code.IDENTIFIANT.NOM === valueToCheck ); });
-						$log.debug("hbValidCode: matchingValidCode = " + matchingValidCode + " for valueToCheck " + valueToCheck);
+						$log.debug("hbValidCode: matchingValidCode = " + angular.toJson(matchingValidCode) + " for valueToCheck " + valueToCheck);
 						var valid = (matchingValidCode !== undefined);
 						return valid;
     		    	  };
