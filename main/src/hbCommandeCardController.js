@@ -25,13 +25,15 @@
 									HB_EVENTS, userDetails, hbQueryService) {
 
 						
+								// Can be dynamically updated given user roles, functions.
+								$scope.canEdit = true;
+
 								$scope.selected = { 
 										"building" : {},
 										"code" : null,
 										"provider" : {},
 										"initialised" : false
 									};
-								
 								
 								$scope.$watch('selected.building', function(newBuilding, oldBuilding) { 
 									if ($scope.selected.initialised === true ) {
