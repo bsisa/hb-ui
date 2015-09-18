@@ -713,7 +713,38 @@
 
 	
 	/**
-	 * Filter tailored to ACTEUR list requirements.
+	 * Filter tailored to ACTEUR list requirements on strict list of fields defined as: 
+	 * `predicate {qualite, nom, alias, groupe}`
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual actor list. 
+	 */
+	angular.module('hb5').filter('actorListFilter', [function () {
+		
+		return function (actors, predicate) {
+	        if (!angular.isUndefined(actors) && actors !== null && !angular.isUndefined(predicate)) {
+				console.log(">>>> actors.length, predicate = " + actors.length +", " + angular.toJson(predicate));	        	
+	            var tempactors = [ ];
+	            angular.forEach(actors, function (actor) {
+                    if ( 
+                    	 icontains(actor.IDENTIFIANT.QUALITE, predicate.qualite) &&
+                    	 icontains(actor.IDENTIFIANT.NOM, predicate.nom) &&
+                    	 icontains(actor.IDENTIFIANT.ALIAS, predicate.alias) &&
+                    	 icontains(actor.GROUPE, predicate.groupe)
+                    ) {
+                    	tempactors.push(actor);
+                    }
+                });
+	            return tempactors;
+	        } else {
+	            return actors;
+	        }
+	    };	    
+	    
+	    
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to ACTEUR list single search criterion on `all fields`.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual actor list. 
 	 */
 	angular.module('hb5').filter('actorListAnyFilter', [function () {
