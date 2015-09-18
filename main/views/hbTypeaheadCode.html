@@ -9,7 +9,11 @@
 	hb-valid-code
 	ng-required="validateCode"
 	autocomplete="off"
-	typeahead="code as (code.IDENTIFIANT.NOM + ' - '  + code.DIVERS.REMARQUE) for code in codes | codeListAnyFilter:$viewValue | limitTo:16"
+	typeahead="code as (code.IDENTIFIANT.NOM + ' - '  + code.DIVERS.REMARQUE) for code in codes | codeListAnyFilter:$viewValue "
 	typeahead-editable="true" 
 	>
 	
+<!-- 
+	typeahead="code as (code.IDENTIFIANT.NOM + ' - '  + code.DIVERS.REMARQUE) for code in codes | codeListAnyFilter:$viewValue | limitTo:16"
+	typeahead-min-length='3'
+ -->
