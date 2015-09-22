@@ -21,6 +21,9 @@
 					function($attrs, $scope, $modal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
+						// Protects against load latency.
+						$scope.codesLoaded = false;
+				
 						// Check if optional editable property is available
 						if ($scope.editable) {
 							// We need to deal with text values, make it explicit rather than use == operator.
@@ -33,6 +36,10 @@
 							$scope.cannotEdit = false;
 						}
 
+						$scope.selectionEnabled = function() {
+							return (!$scope.cannotEdit && $scope.codesLoaded);
+						};
+						
 						/**
 						 * Initialisation state information
 						 */
@@ -90,8 +97,6 @@
 			        	 */
 			        	var codeElfinModelWatchDeregistration = $scope.$watch('codeElfinModel.Id', function(newId, oldId) {
 			        		
-			        		$log.debug(">>>>>>>>>>>> HbChooseCodeController - 'codeElfinModel.Id' LISTENER: oldId = " + oldId + " => newId = " + newId);
-			        		
 			        		if (!angular.isUndefined($scope.codeElfinModel) && newId !== oldId) {
 					        	selectedCodeUpdate($scope.codeElfinModel);
 					        	codeModelsUpdate($scope.codeElfinModel);
@@ -110,7 +115,7 @@
 						hbQueryService.getCodes(xpathForCfcCodes).then(
 							function(cfcCodes) {
 								$scope.codes = _.sortBy(cfcCodes, function(cfcCode){ return cfcCode.CARACTERISTIQUE.CAR1.VALEUR });
-								$log.debug(">>> CODES.CFC: " + cfcCodes.length);
+								$scope.codesLoaded = true;
 							},
 							function(response) {
 								var message = "Le chargement de la liste de CODE CFC a échoué (statut de retour: " + response.status + ")";

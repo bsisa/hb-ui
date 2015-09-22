@@ -10,7 +10,7 @@
 		ng-required="validateCode">
 		
 		<span class="input-group-btn" >
-			<button ng-disabled="{{cannotEdit}}" class="btn btn-default" type="button" ng-click="hbChooseCode()">
+			<button ng-disabled="{{!selectionEnabled}}" class="btn btn-default" type="button" ng-click="hbChooseCode()">
 				<i class="glyphicon glyphicon-list-alt" ></i>
 			</button>
 		</span>

@@ -21,6 +21,9 @@
 					function($attrs, $scope, $modal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
+						// Protects against load latency.
+						$scope.buildingsLoaded = false;
+				
 						// Check if optional editable property is available
 						if ($scope.editable) {
 							// We need to deal with text values, make it explicit rather than use == operator.
@@ -33,6 +36,10 @@
 							$scope.cannotEdit = false;
 						}
 
+						$scope.selectionEnabled = function() {
+							return (!$scope.cannotEdit && $scope.buildingsLoaded);
+						};
+						
 						/**
 						 * Initialisation state information
 						 */
@@ -90,8 +97,6 @@
 			        	 */
 			        	var buildingElfinModelWatchDeregistration = $scope.$watch('buildingElfinModel.Id', function(newId, oldId) {
 			        		
-			        		$log.debug(">>>>>>>>>>>> HbChooseBuildingController - 'buildingElfinModel.Id' LISTENER: oldId = " + oldId + " => newId = " + newId);
-			        		
 			        		if (!angular.isUndefined($scope.buildingElfinModel) && newId !== oldId) {
 					        	selectedBuildingUpdate($scope.buildingElfinModel);
 					        	buildingModelsUpdate($scope.buildingElfinModel);
@@ -106,6 +111,7 @@
 			            // Asychronous buildings preloading and sorting
 			            hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE']")		
 						.then(function(buildings) {
+
 								// order buildings by IDENTIFIANT.OBJECTIF, ALIAS
 								buildings.sort(function(a, b) {
 									return a.IDENTIFIANT.OBJECTIF < b.IDENTIFIANT.OBJECTIF ? -1 :
@@ -114,6 +120,7 @@
 												a.IDENTIFIANT.ALIAS > b.IDENTIFIANT.ALIAS ? 1 : 0;
 					            });
 								$scope.buildings =  buildings;
+								$scope.buildingsLoaded = true;
 							},
 							function(response) {
 								var message = "Le chargement des IMMEUBLEs a échoué (statut de retour: "+ response.status+ ")";
