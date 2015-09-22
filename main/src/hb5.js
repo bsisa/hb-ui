@@ -9,8 +9,7 @@
 (function() {
 	
     var hb5 = angular.module('hb5',
-        ['flow','nGgrid','ui.grid.selection','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils','angular.filter']);
-        //['flow','ui.grid','ui.grid.selection','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils','angular.filter']);
+        ['flow','ui.grid','ui.grid.selection','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils','angular.filter']);
 	
     // ================================================================
     // ====                      Config                            ====

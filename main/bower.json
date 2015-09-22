@@ -39,7 +39,7 @@
     "angular-chosen-localytics": "~1.0.3",
     "ngUpload": "~0.5.8",
     "angular-animate": "~1.2.16",
-    "angular-grid": "2.0.14",
+    "angular-ui-grid": "3.0.6",
     "leaflet": "0.7.3",
     "leaflet-providers": "1.0.5",
     "leaflet.draw": "0.2.3",

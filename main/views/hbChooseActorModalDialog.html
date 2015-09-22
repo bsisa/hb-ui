@@ -17,7 +17,7 @@
 				<div id="currentSelection" class="col-sm-8" style="padding-left: 0; padding-right: 0;padding-top: 5px;padding-bottom: 5px;" ng-show="selectedElfins && selectedElfins.length > 0">{{currentSelection.IDENTIFIANT.NOM}} {{currentSelection.IDENTIFIANT.ALIAS}} - {{currentSelection.GROUPE}}</div>
 		</div>
 		<div class="clearfix"></div>
-		<div class="modalGridStyle" ng-grid="gridOptions"></div>
+		<div class="modalGridStyle" ui-grid="gridOptions" ui-grid-selection></div>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-warning" ng-click="cancel()">Annuler</button>
