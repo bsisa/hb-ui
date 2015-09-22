@@ -269,6 +269,7 @@
 							        selectedItems: $scope.selectedElfins,
 							        showColumnMenu: false, // Useful for grouping 
 							        showFilter: false, // Ugly look, redefine our own search field
+							        sortInfo:{ fields: ['IDENTIFIANT.NOM'], directions: ['asc']}, // sortFields automatically build from columnsDefinition
 							        filterOptions : { filterText: '', useExternalFilter: true },
 							        doubleClickFunction: $scope.doubleClickListener,
 							        plugins: [ngGridDoubleClickPluginInstance]
