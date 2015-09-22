@@ -114,7 +114,7 @@
 						// Asychronous codes preloading
 						hbQueryService.getCodes(xpathForCfcCodes).then(
 							function(cfcCodes) {
-								$scope.codes = _.sortBy(cfcCodes, function(cfcCode){ return cfcCode.CARACTERISTIQUE.CAR1.VALEUR });
+								$scope.codes = _.sortBy(cfcCodes, function(cfcCode){ return cfcCode.IDENTIFIANT.NOM });
 								$scope.codesLoaded = true;
 							},
 							function(response) {
