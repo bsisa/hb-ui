@@ -151,8 +151,8 @@
 				            		selectedCodeUpdate(selectedElfin);
 					        		codeModelsUpdate(selectedElfin);
 
-					            	// Notify user current data need saving.
-					            	$scope.elfinForm.$setDirty();			
+					            	// Manually trigger angular field and form states (valid, pristine,...)
+					            	$scope.elfinForm[$scope.codeIdName].$setViewValue($scope.elfinForm[$scope.codeIdName].$viewValue);
 					            	
 				            	} else {
 				            		//$log.debug("No selection returned!!!");				            		
