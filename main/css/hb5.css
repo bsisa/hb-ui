@@ -590,6 +590,11 @@ div.modal-body.ng-pristine {
     background-color: white;
     border: 1px solid #CCC;
 }
+/* Define OK buttons width for all modal dialogs */
+div.modal-footer button.btn-primary {
+	width: 200px;
+}
+
 
 /*********************************************************************/
 
