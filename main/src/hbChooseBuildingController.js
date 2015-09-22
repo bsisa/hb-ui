@@ -153,9 +153,8 @@
 				            		selectedBuildingUpdate(selectedElfin);
 					        		buildingModelsUpdate(selectedElfin);
 
-					            	// Notify user current data need saving.
-					            	$scope.elfinForm.$setDirty();			
-					            	
+					        		// Manually trigger angular field and form states (valid, pristine,...)
+					            	$scope.elfinForm[$scope.buildingIdName].$setViewValue($scope.elfinForm[$scope.buildingIdName].$viewValue)
 				            	} else {
 				            		//$log.debug("No selection returned!!!");				            		
 				            	}
