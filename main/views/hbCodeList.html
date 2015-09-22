@@ -1,0 +1,37 @@
+<table class="table table-condensed table-bordered table-striped"
+	ng-show="elfins">
+	<thead>
+		<tr>
+			<th colspan="5"><span class="badge">{{elfinsCount}}</span> 
+			code{{ elfinsCount | plural }} trouvé{{elfinsCount | plural }}</th>
+		</tr>
+		<tr>
+			<th class="col-sm-1" />
+			<th colspan="4">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>		
+		<tr>
+			<th />
+			<th><a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Groupe</a></th>
+			<th><a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">Code</a></th>
+			<th><a href="" ng-click="predicate = 'DIVERS.REMARQUE'; reverse=!reverse">Description</a></th>
+			<th><a href="" ng-click="predicate = 'CARACTERISTIQUE.CAR1.VALEUR'; reverse=!reverse">Order de tri</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="elfin in elfins | codeListAnyFilter:search.text | orderBy:predicate:reverse">
+			<td>
+				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>			
+			</td>
+			<td>{{elfin.GROUPE}}</td>
+			<td>{{elfin.IDENTIFIANT.NOM}}</td>
+			<td>{{elfin.DIVERS.REMARQUE}}</td>
+			<td>{{elfin.CARACTERISTIQUE.CAR1.VALEUR}}</td>
+		</tr>
+	</tbody>
+</table>

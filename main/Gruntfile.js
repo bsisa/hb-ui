@@ -70,6 +70,12 @@ module.exports = function(grunt) {
 								'src/hbChooseOneDirective.js',
 								'src/hbCiterneCardController.js',
 								'src/hbCiterneCardDirective.js',
+								
+								'src/hbCodeCardController.js',
+								'src/hbCodeCardDirective.js',
+								'src/hbCodeListController.js',
+								'src/hbCodeListDirective.js',
+								
 								'src/hbCollapseController.js',
 								'src/hbCollapseDirective.js',
 

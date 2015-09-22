@@ -9,7 +9,8 @@
 (function() {
 	
     var hb5 = angular.module('hb5',
-        ['flow','ngGrid','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils','angular.filter']);
+        ['flow','nGgrid','ui.grid.selection','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils','angular.filter']);
+        //['flow','ui.grid','ui.grid.selection','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils','angular.filter']);
 	
     // ================================================================
     // ====                      Config                            ====
@@ -95,6 +96,15 @@
             })                                    
             .when('/elfin/:collectionId/CITERNE/:elfinId', {
                 templateUrl: '/assets/views/CITERNE_card_view.html'
+            })
+            .when('/elfin/create/CODE', {
+                templateUrl: '/assets/views/CODE_card_new_view.html'
+            })
+            .when('/elfin/:collectionId/CODE/:elfinId', {
+                templateUrl: '/assets/views/CODE_card_view.html'
+            })
+            .when('/elfin/:collectionId/CODE', {
+                templateUrl: '/assets/views/CODE_list_view.html'
             })
             .when('/elfin/create/COMMANDE', {
                 templateUrl: '/assets/views/COMMANDE_card_new_view.html'
