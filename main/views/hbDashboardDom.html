@@ -1,0 +1,136 @@
+
+<!-- 
+Stade et terrain / stadium
+Piscine / pool
+Patinoire / rink
+Salle / hall
+Place de sport / sports area
+Droit de superficie et autre infra./ surface right
+ -->
+<table class="table table-condensed table-bordered table-striped" >
+	<tbody>
+		<tr>
+			<th class="dashboard" style="width: 33%;">Stade{{ asStadiumElfinsLength | plural }} et terrain{{ asStadiumElfinsLength | plural }} <span class="badge">{{asStadiumElfinsLength}}</span></th>
+			<th class="dashboard" >Piscine{{ asPoolElfinsLength | plural }} <span class="badge">{{asPoolElfinsLength}}</span></th>			
+			<th class="dashboard" style="width: 33%;">Patinoire{{ asRinkElfinsLength | plural }} <span class="badge">{{asRinkElfinsLength}}</span></th>
+		</tr>
+		<tr>
+			<td ><img ng-click="listOrViewStadium()" src="/assets/images/sds_stadium.jpeg" ng-src="/assets/images/sds_stadium.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewPool()" src="/assets/images/sds_pool.jpeg" ng-src="/assets/images/sds_pool.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewRink()" src="/assets/images/sds_rink.jpeg" ng-src="/assets/images/sds_rink.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+		</tr>
+		<tr>
+			<th >Sélection  <span class="badge">{{filteredAsStadiumElfins.length}}</span>
+				<div class="right">
+					<button tabindex="2" class="btn btn-primary btn-xs" ng-click="listOrViewStadium()" ng-disabled="filteredAsStadiumElfins.length < 1">
+						<span ng-show="filteredAsStadiumElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsStadiumElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+			<th >Sélection  <span class="badge">{{filteredAsPoolElfins.length}}</span>
+				<div class="right">
+					<button tabindex="4" class="btn btn-primary btn-xs" ng-click="listOrViewPool()" ng-disabled="filteredAsPoolElfins.length < 1">
+						<span ng-show="filteredAsPoolElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsPoolElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+			<th >Sélection  <span class="badge">{{filteredAsRinkElfins.length}}</span>
+				<div class="right">
+					<button tabindex="6" class="btn btn-primary btn-xs" ng-click="listOrViewRink()" ng-disabled="filteredAsRinkElfins.length < 1">
+						<span ng-show="filteredAsRinkElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsRinkElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+		</tr>
+		<tr>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewStadium()" tabindex="1" id="asStadiumSearchTextInput" name="asStadiumSearchTextInput" type="text" class="form-control" ng-model="asStadiumSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewPool()" tabindex="3" id="asPoolSearchTextInput" name="asPoolSearchTextInput" type="text" class="form-control" ng-model="asPoolSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewRink()" tabindex="5" id="asRinkSearchTextInput" name="asRinkSearchTextInput" type="text" class="form-control" ng-model="asRinkSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+	</tbody>
+</table>
+<table class="table table-condensed table-bordered table-striped" >
+	<tbody>
+		<tr>
+			<th class="dashboard" style="width: 33%;">Salle{{ asHallElfinsLength | plural }} <span class="badge">{{asHallElfinsLength}}</span></th>
+			<th class="dashboard" >Place{{ asSportsAreaElfinsLength | plural }} de sport <span class="badge">{{asSportsAreaElfinsLength}}</span></th>
+			<th class="dashboard" style="width: 33%;">Droit{{ asSurfaceRightElfinsLength | plural }} de superficie et autre{{ asSurfaceRightElfinsLength | plural }} <span class="badge">{{asSurfaceRightElfinsLength}}</span></th>
+		</tr>
+		<tr>
+			<td ><img ng-click="listOrViewHall()" src="/assets/images/sds_hall.jpeg" ng-src="/assets/images/sds_hall.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewSportsArea()" src="/assets/images/sds_sports_area.jpeg" ng-src="/assets/images/sds_sports_area.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewSurfaceRight()" src="/assets/images/sds_surface_right.jpeg" ng-src="/assets/images/sds_surface_right.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+		</tr>
+		<tr>
+			<th >Sélection  <span class="badge">{{filteredAsHallElfins.length}}</span>
+				<div class="right">
+					<button tabindex="8" class="btn btn-primary btn-xs" ng-click="listOrViewHall()" ng-disabled="filteredAsHallElfins.length < 1">
+						<span ng-show="filteredAsHallElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsHallElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+			<th >Sélection  <span class="badge">{{filteredAsSportsAreaElfins.length}}</span>
+				<div class="right">
+					<button tabindex="10" class="btn btn-primary btn-xs" ng-click="listOrViewSportsArea()" ng-disabled="filteredAsSportsAreaElfins.length < 1">
+						<span ng-show="filteredAsSportsAreaElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsSportsAreaElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+			<th >Sélection  <span class="badge">{{filteredAsSurfaceRightElfins.length}}</span>
+				<div class="right">
+					<button tabindex="12" class="btn btn-primary btn-xs" ng-click="listOrViewSurfaceRight()" ng-disabled="filteredAsSurfaceRightElfins.length < 1">
+						<span ng-show="filteredAsSurfaceRightElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredAsSurfaceRightElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>			
+			</th>
+		</tr>
+		<tr>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewHall()" tabindex="7" id="asHallSearchTextInput" name="asHallSearchTextInput" type="text" class="form-control" ng-model="asHallSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewSportsArea()" tabindex="9" id="asSportsAreaSearchTextInput" name="asSportsAreaSearchTextInput" type="text" class="form-control" ng-model="asSportsAreaSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewSurfaceRight()" tabindex="11" id="asSurfaceRightSearchTextInput" name="asSurfaceRightSearchTextInput" type="text" class="form-control" ng-model="asSurfaceRightSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+	</tbody>
+</table>
+

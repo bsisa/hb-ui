@@ -74,6 +74,9 @@ module.exports = function(grunt) {
                                 'src/hbDashboardDirective.js',
                                 'src/hbDashboardController.js',
                                 
+                                'src/hbDashboardDomDirective.js',
+                                'src/hbDashboardDomController.js',                                
+                                
                                 'src/hbDashboardSdsDirective.js',
                                 'src/hbDashboardSdsController.js',
                                 
