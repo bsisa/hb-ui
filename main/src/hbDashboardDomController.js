@@ -1,8 +1,113 @@
 (function() {
 
-    angular.module('hb5').controller('HbDashboardDomController', ['$attrs', '$scope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', function($attrs, $scope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil, hbQueryService) {
+    angular.module('hb5').controller('HbDashboardDomController', ['$attrs', '$scope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', 'hbPrintService', function($attrs, $scope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil, hbQueryService, hbPrintService) {
     
     	//$log.debug("    >>>> HbDashboardDomController called at " + new Date());
+    	
+    	
+    	// ============================================================
+    	// Buildings Section - IMMEUBLE
+    	// ============================================================    	
+    	
+    	// ==== Initialisation ========================================
+    	
+    	$scope.immeublesActiveStates = [
+    	                                {label:'Actifs', value: 'yes'},
+    	                                {label:'Sortis', value: 'no'},
+    	                                {label:'Tous', value: 'any'}
+    	                               ];
+    	
+    	var immeublesCollectionId = HB_COLLECTIONS.IMMEUBLE_ID;
+    	
+		/**
+		 *  Apply immeubleListAnyFilter
+		 */
+		var filterImmeubleElfins = function(elfins_p, search_p) {
+	    	var filteredSortedElfins = $filter('immeubleListAnyFilter')(elfins_p, search_p.text, search_p.active);
+	    	return filteredSortedElfins;
+		};    	
+    	
+        // Contains ELFINs JSON Array resulting from the GeoxmlService query   
+        $scope.immeubleElfins = null;
+        
+
+        // Note: there is no security issue regarding this information, only
+        // better end-user data selection.
+        var ger = "DOM";
+        // TODO: Find reliable way to dynamically get that information.
+        // The current code is non-deterministic due to asynchronous 
+        // ger and getImmeubles states/execution.
+//        var activeJob = hbPrintService.getActiveJob();
+//        if (activeJob) {
+//        	for (var i = 0; i < activeJob.CARACTERISTIQUE.CARSET.CAR.length; i++) { 
+//				var currCar = activeJob.CARACTERISTIQUE.CARSET.CAR[i];
+//				if (currCar.NAME = 'CREATE/UPDATE') {
+//					ger = currCar.VALEUR;
+//				}
+//			}
+//        	$log.debug(">>>> GER set to : " + ger);
+//            $log.debug("activeJob: " + angular.toJson(activeJob.CARACTERISTIQUE.CARSET));
+//        } else {
+//        	$log.debug("activeJob: CURRENTLY NULL");
+//        }
+
+        // Query all available buildings IMMEUBLE 
+        hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+ger+"']")
+	        .then(function(immeubleElfins) {
+        		$scope.immeubleElfins = immeubleElfins;
+        		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
+	        }, function(response) {
+	            var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
+	            hbAlertMessages.addAlert("danger",message);
+	        });	
+    	
+		/**
+		 * immeubleElfins result is loaded asynchronously.
+		 */
+    	$scope.$watch('immeubleElfins', function() { 
+    		if ($scope.immeubleElfins!=null) {
+				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);										
+    		}
+    	});	        
+
+    	// ==== Navigation ===========================================
+
+        /**
+         * Navigate to end user selected buildings. 
+         * Either a list, a card or stay on current page if selection is 0. 
+         */
+        $scope.listOrViewImmeuble = function() {
+        	// 
+        	if ($scope.filteredImmeubleElfins.length > 1) {
+        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE').search('search', $scope.immeubleSearch.text).search('active', $scope.immeubleSearch.active);
+        	} else if ($scope.filteredImmeubleElfins.length == 1) {
+        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE/' + $scope.filteredImmeubleElfins[0].Id);	
+        	}
+        };                
+
+        
+    	// ==== End user search and related listener ==================        
+        /** User entered IMMEUBLE search criterion */
+        $scope.immeubleSearch = { 
+        		"active" : "yes",
+        		"text" : ""
+        };
+		
+		/**
+		 * Update filtered collection when search or sorting criteria are modified. 
+		 */
+    	$scope.$watch('immeubleSearch', function(newSearch, oldSearch) {
+    		if ($scope.immeubleElfins!=null) {
+				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
+    		}
+    	}, true);								
+			
+    	// ============================================================
+        // Buildings search - end
+    	// ============================================================    	
+    	
+    	
+    	
     	
     	var AMENAGEMENT_SPORTIF_GROUPE_STADIUM = "Stade et terrain";
     	var AMENAGEMENT_SPORTIF_GROUPE_POOL = "Piscine";

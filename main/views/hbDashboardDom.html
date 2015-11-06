@@ -10,21 +10,32 @@ Droit de superficie et autre infra./ surface right
 <table class="table table-condensed table-bordered table-striped" >
 	<tbody>
 		<tr>
-			<th class="dashboard" style="width: 33%;">Immeuble{{ asStadiumElfinsLength | plural }} et terrain{{ asStadiumElfinsLength | plural }} <span class="badge">{{asStadiumElfinsLength}}</span></th>
+			<th class="dashboard" style="width: 33%;">Immeuble{{ immeubleElfins.length | plural }} <span class="badge">{{immeubleElfins.length}}</span></th>
 			<th class="dashboard" >Bâtiment{{ asPoolElfinsLength | plural }} agricole{{ asPoolElfinsLength | plural }} <span class="badge">{{asPoolElfinsLength}}</span></th>			
 			<th class="dashboard" style="width: 33%;">Bâtiment{{ asRinkElfinsLength | plural }} locatif{{ asRinkElfinsLength | plural }} <span class="badge">{{asRinkElfinsLength}}</span></th>
 		</tr>
 		<tr>
-			<td ><img ng-click="listOrViewStadium()" src="/assets/images/sds_stadium.jpeg" ng-src="/assets/images/sds_stadium.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewImmeuble()" src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img ng-click="listOrViewPool()" src="/assets/images/sds_pool.jpeg" ng-src="/assets/images/sds_pool.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img ng-click="listOrViewRink()" src="/assets/images/sds_rink.jpeg" ng-src="/assets/images/sds_rink.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>
 		<tr>
-			<th >Sélection  <span class="badge">{{filteredAsStadiumElfins.length}}</span>
+			<th >		
+				Sélection <span class="badge">{{filteredImmeubleElfins.length}}</span>
 				<div class="right">
-					<button tabindex="2" class="btn btn-primary btn-xs" ng-click="listOrViewStadium()" ng-disabled="filteredAsStadiumElfins.length < 1">
-						<span ng-show="filteredAsStadiumElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
-						<span ng-show="filteredAsStadiumElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					<div class="btn-group">	
+					<label ng-repeat="immeublesActiveState in immeublesActiveStates" for="{{immeublesActiveState.value}}">
+	     						{{immeublesActiveState.label}}
+						<input type="radio"
+							ng-value="immeublesActiveState.value"
+	            					id="{{immeublesActiveState.value}}"
+	            					name="immeubleActiveState.value" 
+							ng-model="immeubleSearch.active" >&nbsp;&nbsp;
+					</label>
+					</div>				
+					<button tabindex="2" class="btn btn-primary btn-xs" ng-click="listOrViewImmeuble()" ng-disabled="filteredImmeubleElfins.length < 1">
+						<span ng-show="filteredImmeubleElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredImmeubleElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
 					</button>
 				</div>			
 			</th>
@@ -49,7 +60,8 @@ Droit de superficie et autre infra./ surface right
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input hb-enter="listOrViewStadium()" tabindex="1" id="asStadiumSearchTextInput" name="asStadiumSearchTextInput" type="text" class="form-control" ng-model="asStadiumSearch.text" hb-no-dirty-check placeholder="">
+						<input hb-enter="listOrViewImmeuble()" tabindex="1" id="immeubleSearchTextInput" name="immeubleSearchTextInput" type="text" class="form-control" ng-model="immeubleSearch.text" hb-no-dirty-check placeholder="">
+<!-- 						<input hb-enter="listOrViewImmeuble()" tabindex="1" id="immeubleSearchActiveInput" name="immeubleSearchActiveInput" type="text" class="form-control" ng-model="immeubleSearch.active" hb-no-dirty-check placeholder=""> -->
 					</div>
 				</div>
 			</th>
