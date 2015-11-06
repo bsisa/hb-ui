@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbDashboardController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbDashboardController', ['$attrs', '$scope', 'hbQueryService', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, hbQueryService, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil) {
     
     	//$log.debug("    >>>> HbDashboardController called at " + new Date());
     	
@@ -26,11 +26,11 @@
 	    	return filteredSortedElfins;
 		};    	
     	
-        // Contains ELFINs JSON Array resulting from the GeoxmlService query   
+        // Contains ELFINs JSON Array resulting from the hbQueryService query   
         $scope.immeubleElfins = null;
         
         // Query all available buildings IMMEUBLE 
-        GeoxmlService.getCollection(immeublesCollectionId).getList()
+        hbQueryService.getImmeubles()
 	        .then(function(immeubleElfins) {
         		$scope.immeubleElfins = immeubleElfins;
         		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
@@ -100,14 +100,14 @@
 	    	return filteredSortedElfins;
 		};    	
     	
-        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        /** Contains ELFINs JSON Array resulting from the hbQueryService query */   
         $scope.uniteLocElfins = null;
 
         /** User entered IMMEUBLE search criterion */
         $scope.uniteLocSearch = { "text" : "" };             
         
         /** Query all available buildings IMMEUBLE */ 
-        GeoxmlService.getCollection(uniteLocCollectionId).getList()
+        hbQueryService.getLocationUnits()
 	        .then(function(uniteLocElfins) {
         		$scope.uniteLocElfins = uniteLocElfins;
         		$scope.filteredUniteLocElfins = filterUniteLocElfins($scope.uniteLocElfins, $scope.uniteLocSearch);
@@ -170,14 +170,14 @@
 	    	return filteredSortedElfins;
 		};    	
     	
-        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        /** Contains ELFINs JSON Array resulting from the hbQueryService query */   
         $scope.fontaineElfins = null;
 
         /** User entered FONTAINE search criterion */
         $scope.fontaineSearch = { "text" : "" };             
         
         /** Query all available fountain FONTAINE */ 
-        GeoxmlService.getCollection(fontaineCollectionId).getList()
+        hbQueryService.getFontaines()
 	        .then(function(fontaineElfins) {
         		$scope.fontaineElfins = fontaineElfins;
         		$scope.filteredFontaineElfins = filterFontaineElfins($scope.fontaineElfins, $scope.fontaineSearch);
@@ -240,14 +240,14 @@
 	    	return filteredSortedElfins;
 		};    	    	
     	
-        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        /** Contains ELFINs JSON Array resulting from the hbQueryService query */   
         $scope.wcElfins = null;
         
         /** User entered WC search criterion */
         $scope.wcSearch = { "text" : "" };                    
 
         /** Query all available WC */ 
-        GeoxmlService.getCollection(wcCollectionId).getList()
+        hbQueryService.getWcList()
 	        .then(function(wcElfins) {
         		$scope.wcElfins = wcElfins;
         		$scope.filteredWcElfins = filterWcElfins($scope.wcElfins, $scope.wcSearch);
@@ -293,11 +293,11 @@
     	// ==== Initialisation ========================================
     	var horlogeCollectionId = HB_COLLECTIONS.HORLOGE_ID;
     	
-        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        /** Contains ELFINs JSON Array resulting from the hbQueryService query */   
         $scope.horlogeElfins = null;
 
-        /** Query all available WC */ 
-        GeoxmlService.getCollection(horlogeCollectionId).getList()
+        /** Query all available Horloges */ 
+        hbQueryService.getHorlogeList()
 	        .then(function(horlogeElfins) {
         		$scope.horlogeElfins = horlogeElfins;
 	        }, function(response) {
@@ -331,11 +331,11 @@
     	// ==== Initialisation ========================================
     	var abribusCollectionId = HB_COLLECTIONS.ABRIBUS_ID;
     	
-        /** Contains ELFINs JSON Array resulting from the GeoxmlService query */   
+        /** Contains ELFINs JSON Array resulting from the hbQueryService query */   
         $scope.abribusElfins = null;
 
         /** Query all available ABRIBUS */ 
-        GeoxmlService.getCollection(abribusCollectionId).getList()
+        hbQueryService.getAbribusList()
 	        .then(function(abribusElfins) {
         		$scope.abribusElfins = abribusElfins;
 	        }, function(response) {
