@@ -21,6 +21,18 @@
 	        }			
 		};
 		
+				
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.ABRIBUS_ID` identifies collection containing ELFIN objects of CLASSE ABRIBUS.  
+		 *  @see getList
+		 */		
+		var getAbribusList = function(xpath) {
+	        return getList(HB_COLLECTIONS.ABRIBUS_ID,xpath);
+		};	
+		
+		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *   
@@ -95,6 +107,28 @@
 		 */
 		var getEquipementsSportifs = function(xpath) {
 			return getList(HB_COLLECTIONS.EQUIPEMENT_SPORTIF_ID,xpath);
+		};
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.FONTAINE_ID` identifies collection containing ELFIN objects of CLASSE FONTAINE_ID.  
+		 *  @see getList
+		 */
+		var getFontaines = function(xpath) {
+			return getList(HB_COLLECTIONS.FONTAINE_ID,xpath);
+		};	
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.HORLOGE_ID` identifies collection containing ELFIN objects of CLASSE HORLOGE.  
+		 *  @see getList
+		 */
+		var getHorlogeList = function(xpath) {
+			return getList(HB_COLLECTIONS.HORLOGE_ID,xpath);
 		};	
 
 
@@ -220,8 +254,20 @@
 			return getList(HB_COLLECTIONS.VENTILATION_ID,xpath);
 		};			
 		
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *  
+		 * `HB_COLLECTIONS.WC_ID` constant identifies collection containing ELFIN objects of CLASSE WC.
+		 *  @see getList
+		 */		
+		var getWcList = function(xpath) {
+			return getList(HB_COLLECTIONS.WC_ID,xpath);
+		};	
 	
         return {
+        	getAbribusList:getAbribusList,
         	getActors:getActors,
         	getAmenagementSportifs:getAmenagementSportifs,
         	getCiterneList:getCiterneList,
@@ -229,6 +275,8 @@
         	getContrats:getContrats,
         	getEquipementList:getEquipementList,
         	getEquipementsSportifs:getEquipementsSportifs,
+        	getFontaines:getFontaines,
+        	getHorlogeList:getHorlogeList,
         	getImmeubles:getImmeubles,
         	getInstallationsSportives:getInstallationsSportives,
         	getIntroductionElectriciteList:getIntroductionElectriciteList,
@@ -239,7 +287,8 @@
         	getRoleList:getRoleList,
         	getTransactions:getTransactions,
         	getUserList:getUserList,
-        	getVentilationList:getVentilationList
+        	getVentilationList:getVentilationList,
+        	getWcList:getWcList
         };
 
     }]);
