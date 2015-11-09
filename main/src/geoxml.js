@@ -22,16 +22,16 @@
 
 (function() {
     angular.module('geoxml', ['restangular']).factory('GeoxmlService', [
-        'Restangular', '$log', 'HB_API', function(Restangular, $log, HB_API) {
+        'Restangular', '$log', 'HB_API', '$rootScope', function(Restangular, $log, HB_API, $rootScope) {
 
         	var restGeoxml = undefined;
             var _geoxmlService = undefined;
             var currentDataManagerAccessRightsCreateUpdate = undefined;
         	
         	var setRestGeoxml = function(dataManagerAccessRightsCreateUpdate, dataManagerAccessRightsRead) {
-        		
+        		// Update GeoxmlService property by reference
         		currentDataManagerAccessRightsCreateUpdate = dataManagerAccessRightsCreateUpdate;
-        		//$log.debug("GeoxmlService: currentDataManagerAccessRightsCreateUpdate set to : " + currentDataManagerAccessRightsCreateUpdate);
+        		//$log.debug(">>>>>>>>>> GeoxmlService: currentDataManagerAccessRightsCreateUpdate set to : " + currentDataManagerAccessRightsCreateUpdate);
         		
         		restGeoxml = Restangular.withConfig(function(Configurer) {
                 	/*
@@ -56,13 +56,13 @@
                 	defaultHeadersObj[HB_API.HTTP_HEADER_DATA_MANAGER_ACCESS_RIGHTS_CREATE_UPDATE] = dataManagerAccessRightsCreateUpdate;
                 	defaultHeadersObj[HB_API.HTTP_HEADER_DATA_MANAGER_ACCESS_RIGHTS_READ] = dataManagerAccessRightsRead;
                 	
-                	
-                	
                 	Configurer.setDefaultHeaders( defaultHeadersObj );
                 	
                 });
         		
         		_geoxmlService = restGeoxml.all('');
+        		
+        		$rootScope.$emit("ACL_UPDATE", { "dataManagerAccessRightsCreateUpdate" : dataManagerAccessRightsCreateUpdate, "dataManagerAccessRightsRead" : dataManagerAccessRightsRead } );
         		
         	};
         	
