@@ -40,6 +40,7 @@ angular.module('hb5').constant('HB_COLLECTIONS', {
  * Define events names as constants
  */
 angular.module('hb5').constant('HB_EVENTS', {
+	ACL_UPDATE : "ACL_UPDATE",
 	DISPLAY_MAP_CONTENT : "hb5:display:MapContentEvent",
 	DISPLAY_MAP_VIEW : "hb5:display:MapViewEvent",
 	ELFIN_LOADED : "hb5:elfin:loadedEvent",

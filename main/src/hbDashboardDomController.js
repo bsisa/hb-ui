@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbDashboardDomController', ['$attrs', '$scope', '$rootScope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', 'hbPrintService', 'GeoxmlService', function($attrs, $scope, $rootScope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil, hbQueryService, hbPrintService, GeoxmlService) {
+    angular.module('hb5').controller('HbDashboardDomController', ['$attrs', '$scope', '$rootScope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'HB_EVENTS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', 'hbPrintService', 'GeoxmlService', function($attrs, $scope, $rootScope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, HB_EVENTS, hbAlertMessages, hbUtil, hbQueryService, hbPrintService, GeoxmlService) {
     
     	//$log.debug("    >>>> HbDashboardDomController called at " + new Date());
     	
@@ -30,12 +30,14 @@
     	var immeublesXpath = '';
 
     	// Centralises ACL update procedure
+        // Note: there is no security issue regarding this information, only
+        // better end-user data selection.
         var updateAclRelatedData = function(dataManagerAccessRightsCreateUpdate) {
         	immeublesXpath = "//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+dataManagerAccessRightsCreateUpdate+"']"
         };    	
     	
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
-        $rootScope.$on("ACL_UPDATE", function(event, acl) {
+        $rootScope.$on(HB_EVENTS.ACL_UPDATE, function(event, acl) {
         	$log.debug("Received ACL_UPDATE notification, new acl = " + angular.toJson(acl))
         	updateAclRelatedData(acl.dataManagerAccessRightsCreateUpdate);
         	updateImmeubles();
@@ -56,28 +58,6 @@
         // Contains ELFINs JSON Array resulting from the GeoxmlService query   
         $scope.immeubleElfins = null;
         
-
-        // Note: there is no security issue regarding this information, only
-        // better end-user data selection.
-        var ger = "DOM";
-        // TODO: Find reliable way to dynamically get that information.
-        
-        // The current code is non-deterministic due to asynchronous 
-        // ger and getImmeubles states/execution.
-//        var activeJob = hbPrintService.getActiveJob();
-//        if (activeJob) {
-//        	for (var i = 0; i < activeJob.CARACTERISTIQUE.CARSET.CAR.length; i++) { 
-//				var currCar = activeJob.CARACTERISTIQUE.CARSET.CAR[i];
-//				if (currCar.NAME = 'CREATE/UPDATE') {
-//					ger = currCar.VALEUR;
-//				}
-//			}
-//        	$log.debug(">>>> GER set to : " + ger);
-//            $log.debug("activeJob: " + angular.toJson(activeJob.CARACTERISTIQUE.CARSET));
-//        } else {
-//        	$log.debug("activeJob: CURRENTLY NULL");
-//        }
-
         // Query all available buildings IMMEUBLE 
         //hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+ger+"']")
         var updateImmeubles = function() {

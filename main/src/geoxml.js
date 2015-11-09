@@ -22,7 +22,7 @@
 
 (function() {
     angular.module('geoxml', ['restangular']).factory('GeoxmlService', [
-        'Restangular', '$log', 'HB_API', '$rootScope', function(Restangular, $log, HB_API, $rootScope) {
+        'Restangular', '$log', 'HB_API', 'HB_EVENTS', '$rootScope', function(Restangular, $log, HB_API, HB_EVENTS, $rootScope) {
 
         	var restGeoxml = undefined;
             var _geoxmlService = undefined;
@@ -62,7 +62,7 @@
         		
         		_geoxmlService = restGeoxml.all('');
         		
-        		$rootScope.$emit("ACL_UPDATE", { "dataManagerAccessRightsCreateUpdate" : dataManagerAccessRightsCreateUpdate, "dataManagerAccessRightsRead" : dataManagerAccessRightsRead } );
+        		$rootScope.$emit(HB_EVENTS.ACL_UPDATE, { "dataManagerAccessRightsCreateUpdate" : dataManagerAccessRightsCreateUpdate, "dataManagerAccessRightsRead" : dataManagerAccessRightsRead } );
         		
         	};
         	
