@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbDashboardDomController', ['$attrs', '$scope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', 'hbPrintService', function($attrs, $scope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil, hbQueryService, hbPrintService) {
+    angular.module('hb5').controller('HbDashboardDomController', ['$attrs', '$scope', '$rootScope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', 'hbPrintService', 'GeoxmlService', function($attrs, $scope, $rootScope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil, hbQueryService, hbPrintService, GeoxmlService) {
     
     	//$log.debug("    >>>> HbDashboardDomController called at " + new Date());
     	
@@ -11,6 +11,12 @@
     	
     	// ==== Initialisation ========================================
     	
+        /** User entered IMMEUBLE search criterion */
+        $scope.immeubleSearch = { 
+        		"active" : "yes",
+        		"text" : ""
+        };    	
+    	
     	$scope.immeublesActiveStates = [
     	                                {label:'Actifs', value: 'yes'},
     	                                {label:'Sortis', value: 'no'},
@@ -19,6 +25,26 @@
     	
     	var immeublesCollectionId = HB_COLLECTIONS.IMMEUBLE_ID;
     	
+    	
+    	//var dataManagerAccessRightsCreateUpdate = '';
+    	var immeublesXpath = '';
+
+    	// Centralises ACL update procedure
+        var updateAclRelatedData = function(dataManagerAccessRightsCreateUpdate) {
+        	immeublesXpath = "//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+dataManagerAccessRightsCreateUpdate+"']"
+        };    	
+    	
+        // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
+        $rootScope.$on("ACL_UPDATE", function(event, acl) {
+        	$log.debug("Received ACL_UPDATE notification, new acl = " + angular.toJson(acl))
+        	updateAclRelatedData(acl.dataManagerAccessRightsCreateUpdate);
+        	updateImmeubles();
+        });           	
+    	
+        // Initialisation at current controller creation
+        updateAclRelatedData(GeoxmlService.getCurrentDataManagerAccessRightsCreateUpdate());
+
+        
 		/**
 		 *  Apply immeubleListAnyFilter
 		 */
@@ -35,6 +61,7 @@
         // better end-user data selection.
         var ger = "DOM";
         // TODO: Find reliable way to dynamically get that information.
+        
         // The current code is non-deterministic due to asynchronous 
         // ger and getImmeubles states/execution.
 //        var activeJob = hbPrintService.getActiveJob();
@@ -52,14 +79,20 @@
 //        }
 
         // Query all available buildings IMMEUBLE 
-        hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+ger+"']")
-	        .then(function(immeubleElfins) {
-        		$scope.immeubleElfins = immeubleElfins;
-        		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
-	        }, function(response) {
-	            var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
-	            hbAlertMessages.addAlert("danger",message);
-	        });	
+        //hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+ger+"']")
+        var updateImmeubles = function() {
+		    hbQueryService.getImmeubles(immeublesXpath)
+		        .then(function(immeubleElfins) {
+		        	$log.debug("immeublesXpath at getImmeubles() call time = " + immeublesXpath);
+		    		$scope.immeubleElfins = immeubleElfins;
+		    		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
+		        }, function(response) {
+		            var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
+		            hbAlertMessages.addAlert("danger",message);
+		        });	
+        };
+        
+        updateImmeubles();
     	
 		/**
 		 * immeubleElfins result is loaded asynchronously.
@@ -87,11 +120,6 @@
 
         
     	// ==== End user search and related listener ==================        
-        /** User entered IMMEUBLE search criterion */
-        $scope.immeubleSearch = { 
-        		"active" : "yes",
-        		"text" : ""
-        };
 		
 		/**
 		 * Update filtered collection when search or sorting criteria are modified. 
