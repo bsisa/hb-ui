@@ -54,7 +54,7 @@
                     		} else {
                     			$location.path( '/SBAT' );
                     		}
-                    		// We want value > 0 only a controller initialisation time.
+                    		// We want value > 0 only at controller initialisation time.
                     		businessDashboardLoadWaitTimeMillisec = 0;
                     	}, businessDashboardLoadWaitTimeMillisec, true);                    	
                     	
