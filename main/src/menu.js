@@ -11,7 +11,7 @@
     };
 
     angular.module('hb5').controller('HbResetPwdController', ['$scope', '$modalInstance', '$timeout', '$log', function($scope, $modalInstance, $timeout, $log) {
-    	
+
     	$scope.model = {
     			pwd1: "",
     			pwd2: ""
@@ -96,7 +96,7 @@
     angular.module('hb5').controller('MenuController', [
         '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS', 'userDetails','hbPrintService',
         function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS, userDetails, hbPrintService) {
-
+        	
       	// Force service initialisation 
         // Check $$activeConfiguration watch for actual initialisation).
        	userDetails.getAbbreviation;
@@ -712,6 +712,13 @@
         	$scope.activeJob = job;
             hbPrintService.setActiveJob($scope.activeJob);
 
+        	// Expose hbUtil in scope for access by expressions in menu.html view.
+//        	$scope.hbUtil = hbUtil;
+//        	
+        	$scope.activeJobCreateUpdateACL = hbUtil.getCARByPos(job, 1).VALEUR;
+        	$log.debug(">>>>>> activeJobCreateUpdateACL = " + angular.toJson($scope.activeJobCreateUpdateACL));            
+            
+            
             // Check if data manager rights are defined for this job/business  
             if ($scope.activeJob['CARACTERISTIQUE'].hasOwnProperty('CARSET')) {
             	if ($scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'].length > 0) {

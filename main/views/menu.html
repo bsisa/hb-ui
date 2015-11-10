@@ -8,8 +8,9 @@
 		 -->
 <!-- 		<ul class="nav navbar-nav navbar-left" > -->
 	    <li class="search-wrapper">	    
-			<div ng-if="!(activeJob.IDENTIFIANT.NOM === 'Service des sports')" hb-search ></div>
-			<div ng-if="(activeJob.IDENTIFIANT.NOM === 'Service des sports')" hb-search-sds></div>
+			<div ng-if="!(activeJobCreateUpdateACL === 'SDS' || activeJobCreateUpdateACL === 'DOM')" hb-search ></div>
+			<div ng-if="(activeJobCreateUpdateACL === 'SDS')" hb-search-sds></div>
+			<div ng-if="(activeJobCreateUpdateACL === 'DOM')" hb-search-dom></div>
 	    </li>
 
 		<li hb-dropdown-menu-items="menuItems.maps.elements" hb-dropdown-menu-label="menuItems.maps.label" hb-dropdown-menu-icon-class="icon-map-marker" hb-dropdown-menu />
