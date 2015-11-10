@@ -37,7 +37,7 @@
         var updateImmeubles = function() {
 		    hbQueryService.getImmeubles(immeublesXpath)
 		        .then(function(immeubleElfins) {
-		        	$log.debug("immeublesXpath at getImmeubles() call time = " + immeublesXpath);
+		        	//$log.debug("immeublesXpath at getImmeubles() call time = " + immeublesXpath);
 		    		$scope.immeubleElfins = immeubleElfins;
 		        }, function(response) {
 		            var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";

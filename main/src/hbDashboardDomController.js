@@ -35,7 +35,7 @@
     	
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
         var aclUpdateRootscopeListenerUnregister = $rootScope.$on(HB_EVENTS.ACL_UPDATE, function(event, acl) {
-        	$log.debug("HbDashboardDomController: Received ACL_UPDATE notification, new acl = " + angular.toJson(acl))
+        	//$log.debug("HbDashboardDomController: Received ACL_UPDATE notification, new acl = " + angular.toJson(acl))
         	updateAclRelatedData(acl.dataManagerAccessRightsCreateUpdate);
         	updateImmeubles();
         });           	
@@ -60,7 +60,7 @@
         var updateImmeubles = function() {
 		    hbQueryService.getImmeubles(immeublesXpath)
 		        .then(function(immeubleElfins) {
-		        	$log.debug("immeublesXpath at getImmeubles() call time = " + immeublesXpath);
+		        	//$log.debug("immeublesXpath at getImmeubles() call time = " + immeublesXpath);
 		    		$scope.immeubleElfins = immeubleElfins;
 		    		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
 		        }, function(response) {
