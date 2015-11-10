@@ -2,7 +2,7 @@
 
     angular.module('hb5').controller('HbSearchDomController', ['$scope', '$rootScope', 'GeoxmlService', '$log', '$filter', '$location', 'HB_COLLECTIONS', 'HB_EVENTS', 'hbAlertMessages', 'hbQueryService', function($scope, $rootScope, GeoxmlService, $log, $filter, $location, HB_COLLECTIONS, HB_EVENTS, hbAlertMessages, hbQueryService) {
     
-    	$log.debug("    >>>> HbSearchDomController called at " + new Date());
+    	//$log.debug("    >>>> HbSearchDomController called at " + new Date());
     	
     	// ============================================================
     	// Buildings Section - IMMEUBLE
@@ -50,7 +50,7 @@
         
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
         var aclUpdateRootscopeListenerUnregister = $rootScope.$on(HB_EVENTS.ACL_UPDATE, function(event, acl) {
-        	$log.debug("HbSearchDomController: Received ACL_UPDATE notification, new acl = " + angular.toJson(acl))
+        	//$log.debug("HbSearchDomController: Received ACL_UPDATE notification, new acl = " + angular.toJson(acl))
         	updateAclRelatedData(acl.dataManagerAccessRightsCreateUpdate);
         	updateImmeubles();
         });           	
