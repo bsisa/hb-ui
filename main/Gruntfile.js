@@ -126,6 +126,9 @@ module.exports = function(grunt) {
 								'src/hbSearchController.js',
 								'src/hbSearchDirective.js',
 
+								'src/hbSearchDomController.js',
+								'src/hbSearchDomDirective.js',
+								
 								'src/hbSearchSdsController.js',
 								'src/hbSearchSdsDirective.js',
 								
