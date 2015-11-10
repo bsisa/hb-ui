@@ -584,7 +584,8 @@
          * That there is no more current elfin displayed
          */
         $scope.$on('$destroy', function() {
-            //$log.debug('Current elfin card closed (controller $destroy) for $location.url = ' + $location.url());
+        	
+            $log.debug('Current elfin card closed (controller $destroy) for $location.url = ' + $location.url());
         	
             // Get elfin will fail if: 
         	// 1) In create mode the elfin instance does not yet exist in the database 
@@ -600,8 +601,8 @@
 	            });
             }
             
-            // TODO: To evaluate 
-            // elfinUpdatedListenerUnregister();
+            // Unregister $rootScope listener to prevent memory leak
+            elfinUpdatedListenerUnregister();
         });
 
 
@@ -609,9 +610,7 @@
          * React to elfin update done elsewhere than through the current controller, 
          * for instance via the map.
          */
-        // TODO: To evaluate 
-        // var elfinUpdatedListenerUnregister = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
-        $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
+        var elfinUpdatedListenerUnregister = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
 
             /**
              * We must not update elfinForm state and elfin when the event was 
