@@ -398,9 +398,9 @@
 		return function (immeubles, searchtext, active) {
 
 			if (active) {
-				$log.debug("immeubleListAnyFilter, active = " + active);
+				//$log.debug("immeubleListAnyFilter, active = " + active);
 			} else {
-				$log.debug("immeubleListAnyFilter, active = UNDEFINED");
+				//$log.debug("immeubleListAnyFilter, active = UNDEFINED");
 			}
 			
 			var checkAnyField = function(immeuble,searchtext) {
