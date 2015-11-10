@@ -373,6 +373,7 @@
                     	 icontains(immeublePlace.VALEUR, predicate.place) &&
                     	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
                     	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address) &&
+                    	 icontains(immeuble.IDENTIFIANT.GER, predicate.GER) &&
                     	 ( 
                     			 predicate.active === "yes" && immeubleIsActive(immeuble) || 
                     			 predicate.active === "no" && !immeubleIsActive(immeuble) || 

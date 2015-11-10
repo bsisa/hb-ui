@@ -16,7 +16,8 @@
     			"place" : "",
     			"buildingNb" : "",
     			"address" : "",
-    			"text" : ""
+    			"text" : "",
+    			"GER" :""
     	};
 
     	// Initialise general search text with search request parameter if defined.
@@ -28,7 +29,12 @@
     	// Support for including/excluding retired buildings.
     	if ($routeParams.active) {
     		$scope.search.active = $routeParams.active; 
-    	}    	
+    	}
+    	
+    	// Support for GER restriction
+    	if ($routeParams.GER) {
+    		$scope.search.GER = $routeParams.GER; 
+    	}    	    	
     	
     	// Support for IMMEUBLE selection
     	if ($routeParams.source) {
@@ -77,7 +83,25 @@
 		 */
     	$scope.$watch('elfins', function() { 
     		if ($scope.elfins!=null) {
-				$scope.filteredElfins = filterSortElfins($scope.elfins, $scope.search, $scope.predicate, $scope.reverse);										
+				$scope.filteredElfins = filterSortElfins($scope.elfins, $scope.search, $scope.predicate, $scope.reverse);
+				// If GER restriction applies, override elfinsCount parent scope variable with local computed count.
+				if ($scope.search.GER !== "") {
+					//$log.debug(">>>>>> RECOMPUTING elfinsCount <<<<<<");
+					var gerSearch = {
+			    			"active" : "any",
+			    			"owner" : "",
+			    			"registerNb" : "",
+			    			"place" : "",
+			    			"buildingNb" : "",
+			    			"address" : "",
+			    			"text" : "",
+			    			"GER" : $scope.search.GER
+			    	};
+					var gerSearchFilteredElfins = $filter('immeubleListFilter')($scope.elfins, gerSearch);
+					$scope.elfinsCount = gerSearchFilteredElfins.length;
+				} else {
+					//$log.debug(">>>>>> ORIGINAL elfinsCount <<<<<<");
+				}
     		} else {
     			//$log.debug(">>>>> HbImmeubleListController elfins NOT YET LOADED <<<<<");
     		}
@@ -90,7 +114,8 @@
 			$('#globalSearchField').focus();	
 		};        
 		$timeout(focusOnSearchField, 250, false);    	
-    	
+
+		
     }]);
 
 

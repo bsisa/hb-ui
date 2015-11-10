@@ -11,6 +11,8 @@
     	// ==== Initialisation ========================================
     	var immeublesCollectionId = HB_COLLECTIONS.IMMEUBLE_ID;
     	var immeublesXpath = '';
+        /** User entered IMMEUBLE search criterion */
+        $scope.immeubleSearch = { "text" : "" , "GER" : ""};
         $scope.immeubleElfins = null;
 
     	// Centralises ACL update procedure
@@ -18,6 +20,7 @@
         // better end-user data selection.
         var updateAclRelatedData = function(dataManagerAccessRightsCreateUpdate) {
         	immeublesXpath = "//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+dataManagerAccessRightsCreateUpdate+"']"
+        	$scope.immeubleSearch.GER = dataManagerAccessRightsCreateUpdate;
         };    	
 
         // Initialisation at current controller creation
@@ -75,7 +78,9 @@
     		// Clean up any former irrelevant sticky search parameter such as ?xpath=...
     		$location.search({}); 
         	if ($scope.filteredImmeubleElfins.length > 1) {
-        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE').search('search', $scope.immeubleSearch.text);
+        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE')
+        			.search('search', $scope.immeubleSearch.text)
+        			.search('GER', $scope.immeubleSearch.GER);;
         	} else if ($scope.filteredImmeubleElfins.length == 1) {
         		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE/' + $scope.filteredImmeubleElfins[0].Id);	
         	}
@@ -83,8 +88,6 @@
 
         
     	// ==== End user search and related listener ==================        
-        /** User entered IMMEUBLE search criterion */
-        $scope.immeubleSearch = { "text" : "" };
 		
 		/**
 		 * Update filtered collection when search or sorting criteria are modified. 

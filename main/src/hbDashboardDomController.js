@@ -14,7 +14,8 @@
         /** User entered IMMEUBLE search criterion */
         $scope.immeubleSearch = { 
         		"active" : "yes",
-        		"text" : ""
+        		"text" : "",
+        		"GER" : ""
         };    	
     	
     	$scope.immeublesActiveStates = [
@@ -31,6 +32,7 @@
         // better end-user data selection.
         var updateAclRelatedData = function(dataManagerAccessRightsCreateUpdate) {
         	immeublesXpath = "//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+dataManagerAccessRightsCreateUpdate+"']"
+        	$scope.immeubleSearch.GER = dataManagerAccessRightsCreateUpdate;
         };    	
     	
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
@@ -89,7 +91,10 @@
         $scope.listOrViewImmeuble = function() {
         	// 
         	if ($scope.filteredImmeubleElfins.length > 1) {
-        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE').search('search', $scope.immeubleSearch.text).search('active', $scope.immeubleSearch.active);
+        		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE')
+        			.search('search', $scope.immeubleSearch.text)
+        			.search('active', $scope.immeubleSearch.active)
+        			.search('GER', $scope.immeubleSearch.GER);
         	} else if ($scope.filteredImmeubleElfins.length == 1) {
         		$location.path('/elfin/'+immeublesCollectionId+'/IMMEUBLE/' + $scope.filteredImmeubleElfins[0].Id);	
         	}
