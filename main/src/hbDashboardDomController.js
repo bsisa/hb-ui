@@ -24,9 +24,6 @@
     	                               ];
     	
     	var immeublesCollectionId = HB_COLLECTIONS.IMMEUBLE_ID;
-    	
-    	
-    	//var dataManagerAccessRightsCreateUpdate = '';
     	var immeublesXpath = '';
 
     	// Centralises ACL update procedure
@@ -37,8 +34,8 @@
         };    	
     	
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
-        $rootScope.$on(HB_EVENTS.ACL_UPDATE, function(event, acl) {
-        	$log.debug("Received ACL_UPDATE notification, new acl = " + angular.toJson(acl))
+        var aclUpdateRootscopeListenerUnregister = $rootScope.$on(HB_EVENTS.ACL_UPDATE, function(event, acl) {
+        	$log.debug("HbDashboardDomController: Received ACL_UPDATE notification, new acl = " + angular.toJson(acl))
         	updateAclRelatedData(acl.dataManagerAccessRightsCreateUpdate);
         	updateImmeubles();
         });           	
@@ -422,6 +419,16 @@
 		// Focus needs delay otherwise it fails finding the field 
 		$timeout(focusOnSearchField, 250, false);    	
     	
+		
+		
+        /**
+         * Clean up rootScope listeners explicitely (required). 
+         */
+        $scope.$on('$destroy', function(event, data){
+        	aclUpdateRootscopeListenerUnregister();
+        });
+		
+		
     	
     }]);
 
