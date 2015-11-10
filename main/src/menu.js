@@ -715,12 +715,14 @@
         	// Expose hbUtil in scope for access by expressions in menu.html view.
 //        	$scope.hbUtil = hbUtil;
 //        	
-        	$scope.activeJobCreateUpdateACL = hbUtil.getCARByPos(job, 1).VALEUR;
-        	$log.debug(">>>>>> activeJobCreateUpdateACL = " + angular.toJson($scope.activeJobCreateUpdateACL));            
-            
+        	$scope.activeJobCreateUpdateACL = "";
             
             // Check if data manager rights are defined for this job/business  
             if ($scope.activeJob['CARACTERISTIQUE'].hasOwnProperty('CARSET')) {
+            	
+            	$scope.activeJobCreateUpdateACL = hbUtil.getCARByPos(job, 1).VALEUR;
+            	//$log.debug(">>>>>> activeJobCreateUpdateACL = " + angular.toJson($scope.activeJobCreateUpdateACL));            	
+            	
             	if ($scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'].length > 0) {
                     var jobCarsetCar = $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'];
                     reorderArrayByPOS(jobCarsetCar);
