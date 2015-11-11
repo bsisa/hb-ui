@@ -24,6 +24,7 @@
     	                                {label:'Tous', value: 'any'}
     	                               ];
     	
+    	
     	var immeublesCollectionId = HB_COLLECTIONS.IMMEUBLE_ID;
     	var immeublesXpath = '';
 
@@ -60,15 +61,48 @@
         // Query all available buildings IMMEUBLE 
         //hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+ger+"']")
         var updateImmeubles = function() {
-		    hbQueryService.getImmeubles(immeublesXpath)
-		        .then(function(immeubleElfins) {
-		        	//$log.debug("immeublesXpath at getImmeubles() call time = " + immeublesXpath);
-		    		$scope.immeubleElfins = immeubleElfins;
+
+        	hbQueryService.getAugmentedImmeubles(immeublesXpath)
+        		.then(function(augmentedImmeubles) {
+					$scope.immeubleElfins = augmentedImmeubles;
 		    		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
-		        }, function(response) {
-		            var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
+        		}, function(message) {
 		            hbAlertMessages.addAlert("danger",message);
 		        });	
+        	
+//		    hbQueryService.getImmeubles(immeublesXpath)
+//		        .then(function(immeubleElfins) {
+//		        	// Get all current year PRESTATIONs at once (most efficient)
+//		        	var currentYear = moment().year();
+//		        	var prestationsXpath = "//ELFIN[@CLASSE='PRESTATION' and IDENTIFIANT/DE='"+currentYear+"']";
+//		        	hbQueryService.getPrestations(prestationsXpath).then(function(prestationElfins) {
+//						var augmentedImmeubles = new Array();
+//						for (var i = 0; i < immeubleElfins.length; i++) {
+//							var currImmeuble = immeubleElfins[i];
+//							var xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION' and PARTENAIRE/PROPRIETAIRE/@NOM='"+currImmeuble.PARTENAIRE.PROPRIETAIRE.NOM+"' and IDENTIFIANT/DE='"+currentYear+"'][substring-before(IDENTIFIANT/OBJECTIF,'.')='"+currImmeuble.IDENTIFIANT.OBJECTIF+"']";				
+//							// Perform PRESTATION query work
+//							var currPrestation = _.find(prestationElfins, function(prestaElfin){ 
+//								return ( 
+//										prestaElfin.PARTENAIRE.PROPRIETAIRE.NOM === currImmeuble.PARTENAIRE.PROPRIETAIRE.NOM && 
+//										prestaElfin.IDENTIFIANT.OBJECTIF.substr(0, prestaElfin.IDENTIFIANT.OBJECTIF.indexOf('.')) === 
+//											currImmeuble.IDENTIFIANT.OBJECTIF ) });
+//							
+//							if (angular.isDefined(currPrestation)) {
+//								currImmeuble.GROUPE_COMPTABLE = currPrestation.IDENTIFIANT.ORIGINE;
+//							}
+//							augmentedImmeubles.push(currImmeuble);
+//						}		        		
+//						$scope.immeubleElfins = augmentedImmeubles;
+//			    		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);		        		
+//		        	}, function(response) {
+//			            var message = "Le chargement des prestations a échoué (statut de retour: " + response.status + ")";
+//			            hbAlertMessages.addAlert("danger",message);
+//			        });	
+//		        	
+//		        }, function(response) {
+//		            var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
+//		            hbAlertMessages.addAlert("danger",message);
+//		        });	
         };
         
         updateImmeubles();
@@ -80,7 +114,7 @@
     		if ($scope.immeubleElfins!=null) {
 				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);										
     		}
-    	});	        
+    	}, true);        
 
     	// ==== Navigation ===========================================
 

@@ -374,6 +374,7 @@
                     	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
                     	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address) &&
                     	 icontains(immeuble.IDENTIFIANT.GER, predicate.GER) &&
+                    	 icontains(immeuble.GROUPE_COMPTABLE, predicate.GROUPE_COMPTABLE) && 
                     	 ( 
                     			 predicate.active === "yes" && immeubleIsActive(immeuble) || 
                     			 predicate.active === "no" && !immeubleIsActive(immeuble) || 
@@ -413,13 +414,21 @@
 					//icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
 					icontains(immeublePlace.VALEUR, searchtext) ||
 //					icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
-					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext)   
+					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext) ||
+					icontains(immeuble.GROUPE_COMPTABLE, searchtext)
 				);		
 			};			
 
 	        if (!angular.isUndefined(immeubles) && !angular.isUndefined(searchtext)) {
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
+	            	
+	            	if (immeuble.GROUPE_COMPTABLE) {
+	            		$log.debug("IMM " + immeuble.IDENTIFIANT.OBJECTIF + " - GROUPE_COMPTABLE = " + immeuble.GROUPE_COMPTABLE);
+	            	} else {
+	            		$log.debug("IMM " + immeuble.IDENTIFIANT.OBJECTIF + " - NO GROUPE_COMPTABLE");
+	            	}
+	            	
                     if ( checkAndForTokenisedSearchText(immeuble,searchtext,checkAnyField) ) {
                     	if ( !angular.isUndefined(active) ) {
                     		if ( active === "any" || 

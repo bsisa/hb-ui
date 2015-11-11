@@ -30,13 +30,13 @@
         $scope.immeubleElfins = null;
         
         // Query all available buildings IMMEUBLE 
-        hbQueryService.getImmeubles()
+        hbQueryService.getAugmentedImmeubles()
 	        .then(function(immeubleElfins) {
         		$scope.immeubleElfins = immeubleElfins;
         		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
 	        }, function(response) {
-	            var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
-	            hbAlertMessages.addAlert("danger",message);
+	            //var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
+	            hbAlertMessages.addAlert("danger",response);
 	        });	
     	
 		/**
