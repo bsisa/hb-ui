@@ -292,8 +292,12 @@
 												            var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='"+currPrestation.IDENTIFIANT.OBJECTIF+"']";
 												            hbQueryService.getTransactions(xpathForTransactions)
 																.then(function(transactionElfins) {
-																	var transactionElfinsMap = $filter('map')(transactionElfins,'IDENTIFIANT.VALEUR');
-																	var transactionElfinsSum = $filter('sum')(transactionElfinsMap);
+																	// Kept following filter use as reminder for controller side usage. 
+																	// var transactionElfinsMap = $filter('map')(transactionElfins,'IDENTIFIANT.VALEUR');
+																	// var transactionElfinsSum = $filter('sum')(transactionElfinsMap);
+																	// Currently the exact same computation is performed in hbImmeubleCard.html view as:
+																	// {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
+
 																	// Manualy flatten $scope.transactions 
 																	for (var j = 0; j < transactionElfins.length; j++) {
 																		var currTrans = transactionElfins[j];
