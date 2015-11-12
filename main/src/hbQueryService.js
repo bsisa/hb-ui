@@ -329,6 +329,15 @@
 			return getList(HB_COLLECTIONS.WC_ID,xpath);
 		};	
 	
+		/**
+		 * Get PRESTATION distinct accounting groups for the current year
+		 */
+		var getJsonAccountingGroups = function() {
+			return GeoxmlService.getXqueryResult("jsonPrestationAccountingGroups.xq").get();
+		};	
+		
+		
+		
         return {
         	getAbribusList:getAbribusList,
         	getActors:getActors,
@@ -352,7 +361,8 @@
         	getTransactions:getTransactions,
         	getUserList:getUserList,
         	getVentilationList:getVentilationList,
-        	getWcList:getWcList
+        	getWcList:getWcList,
+        	getJsonAccountingGroups:getJsonAccountingGroups
         };
 
     }]);
