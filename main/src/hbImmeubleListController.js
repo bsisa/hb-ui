@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbImmeubleListController', ['$attrs', '$scope', 'GeoxmlService', '$routeParams', '$log', '$filter', '$timeout', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, $routeParams, $log, $filter, $timeout, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbImmeubleListController', ['$attrs', '$scope', 'GeoxmlService', 'hbQueryService', '$routeParams', '$log', '$filter', '$timeout', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, GeoxmlService, hbQueryService, $routeParams, $log, $filter, $timeout, hbAlertMessages, hbUtil) {
     
     	//$log.debug("    >>>> HbImmeubleListController called...");
     	
@@ -17,7 +17,8 @@
     			"buildingNb" : "",
     			"address" : "",
     			"text" : "",
-    			"GER" :""
+    			"GER" :"",
+    			"GROUPE_COMPTABLE" : ""
     	};
 
     	// Initialise general search text with search request parameter if defined.
@@ -41,6 +42,19 @@
     		$scope.source = $routeParams.source
     		$log.debug("$scope.source = " + $scope.source);
     	}
+    	
+    	
+    	// Init distinct PRESTATION groupe comptable
+    	$scope.accountingGroups = new Array();
+
+		hbQueryService.getJsonAccountingGroups().then(function(jsonAccountingGroups) {
+			$scope.accountingGroups = jsonAccountingGroups.choices;
+		}, function(response) {
+        	var errorMessage = "Error with status code " + response.status + " while getting JSON accountingGroups.";
+        	$log.error(errorMessage);
+        	hbAlertMessages.addAlert("danger","Les groupes comptables n'ont pu être obtenus.");
+        });    	
+    	
     	
 
     	/**
