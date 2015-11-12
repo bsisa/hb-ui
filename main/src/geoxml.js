@@ -123,6 +123,9 @@
                 getWhoAmI: function() {
                     return _geoxmlService.one("whoami");
                 },
+                getXqueryResult: function(xqueryFilename) {
+                    return _geoxmlService.one("xquery/"+xqueryFilename);
+                },
                 getCollections: function() {
                 	//TODO: To check, this should certainly be:
                 	// return _geoxmlService;
