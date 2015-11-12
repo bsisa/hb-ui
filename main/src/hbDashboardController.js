@@ -18,6 +18,19 @@
     	
     	var immeublesCollectionId = HB_COLLECTIONS.IMMEUBLE_ID;
     	
+    	
+    	// Init distinct PRESTATION groupe comptable
+    	$scope.accountingGroups = new Array();
+
+		hbQueryService.getJsonAccountingGroups().then(function(jsonAccountingGroups) {
+			$scope.accountingGroups = jsonAccountingGroups.choices;
+		}, function(response) {
+        	var errorMessage = "Error with status code " + response.status + " while getting JSON accountingGroups.";
+        	$log.error(errorMessage);
+        	hbAlertMessages.addAlert("danger","Les groupes comptables n'ont pu être obtenus.");
+        });						
+
+    	
 		/**
 		 *  Apply immeubleListAnyFilter
 		 */
@@ -68,7 +81,8 @@
         /** User entered IMMEUBLE search criterion */
         $scope.immeubleSearch = { 
         		"active" : "yes",
-        		"text" : ""
+        		"text" : "",
+        		"GROUPE_COMPTABLE" : ""
         };
 		
 		/**
