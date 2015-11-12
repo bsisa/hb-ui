@@ -21,6 +21,14 @@
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.owner" hb-no-dirty-check placeholder="">
 					</div>
+					
+						<div class="form-group ">
+							<label for="groupe" class="col-lg-3 col-md-2 control-label">Groupe comptable</label>
+							<div class="col-lg-9 col-md-10">
+								<div hb-single-select hb-single-select-options="accountingGroups" ng-model="search.GROUPE_COMPTABLE" ></div>
+							</div>
+						</div>							
+					
 				</div>
 			</th>
 			<th class="col-sm-1">
