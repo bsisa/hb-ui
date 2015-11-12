@@ -355,10 +355,10 @@
         
         
         /**
-         * Display JSON data for 'elfin' - Only allowed to 'admin' users
+         * Display JSON data for 'elfin' - Only allowed to 'dev' users
          */
         $scope.displayJson = function (elfin) {
-        	if (_.contains(userDetails.getRoles(),HB_ROLE_FONCTION.ADMIN)) {
+        	if ($scope.devRights) {
 	        	var apiCallForJs = "/api/melfin/"+elfin.ID_G+"/"+elfin.Id+"?format=json-pretty";
 	        	$window.open(apiCallForJs, "Javascript format");
         	}
@@ -366,10 +366,10 @@
         };
 
         /**
-         * Display XML data for 'elfin' - Only allowed to 'admin' users
+         * Display XML data for 'elfin' - Only allowed to 'dev' users
          */
         $scope.displayXml = function (elfin) {
-        	if (_.contains(userDetails.getRoles(),HB_ROLE_FONCTION.ADMIN)) {
+        	if ($scope.devRights) {
 	        	var apiCallForXml = "/api/melfin/"+elfin.ID_G+"/"+elfin.Id+"?format=xml";
 	        	$window.open(apiCallForXml, "Javascript format");
         	}
