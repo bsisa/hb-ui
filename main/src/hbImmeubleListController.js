@@ -4,6 +4,8 @@
     
     	//$log.debug("    >>>> HbImmeubleListController called...");
     	
+    	$scope.emptyAccountingGroup = {name: "TOUS", value: ""};
+
     	// Default order is by "Building management" 
     	$scope.predicate = 'IDENTIFIANT.OBJECTIF';
     	$scope.reverse = false;
