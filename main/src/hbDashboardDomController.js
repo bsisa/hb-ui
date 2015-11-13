@@ -17,6 +17,12 @@
         		"text" : "",
         		"GER" : ""
         };    	
+        
+        $scope.immeubleTerrainDdpSearch = { 
+        		"active" : $scope.immeubleSearch.active,
+        		"text" : "",
+        		"GER" : ""
+        };    	
     	
     	$scope.immeublesActiveStates = [
     	                                {label:'Actifs', value: 'yes'},
@@ -34,6 +40,7 @@
         var updateAclRelatedData = function(dataManagerAccessRightsCreateUpdate) {
         	immeublesXpath = "//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+dataManagerAccessRightsCreateUpdate+"']"
         	$scope.immeubleSearch.GER = dataManagerAccessRightsCreateUpdate;
+        	$scope.immeubleTerrainDdpSearch.GER = dataManagerAccessRightsCreateUpdate;
         };    	
     	
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
@@ -66,6 +73,9 @@
         		.then(function(augmentedImmeubles) {
 					$scope.immeubleElfins = augmentedImmeubles;
 		    		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
+		    		
+		    		refreshFilteredImmeubleTerrainDdpElfins();
+		    		
         		}, function(message) {
 		            hbAlertMessages.addAlert("danger",message);
 		        });	
@@ -78,7 +88,15 @@
 		 */
     	$scope.$watch('immeubleElfins', function() { 
     		if ($scope.immeubleElfins!=null) {
-				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);										
+				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);		
+				
+	   			// Initialise AMENAGEMENT_SPORTIF per GROUPE without filtering.
+    			$scope.immeubleTerrainDdpElfinsLength = filterImmeubleTerrainDdpElfins($scope.immeubleElfins).length;
+    			$log.debug("$scope.immeubleTerrainDdpElfinsLength = " + $scope.immeubleTerrainDdpElfinsLength);
+
+    			// Refresh IMMEUBLE per GROUPE_COMPTABLE with filtering.
+        		refreshFilteredImmeubleTerrainDdpElfins();				
+				
     		}
     	}, true);        
 
@@ -109,6 +127,9 @@
     	$scope.$watch('immeubleSearch', function(newSearch, oldSearch) {
     		if ($scope.immeubleElfins!=null) {
 				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
+				$log.debug("$scope.filteredImmeubleElfins.length = " + $scope.filteredImmeubleElfins.length);
+ 
+				
     		}
     	}, true);								
 			
@@ -119,7 +140,8 @@
     	
     	
     	
-    	var AMENAGEMENT_SPORTIF_GROUPE_STADIUM = "Stade et terrain";
+    	var IMMEUBLE_GC_TERRAIN_DDP = "Terrains – D.D.P."
+    	
     	var AMENAGEMENT_SPORTIF_GROUPE_POOL = "Piscine";
     	var AMENAGEMENT_SPORTIF_GROUPE_RINK = "Patinoire";
     	var AMENAGEMENT_SPORTIF_GROUPE_HALL = "Salle";
@@ -141,10 +163,19 @@
 		};    	
 		
 		/**
-		 *  Apply amenagementSportifListFilter with predefined group parameter 'Stadium'
+		 *  Apply immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
 		 */
-		var filterAmenagementSportifStadiumElfins = function(elfins_p) {
-	    	var filteredSortedElfins = $filter('amenagementSportifListFilter')(elfins_p, { "group" : AMENAGEMENT_SPORTIF_GROUPE_STADIUM } );
+		var filterImmeubleTerrainDdpElfins = function(elfins_p) {
+			$log.debug("filterImmeubleTerrainDdpElfins >>>> elfins_p.length = " + elfins_p.length);
+	    	var filteredSortedElfins = $filter('immeubleListFilter')(elfins_p, $scope.immeubleTerrainDdpSearch);
+	    	
+//    		{
+//    			"active" : $scope.immeubleSearch.active,
+//    			"GROUPE_COMPTABLE" : IMMEUBLE_GC_TERRAIN_DDP,
+//    			"GER" : $scope.immeubleSearch.GER
+//    		}	    	
+	    	
+	    	$log.debug("filterImmeubleTerrainDdpElfins >>>> filteredSortedElfins.length = " + filteredSortedElfins.length);
 	    	return filteredSortedElfins;
 		};
 		
@@ -199,7 +230,7 @@
 	        	$scope.asElfins = asElfins;
         		// Here above asElfins is a promise an might not be fully loaded 
 	        	// when hereafter calls are performed. Reason for asElfins $watch.
-        		refreshFilteredAsStadiumElfins();
+        		//refreshFilteredImmeubleTerrainDdpElfins();
         		refreshFilteredAsPoolElfins();
         		refreshFilteredAsRinkElfins();
         		refreshFilteredAsHallElfins();
@@ -218,7 +249,7 @@
     		if ($scope.asElfins!=null) {
     			
     			// Initialise AMENAGEMENT_SPORTIF per GROUPE without filtering.
-    			$scope.asStadiumElfinsLength = filterAmenagementSportifStadiumElfins($scope.asElfins).length;
+    			//$scope.asStadiumElfinsLength = filterImmeubleTerrainDdpElfins($scope.asElfins).length;
     			$scope.asPoolElfinsLength = filterAmenagementSportifPoolElfins($scope.asElfins).length;
     			$scope.asRinkElfinsLength = filterAmenagementSportifRinkElfins($scope.asElfins).length;
     			$scope.asHallElfinsLength = filterAmenagementSportifHallElfins($scope.asElfins).length;
@@ -226,7 +257,7 @@
     			$scope.asSurfaceRightElfinsLength = filterAmenagementSportifSurfaceRightElfins($scope.asElfins).length;
     			
     			// Refresh AMENAGEMENT_SPORTIF per GROUPE with filtering.
-        		refreshFilteredAsStadiumElfins();
+        		//refreshFilteredImmeubleTerrainDdpElfins();
         		refreshFilteredAsPoolElfins();
         		refreshFilteredAsRinkElfins();
         		refreshFilteredAsHallElfins();
@@ -238,16 +269,27 @@
     	// ==== Navigation ===========================================
 
         /**
-         * Navigate to end user selected stadium 
+         * Navigate to end user selected IMMEUBLE_GC_TERRAIN_DDP 
          * Either a list, a card or stay on current page if selection is 0. 
          */
-        $scope.listOrViewStadium = function() {
+        $scope.listOrViewTerrainDdp = function() {
         	
-        	if ($scope.filteredAsStadiumElfins.length > 1) {
-        		var searchObj = { 'search' : $scope.asStadiumSearch.text, 'group' : AMENAGEMENT_SPORTIF_GROUPE_STADIUM};
-        		$location.path('/elfin/'+HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID+'/AMENAGEMENT_SPORTIF').search(searchObj);
-        	} else if ($scope.filteredAsStadiumElfins.length == 1) {
-        		$location.path('/elfin/'+HB_COLLECTIONS.AMENAGEMENT_SPORTIF_ID+'/AMENAGEMENT_SPORTIF/' + $scope.filteredAsStadiumElfins[0].Id);	
+        	if ($scope.immeubleTerrainDdpElfins.length > 1) {
+        		//var searchObj = { 'search' : $scope.immeubleTerrainDdpSearch.text, 'GROUPE_COMPTABLE' : IMMEUBLE_GC_TERRAIN_DDP};
+        		$location.path('/elfin/'+HB_COLLECTIONS.IMMEUBLE_ID+'/IMMEUBLE')
+        			.search('search', $scope.immeubleTerrainDdpSearch.text)
+        			.search('active', $scope.immeubleTerrainDdpSearch.active)
+        			.search('GER', $scope.immeubleTerrainDdpSearch.GER);
+
+        		
+        		
+//        		.search('search', $scope.immeubleSearch.text)
+//    			.search('active', $scope.immeubleSearch.active)
+//    			.search('GER', $scope.immeubleSearch.GER);        		
+        		
+        		
+        	} else if ($scope.immeubleTerrainDdpElfins.length == 1) {
+        		$location.path('/elfin/'+HB_COLLECTIONS.IMMEUBLE_ID+'/IMMEUBLE/' + $scope.immeubleTerrainDdpElfins[0].Id);	
         	}
         };
         
@@ -324,7 +366,8 @@
         
     	// ==== End user search and related listener ==================        
         /** User entered AMENAGEMENT_SPORTIF search criterion */
-        $scope.asStadiumSearch = { "text" : "" };
+        $scope.immeubleTerrainDdpSearch = { "text" : "" };        
+        //$scope.asStadiumSearch = { "text" : "" };
         $scope.asPoolSearch = { "text" : "" };
         $scope.asRinkSearch = { "text" : "" };
         $scope.asHallSearch = { "text" : "" };
@@ -333,11 +376,12 @@
         
 		
 		/**
-		 * Update filtered collection when search criteria are modified for 'Stadium search' 
+		 * Update filtered collection when search criteria are modified for 'immeubleTerrainDdp search' 
 		 */
-    	$scope.$watch('asStadiumSearch', function(newSearch, oldSearch) {
-    		if ($scope.asElfins!=null) {
-    			refreshFilteredAsStadiumElfins();
+    	$scope.$watch('immeubleTerrainDdpSearch', function(newSearch, oldSearch) {
+    		if ($scope.immeubleElfins!=null) {
+    			refreshFilteredImmeubleTerrainDdpElfins();
+    			//refreshFilteredAsStadiumElfins();
     		}
     	}, true);								
     	
@@ -387,8 +431,22 @@
     	}, true);    	
 
     	
-    	var refreshFilteredAsStadiumElfins = function() {
-    		$scope.filteredAsStadiumElfins = filterAmenagementSportifElfins(filterAmenagementSportifStadiumElfins($scope.asElfins), $scope.asStadiumSearch);
+    	// TODO: rename to DDP
+    	//var refreshFilteredAsStadiumElfins = function() {
+    	var	refreshFilteredImmeubleTerrainDdpElfins = function () {
+        	// TODO: 
+    		// * rename to DDP
+    		// * make use of $scope.immeuble ref
+    		// * make use of $scope.immeubleDdpSearch ref
+    		// * make use of filterImmeuble...
+    		// * update filteredImmeubleDdp...     
+
+    		$log.debug(">>>> REFRESHING TERRAIN DDP: $scope.immeubleElfins.length = " + $scope.immeubleElfins.length +", $scope.immeubleTerrainDdpSearch = " + angular.toJson($scope.immeubleTerrainDdpSearch)) ;
+    		var fImmTerrDdp = filterImmeubleTerrainDdpElfins($scope.immeubleElfins);
+    		$log.debug(">>>> REFRESHING: $scope.immeubleElfins ("+$scope.immeubleElfins.length+") => fImmTerrDdp ("+fImmTerrDdp.length+") ");
+    		$scope.immeubleTerrainDdpElfins = filterImmeubleElfins(fImmTerrDdp, $scope.immeubleTerrainDdpSearch);
+    		$log.debug(">>>> REFRESHING TERRAIN DDP: $scope.immeubleTerrainDdpElfins.length = " + $scope.immeubleTerrainDdpElfins.length);
+    		//$scope.filteredAsStadiumElfins          = filterAmenagementSportifElfins(filterImmeubleTerrainDdpElfins($scope.immeubleElfins), $scope.asStadiumSearch);
     	};
     	
     	var refreshFilteredAsPoolElfins = function() {
