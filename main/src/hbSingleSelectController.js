@@ -22,11 +22,29 @@
 						};
 						
 						/**
+						 * Get option.name for option.value provided as optionValue parameter
+						 * 
+						 * Returns option.name from options. 
+						 * If not found checks for emptyOption.value match. 
+						 * If it does not match emptyOption either returns undefined.
+						 */
+						$scope.getOptionName = function(value) {
+							var optionRes = _.find($scope.options, function(option){ return (option.value === value); });
+							if (optionRes) {
+								return optionRes.name;
+							} else if ($scope.emptyOption && $scope.emptyOption.value === value) {
+								return $scope.emptyOption.name;
+							} else {
+								return undefined;
+							}
+						};
+						
+						/**
 						 * Reflects user selection to model view value and simulate user input with commit action.
 						 */
 						$scope.selectOption = function(option) {
 							// Reflect user selection to model.
-							$scope.ngModelCtrl.$setViewValue(option.name);
+							$scope.ngModelCtrl.$setViewValue(option.value);
 							$scope.ngModelCtrl.$render();													
 						};
 

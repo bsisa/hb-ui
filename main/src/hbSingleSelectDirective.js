@@ -14,7 +14,8 @@
 			templateUrl : "/assets/views/hbSingleSelect.html",
 			controller: 'HbSingleSelectController',
 			scope : {
-				'options' : '=hbSingleSelectOptions'   
+				'options' : '=hbSingleSelectOptions' ,
+				'emptyOption' : '=?hbSingleSelectEmptyOption'
 			},
 			link: function ($scope, $element, $attrs, ctrls) {
 				var hbSingleSelectController = ctrls[0];
