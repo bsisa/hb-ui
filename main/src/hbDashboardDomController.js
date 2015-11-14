@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbDashboardDomController', ['$attrs', '$scope', '$rootScope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'HB_EVENTS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', 'hbPrintService', 'GeoxmlService', function($attrs, $scope, $rootScope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, HB_EVENTS, hbAlertMessages, hbUtil, hbQueryService, hbPrintService, GeoxmlService) {
+    angular.module('hb5').controller('HbDashboardDomController', ['$attrs', '$scope', '$rootScope', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'HB_EVENTS', 'HB_ACCOUNTING_GROUPS', 'hbAlertMessages', 'hbUtil', 'hbQueryService', 'hbPrintService', 'GeoxmlService', function($attrs, $scope, $rootScope, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, HB_EVENTS, HB_ACCOUNTING_GROUPS, hbAlertMessages, hbUtil, hbQueryService, hbPrintService, GeoxmlService) {
     
     	//$log.debug("    >>>> HbDashboardDomController called at " + new Date());
     	
@@ -21,7 +21,8 @@
         $scope.immeubleTerrainDdpSearch = { 
         		"active" : $scope.immeubleSearch.active,
         		"text" : "",
-        		"GER" : ""
+        		"GER" : "",
+        		"GROUPE_COMPTABLE" : HB_ACCOUNTING_GROUPS.DOM_TERRAIN_DDP
         };    	
     	
     	$scope.immeublesActiveStates = [
@@ -91,8 +92,8 @@
 				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);		
 				
 	   			// Initialise AMENAGEMENT_SPORTIF per GROUPE without filtering.
-    			$scope.immeubleTerrainDdpElfinsLength = filterImmeubleTerrainDdpElfins($scope.immeubleElfins).length;
-    			$log.debug("$scope.immeubleTerrainDdpElfinsLength = " + $scope.immeubleTerrainDdpElfinsLength);
+    			//$scope.immeubleTerrainDdpElfinsLength = filterImmeubleTerrainDdpElfins($scope.immeubleElfins).length;
+    			//$log.debug("$scope.immeubleTerrainDdpElfinsLength = " + $scope.immeubleTerrainDdpElfinsLength);
 
     			// Refresh IMMEUBLE per GROUPE_COMPTABLE with filtering.
         		refreshFilteredImmeubleTerrainDdpElfins();				
@@ -140,7 +141,7 @@
     	
     	
     	
-    	var IMMEUBLE_GC_TERRAIN_DDP = "Terrains – D.D.P."
+    	//var IMMEUBLE_GC_TERRAIN_DDP = "Terrains – D.D.P."
     	
     	var AMENAGEMENT_SPORTIF_GROUPE_POOL = "Piscine";
     	var AMENAGEMENT_SPORTIF_GROUPE_RINK = "Patinoire";
@@ -279,7 +280,8 @@
         		$location.path('/elfin/'+HB_COLLECTIONS.IMMEUBLE_ID+'/IMMEUBLE')
         			.search('search', $scope.immeubleTerrainDdpSearch.text)
         			.search('active', $scope.immeubleTerrainDdpSearch.active)
-        			.search('GER', $scope.immeubleTerrainDdpSearch.GER);
+        			.search('GER', $scope.immeubleTerrainDdpSearch.GER)
+        			.search('GROUPE_COMPTABLE', $scope.immeubleTerrainDdpSearch.GROUPE_COMPTABLE);
 
         		
         		
@@ -366,7 +368,7 @@
         
     	// ==== End user search and related listener ==================        
         /** User entered AMENAGEMENT_SPORTIF search criterion */
-        $scope.immeubleTerrainDdpSearch = { "text" : "" };        
+        //$scope.immeubleTerrainDdpSearch = { "text" : "" };        
         //$scope.asStadiumSearch = { "text" : "" };
         $scope.asPoolSearch = { "text" : "" };
         $scope.asRinkSearch = { "text" : "" };
