@@ -498,6 +498,7 @@
                     	 icontains(currentOwner, predicate.owner) &&
                     	 icontains(currentTenant, predicate.tenant) &&
                     	 icontains(uniteLocative.IDENTIFIANT.OBJECTIF, predicate.registerNb) && 
+                    	 icontains(uniteLocative.IDENTIFIANT.GER, predicate.GER) &&
                     	 icontains(currentBuildingAddress, predicate.address)
                     ) {
                     	tempUniteLocatives.push(uniteLocative);
