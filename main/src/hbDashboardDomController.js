@@ -54,17 +54,36 @@
     	
     	var immeublesCollectionId = HB_COLLECTIONS.IMMEUBLE_ID;
     	var immeublesXpath = '';
+    	
+    	
+    	
+    	
+    	$scope.locationUnitSearch = { 
+        		"text" : "",
+        		"GER" : ""
+    	};
+    	
+    	var locationUnitsCollectionId = HB_COLLECTIONS.LOCATION_UNIT_ID;
+    	var locationUnitsXpath = '';
 
+    	
+    	// ============================================================
+    	// ==== ACL update procedure ==================================
+    	// ============================================================    	
+    	
     	// Centralises ACL update procedure
         // Note: there is no security issue regarding this information, only
         // better end-user data selection.
         var updateAclRelatedData = function(dataManagerAccessRightsCreateUpdate) {
         	immeublesXpath = "//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+dataManagerAccessRightsCreateUpdate+"']"
+        	locationUnitsXpath = "//ELFIN[@CLASSE='SURFACE' and IDENTIFIANT/GER='"+dataManagerAccessRightsCreateUpdate+"']"
         	$scope.immeubleSearch.GER = dataManagerAccessRightsCreateUpdate;
         	$scope.immeubleTerrainDdpSearch.GER = dataManagerAccessRightsCreateUpdate;
         	$scope.immeubleBatAgricoleSearch.GER = dataManagerAccessRightsCreateUpdate;
         	$scope.immeubleBatLocatifSearch.GER = dataManagerAccessRightsCreateUpdate;
         	$scope.immeubleHangarDepotSearch.GER = dataManagerAccessRightsCreateUpdate;
+        	
+        	$scope.locationUnitSearch.GER = dataManagerAccessRightsCreateUpdate;
         };    	
     	
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
@@ -77,6 +96,12 @@
         // Initialisation at current controller creation
         updateAclRelatedData(GeoxmlService.getCurrentDataManagerAccessRightsCreateUpdate());
 
+        
+        
+        
+    	// ============================================================
+    	// ==== DOM IMMEUBLE list  ====================================
+    	// ============================================================
         
 		/**
 		 *  Apply immeubleListAnyFilter
@@ -106,6 +131,7 @@
         
         updateImmeubles();
     	
+        
 		/**
 		 * immeubleElfins result is loaded asynchronously. Filtering need to be triggered on 
 		 * immeubleElfins change except when empty. 
@@ -119,8 +145,8 @@
         		refreshFilteredImmeubleHangarDepotElfins();
     		}
     	}, true);        
-
-
+    	
+    	
         /**
          * Navigates to end user selection result which leads to either 
          * a list, a card or stay on current page if selection is 0. 
@@ -144,12 +170,75 @@
     		if ($scope.immeubleElfins!=null) {
 				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
     		}
-    	}, true);								
-			
-  	
-		
-    	// ==== HB_ACCOUNTING_GROUPS.DOM_TERRAIN_DDP section ===========
+    	}, true);        
+        
     	
+
+    	
+    	// ============================================================
+    	// ==== DOM LOCATION UNIT/SURFACE list   ======================
+    	// ============================================================    	
+    	
+        var filterLocationUnitElfins = function(elfins_p, search_p) {
+	    	var filteredSortedElfins = $filter('uniteLocativeListAnyFilter')(elfins_p, search_p.text);
+	    	return filteredSortedElfins;
+        };
+        
+        // Query all available location units SURFACE 
+        var updateLocationUnits = function() {
+        	hbQueryService.getLocationUnits(locationUnitsXpath)
+        		.then(function(locationUnits) {
+					$scope.locationUnitElfins = locationUnits;
+		    		$scope.filteredLocationUnitElfins = filterLocationUnitElfins($scope.locationUnitElfins, $scope.locationUnitSearch);
+        		}, function(message) {
+        			// TODO: fix alert ...
+		            hbAlertMessages.addAlert("danger",message);
+		        });	
+        };
+        
+        updateLocationUnits();        
+        
+		/**
+		 * locationUnitElfins result is loaded asynchronously. Filtering need to be triggered on 
+		 * locationUnitElfins change except when empty. 
+		 */
+    	$scope.$watch('locationUnitElfins', function() { 
+    		if ($scope.locationUnitElfins!=null) {
+    			$scope.filteredLocationUnitElfins = filterLocationUnitElfins($scope.locationUnitElfins, $scope.locationUnitSearch);
+    		}
+    	}, true);        
+        
+
+        /**
+         * Navigates to end user selection result which leads to either 
+         * a list, a card or stay on current page if selection is 0. 
+         */
+        $scope.listOrViewlocationUnit = function() {
+        	// 
+        	if ($scope.filteredLocationUnitElfins.length > 1) {
+        		$location.path('/elfin/'+locationUnitsCollectionId+'/SURFACE')
+        			.search('search', $scope.locationUnitSearch.text)
+        			.search('GER', $scope.locationUnitSearch.GER);
+        	} else if ($scope.filteredLocationUnitElfins.length == 1) {
+        		$location.path('/elfin/'+locationUnitsCollectionId+'/SURFACE/' + $scope.filteredLocationUnitElfins[0].Id);	
+        	}
+        };                
+
+		/**
+		 * Update filtered collection when search or sorting criteria are modified. 
+		 */
+    	$scope.$watch('locationUnitSearch', function(newSearch, oldSearch) {
+    		if ($scope.locationUnitElfins!=null) {
+				$scope.filteredLocationUnitElfins = filterImmeubleElfins($scope.locationUnitElfins, $scope.locationUnitSearch);
+    		}
+    	}, true);
+
+    	
+    	
+		
+    	// ============================================================
+    	// ==== HB_ACCOUNTING_GROUPS.DOM_TERRAIN_DDP section ==========
+    	// ============================================================
 		/**
 		 *  Applies immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
 		 */
@@ -195,8 +284,10 @@
 
     	
     	
-
-    	// ==== HB_ACCOUNTING_GROUPS.DOM_BATIMENTS_AGRICOLES section ===========
+    	
+    	// ============================================================
+    	// ==== HB_ACCOUNTING_GROUPS.DOM_BATIMENTS_AGRICOLES section ==
+    	// ============================================================    	
     	
 		/**
 		 *  Applies immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
@@ -242,7 +333,11 @@
     	}, true);
     	
     	
-    	// ==== HB_ACCOUNTING_GROUPS.DOM_BATIMENT_LOCATIF section ===========
+    	
+    	
+    	// ============================================================
+    	// ==== HB_ACCOUNTING_GROUPS.DOM_BATIMENT_LOCATIF section =====
+    	// ============================================================
     	
 		/**
 		 *  Applies immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
@@ -290,7 +385,9 @@
     	
     	
     	
-    	// ==== HB_ACCOUNTING_GROUPS.DOM_HANGAR_DEPOT section ===========
+    	// ============================================================
+    	// ==== HB_ACCOUNTING_GROUPS.DOM_HANGAR_DEPOT section =========
+    	// ============================================================
     	
 		/**
 		 *  Applies immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
@@ -334,8 +431,9 @@
     			refreshFilteredImmeubleHangarDepotElfins();
     		}
     	}, true);
+
     	
-    	
+
     	
     	var focusOnSearchField = function() {
 			$('#immeubleSearchTextInput').focus();	

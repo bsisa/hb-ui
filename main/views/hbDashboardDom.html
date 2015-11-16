@@ -84,21 +84,21 @@ Droit de superficie et autre infra./ surface right
 <table class="table table-condensed table-bordered table-striped" >
 	<tbody>
 		<tr>
-			<th class="dashboard" style="width: 33%;">Unité{{ asHallElfinsLength | plural }} locative{{ asHallElfinsLength | plural }} <span class="badge">{{asHallElfinsLength}}</span></th>
+			<th class="dashboard" style="width: 33%;">Unité{{ filteredLocationUnitElfins.length | plural }} locative{{ filteredLocationUnitElfins.length | plural }} <span class="badge">{{filteredLocationUnitElfins.length}}</span></th>
 			<th class="dashboard" >Terrain{{ immeubleTerrainDdpElfins.length | plural }} – D.D.P. <span class="badge">{{immeubleTerrainDdpElfins.length}}</span></th>
 			<th class="dashboard" style="width: 33%;">Hangar{{ immeubleHangarDepotElfins.length | plural }} et dépôt{{ immeubleHangarDepotElfins.length | plural }} <span class="badge">{{immeubleHangarDepotElfins.length}}</span></th>
 		</tr>
 		<tr>
-			<td ><img ng-click="listOrViewHall()" src="/assets/images/sds_hall.jpeg" ng-src="/assets/images/sds_hall.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewlocationUnit()" src="/assets/images/sds_hall.jpeg" ng-src="/assets/images/sds_hall.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img ng-click="listOrViewTerrainDdp()" src="/assets/images/sds_sports_area.jpeg" ng-src="/assets/images/sds_sports_area.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img ng-click="listOrViewHangarDepot()" src="/assets/images/sds_surface_right.jpeg" ng-src="/assets/images/sds_surface_right.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>
 		<tr>
-			<th >Sélection  <span class="badge">{{filteredAsHallElfins.length}}</span>
+			<th >Sélection  <span class="badge">{{filteredLocationUnitElfins.length}}</span>
 				<div class="right">
-					<button tabindex="8" class="btn btn-primary btn-xs" ng-click="listOrViewHall()" ng-disabled="filteredAsHallElfins.length < 1">
-						<span ng-show="filteredAsHallElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
-						<span ng-show="filteredAsHallElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					<button tabindex="8" class="btn btn-primary btn-xs" ng-click="listOrViewlocationUnit()" ng-disabled="filteredLocationUnitElfins.length < 1">
+						<span ng-show="filteredLocationUnitElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="filteredLocationUnitElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
 					</button>
 				</div>			
 			</th>
@@ -123,7 +123,7 @@ Droit de superficie et autre infra./ surface right
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input hb-enter="listOrViewHall()" tabindex="7" id="asHallSearchTextInput" name="asHallSearchTextInput" type="text" class="form-control" ng-model="asHallSearch.text" hb-no-dirty-check placeholder="">
+						<input hb-enter="listOrViewlocationUnit()" tabindex="7" id="locationUnitSearchTextInput" name="locationUnitSearchTextInput" type="text" class="form-control" ng-model="locationUnitSearch.text" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
