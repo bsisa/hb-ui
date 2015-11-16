@@ -11,12 +11,12 @@ Droit de superficie et autre infra./ surface right
 	<tbody>
 		<tr>
 			<th class="dashboard" style="width: 33%;">Immeuble{{ immeubleElfins.length | plural }} <span class="badge">{{immeubleElfins.length}}</span></th>
-			<th class="dashboard" >Bâtiment{{ asPoolElfinsLength | plural }} agricole{{ asPoolElfinsLength | plural }} <span class="badge">{{asPoolElfinsLength}}</span></th>			
+			<th class="dashboard" >Bâtiment{{ immeubleBatAgricoleElfins.length | plural }} agricole{{ immeubleBatAgricoleElfins.length | plural }} <span class="badge">{{immeubleBatAgricoleElfins.length}}</span></th>			
 			<th class="dashboard" style="width: 33%;">Bâtiment{{ asRinkElfinsLength | plural }} locatif{{ asRinkElfinsLength | plural }} <span class="badge">{{asRinkElfinsLength}}</span></th>
 		</tr>
 		<tr>
 			<td ><img ng-click="listOrViewImmeuble()" src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img ng-click="listOrViewPool()" src="/assets/images/sds_pool.jpeg" ng-src="/assets/images/sds_pool.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewBatAgricole()" src="/assets/images/sds_pool.jpeg" ng-src="/assets/images/sds_pool.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img ng-click="listOrViewRink()" src="/assets/images/sds_rink.jpeg" ng-src="/assets/images/sds_rink.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>
 		<tr>
@@ -39,11 +39,11 @@ Droit de superficie et autre infra./ surface right
 					</button>
 				</div>			
 			</th>
-			<th >Sélection  <span class="badge">{{filteredAsPoolElfins.length}}</span>
+			<th >Sélection  <span class="badge">{{immeubleBatAgricoleElfins.length}}</span>
 				<div class="right">
-					<button tabindex="4" class="btn btn-primary btn-xs" ng-click="listOrViewPool()" ng-disabled="filteredAsPoolElfins.length < 1">
-						<span ng-show="filteredAsPoolElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
-						<span ng-show="filteredAsPoolElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					<button tabindex="4" class="btn btn-primary btn-xs" ng-click="listOrViewBatAgricole()" ng-disabled="immeubleBatAgricoleElfins.length < 1">
+						<span ng-show="immeubleBatAgricoleElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="immeubleBatAgricoleElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
 					</button>
 				</div>			
 			</th>
@@ -61,14 +61,13 @@ Droit de superficie et autre infra./ surface right
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input hb-enter="listOrViewImmeuble()" tabindex="1" id="immeubleSearchTextInput" name="immeubleSearchTextInput" type="text" class="form-control" ng-model="immeubleSearch.text" hb-no-dirty-check placeholder="">
-<!-- 						<input hb-enter="listOrViewImmeuble()" tabindex="1" id="immeubleSearchActiveInput" name="immeubleSearchActiveInput" type="text" class="form-control" ng-model="immeubleSearch.active" hb-no-dirty-check placeholder=""> -->
 					</div>
 				</div>
 			</th>
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input hb-enter="listOrViewPool()" tabindex="3" id="asPoolSearchTextInput" name="asPoolSearchTextInput" type="text" class="form-control" ng-model="asPoolSearch.text" hb-no-dirty-check placeholder="">
+						<input hb-enter="listOrViewBatAgricole()" tabindex="9" id="immeubleBatAgricoleSearchTextInput" name="immeubleBatAgricoleSearchTextInput" type="text" class="form-control" ng-model="immeubleBatAgricoleSearch.text" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
@@ -132,7 +131,6 @@ Droit de superficie et autre infra./ surface right
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input hb-enter="listOrViewTerrainDdp()" tabindex="9" id="immeubleTerrainDdpSearchTextInput" name="immeubleTerrainDdpSearchTextInput" type="text" class="form-control" ng-model="immeubleTerrainDdpSearch.text" hb-no-dirty-check placeholder="">
-<!-- 						<input hb-enter="listOrViewSportsArea()" tabindex="9" id="asSportsAreaSearchTextInput" name="asSportsAreaSearchTextInput" type="text" class="form-control" ng-model="asSportsAreaSearch.text" hb-no-dirty-check placeholder=""> -->
 					</div>
 				</div>
 			</th>

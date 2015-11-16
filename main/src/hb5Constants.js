@@ -42,10 +42,10 @@ angular.module('hb5').constant('HB_COLLECTIONS', {
  * required by database value change which are seldom expected to happen.
  */
 angular.module('hb5').constant('HB_ACCOUNTING_GROUPS', {
-	DOM_TERRAIN_DDP : "Terrains – D.D.P.",
-	DOM_BATIMENTS_AGRICOLES : "Bâtiments agricoles",
-	DOM_BATIMENTS_LOCATIFS : "Bâtiments locatifs",
-	DOM_HANGARS_DEPOTS : "Hangars et dépôts"
+	DOM_TERRAIN_DDP : "Terrain – D.D.P.",
+	DOM_BATIMENT_AGRICOLE : "Bâtiment agricole",
+	DOM_BATIMENT_LOCATIF : "Bâtiment locatif",
+	DOM_HANGAR_DEPOT : "Hangar et dépôt"
 
 });
 

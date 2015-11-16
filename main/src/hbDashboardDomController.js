@@ -21,6 +21,14 @@
         		"GER" : "",
         		"GROUPE_COMPTABLE" : HB_ACCOUNTING_GROUPS.DOM_TERRAIN_DDP
         };    	
+        
+        
+        $scope.immeubleBatAgricoleSearch = { 
+        		"active" : $scope.immeubleSearch.active,
+        		"text" : "",
+        		"GER" : "",
+        		"GROUPE_COMPTABLE" : HB_ACCOUNTING_GROUPS.DOM_BATIMENT_AGRICOLE
+        };    	
     	
     	$scope.immeublesActiveStates = [
     	                                {label:'Actifs', value: 'yes'},
@@ -39,6 +47,7 @@
         	immeublesXpath = "//ELFIN[@CLASSE='IMMEUBLE' and IDENTIFIANT/GER='"+dataManagerAccessRightsCreateUpdate+"']"
         	$scope.immeubleSearch.GER = dataManagerAccessRightsCreateUpdate;
         	$scope.immeubleTerrainDdpSearch.GER = dataManagerAccessRightsCreateUpdate;
+        	$scope.immeubleBatAgricoleSearch.GER = dataManagerAccessRightsCreateUpdate;
         };    	
     	
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
@@ -70,6 +79,7 @@
 					$scope.immeubleElfins = augmentedImmeubles;
 		    		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
 		    		refreshFilteredImmeubleTerrainDdpElfins();
+		    		refreshFilteredImmeubleBatAgricoleElfins();
         		}, function(message) {
 		            hbAlertMessages.addAlert("danger",message);
 		        });	
@@ -78,20 +88,21 @@
         updateImmeubles();
     	
 		/**
-		 * immeubleElfins result is loaded asynchronously.
+		 * immeubleElfins result is loaded asynchronously. Filtering need to be triggered on 
+		 * immeubleElfins change except when empty. 
 		 */
     	$scope.$watch('immeubleElfins', function() { 
     		if ($scope.immeubleElfins!=null) {
 				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);		
-        		refreshFilteredImmeubleTerrainDdpElfins();				
+        		refreshFilteredImmeubleTerrainDdpElfins();	
+        		refreshFilteredImmeubleBatAgricoleElfins();
     		}
     	}, true);        
 
 
-
         /**
-         * Navigate to end user selected buildings. 
-         * Either a list, a card or stay on current page if selection is 0. 
+         * Navigates to end user selection result which leads to either 
+         * a list, a card or stay on current page if selection is 0. 
          */
         $scope.listOrViewImmeuble = function() {
         	// 
@@ -105,9 +116,6 @@
         	}
         };                
 
-        
-     
-		
 		/**
 		 * Update filtered collection when search or sorting criteria are modified. 
 		 */
@@ -118,28 +126,28 @@
     	}, true);								
 			
   	
-
+		
+    	// ==== HB_ACCOUNTING_GROUPS.DOM_TERRAIN_DDP section ===========
     	
 		/**
-		 *  Apply amenagementSportifListAnyFilter
-		 */
-		var filterAmenagementSportifElfins = function(elfins_p, search_p) {
-	    	var filteredSortedElfins = $filter('amenagementSportifListAnyFilter')(elfins_p, search_p.text);
-	    	return filteredSortedElfins;
-		};    	
-		
-		/**
-		 *  Apply immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
+		 *  Applies immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
 		 */
 		var filterImmeubleTerrainDdpElfins = function(elfins_p) {
 	    	var filteredSortedElfins = $filter('immeubleListFilter')(elfins_p, $scope.immeubleTerrainDdpSearch);
 	    	return filteredSortedElfins;
 		};
-		
+
+    	/**
+    	 *	Refreshes IMMEUBLE per GROUPE_COMPTABLE DOM_TERRAIN_DDP with filtering.
+    	 */
+    	var	refreshFilteredImmeubleTerrainDdpElfins = function () {
+    		var fImmTerrDdp = filterImmeubleTerrainDdpElfins($scope.immeubleElfins);
+    		$scope.immeubleTerrainDdpElfins = filterImmeubleElfins(fImmTerrDdp, $scope.immeubleTerrainDdpSearch);
+    	};		
 
         /**
-         * Navigate to end user selected IMMEUBLE_GC_TERRAIN_DDP 
-         * Either a list, a card or stay on current page if selection is 0. 
+         * Navigates to end user selection result which leads to either 
+         * a list, a card or stay on current page if selection is 0. 
          */
         $scope.listOrViewTerrainDdp = function() {
         	
@@ -156,23 +164,65 @@
         
 		
 		/**
-		 * Update filtered collection when search criteria are modified for 'immeubleTerrainDdp search' 
+		 * Updates filtered collection when search criteria are modified for 'immeubleTerrainDdp search' 
 		 */
     	$scope.$watch('immeubleTerrainDdpSearch', function(newSearch, oldSearch) {
     		if ($scope.immeubleElfins!=null) {
     			refreshFilteredImmeubleTerrainDdpElfins();
     		}
     	}, true);								
+
     	
-    	/**
-    	 *     			// Refresh IMMEUBLE per GROUPE_COMPTABLE with filtering.
-    	 */
-    	var	refreshFilteredImmeubleTerrainDdpElfins = function () {
-    		var fImmTerrDdp = filterImmeubleTerrainDdpElfins($scope.immeubleElfins);
-    		$scope.immeubleTerrainDdpElfins = filterImmeubleElfins(fImmTerrDdp, $scope.immeubleTerrainDdpSearch);
-    	};
     	
 
+    	// ==== HB_ACCOUNTING_GROUPS.DOM_BATIMENTS_AGRICOLES section ===========
+    	
+		/**
+		 *  Applies immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
+		 */
+		var filterImmeubleBatAgricoleElfins = function(elfins_p) {
+	    	var filteredSortedElfins = $filter('immeubleListFilter')(elfins_p, $scope.immeubleBatAgricoleSearch);
+	    	return filteredSortedElfins;
+		};
+
+    	/**
+    	 *	Refreshes IMMEUBLE per GROUPE_COMPTABLE DOM_BATIMENTS_AGRICOLES with filtering.
+    	 */
+    	var	refreshFilteredImmeubleBatAgricoleElfins = function () {
+    		var fImmBatAgricole = filterImmeubleBatAgricoleElfins($scope.immeubleElfins);
+    		$scope.immeubleBatAgricoleElfins = filterImmeubleElfins(fImmBatAgricole, $scope.immeubleBatAgricoleSearch);
+    	};		
+
+        /**
+         * Navigates to end user selection result which leads to either 
+         * a list, a card or stay on current page if selection is 0. 
+         */
+        $scope.listOrViewBatAgricole = function() {
+        	
+        	if ($scope.immeubleBatAgricoleElfins.length > 1) {
+        		$location.path('/elfin/'+HB_COLLECTIONS.IMMEUBLE_ID+'/IMMEUBLE')
+        			.search('search', $scope.immeubleBatAgricoleSearch.text)
+        			.search('active', $scope.immeubleBatAgricoleSearch.active)
+        			.search('GER', $scope.immeubleBatAgricoleSearch.GER)
+        			.search('GROUPE_COMPTABLE', $scope.immeubleBatAgricoleSearch.GROUPE_COMPTABLE);        		
+        	} else if ($scope.immeubleBatAgricoleElfins.length == 1) {
+        		$location.path('/elfin/'+HB_COLLECTIONS.IMMEUBLE_ID+'/IMMEUBLE/' + $scope.immeubleBatAgricoleElfins[0].Id);	
+        	}
+        };
+        
+		
+		/**
+		 * Updates filtered collection when search criteria are modified for 'immeubleTerrainDdp search' 
+		 */
+    	$scope.$watch('immeubleBatAgricoleSearch', function(newSearch, oldSearch) {
+    		if ($scope.immeubleElfins!=null) {
+    			refreshFilteredImmeubleBatAgricoleElfins();
+    		}
+    	}, true);
+    	
+    	
+    	
+    	
     	var focusOnSearchField = function() {
 			$('#immeubleSearchTextInput').focus();	
 		};        
