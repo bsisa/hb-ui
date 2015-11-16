@@ -35,11 +35,16 @@
         		"text" : "",
         		"GER" : "",
         		"GROUPE_COMPTABLE" : HB_ACCOUNTING_GROUPS.DOM_BATIMENT_LOCATIF
-        };    	        
-        
-        
-        
-    	
+        };
+
+        $scope.immeubleHangarDepotSearch = { 
+        		"active" : $scope.immeubleSearch.active,
+        		"text" : "",
+        		"GER" : "",
+        		"GROUPE_COMPTABLE" : HB_ACCOUNTING_GROUPS.DOM_HANGAR_DEPOT
+        };
+
+
     	$scope.immeublesActiveStates = [
     	                                {label:'Actifs', value: 'yes'},
     	                                {label:'Sortis', value: 'no'},
@@ -59,6 +64,7 @@
         	$scope.immeubleTerrainDdpSearch.GER = dataManagerAccessRightsCreateUpdate;
         	$scope.immeubleBatAgricoleSearch.GER = dataManagerAccessRightsCreateUpdate;
         	$scope.immeubleBatLocatifSearch.GER = dataManagerAccessRightsCreateUpdate;
+        	$scope.immeubleHangarDepotSearch.GER = dataManagerAccessRightsCreateUpdate;
         };    	
     	
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
@@ -92,6 +98,7 @@
 		    		refreshFilteredImmeubleTerrainDdpElfins();
 		    		refreshFilteredImmeubleBatAgricoleElfins();
 		    		refreshFilteredImmeubleBatLocatifElfins();
+		    		refreshFilteredImmeubleHangarDepotElfins();
         		}, function(message) {
 		            hbAlertMessages.addAlert("danger",message);
 		        });	
@@ -109,6 +116,7 @@
         		refreshFilteredImmeubleTerrainDdpElfins();	
         		refreshFilteredImmeubleBatAgricoleElfins();
         		refreshFilteredImmeubleBatLocatifElfins();
+        		refreshFilteredImmeubleHangarDepotElfins();
     		}
     	}, true);        
 
@@ -225,7 +233,7 @@
         
 		
 		/**
-		 * Updates filtered collection when search criteria are modified for 'immeubleTerrainDdp search' 
+		 * Updates filtered collection when search criteria are modified for 'immeubleBatAgricole search' 
 		 */
     	$scope.$watch('immeubleBatAgricoleSearch', function(newSearch, oldSearch) {
     		if ($scope.immeubleElfins!=null) {
@@ -245,7 +253,7 @@
 		};
 
     	/**
-    	 *	Refreshes IMMEUBLE per GROUPE_COMPTABLE DOM_BATIMENTS_AGRICOLES with filtering.
+    	 *	Refreshes IMMEUBLE per GROUPE_COMPTABLE DOM_BATIMENT_LOCATIF with filtering.
     	 */
     	var	refreshFilteredImmeubleBatLocatifElfins = function () {
     		var fImmBatLocatif = filterImmeubleBatLocatifElfins($scope.immeubleElfins);
@@ -271,7 +279,7 @@
         
 		
 		/**
-		 * Updates filtered collection when search criteria are modified for 'immeubleTerrainDdp search' 
+		 * Updates filtered collection when search criteria are modified for 'immeubleBatLocatif search' 
 		 */
     	$scope.$watch('immeubleBatLocatifSearch', function(newSearch, oldSearch) {
     		if ($scope.immeubleElfins!=null) {
@@ -279,6 +287,53 @@
     		}
     	}, true);
     	
+    	
+    	
+    	
+    	// ==== HB_ACCOUNTING_GROUPS.DOM_HANGAR_DEPOT section ===========
+    	
+		/**
+		 *  Applies immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
+		 */
+		var filterImmeubleHangarDepotElfins = function(elfins_p) {
+	    	var filteredSortedElfins = $filter('immeubleListFilter')(elfins_p, $scope.immeubleHangarDepotSearch);
+	    	return filteredSortedElfins;
+		};
+
+    	/**
+    	 *	Refreshes IMMEUBLE per GROUPE_COMPTABLE DOM_HANGAR_DEPOT with filtering.
+    	 */
+    	var	refreshFilteredImmeubleHangarDepotElfins = function () {
+    		var fImmHangarDepot = filterImmeubleHangarDepotElfins($scope.immeubleElfins);
+    		$scope.immeubleHangarDepotElfins = filterImmeubleElfins(fImmHangarDepot, $scope.immeubleHangarDepotSearch);
+    	};		
+
+        /**
+         * Navigates to end user selection result which leads to either 
+         * a list, a card or stay on current page if selection is 0. 
+         */
+        $scope.listOrViewHangarDepot = function() {
+        	
+        	if ($scope.immeubleHangarDepotElfins.length > 1) {
+        		$location.path('/elfin/'+HB_COLLECTIONS.IMMEUBLE_ID+'/IMMEUBLE')
+        			.search('search', $scope.immeubleHangarDepotSearch.text)
+        			.search('active', $scope.immeubleHangarDepotSearch.active)
+        			.search('GER', $scope.immeubleHangarDepotSearch.GER)
+        			.search('GROUPE_COMPTABLE', $scope.immeubleHangarDepotSearch.GROUPE_COMPTABLE);        		
+        	} else if ($scope.immeubleHangarDepotElfins.length == 1) {
+        		$location.path('/elfin/'+HB_COLLECTIONS.IMMEUBLE_ID+'/IMMEUBLE/' + $scope.immeubleHangarDepotElfins[0].Id);	
+        	}
+        };
+        
+		
+		/**
+		 * Updates filtered collection when search criteria are modified for 'immeubleHangarDepot search' 
+		 */
+    	$scope.$watch('immeubleHangarDepotSearch', function(newSearch, oldSearch) {
+    		if ($scope.immeubleElfins!=null) {
+    			refreshFilteredImmeubleHangarDepotElfins();
+    		}
+    	}, true);
     	
     	
     	
