@@ -45,7 +45,8 @@
     			"place" : "",
     			"buildingNb" : "",
     			"address" : "",
-    			"text" : ""
+    			"text" : "",
+    			"GER" :""
 
     	};
 
@@ -54,6 +55,11 @@
     	if ($routeParams.search) {
     		$scope.search.text = $routeParams.search; 
     	}
+    	
+    	// Support for GER restriction
+    	if ($routeParams.GER) {
+    		$scope.search.GER = $routeParams.GER; 
+    	}    	
     	
 		/**
 		 * Proceed to elfin_p collection `uniteLocativeListFilter` filtering and sorting
@@ -87,7 +93,29 @@
 		 */
     	$scope.$watch('elfins', function() { 
     		if ($scope.elfins!=null) {
-				$scope.filteredElfins = filterSortElfins($scope.elfins, $scope.search, $scope.predicate, $scope.reverse);										
+				$scope.filteredElfins = filterSortElfins($scope.elfins, $scope.search, $scope.predicate, $scope.reverse);		
+				
+				// If GER restriction applies, override elfinsCount parent scope variable with local computed count.
+				if ($scope.search.GER !== "") {
+					//$log.debug(">>>>>> RECOMPUTING elfinsCount <<<<<<");
+					var gerOnlySearch = {
+			    			"registerNb" : "",
+			    			"tenant" : "",
+			    			"owner" : "",
+			    			"place" : "",
+			    			"buildingNb" : "",
+			    			"address" : "",
+			    			"text" : "",
+			    			"GER" : $scope.search.GER
+			    	};
+					var gerSearchFilteredElfins = $filter('uniteLocativeListFilter')($scope.elfins, gerOnlySearch);
+					$scope.elfinsCount = gerSearchFilteredElfins.length;
+				} else {
+					//$log.debug(">>>>>> ORIGINAL elfinsCount <<<<<<");
+				}				
+				
+				
+				
     		} else {
     			//$log.debug(">>>>> HbUniteLocativeListController.js elfins NOT YET LOADED <<<<<");
     		}
