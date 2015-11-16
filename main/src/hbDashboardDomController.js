@@ -28,7 +28,17 @@
         		"text" : "",
         		"GER" : "",
         		"GROUPE_COMPTABLE" : HB_ACCOUNTING_GROUPS.DOM_BATIMENT_AGRICOLE
-        };    	
+        };
+        
+        $scope.immeubleBatLocatifSearch = { 
+        		"active" : $scope.immeubleSearch.active,
+        		"text" : "",
+        		"GER" : "",
+        		"GROUPE_COMPTABLE" : HB_ACCOUNTING_GROUPS.DOM_BATIMENT_LOCATIF
+        };    	        
+        
+        
+        
     	
     	$scope.immeublesActiveStates = [
     	                                {label:'Actifs', value: 'yes'},
@@ -48,6 +58,7 @@
         	$scope.immeubleSearch.GER = dataManagerAccessRightsCreateUpdate;
         	$scope.immeubleTerrainDdpSearch.GER = dataManagerAccessRightsCreateUpdate;
         	$scope.immeubleBatAgricoleSearch.GER = dataManagerAccessRightsCreateUpdate;
+        	$scope.immeubleBatLocatifSearch.GER = dataManagerAccessRightsCreateUpdate;
         };    	
     	
         // Update on ACL_UPDATE events (Business end-user selection, geoxml reload, init.) 
@@ -80,6 +91,7 @@
 		    		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
 		    		refreshFilteredImmeubleTerrainDdpElfins();
 		    		refreshFilteredImmeubleBatAgricoleElfins();
+		    		refreshFilteredImmeubleBatLocatifElfins();
         		}, function(message) {
 		            hbAlertMessages.addAlert("danger",message);
 		        });	
@@ -96,6 +108,7 @@
 				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);		
         		refreshFilteredImmeubleTerrainDdpElfins();	
         		refreshFilteredImmeubleBatAgricoleElfins();
+        		refreshFilteredImmeubleBatLocatifElfins();
     		}
     	}, true);        
 
@@ -217,6 +230,52 @@
     	$scope.$watch('immeubleBatAgricoleSearch', function(newSearch, oldSearch) {
     		if ($scope.immeubleElfins!=null) {
     			refreshFilteredImmeubleBatAgricoleElfins();
+    		}
+    	}, true);
+    	
+    	
+    	// ==== HB_ACCOUNTING_GROUPS.DOM_BATIMENT_LOCATIF section ===========
+    	
+		/**
+		 *  Applies immeubleListFilter with predefined GROUPE_COMPTABLE parameter 'GROUPE_COMPTABLE'
+		 */
+		var filterImmeubleBatLocatifElfins = function(elfins_p) {
+	    	var filteredSortedElfins = $filter('immeubleListFilter')(elfins_p, $scope.immeubleBatLocatifSearch);
+	    	return filteredSortedElfins;
+		};
+
+    	/**
+    	 *	Refreshes IMMEUBLE per GROUPE_COMPTABLE DOM_BATIMENTS_AGRICOLES with filtering.
+    	 */
+    	var	refreshFilteredImmeubleBatLocatifElfins = function () {
+    		var fImmBatLocatif = filterImmeubleBatLocatifElfins($scope.immeubleElfins);
+    		$scope.immeubleBatLocatifElfins = filterImmeubleElfins(fImmBatLocatif, $scope.immeubleBatLocatifSearch);
+    	};		
+
+        /**
+         * Navigates to end user selection result which leads to either 
+         * a list, a card or stay on current page if selection is 0. 
+         */
+        $scope.listOrViewBatLocatif = function() {
+        	
+        	if ($scope.immeubleBatLocatifElfins.length > 1) {
+        		$location.path('/elfin/'+HB_COLLECTIONS.IMMEUBLE_ID+'/IMMEUBLE')
+        			.search('search', $scope.immeubleBatLocatifSearch.text)
+        			.search('active', $scope.immeubleBatLocatifSearch.active)
+        			.search('GER', $scope.immeubleBatLocatifSearch.GER)
+        			.search('GROUPE_COMPTABLE', $scope.immeubleBatLocatifSearch.GROUPE_COMPTABLE);        		
+        	} else if ($scope.immeubleBatLocatifElfins.length == 1) {
+        		$location.path('/elfin/'+HB_COLLECTIONS.IMMEUBLE_ID+'/IMMEUBLE/' + $scope.immeubleBatLocatifElfins[0].Id);	
+        	}
+        };
+        
+		
+		/**
+		 * Updates filtered collection when search criteria are modified for 'immeubleTerrainDdp search' 
+		 */
+    	$scope.$watch('immeubleBatLocatifSearch', function(newSearch, oldSearch) {
+    		if ($scope.immeubleElfins!=null) {
+    			refreshFilteredImmeubleBatLocatifElfins();
     		}
     	}, true);
     	

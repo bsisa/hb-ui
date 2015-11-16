@@ -12,12 +12,12 @@ Droit de superficie et autre infra./ surface right
 		<tr>
 			<th class="dashboard" style="width: 33%;">Immeuble{{ immeubleElfins.length | plural }} <span class="badge">{{immeubleElfins.length}}</span></th>
 			<th class="dashboard" >Bâtiment{{ immeubleBatAgricoleElfins.length | plural }} agricole{{ immeubleBatAgricoleElfins.length | plural }} <span class="badge">{{immeubleBatAgricoleElfins.length}}</span></th>			
-			<th class="dashboard" style="width: 33%;">Bâtiment{{ asRinkElfinsLength | plural }} locatif{{ asRinkElfinsLength | plural }} <span class="badge">{{asRinkElfinsLength}}</span></th>
+			<th class="dashboard" style="width: 33%;">Bâtiment{{ immeubleBatLocatifElfins.length | plural }} locatif{{ immeubleBatLocatifElfins.length | plural }} <span class="badge">{{immeubleBatLocatifElfins.length}}</span></th>
 		</tr>
 		<tr>
 			<td ><img ng-click="listOrViewImmeuble()" src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" ng-src="/api/melfin/annex/G20040930101030005/G20040203114943000/photo.jpg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 			<td ><img ng-click="listOrViewBatAgricole()" src="/assets/images/sds_pool.jpeg" ng-src="/assets/images/sds_pool.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
-			<td ><img ng-click="listOrViewRink()" src="/assets/images/sds_rink.jpeg" ng-src="/assets/images/sds_rink.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><img ng-click="listOrViewBatLocatif()" src="/assets/images/sds_rink.jpeg" ng-src="/assets/images/sds_rink.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
 		</tr>
 		<tr>
 			<th >		
@@ -47,11 +47,11 @@ Droit de superficie et autre infra./ surface right
 					</button>
 				</div>			
 			</th>
-			<th >Sélection  <span class="badge">{{filteredAsRinkElfins.length}}</span>
+			<th >Sélection  <span class="badge">{{immeubleBatLocatifElfins.length}}</span>
 				<div class="right">
-					<button tabindex="6" class="btn btn-primary btn-xs" ng-click="listOrViewRink()" ng-disabled="filteredAsRinkElfins.length < 1">
-						<span ng-show="filteredAsRinkElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
-						<span ng-show="filteredAsRinkElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					<button tabindex="6" class="btn btn-primary btn-xs" ng-click="listOrViewBatLocatif()" ng-disabled="immeubleBatLocatifElfins.length < 1">
+						<span ng-show="immeubleBatLocatifElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="immeubleBatLocatifElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
 					</button>
 				</div>			
 			</th>
@@ -74,7 +74,7 @@ Droit de superficie et autre infra./ surface right
 			<th >
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input hb-enter="listOrViewRink()" tabindex="5" id="asRinkSearchTextInput" name="asRinkSearchTextInput" type="text" class="form-control" ng-model="asRinkSearch.text" hb-no-dirty-check placeholder="">
+						<input hb-enter="listOrViewBatLocatif()" tabindex="5" id="immeubleBatLocatifSearchTextInput" name="immeubleBatLocatifSearchTextInput" type="text" class="form-control" ng-model="immeubleBatLocatifSearch.text" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
 			</th>
