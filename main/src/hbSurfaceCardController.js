@@ -13,10 +13,11 @@
 							'$timeout',
 							'hbAlertMessages',
 							'hbUtil',
-							'hbQueryService',
+							'hbQueryService', 
+							'HB_COLLECTIONS',
 							function($scope, $attrs, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout,
-									hbAlertMessages, hbUtil, hbQueryService) {
+									hbAlertMessages, hbUtil, hbQueryService, HB_COLLECTIONS) {
 
 								//$log.debug("    >>>> Using HbSurfaceCardController");
 
@@ -76,6 +77,7 @@
 									            	$scope.elfin.GROUPE  = angular.copy(archivedLocationUnit.GROUPE);
 									            	$scope.elfin.NATURE  = angular.copy(archivedLocationUnit.NATURE);
 									            	$scope.elfin.TYPE  = angular.copy(archivedLocationUnit.TYPE);
+									            	$scope.elfin.SOURCE  = angular.copy(archivedLocationUnit.SOURCE);
 
 									            	// Force creation of new UNITE LOCATION.
 									            	$scope.saveElfin($scope.elfin);
@@ -91,6 +93,8 @@
 												});		
 							    			} else if ($routeParams.ORIGINE) {
 								    			$scope.elfin.IDENTIFIANT.ORIGINE = $routeParams.ORIGINE;
+								    			// Build reference to parent IMMEUBLE.
+								    			$scope.elfin.SOURCE = HB_COLLECTIONS.IMMEUBLE_ID + "/IMMEUBLE/" + $routeParams.ORIGINE;
 							    			}
 							    			 
 							    		} 
