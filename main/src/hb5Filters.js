@@ -423,12 +423,6 @@
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
 	            	
-	            	if (immeuble.GROUPE_COMPTABLE) {
-	            		$log.debug("IMM " + immeuble.IDENTIFIANT.OBJECTIF + " - GROUPE_COMPTABLE = " + immeuble.GROUPE_COMPTABLE);
-	            	} else {
-	            		$log.debug("IMM " + immeuble.IDENTIFIANT.OBJECTIF + " - NO GROUPE_COMPTABLE");
-	            	}
-	            	
                     if ( checkAndForTokenisedSearchText(immeuble,searchtext,checkAnyField) ) {
                     	if ( !angular.isUndefined(active) ) {
                     		if ( active === "any" || 
