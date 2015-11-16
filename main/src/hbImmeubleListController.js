@@ -37,7 +37,12 @@
     	// Support for GER restriction
     	if ($routeParams.GER) {
     		$scope.search.GER = $routeParams.GER; 
-    	}    	    	
+    	}
+    	
+    	// Support for GROUPE_COMPTABLE restriction
+    	if ($routeParams.GROUPE_COMPTABLE) {
+    		$scope.search.GROUPE_COMPTABLE = $routeParams.GROUPE_COMPTABLE; 
+    	}
     	
     	// Support for IMMEUBLE selection
     	if ($routeParams.source) {
