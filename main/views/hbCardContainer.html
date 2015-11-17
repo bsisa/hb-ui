@@ -10,14 +10,15 @@
 	    
 			<!-- Fix position buttons bar -->
 			<div class="hb-btn-bar btn-group-vertical" >
-			    <button class="btn btn-default" ng-click="home()"><i class="glyphicon glyphicon-home"></i></button>
-				<button class="btn btn-default" ng-class="getBtnClasses(elfinForm)" ng-click="saveElfin(elfin)" ng-disabled="!canSave()">
+			    <button class="btn btn-default" ng-click="home()" tooltip="Home - Dashboard" tooltip-popup-delay="1000" tooltip-placement="right"><i class="glyphicon glyphicon-home"></i></button>
+				<button class="btn btn-default" ng-class="getBtnClasses(elfinForm)" ng-click="saveElfin(elfin)" ng-disabled="!canSave()" tooltip="Sauver" tooltip-popup-delay="1000" tooltip-placement="right">
 					<span ng-show="canSave()"><i class="glyphicon glyphicon-save"></i></span>
 					<span ng-show="!canSave()"><i class="glyphicon glyphicon-saved"></i></span>
 				</button>
-				<button class="btn btn-default" ng-click="delElfin(elfin)" ><i class="glyphicon glyphicon-remove-circle"></i></button>
-				<button class="btn btn-default" ng-click="printReport(elfin)" ng-disabled="!canPrint()"><i class="glyphicon glyphicon-print"></i></button>
-				<button class="btn btn-danger" ng-click="switchMapDisplayType()"><i class="glyphicon glyphicon-picture"></i></button>
+				<button class="btn btn-default" ng-click="delElfin(elfin)" tooltip="Supprimer" tooltip-popup-delay="1000" tooltip-placement="right"><i class="glyphicon glyphicon-remove-circle"></i></button>
+				<button class="btn btn-default" ng-click="printReport(elfin)" ng-disabled="!canPrint()" tooltip="Impression" tooltip-popup-delay="1000" tooltip-placement="right"><i class="glyphicon glyphicon-print"></i></button>
+				<button class="btn btn-default" ng-click="printStickersReport(elfin)" ng-show="hasStickersReport(elfin)" tooltip="Rapport des étiquettes" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-tags"></i></button>
+				<button class="btn btn-danger" ng-click="switchMapDisplayType()" tooltip="Changement de mode d'affichage plan" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-picture"></i></button>
 	   		</div>    
 	    
 	        <div ng-show="!isMapToggled() || (isMapToggled() && mapDisplayType === 'SPLIT') " class="hb-card-content" ng-transclude>

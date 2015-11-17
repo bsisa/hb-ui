@@ -352,7 +352,18 @@
         $scope.printReport = function (elfin) {
         	$window.open(hbPrintService.getReportUrl(elfin), "Impression rapport");
         };
+
         
+        $scope.hasStickersReport = function (elfin) {
+        	return (elfin.CLASSE === 'IMMEUBLE');
+        }
+        
+        /**
+         * Prints stickers report designed for IMMEUBLE only.
+         */
+        $scope.printStickersReport = function (elfin) {
+        	$window.open("/api/melfin/report/G20050101000012345/G20150928113000000?col="+elfin.ID_G+"&id="+elfin.Id);
+        }
         
         /**
          * Display JSON data for 'elfin' - Only allowed to 'dev' users
