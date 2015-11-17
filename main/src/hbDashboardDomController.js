@@ -169,6 +169,17 @@
     	$scope.$watch('immeubleSearch', function(newSearch, oldSearch) {
     		if ($scope.immeubleElfins!=null) {
 				$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
+				
+				// Current behaviour is to make use immeubleSearch active state for all immeuble sub-groups.
+				$scope.immeubleTerrainDdpSearch.active = $scope.immeubleSearch.active;
+				$scope.immeubleBatAgricoleSearch.active = $scope.immeubleSearch.active;
+				$scope.immeubleBatLocatifSearch.active = $scope.immeubleSearch.active;
+				$scope.immeubleHangarDepotSearch.active = $scope.immeubleSearch.active;
+	    		
+				refreshFilteredImmeubleTerrainDdpElfins();
+	    		refreshFilteredImmeubleBatAgricoleElfins();
+	    		refreshFilteredImmeubleBatLocatifElfins();
+	    		refreshFilteredImmeubleHangarDepotElfins();
     		}
     	}, true);        
         
