@@ -359,9 +359,9 @@
         }
         
         /**
-         * Prints stickers report designed for IMMEUBLE only.
+         * Prints labels report designed for IMMEUBLE only.
          */
-        $scope.printStickersReport = function (elfin) {
+        $scope.printLabelsReport = function (elfin) {
         	$window.open("/api/melfin/report/G20050101000012345/G20150928113000000?col="+elfin.ID_G+"&id="+elfin.Id);
         }
         
