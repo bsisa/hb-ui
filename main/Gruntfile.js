@@ -90,7 +90,7 @@ module.exports = function(grunt) {
 								'src/hbContratCardDirective.js',
                                 'src/hbDashboardDirective.js',
                                 'src/hbDashboardController.js',
-
+                                
                                 'src/hbDashboardDomDirective.js',
                                 'src/hbDashboardDomController.js',                                
                                 
