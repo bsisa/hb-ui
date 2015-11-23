@@ -37,11 +37,28 @@ angular.module('hb5').constant('HB_COLLECTIONS', {
 
 });
 
+/**
+ * Define accounting groups used as `hardcoded` references within application.
+ * There are many more defined within the database but not required as constant.
+ * The goal of these constants are to ease source code update that might be 
+ * required by database value change which are seldom expected to happen.
+ */
+angular.module('hb5').constant('HB_ACCOUNTING_GROUPS', {
+	DOM_TERRAIN_DDP : "Terrain – D.D.P.",
+	DOM_BATIMENT_AGRICOLE : "Bâtiment agricole",
+	DOM_BATIMENT_LOCATIF : "Bâtiment locatif",
+	DOM_HANGAR_DEPOT : "Hangar et dépôt"
+
+});
+
+
+
 
 /**
  * Define events names as constants
  */
 angular.module('hb5').constant('HB_EVENTS', {
+	ACL_UPDATE : "ACL_UPDATE",
 	DISPLAY_MAP_CONTENT : "hb5:display:MapContentEvent",
 	DISPLAY_MAP_VIEW : "hb5:display:MapViewEvent",
 	ELFIN_LOADED : "hb5:elfin:loadedEvent",

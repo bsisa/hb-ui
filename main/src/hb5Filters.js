@@ -431,6 +431,8 @@
                     	 icontains(immeublePlace.VALEUR, predicate.place) &&
                     	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
                     	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address) &&
+                    	 icontains(immeuble.IDENTIFIANT.GER, predicate.GER) &&
+                    	 icontains(immeuble.GROUPE_COMPTABLE, predicate.GROUPE_COMPTABLE) && 
                     	 ( 
                     			 predicate.active === "yes" && immeubleIsActive(immeuble) || 
                     			 predicate.active === "no" && !immeubleIsActive(immeuble) || 
@@ -455,11 +457,12 @@
 		
 		return function (immeubles, searchtext, active) {
 
-//			if (!angular.isUndefined(active) && ( active === 'any' || active === 'yes' || active === 'no' )) {
-//				$log.debug("immeubleListAnyFilter, active = " + active);
-//			} else {
-//				$log.debug("immeubleListAnyFilter, active = UNDEFINED");
-//			}
+			// TODO: remove 
+			if (active) {
+				//$log.debug("immeubleListAnyFilter, active = " + active);
+			} else {
+				//$log.debug("immeubleListAnyFilter, active = UNDEFINED");
+			}
 			
 			var checkAnyField = function(immeuble,searchtext) {
 				var immeublePlace = hbUtil.getCARByPos(immeuble, 1);
@@ -470,13 +473,15 @@
 					//icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
 					icontains(immeublePlace.VALEUR, searchtext) ||
 //					icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
-					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext)   
+					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext) ||
+					icontains(immeuble.GROUPE_COMPTABLE, searchtext)
 				);		
 			};			
 
 	        if (!angular.isUndefined(immeubles) && !angular.isUndefined(searchtext)) {
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
+	            	
                     if ( checkAndForTokenisedSearchText(immeuble,searchtext,checkAnyField) ) {
                     	if ( !angular.isUndefined(active) && ( active === 'any' || active === 'yes' || active === 'no' ) ) {
                     		if ( active === "any" || 
@@ -546,6 +551,7 @@
                     	 icontains(currentOwner, predicate.owner) &&
                     	 icontains(currentTenant, predicate.tenant) &&
                     	 icontains(uniteLocative.IDENTIFIANT.OBJECTIF, predicate.registerNb) && 
+                    	 icontains(uniteLocative.IDENTIFIANT.GER, predicate.GER) &&
                     	 icontains(currentBuildingAddress, predicate.address)
                     ) {
                     	tempUniteLocatives.push(uniteLocative);

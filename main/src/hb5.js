@@ -47,14 +47,14 @@
                     	}                		
                 		
                 		$timeout(function() {
-                			$log.debug(">>>> businessDashboardLoadWaitTimeMillisec = "+businessDashboardLoadWaitTimeMillisec+" <<<<");
+                			//$log.debug(">>>> businessDashboardLoadWaitTimeMillisec = "+businessDashboardLoadWaitTimeMillisec+" <<<<");
                 			activeJob = hbPrintService.getActiveJob();
                     		if (activeJob['CARACTERISTIQUE']['CARSET'] && activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR) {
                     			$location.path( '/' + activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR);
                     		} else {
                     			$location.path( '/SBAT' );
                     		}
-                    		// We want value > 0 only a controller initialisation time.
+                    		// We want value > 0 only at controller initialisation time.
                     		businessDashboardLoadWaitTimeMillisec = 0;
                     	}, businessDashboardLoadWaitTimeMillisec, true);                    	
                     	
@@ -62,6 +62,9 @@
                 	
                 	$scope.init();
                 }]
+            })
+            .when('/DOM', {
+                templateUrl: '/assets/views/indexDom.html'
             })
             .when('/SDS', {
                 templateUrl: '/assets/views/indexSds.html'

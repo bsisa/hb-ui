@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 								'src/hbActorLineConverterController.js',
 								'src/hbActorLineConverterDirective.js',
 								'src/hbAlertMessagesService.js',
-
+								
 								'src/hbAmenagementSportifCardDirective.js', 
 								'src/hbAmenagementSportifCardController.js',
 								'src/hbAmenagementSportifListController.js',
@@ -91,6 +91,9 @@ module.exports = function(grunt) {
                                 'src/hbDashboardDirective.js',
                                 'src/hbDashboardController.js',
 
+                                'src/hbDashboardDomDirective.js',
+                                'src/hbDashboardDomController.js',                                
+                                
                                 'src/hbDashboardSdsDirective.js',
                                 'src/hbDashboardSdsController.js',
 
@@ -140,6 +143,9 @@ module.exports = function(grunt) {
 								'src/hbSearchController.js',
 								'src/hbSearchDirective.js',
 
+								'src/hbSearchDomController.js',
+								'src/hbSearchDomDirective.js',
+								
 								'src/hbSearchSdsController.js',
 								'src/hbSearchSdsDirective.js',
 

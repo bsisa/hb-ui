@@ -6,7 +6,7 @@
 	 * The goal of the current service is to avoid both code and 
 	 * configurations duplication. 
 	 */
-	angular.module('hb5').service('hbQueryService', ['$log','GeoxmlService', 'HB_COLLECTIONS',function ($log,GeoxmlService,HB_COLLECTIONS) {
+	angular.module('hb5').service('hbQueryService', ['$log','GeoxmlService', 'HB_COLLECTIONS', '$q',function ($log,GeoxmlService,HB_COLLECTIONS, $q) {
 		
 		/**
 		 * Returns a handle to function:
@@ -20,6 +20,18 @@
 	        	return GeoxmlService.getCollection(collectionId).getList();
 	        }			
 		};
+		
+				
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.ABRIBUS_ID` identifies collection containing ELFIN objects of CLASSE ABRIBUS.  
+		 *  @see getList
+		 */		
+		var getAbribusList = function(xpath) {
+	        return getList(HB_COLLECTIONS.ABRIBUS_ID,xpath);
+		};	
+		
 		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
@@ -118,6 +130,28 @@
 		 */
 		var getEquipementsSportifs = function(xpath) {
 			return getList(HB_COLLECTIONS.EQUIPEMENT_SPORTIF_ID,xpath);
+		};
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.FONTAINE_ID` identifies collection containing ELFIN objects of CLASSE FONTAINE_ID.  
+		 *  @see getList
+		 */
+		var getFontaines = function(xpath) {
+			return getList(HB_COLLECTIONS.FONTAINE_ID,xpath);
+		};	
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.HORLOGE_ID` identifies collection containing ELFIN objects of CLASSE HORLOGE.  
+		 *  @see getList
+		 */
+		var getHorlogeList = function(xpath) {
+			return getList(HB_COLLECTIONS.HORLOGE_ID,xpath);
 		};	
 
 
@@ -129,9 +163,72 @@
 		 */
 		var getImmeubles = function(xpath) {
 	        return getList(HB_COLLECTIONS.IMMEUBLE_ID,xpath);
-		};		
+		};
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.IMMEUBLE_ID` identifies collection containing ELFIN objects of CLASSE IMMEUBLE.  
+		 *  @see getList  
+		 */
+		var getImmeubles = function(xpath) {
+	        return getList(HB_COLLECTIONS.IMMEUBLE_ID,xpath);
+		};			
 
+		
+		/**
+		 * POC - deferred list of immeubles with added GROUPE_COMPTABLE property from current year PRESTATION
+		 * 
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *   
+		 * `HB_COLLECTIONS.IMMEUBLE_ID` identifies collection containing ELFIN objects of CLASSE IMMEUBLE.  
+		 *  @see getList
+		 */
+		var getAugmentedImmeubles = function(immeublesXpath) {
+	        
+			var deferred = $q.defer();
+			
+		    getImmeubles(immeublesXpath)
+	        .then(function(immeubleElfins) {
+	        	// Get all current year PRESTATIONs at once (most efficient)
+	        	var currentYear = moment().year();
+	        	var prestationsXpath = "//ELFIN[@CLASSE='PRESTATION' and IDENTIFIANT/DE='"+currentYear+"']";
+	        	getPrestations(prestationsXpath).then(function(prestationElfins) {
+					var augmentedImmeubles = new Array();
+					for (var i = 0; i < immeubleElfins.length; i++) {
+						var currImmeuble = immeubleElfins[i];
+						var xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION' and PARTENAIRE/PROPRIETAIRE/@NOM='"+currImmeuble.PARTENAIRE.PROPRIETAIRE.NOM+"' and IDENTIFIANT/DE='"+currentYear+"'][substring-before(IDENTIFIANT/OBJECTIF,'.')='"+currImmeuble.IDENTIFIANT.OBJECTIF+"']";				
+						// Perform PRESTATION query work
+						var currPrestation = _.find(prestationElfins, function(prestaElfin){ 
+							return ( 
+									prestaElfin.PARTENAIRE.PROPRIETAIRE.NOM === currImmeuble.PARTENAIRE.PROPRIETAIRE.NOM && 
+									prestaElfin.IDENTIFIANT.OBJECTIF.substr(0, prestaElfin.IDENTIFIANT.OBJECTIF.indexOf('.')) === 
+										currImmeuble.IDENTIFIANT.OBJECTIF ) });
+						
+						if (angular.isDefined(currPrestation)) {
+							currImmeuble.GROUPE_COMPTABLE = currPrestation.IDENTIFIANT.ORIGINE;
+						}
+						augmentedImmeubles.push(currImmeuble);
+					}		        	
+					// Return list of augmented immeubles as a promise
+					deferred.resolve(augmentedImmeubles);
+	        	}, function(response) {
+		            var message = "Le chargement des prestations a échoué (statut de retour: " + response.status + ")";
+					// Return error message as a promise
+		            deferred.reject(message);
+		        });	
+	        	
+	        }, function(response) {
+	            var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
+				// Return error message as a promise
+	            deferred.reject(message);
+	        });			
+			
+		    return deferred.promise;
+		};			
 
+		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *   
@@ -243,8 +340,29 @@
 			return getList(HB_COLLECTIONS.VENTILATION_ID,xpath);
 		};			
 		
+		
+		
+		/**
+		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
+		 *  
+		 * `HB_COLLECTIONS.WC_ID` constant identifies collection containing ELFIN objects of CLASSE WC.
+		 *  @see getList
+		 */		
+		var getWcList = function(xpath) {
+			return getList(HB_COLLECTIONS.WC_ID,xpath);
+		};	
 	
+		/**
+		 * Get PRESTATION distinct accounting groups for the current year
+		 */
+		var getJsonAccountingGroups = function() {
+			return GeoxmlService.getXqueryResult("jsonPrestationAccountingGroups.xq").get();
+		};	
+		
+		
+		
         return {
+        	getAbribusList:getAbribusList,
         	getActors:getActors,
         	getAmenagementSportifs:getAmenagementSportifs,
         	getCiterneList:getCiterneList,
@@ -254,7 +372,10 @@
         	getContrats:getContrats,
         	getEquipementList:getEquipementList,
         	getEquipementsSportifs:getEquipementsSportifs,
+        	getFontaines:getFontaines,
+        	getHorlogeList:getHorlogeList,
         	getImmeubles:getImmeubles,
+        	getAugmentedImmeubles:getAugmentedImmeubles,
         	getInstallationsSportives:getInstallationsSportives,
         	getIntroductionElectriciteList:getIntroductionElectriciteList,
         	getLocationUnits:getLocationUnits,
@@ -264,7 +385,9 @@
         	getRoleList:getRoleList,
         	getTransactions:getTransactions,
         	getUserList:getUserList,
-        	getVentilationList:getVentilationList
+        	getVentilationList:getVentilationList,
+        	getWcList:getWcList,
+        	getJsonAccountingGroups:getJsonAccountingGroups
         };
 
     }]);
