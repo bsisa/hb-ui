@@ -177,7 +177,7 @@
             Display Map Events
              */
 
-            var displayMapViewListener = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_VIEW, function (event, displayMap) {
+            var displayMapViewListenerDeregister = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_VIEW, function (event, displayMap) {
                 if (displayMap === true) {
                     leafletData.getMap().then(function (map) {
                         map.invalidateSize();
@@ -186,7 +186,7 @@
             });
 
 
-            var displayMapContentListener = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, mapDef) {
+            var displayMapContentListenerDeregister = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, mapDef) {
 
                 leafletData.getMap().then(function (map) {
 
@@ -305,14 +305,14 @@
              */
 
             // Elfin has been loaded
-            var elfinLoadedListener = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
+            var elfinLoadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
             	// TODO: review: not relevant for all ELFIN@CLASSE !
                 $scope.elfin = elfin;
-                $log.debug(">>>> elfinLoadedListener => " + elfin.CLASSE);
+                $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE);
             });
 
             // Elfin has been unloaded, thus no more current elfin
-            var elfinUnloadedListener = $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
+            var elfinUnloadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
                 if (elfin) {
                     updateElfinRepresentation(elfin);
                 }
@@ -326,12 +326,12 @@
              * Note: Unlike in hbCardContainerController we do always need to   
              * update the ELFIN representation on the map.
              */
-            var elfinUpdatedListener = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
+            var elfinUpdatedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
                	updateElfinRepresentation(elfin);            		
             });
 
             // Elfin has been deleted, thus remove it from the map
-            var elfinDeletedListener = $rootScope.$on(HB_EVENTS.ELFIN_DELETED, function(event, elfin) {
+            var elfinDeletedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_DELETED, function(event, elfin) {
                 var identifier = getElfinIdentifier(elfin);
                 if (angular.isDefined($scope.layerDictionary[identifier])) {
 
@@ -430,14 +430,15 @@
              * Clean up rootScope listeners explicitely (required). 
              */
             $scope.$on('$destroy', function(event, data){
-            	//$log.debug(">>>>>>>>>> $destroy called for hbMapController ! <<<<<<<<<<");
+            	$log.debug(">>>> $destroy called for hbMapController <<<<<<<<<<");
+            	$log.debug(">>>> MapController: proceed with rootscope listeners deregistration:  displayMapViewListenerDeregister, displayMapContentListenerDeregister, elfinLoadedListenerDeregister, elfinUnloadedListenerDeregister, elfinUpdatedListenerDeregister, elfinDeletedListenerDeregister");
             	//switchMapDisplayListener;
-            	displayMapViewListener();
-            	displayMapContentListener();
-                elfinLoadedListener();
-                elfinUnloadedListener();
-                elfinUpdatedListener();
-                elfinDeletedListener();
+            	displayMapViewListenerDeregister();
+            	displayMapContentListenerDeregister();
+            	elfinLoadedListenerDeregister();
+            	elfinUnloadedListenerDeregister();
+            	elfinUpdatedListenerDeregister();
+            	elfinDeletedListenerDeregister();
             });
             
         }]);
