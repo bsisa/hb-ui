@@ -1,0 +1,73 @@
+	<div hb-card-header >
+		<!-- Custom validation message to be defined here -->
+		<span ng-show="elfinForm.name.$error.required">Le champs <strong>Nom de famille</strong> est obligatoire pour les collaborateurs</span>
+		<span ng-show="elfinForm.surname.$error.required">Le champs <strong>Prénom</strong> est obligatoire pour les collaborateurs</span>
+		<span ng-show="elfinForm.email.$error.email">Le champs <strong>Email</strong> n'est pas valide</span>
+		<span ng-show="elfinForm.email.$error.required">Le champs <strong>Email</strong> est obligatoire pour les collaborateurs</span>
+		<span ng-show="elfinForm.societe.$error.required">Le champs <strong><span ng-show="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'" >Société</span><span ng-show="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'" >Abréviation</span></strong> est obligatoire</span>
+		<span ng-show="elfinForm.role.$error.required">Le champs <strong>Rôle</strong> est obligatoire</span>
+	</div>
+	<div class="row" style="padding-top: 8px;">
+		<div class="col-xs-12">
+			<tabset> <!-- CONSTAT tab --> <tab> <tab-heading>Identifications</tab-heading>
+			<div class="hb-tab">
+				<div class="form-group">
+					<label for="name" class="col-sm-2 control-label">CODE :: Nom de
+						famille</label>
+					<div class="col-sm-5">
+						<input id="name" name="name" type="text" class="form-control"
+							ng-model="elfin.IDENTIFIANT.NOM" ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="surname" class="col-sm-2 control-label">Prénom</label>
+					<div class="col-sm-5">
+						<input id="surname" name="surname" type="text" class="form-control"
+							ng-model="elfin.IDENTIFIANT.ALIAS"
+							ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="role" class="col-sm-2 control-label">Groupe</label>
+					<div class="col-sm-5">
+						<div hb-single-select hb-single-select-options="codeGroups" ng-model="elfin.GROUPE" ></div>
+					</div>
+					
+				</div>
+				<div class="form-group">
+					<label for="societe" class="col-sm-2 control-label"><span ng-show="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'" >Société</span><span ng-show="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'" >Abréviation</span></label>
+					<div class="col-sm-5">
+						<input id="societe" name="societe" type="text" class="form-control"
+							ng-model="elfin.GROUPE" tooltip="elfin.GROUPE" ng-required="elfin.IDENTIFIANT.QUALITE != ''">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tel" class="col-sm-2 control-label">Téléphone</label>
+					<div class="col-sm-5">
+						<input id="tel" name="tel" type="text" class="form-control"
+							ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"
+							tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="cellphone" class="col-sm-2 control-label">{{elfin.CARACTERISTIQUE.CARSET.CAR[0].NOM}}</label>
+					<div class="col-sm-5">
+						<input id="cellphone" name="cellphone" type="text" class="form-control"
+							ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"
+							>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="email" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-5">
+						<input id="email" name="email" type="email" class="form-control"
+							ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR"
+							tooltip="elfin.CARACTERISTIQUE.CAR5.VALEUR" ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
+					</div>
+				</div>				
+	
+			</div>
+			</tab> </tabset>
+		</div>
+	</div>

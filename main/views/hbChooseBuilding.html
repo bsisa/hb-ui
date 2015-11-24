@@ -1,0 +1,17 @@
+<div class="input-group">
+	<input 
+		id="{{actorIdName}}" 
+		hb-dynamic-name="buildingIdName"
+		type="text" 
+		class="form-control" 
+		ng-model="selected.buildingDisplay" 
+		ng-readonly="true"
+		ng-model-options="{ debounce: 500 }" 
+		ng-required="validateBuilding">
+		
+		<span class="input-group-btn" >
+			<button ng-disabled="{{!selectionEnabled}}" class="btn btn-default" type="button" ng-click="hbChooseBuilding()">
+				<i class="glyphicon glyphicon-list-alt" ></i>
+			</button>
+		</span>
+</div>

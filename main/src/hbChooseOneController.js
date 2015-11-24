@@ -86,20 +86,38 @@
 							// ============================================================
 							// Custom search field used to filter elfins
 							// ============================================================    	
-							// Default ng-grid showFilter box requires an extra click 
-							// to be accessed and is ugly. Let's define our own 
-							
 							$scope.search = { text: ""};
 							
-							$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);
-							
 							$scope.$watch('search.text', function() { 
-								$scope.gridOptions.filterOptions.filterText = $scope.search.text;
-								// TODO: build fields with columnsDefinition... Test with PRODUCTION_CHALEUR...
-								//$scope.gridOptions.sortInfo = { fields: ['GROUPE','IDENTIFIANT.QUALITE'], directions: ['asc', 'asc']}
-								}, true);
+								$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);								
+							}, true);
 							// ============================================================
 							
+							// sortFields automatically build from columnsDefinition
+							//$scope.sortFields = _.pluck(columnsDefinition, 'field');
+							// In ui-grid 3 (formerly ng-grid) sort information must be 
+							// defined in columnDefs if needed as: 
+							/*
+							columnDefs: [
+							             {
+							               field: 'firstFieldName',
+							               sort: {
+							                 direction: uiGridConstants.ASC,
+							                 priority: 2
+							               }
+							             },
+							             {
+							               field: 'secondFieldName',
+							               sort: {
+							                 direction: uiGridConstants.DESC,
+							                 priority: 1
+							               }
+							             }							             
+							*/
+							// Remarks: 
+							// 1) It requires 'uiGridConstants' injection
+							// 2) Priorities are used lower first
+							// 
 							
 							// ============================================================
 							// Manage user selection
@@ -125,34 +143,26 @@
 							}, true);
 							
 							
-							// ============================================================
-							// Manage ng-grid row double click event using gridOptions plugin
-							// ============================================================
-							
-							var ngGridDoubleClickPluginInstance = new ngGridDoubleClickPlugin();
-							
 							var selectionConfirmed = function() {
 								$modalInstance.close($scope.selectedElfins);
 							};
 							
-							$scope.doubleClickListener = function(rowItem) {
-								selectionConfirmed();
-							};
 							
-							
-							// ng-grid options. See ng-grid API Documentation for details.
+							// ui-grid options. See ui-grid API Documentation for details.
 							$scope.gridOptions = {
 							        data: 'elfins',
 							        columnDefs: columnsDefinition,
-							        multiSelect: false,
-							        selectedItems: $scope.selectedElfins,
-							        showColumnMenu: false, // Useful for grouping 
-							        showFilter: false, // Ugly look, redefine our own search field
-							        filterOptions : { filterText: '', useExternalFilter: false },
-							        doubleClickFunction: $scope.doubleClickListener,
-							        plugins: [ngGridDoubleClickPluginInstance]
-							    };    	
-							
+							        multiSelect: false,	
+							        enableFullRowSelection: true,
+							        modifierKeysToMultiSelect: false,					        
+								    onRegisterApi: function (gridApi) {
+								        //set gridApi on scope
+								        $scope.gridApi = gridApi;
+								        gridApi.selection.on.rowSelectionChanged($scope,function(row){
+								          $scope.selectedElfins = gridApi.selection.getSelectedRows();
+								        });
+								    }								    
+							    };    								
 							
 							$scope.ok = function () {
 								selectionConfirmed();
@@ -160,39 +170,6 @@
 							$scope.cancel = function () {
 							    $modalInstance.dismiss('cancel');
 							};
-							
-							
-							/**
-							 * ngGridDoubleClickPlugin definition - see http://angular-ui.github.io/ng-grid/ API documentation
-							 * This plugin provides ng-grid with a new doubleClickFunction called when 
-							 * a row is double clicked. The first element of of the selectedItems is 
-							 * passed as single function parameter.
-							 */
-							function ngGridDoubleClickPlugin() {
-							
-								var self = this;
-							    self.$scope = null;
-							    self.gridRef = null;
-							 
-							    // Called when ng-grid directive executes.
-							    self.init = function(scope, grid, services) {
-							        // Keep references of grid scope and grid object received from ng-grid directive
-							        self.$scope = scope;
-							        self.gridRef = grid;
-							        // Trigger grid events assignment.
-							        self.assignEvents();
-							    };
-							    self.assignEvents = function() {
-							        // Set double click event handler to the header container.
-							        self.gridRef.$viewport.on('dblclick', self.onDoubleClick);
-							    };
-							    // Double click function
-							    self.onDoubleClick = function(event) {
-							    	// Configure new function name and signature, here: doubleClickFunction
-							        self.gridRef.config.doubleClickFunction(self.$scope.selectedItems[0]);
-							    };
-							};
-							
 							
 							var focusOnSearchField = function() {
 								$('#searchTextInput').focus();	

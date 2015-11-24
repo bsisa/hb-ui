@@ -1,0 +1,17 @@
+<div class="input-group">
+	<input 
+		id="{{codeIdName}}" 
+		hb-dynamic-name="codeIdName"
+		type="text" 
+		class="form-control" 
+		ng-model="selected.codeDisplay" 
+		ng-readonly="true"
+		ng-model-options="{ debounce: 500 }" 
+		ng-required="validateCode">
+		
+		<span class="input-group-btn" >
+			<button ng-disabled="{{!selectionEnabled}}" class="btn btn-default" type="button" ng-click="hbChooseCode()">
+				<i class="glyphicon glyphicon-list-alt" ></i>
+			</button>
+		</span>
+</div>

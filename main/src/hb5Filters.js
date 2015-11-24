@@ -121,6 +121,64 @@
 	    };
 	}]);		
 	
+	
+	/**
+	 * Filter tailored to CODE list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual code list. 
+	 */
+	angular.module('hb5').filter('codeListFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (codes, predicate) {
+	        if (!angular.isUndefined(codes) && !angular.isUndefined(predicate)) {
+	            var tempCodes = [ ];
+	            angular.forEach(codes, function (code) {
+	            	// var codeSortPosition = hbUtil.getCARByPos(code, 1);
+                    if ( 
+                    	 icontains(code.IDENTIFIANT.NOM, predicate.codeNb) &&
+                    	 icontains(code.DIVERS.REMARQUE, predicate.codeDescription) && 
+                    	 icontains(code.GROUPE, predicate.codeGroup)
+                    ) {
+                    	tempCodes.push(code);
+                    }
+                });
+	            return tempCodes;
+	        } else {
+	            return codes;
+	        }
+	    };
+	}]);
+	
+	
+	/**
+	 * Filter tailored to CODE list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual code list. 
+	 */
+	angular.module('hb5').filter('codeListAnyFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (codes, searchtext) {
+			
+			var checkAnyField = function(code,searchtext) {
+				return (
+					icontains(code.IDENTIFIANT.NOM, searchtext) ||
+					icontains(code.DIVERS.REMARQUE, searchtext)   
+				);		
+			};
+			
+	        if (!angular.isUndefined(codes) && !angular.isUndefined(searchtext)) {
+	            var tempCodes = [ ];
+	            angular.forEach(codes, function (code) {
+                    if ( checkAndForTokenisedSearchText(code,searchtext,checkAnyField) ) {
+                    	tempCodes.push(code);	
+                    }
+                });
+	            return tempCodes;
+	        } else {
+	            return codes;
+	        }
+	    };
+	    
+	}]);	
+	
 
 	/**
      * Filter tailored to CONSTAT list requirements
@@ -399,6 +457,7 @@
 		
 		return function (immeubles, searchtext, active) {
 
+			// TODO: remove 
 			if (active) {
 				//$log.debug("immeubleListAnyFilter, active = " + active);
 			} else {
@@ -424,7 +483,7 @@
 	            angular.forEach(immeubles, function (immeuble) {
 	            	
                     if ( checkAndForTokenisedSearchText(immeuble,searchtext,checkAnyField) ) {
-                    	if ( !angular.isUndefined(active) ) {
+                    	if ( !angular.isUndefined(active) && ( active === 'any' || active === 'yes' || active === 'no' ) ) {
                     		if ( active === "any" || 
                     			   active === "yes" && immeubleIsActive(immeuble) || 
                               	   active === "no" && !immeubleIsActive(immeuble) 
@@ -660,10 +719,41 @@
 
 	
 	/**
-	 * Filter tailored to ACTEUR list requirements.
+	 * Filter tailored to ACTEUR list requirements on strict list of fields defined as: 
+	 * `predicate {qualite, nom, alias, groupe}`
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual actor list. 
 	 */
 	angular.module('hb5').filter('actorListFilter', [function () {
+		
+		return function (actors, predicate) {
+	        if (!angular.isUndefined(actors) && actors !== null && !angular.isUndefined(predicate)) {
+				console.log(">>>> actors.length, predicate = " + actors.length +", " + angular.toJson(predicate));	        	
+	            var tempactors = [ ];
+	            angular.forEach(actors, function (actor) {
+                    if ( 
+                    	 icontains(actor.IDENTIFIANT.QUALITE, predicate.qualite) &&
+                    	 icontains(actor.IDENTIFIANT.NOM, predicate.nom) &&
+                    	 icontains(actor.IDENTIFIANT.ALIAS, predicate.alias) &&
+                    	 icontains(actor.GROUPE, predicate.groupe)
+                    ) {
+                    	tempactors.push(actor);
+                    }
+                });
+	            return tempactors;
+	        } else {
+	            return actors;
+	        }
+	    };	    
+	    
+	    
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to ACTEUR list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual actor list. 
+	 */
+	angular.module('hb5').filter('actorListAnyFilter', [function () {
 		
 		return function (actors, searchText) {
 	        if (!angular.isUndefined(actors) && actors !== null && !angular.isUndefined(searchText)) {

@@ -297,23 +297,31 @@
         /**
          * Reads a source object property value defined at sourcePath.
          * Example: getValueAtPath(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE')
+         * `sourcePath` empty string is treated as `return source object itself` 
          */
         var getValueAtPath = function (source, sourcePath) {
-            var sourcePathComponents = sourcePath.split('.');
-            var objectRef = source;
-            var value = null;
-            var index;
-            for (index = 0; index < sourcePathComponents.length; ++index) {
-                var pathElement = sourcePathComponents[index];
-                if (index == sourcePathComponents.length - 1) {
-                	// Get value at sourcePath
-                	value = objectRef[pathElement];
-                } else {
-                    // Go down a level
-                    objectRef = objectRef[pathElement];
+
+        	if (!angular.isString(sourcePath) ) { // Path is expected to be a string.
+        		return;
+            } else if (sourcePath === '') { // Special processing for empty sourcePath.
+        		return source;
+        	} else {
+                var sourcePathComponents = sourcePath.split('.');
+                var objectRef = source;
+                var value = null;
+                var index;
+                for (index = 0; index < sourcePathComponents.length; ++index) {
+                    var pathElement = sourcePathComponents[index];
+                    if (index == sourcePathComponents.length - 1) {
+                    	// Get value at sourcePath
+                    	value = objectRef[pathElement];
+                    } else {
+                        // Go down a level
+                        objectRef = objectRef[pathElement];
+                    }
                 }
-            }
-            return value;
+                return value;        		
+        	}
         };        
                 
         /**
@@ -353,26 +361,31 @@
          * 
          */
         var applyPaths = function(target, targetPath, source, sourcePath) {
-        	// The paths are expected to be a strings.
+        	// Paths are expected to be strings.
         	if (!angular.isString(targetPath) && !angular.isString(sourcePath) ) {
                   return;
             }
-
-            var targetPathComponents = targetPath.split('.');
-            var objectRef = target;
-            var index;
-            
-            for (index = 0; index < targetPathComponents.length; ++index) {
-                var pathElement = targetPathComponents[index];
-                // Check for last level
-                if (index == targetPathComponents.length - 1) {
-                	// Assign the new value
-                    objectRef[pathElement] = getValueAtPath(source, sourcePath);
-                } else {
-                    // Go down a level
-                    objectRef = objectRef[pathElement];
-                }
-            }
+        	// Special processing for targetPath empty string
+        	if (targetPath === '') {
+        		// Assign the new value directly to target object
+        		target = getValueAtPath(source, sourcePath);
+        	} else {
+                var targetPathComponents = targetPath.split('.');
+                var objectRef = target;
+                var index;
+                
+                for (index = 0; index < targetPathComponents.length; ++index) {
+                    var pathElement = targetPathComponents[index];
+                    // Check for last level
+                    if (index == targetPathComponents.length - 1) {
+                    	// Assign the new value
+                        objectRef[pathElement] = getValueAtPath(source, sourcePath);
+                    } else {
+                        // Go down a level
+                        objectRef = objectRef[pathElement];
+                    }
+                }        		
+        	}
         };
                 
 
@@ -430,6 +443,26 @@
         		return false;
         	}
         };
+        
+        
+        /**
+         * If the provided 'sourceURI' satisfies containsStandardSourceURI() check then
+         * it returns a result object with Id, ID_G, CLASSE properties set. 
+         * Otherwise it returns undefined.
+         */
+        var getIdentifiersFromStandardSourceURI = function(sourceURI) {
+        	if (containsStandardSourceURI(sourceURI)) {
+        		var sourceURITokensArray = sourceURI.split('/');
+        		var result = { 
+        				"ID_G" : sourceURITokensArray[0],
+        				"CLASSE" : sourceURITokensArray[1],
+        				"Id" : sourceURITokensArray[2] 
+        			};
+        		return result;
+    		} else {
+    			return undefined;
+    		}
+        };        
         
         
         /**
@@ -705,6 +738,7 @@
         	getFractionLByPos:getFractionLByPos,
         	getFractionLIndexByPos:getFractionLIndexByPos,
         	getFractionLCByPos:getFractionLCByPos,
+        	getIdentifiersFromStandardSourceURI:getIdentifiersFromStandardSourceURI,
         	getLinkFileName:getLinkFileName,
         	getLinkFileApiUrl:getLinkFileApiUrl,
         	getMomentDateFromHbTextDateFormat:getMomentDateFromHbTextDateFormat,

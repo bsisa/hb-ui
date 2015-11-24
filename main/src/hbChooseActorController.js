@@ -40,7 +40,7 @@
 
 						//$log.debug("    >>>> Using HbChooseActorController");
 
-						// Check if optional editable property if available
+						// Check if optional editable property is available
 						if ($scope.editable) {
 							// We need to deal with text values, make it explicit rather than use == operator.
 							if (($scope.editable === 'true') || ($scope.editable === true)) {
@@ -382,8 +382,7 @@
 							$scope.search = { text: ""};
 							
 							$scope.$watch('search.text', function() { 
-								//$scope.gridOptions.filterOptions.filterText = $scope.search.text;
-								$scope.elfins = $filter('actorListFilter')(elfins, $scope.search.text , false);
+								$scope.elfins = $filter('actorListAnyFilter')(elfins, $scope.search.text , false);
 							}, true);
 							// ============================================================
 							
@@ -412,34 +411,24 @@
 							}, true);
 							
 							
-							// ============================================================
-							// Manage ng-grid row double click event using gridOptions plugin
-							// ============================================================
-							
-							var ngGridDoubleClickPluginInstance = new ngGridDoubleClickPlugin();
-							
 							var selectionConfirmed = function() {
 								$modalInstance.close($scope.selectedElfins);
 							};
 							
-							$scope.doubleClickListener = function(rowItem) {
-								selectionConfirmed();
-							};
-							
-							
-							// ng-grid options. See ng-grid API Documentation for details.
+							// ui-grid options. See ui-grid API Documentation for details.
 							$scope.gridOptions = {
 							        data: 'elfins',
 							        columnDefs: columnsDefinition,
 							        multiSelect: false,
-							        selectedItems: $scope.selectedElfins,
-							        showColumnMenu: false, // Useful for grouping 
-							        showFilter: false, // Ugly look, redefine our own search field
-							        filterOptions : { filterText: '', useExternalFilter: true },
-							        doubleClickFunction: $scope.doubleClickListener,
-							        plugins: [ngGridDoubleClickPluginInstance]
-							    };    	
-							
+							        enableFullRowSelection: true,
+							        modifierKeysToMultiSelect: false,
+								    onRegisterApi: function (gridApi) {
+								        $scope.gridApi = gridApi;
+								        gridApi.selection.on.rowSelectionChanged($scope,function(row){
+								          $scope.selectedElfins = gridApi.selection.getSelectedRows();
+								        });				        
+								    }								    
+							    };							
 							
 							$scope.ok = function () {
 								selectionConfirmed();
@@ -447,39 +436,6 @@
 							$scope.cancel = function () {
 							    $modalInstance.dismiss('cancel');
 							};
-							
-							
-							/**
-							 * ngGridDoubleClickPlugin definition - see http://angular-ui.github.io/ng-grid/ API documentation
-							 * This plugin provides ng-grid with a new doubleClickFunction called when 
-							 * a row is double clicked. The first element of of the selectedItems is 
-							 * passed as single function parameter.
-							 */
-							function ngGridDoubleClickPlugin() {
-							
-								var self = this;
-							    self.$scope = null;
-							    self.gridRef = null;
-							 
-							    // Called when ng-grid directive executes.
-							    self.init = function(scope, grid, services) {
-							        // Keep references of grid scope and grid object received from ng-grid directive
-							        self.$scope = scope;
-							        self.gridRef = grid;
-							        // Trigger grid events assignment.
-							        self.assignEvents();
-							    };
-							    self.assignEvents = function() {
-							        // Set double click event handler to the header container.
-							        self.gridRef.$viewport.on('dblclick', self.onDoubleClick);
-							    };
-							    // Double click function
-							    self.onDoubleClick = function(event) {
-							    	// Configure new function name and signature, here: doubleClickFunction
-							        self.gridRef.config.doubleClickFunction(self.$scope.selectedItems[0]);
-							    };
-							};
-							
 							
 							var focusOnSearchField = function() {
 								$('#searchTextInput').focus();	

@@ -9,7 +9,7 @@
 (function() {
 	
     var hb5 = angular.module('hb5',
-        ['flow','ngGrid','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils','angular.filter']);
+        ['flow','ui.grid','ui.grid.selection','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils','angular.filter']);
 	
     // ================================================================
     // ====                      Config                            ====
@@ -66,6 +66,9 @@
             .when('/DOM', {
                 templateUrl: '/assets/views/indexDom.html'
             })
+            .when('/DOM', {
+                templateUrl: '/assets/views/indexDom.html'
+            })
             .when('/SDS', {
                 templateUrl: '/assets/views/indexSds.html'
             })
@@ -98,7 +101,25 @@
             })                                    
             .when('/elfin/:collectionId/CITERNE/:elfinId', {
                 templateUrl: '/assets/views/CITERNE_card_view.html'
-            })                                  
+            })
+            .when('/elfin/create/CODE', {
+                templateUrl: '/assets/views/CODE_card_new_view.html'
+            })
+            .when('/elfin/:collectionId/CODE/:elfinId', {
+                templateUrl: '/assets/views/CODE_card_view.html'
+            })
+            .when('/elfin/:collectionId/CODE', {
+                templateUrl: '/assets/views/CODE_list_view.html'
+            })
+            .when('/elfin/create/COMMANDE', {
+                templateUrl: '/assets/views/COMMANDE_card_new_view.html'
+            })
+            .when('/elfin/:collectionId/COMMANDE/:elfinId', {
+                templateUrl: '/assets/views/COMMANDE_card_view.html'
+            })
+            .when('/elfin/:collectionId/COMMANDE', {
+                templateUrl: '/assets/views/COMMANDE_list_view.html'
+            })
             .when('/elfin/create/CONSTAT', {
                 templateUrl: '/assets/views/CONSTAT_card_new_view.html'
             })
@@ -108,7 +129,7 @@
             .when('/elfin/:collectionId/CONSTAT', {
                 templateUrl: '/assets/views/CONSTAT_list_view.html'
             })
-           .when('/elfin/create/CONTRAT', {
+            .when('/elfin/create/CONTRAT', {
                 templateUrl: '/assets/views/CONTRAT_card_new_view.html'
             })
             .when('/elfin/:collectionId/CONTRAT/:elfinId', {
@@ -117,7 +138,7 @@
             .when('/elfin/:collectionId/CONTRAT', {
                 templateUrl: '/assets/views/CONTRAT_list_view.html'
             })
-           .when('/elfin/create/EQUIPEMENT_SPORTIF', {
+            .when('/elfin/create/EQUIPEMENT_SPORTIF', {
                 templateUrl: '/assets/views/EQUIPEMENT_SPORTIF_card_new_view.html'
             })            
             .when('/elfin/:collectionId/FONTAINE/:elfinId', {
@@ -338,12 +359,18 @@
     	        			errMsg += "( " + response.data.DESCRIPTION +" )"; 
     	        		} 
     	        		$log.error(errMsg);
+    	        		// NOTE: reactivated for extensive testing. The former problem
+    	        		// was most certainly due to the "Java date parser wrong usage"
+    	        		// fixed issue.
+    	        		// 
+    	        		// The following comment is deprecated but currently kept as reminder: 
+    	        		// 
     	        		// Error 500 sometime shows up on xhr "wake up" without affecting 
     	        		// the application behaviour to the end-user. Thus stop launching 
     	        		// annoying dialog to the end-user with information he cannot act
     	        		// upon. Keep logging error in case annother true exception case 
     	        		// need investigations.
-    	        		//hbAlertMessages.addAlert("danger",errMsg);
+    	        		hbAlertMessages.addAlert("danger",errMsg);
     	        	} else if (response.status == 566) { // 566 - Custom code for connect exception
     	        		var errMsg = "La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur. ( " + response.data.DESCRIPTION +" )";
     	        		$log.error(errMsg);
