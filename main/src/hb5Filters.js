@@ -1,12 +1,36 @@
 /**
  * hb5 module custom filters.
  * 
- * Available filters:
+ * Available ELFIN@CLASSE related filters:
+ * 
  * <ul>
+ * <li>actorListFilter</li>
+ * <li>actorListAnyFilter</li>
+ * <li>amenagementSportifListFilter</li>
+ * <li>amenagementSportifListAnyFilter</li>
  * <li>annexExcludeTag</li>
- * <li>annexIncludeTag</li>
- * <li>constatListFilter</li>
- * <li>immeubleListFilter</li> 
+ * <li>annexIncludeTag</li> 
+ * <li>codeListFilter</li>
+ * <li>codeListAnyFilter</li>
+ * <li>constatListFilter</li> 
+ * <li>contractTerminatedListFilter</li>
+ * <li>fontaineListFilter</li>
+ * <li>fontaineListAnyFilter</li>
+ * <li>fractionElfinRefFilter</li>
+ * <li>horlogeListFilter</li>
+ * <li>horlogeListAnyFilter</li>
+ * <li>immeubleListFilter</li>
+ * <li>immeubleListAnyFilter</li>  
+ * <li>prestationListFilter</li>
+ * <li>uniteLocativeListFilter</li>
+ * <li>uniteLocativeListAnyFilter</li>
+ * <li>wcListFilter</li>
+ * <li>wcListAnyFilter</li>
+ * </ul>
+ * 
+ * Available generic filters:
+ * 
+ * <ul> 
  * <li>notLast</li>
  * <li>plural</li>
  * </ul> 
@@ -15,6 +39,11 @@
  */
 (function() {
 
+	
+	// ================================================================
+	// ====            Filters utility functions                   ====
+	// ================================================================
+	
 	/** 
 	 * case insensitive string contains check
 	 */
@@ -61,6 +90,140 @@
 			return checkfun(elfins,searchtext);
 		}	
 	};	
+
+	
+	
+	// ================================================================
+	// ====                       Filters                          ====
+	// ================================================================	
+	
+	/**
+	 * Filter tailored to ACTEUR list requirements on strict list of fields defined as: 
+	 * `predicate {qualite, nom, alias, groupe}`
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual actor list. 
+	 */
+	angular.module('hb5').filter('actorListFilter', [function () {
+		
+		return function (actors, predicate) {
+	        if (!angular.isUndefined(actors) && actors !== null && !angular.isUndefined(predicate)) {
+				console.log(">>>> actors.length, predicate = " + actors.length +", " + angular.toJson(predicate));	        	
+	            var tempactors = [ ];
+	            angular.forEach(actors, function (actor) {
+                    if ( 
+                    	 icontains(actor.IDENTIFIANT.QUALITE, predicate.qualite) &&
+                    	 icontains(actor.IDENTIFIANT.NOM, predicate.nom) &&
+                    	 icontains(actor.IDENTIFIANT.ALIAS, predicate.alias) &&
+                    	 icontains(actor.GROUPE, predicate.groupe)
+                    ) {
+                    	tempactors.push(actor);
+                    }
+                });
+	            return tempactors;
+	        } else {
+	            return actors;
+	        }
+	    };	    
+	    
+	    
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to ACTEUR list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual actor list. 
+	 */
+	angular.module('hb5').filter('actorListAnyFilter', [function () {
+		
+		return function (actors, searchText) {
+	        if (!angular.isUndefined(actors) && actors !== null && !angular.isUndefined(searchText)) {
+				console.log(">>>> actors.length, searchText = " + actors.length +", " + searchText);	        	
+	            var tempactors = [ ];
+	            angular.forEach(actors, function (actor) {
+                    if ( 
+                    	 icontains(actor.IDENTIFIANT.QUALITE, searchText) ||
+                    	 icontains(actor.IDENTIFIANT.NOM, searchText) ||
+                    	 icontains(actor.IDENTIFIANT.ALIAS, searchText) ||
+                    	 icontains(actor.GROUPE, searchText)
+                    ) {
+                    	tempactors.push(actor);
+                    }
+                });
+	            return tempactors;
+	        } else {
+	            return actors;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to AMENAGEMENT_SPORTIF list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual amenagementSportif list. 
+	 */
+	angular.module('hb5').filter('amenagementSportifListFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (amenagementSportifs, predicate) {
+	        if (!angular.isUndefined(amenagementSportifs) && !angular.isUndefined(predicate)) {
+	            var tempAmenagementSportifs = [ ];
+	            angular.forEach(amenagementSportifs, function (amenagementSportif) {
+	            	var amenagementSportifPlace = hbUtil.getCARByPos(amenagementSportif, 1);
+	            	amenagementSportifPlace = (amenagementSportifPlace === undefined) ? {"VALEUR" : ""} : amenagementSportifPlace;
+                    if ( 
+                    	 icontains(amenagementSportif.PARTENAIRE.PROPRIETAIRE.NOM, predicate.owner) &&
+                    	 icontains(amenagementSportif.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
+                    	 //icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
+                    	 icontains(amenagementSportifPlace.VALEUR, predicate.place) &&
+                    	 icontains(amenagementSportif.GROUPE, predicate.group) &&
+                    	 icontains(amenagementSportif.IDENTIFIANT.NOM, predicate.buildingNb) &&
+                    	 icontains(amenagementSportif.IDENTIFIANT.ALIAS, predicate.address)
+                    ) {
+                    	tempAmenagementSportifs.push(amenagementSportif);
+                    }
+                });
+	            return tempAmenagementSportifs;
+	        } else {
+	            return amenagementSportifs;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to AMENAGEMENT_SPORTIF list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual amenagementSportif list. 
+	 */
+	angular.module('hb5').filter('amenagementSportifListAnyFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (amenagementSportifs, searchtext) {
+
+			var checkAnyField = function(amenagementSportif,searchtext) {
+				var amenagementSportifPlace = hbUtil.getCARByPos(amenagementSportif, 1);
+				amenagementSportifPlace = (amenagementSportifPlace === undefined) ? {"VALEUR" : ""} : amenagementSportifPlace;
+				return (
+					icontains(amenagementSportif.GROUPE, searchtext) ||
+					icontains(amenagementSportif.PARTENAIRE.PROPRIETAIRE.NOM, searchtext) ||
+					icontains(amenagementSportif.IDENTIFIANT.OBJECTIF, searchtext) ||
+					//icontains(amenagementSportif.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
+					icontains(amenagementSportifPlace.VALEUR, searchtext) ||
+//					icontains(amenagementSportif.IDENTIFIANT.NOM, searchtext) ||
+					icontains(amenagementSportif.IDENTIFIANT.ALIAS, searchtext)
+				);		
+			};			
+
+	        if (!angular.isUndefined(amenagementSportifs) && !angular.isUndefined(searchtext)) {
+	            var tempAmenagementSportifs = [ ];
+	            angular.forEach(amenagementSportifs, function (amenagementSportif) {
+                    if ( checkAndForTokenisedSearchText(amenagementSportif,searchtext,checkAnyField) ) {
+                    	tempAmenagementSportifs.push(amenagementSportif);
+                    }
+                });
+	            return tempAmenagementSportifs;
+	        } else {
+	            return amenagementSportifs;
+	        }
+	    };
+	}]);	
+
 
 	/**
 	 * Filter specialised for ELFIN ANNEXE RENVOI.
@@ -282,75 +445,66 @@
 	    };
 	}]);	
 
+
 	/**
-	 * Filter tailored to AMENAGEMENT_SPORTIF list requirements.
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual amenagementSportif list. 
+	 * Filter tailored to FONTAINE list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual fontaine list. 
 	 */
-	angular.module('hb5').filter('amenagementSportifListFilter', ['$log','hbUtil', function ($log,hbUtil) {
+	angular.module('hb5').filter('fontaineListFilter', [function () {
 		
-		return function (amenagementSportifs, predicate) {
-	        if (!angular.isUndefined(amenagementSportifs) && !angular.isUndefined(predicate)) {
-	            var tempAmenagementSportifs = [ ];
-	            angular.forEach(amenagementSportifs, function (amenagementSportif) {
-	            	var amenagementSportifPlace = hbUtil.getCARByPos(amenagementSportif, 1);
-	            	amenagementSportifPlace = (amenagementSportifPlace === undefined) ? {"VALEUR" : ""} : amenagementSportifPlace;
+		return function (fontaines, search) {
+	        if (!angular.isUndefined(fontaines) && !angular.isUndefined(search)) {
+	            var tempFontaines = [ ];
+	            angular.forEach(fontaines, function (fontaine) {
                     if ( 
-                    	 icontains(amenagementSportif.PARTENAIRE.PROPRIETAIRE.NOM, predicate.owner) &&
-                    	 icontains(amenagementSportif.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
-                    	 //icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
-                    	 icontains(amenagementSportifPlace.VALEUR, predicate.place) &&
-                    	 icontains(amenagementSportif.GROUPE, predicate.group) &&
-                    	 icontains(amenagementSportif.IDENTIFIANT.NOM, predicate.buildingNb) &&
-                    	 icontains(amenagementSportif.IDENTIFIANT.ALIAS, predicate.address)
+                    	 icontains(fontaine.IDENTIFIANT.OBJECTIF, search.objectif) &&
+                    	 icontains(fontaine.IDENTIFIANT.NOM, search.nom) &&
+                    	 icontains(fontaine.IDENTIFIANT.ALIAS, search.alias) &&
+                    	 icontains(fontaine.DIVERS.REMARQUE, search.remark)
                     ) {
-                    	tempAmenagementSportifs.push(amenagementSportif);
+                    	tempFontaines.push(fontaine);
                     }
                 });
-	            return tempAmenagementSportifs;
+	            return tempFontaines;
 	        } else {
-	            return amenagementSportifs;
+	            return fontaines;
 	        }
 	    };
 	}]);	
 	
 	
 	/**
-	 * Filter tailored to AMENAGEMENT_SPORTIF list single search criterion on `all fields`.
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual amenagementSportif list. 
+	 * Filter tailored to FONTAINE list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual fontaine list. 
 	 */
-	angular.module('hb5').filter('amenagementSportifListAnyFilter', ['$log','hbUtil', function ($log,hbUtil) {
+	angular.module('hb5').filter('fontaineListAnyFilter', [function () {
 		
-		return function (amenagementSportifs, searchtext) {
-
-			var checkAnyField = function(amenagementSportif,searchtext) {
-				var amenagementSportifPlace = hbUtil.getCARByPos(amenagementSportif, 1);
-				amenagementSportifPlace = (amenagementSportifPlace === undefined) ? {"VALEUR" : ""} : amenagementSportifPlace;
+		return function (fontaines, searchtext) {
+			
+			var checkFontaine = function(fontaine, searchtext) {
 				return (
-					icontains(amenagementSportif.GROUPE, searchtext) ||
-					icontains(amenagementSportif.PARTENAIRE.PROPRIETAIRE.NOM, searchtext) ||
-					icontains(amenagementSportif.IDENTIFIANT.OBJECTIF, searchtext) ||
-					//icontains(amenagementSportif.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, searchtext) ||
-					icontains(amenagementSportifPlace.VALEUR, searchtext) ||
-//					icontains(amenagementSportif.IDENTIFIANT.NOM, searchtext) ||
-					icontains(amenagementSportif.IDENTIFIANT.ALIAS, searchtext)
-				);		
-			};			
-
-	        if (!angular.isUndefined(amenagementSportifs) && !angular.isUndefined(searchtext)) {
-	            var tempAmenagementSportifs = [ ];
-	            angular.forEach(amenagementSportifs, function (amenagementSportif) {
-                    if ( checkAndForTokenisedSearchText(amenagementSportif,searchtext,checkAnyField) ) {
-                    	tempAmenagementSportifs.push(amenagementSportif);
+                   	 icontains(fontaine.IDENTIFIANT.OBJECTIF, searchtext) ||
+                	 icontains(fontaine.IDENTIFIANT.NOM, searchtext) ||
+                	 icontains(fontaine.IDENTIFIANT.ALIAS, searchtext) || 
+                	 icontains(fontaine.DIVERS.REMARQUE, searchtext)
+	    		);
+			};					
+			
+	        if (!angular.isUndefined(fontaines) && !angular.isUndefined(searchtext)) {
+	            var tempFontaines = [ ];
+	            angular.forEach(fontaines, function (fontaine) {
+                    if ( checkAndForTokenisedSearchText(fontaine,searchtext,checkFontaine) ) {
+                    	tempFontaines.push(fontaine);
                     }
                 });
-	            return tempAmenagementSportifs;
+	            return tempFontaines;
 	        } else {
-	            return amenagementSportifs;
+	            return fontaines;
 	        }
 	    };
-	}]);	
+	}]);
 	
-	
+
 	/**
      * Filter tailored to ELFIN/CARACTERISTIQUE/FRACTION/L elements used to store ELFIN references as:
      * 
@@ -395,6 +549,63 @@
 	            return tempFractionLs;
 	        } else {
 	            return fractionLs;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to HORLOGE list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual horloge list. 
+	 */
+	angular.module('hb5').filter('horlogeListFilter', [function () {
+		
+		return function (horloges, search) {
+	        if (!angular.isUndefined(horloges) && !angular.isUndefined(search)) {
+	            var tempHorloges = [ ];
+	            angular.forEach(horloges, function (horloge) {
+                    if ( 
+                    	 icontains(horloge.IDENTIFIANT.NOM, search.nom) &&
+                    	 icontains(horloge.IDENTIFIANT.ALIAS, search.alias) &&
+                    	 icontains(horloge.DIVERS.REMARQUE, search.remark)
+                    ) {
+                    	tempHorloges.push(horloge);
+                    }
+                });
+	            return tempHorloges;
+	        } else {
+	            return horloges;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
+	 * Filter tailored to HORLOGE list single search criterion on `all fields`.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual horloge list. 
+	 */
+	angular.module('hb5').filter('horlogeListAnyFilter', [function () {
+		
+		return function (horloges, searchtext) {
+			
+			var checkHorloge = function(horloge, searchtext) {
+				return (
+                	 icontains(horloge.IDENTIFIANT.NOM, searchtext) ||
+                	 icontains(horloge.IDENTIFIANT.ALIAS, searchtext) || 
+                	 icontains(horloge.DIVERS.REMARQUE, searchtext)
+	    		);
+			};					
+			
+	        if (!angular.isUndefined(horloges) && !angular.isUndefined(searchtext)) {
+	            var tempHorloges = [ ];
+	            angular.forEach(horloges, function (horloge) {
+                    if ( checkAndForTokenisedSearchText(horloge,searchtext,checkHorloge) ) {
+                    	tempHorloges.push(horloge);
+                    }
+                });
+	            return tempHorloges;
+	        } else {
+	            return horloges;
 	        }
 	    };
 	}]);	
@@ -493,9 +704,103 @@
 	            return immeubles;
 	        }
 	    };
-	}]);	
+	}]);
 	
+	
+	/**
+	 * Filter tailored to PRESTATION list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual prestation list. 
+	 */
+	angular.module('hb5').filter('prestationListFilter', [function () {
 		
+		return function (prestations, search) {
+			
+			/**
+			 * checkManager function adds behaviour: 
+			 * `If a Manager criterion is defined and no Manager is defined in prestation then match result is false`
+			 * to icontains behaviour.
+			 */
+			var checkManager = function(prestation) {
+				if (!angular.isUndefined(prestation.PARTENAIRE) && !angular.isUndefined(prestation.PARTENAIRE.GERANT)) {
+					return icontains(prestation.PARTENAIRE.GERANT.VALUE,search.manager);
+				} else {
+					if (search.manager && search.manager.trim().length > 0) {
+						return false;
+					} else {
+						return true;
+					}
+				}				
+			};
+			
+			/**
+			 * checkRemark function adds behaviour: 
+			 * `If a Remark criterion is defined and no Remark is defined in prestation then match result is false`
+			 * to icontains behaviour.
+			 */
+			var checkRemark = function(prestation) {
+				   //(!angular.isUndefined(prestation.DIVERS) ? icontains(prestation.DIVERS.REMARQUE, search.remark) : true)
+				if (!angular.isUndefined(prestation.DIVERS)) {
+					return icontains(prestation.DIVERS.REMARQUE, search.remark);
+				} else {
+					if (search.remark && search.remark.trim().length > 0) {
+						return false;
+					} else {
+						return true;
+					}
+				}				
+			};
+			
+			/**
+			 * Allow several dates criteria union using OR condition entered as pipe sign by advanced users.
+			 * This is specific to IDENTIFIANT.DE property (From date).
+			 */
+			var checkFromForOr = function(prestation) {
+				if (search.from && search.from.trim().length > 0 && search.from.indexOf("|") != -1) {
+					var searchTokens = search.from.split("|");
+					var booleanResult = false;
+					for (var i = 0; i < searchTokens.length; i++) { 
+						var currToken = searchTokens[i];
+						// Avoid setting true result for something or nothing.
+						if (currToken && currToken.trim().length > 0) {
+							booleanResult = booleanResult || icontains(prestation.IDENTIFIANT.DE, currToken);
+						}
+					}
+					return booleanResult;
+				} else {
+					return icontains(prestation.IDENTIFIANT.DE, search.from);
+				}				
+			};			
+			
+	        if (!(prestations == null || search == null ) && !angular.isUndefined(prestations) && !angular.isUndefined(search)) {
+	        	//console.log(">>>> prestations.length, search = " + prestations.length +", " + search);
+	            var tempPrestations = [ ];
+	            angular.forEach(prestations, function (prestation) {
+                    if ( 
+                    	 icontains(prestation.GROUPE, search.group) &&
+                    	 icontains(prestation.IDENTIFIANT.ORIGINE, search.origin) &&
+                    	 icontains(prestation.IDENTIFIANT.COMPTE, search.account) &&
+                    	 icontains(prestation.IDENTIFIANT.OBJECTIF, search.goal) &&
+                    	 //icontains(prestation.IDENTIFIANT.DE, search.from) &&
+                    	 checkFromForOr(prestation) &&
+                    	 //TODO: Numeric is not supported yet. Should use > < = operators to be useful.
+                    	 //icontains(prestation.IDENTIFIANT.VALEUR_A_NEUF, search.replacementValue) &&
+                    	// If no PARTENAIRE.GERANT object is available deactivate search restriction by always returning true
+                    	 checkManager(prestation) && 
+                    	 //(!angular.isUndefined(prestation.PARTENAIRE) && !angular.isUndefined(prestation.PARTENAIRE.GERANT) ? icontains(prestation.PARTENAIRE.GERANT.VALUE, search.manager) : true) &&
+                    	 //TODO: find the correct way to deal with references.
+                    	 //icontains(prestation.PARTENAIRE.PROPRIETAIRE.Id, search.owner) &&
+                    	 // If no DIVERS object is available deactivate search restriction by always returning true
+                    	 checkRemark(prestation)
+                    ) {
+                    	tempPrestations.push(prestation);
+                    }
+                });
+	            return tempPrestations;
+	        } else {
+	            return prestations;
+	        }
+	    };
+	}]);
 	
 		
 	/**
@@ -617,283 +922,7 @@
 	        }
 	    };
 	}]);	
-	
-	
-	/**
-	 * Filter tailored to PRESTATION list requirements.
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual prestation list. 
-	 */
-	angular.module('hb5').filter('prestationListFilter', [function () {
-		
-		return function (prestations, search) {
-			
-			/**
-			 * checkManager function adds behaviour: 
-			 * `If a Manager criterion is defined and no Manager is defined in prestation then match result is false`
-			 * to icontains behaviour.
-			 */
-			var checkManager = function(prestation) {
-				if (!angular.isUndefined(prestation.PARTENAIRE) && !angular.isUndefined(prestation.PARTENAIRE.GERANT)) {
-					return icontains(prestation.PARTENAIRE.GERANT.VALUE,search.manager);
-				} else {
-					if (search.manager && search.manager.trim().length > 0) {
-						return false;
-					} else {
-						return true;
-					}
-				}				
-			};
-			
-			/**
-			 * checkRemark function adds behaviour: 
-			 * `If a Remark criterion is defined and no Remark is defined in prestation then match result is false`
-			 * to icontains behaviour.
-			 */
-			var checkRemark = function(prestation) {
-				   //(!angular.isUndefined(prestation.DIVERS) ? icontains(prestation.DIVERS.REMARQUE, search.remark) : true)
-				if (!angular.isUndefined(prestation.DIVERS)) {
-					return icontains(prestation.DIVERS.REMARQUE, search.remark);
-				} else {
-					if (search.remark && search.remark.trim().length > 0) {
-						return false;
-					} else {
-						return true;
-					}
-				}				
-			};
-			
-			/**
-			 * Allow several dates criteria union using OR condition entered as pipe sign by advanced users.
-			 * This is specific to IDENTIFIANT.DE property (From date).
-			 */
-			var checkFromForOr = function(prestation) {
-				if (search.from && search.from.trim().length > 0 && search.from.indexOf("|") != -1) {
-					var searchTokens = search.from.split("|");
-					var booleanResult = false;
-					for (var i = 0; i < searchTokens.length; i++) { 
-						var currToken = searchTokens[i];
-						// Avoid setting true result for something or nothing.
-						if (currToken && currToken.trim().length > 0) {
-							booleanResult = booleanResult || icontains(prestation.IDENTIFIANT.DE, currToken);
-						}
-					}
-					return booleanResult;
-				} else {
-					return icontains(prestation.IDENTIFIANT.DE, search.from);
-				}				
-			};			
-			
-	        if (!(prestations == null || search == null ) && !angular.isUndefined(prestations) && !angular.isUndefined(search)) {
-	        	//console.log(">>>> prestations.length, search = " + prestations.length +", " + search);
-	            var tempPrestations = [ ];
-	            angular.forEach(prestations, function (prestation) {
-                    if ( 
-                    	 icontains(prestation.GROUPE, search.group) &&
-                    	 icontains(prestation.IDENTIFIANT.ORIGINE, search.origin) &&
-                    	 icontains(prestation.IDENTIFIANT.COMPTE, search.account) &&
-                    	 icontains(prestation.IDENTIFIANT.OBJECTIF, search.goal) &&
-                    	 //icontains(prestation.IDENTIFIANT.DE, search.from) &&
-                    	 checkFromForOr(prestation) &&
-                    	 //TODO: Numeric is not supported yet. Should use > < = operators to be useful.
-                    	 //icontains(prestation.IDENTIFIANT.VALEUR_A_NEUF, search.replacementValue) &&
-                    	// If no PARTENAIRE.GERANT object is available deactivate search restriction by always returning true
-                    	 checkManager(prestation) && 
-                    	 //(!angular.isUndefined(prestation.PARTENAIRE) && !angular.isUndefined(prestation.PARTENAIRE.GERANT) ? icontains(prestation.PARTENAIRE.GERANT.VALUE, search.manager) : true) &&
-                    	 //TODO: find the correct way to deal with references.
-                    	 //icontains(prestation.PARTENAIRE.PROPRIETAIRE.Id, search.owner) &&
-                    	 // If no DIVERS object is available deactivate search restriction by always returning true
-                    	 checkRemark(prestation)
-                    ) {
-                    	tempPrestations.push(prestation);
-                    }
-                });
-	            return tempPrestations;
-	        } else {
-	            return prestations;
-	        }
-	    };
-	}]);		
 
-	
-	/**
-	 * Filter tailored to ACTEUR list requirements on strict list of fields defined as: 
-	 * `predicate {qualite, nom, alias, groupe}`
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual actor list. 
-	 */
-	angular.module('hb5').filter('actorListFilter', [function () {
-		
-		return function (actors, predicate) {
-	        if (!angular.isUndefined(actors) && actors !== null && !angular.isUndefined(predicate)) {
-				console.log(">>>> actors.length, predicate = " + actors.length +", " + angular.toJson(predicate));	        	
-	            var tempactors = [ ];
-	            angular.forEach(actors, function (actor) {
-                    if ( 
-                    	 icontains(actor.IDENTIFIANT.QUALITE, predicate.qualite) &&
-                    	 icontains(actor.IDENTIFIANT.NOM, predicate.nom) &&
-                    	 icontains(actor.IDENTIFIANT.ALIAS, predicate.alias) &&
-                    	 icontains(actor.GROUPE, predicate.groupe)
-                    ) {
-                    	tempactors.push(actor);
-                    }
-                });
-	            return tempactors;
-	        } else {
-	            return actors;
-	        }
-	    };	    
-	    
-	    
-	}]);	
-	
-	
-	/**
-	 * Filter tailored to ACTEUR list single search criterion on `all fields`.
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual actor list. 
-	 */
-	angular.module('hb5').filter('actorListAnyFilter', [function () {
-		
-		return function (actors, searchText) {
-	        if (!angular.isUndefined(actors) && actors !== null && !angular.isUndefined(searchText)) {
-				console.log(">>>> actors.length, searchText = " + actors.length +", " + searchText);	        	
-	            var tempactors = [ ];
-	            angular.forEach(actors, function (actor) {
-                    if ( 
-                    	 icontains(actor.IDENTIFIANT.QUALITE, searchText) ||
-                    	 icontains(actor.IDENTIFIANT.NOM, searchText) ||
-                    	 icontains(actor.IDENTIFIANT.ALIAS, searchText) ||
-                    	 icontains(actor.GROUPE, searchText)
-                    ) {
-                    	tempactors.push(actor);
-                    }
-                });
-	            return tempactors;
-	        } else {
-	            return actors;
-	        }
-	    };
-	}]);		
-	
-	
-	
-	/**
-	 * Filter tailored to FONTAINE list requirements.
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual fontaine list. 
-	 */
-	angular.module('hb5').filter('fontaineListFilter', [function () {
-		
-		return function (fontaines, search) {
-	        if (!angular.isUndefined(fontaines) && !angular.isUndefined(search)) {
-	            var tempFontaines = [ ];
-	            angular.forEach(fontaines, function (fontaine) {
-                    if ( 
-                    	 icontains(fontaine.IDENTIFIANT.OBJECTIF, search.objectif) &&
-                    	 icontains(fontaine.IDENTIFIANT.NOM, search.nom) &&
-                    	 icontains(fontaine.IDENTIFIANT.ALIAS, search.alias) &&
-                    	 icontains(fontaine.DIVERS.REMARQUE, search.remark)
-                    ) {
-                    	tempFontaines.push(fontaine);
-                    }
-                });
-	            return tempFontaines;
-	        } else {
-	            return fontaines;
-	        }
-	    };
-	}]);	
-	
-	
-	/**
-	 * Filter tailored to FONTAINE list single search criterion on `all fields`.
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual fontaine list. 
-	 */
-	angular.module('hb5').filter('fontaineListAnyFilter', [function () {
-		
-		return function (fontaines, searchtext) {
-			
-			var checkFontaine = function(fontaine, searchtext) {
-				return (
-                   	 icontains(fontaine.IDENTIFIANT.OBJECTIF, searchtext) ||
-                	 icontains(fontaine.IDENTIFIANT.NOM, searchtext) ||
-                	 icontains(fontaine.IDENTIFIANT.ALIAS, searchtext) || 
-                	 icontains(fontaine.DIVERS.REMARQUE, searchtext)
-	    		);
-			};					
-			
-	        if (!angular.isUndefined(fontaines) && !angular.isUndefined(searchtext)) {
-	            var tempFontaines = [ ];
-	            angular.forEach(fontaines, function (fontaine) {
-                    if ( checkAndForTokenisedSearchText(fontaine,searchtext,checkFontaine) ) {
-                    	tempFontaines.push(fontaine);
-                    }
-                });
-	            return tempFontaines;
-	        } else {
-	            return fontaines;
-	        }
-	    };
-	}]);	
-	
-	
-	
-	/**
-	 * Filter tailored to HORLOGE list requirements.
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual horloge list. 
-	 */
-	angular.module('hb5').filter('horlogeListFilter', [function () {
-		
-		return function (horloges, search) {
-	        if (!angular.isUndefined(horloges) && !angular.isUndefined(search)) {
-	            var tempHorloges = [ ];
-	            angular.forEach(horloges, function (horloge) {
-                    if ( 
-                    	 icontains(horloge.IDENTIFIANT.NOM, search.nom) &&
-                    	 icontains(horloge.IDENTIFIANT.ALIAS, search.alias) &&
-                    	 icontains(horloge.DIVERS.REMARQUE, search.remark)
-                    ) {
-                    	tempHorloges.push(horloge);
-                    }
-                });
-	            return tempHorloges;
-	        } else {
-	            return horloges;
-	        }
-	    };
-	}]);	
-	
-	
-	/**
-	 * Filter tailored to HORLOGE list single search criterion on `all fields`.
-	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual horloge list. 
-	 */
-	angular.module('hb5').filter('horlogeListAnyFilter', [function () {
-		
-		return function (horloges, searchtext) {
-			
-			var checkHorloge = function(horloge, searchtext) {
-				return (
-                	 icontains(horloge.IDENTIFIANT.NOM, searchtext) ||
-                	 icontains(horloge.IDENTIFIANT.ALIAS, searchtext) || 
-                	 icontains(horloge.DIVERS.REMARQUE, searchtext)
-	    		);
-			};					
-			
-	        if (!angular.isUndefined(horloges) && !angular.isUndefined(searchtext)) {
-	            var tempHorloges = [ ];
-	            angular.forEach(horloges, function (horloge) {
-                    if ( checkAndForTokenisedSearchText(horloge,searchtext,checkHorloge) ) {
-                    	tempHorloges.push(horloge);
-                    }
-                });
-	            return tempHorloges;
-	        } else {
-	            return horloges;
-	        }
-	    };
-	}]);	
-	
-	
-	
-	
 		
 	/**
 	 * Filter tailored to WC list requirements.
