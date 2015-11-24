@@ -662,6 +662,10 @@
 				}				
 			};
 			
+			/**
+			 * Allow several dates criteria union using OR condition entered as pipe sign by advanced users.
+			 * This is specific to IDENTIFIANT.DE property (From date).
+			 */
 			var checkFromForOr = function(prestation) {
 				if (search.from && search.from.trim().length > 0 && search.from.indexOf("|") != -1) {
 					var searchTokens = search.from.split("|");
