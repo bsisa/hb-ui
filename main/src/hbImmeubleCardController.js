@@ -341,7 +341,7 @@
 							    	 */
 							    	$scope.$watchCollection('[elfin.IDENTIFIANT.OBJECTIF,elfin.IDENTIFIANT.NOM]', function(newValues, oldValues) {							    		
 
-							    		$log.debug("$watchCollection for OBJECTIF, NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
+							    		//$log.debug("$watchCollection for OBJECTIF, NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 							    		
 							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
 								            var xpathForProductionChaleur = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and IDENTIFIANT/ORIGINE='"+$scope.elfin.IDENTIFIANT.NOM+"' and @CLASSE='PRODUCTION_CHALEUR']";

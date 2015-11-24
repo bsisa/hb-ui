@@ -16,7 +16,7 @@
 					function($attrs, $scope, GeoxmlService, $modal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil, hbQueryService) {
 
-						$log.debug("    >>>> Using HbProductionFroidCardController ");
+						//$log.debug("    >>>> Using HbProductionFroidCardController ");
 						
 						// Used to provide navigation link back to IMMEUBLE link to this PRODUCTION_FROID
 						$scope.immeubleRef = null;			 			
@@ -29,7 +29,7 @@
 			        	
 				    	$scope.$watchCollection('[elfin.IDENTIFIANT.OBJECTIF,elfin.IDENTIFIANT.ORIGINE]', function(newValues, oldValues) {							    		
 
-				    		$log.debug("$watchCollection for OBJECTIF, ORIGINE : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
+				    		//$log.debug("$watchCollection for OBJECTIF, ORIGINE : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 				    		
 				    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
 					    		var saiNb = $scope.elfin.IDENTIFIANT.OBJECTIF;
