@@ -457,13 +457,6 @@
 		
 		return function (immeubles, searchtext, active) {
 
-			// TODO: remove 
-			if (active) {
-				//$log.debug("immeubleListAnyFilter, active = " + active);
-			} else {
-				//$log.debug("immeubleListAnyFilter, active = UNDEFINED");
-			}
-			
 			var checkAnyField = function(immeuble,searchtext) {
 				var immeublePlace = hbUtil.getCARByPos(immeuble, 1);
 				immeublePlace = (immeublePlace === undefined) ? {"VALEUR" : ""} : immeublePlace;
