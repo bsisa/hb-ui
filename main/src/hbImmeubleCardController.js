@@ -349,11 +349,11 @@
 												.then(function(elfins) {
 														$scope.productionChaleurList = elfins;
 														computeEquipementsCount();
-														if ($scope.productionChaleurList) {
-															$log.debug(">>>> $scope.productionChaleurList.length = " + $scope.productionChaleurList.length);
-														} else {
-															$log.debug(">>>> $scope.productionChaleurList.length SEEMS EMPTY...");
-														}
+//														if ($scope.productionChaleurList) {
+//															$log.debug(">>>> $scope.productionChaleurList.length = " + $scope.productionChaleurList.length);
+//														} else {
+//															$log.debug(">>>> $scope.productionChaleurList.length SEEMS EMPTY...");
+//														}
 													},
 													function(response) {
 														var message = "Le chargement des PRODUCTION_CHALEURs a échoué (statut de retour: "+ response.status+ ")";
@@ -365,11 +365,11 @@
 												.then(function(elfins) {
 														$scope.productionFroidList = elfins;
 														computeEquipementsCount();
-														if ($scope.productionFroidList) {
-															$log.debug(">>>> $scope.productionFroidList.length = " + $scope.productionFroidList.length);
-														} else {
-															$log.debug(">>>> $scope.productionFroidList.length SEEMS EMPTY...");
-														}
+//														if ($scope.productionFroidList) {
+//															$log.debug(">>>> $scope.productionFroidList.length = " + $scope.productionFroidList.length);
+//														} else {
+//															$log.debug(">>>> $scope.productionFroidList.length SEEMS EMPTY...");
+//														}
 													},
 													function(response) {
 														var message = "Le chargement des PRODUCTION_FROIDs a échoué (statut de retour: "+ response.status+ ")";
@@ -381,11 +381,11 @@
 												.then(function(elfins) {
 														$scope.ventilationList = elfins;
 														computeEquipementsCount();
-														if ($scope.ventilationList) {
-															$log.debug(">>>> $scope.ventilationList.length = " + $scope.ventilationList.length);
-														} else {
-															$log.debug(">>>> $scope.ventilationList.length SEEMS EMPTY...");
-														}
+//														if ($scope.ventilationList) {
+//															$log.debug(">>>> $scope.ventilationList.length = " + $scope.ventilationList.length);
+//														} else {
+//															$log.debug(">>>> $scope.ventilationList.length SEEMS EMPTY...");
+//														}
 													},
 													function(response) {
 														var message = "Le chargement des VENTILATIONs a échoué (statut de retour: "+ response.status+ ")";
@@ -397,11 +397,11 @@
 												.then(function(elfins) {
 														$scope.citerneList = elfins;
 														computeEquipementsCount();
-														if ($scope.citerneList) {
-															$log.debug(">>>> $scope.citerneList.length = " + $scope.citerneList.length);
-														} else {
-															$log.debug(">>>> $scope.citerneList.length SEEMS EMPTY...");
-														}
+//														if ($scope.citerneList) {
+//															$log.debug(">>>> $scope.citerneList.length = " + $scope.citerneList.length);
+//														} else {
+//															$log.debug(">>>> $scope.citerneList.length SEEMS EMPTY...");
+//														}
 													},
 													function(response) {
 														var message = "Le chargement des CITERNEs a échoué (statut de retour: "+ response.status+ ")";
