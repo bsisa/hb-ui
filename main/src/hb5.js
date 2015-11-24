@@ -66,9 +66,6 @@
             .when('/DOM', {
                 templateUrl: '/assets/views/indexDom.html'
             })
-            .when('/DOM', {
-                templateUrl: '/assets/views/indexDom.html'
-            })
             .when('/SDS', {
                 templateUrl: '/assets/views/indexSds.html'
             })
