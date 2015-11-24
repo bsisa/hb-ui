@@ -354,8 +354,15 @@
         };
 
         
+        /**
+         * Helper to deal with enabled / disabled status for labels report.
+         */
         $scope.hasStickersReport = function (elfin) {
-        	return (elfin.CLASSE === 'IMMEUBLE');
+        	if (elfin!=null && angular.isDefined(elfin.CLASSE)) {
+        		return (elfin.CLASSE === 'IMMEUBLE');
+        	} else {
+        		return false;
+        	}
         }
         
         /**
