@@ -11,6 +11,8 @@
  * <li>annexExcludeTag</li>
  * <li>annexIncludeTag</li> 
  * <li>codeListFilter</li>
+ * <li>commandeListFilter</li>
+ * <li>commandeListAnyFilter</li>
  * <li>codeListAnyFilter</li>
  * <li>constatListFilter</li> 
  * <li>contractTerminatedListFilter</li>
@@ -48,6 +50,12 @@
 	 * case insensitive string contains check
 	 */
 	var icontains = function (targetString, matchString) {
+		
+		// Support textual search for number type
+		if (typeof targetString === "number" && targetString !== NaN && targetString !== undefined && targetString !== null) {
+			targetString = targetString.toString();
+		}
+		
 		if (matchString && matchString.trim().length > 0) {
 			if (targetString) {
 				if (targetString.toLowerCase().indexOf(matchString.toLowerCase()) != -1) {
@@ -62,6 +70,7 @@
 			// returns true if match string empty or undefined.
 			return true;
 		}
+
 	};
 	
 	/**
@@ -344,6 +353,80 @@
 	
 
 	/**
+	 * Filter tailored to COMMANDE list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual code list.
+	 */
+	angular.module('hb5').filter('commandeListFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (commandes, predicate) {
+	        if (!angular.isUndefined(commandes) && !angular.isUndefined(predicate)) {
+	            var tempCommandes = [ ];
+	            angular.forEach(commandes, function (commande) {
+                    if ( 
+                       	 icontains(commande.IDENTIFIANT.NOM, predicate.orderNb) &&
+                    	 icontains(commande.IDENTIFIANT.OBJECTIF, predicate.registerNb) && 
+                    	 icontains(commande.IDENTIFIANT.ORIGINE, predicate.buildingNb) &&
+                    	 icontains(commande.GROUPE, predicate.cfc) &&
+                    	 icontains(commande.IDENTIFIANT.DE, predicate.date) &&
+                    	 icontains(commande.IDENTIFIANT.VALEUR, predicate.amount) &&
+                    	 icontains(commande.PARTENAIRE.FOURNISSEUR.GROUPE, predicate.provider_group) &&
+                    	 icontains(commande.PARTENAIRE.PROPRIETAIRE.GROUPE, predicate.owner_group) &&
+                    	 icontains(commande.DIVERS.REMARQUE, predicate.description)
+                    ) {
+                    	tempCommandes.push(commande);
+                    }
+                });
+	            return tempCommandes;
+	        } else {
+	            return commandes;
+	        }
+	    };
+	}]);
+	
+	
+	/**
+	 * Filter tailored to COMMANDE list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual code list. 
+	 */
+	angular.module('hb5').filter('commandeListAnyFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (commandes, searchtext) {
+			
+			var checkAnyField = function(commande,searchtext) {
+				return (
+					icontains(commande.IDENTIFIANT.NOM, searchtext) ||
+					icontains(commande.IDENTIFIANT.OBJECTIF, searchtext) ||
+					icontains(commande.IDENTIFIANT.ORIGINE, searchtext) ||
+					icontains(commande.GROUPE, searchtext) ||
+					icontains(commande.IDENTIFIANT.DE, searchtext) ||
+					icontains(commande.IDENTIFIANT.VALEUR, searchtext) ||
+					icontains(commande.PARTENAIRE.FOURNISSEUR.GROUPE, searchtext) ||
+					icontains(commande.PARTENAIRE.PROPRIETAIRE.GROUPE, searchtext) ||
+					icontains(commande.DIVERS.REMARQUE, searchtext)   
+				);		
+			};
+			
+	        if (!angular.isUndefined(commandes) && !angular.isUndefined(searchtext)) {
+	            var tempCommandes = [ ];
+	            angular.forEach(commandes, function (commande) {
+                    if ( checkAndForTokenisedSearchText(commande,searchtext,checkAnyField) ) {
+                    	tempCommandes.push(commande);	
+                    }
+                });
+	            return tempCommandes;
+	        } else {
+	            return commandes;
+	        }
+	    };
+	    
+	}]);	
+	
+	
+	
+// ======
+	
+
+	/**
      * Filter tailored to CONSTAT list requirements
      * Keeping 'Filter' postfix is useful to avoid naming conflict with actual constat list.
 	 */
@@ -363,7 +446,9 @@
 	            	}
                     if ( 
                     	 icontains(currentlastResp, predicate.last_resp) &&
+                    	 // TODO: review predicate mapping DE => description
                     	 icontains(constat.IDENTIFIANT.DE, predicate.description) &&
+                    	 // TODO: review predicate mapping NOM => constat_date
                     	 icontains(constat.IDENTIFIANT.NOM, predicate.constat_date) &&
                     	 icontains(currentPartnerUser, predicate.partenaire_usager) && 
                     	 icontains(constat.GROUPE, predicate.constat_group) &&
