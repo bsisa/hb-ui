@@ -40,8 +40,10 @@
 										if ($scope.selected.building) {
 											//$log.debug("building : " + angular.toJson($scope.selected.building));											
 											$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;
-											// TODO: get building object and set its OBJECTIF to the COMMANDE OBJECTIF (no SAI instead of Id)
+											// Gets building object and set its OBJECTIF to the COMMANDE OBJECTIF (no SAI)
 											$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.IDENTIFIANT.OBJECTIF;
+											// Gets building object and set its NOM (No construction) to the COMMANDE ORIGINE (The COMMANDE NOM is reserved for COMMANDE number)
+											$scope.elfin.IDENTIFIANT.ORIGINE = $scope.selected.building.IDENTIFIANT.NOM;
 											var buildingOwner = {
 													 "Id" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.Id,
 												      "ID_G" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.ID_G,
@@ -54,6 +56,7 @@
 											//$log.debug("building has been reset... ");											
 											$scope.elfin.SOURCE = "";
 											$scope.elfin.IDENTIFIANT.OBJECTIF = "";
+											$scope.elfin.IDENTIFIANT.ORIGINE = "";
 											var buildingOwner = {
 													 "Id" : "",
 												      "ID_G" : "",
@@ -236,6 +239,9 @@
 												
 												// SAI nb.
 												$scope.elfin.IDENTIFIANT.OBJECTIF = "";
+												
+												// No construction of source IMMEUBLE
+												$scope.elfin.IDENTIFIANT.ORIGINE = "";
 
 												// CFC code
 												$scope.elfin.GROUPE = "";
@@ -273,6 +279,7 @@
 //									$('#objectifSearchHelper').focus();
 //								};
 
+						    	// TODO: check if used
 								$scope.immeubleChooseOneColumnsDefinition = [
 										{
 											field : "PARTENAIRE.PROPRIETAIRE.VALUE",

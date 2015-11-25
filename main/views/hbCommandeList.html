@@ -1,0 +1,140 @@
+<table class="table table-condensed table-bordered table-striped"
+	ng-show="elfins">
+
+	<thead>
+		<tr>
+			<th colspan="10"><span class="badge">{{filteredElfins.length}} / {{elfinsCount}}</span> commande{{ elfinsCount | plural }} trouvée{{ elfinsCount | plural
+				}}</th>
+		</tr>
+		<tr>
+			<th rowspan="3"  />
+			<th colspan="9">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input id="globalSearchField" name="globalSearchField" type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.orderNb" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>	
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.registerNb" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.buildingNb" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.cfc" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>			
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.date" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.amount" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.provider_group" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.owner_group" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.description" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">N° commande</a>
+			</th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° SAI</a>
+			</th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.ORIGINE'; reverse=!reverse">N° construction</a>
+			</th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Code CFC</a>
+			</th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse">Date</a>
+			</th>			
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.VALEUR'; reverse=!reverse">Montant</a>
+			</th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'PARTENAIRE.FOURNISSEUR.GROUPE'; reverse=!reverse">Fournisseur</a>
+			</th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.GROUPE'; reverse=!reverse">Propriétaire</a>
+			</th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'DIVERS.REMARQUE'; reverse=!reverse">Description</a>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="elfin in filteredElfins">
+			<td>
+				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
+			</td> 
+			<!-- Order nb -->
+			<td class="number">{{elfin.IDENTIFIANT.NOM}}</td>
+			<!-- SAI nb -->
+			<td class="number">{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<!-- Building nb -->
+			<td class="number">{{elfin.IDENTIFIANT.ORIGINE}}</td>
+			<!-- CFC code -->
+			<td>{{elfin.GROUPE}}</td>
+			<!-- Estimation/Quote date -->
+			<td class="date">{{elfin.IDENTIFIANT.DE}}</td>
+			<!-- Amount -->
+			<td class="number">{{elfin.IDENTIFIANT.VALEUR | currency:'CHF'}}</td>
+			<!-- Enterprise name -->
+			<td>{{elfin.PARTENAIRE.FOURNISSEUR.GROUPE}}</td>				
+			<!-- Owner at order time / copy of building owner -->
+			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.GROUPE}}</td>			
+			<!-- Order description... -->
+			<td>{{elfin.DIVERS.REMARQUE}}</td>			
+		</tr>
+	</tbody>
+
+</table>
