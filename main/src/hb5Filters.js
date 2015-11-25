@@ -446,10 +446,8 @@
 	            	}
                     if ( 
                     	 icontains(currentlastResp, predicate.last_resp) &&
-                    	 // TODO: review predicate mapping DE => description
-                    	 icontains(constat.IDENTIFIANT.DE, predicate.description) &&
-                    	 // TODO: review predicate mapping NOM => constat_date
-                    	 icontains(constat.IDENTIFIANT.NOM, predicate.constat_date) &&
+                    	 icontains(constat.IDENTIFIANT.DE, predicate.constat_date) &&
+                    	 icontains(constat.IDENTIFIANT.NOM, predicate.description) &&                    	 
                     	 icontains(currentPartnerUser, predicate.partenaire_usager) && 
                     	 icontains(constat.GROUPE, predicate.constat_group) &&
                     	 icontains(constat.IDENTIFIANT.OBJECTIF, predicate.constat_noSAI)
