@@ -112,12 +112,16 @@
 			            hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE']")		
 						.then(function(buildings) {
 
-								// order buildings by IDENTIFIANT.OBJECTIF, ALIAS
+								// order buildings by IDENTIFIANT.OBJECTIF, IDENTIFIANT.ALIAS, IDENTIFIANT.NOM, PARTENAIRE.PROPRIETAIRE.NOM
 								buildings.sort(function(a, b) {
 									return a.IDENTIFIANT.OBJECTIF < b.IDENTIFIANT.OBJECTIF ? -1 :
 										a.IDENTIFIANT.OBJECTIF > b.IDENTIFIANT.OBJECTIF ? 1 :
 											a.IDENTIFIANT.ALIAS < b.IDENTIFIANT.ALIAS ? -1 : 
-												a.IDENTIFIANT.ALIAS > b.IDENTIFIANT.ALIAS ? 1 : 0;
+												a.IDENTIFIANT.ALIAS > b.IDENTIFIANT.ALIAS ? 1 : 
+													a.IDENTIFIANT.NOM < b.IDENTIFIANT.NOM ? -1 : 
+														a.IDENTIFIANT.NOM > b.IDENTIFIANT.NOM ? 1 :
+															a.PARTENAIRE.PROPRIETAIRE.NOM < b.PARTENAIRE.PROPRIETAIRE.NOM ? -1 : 
+																a.PARTENAIRE.PROPRIETAIRE.NOM > b.PARTENAIRE.PROPRIETAIRE.NOM ? 1 :	0;
 					            });
 								$scope.buildings =  buildings;
 								$scope.buildingsLoaded = true;
@@ -142,7 +146,7 @@
 				                    	return $scope.buildings;
 				                    },
 				                    columnsDefinition: function() {
-				                    	return [ { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI"}, { field:"IDENTIFIANT.ALIAS", displayName: "Adresse"}, { field:"PARTENAIRE.PROPRIETAIRE.NOM", displayName: "Propriétaire"} ];
+				                    	return [ { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI"}, { field:"IDENTIFIANT.ALIAS", displayName: "Adresse"}, { field: "IDENTIFIANT.NOM", displayName: "No de constr."}, { field:"PARTENAIRE.PROPRIETAIRE.NOM", displayName: "Propriétaire"} ];
 				                    }
 				                },                
 				                backdrop: 'static'
@@ -188,7 +192,7 @@
 				        	// Update selected building instance in scope
 				        	$scope.selected.building = selectedBuilding;
 				        	// Update selected building display string
-				        	$scope.selected.buildingDisplay = $scope.selected.building.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.building.IDENTIFIANT.ALIAS + " - " + $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM;
+				        	$scope.selected.buildingDisplay = $scope.selected.building.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.building.IDENTIFIANT.ALIAS + " - " + $scope.selected.building.IDENTIFIANT.NOM + " - " + $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM;
 				        };
 
 					} ]); // End of HbChooseBuildingController definition
