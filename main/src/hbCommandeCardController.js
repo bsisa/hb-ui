@@ -275,10 +275,6 @@
 									}
 						    	}, true);								
 
-//								var focusOnField = function() {
-//									$('#objectifSearchHelper').focus();
-//								};
-
 						    	// TODO: check if used
 								$scope.immeubleChooseOneColumnsDefinition = [
 										{
@@ -294,11 +290,6 @@
 											displayName : "Lieu-dit"
 										} ];
 								$scope.immeubleChooseOneTemplate = '/assets/views/chooseOneImmeuble.html';
-
-								// TODO: FocusTimeout issue. Find a better
-								// solution ?
-//								$timeout(focusOnField, 500, true);
-
 
 								// Load ACTEUR `Entreprise` list
 								$scope.entrepriseActors = null;
@@ -345,7 +336,14 @@
 		    	                   	$location.path( redirUrl );						        	
 						        };					            
 					            
-		
+						        // Set focus to orderNb
+								var focusOnField = function() {
+									$('#orderNb').focus();
+								};						      
+								
+								// Call set focus to orderNb with a 500 millisec delay.
+								$timeout(focusOnField, 500, false);    									
+								
 					            
 							} ]);
 
