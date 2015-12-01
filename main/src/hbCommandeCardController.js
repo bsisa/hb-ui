@@ -47,7 +47,7 @@
 											var buildingOwner = {
 													 "Id" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.Id,
 												      "ID_G" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.ID_G,
-												      "NOM" : "",
+												      "NOM" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM,
 												      "GROUPE" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.GROUPE,
 												      "VALUE" : ""
 												};
