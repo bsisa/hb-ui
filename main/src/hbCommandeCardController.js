@@ -120,7 +120,7 @@
 											$scope.elfin.PARTENAIRE.FOURNISSEUR = provider;											
 										}
 									} else {
-										$log.debug("provider : " + angular.toJson($scope.selected.provider) + " ... WAIING for initialisation...");
+										$log.debug("provider : " + angular.toJson($scope.selected.provider) + " ... WAITING for initialisation...");
 									}
 								}, true);
 								
