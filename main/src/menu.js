@@ -583,13 +583,18 @@
                 var actionValue = L.C[2].VALUE;
                 /* actionValue is expected to contain JSON menu item format as, for instance: 
 
+				Note: Optional actionRights property activate rights restriction if present.
+
+
 				Simple link navigation
 				
 				{
+					"actionRights": "function-right-key",
 				    "type": "link",
 				    "url": "/api/melfin/spreadsheet/syntheseContrats.xls?PARAM_1=195"
 				}
 				
+
 				Modal panel requesting parameters and querying the provided URL with these parameters
 				The javascript function must be available in menu.js scope
 				if newWindow equals true the result of calling the URL will be opened in a new Window 
@@ -598,6 +603,7 @@
 				opened in the same window or tab.
 				
 				{
+				    "actionRights": "function-right-key",
 				    "type": "modal",
 				    "functionName": "myFunctionName",
 				    "url": "/the/URL/to/query/to",
@@ -649,23 +655,34 @@
                     // Groups shall not have action.
                     if (existingGroups.length == 0) {
                     	
-                        menuStructure.elements.push( {
-                            label:groupName,
-                            subItems:[{
-                                label:entryName,
-                                action: actionValue 
-                            }]              
-                        });
+                    	// Make sure the subItem is authorised
+                    	if (hbUtil.isActionAuthorised(actionValue)) { 
+                    	
+		                    menuStructure.elements.push( {
+		                        label:groupName,
+		                        subItems:[{
+		                            label:entryName,
+		                            action: actionValue 
+		                        }]              
+		                    });
+                        
+                    	}
                     }
 
                     // Add sub items to existing group. In case of new group creation 
                     // the existingGroups object does not include the new group as 
                     // filtering happened before group creation.
                     existingGroups.forEach(function(group) {
-                        group['subItems'].push({
-                            label:entryName,
-                            action: actionValue
-                        });
+                    	
+                    	// Make sure the subItem is authorised
+                    	if (hbUtil.isActionAuthorised(actionValue)) {                    	
+                    	
+		                    group['subItems'].push({
+		                        label:entryName,
+		                        action: actionValue
+		                    });
+		                    
+                    	}
                     });
 
                 } else {

@@ -8,6 +8,21 @@
 	angular.module('hb5').service('hbUtil', ['$log','$window','$filter','HB_API',function ($log,$window,$filter,HB_API) {
 
 		
+		
+		// ============================================================
+		// HyperBird authorisation related utilities
+		// ============================================================		
+		
+		var isActionAuthorised  = function ( menuAction ) {
+        	if ( angular.isDefined(menuAction) && angular.isDefined(menuAction.actionRights)) {
+        		return _.contains(userDetails.getRoles(),menuAction.actionRights);
+        	} else {
+        		return true;
+        	}
+        };	
+		
+		
+		
 		// ============================================================
 		// HyperBird GeoXML data structure to JSON utilities
 		// ============================================================
@@ -746,6 +761,7 @@
         	getMomentInHbTextFormat:getMomentInHbTextFormat,
         	getPrestationGroupForTransactionGroup:getPrestationGroupForTransactionGroup,
         	getValueAtPath:getValueAtPath,
+        	isActionAuthorised:isActionAuthorised,
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
         	removeAnnexeRenvoiByPos:removeAnnexeRenvoiByPos,

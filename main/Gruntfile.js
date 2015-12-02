@@ -106,6 +106,9 @@ module.exports = function(grunt) {
 								'src/hbDefaultCardDirective.js',
 								'src/hbDefaultCardController.js',
 								'src/hbDropdownMenuDirective.js',
+								
+								'src/hbDropdownMenuController.js',
+								
 								'src/hbDynamicNameDirective.js',
 								'src/hbEnterDirective.js',
 								'src/hbEqualsDirective.js',
