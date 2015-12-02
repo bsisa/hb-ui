@@ -648,8 +648,6 @@
 
                 if (groupName && groupName !== '' && hbUtil.isActionAuthorised(actionValue)) {
                 	
-                	$log.debug(">>>> groupName = " + groupName + " authorised: " + hbUtil.isActionAuthorised(actionValue));
-                	
                     var existingGroups = menuStructure.elements.filter(function(menuItem) {return menuItem.label === groupName;});
                     
                     // No group already exist for this groupName in the current menuStructure.elements.
@@ -704,24 +702,11 @@
             // Post process menuStructure.elements to convert single element groups to regular 
             // single menu item.
             menuStructure.elements.forEach(function(group) {
-            	//$log.debug(">>> group.label " + group.label);
-            	
-            	if (group.label === 'Statistiques des commandes') {
-            		$log.debug(">>> group: " + angular.toJson(group));
-            	}
             	
             	if (group.subItems != null) {
             		if (group.subItems.length == 0) {
             			// This is unlikely but nullify subItems array for consistent 
             			// view rendering in case subItems appears in tests.
-            			
-            			// No sub-item, regular menu item: do nothing
-                		if (!angular.isDefined(group.action)) {
-                			$log.debug(">>> 1) Remove menu entry ? " + angular.toJson(group));
-                		} else {
-                			$log.debug(">>> 1) Keep   menu entry ? " + angular.toJson(group));
-                		}            			
-            			
             			group.subItems = null;
             		} else if (group.subItems.length == 1) {
             			// Single sub-item group: Transform back to regular menu item.
@@ -736,11 +721,6 @@
             		}
             	} else {
         			// No sub-item, regular menu item: do nothing
-            		if (!angular.isDefined(group.action)) {
-            			$log.debug(">>> 2) Remove menu entry ? " + angular.toJson(group));
-            		} else {
-            			$log.debug(">>> 2) Keep   menu entry ? " + angular.toJson(group));
-            		}
             	}
             });
 
