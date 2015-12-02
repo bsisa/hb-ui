@@ -5,7 +5,7 @@
 	 * without code duplication.
 	 */
 	
-	angular.module('hb5').service('hbUtil', ['$log','$window','$filter','HB_API',function ($log,$window,$filter,HB_API) {
+	angular.module('hb5').service('hbUtil', ['$log','$window','$filter','HB_API', 'userDetails' ,function ($log,$window,$filter,HB_API,userDetails) {
 
 		
 		
