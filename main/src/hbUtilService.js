@@ -14,7 +14,6 @@
 		// ============================================================		
 		
 		var isActionAuthorised  = function ( menuAction ) {
-			$log.debug(">>>> menuAction = " + angular.toJson(menuAction) );
         	if ( angular.isDefined(menuAction) && angular.isDefined(menuAction.actionRights)) {
         		return _.contains(userDetails.getRoles(),menuAction.actionRights);
         	} else {
