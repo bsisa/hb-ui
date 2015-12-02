@@ -646,7 +646,9 @@
                 // Just ignore empty entries for now
                 if (!entryName || entryName === '') return;
 
-                if (groupName && groupName !== '') {
+                if (groupName && groupName !== '' && hbUtil.isActionAuthorised(actionValue)) {
+                	
+                	$log.debug(">>>> groupName = " + groupName + " authorised: " + hbUtil.isActionAuthorised(actionValue));
                 	
                     var existingGroups = menuStructure.elements.filter(function(menuItem) {return menuItem.label === groupName;});
                     
@@ -656,7 +658,7 @@
                     if (existingGroups.length == 0) {
                     	
                     	// Make sure the subItem is authorised
-                    	if (hbUtil.isActionAuthorised(actionValue)) { 
+                    	//if (hbUtil.isActionAuthorised(actionValue)) { 
                     	
 		                    menuStructure.elements.push( {
 		                        label:groupName,
@@ -666,7 +668,7 @@
 		                        }]              
 		                    });
                         
-                    	}
+                    	//}
                     }
 
                     // Add sub items to existing group. In case of new group creation 
@@ -675,32 +677,51 @@
                     existingGroups.forEach(function(group) {
                     	
                     	// Make sure the subItem is authorised
-                    	if (hbUtil.isActionAuthorised(actionValue)) {                    	
+                    	//if (hbUtil.isActionAuthorised(actionValue)) {                    	
                     	
 		                    group['subItems'].push({
 		                        label:entryName,
 		                        action: actionValue
 		                    });
 		                    
-                    	}
+                    	//}
                     });
 
                 } else {
                 	// Regular single menu item without group name specified
-                    menuStructure.elements.push({
-                        label:entryName,
-                        action: actionValue
-                    });
+                	
+                	// Make sure the subItem is authorised
+                	if (hbUtil.isActionAuthorised(actionValue)) {                	
+                	
+	                    menuStructure.elements.push({
+	                        label:entryName,
+	                        action: actionValue
+	                    });
+                	}
                 }
             });
 
             // Post process menuStructure.elements to convert single element groups to regular 
             // single menu item.
             menuStructure.elements.forEach(function(group) {
+            	//$log.debug(">>> group.label " + group.label);
+            	
+            	if (group.label === 'Statistiques des commandes') {
+            		$log.debug(">>> group: " + angular.toJson(group));
+            	}
+            	
             	if (group.subItems != null) {
             		if (group.subItems.length == 0) {
             			// This is unlikely but nullify subItems array for consistent 
             			// view rendering in case subItems appears in tests.
+            			
+            			// No sub-item, regular menu item: do nothing
+                		if (!angular.isDefined(group.action)) {
+                			$log.debug(">>> 1) Remove menu entry ? " + angular.toJson(group));
+                		} else {
+                			$log.debug(">>> 1) Keep   menu entry ? " + angular.toJson(group));
+                		}            			
+            			
             			group.subItems = null;
             		} else if (group.subItems.length == 1) {
             			// Single sub-item group: Transform back to regular menu item.
@@ -715,6 +736,11 @@
             		}
             	} else {
         			// No sub-item, regular menu item: do nothing
+            		if (!angular.isDefined(group.action)) {
+            			$log.debug(">>> 2) Remove menu entry ? " + angular.toJson(group));
+            		} else {
+            			$log.debug(">>> 2) Keep   menu entry ? " + angular.toJson(group));
+            		}
             	}
             });
 
