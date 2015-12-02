@@ -18,8 +18,7 @@
 				'menuIconClass' : '@hbDropdownMenuIconClass',
 				'menuLabel' : '=hbDropdownMenuLabel',  
 				'menuItems' : '=hbDropdownMenuItems'   
-			},
-			controller: 'HbDropdownMenuController'
+			}
 		};
 	
     });
