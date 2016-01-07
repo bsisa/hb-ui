@@ -135,4 +135,51 @@
 		</tr>		
 	</tbody>
 </table>
+<table ng-if="canManageOrders" class="table table-condensed table-bordered table-striped" >
+	<tbody>
+		<tr>
+			<th class="dashboard" style="width: 33%;"> </th>
+			<th class="dashboard">Commande{{ commandeElfins.length | plural }} <span class="badge">{{commandeElfins.length}}</th>
+			<th class="dashboard" style="width: 33%;"> </th>
+		</tr>
+		<tr>
+			<td ><div style="width: 150px; height: 105px;"></div></td>
+			<td ><img ng-click="listOrViewCommandes()" src="/assets/images/commandes.jpeg" ng-src="/assets/images/commandes.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td ><div style="width: 150px; height: 105px;"></div></td>
+		</tr>		
+		<tr>			
+			<th ></th>
+			<th >Sélection  <span class="badge">{{commandeElfins.length}}</span>
+				<div class="right">
+					<button tabindex="16" class="btn btn-primary btn-xs" ng-click="listOrViewCommandes()" ng-disabled="commandeElfins.length < 1">
+						<span ng-show="commandeElfins.length > 1"><i class="glyphicon glyphicon-list-alt"></i></span>
+						<span ng-show="commandeElfins.length <= 1"><i class="glyphicon glyphicon-eye-open"></i></span>
+					</button>
+				</div>							
+			</th>
+			<th ></th>
+		</tr>
+		<tr>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input hb-enter="listOrViewCommandes()" tabindex="15" id="commandeSearchTextInput" name="commandeSearchTextInput" type="text" class="form-control" ng-model="commandeSearch.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th >
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+					</div>
+				</div>
+			</th>
+		</tr>		
+	</tbody>
+</table>
 

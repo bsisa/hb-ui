@@ -1,8 +1,12 @@
 (function() {
 
-    angular.module('hb5').controller('HbDashboardController', ['$attrs', '$scope', 'hbQueryService', '$routeParams', '$log', '$filter', '$location', '$timeout', 'HB_COLLECTIONS', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, hbQueryService, $routeParams, $log, $filter, $location, $timeout, HB_COLLECTIONS, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbDashboardController', ['$attrs', '$scope', 'hbQueryService', '$routeParams', '$log', '$filter', '$location', '$timeout', 'userDetails', 'HB_COLLECTIONS', 'HB_ROLE_FONCTION', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, hbQueryService, $routeParams, $log, $filter, $location, $timeout, userDetails, HB_COLLECTIONS, HB_ROLE_FONCTION, hbAlertMessages, hbUtil) {
     
     	//$log.debug("    >>>> HbDashboardController called at " + new Date());
+    	
+    	
+		$scope.canManageOrders = _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.ORDERS_STATISTICS);
+    	
     	
     	// ============================================================
     	// Buildings Section - IMMEUBLE
@@ -374,6 +378,70 @@
     	// ============================================================
         // ABRIBUS Section - end
     	// ============================================================    	
+        
+        
+        
+        
+    	// ============================================================
+    	// COMMANDE Section
+    	// ============================================================    	
+    	
+    	// ==== Initialisation ========================================
+    	var commandeCollectionId = HB_COLLECTIONS.COMMANDE_ID;
+    	
+		/**
+		 *  Apply commandeListAnyFilter
+		 */
+		var filterCommandeElfins = function(elfins_p, search_p) {
+	    	var filteredSortedElfins = $filter('commandeListAnyFilter')(elfins_p, search_p.text);
+	    	return filteredSortedElfins;
+		};    	    	
+    	
+        /** Contains ELFINs JSON Array resulting from the hbQueryService query */   
+        $scope.commandeElfins = null;
+        
+        /** User entered COMMANDE search criterion */
+        $scope.commandeSearch = { "text" : "" };                    
+
+        /** Query all available COMMANDE */ 
+        hbQueryService.getCommandes()
+	        .then(function(commandeElfins) {
+        		$scope.commandeElfins = commandeElfins;
+        		$scope.filteredCommandeElfins = filterCommandeElfins($scope.commandeElfins, $scope.commandeSearch);
+	        }, function(response) {
+	            var message = "Le chargement des COMMANDEs a échoué (statut de retour: " + response.status + ")";
+	            hbAlertMessages.addAlert("danger",message);
+	        });	
+        
+
+    	// ==== Navigation ===========================================
+        /**
+         * Navigate to end user selected COMMANDE. 
+         * Either a list, a card or stay on current page if selection is 0.
+         */
+        $scope.listOrViewCommandes = function() {
+        	if ($scope.commandeElfins.length > 1) {
+            	$location.path('/elfin/'+commandeCollectionId+'/COMMANDE').search('search', $scope.commandeSearch.text);
+        	} else if ($scope.commandeElfins.length == 1) {
+            	$location.path('/elfin/'+commandeCollectionId+'/COMMANDE/' + $scope.commandeElfins[0].Id);	
+        	}
+        };      	
+        
+    	// ==== End user search related listener ==================        
+		/**
+		 * Update filtered collection when search or sorting criteria are modified. 
+		 */
+    	$scope.$watch('commandeSearch', function(newSearch, oldSearch) {
+    		if ($scope.commandeElfins!=null) {
+				$scope.filteredCommandeElfins = filterCommandeElfins($scope.commandeElfins, $scope.commandeSearch);
+    		}
+    	}, true);        
+			
+    	// ============================================================
+        // COMMANDE Section - end
+    	// ============================================================
+        
+        
         
         
     	var focusOnSearchField = function() {
