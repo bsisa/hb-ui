@@ -10,7 +10,7 @@
 		
 		/**
 		 * Returns a handle to function:
-		 * GeoxmlService.getCollection(locationUnitsCollectionId).getList({"xpath" : xpath})
+		 * GeoxmlService.getCollection(collectionId).getList({"xpath" : xpath})
 		 * Note: Intended to private service usage only.
 		 */
 		var getList = function (collectionId, xpath) {
