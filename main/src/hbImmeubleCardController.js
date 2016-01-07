@@ -491,7 +491,49 @@
 								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM = '';
 								    			$scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE = '';
 								    			$scope.elfin.CARACTERISTIQUE.CAR2.VALEUR = '';
-								    		} 
+								    		} else {
+								    			// Need loading related data only when not in create mode
+								    			
+								    			// Only load orders if user as rights to see them
+								    			if ($scope.canManageOrders) {
+													hbQueryService.getCommandesForSource($scope.elfin.ID_G+ "/" +$scope.elfin.CLASSE + "/" +  $scope.elfin.Id).then(function(elfins) {
+														$scope.commandes = elfins;
+													},
+													function(response) {
+														var message = "Le chargement des COMMANDES a échoué (statut de retour: "+ response.status+ ")";
+											            hbAlertMessages.addAlert("danger",message);
+													});
+								    			}
+												
+								    			// Get UNITE_LOCATIVE corresponding to current ELFIN.Id
+									            //var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
+									            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"' and not(string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() "+hbUtil.encodeUriParameter(" <= ") + "'"+currentHbTextDate+"')]";								            
+									            
+									            hbQueryService.getLocationUnits(xpathForSurfaces)
+													.then(function(elfins) {
+															$scope.locationUnits = elfins;
+														},
+														function(response) {
+															var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
+												            hbAlertMessages.addAlert("danger",message);
+														});
+									            
+									            
+								    			// Get archived UNITE_LOCATIVE corresponding to current ELFIN.Id
+
+									            // Note we exclude date string not equal to 10 characters to avoid having '' empty string 
+									            // considered as a date smaller than any other regular 10 char dates.
+									            var xpathForArchivedSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"' and string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() "+hbUtil.encodeUriParameter(" <= ") + "'"+currentHbTextDate+"']";
+									            hbQueryService.getLocationUnits(xpathForArchivedSurfaces)
+													.then(function(elfins) {
+															$scope.locationUnitsArchived = elfins;
+														},
+														function(response) {
+															var message = "Le chargement des SURFACEs archivées a échoué (statut de retour: "+ response.status+ ")";
+												            hbAlertMessages.addAlert("danger",message);
+														});												
+								    			
+								    		}
 							    			// Data correction - if no elfin.PARTENAIRE.FOURNISSEUR.VALUE datastructure exist creates it
 							    			// TODO: evaluate batch data update. 
 							    			if (!$scope.elfin.PARTENAIRE.FOURNISSEUR) {
@@ -502,34 +544,6 @@
 
 							    			// Current time in text format
 								            var currentHbTextDate = hbUtil.getDateInHbTextFormat(new Date());							    			
-							    			
-							    			// Get UNITE_LOCATIVE corresponding to current ELFIN.Id
-								            //var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
-								            var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"' and not(string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() "+hbUtil.encodeUriParameter(" <= ") + "'"+currentHbTextDate+"')]";								            
-								            
-								            hbQueryService.getLocationUnits(xpathForSurfaces)
-												.then(function(elfins) {
-														$scope.locationUnits = elfins;
-													},
-													function(response) {
-														var message = "Le chargement des SURFACEs a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});
-								            
-								            
-							    			// Get archived UNITE_LOCATIVE corresponding to current ELFIN.Id
-
-								            // Note we exclude date string not equal to 10 characters to avoid having '' empty string 
-								            // considered as a date smaller than any other regular 10 char dates.
-								            var xpathForArchivedSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"' and string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() "+hbUtil.encodeUriParameter(" <= ") + "'"+currentHbTextDate+"']";
-								            hbQueryService.getLocationUnits(xpathForArchivedSurfaces)
-												.then(function(elfins) {
-														$scope.locationUnitsArchived = elfins;
-													},
-													function(response) {
-														var message = "Le chargement des SURFACEs archivées a échoué (statut de retour: "+ response.status+ ")";
-											            hbAlertMessages.addAlert("danger",message);
-													});								            
 
 								            // Make IMMEUBLE photo available
 								            $scope.updatePhotoSrc();
