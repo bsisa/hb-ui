@@ -87,7 +87,15 @@
 		var getCommandes = function(xpath) {		
 	        return getList(HB_COLLECTIONS.COMMANDE_ID,xpath);
 		};			
-		
+
+
+		/**
+		 * Prototype (test) function making use of server side XQuery for improved control and performance. 
+		 */
+		var getCommandesForSource = function(source) {
+	        return GeoxmlService.getXqueryResults("get_COMMANDE_list_for_SOURCE.xq").getList({"source" : source, "format" : "json" });
+		};
+
 		
 		/**
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
@@ -368,6 +376,7 @@
         	getCiterneList:getCiterneList,
         	getCodes:getCodes,
         	getCommandes:getCommandes,
+        	getCommandesForSource:getCommandesForSource,
         	getConstats:getConstats,
         	getContrats:getContrats,
         	getEquipementList:getEquipementList,
