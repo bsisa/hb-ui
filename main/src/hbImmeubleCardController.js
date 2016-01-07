@@ -89,6 +89,7 @@
 									$scope.canEdit = ($scope.createMode || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT));
 									$scope.canEditParteners = ($scope.createMode || $scope.canEdit || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT_OTHER_PARTNERS));
 									
+									$scope.commandes = null;
 							        $scope.constatsEncours = null;
 							        $scope.constatsClos = null;
 							        $scope.prestations = null;
@@ -150,6 +151,13 @@
 						            $scope.contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE';
 						            $scope.contractReverse = false;
 							        
+						            $scope.createNewCommande = function() {
+						            	if ($attrs.hbMode != "create") {
+									        // Added id,classe,idg for generic link to creation source/parent prototype.
+											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF, id: $scope.elfin.Id, classe: $scope.elfin.CLASSE, idg: $scope.elfin.ID_G }
+											$location.search(searchObj).path( "/elfin/create/COMMANDE" );
+										}
+						            };
 							        
 									/**
 									 * Triggers a redirection to the CONSTAT creation URL with current

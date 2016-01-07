@@ -35,6 +35,31 @@
 										"initialised" : false
 									};
 								
+								/**
+								 * Set selected.building scope variable given building ID_G, Id identifiers.
+								 */
+								var setSelectedBuilding = function(ID_G, Id) {
+				    				GeoxmlService.getElfin(ID_G, Id).get()
+							        .then(function(buildingElfin) {
+							        	// Force CAR array sorting by POS attribute
+							        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
+							        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
+							        	//       Need review of other similar operations
+							        	if ( buildingElfin['CARACTERISTIQUE'] != null && buildingElfin['CARACTERISTIQUE']['CARSET'] != null && buildingElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+							        		hbUtil.reorderArrayByPOS(buildingElfin['CARACTERISTIQUE']['CARSET']['CAR']);
+							        	}
+						    			$scope.selected.building = buildingElfin;
+						    			// Wait for building initialisation if one if referenced
+						    			$scope.selected.initialised = true;
+							        }, function(response) {
+							        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + selectedBuildingIds.ID_G + " et l'identifiant: " + selectedBuildingIds.Id + ".";
+							        	$log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
+							        });	
+								};								
+								
+								/**
+								 * Listen to selected.building change and perform corresponding $scope.elfin updates
+								 */
 								$scope.$watch('selected.building', function(newBuilding, oldBuilding) { 
 									if ($scope.selected.initialised === true ) {
 										if ($scope.selected.building) {
@@ -161,7 +186,6 @@
 											}
 										);								
 								
-								
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
@@ -178,25 +202,8 @@
 											    };
 						    			//$scope.elfin.PARTENAIRE.FOURNISSEUR.VALUE
 						    			var selectedBuildingIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.SOURCE);
-						    			
 						    			if (selectedBuildingIds) {
-
-						    				GeoxmlService.getElfin(selectedBuildingIds.ID_G, selectedBuildingIds.Id).get()
-									        .then(function(buildingElfin) {
-									        	// Force CAR array sorting by POS attribute
-									        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
-									        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
-									        	//       Need review of other similar operations
-									        	if ( buildingElfin['CARACTERISTIQUE'] != null && buildingElfin['CARACTERISTIQUE']['CARSET'] != null && buildingElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
-									        		hbUtil.reorderArrayByPOS(buildingElfin['CARACTERISTIQUE']['CARSET']['CAR']);
-									        	}
-								    			$scope.selected.building = buildingElfin;
-								    			// Wait for building initialisation if one if referenced
-								    			$scope.selected.initialised = true;
-									        }, function(response) {
-									        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + selectedBuildingIds.ID_G + " et l'identifiant: " + selectedBuildingIds.Id + ".";
-									        	$log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
-									        });							    				
+						    				setSelectedBuilding(selectedBuildingIds.ID_G, selectedBuildingIds.Id);
 						    			} else {
 							    			// If no reference to building exists confirm initialisation is complete.
 							    			$scope.selected.initialised = true;
@@ -226,16 +233,14 @@
 													);						    				
 						    			}
 						    			
-										// Update elfin properties from catalogue while in create mode
+										// Update elfin properties from catalog while in create mode
 										if ($attrs.hbMode === "create") {
 											
 											if ($scope.elfin) {
-
-												var currentDate = new Date();
-												$scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(currentDate);
-
-												// Get user abbreviation from userDetails service
-												$scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();												
+												
+												// ===================================================
+												//   Reset catalog default values 
+												// =================================================== 
 												
 												// SAI nb.
 												$scope.elfin.IDENTIFIANT.OBJECTIF = "";
@@ -267,7 +272,21 @@
 												$scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE = "";
 												
 												$scope.elfin.DIVERS.REMARQUE = "";
+
+												// ===================================================
+												//   Initialises default values using parameters 
+												//   if provided 
+												// ===================================================
+												var currentDate = new Date();
+												$scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(currentDate);
+
+												// Get user abbreviation from userDetails service
+												$scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();
 												
+												// Initialise selected building using provided IMMEUBLE parameters
+												if ($routeParams.idg && $routeParams.id) {
+													setSelectedBuilding($routeParams.idg, $routeParams.id);
+												}
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
