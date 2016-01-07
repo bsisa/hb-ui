@@ -759,7 +759,7 @@
 		</tab> 
 		
 		<!-- COMMANDE tab --> 
-		<tab active="tabState.commande.active">
+		<tab ng-if="canManageOrders" active="tabState.commande.active">
 			<tab-heading>Commandes ({{commandes.length}})</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
