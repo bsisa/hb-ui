@@ -123,8 +123,17 @@
                 getWhoAmI: function() {
                     return _geoxmlService.one("whoami");
                 },
+                /**
+                 * getXqueryResult (singular) expects xqueryFilename to produce a single JSON object response
+                 */
                 getXqueryResult: function(xqueryFilename) {
                     return _geoxmlService.one("xquery/"+xqueryFilename);
+                },
+                /**
+                 * getXqueryResults (plural) expects xqueryFilename to produce an array of JSON objects response
+                 */
+                getXqueryResults: function(xqueryFilename) {
+                    return _geoxmlService.all("xquery/"+xqueryFilename);
                 },
                 getCollections: function() {
                 	//TODO: To check, this should certainly be:
