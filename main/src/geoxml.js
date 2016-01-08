@@ -153,6 +153,9 @@
                 getNewElfin: function(elfinClasse) {
                     return _geoxmlService.one("catalogue", elfinClasse);
                 }, 
+                getNewOrderNumber:function() {
+                    return _geoxmlService.one("orders/new/order-number");
+                },  
                 getService: function() {
                 	return restGeoxml;
                 },

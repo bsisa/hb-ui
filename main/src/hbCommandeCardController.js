@@ -24,7 +24,7 @@
 									$timeout, hbAlertMessages, hbUtil,
 									HB_EVENTS, userDetails, hbQueryService) {
 
-						
+								
 								// Can be dynamically updated given user roles, functions.
 								$scope.canEdit = true;
 
@@ -254,8 +254,15 @@
 												// Default value from catalogue contains repartition list: Reset it.
 												$scope.elfin.IDENTIFIANT.VALEUR = "";
 
-												// Reserved for future semantic identifier nb. 
-												$scope.elfin.IDENTIFIANT.NOM = "";
+												GeoxmlService.getNewOrderNumber().get().then(function(number) {
+														// Reserved for future semantic identifier nb. 
+														$scope.elfin.IDENTIFIANT.NOM = number;													
+													},
+													function(response) {
+														var message = "Le numéro de commande n'a pas pu être obtenu. (statut de retour: "+ response.status+ ")";
+														hbAlertMessages.addAlert("danger",message);
+													});	
+												
 												
 												// Reset entreprise service provider 
 												$scope.elfin.PARTENAIRE.FOURNISSEUR.Id = "";
