@@ -362,9 +362,9 @@
 		    	                   	$location.path( redirUrl );						        	
 						        };					            
 					            
-						        // Set focus to orderNb
+						        // Set focus to building (orderNb is automatically set and should not be changed)
 								var focusOnField = function() {
-									$('#orderNb').focus();
+									$('#building').focus();
 								};						      
 								
 								// Call set focus to orderNb with a 500 millisec delay.
