@@ -258,6 +258,9 @@
 												// SAI nb.
 												$scope.elfin.IDENTIFIANT.OBJECTIF = "";
 												
+												// Order type
+												$scope.elfin.IDENTIFIANT.QUALITE = "Bon de commande";
+												
 												// No construction of source IMMEUBLE
 												$scope.elfin.IDENTIFIANT.ORIGINE = "";
 
