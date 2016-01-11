@@ -28,6 +28,19 @@
 								// Can be dynamically updated given user roles, functions.
 								$scope.canEdit = true;
 
+								
+						    	GeoxmlService.getNewElfin("COMMANDE").get()
+					            .then(function(order) {
+					            		// Get typeChoices from catalog default
+					            	    $scope.typeChoices = hbUtil.buildArrayFromCatalogueDefault(order.IDENTIFIANT.QUALITE);
+									},
+									function(response) {
+										var message = "Les valeurs par défaut pour la CLASSE COMMANDE n'ont pas pu être chargées. (statut de retour: "+ response.status+ ")";
+										hbAlertMessages.addAlert("danger",message);
+									});	
+								
+								$scope.typeChoices = 
+								
 								$scope.selected = { 
 										"building" : {},
 										"code" : null,
@@ -286,6 +299,8 @@
 												// ===================================================
 												var currentDate = new Date();
 												$scope.elfin.IDENTIFIANT.DE = hbUtil.getDateInHbTextFormat(currentDate);
+												// Current date is not a relevant deadline but helps end-user with data entry
+												$scope.elfin.IDENTIFIANT.A = hbUtil.getDateInHbTextFormat(currentDate);
 
 												// Get user abbreviation from userDetails service
 												$scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();

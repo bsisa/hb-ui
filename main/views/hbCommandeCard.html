@@ -44,6 +44,17 @@
 					</div>
 				</div>
 
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.type)">				
+					<label for="type" class="col-sm-4 control-label">Type</label>
+					<div class="col-sm-4">
+						<div id="type" name="type" hb-single-select hb-single-select-options="typeChoices" ng-model="elfin.IDENTIFIANT.QUALITE" ></div>
+					</div>
+					<label for="auteur" class="col-sm-2 control-label">Délai d'exécution</label>
+					<div class="col-sm-2">
+						<div hb-date id="deadline" name="deadline" ng-model="elfin.IDENTIFIANT.A"></div>
+					</div>
+				</div>
+
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.building)">
 					<label for="building" class="col-sm-4 control-label">No SAI</label>
 					<div class="col-sm-8">
