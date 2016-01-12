@@ -1,0 +1,60 @@
+<div>
+<div>HB-ORDER-SPREADSHEET...</div>
+<table class="table table-condensed table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>
+				<div class="input-group">
+					<div>Lignes de commande</div>
+					<span class="input-group-btn">
+
+<!-- 						<button class="btn btn-default" type="button" -->
+<!-- 							ng-click="addRow(elfin, 'CARACTERISTIQUE.CARSET.CAR', { 'POS': 1 , 'NOM': '...', 'UNITE': 'abs', 'VALEUR': '0'})"> -->
+<!-- 							<i class="icon-plus-sign"></i> Nouveau -->
+<!-- 						</button> -->
+					</span>
+				</div>
+			</th>
+		</tr>
+	</thead>
+	<tbody ng-show="ngModelCtrl.$modelValue.CARACTERISTIQUE.CARSET.CAR.length > 0">
+		<tr ng-repeat="line in ngModelCtrl.$modelValue.CARACTERISTIQUE.CARSET.CAR">
+			<td>
+			
+				<div class="form-group">
+					<label for="linePos{$index}" class="col-sm-1 control-label">Pos</label>
+					<div class="col-sm-2">
+						<input type="text" id="linePos{$index}" name="linePos{$index}" class="form-control" ng-model="line.POS">
+					</div>
+					
+					<label for="lineDesc{$index}" class="col-sm-1 control-label">Desc</label>
+					<div class="col-sm-2">					
+						<input type="text" name="lineDesc{$index}" class="form-control" ng-model="line.NOM">
+					</div>
+					
+					<label for="lineType{$index}" class="col-sm-1 control-label">Type</label>
+					<div class="col-sm-2">
+					<input type="text" name="lineType{$index}" class="form-control" ng-model="line.UNITE">
+					</div>
+
+					<label for="lineAmount{$index}" class="col-sm-1 control-label">Amnt</label>					
+					<div class="col-sm-2">		
+					<div class="input-group">					
+						<input type="text" name="lineAmount{$index}" class="form-control" ng-model="line.VALEUR">
+						<span class="input-group-btn">
+							<button class="btn btn-default"
+								ng-click="removeLine($index)">
+								<i class="icon-remove-sign"></i> Supprimer
+							</button>
+						</span>
+					</div>
+					</div>					
+
+
+					
+				</div>			
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
