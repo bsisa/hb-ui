@@ -35,6 +35,10 @@
 				this.setNgModelCtrl = function(ctrl) {
 					$scope.ngModelCtrl = ctrl;						
 				};				
+
+				$scope.lineOrderTypeChoices = hbUtil.buildArrayFromCatalogueDefault("%|val|sum");				
+				
+				
 				
 				$scope.addRow = function (elfin, path, value) {
 					$log.debug(">>>> addRow DOES NOTHING AT THE MOMENT... ");

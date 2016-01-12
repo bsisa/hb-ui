@@ -22,29 +22,30 @@
 			<td>
 			
 				<div class="form-group">
-					<label for="linePos{$index}" class="col-sm-1 control-label">Pos</label>
-					<div class="col-sm-2">
-						<input type="text" id="linePos{$index}" name="linePos{$index}" class="form-control" ng-model="line.POS">
+<!-- 					<label for="linePos{$index}" class="col-sm-1 control-label">Pos</label> -->
+<!-- 					<div class="col-sm-2"> -->
+<!-- 						<input type="text" id="linePos{$index}" name="linePos{$index}" class="form-control" ng-model="line.POS"> -->
+<!-- 					</div> -->
+					
+<!-- 					<label for="lineDesc{$index}" class="col-sm-1 control-label">Description</label> -->
+					<div class="col-sm-6">					
+						<input type="text" id="lineDesc{$index}" name="lineDesc{$index}" class="form-control" ng-model="line.NOM" placeholder="Description...">
 					</div>
 					
-					<label for="lineDesc{$index}" class="col-sm-1 control-label">Desc</label>
-					<div class="col-sm-2">					
-						<input type="text" name="lineDesc{$index}" class="form-control" ng-model="line.NOM">
-					</div>
-					
-					<label for="lineType{$index}" class="col-sm-1 control-label">Type</label>
+<!-- 					<label for="lineType{$index}" class="col-sm-1 control-label">Type</label> -->
 					<div class="col-sm-2">
-					<input type="text" name="lineType{$index}" class="form-control" ng-model="line.UNITE">
+<!-- 						<input type="text" name="lineType{$index}" class="form-control" ng-model="line.UNITE"> -->
+						<div id="type" name="type" hb-single-select hb-single-select-options="lineOrderTypeChoices" ng-model="line.UNITE" ></div>
 					</div>
 
-					<label for="lineAmount{$index}" class="col-sm-1 control-label">Amnt</label>					
-					<div class="col-sm-2">		
+<!-- 					<label for="lineAmount{$index}" class="col-sm-1 control-label">Montant</label>					 -->
+					<div class="col-sm-4">		
 					<div class="input-group">					
-						<input type="text" name="lineAmount{$index}" class="form-control" ng-model="line.VALEUR">
+						<input type="text" name="lineAmount{$index}" class="form-control" ng-model="line.VALEUR" placeholder="0.00">
 						<span class="input-group-btn">
-							<button class="btn btn-default"
+							<button class="btn btn-default" tooltip="Supprimer"
 								ng-click="removeLine($index)">
-								<i class="icon-remove-sign"></i> Supprimer
+								<i class="icon-remove-sign"></i>
 							</button>
 						</span>
 					</div>
