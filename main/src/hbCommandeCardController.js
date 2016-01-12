@@ -39,8 +39,6 @@
 										hbAlertMessages.addAlert("danger",message);
 									});	
 								
-								$scope.typeChoices = 
-								
 								$scope.selected = { 
 										"building" : {},
 										"code" : null,
@@ -116,14 +114,14 @@
 										// the kind of verifications performed hereafter should be encapsulated within the
 										// directives (typehead or choose).
 										if ($scope.selected.code !== null && $scope.selected.code !== undefined) {
-											$log.debug("selected.code : " + angular.toJson($scope.selected.code));											
+											//$log.debug("selected.code : " + angular.toJson($scope.selected.code));											
 											$scope.elfin.GROUPE = $scope.selected.code.IDENTIFIANT.NOM;
 										} else {
-											$log.debug("selected.code has been reset... ");											
+											//$log.debug("selected.code has been reset... ");											
 											$scope.elfin.GROUPE = "";
 										}
 									} else {
-										$log.debug("selected.code : " + angular.toJson($scope.selected.code) + " ... WAITING for initialisation...");
+										//$log.debug("selected.code : " + angular.toJson($scope.selected.code) + " ... WAITING for initialisation...");
 									}
 								}, true);								
 								
