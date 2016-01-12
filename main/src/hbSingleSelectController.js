@@ -31,8 +31,15 @@
 						$scope.getOptionName = function(value) {
 							var optionRes = _.find($scope.options, function(option){ return (option.value === value); });
 							if (optionRes) {
-								return optionRes.name;
-							} else if ($scope.emptyOption && $scope.emptyOption.value === value) {
+								if (optionRes.name) {
+									$log.debug(">>>> single select: optionRes.name ok = " + optionRes.name);
+									return optionRes.name;	
+								} else {
+									$log.debug(">>>> single select: NO optionRes.name ... $scope.options = " + angular.toJson($scope.options));
+									return undefined;
+								}
+								
+							} else if ($scope.emptyOption && ($scope.emptyOption.value === value)) {
 								return $scope.emptyOption.name;
 							} else {
 								return undefined;
