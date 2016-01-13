@@ -24,6 +24,25 @@
 				$log.debug(">>>> HbOrderSpreadsheetController...");
 				
 				
+				
+				$scope.computeOrderLines = function() {
+					
+				var restGeoxml = GeoxmlService.getService();				
+				
+        		restGeoxml.all("orders/compute/order-lines").post($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE).then( 
+               			function(updatedCaracteristique) {
+               				$log.debug(">>>> HbOrderSpreadsheetController, POST SENT:     CARACTERISTIQUE = \n" + angular.toJson($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE));
+               				$log.debug(">>>> HbOrderSpreadsheetController, POST RECEIVED: CARACTERISTIQUE = \n" + angular.toJson(updatedCaracteristique));
+    	       			}, 
+    	       			function(response) { 
+    	       				$log.debug("Error in computeOrderLines POST operation with status code", response.status);
+    	       				var message = "Le calcul du montant de commande a échoué (statut de retour: "+ response.status+ ")";
+    						hbAlertMessages.addAlert("danger",message);
+    	       			}
+            		);				
+				};				
+				
+				
 				/**
 				 * Reference to hb-single-select ng-model sibling directive controller
 				 */
@@ -46,6 +65,7 @@
 				
 				$scope.removeLine = function (index) {
 					$log.debug(">>>> removeLine DOES NOTHING AT THE MOMENT... ");
+					$scope.computeOrderLines();
 				};
 
 					} ]); // End of HbOrderSpreadsheetController definition
