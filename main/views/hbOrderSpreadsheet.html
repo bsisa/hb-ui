@@ -1,61 +1,73 @@
 <div>
-<div>HB-ORDER-SPREADSHEET...</div>
 <table class="table table-condensed table-bordered table-striped">
 	<thead>
 		<tr>
 			<th>
 				<div class="input-group">
-					<div>Lignes de commande</div>
-					<span class="input-group-btn">
-
-<!-- 						<button class="btn btn-default" type="button" -->
-<!-- 							ng-click="addRow(elfin, 'CARACTERISTIQUE.CARSET.CAR', { 'POS': 1 , 'NOM': '...', 'UNITE': 'abs', 'VALEUR': '0'})"> -->
-<!-- 							<i class="icon-plus-sign"></i> Nouveau -->
-<!-- 						</button> -->
-					</span>
+					<div>Montant de la commande</div>
 				</div>
 			</th>
 		</tr>
 	</thead>
-	<tbody ng-show="ngModelCtrl.$modelValue.CARACTERISTIQUE.CARSET.CAR.length > 0">
-		<tr ng-repeat="line in ngModelCtrl.$modelValue.CARACTERISTIQUE.CARSET.CAR">
+	<tbody ng-show="ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L.length > 0">
+		<tr ng-repeat="line in ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L">	
 			<td>
-			
 				<div class="form-group">
-<!-- 					<label for="linePos{$index}" class="col-sm-1 control-label">Pos</label> -->
-<!-- 					<div class="col-sm-2"> -->
-<!-- 						<input type="text" id="linePos{$index}" name="linePos{$index}" class="form-control" ng-model="line.POS"> -->
-<!-- 					</div> -->
-					
-<!-- 					<label for="lineDesc{$index}" class="col-sm-1 control-label">Description</label> -->
-					<div class="col-sm-6">					
-						<input type="text" id="lineDesc{$index}" name="lineDesc{$index}" class="form-control" ng-model="line.NOM" placeholder="Description...">
+					<div class="col-sm-5">
+						<div ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-default" tooltip="Supprimer"
+									ng-click="removeLine($index)">
+									<i class="icon-remove-sign"></i>
+								</button>
+							</span>
+							<input ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
+						</div>
+						<span ng-if="line.C[0].VALUE !== 'MANUAL_AMOUNT'">{{line.C[1].VALUE}}</span>
 					</div>
-					
-<!-- 					<label for="lineType{$index}" class="col-sm-1 control-label">Type</label> -->
 					<div class="col-sm-2">
-<!-- 						<input type="text" name="lineType{$index}" class="form-control" ng-model="line.UNITE"> -->
-						<div id="type" name="type" hb-single-select hb-single-select-options="lineOrderTypeChoices" ng-model="line.UNITE" ></div>
-					</div>
-
-<!-- 					<label for="lineAmount{$index}" class="col-sm-1 control-label">Montant</label>					 -->
-					<div class="col-sm-4">		
-					<div class="input-group">					
-						<input type="text" name="lineAmount{$index}" class="form-control" ng-model="line.VALEUR" placeholder="0.00">
-						<span class="input-group-btn">
-							<button class="btn btn-default" tooltip="Supprimer"
-								ng-click="removeLine($index)">
-								<i class="icon-remove-sign"></i>
-							</button>
-						</span>
-					</div>
-					</div>					
-
-
+<!-- 					<div>line.C[5].VALUE: {{line.C[5].VALUE}}</div> -->
+<!-- 					<div>line.C[3].VALUE.length: {{line.C[3].VALUE.length}}</div> -->
+<!-- 					<div>line.C[5].VALUE === 'true' &&  line.C[3].VALUE.length > 0 : {{line.C[5].VALUE === 'true' &&  line.C[3].VALUE.length > 0}}</div> -->
 					
-				</div>			
+						<div ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length > 0" class="input-group">
+							<input type="text" class="form-control" ng-model="line.C[2].VALUE" />
+							<span class="input-group-addon">{{line.C[3].VALUE}}</span>
+						</div>
+						<input ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length === 0" type="text" class="form-control" ng-model="line.C[2].VALUE" />
+						<div ng-if="line.C[5].VALUE === 'false'" ></div>
+					</div>
+					<div class="col-sm-4 text-right">
+						<input ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" type="text" class="form-control" style="text-align: right;padding-right:0px;" ng-model="line.C[4].VALUE" >
+						<div ng-if="line.C[0].VALUE !== 'MANUAL_AMOUNT'" >{{line.C[4].VALUE}}</div>
+					</div>
+				</div>	
 			</td>
-		</tr>
-	</tbody>
-</table>
+		</tr>	
+<!-- 	<tbody ng-show="ngModelCtrl.$modelValue.CARACTERISTIQUE.CARSET.CAR.length > 0"> -->
+<!-- 		<tr ng-repeat="line in ngModelCtrl.$modelValue.CARACTERISTIQUE.CARSET.CAR"> -->
+<!-- 			<td> -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<div class="col-sm-6">					 -->
+<!-- 						<input type="text" id="lineDesc{$index}" name="lineDesc{$index}" class="form-control" ng-model="line.NOM" placeholder="Description..."> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm-2"> -->
+<!-- 						<div id="type" name="type" hb-single-select hb-single-select-options="lineOrderTypeChoices" ng-model="line.UNITE" ></div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm-4">		 -->
+<!-- 					<div class="input-group">					 -->
+<!-- 						<input type="text" name="lineAmount{$index}" class="form-control" ng-model="line.VALEUR" placeholder="0.00"> -->
+<!-- 						<span class="input-group-btn"> -->
+<!-- 							<button class="btn btn-default" tooltip="Supprimer" -->
+<!-- 								ng-click="removeLine($index)"> -->
+<!-- 								<i class="icon-remove-sign"></i> -->
+<!-- 							</button> -->
+<!-- 						</span> -->
+<!-- 					</div> -->
+<!-- 					</div> -->
+<!-- 				</div>			 -->
+<!-- 			</td> -->
+<!-- 		</tr> -->
+<!-- 	</tbody> -->
+	</table>
 </div>
