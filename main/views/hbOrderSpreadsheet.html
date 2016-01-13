@@ -26,10 +26,6 @@
 						<span ng-if="line.C[0].VALUE !== 'MANUAL_AMOUNT'">{{line.C[1].VALUE}}</span>
 					</div>
 					<div class="col-sm-2">
-<!-- 					<div>line.C[5].VALUE: {{line.C[5].VALUE}}</div> -->
-<!-- 					<div>line.C[3].VALUE.length: {{line.C[3].VALUE.length}}</div> -->
-<!-- 					<div>line.C[5].VALUE === 'true' &&  line.C[3].VALUE.length > 0 : {{line.C[5].VALUE === 'true' &&  line.C[3].VALUE.length > 0}}</div> -->
-					
 						<div ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length > 0" class="input-group">
 							<input type="text" class="form-control" ng-model="line.C[2].VALUE" />
 							<span class="input-group-addon">{{line.C[3].VALUE}}</span>
@@ -43,31 +39,6 @@
 					</div>
 				</div>	
 			</td>
-		</tr>	
-<!-- 	<tbody ng-show="ngModelCtrl.$modelValue.CARACTERISTIQUE.CARSET.CAR.length > 0"> -->
-<!-- 		<tr ng-repeat="line in ngModelCtrl.$modelValue.CARACTERISTIQUE.CARSET.CAR"> -->
-<!-- 			<td> -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<div class="col-sm-6">					 -->
-<!-- 						<input type="text" id="lineDesc{$index}" name="lineDesc{$index}" class="form-control" ng-model="line.NOM" placeholder="Description..."> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-sm-2"> -->
-<!-- 						<div id="type" name="type" hb-single-select hb-single-select-options="lineOrderTypeChoices" ng-model="line.UNITE" ></div> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-sm-4">		 -->
-<!-- 					<div class="input-group">					 -->
-<!-- 						<input type="text" name="lineAmount{$index}" class="form-control" ng-model="line.VALEUR" placeholder="0.00"> -->
-<!-- 						<span class="input-group-btn"> -->
-<!-- 							<button class="btn btn-default" tooltip="Supprimer" -->
-<!-- 								ng-click="removeLine($index)"> -->
-<!-- 								<i class="icon-remove-sign"></i> -->
-<!-- 							</button> -->
-<!-- 						</span> -->
-<!-- 					</div> -->
-<!-- 					</div> -->
-<!-- 				</div>			 -->
-<!-- 			</td> -->
-<!-- 		</tr> -->
-<!-- 	</tbody> -->
+		</tr>
 	</table>
 </div>
