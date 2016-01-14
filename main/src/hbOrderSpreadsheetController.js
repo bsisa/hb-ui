@@ -64,8 +64,37 @@
 				
 				
 				
-				$scope.addRow = function (elfin, path, value) {
+				$scope.addLine = function () {
 					$log.debug(">>>> addRow DOES NOTHING AT THE MOMENT... ");
+					
+					var L = {
+						          "C" : [ {
+						            "POS" : 1,
+						            "VALUE" : "MANUAL_AMOUNT"
+						          }, {
+						            "POS" : 2,
+						            "VALUE" : "Lavabo"
+						          }, {
+						            "POS" : 3,
+						            "VALUE" : ""
+						          }, {
+						            "POS" : 4,
+						            "VALUE" : ""
+						          }, {
+						            "POS" : 5,
+						            "VALUE" : "100000"
+						          }, {
+						            "POS" : 6,
+						            "VALUE" : "false"
+						          } ],
+						          "POS" : 1
+						        };
+
+					GeoxmlService.addRow($scope.ngModelCtrl.$modelValue, "CARACTERISTIQUE.FRACTION.L", L);
+					// Notify view of model update.
+       				$scope.ngModelCtrl.$render();
+       				$scope.elfinForm.$setDirty();
+					
 				};
 				
 				$scope.removeLine = function (index) {

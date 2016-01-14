@@ -16,6 +16,10 @@
 					<div class="col-sm-5">
 						<div ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" class="input-group">
 							<span class="input-group-btn">
+								<button class="btn btn-default" tooltip="Ajouter"
+									ng-click="addLine($index)">
+									<i class="icon-add-sign"></i>
+								</button>								
 								<button class="btn btn-default" tooltip="Supprimer"
 									ng-click="removeLine($index)">
 									<i class="icon-remove-sign"></i>
