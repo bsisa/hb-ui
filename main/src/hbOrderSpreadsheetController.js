@@ -25,21 +25,26 @@
 				
 				
 				
-				$scope.computeOrderLines = function() {
+				/**
+				 * Call HB-API service to obtain order lines computation.
+				 */
+				$scope.updateOrderLines = function() {
 					
-				var restGeoxml = GeoxmlService.getService();				
-				
-        		restGeoxml.all("orders/compute/order-lines").post($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE).then( 
-               			function(updatedCaracteristique) {
-               				$log.debug(">>>> HbOrderSpreadsheetController, POST SENT:     CARACTERISTIQUE = \n" + angular.toJson($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE));
-               				$log.debug(">>>> HbOrderSpreadsheetController, POST RECEIVED: CARACTERISTIQUE = \n" + angular.toJson(updatedCaracteristique));
-    	       			}, 
-    	       			function(response) { 
-    	       				$log.debug("Error in computeOrderLines POST operation with status code", response.status);
-    	       				var message = "Le calcul du montant de commande a échoué (statut de retour: "+ response.status+ ")";
-    						hbAlertMessages.addAlert("danger",message);
-    	       			}
-            		);				
+					var restGeoxml = GeoxmlService.getService();				
+					
+	        		restGeoxml.all("orders/compute/order-lines").post($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE).then( 
+	               			function(updatedCaracteristique) {
+	               				$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE = updatedCaracteristique;
+	               				// Notify view of model update.
+	               				$scope.ngModelCtrl.$render();
+	               				$scope.elfinForm.$setDirty();
+	    	       			}, 
+	    	       			function(response) { 
+	    	       				$log.debug("Error in computeOrderLines POST operation with status code", response.status);
+	    	       				var message = "Le calcul du montant de commande a échoué (statut de retour: "+ response.status+ ")";
+	    						hbAlertMessages.addAlert("danger",message);
+	    	       			}
+	            		);				
 				};				
 				
 				
@@ -65,7 +70,7 @@
 				
 				$scope.removeLine = function (index) {
 					$log.debug(">>>> removeLine DOES NOTHING AT THE MOMENT... ");
-					$scope.computeOrderLines();
+					$scope.updateOrderLines();
 				};
 
 					} ]); // End of HbOrderSpreadsheetController definition
