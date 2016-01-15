@@ -14,7 +14,7 @@
 			<td>
 				<div class="form-group">
 					<div class="col-sm-5">
-						<div ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" class="input-group">
+						<div ng-if="line.C[0].VALUE === MANUAL_AMOUNT" class="input-group">
 							<span class="input-group-btn">
 								<button class="btn btn-default" tooltip="Ajouter"
 									ng-click="addLine($index)">
@@ -25,11 +25,11 @@
 									<i class="icon-remove-sign"></i>
 								</button>
 							</span>
-							<input ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
+							<input ng-if="line.C[0].VALUE === MANUAL_AMOUNT" type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
 						</div>
-						<span ng-if="line.C[0].VALUE !== 'MANUAL_AMOUNT'">{{line.C[1].VALUE}}</span>
+						<span ng-if="line.C[0].VALUE !== MANUAL_AMOUNT">{{line.C[1].VALUE}}</span>
 					</div>
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<div ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length > 0" class="input-group">
 							<input type="text" class="form-control" ng-model="line.C[2].VALUE" />
 							<span class="input-group-addon">{{line.C[3].VALUE}}</span>
@@ -37,11 +37,9 @@
 						<input ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length === 0" type="text" class="form-control" ng-model="line.C[2].VALUE" />
 						<div ng-if="line.C[5].VALUE === 'false'" ></div>
 					</div>
-					<div class="col-sm-4 text-right">
-						<input ng-blur="updateOrderLines()" ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" type="text" class="form-control" style="text-align: right;padding-right:0px;" ng-model="line.C[4].VALUE" >
-						<div ng-if="line.C[0].VALUE !== 'MANUAL_AMOUNT'" >{{line.C[4].VALUE}}</div>
-						<div ng-show="hasManualOrderLine" >hasManualOrderLine!!!</div>
-						
+					<div class="col-sm-3 text-right">
+						<input ng-blur="updateOrderLines()" ng-if="lineValueEditable(line)" type="text" class="form-control" style="text-align: right;padding-right:0px;" ng-model="line.C[4].VALUE" >
+						<div ng-if="!lineValueEditable(line)" >{{line.C[4].VALUE}}</div>
 					</div>
 				</div>	
 			</td>

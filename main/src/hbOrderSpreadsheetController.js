@@ -21,27 +21,38 @@
 					function($attrs, $scope, $modal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
+				$scope.GROSS_AMOUNT_TOTAL = "TOTAL_GROSS";
+				$scope.MANUAL_AMOUNT = "MANUAL_AMOUNT";
+				
 				$log.debug(">>>> HbOrderSpreadsheetController...");
-				
-				
-				$scope.$watch('$scope.ngModelCtrl.$modelValue', function() {
-					if ($scope.ngModelCtrl !== null) {
-					$scope.hasManualOrderLine = _.find(
-							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L, 
-							function(L){ 
-								var manualAmtCell =_.find(
-										L.C,
-										function(C) {
-											return ( C.POS === 1 && C.VALUE === "MANUAL_AMOUNT") 
-										}
-										);
-								return ( manualAmtCell !== undefined) 
-							}
-						);
+
+				/**
+				 * Listener defining and updating $scope.hasManualOrderLine boolean value
+				 */
+				$scope.$watch('ngModelCtrl.$modelValue', function() {
+					
+					if ($scope.ngModelCtrl !== null && $scope.ngModelCtrl.$modelValue !== null) {
+						// Encapsulate two level deep underscorejs _.find 
+						$scope.hasManualOrderLine = _.find( 
+								// Loop on array of Ls (lines)
+								$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L, 
+								function(L){ 
+									// Loop on array of Cs (cells)
+									var manualAmtCell =_.find( L.C, function(C) { return ( C.POS === 1 && C.VALUE === $scope.MANUAL_AMOUNT) } );
+									return ( manualAmtCell !== undefined) 
+								}
+							);
+					} else { 
+						// Nada
 					};
 				}, true);
 				
-
+				/**
+				 * Boolean expression to make order line value conditionally editable
+				 */
+				$scope.lineValueEditable = function(line) {
+					return (line.C[0].VALUE === $scope.MANUAL_AMOUNT) || ((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine )
+				};
 				
 				
 				/**
