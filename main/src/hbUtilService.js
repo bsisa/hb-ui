@@ -64,7 +64,7 @@
 		var getFractionLCByPos = function(elfin, LPos, CPos) {
     		var currentL = _.find(elfin.CARACTERISTIQUE.FRACTION.L, function(L){ return L.POS === LPos; });
     		if (currentL) {
-    			return getCByPos(currentL.C);
+    			return getCByPos(currentL.C, CPos); 
     		} else {
     			return undefined;	
     		}
