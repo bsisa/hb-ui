@@ -40,6 +40,8 @@
 					<div class="col-sm-4 text-right">
 						<input ng-blur="updateOrderLines()" ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" type="text" class="form-control" style="text-align: right;padding-right:0px;" ng-model="line.C[4].VALUE" >
 						<div ng-if="line.C[0].VALUE !== 'MANUAL_AMOUNT'" >{{line.C[4].VALUE}}</div>
+						<div ng-show="hasManualOrderLine" >hasManualOrderLine!!!</div>
+						
 					</div>
 				</div>	
 			</td>

@@ -24,6 +24,25 @@
 				$log.debug(">>>> HbOrderSpreadsheetController...");
 				
 				
+				$scope.$watch('$scope.ngModelCtrl.$modelValue', function() {
+					if ($scope.ngModelCtrl !== null) {
+					$scope.hasManualOrderLine = _.find(
+							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L, 
+							function(L){ 
+								var manualAmtCell =_.find(
+										L.C,
+										function(C) {
+											return ( C.POS === 1 && C.VALUE === "MANUAL_AMOUNT") 
+										}
+										);
+								return ( manualAmtCell !== undefined) 
+							}
+						);
+					};
+				}, true);
+				
+
+				
 				
 				/**
 				 * Call HB-API service to obtain order lines computation.
