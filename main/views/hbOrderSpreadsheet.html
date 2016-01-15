@@ -18,7 +18,7 @@
 							<span class="input-group-btn">
 								<button class="btn btn-default" tooltip="Ajouter"
 									ng-click="addLine($index)">
-									<i class="icon-add-sign"></i>
+									<i class="icon-plus-sign"></i>
 								</button>								
 								<button class="btn btn-default" tooltip="Supprimer"
 									ng-click="removeLine($index)">
@@ -38,7 +38,7 @@
 						<div ng-if="line.C[5].VALUE === 'false'" ></div>
 					</div>
 					<div class="col-sm-4 text-right">
-						<input ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" type="text" class="form-control" style="text-align: right;padding-right:0px;" ng-model="line.C[4].VALUE" >
+						<input ng-blur="updateOrderLines()" ng-if="line.C[0].VALUE === 'MANUAL_AMOUNT'" type="text" class="form-control" style="text-align: right;padding-right:0px;" ng-model="line.C[4].VALUE" >
 						<div ng-if="line.C[0].VALUE !== 'MANUAL_AMOUNT'" >{{line.C[4].VALUE}}</div>
 					</div>
 				</div>	
