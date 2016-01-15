@@ -18,11 +18,14 @@
 					'hbUtil',
 					'GeoxmlService',
 					'hbQueryService',
+					'HB_REGEXP',
 					function($attrs, $scope, $modal, $routeParams,
-							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
+							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService, HB_REGEXP) {
 
 				$scope.GROSS_AMOUNT_TOTAL = "TOTAL_GROSS";
 				$scope.MANUAL_AMOUNT = "MANUAL_AMOUNT";
+				
+				$scope.numericOnlyRegexp = HB_REGEXP.NUMERIC_POS_ONLY;
 				
 				$log.debug(">>>> HbOrderSpreadsheetController...");
 

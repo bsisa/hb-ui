@@ -107,3 +107,14 @@ angular.module('hb5').constant('HB_ROLE_FONCTION', {
 	AMENAGEMENT_SPORTIF_EDIT_BUILDINGS_LIST : "amenagement_sportif-edit-immeubles-list",
 	ORDERS_STATISTICS : "stat-commandes"
 });
+
+
+
+/**
+ * Standard regexp patterns used throughout code.
+ */
+angular.module('hb5').constant('HB_REGEXP', {
+	NUMERIC_POS_ONLY : /^\d*\.?\d*$/,
+	NUMERIC_POS_AND_NEG_ONLY : /^[-]?\d*\.?\d*$/
+});
+

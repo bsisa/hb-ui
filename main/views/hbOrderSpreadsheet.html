@@ -38,7 +38,15 @@
 						<div ng-if="line.C[5].VALUE === 'false'" ></div>
 					</div>
 					<div class="col-sm-3 text-right">
-						<input ng-blur="updateOrderLines()" ng-if="lineValueEditable(line)" type="text" class="form-control" style="text-align: right;padding-right:0px;" ng-model="line.C[4].VALUE" >
+						<input 
+							ng-blur="updateOrderLines()" 
+							ng-if="lineValueEditable(line)" 
+							type="text" 
+							class="form-control" 
+							style="text-align: right;padding-right:0px;" 
+							ng-model="line.C[4].VALUE" 
+							ng-pattern="numericOnlyRegexp" 
+							ng-trim='false' >
 						<div ng-if="!lineValueEditable(line)" >{{line.C[4].VALUE}}</div>
 					</div>
 				</div>	

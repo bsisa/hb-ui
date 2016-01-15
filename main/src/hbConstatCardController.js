@@ -15,11 +15,12 @@
 					'hbAlertMessages',
 					'hbUtil',
 					'HB_EVENTS',
-					'HB_ROLE_FONCTION', 
+					'HB_REGEXP', 
+					'HB_ROLE_FONCTION',
 					'userDetails',
 					'hbQueryService',
 					function($attrs, $rootScope, $scope, GeoxmlService, $modal, $routeParams,
-							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, HB_ROLE_FONCTION, userDetails, hbQueryService) {
+							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, HB_REGEXP, HB_ROLE_FONCTION, userDetails, hbQueryService) {
 
 						//$log.debug("    >>>> Using ConstatCardController ");
 
@@ -29,9 +30,7 @@
 						$scope.immeubleRef = null;
 						
 			        	// Expression used by ng-pattern for numeric only validation.
-			        	$scope.numericOnlyRegexp = /^\d*\.?\d*$/;
-			        	// To allow negative values:
-			        	//$scope.numericOnlyRegexp = /^[-]?\d*\.?\d*$/;
+			        	$scope.numericOnlyRegexp = HB_REGEXP.NUMERIC_POS_ONLY; 
 
 			        	
 			        	$scope.messageDecisionList = [{ "name" : "", "value" : ""} ,
