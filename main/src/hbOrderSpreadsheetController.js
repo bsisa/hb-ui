@@ -64,9 +64,8 @@
 				
 				
 				
-				$scope.addLine = function () {
-					$log.debug(">>>> addRow DOES NOTHING AT THE MOMENT... ");
-					
+				$scope.addLine = function (index) {
+					$log.debug("addLine("+index+")");
 					var L = {
 						          "C" : [ {
 						            "POS" : 1,
@@ -82,7 +81,7 @@
 						            "VALUE" : ""
 						          }, {
 						            "POS" : 5,
-						            "VALUE" : "100000"
+						            "VALUE" : "0.00"
 						          }, {
 						            "POS" : 6,
 						            "VALUE" : "false"
@@ -90,7 +89,9 @@
 						          "POS" : 1
 						        };
 
-					GeoxmlService.addRow($scope.ngModelCtrl.$modelValue, "CARACTERISTIQUE.FRACTION.L", L);
+					// Add new line
+					//GeoxmlService.addRow($scope.ngModelCtrl.$modelValue, "CARACTERISTIQUE.FRACTION.L", L);
+					hbUtil.addFractionLByIndex($scope.ngModelCtrl.$modelValue,index,L);
 					// Notify view of model update.
        				$scope.ngModelCtrl.$render();
        				$scope.elfinForm.$setDirty();
@@ -98,7 +99,8 @@
 				};
 				
 				$scope.removeLine = function (index) {
-					$log.debug(">>>> removeLine DOES NOTHING AT THE MOMENT... ");
+					$log.debug(">>>> removeLine TODO: implement... ");
+					hbUtil.removeFractionLByIndex($scope.ngModelCtrl.$modelValue,index);
 					$scope.updateOrderLines();
 				};
 
