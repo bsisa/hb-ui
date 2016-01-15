@@ -22,13 +22,27 @@
 					function($attrs, $scope, $modal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService, HB_REGEXP) {
 
+				$log.debug(">>>> HbOrderSpreadsheetController...");				
+				
 				$scope.GROSS_AMOUNT_TOTAL = "TOTAL_GROSS";
 				$scope.MANUAL_AMOUNT = "MANUAL_AMOUNT";
 				
 				$scope.numericOnlyRegexp = HB_REGEXP.NUMERIC_POS_ONLY;
 				
-				$log.debug(">>>> HbOrderSpreadsheetController...");
+				
+				/**
+				 * Reference to hb-single-select ng-model sibling directive controller
+				 */
+				$scope.ngModelCtrl = null;
 
+				/**
+				 * ngModel controller scope reference setter.
+				 */
+				this.setNgModelCtrl = function(ctrl) {
+					$scope.ngModelCtrl = ctrl;						
+				};
+				
+				
 				/**
 				 * Listener defining and updating $scope.hasManualOrderLine boolean value
 				 */
@@ -98,25 +112,15 @@
 						// Nada - Do not submit invalid data.
 					}
 				};				
+			
+
+				//$scope.lineOrderTypeChoices = hbUtil.buildArrayFromCatalogueDefault("%|val|sum");				
 				
 				
 				/**
-				 * Reference to hb-single-select ng-model sibling directive controller
+				 * Adds a `manual entry` order line
 				 */
-				$scope.ngModelCtrl = null;
-
-				/**
-				 * ngModel controller scope reference setter.
-				 */
-				this.setNgModelCtrl = function(ctrl) {
-					$scope.ngModelCtrl = ctrl;						
-				};				
-
-				$scope.lineOrderTypeChoices = hbUtil.buildArrayFromCatalogueDefault("%|val|sum");				
-				
-				
-				
-				$scope.addLine = function (index) {
+				$scope.addLine = function (index, formValid) {
 					$log.debug("addLine("+index+")");
 					var L = {
 						          "C" : [ {
@@ -144,16 +148,18 @@
 					// Add new line
 					//GeoxmlService.addRow($scope.ngModelCtrl.$modelValue, "CARACTERISTIQUE.FRACTION.L", L);
 					hbUtil.addFractionLByIndex($scope.ngModelCtrl.$modelValue,index,L);
+					$scope.updateOrderLines(formValid);
        				$scope.elfinForm.$setDirty();
-
 				};
 				
+				/**
+				 * Removes a `manual entry` order line
+				 */
 				$scope.removeLine = function (index, formValid) {
-					$log.debug(">>>> removeLine TODO: implement... ");
 					hbUtil.removeFractionLByIndex($scope.ngModelCtrl.$modelValue,index);
 					$scope.updateOrderLines(formValid);
 				};
 
-					} ]); // End of HbOrderSpreadsheetController definition
+			} ]); // End of HbOrderSpreadsheetController definition
         
 })();

@@ -3,8 +3,13 @@
 	<thead>
 		<tr>
 			<th>
-				<div class="input-group">
-					<div>Montant de la commande <span ng-show="elfinForm.$invalid" >problem!!!</span></div>
+				<div class="col-sm-12" class="input-group">
+					<div class="col-sm-12" >Montant de la commande 
+						<button ng-show="!hasManualOrderLine" class="btn btn-xs btn-default" tooltip="Ajouter une ligne de commande"
+							ng-click="addLine(0,elfinForm.$valid)">
+							<i class="icon-plus-sign"></i>
+						</button>
+					</div>
 				</div>
 			</th>
 		</tr>
@@ -17,7 +22,7 @@
 						<div ng-if="line.C[0].VALUE === MANUAL_AMOUNT" class="input-group">
 							<span class="input-group-btn">
 								<button class="btn btn-default" tooltip="Ajouter"
-									ng-click="addLine($index+1)">
+									ng-click="addLine($index+1,elfinForm.$valid)">
 									<i class="icon-plus-sign"></i>
 								</button>								
 								<button class="btn btn-default" tooltip="Supprimer"
