@@ -4,24 +4,24 @@
 		<tr>
 			<th>
 				<div class="input-group">
-					<div>Montant de la commande</div>
+					<div>Montant de la commande <span ng-show="elfinForm.$invalid" >problem!!!</span></div>
 				</div>
 			</th>
 		</tr>
 	</thead>
 	<tbody ng-show="ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L.length > 0">
-		<tr ng-repeat="line in ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L">	
+		<tr ng-repeat="line in ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L"  ng-form="lineForm">	
 			<td>
 				<div class="form-group">
 					<div class="col-sm-5">
 						<div ng-if="line.C[0].VALUE === MANUAL_AMOUNT" class="input-group">
 							<span class="input-group-btn">
 								<button class="btn btn-default" tooltip="Ajouter"
-									ng-click="addLine($index)">
+									ng-click="addLine($index+1)">
 									<i class="icon-plus-sign"></i>
 								</button>								
 								<button class="btn btn-default" tooltip="Supprimer"
-									ng-click="removeLine($index)">
+									ng-click="removeLine($index,elfinForm.$valid)">
 									<i class="icon-remove-sign"></i>
 								</button>
 							</span>
@@ -38,17 +38,32 @@
 						<div ng-if="line.C[5].VALUE === 'false'" ></div>
 					</div>
 					<div class="col-sm-3 text-right">
-						<input 
-							ng-blur="updateOrderLines()" 
-							ng-if="lineValueEditable(line)" 
-							type="text" 
-							class="form-control" 
-							style="text-align: right;padding-right:0px;" 
-							ng-model="line.C[4].VALUE" 
-							ng-pattern="numericOnlyRegexp" 
-							ng-trim='false' >
+						<div ng-if="lineValueEditable(line)" class="input-group">
+							<input 
+								name="orderLineAmount"
+								type="text" 
+								class="form-control" 
+								style="text-align: right;padding-right:0px;" 
+								ng-model="line.C[4].VALUE" 
+								ng-pattern="numericOnlyRegexp" 
+								ng-trim='false' >
+							<span class="input-group-btn">
+								<button 
+									ng-show="lineForm.orderLineAmount.$dirty" 
+									class="btn btn-default" 
+									ng-click="updateOrderLines(elfinForm.$valid)">
+									<i class="glyphicon glyphicon-save"></i>
+								</button>								
+								<button 
+									ng-show="lineForm.orderLineAmount.$pristine" 
+									class="btn btn-default">
+									<i class="glyphicon glyphicon-saved"></i>
+								</button>
+							</span>
+						</div>
 						<div ng-if="!lineValueEditable(line)" >{{line.C[4].VALUE}}</div>
 					</div>
+					<div class="col-sm-12 text-danger" ng-show="lineForm.orderLineAmount.$error.pattern">Le montant doit être <strong>un nombre</strong> valide!</span></div>
 				</div>	
 			</td>
 		</tr>

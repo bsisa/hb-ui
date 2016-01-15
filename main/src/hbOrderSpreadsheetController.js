@@ -35,6 +35,7 @@
 				$scope.$watch('ngModelCtrl.$modelValue', function() {
 					
 					if ($scope.ngModelCtrl !== null && $scope.ngModelCtrl.$modelValue !== null) {
+						$log.debug(">>>> $modelValue CHANGED...");
 						// Encapsulate two level deep underscorejs _.find 
 						$scope.hasManualOrderLine = _.find( 
 								// Loop on array of Ls (lines)
@@ -50,6 +51,20 @@
 					};
 				}, true);
 				
+				
+				/**
+				 * Listener defining and updating $scope.hasManualOrderLine boolean value
+				 */
+				$scope.$watch('ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L', function() {
+										
+					if ($scope.ngModelCtrl !== null && $scope.ngModelCtrl.$modelValue !== null && $scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L) {
+						$log.debug(">>>> $modelValue.CARACTERISTIQUE.FRACTION.L CHANGED...");
+					} else { 
+						// Nada
+					};
+				}, true);				
+				
+				
 				/**
 				 * Boolean expression to make order line value conditionally editable
 				 */
@@ -61,23 +76,27 @@
 				/**
 				 * Call HB-API service to obtain order lines computation.
 				 */
-				$scope.updateOrderLines = function() {
+				$scope.updateOrderLines = function(formValid) {
 					
-					var restGeoxml = GeoxmlService.getService();				
-					
-	        		restGeoxml.all("orders/compute/order-lines").post($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE).then( 
-	               			function(updatedCaracteristique) {
-	               				$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE = updatedCaracteristique;
-	               				// Notify view of model update.
-	               				$scope.ngModelCtrl.$render();
-	               				$scope.elfinForm.$setDirty();
-	    	       			}, 
-	    	       			function(response) { 
-	    	       				$log.debug("Error in computeOrderLines POST operation with status code", response.status);
-	    	       				var message = "Le calcul du montant de commande a échoué (statut de retour: "+ response.status+ ")";
-	    						hbAlertMessages.addAlert("danger",message);
-	    	       			}
-	            		);				
+					if (formValid) {
+						var restGeoxml = GeoxmlService.getService();				
+						
+		        		restGeoxml.all("orders/compute/order-lines").post($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE).then( 
+		               			function(updatedCaracteristique) {
+		               				$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE = updatedCaracteristique;
+		               				// Notify view of model update.
+		               				$scope.ngModelCtrl.$render();		               				
+		               				$scope.elfinForm.$setDirty();
+		    	       			}, 
+		    	       			function(response) { 
+		    	       				$log.debug("Error in computeOrderLines POST operation with status code", response.status);
+		    	       				var message = "Le calcul du montant de commande a échoué (statut de retour: "+ response.status+ ")";
+		    						hbAlertMessages.addAlert("danger",message);
+		    	       			}
+		            		);			
+					} else {
+						// Nada - Do not submit invalid data.
+					}
 				};				
 				
 				
@@ -105,7 +124,7 @@
 						            "VALUE" : "MANUAL_AMOUNT"
 						          }, {
 						            "POS" : 2,
-						            "VALUE" : "Lavabo"
+						            "VALUE" : "Description"
 						          }, {
 						            "POS" : 3,
 						            "VALUE" : ""
@@ -125,16 +144,14 @@
 					// Add new line
 					//GeoxmlService.addRow($scope.ngModelCtrl.$modelValue, "CARACTERISTIQUE.FRACTION.L", L);
 					hbUtil.addFractionLByIndex($scope.ngModelCtrl.$modelValue,index,L);
-					// Notify view of model update.
-       				$scope.ngModelCtrl.$render();
        				$scope.elfinForm.$setDirty();
-					
+
 				};
 				
-				$scope.removeLine = function (index) {
+				$scope.removeLine = function (index, formValid) {
 					$log.debug(">>>> removeLine TODO: implement... ");
 					hbUtil.removeFractionLByIndex($scope.ngModelCtrl.$modelValue,index);
-					$scope.updateOrderLines();
+					$scope.updateOrderLines(formValid);
 				};
 
 					} ]); // End of HbOrderSpreadsheetController definition
