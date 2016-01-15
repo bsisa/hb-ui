@@ -98,6 +98,18 @@
 		};
 		
 		/**
+		 * Inserts L entry at `index` in elfin.CARACTERISTIQUE.FRACTION.L 
+		 * Takes care of POS renumbering to avoid discontinuous POS values. 
+		 */
+		var addFractionLByIndex = function(elfin, index, newL) {
+			// Inserts L entry at index 
+			elfin.CARACTERISTIQUE.FRACTION.L.splice(index,0,newL);
+			// Renumber all POS of elfin.CARACTERISTIQUE.FRACTION.L array.
+			renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
+		};		
+		
+		
+		/**
 		 * Removes L entry having POS attribute value LPos from elfin.CARACTERISTIQUE.FRACTION.L
 		 * Takes care of POS renumbering to avoid discontinuous POS values. 
 		 */
@@ -111,6 +123,18 @@
 				renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
 			}
 		};
+		
+		/**
+		 * Removes L entry having index from elfin.CARACTERISTIQUE.FRACTION.L
+		 * Takes care of POS renumbering to avoid discontinuous POS values. 
+		 */
+		var removeFractionLByIndex = function(elfin, index) {
+
+			// Remove L entry at index corresponding to LPos
+			elfin.CARACTERISTIQUE.FRACTION.L.splice(index,1);
+			// Renumber all POS of elfin.CARACTERISTIQUE.FRACTION.L array.
+			renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
+		};		
 		
 		
 		
@@ -765,7 +789,9 @@
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
         	removeAnnexeRenvoiByPos:removeAnnexeRenvoiByPos,
+        	addFractionLByIndex:addFractionLByIndex,
         	removeFractionLByPos:removeFractionLByPos,
+        	removeFractionLByIndex:removeFractionLByIndex,
         	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS,
         	sortElfinByDEDescending:sortElfinByDEDescending
