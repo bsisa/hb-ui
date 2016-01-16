@@ -43,29 +43,38 @@
 						<div ng-if="line.C[5].VALUE === 'false'" ></div>
 					</div>
 					<div class="col-sm-3 text-right">
-						<div ng-if="lineValueEditable(line)" class="input-group">
-							<input 
-								name="orderLineAmount"
-								type="text" 
-								class="form-control" 
-								style="text-align: right;padding-right:0px;" 
-								ng-model="line.C[4].VALUE" 
-								ng-pattern="numericOnlyRegexp" 
-								ng-trim='false' >
-							<span class="input-group-btn">
-								<button 
-									ng-show="lineForm.orderLineAmount.$dirty" 
-									class="btn btn-default" 
-									ng-click="updateOrderLines(elfinForm.$valid)">
-									<i class="glyphicon glyphicon-save"></i>
-								</button>								
-								<button 
-									ng-show="lineForm.orderLineAmount.$pristine" 
-									class="btn btn-default">
-									<i class="glyphicon glyphicon-saved"></i>
-								</button>
-							</span>
-						</div>
+						<input 
+							ng-if="lineValueEditable(line)"
+							name="orderLineAmount"
+							type="text" 
+							class="form-control" 
+							style="text-align: right;padding-right:0px;" 
+							ng-model="line.C[4].VALUE" 
+							ng-pattern="numericOnlyRegexp" 
+							ng-trim='false' >
+<!-- 						<div ng-if="lineValueEditable(line)" class="input-group"> -->
+<!-- 							<span class="input-group-btn"> -->
+<!-- 								<button  -->
+<!-- 									ng-show="lineForm.orderLineAmount.$dirty"  -->
+<!-- 									class="btn btn-default"  -->
+<!-- 									ng-click="updateOrderLines(elfinForm.$valid)"> -->
+<!-- 									<i class="glyphicon glyphicon-save"></i> -->
+<!-- 								</button>								 -->
+<!-- 								<button  -->
+<!-- 									ng-show="lineForm.orderLineAmount.$pristine"  -->
+<!-- 									class="btn btn-default"> -->
+<!-- 									<i class="glyphicon glyphicon-saved"></i> -->
+<!-- 								</button> -->
+<!-- 							</span> -->
+<!-- 							<input  -->
+<!-- 								name="orderLineAmount" -->
+<!-- 								type="text"  -->
+<!-- 								class="form-control"  -->
+<!-- 								style="text-align: right;padding-right:0px;"  -->
+<!-- 								ng-model="line.C[4].VALUE"  -->
+<!-- 								ng-pattern="numericOnlyRegexp"  -->
+<!-- 								ng-trim='false' > -->
+<!-- 						</div> -->
 						<div ng-if="!lineValueEditable(line)" >{{line.C[4].VALUE}}</div>
 					</div>
 					<div class="col-sm-12 text-danger" ng-show="lineForm.orderLineAmount.$error.pattern">Le montant doit être <strong>un nombre</strong> valide!</span></div>
