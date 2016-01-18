@@ -36,10 +36,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length > 0" class="input-group">
-							<input type="text" class="form-control" ng-model="line.C[2].VALUE" />
+							<input type="text" class="form-control" ng-model="line.C[2].VALUE" ng-pattern="numericOnlyRegexp" ng-trim='false' >
 							<span class="input-group-addon">{{line.C[3].VALUE}}</span>
 						</div>
-						<input ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length === 0" type="text" class="form-control" ng-model="line.C[2].VALUE" />
+						<input ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length === 0" type="text" class="form-control" ng-model="line.C[2].VALUE"  ng-pattern="numericOnlyRegexp" ng-trim='false' >
 						<div ng-if="line.C[5].VALUE === 'false'" ></div>
 					</div>
 					<div class="col-sm-3 text-right">
@@ -51,7 +51,7 @@
 							style="text-align: right;padding-right:0px;" 
 							ng-model="line.C[4].VALUE" 
 							ng-pattern="numericOnlyRegexp" 
-							ng-trim='false' >
+							ng-trim='false' />
 <!-- 						<div ng-if="lineValueEditable(line)" class="input-group"> -->
 <!-- 							<span class="input-group-btn"> -->
 <!-- 								<button  -->
