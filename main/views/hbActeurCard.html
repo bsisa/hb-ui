@@ -50,11 +50,27 @@
 					</div>
 				</div>
 
+<!-- 				<div class="form-group"> -->
+<!-- 					<label for="cellphone" class="col-sm-2 control-label">{{elfin.CARACTERISTIQUE.CARSET.CAR[0].NOM}}</label> -->
+<!-- 					<div class="col-sm-5"> -->
+<!-- 						<input id="cellphone" name="cellphone" type="text" class="form-control" -->
+<!-- 							ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" -->
+<!-- 							> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				<div class="form-group">
-					<label for="cellphone" class="col-sm-2 control-label">{{elfin.CARACTERISTIQUE.CARSET.CAR[0].NOM}}</label>
+					<label for="cellphone" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,1).NOM}}</label>
 					<div class="col-sm-5">
 						<input id="cellphone" name="cellphone" type="text" class="form-control"
-							ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"
+							ng-model="hbUtil.getCARByPos(elfin,1).VALEUR"
+							>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="fax" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,2).NOM}}</label>
+					<div class="col-sm-5">
+						<input id="fax" name="fax" type="text" class="form-control"
+							ng-model="hbUtil.getCARByPos(elfin,2).VALEUR"
 							>
 					</div>
 				</div>				
@@ -66,7 +82,60 @@
 							tooltip="elfin.CARACTERISTIQUE.CAR5.VALEUR" ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
 					</div>
 				</div>				
-	
+				<div class="form-group">
+					<label for="letterSalutation" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,3).NOM}}</label>
+					<div class="col-sm-2">
+						<input id="letterSalutationUnite" name="letterSalutationUnite" type="text" class="form-control"
+							ng-model="hbUtil.getCARByPos(elfin,3).UNITE"
+							>
+					</div>					
+					<div class="col-sm-3">
+						<input id="letterSalutationValue" name="letterSalutationValue" type="text" class="form-control"
+							ng-model="hbUtil.getCARByPos(elfin,3).VALEUR"
+							>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="salutation" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,4).NOM}}</label>
+					<div class="col-sm-2">
+						<input id="salutationUnite" name="salutationUnite" type="text" class="form-control"
+							ng-model="hbUtil.getCARByPos(elfin,4).UNITE"
+							>
+					</div>					
+					<div class="col-sm-3">
+						<input id="salutationValue" name="salutationValue" type="text" class="form-control"
+							ng-model="hbUtil.getCARByPos(elfin,4).VALEUR"
+							>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="webSite" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,5).NOM}}</label>
+					<div class="col-sm-5">
+						<input id="webSite" name="webSite" type="text" class="form-control"
+							ng-model="hbUtil.getCARByPos(elfin,5).VALEUR"
+							>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="address" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,6).NOM}}</label>
+					<div class="col-sm-5">
+						<input id="address" name="address" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,6).VALEUR" >
+						<input id="addressLine2" name="addressLine2" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,7).VALEUR" >
+						<input id="addressLine2" name="addressLine2" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,8).VALEUR" >
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="zipcode" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,9).NOM}}</label>
+					<div class="col-sm-5">
+						<input id="zipcode" name="zipcode" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,9).VALEUR" >
+					</div>
+				</div>		
+				<div class="form-group">
+					<label for="country" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,10).NOM}}</label>
+					<div class="col-sm-5">
+						<input id="country" name="country" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,10).VALEUR" >
+					</div>
+				</div>
 			</div>
 			</tab> </tabset>
 		</div>
