@@ -206,7 +206,7 @@
                  */
                 getPolygonCoords: function(elfin) {
                     if (!elfin.FORME) return null;
-
+                    // TODO: HBGeo? - Do we only expect one ZONE element ? With POS=1 ? 
                     var zoneDef = this.findElementWithPos(elfin.FORME.ZONE, '1');
                     if (!zoneDef) return null;
 
@@ -216,10 +216,14 @@
 
                     angular.forEach(zoneDef.LIGNE, function(l) {
                         var lPos = l.Id.split('#')[1];
+                        // TODO: HBGeo? - This assumes ZONE Id, ID_G only point to the same ELFIN.
+                        // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
                         var lineDef = that.findElementWithPos(elfin.FORME.LIGNE, lPos);
 
                         angular.forEach(lineDef.PASSAGE, function(p) {
                             var pPos = p.Id.split('#')[1];
+                            // TODO: HBGeo? - This assumes LINE Id, ID_G only point to the same ELFIN.
+                            // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
                             var pointDef = that.findElementWithPos(elfin.FORME.POINT, pPos);
                             points.push(that.getLongitudeLatitudeCoordinates({X: parseFloat(pointDef.X), Y: parseFloat(pointDef.Y)}));
                         });
