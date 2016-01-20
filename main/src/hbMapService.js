@@ -243,7 +243,7 @@
                 },
 
                 updatePolygonCoords: function(elfin, layer) {
-                    if (angular.isDefined(layer.setsetLatLngs)) {
+                    if (angular.isDefined(layer.setLatLngs)) {
                         var coords = this.getPolygonCoords(elfin);
                         if (coords && coords.length > 0) {
                             layer.setLatLngs(coords);
