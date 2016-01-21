@@ -51,7 +51,18 @@
                             name: 'Aquarelle',
                             url: 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
                             type: 'xyz'
-                        }
+                        },
+                        gespatri: {
+                            name: 'Gespatri',
+                            type: 'imageOverlay',
+                            url: '/assets/images/abribus.jpeg',
+                            bounds: [[46.992737010038404, 6.931471483187033], [46.99302251894073, 6.931947239697114]],
+                            //{"_southWest":{"lat":46.992737010038404,"lng":6.931471483187033},"_northEast":{"lat":46.99302251894073,"lng":6.931947239697114}}
+                            layerParams: {
+                              noWrap: true,
+                              attribution: 'Custom map <a href="http://www.bsisa.ch/">by BSI SA</a>'
+                            }
+                        }                        
 
                     },
                     overlays: {
@@ -82,6 +93,9 @@
 
 
             var displayLayer = function (map, id, layerDef) {
+            	
+            	$log.debug("Map ctrler: displayLayer: id="+id+", layerDef:\n"+ angular.toJson(layerDef));
+            	
                 var layer = {
                     representationStyle : {}
                 };
@@ -110,29 +124,78 @@
 
                 $scope.layers.overlays[layerId] = layerGroup;
 
+                
+                /**
+                 * Pushes layer to objects by reference (your warned) and updated scope dictionary of objects identifiers. 
+                 */
+                var pushLayer = function(objectLayer, objects, elfin) {
+                    if (objectLayer !== null) {
+                        objects.push(objectLayer);
+                        var identifier = getElfinIdentifier(elfin);
+                        if (angular.isUndefined($scope.layerDictionary[identifier])) {
+                            $scope.layerDictionary[identifier] = [objectLayer];
+                        } else {
+                            $scope.layerDictionary[identifier].push(objectLayer);
+                        }
+                    }            	
+                };                
+                
+                
                 // Using GeoxmlService to obtain layers objects
                 GeoxmlService.getCollection(layer.idg).getList({"xpath" : layer.xpath})
 				.then(
 						function(elfins) {
-            				//$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " objects.");
-							var objects = [];
-		                    angular.forEach(elfins, function (elfin) {
-		                        var objectLayer = MapService.getObjectLayer(elfin, layer.representationType, layer.representationStyle);
-		                        if (objectLayer !== null) {
-//			                    	if ($scope.elfin.Id === elfin.Id && layer.representationType.toLowerCase() == 'marker') {
-//			                    		// TODO: Customise marker icon background... in hbMapService getMarkerLayer...
-//			                    		// For possible solution, check http://stackoverflow.com/questions/23567203/leaflet-changing-marker-color
-//			                    	}		                        	
-		                            objects.push(objectLayer);
-		                            var identifier = getElfinIdentifier(elfin);
-		                            if (angular.isUndefined($scope.layerDictionary[identifier])) {
-		                                $scope.layerDictionary[identifier] = [objectLayer];
-		                            } else {
-		                                $scope.layerDictionary[identifier].push(objectLayer);
-		                            }
-		
-		                        }
+            				$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " layers objects.");
+							
+            				var objects = [];
+            				// We want this marker layer to be on top 
+            				var currentObjectMarkerLayer = null;
+            				
+							angular.forEach(elfins, function (elfin) {
+		                    	
+		                        var objectLayerStyle = {};
+	                        	var objectLayer = null;
+		                        
+	                        	if ($scope.elfin.Id === elfin.Id && layer.representationType.toLowerCase() == 'marker') {
+	                        		
+	                        		var CustomIcon = L.Icon.extend({
+	                        		    options: {
+                       		    			iconSize: [25, 41],
+                       		    			iconAnchor: [12, 41],
+                       		    			popupAnchor: [1, -34],
+                       		    			shadowSize: [41, 41]
+	                        		    }
+	                        		});	                        		
+	                        		
+//	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-orange.png'});
+	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-purple.png'});
+//	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-red.png'});
+//	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-yellow.png'});
+//	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-green.png'});
+	                        		var customStyle = {icon: selectedIcon};
+	                        		$log.debug(">>>> MARKER FOR SELECTED ELFIN /!\ Id = " + elfin.Id + " <<<<" );
+	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, layer.representationType, customStyle);
+	                        	} else {
+	                        		objectLayerStyle = layer.representationStyle;
+	                        		objectLayer = MapService.getObjectLayer(elfin, layer.representationType, objectLayerStyle);
+	                        	}		                    	
+	                        	
+								pushLayer(objectLayer, objects, elfin);
+
+//		                        if (objectLayer !== null) {
+//		                            objects.push(objectLayer);
+//		                            var identifier = getElfinIdentifier(elfin);
+//		                            if (angular.isUndefined($scope.layerDictionary[identifier])) {
+//		                                $scope.layerDictionary[identifier] = [objectLayer];
+//		                            } else {
+//		                                $scope.layerDictionary[identifier].push(objectLayer);
+//		                            }
+//		                        }
 		                    });
+							
+							// Put currentObjectMarkerLayer on top if available
+							pushLayer(currentObjectMarkerLayer, objects, $scope.elfin);
+							
 		
 		                    leafletData.getLayers().then(function(layers) {
 		                        angular.forEach(objects, function(objectLayer) {
@@ -151,7 +214,8 @@
 					);                
 
             };
-
+            
+            
             var updateElfinRepresentation = function(elfin) {
                 var identifier = getElfinIdentifier(elfin);
                 if (angular.isDefined($scope.layerDictionary[identifier])) {
@@ -425,6 +489,24 @@
 
                 $scope.$emit(HB_EVENTS.ELFIN_UPDATED, scope.elfin);
             };
+            
+            // ================================================================
+            // ======================= geographie test bed ====================
+            // ================================================================
+            
+            $scope.zoomToCurrentObject = function() {
+	            var currentElfinRepresentation = 'polygon';
+	            var currentElfinPolygoneStyle = {};
+	            var currentElfinLayerToZoomTo = MapService.getObjectLayer($scope.elfin, currentElfinRepresentation, currentElfinPolygoneStyle);
+	            // zoom the map to the currentElfinLayerToZoomTo
+            	leafletData.getMap().then(function (map) {
+            		$log.debug("currentElfinLayerToZoomTo.getBounds() = " + angular.toJson( currentElfinLayerToZoomTo.getBounds() ));
+            		map.fitBounds(currentElfinLayerToZoomTo.getBounds());
+                });
+            };
+            
+            // ================================================================
+            // ================================================================
             
             /**
              * Clean up rootScope listeners explicitely (required). 

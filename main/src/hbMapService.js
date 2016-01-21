@@ -171,10 +171,12 @@
 
                     var point = this.getElfinBasePoint(elfin);
                     if (!point) {
+                    	$log.debug(">>>> missing BASE POINT for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF );
                         return null;
                     }
 
                     var coords = this.getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
+                    $log.debug(">>>> marker style for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF + " = " + angular.toJson(style) );
                     return L.marker(coords, style);
                 },
 
@@ -237,15 +239,16 @@
                     var coords = this.getPolygonCoords(elfin);
                     if (coords && coords.length > 0) {
                         return L.polygon(coords, style);
+                    } else {
+                        return null;                    	
                     }
-
-                    return null;
                 },
 
                 updatePolygonCoords: function(elfin, layer) {
-                    if (angular.isDefined(layer.setLatLngs)) {
+                    if (angular.isDefined(layer.setLatLngs)) { 
                         var coords = this.getPolygonCoords(elfin);
                         if (coords && coords.length > 0) {
+                        	$log.debug("Map service: updatePolygonCoords - layer.setLatLngs(coords)\ncoords =\n" + angular.toJson(coords));
                             layer.setLatLngs(coords);
                         }
                     }
