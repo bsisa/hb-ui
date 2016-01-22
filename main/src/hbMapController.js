@@ -75,6 +75,16 @@
             Reference to current displayed object
              */
             $scope.elfin = null;
+            
+			/**
+			 * Listener defining and updating $scope.hasManualOrderLine boolean value
+			 */
+			$scope.$watch('elfin.Id', function(newVal, oldVal) {
+				$log.debug(">>>> Map selected elfin.Id changed from: "+oldVal+" to: " + newVal);
+			}, true);            
+            
+            
+            
            /*
             The objects dictionary holds for each idg/class/id combination as text, all layers in an array
              */
@@ -130,12 +140,12 @@
                  */
                 var pushLayer = function(objectLayer, objects, elfin) {
                     if (objectLayer !== null) {
-                        objects.push(objectLayer);
+                        objects.unshift(objectLayer);
                         var identifier = getElfinIdentifier(elfin);
                         if (angular.isUndefined($scope.layerDictionary[identifier])) {
                             $scope.layerDictionary[identifier] = [objectLayer];
                         } else {
-                            $scope.layerDictionary[identifier].push(objectLayer);
+                            $scope.layerDictionary[identifier].unshift(objectLayer);
                         }
                     }            	
                 };                
@@ -158,12 +168,14 @@
 		                        
 	                        	if ($scope.elfin.Id === elfin.Id && layer.representationType.toLowerCase() == 'marker') {
 	                        		
+	                        		// zIndexOffset only effective in higher version... 
 	                        		var CustomIcon = L.Icon.extend({
 	                        		    options: {
                        		    			iconSize: [25, 41],
                        		    			iconAnchor: [12, 41],
                        		    			popupAnchor: [1, -34],
-                       		    			shadowSize: [41, 41]
+                       		    			shadowSize: [41, 41],
+                       		    			zIndexOffset: 1000
 	                        		    }
 	                        		});	                        		
 	                        		
@@ -372,7 +384,8 @@
             var elfinLoadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
             	// TODO: review: not relevant for all ELFIN@CLASSE !
                 $scope.elfin = elfin;
-                $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE);
+                updateElfinRepresentation($scope.elfin);
+                $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE +"/"+elfin.Id);
             });
 
             // Elfin has been unloaded, thus no more current elfin
@@ -380,7 +393,12 @@
                 if (elfin) {
                     updateElfinRepresentation(elfin);
                 }
-                $scope.elfin = null;
+                $log.debug(">>>> MapController: HB_EVENTS.ELFIN_UNLOADED => " + elfin.CLASSE +"/"+elfin.Id);
+                // TODO: This causes problem due to possible reset of formerly updated elfin 
+                // on ELFIN_LOADED event. Indeed the events order is not necessarily as UNLOAD => LOAD but can be
+                // reversed due to asynchronous execution. 
+                //$scope.elfin = null; 
+
             });
 
 
