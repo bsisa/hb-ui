@@ -103,7 +103,6 @@
                     var popup = '<b>' + elfin.IDENTIFIANT.NOM + ' ' + elfin.IDENTIFIANT.ALIAS + '</b><br>';
                     popup += 'No SAI <b>' + elfin.IDENTIFIANT.OBJECTIF + '</b> - ' + elfin.CLASSE + '<br>';
                     popup += '<a href="/elfin/' + elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id + '">Détails</a>';
-//                    popup += '<a href="/elfin/' + elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id + '?mdt=SPLIT">Détails</a>';
                     return popup;
                 },
 
