@@ -229,6 +229,7 @@
             
             
             var updateElfinRepresentation = function(elfin) {
+            	$log.debug(">>>> updateElfinRepresentation(elfin.Id = "+elfin.Id+")");
                 var identifier = getElfinIdentifier(elfin);
                 if (angular.isDefined($scope.layerDictionary[identifier])) {
                     angular.forEach($scope.layerDictionary[identifier], function (layer) {
@@ -511,17 +512,16 @@
             // ================================================================
             // ======================= geographie test bed ====================
             // ================================================================
-            
+
+            /**
+             * Zoom map to current selected ELFIN
+             */
             $scope.zoomToCurrentObject = function() {
-	            var currentElfinRepresentation = 'polygon';
-	            var currentElfinPolygoneStyle = {};
-	            var currentElfinLayerToZoomTo = MapService.getObjectLayer($scope.elfin, currentElfinRepresentation, currentElfinPolygoneStyle);
 	            // zoom the map to the currentElfinLayerToZoomTo
             	leafletData.getMap().then(function (map) {
-            		$log.debug("currentElfinLayerToZoomTo.getBounds() = " + angular.toJson( currentElfinLayerToZoomTo.getBounds() ));
-            		map.fitBounds(currentElfinLayerToZoomTo.getBounds());
+            		map.fitBounds(MapService.getObjectBounds($scope.elfin, 'polygon'));
                 });
-            };
+            };            
             
             // ================================================================
             // ================================================================

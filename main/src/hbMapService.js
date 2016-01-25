@@ -20,6 +20,153 @@
                return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
            };
 
+
+           var getElfinBasePoint = function(elfin) {
+               var point = null;
+               angular.forEach(elfin.FORME.POINT, function(p) {
+                   if (p.FONCTION.toLowerCase() === 'base') {
+                       point = p;
+                   }
+               });
+               return point;
+           };
+           
+           
+           var getPointLayer = function(elfin, style) {
+               if (!elfin.FORME) return null;
+
+               var point = getElfinBasePoint(elfin);
+               if (!point) {
+                   return null;
+               }
+
+               var coords = getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
+
+               return L.circleMarker(coords, style);
+           };
+           
+           
+           var getMarkerLayer = function(elfin, style) {
+               if (!elfin.FORME) return null;
+
+               var point = getElfinBasePoint(elfin);
+               if (!point) {
+               	$log.debug(">>>> missing BASE POINT for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF );
+                   return null;
+               }
+
+               var coords = getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
+               $log.debug(">>>> marker style for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF + " = " + angular.toJson(style) );
+               return L.marker(coords, style);
+           };
+           
+           
+           var findElementWithPos = function(array, pos) {
+               var element = null;
+               angular.forEach(array, function(e) {
+                   if (e.POS === parseInt(pos)) {
+                       element = e;
+                   }
+               });
+               return element;
+           };
+           
+           var getPolygonCoords = function(elfin) {
+               if (!elfin.FORME) return null;
+               // Check if at least a ZONE is defined, at POS 1. 
+               var zoneDef = findElementWithPos(elfin.FORME.ZONE, '1');
+               if (!zoneDef) return null;
+
+               var points = [];
+
+               // Process lines (LIGNE) defined by ZONEs
+               angular.forEach(zoneDef.LIGNE, function(l) {
+                   var lPos = l.Id.split('#')[1];
+                   // TODO: HBGeo? - This assumes ZONE Id, ID_G only point to the same ELFIN.
+                   // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
+                   var lineDef = findElementWithPos(elfin.FORME.LIGNE, lPos);
+
+                   // Process each line passage which in turn reference a POINT whose coordinates will be extracted and drawn. 
+                   angular.forEach(lineDef.PASSAGE, function(p) {
+                       var pPos = p.Id.split('#')[1];
+                       // TODO: HBGeo? - This assumes LINE Id, ID_G only point to the same ELFIN.
+                       // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
+                       var pointDef = findElementWithPos(elfin.FORME.POINT, pPos);
+                       points.push(getLongitudeLatitudeCoordinates({X: parseFloat(pointDef.X), Y: parseFloat(pointDef.Y)}));
+                   });
+               });
+
+               return points;
+           };           
+           
+           var getPolygonLayer = function(elfin, style) {
+               var coords = getPolygonCoords(elfin);
+               if (coords && coords.length > 0) {
+                   return L.polygon(coords, style);
+               } else {
+                   return null;                    	
+               }
+           };
+           
+           /**
+            * TODO: This is not generic: Re-design and refactor. 
+            * (I.e.: Have template per CLASSE and template list loaded from database at startup.)
+            */
+           var getPopupContent = function(elfin) {
+               var popup = '<b>' + elfin.IDENTIFIANT.NOM + ' ' + elfin.IDENTIFIANT.ALIAS + '</b><br>';
+               popup += 'No SAI <b>' + elfin.IDENTIFIANT.OBJECTIF + '</b> - ' + elfin.CLASSE + '<br>';
+               popup += '<a href="/elfin/' + elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id + '">Détails</a>';
+               return popup;
+           };
+           
+           var updatePolygonCoords = function(elfin, layer) {
+               if (angular.isDefined(layer.setLatLngs)) { 
+                   var coords = getPolygonCoords(elfin);
+                   if (coords && coords.length > 0) {
+                   	$log.debug("Map service: updatePolygonCoords - layer.setLatLngs(coords)\ncoords =\n" + angular.toJson(coords));
+                       layer.setLatLngs(coords);
+                   }
+               }
+
+           };
+           
+           
+           var getObjectLayer = function(elfin, representation, style) {
+               var result = null;
+
+               switch (representation.toLowerCase()) {
+                   case 'point': result = getPointLayer(elfin, style); break;
+                   case 'marker': result = getMarkerLayer(elfin, style); break;
+                   case 'polygon': result = getPolygonLayer(elfin, style); break;
+               }
+
+               if (result !== null) {
+               	$log.debug(">>>>    getObjectLayer    ***    START    <<<<");
+                   result.bindPopup(getPopupContent(elfin));
+               	//$log.debug(">>>>    \n" + angular.toJson(result));
+                   angular.extend(result, {elfin:elfin});
+               	//$log.debug(">>>>    \n" + angular.toJson(result));
+               	$log.debug(">>>>    getObjectLayer    ***     END     <<<<");
+               }
+
+               return result;
+           };
+
+           
+           
+           
+           var updateLayerCoords = function(elfin, layer) {
+
+               if (angular.isDefined(layer.setLatLng)) {
+                   var point = getElfinBasePoint(elfin);
+                   if (point) {
+                       var coords = getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
+                       layer.setLatLng(coords);
+                   }
+               }
+           };
+           
+           
            /**
             * Code block dealing with div toggle operation
             */
@@ -72,6 +219,92 @@
 	           }
            };
            
+           
+           var getLongitudeLatitudeCoordinates = function(point) {
+               var x = (point.Y - Y_OFFSET_OBSERVED) / 1000000;
+               var x2 = x * x;
+               var x3 = x2 * x;
+               var x4 = x3 * x;
+
+               var y = (point.X - X_OFFSET_OBSERVED) / 1000000;
+               var y2 = y * y;
+               var y3 = y2 * y;
+               var y4 = y3 * y;
+               var y5 = y4 * y;
+
+               var a1 = + 4.72973056
+                   + 0.7925714 * x
+                   + 0.132812 * x2
+                   + 0.02550 * x3
+                   + 0.0048 * x4;
+
+               var a3 = - 0.044270
+                   - 0.02550 * x
+                   - 0.0096 * x2;
+
+               var a5 = + 0.00096;
+
+               var p0 = 0
+                   + 3.23864877 * x
+                   - 0.0025486 * x2
+                   - 0.013245 * x3
+                   + 0.000048 * x4;
+
+               var p2 = - 0.27135379
+                   - 0.0450442 * x
+                   - 0.007553 * x2
+                   - 0.00146 * x3;
+
+               var p4 = + 0.002442
+                   + 0.00132 * x;
+
+               var latPrime = 16.902866 + p0 + p2 * y2 + p4 * y4;
+               var lonPrime = 2.67825 + a1 * y + a3 * y3 + a5 * y5;
+
+               var latitude = latPrime * 100 / 36;
+               var longitude = lonPrime * 100 / 36;
+
+               return L.latLng(latitude, longitude);
+           };
+
+           /**
+            * See http://www.swisstopo.admin.ch/internet/swisstopo/fr/home/topics/survey/sys/refsys/switzerland.parsysrelated1.31216.downloadList.63873.DownloadFile.tmp/swissprojectionfr.pdf
+            * and http://mapref.org/LinkedDocuments/swiss_projection_en.pdf section 4.1
+            * @param latLong
+            */
+           var getSwissFederalCoordinates = function(latLng) {
+               if (!latLng) return {x: 0, y : 0};
+
+               var latPrime = (latLng.lat * 36 / 100 - 169028.66 / 10000) ,
+                   latPrime2 = latPrime * latPrime,
+                   latPrime3 = latPrime2 * latPrime,
+                   lngPrime = (latLng.lng * 36 / 100 - 26782.5 / 10000) ,
+                   lngPrime2 = lngPrime * lngPrime,
+                   lngPrime3 = lngPrime2 * lngPrime;
+
+               var y = X_OFFSET_OFFICIAL
+                   + 211455.93 * lngPrime
+                   - 10938.51 * lngPrime * latPrime
+                   - 0.36 * lngPrime * latPrime2
+                   - 44.54 * lngPrime3;
+
+               var x = Y_OFFSET_OFFICIAL
+                   + 308807.95 * latPrime
+                   + 3745.25 * lngPrime2
+                   + 76.63 * latPrime2
+                   - 194.56 * lngPrime2 * latPrime
+                   + 119.79 * latPrime3;
+
+               // It is inversed because the original formula gives result in a
+               // transformed coordinate system.
+               return {x: y, y : x};
+
+           };           
+           
+           
+           
+           
+           
             return {
 
                 /**
@@ -99,33 +332,27 @@
                 	}
                 },
                 
-                getPopupContent: function(elfin) {
-                    var popup = '<b>' + elfin.IDENTIFIANT.NOM + ' ' + elfin.IDENTIFIANT.ALIAS + '</b><br>';
-                    popup += 'No SAI <b>' + elfin.IDENTIFIANT.OBJECTIF + '</b> - ' + elfin.CLASSE + '<br>';
-                    popup += '<a href="/elfin/' + elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id + '">Détails</a>';
-                    return popup;
-                },
+                getPopupContent:getPopupContent,
 
-                getObjectLayer: function(elfin, representation, style) {
-                    var result = null;
+                /**
+                 * 
+                 */
+                getObjectLayer: getObjectLayer,
 
-                    switch (representation.toLowerCase()) {
-                        case 'point': result = this.getPointLayer(elfin, style); break;
-                        case 'marker': result = this.getMarkerLayer(elfin, style); break;
-                        case 'polygon': result = this.getPolygonLayer(elfin, style); break;
-                    }
-
-                    if (result !== null) {
-                        result.bindPopup(this.getPopupContent(elfin));
-                        angular.extend(result, {elfin:elfin});
-                    }
-
-                    return result;
-                },
+                /**
+                 * 
+                 */
+                getObjectBounds: function (elfin, representation) {
+    	            // No need for style when computing bounds
+                	var style = {};
+    	            var elfinLayer = getObjectLayer(elfin, representation, style);
+    	            return elfinLayer.getBounds();
+                },                
+                
 
                 updateLayerPopupContent: function(elfin, layer) {
                     if (angular.isDefined(layer.getPopup) && layer.getPopup()) {
-                        layer.getPopup().setContent(this.getPopupContent(elfin));
+                        layer.getPopup().setContent(getPopupContent(elfin));
                     }
                 },
 
@@ -138,127 +365,36 @@
                  * only will be considered (the one with the greatest
                  * POS value). 
                  */
-                getElfinBasePoint: function(elfin) {
-                    var point = null;
-                    angular.forEach(elfin.FORME.POINT, function(p) {
-                        if (p.FONCTION.toLowerCase() === 'base') {
-                            point = p;
-                        }
-                    });
-                    return point;
-                },
+                getElfinBasePoint:getElfinBasePoint,
 
-
-                getPointLayer: function(elfin, style) {
-                    if (!elfin.FORME) return null;
-
-                    var point = this.getElfinBasePoint(elfin);
-                    if (!point) {
-                        return null;
-                    }
-
-                    var coords = this.getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
-
-                    return L.circleMarker(coords, style);
-                },
+                getPointLayer:getPointLayer,
 
                 /*
                 Return markers
                  */
-                getMarkerLayer: function(elfin, style) {
-                    if (!elfin.FORME) return null;
+                getMarkerLayer:getMarkerLayer,
 
-                    var point = this.getElfinBasePoint(elfin);
-                    if (!point) {
-                    	$log.debug(">>>> missing BASE POINT for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF );
-                        return null;
-                    }
+                updateLayerCoords:updateLayerCoords,
 
-                    var coords = this.getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
-                    $log.debug(">>>> marker style for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF + " = " + angular.toJson(style) );
-                    return L.marker(coords, style);
-                },
-
-                updateLayerCoords: function(elfin, layer) {
-
-                    if (angular.isDefined(layer.setLatLng)) {
-                        var point = this.getElfinBasePoint(elfin);
-                        if (point) {
-                            var coords = this.getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
-                            layer.setLatLng(coords);
-                        }
-                    }
-                },
-
-
-                findElementWithPos: function(array, pos) {
-                    var element = null;
-                    angular.forEach(array, function(e) {
-                        if (e.POS === parseInt(pos)) {
-                            element = e;
-                        }
-                    });
-                    return element;
-                },
-
+                findElementWithPos:findElementWithPos,
 
                 /*
                 	Return polygons coordinates for ELFIN.FORME.ZONE if any.
                 	TODO: check behaviour for n ZONE definition
                  */
-                getPolygonCoords: function(elfin) {
-                    if (!elfin.FORME) return null;
-                    // Check if at least a ZONE is defined, at POS 1. 
-                    var zoneDef = this.findElementWithPos(elfin.FORME.ZONE, '1');
-                    if (!zoneDef) return null;
-
-                    var points = [];
-
-                    var that = this;
-                    // Process lines (LIGNE) defined by ZONEs
-                    angular.forEach(zoneDef.LIGNE, function(l) {
-                        var lPos = l.Id.split('#')[1];
-                        // TODO: HBGeo? - This assumes ZONE Id, ID_G only point to the same ELFIN.
-                        // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
-                        var lineDef = that.findElementWithPos(elfin.FORME.LIGNE, lPos);
-
-                        // Process each line passage which in turn reference a POINT whose coordinates will be extracted and drawn. 
-                        angular.forEach(lineDef.PASSAGE, function(p) {
-                            var pPos = p.Id.split('#')[1];
-                            // TODO: HBGeo? - This assumes LINE Id, ID_G only point to the same ELFIN.
-                            // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
-                            var pointDef = that.findElementWithPos(elfin.FORME.POINT, pPos);
-                            points.push(that.getLongitudeLatitudeCoordinates({X: parseFloat(pointDef.X), Y: parseFloat(pointDef.Y)}));
-                        });
-                    });
-
-                    return points;
-                },
+                getPolygonCoords:getPolygonCoords,
 
 
-                getPolygonLayer: function(elfin, style) {
-                    var coords = this.getPolygonCoords(elfin);
-                    if (coords && coords.length > 0) {
-                        return L.polygon(coords, style);
-                    } else {
-                        return null;                    	
-                    }
-                },
+                /**
+                 * Draws polygon overlays on map
+                 */
+                getPolygonLayer:getPolygonLayer,
 
-                
+
                 /**
                  * Update `layer` latitude, longitude coordinates from elfin.FORME.ZONE 
                  */
-                updatePolygonCoords: function(elfin, layer) {
-                    if (angular.isDefined(layer.setLatLngs)) { 
-                        var coords = this.getPolygonCoords(elfin);
-                        if (coords && coords.length > 0) {
-                        	$log.debug("Map service: updatePolygonCoords - layer.setLatLngs(coords)\ncoords =\n" + angular.toJson(coords));
-                            layer.setLatLngs(coords);
-                        }
-                    }
-
-                },
+                updatePolygonCoords:updatePolygonCoords,
 
 
                 /**
@@ -266,86 +402,15 @@
                  * and http://mapref.org/LinkedDocuments/swiss_projection_en.pdf section 3.4
                  * @param point
                  */
-                getLongitudeLatitudeCoordinates: function(point) {
-                    var x = (point.Y - Y_OFFSET_OBSERVED) / 1000000;
-                    var x2 = x * x;
-                    var x3 = x2 * x;
-                    var x4 = x3 * x;
+                getLongitudeLatitudeCoordinates:getLongitudeLatitudeCoordinates,
 
-                    var y = (point.X - X_OFFSET_OBSERVED) / 1000000;
-                    var y2 = y * y;
-                    var y3 = y2 * y;
-                    var y4 = y3 * y;
-                    var y5 = y4 * y;
-
-                    var a1 = + 4.72973056
-                        + 0.7925714 * x
-                        + 0.132812 * x2
-                        + 0.02550 * x3
-                        + 0.0048 * x4;
-
-                    var a3 = - 0.044270
-                        - 0.02550 * x
-                        - 0.0096 * x2;
-
-                    var a5 = + 0.00096;
-
-                    var p0 = 0
-                        + 3.23864877 * x
-                        - 0.0025486 * x2
-                        - 0.013245 * x3
-                        + 0.000048 * x4;
-
-                    var p2 = - 0.27135379
-                        - 0.0450442 * x
-                        - 0.007553 * x2
-                        - 0.00146 * x3;
-
-                    var p4 = + 0.002442
-                        + 0.00132 * x;
-
-                    var latPrime = 16.902866 + p0 + p2 * y2 + p4 * y4;
-                    var lonPrime = 2.67825 + a1 * y + a3 * y3 + a5 * y5;
-
-                    var latitude = latPrime * 100 / 36;
-                    var longitude = lonPrime * 100 / 36;
-
-                    return L.latLng(latitude, longitude);
-                },
 
                 /**
                  * See http://www.swisstopo.admin.ch/internet/swisstopo/fr/home/topics/survey/sys/refsys/switzerland.parsysrelated1.31216.downloadList.63873.DownloadFile.tmp/swissprojectionfr.pdf
                  * and http://mapref.org/LinkedDocuments/swiss_projection_en.pdf section 4.1
                  * @param latLong
                  */
-                getSwissFederalCoordinates: function(latLng) {
-                    if (!latLng) return {x: 0, y : 0};
-
-                    var latPrime = (latLng.lat * 36 / 100 - 169028.66 / 10000) ,
-                        latPrime2 = latPrime * latPrime,
-                        latPrime3 = latPrime2 * latPrime,
-                        lngPrime = (latLng.lng * 36 / 100 - 26782.5 / 10000) ,
-                        lngPrime2 = lngPrime * lngPrime,
-                        lngPrime3 = lngPrime2 * lngPrime;
-
-                    var y = X_OFFSET_OFFICIAL
-                        + 211455.93 * lngPrime
-                        - 10938.51 * lngPrime * latPrime
-                        - 0.36 * lngPrime * latPrime2
-                        - 44.54 * lngPrime3;
-
-                    var x = Y_OFFSET_OFFICIAL
-                        + 308807.95 * latPrime
-                        + 3745.25 * lngPrime2
-                        + 76.63 * latPrime2
-                        - 194.56 * lngPrime2 * latPrime
-                        + 119.79 * latPrime3;
-
-                    // It is inversed because the original formula gives result in a
-                    // transformed coordinate system.
-                    return {x: y, y : x};
-
-                }
+                getSwissFederalCoordinates:getSwissFederalCoordinates
             }
     }]);
 
