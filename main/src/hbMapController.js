@@ -27,31 +27,31 @@
 //                            url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
 //                            type: 'xyz'
 //                        },
-                        hot: {
-                            name: 'HOT',
-                            url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-                            type: 'xyz'
-                        },
-                        transport: {
-                            name: 'Transport',
-                            url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-                            type: 'xyz'
-                        },
-                        landscape: {
-                            name: 'Paysage',
-                            url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
-                            type: 'xyz'
-                        },
-                        grayscale: {
-                            name: 'Routes - Gris',
-                            url: 'http://openmapsurfer.uni-hd.de/tiles/roadsg/x={x}&y={y}&z={z}',
-                            type: 'xyz'
-                        },
-                        watercoloe: {
-                            name: 'Aquarelle',
-                            url: 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
-                            type: 'xyz'
-                        },
+//                        hot: {
+//                            name: 'HOT',
+//                            url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+//                            type: 'xyz'
+//                        },
+//                        transport: {
+//                            name: 'Transport',
+//                            url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+//                            type: 'xyz'
+//                        },
+//                        landscape: {
+//                            name: 'Paysage',
+//                            url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
+//                            type: 'xyz'
+//                        },
+//                        grayscale: {
+//                            name: 'Routes - Gris',
+//                            url: 'http://openmapsurfer.uni-hd.de/tiles/roadsg/x={x}&y={y}&z={z}',
+//                            type: 'xyz'
+//                        },
+//                        watercoloe: {
+//                            name: 'Aquarelle',
+//                            url: 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
+//                            type: 'xyz'
+//                        },
                         gespatri: {
                             name: 'Gespatri',
                             type: 'imageOverlay',
@@ -240,7 +240,8 @@
                         if (angular.isUndefined($scope.layerDictionary[identifier])) {
                         	$log.debug(">>>> NOT FOUND entry for identifier = " + identifier );
                         } else {
-                        	$log.debug(">>>> FOUND entry for identifier = " + identifier + "\n" + angular.toJson($scope.layerDictionary[identifier]));
+                        	$log.debug(">>>> FOUND entry for identifier = " + identifier);
+                        	//$log.debug(">>>> FOUND entry for identifier = " + identifier + "\n" + angular.toJson($scope.layerDictionary[identifier]));
                         }                    	
                     	
                         MapService.updateLayerCoords(elfin, layer);
