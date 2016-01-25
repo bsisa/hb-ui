@@ -203,24 +203,26 @@
 
 
                 /*
-                Return polygons
+                	Return polygons coordinates for ELFIN.FORME.ZONE if any.
+                	TODO: check behaviour for n ZONE definition
                  */
                 getPolygonCoords: function(elfin) {
                     if (!elfin.FORME) return null;
-                    // TODO: HBGeo? - Do we only expect one ZONE element ? With POS=1 ? 
+                    // Check if at least a ZONE is defined, at POS 1. 
                     var zoneDef = this.findElementWithPos(elfin.FORME.ZONE, '1');
                     if (!zoneDef) return null;
 
                     var points = [];
 
                     var that = this;
-
+                    // Process lines (LIGNE) defined by ZONEs
                     angular.forEach(zoneDef.LIGNE, function(l) {
                         var lPos = l.Id.split('#')[1];
                         // TODO: HBGeo? - This assumes ZONE Id, ID_G only point to the same ELFIN.
                         // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
                         var lineDef = that.findElementWithPos(elfin.FORME.LIGNE, lPos);
 
+                        // Process each line passage which in turn reference a POINT whose coordinates will be extracted and drawn. 
                         angular.forEach(lineDef.PASSAGE, function(p) {
                             var pPos = p.Id.split('#')[1];
                             // TODO: HBGeo? - This assumes LINE Id, ID_G only point to the same ELFIN.
@@ -243,6 +245,10 @@
                     }
                 },
 
+                
+                /**
+                 * Update `layer` latitude, longitude coordinates from elfin.FORME.ZONE 
+                 */
                 updatePolygonCoords: function(elfin, layer) {
                     if (angular.isDefined(layer.setLatLngs)) { 
                         var coords = this.getPolygonCoords(elfin);
