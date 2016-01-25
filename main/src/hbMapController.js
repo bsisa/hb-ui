@@ -102,9 +102,33 @@
             };
 
 
+            var selectedObjectMarkerStyle = function() {
+
+        		// zIndexOffset only effective in higher version... 
+        		var CustomIcon = L.Icon.extend({
+        		    options: {
+   		    			iconSize: [25, 41],
+   		    			iconAnchor: [12, 41],
+   		    			popupAnchor: [1, -34],
+   		    			shadowSize: [41, 41],
+   		    			zIndexOffset: 1000
+        		    }
+        		});	                        		
+        		
+//        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-orange.png'});
+        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-purple.png'});
+//        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-red.png'});
+//        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-yellow.png'});
+//        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-green.png'});
+        		var customStyle = {icon: selectedIcon};                	
+            	return customStyle;
+            };
+            
+            
+            
             var displayLayer = function (map, id, layerDef) {
             	
-            	$log.debug("Map ctrler: displayLayer: id="+id+", layerDef:\n"+ angular.toJson(layerDef));
+            	$log.debug(">>>> Map ctrler: displayLayer: id="+id+", layerDef:\n"+ angular.toJson(layerDef));
             	
                 var layer = {
                     representationStyle : {}
@@ -131,12 +155,12 @@
                     visible: true
                 };
                 var layerId = id + '#' + layerDef.POS;
-
+            	$log.debug(">>>> Map ctrler: layerId = "+layerId+ ", layerGroup = " + layerGroup );
                 $scope.layers.overlays[layerId] = layerGroup;
 
                 
                 /**
-                 * Pushes layer to objects by reference (your warned) and updated scope dictionary of objects identifiers. 
+                 * Pushes layer to objects by reference (your warned) and updates scope dictionary of objects identifiers. 
                  */
                 var pushLayer = function(objectLayer, objects, elfin) {
                     if (objectLayer !== null) {
@@ -167,45 +191,16 @@
 	                        	var objectLayer = null;
 		                        
 	                        	if ($scope.elfin.Id === elfin.Id && layer.representationType.toLowerCase() == 'marker') {
-	                        		
-	                        		// zIndexOffset only effective in higher version... 
-	                        		var CustomIcon = L.Icon.extend({
-	                        		    options: {
-                       		    			iconSize: [25, 41],
-                       		    			iconAnchor: [12, 41],
-                       		    			popupAnchor: [1, -34],
-                       		    			shadowSize: [41, 41],
-                       		    			zIndexOffset: 1000
-	                        		    }
-	                        		});	                        		
-	                        		
-//	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-orange.png'});
-	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-purple.png'});
-//	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-red.png'});
-//	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-yellow.png'});
-//	                        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-green.png'});
-	                        		var customStyle = {icon: selectedIcon};
-	                        		$log.debug(">>>> MARKER FOR SELECTED ELFIN /!\ Id = " + elfin.Id + " <<<<" );
-	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, layer.representationType, customStyle);
+	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, layer.representationType, selectedObjectMarkerStyle());
 	                        	} else {
 	                        		objectLayerStyle = layer.representationStyle;
 	                        		objectLayer = MapService.getObjectLayer(elfin, layer.representationType, objectLayerStyle);
 	                        	}		                    	
 	                        	
 								pushLayer(objectLayer, objects, elfin);
-
-//		                        if (objectLayer !== null) {
-//		                            objects.push(objectLayer);
-//		                            var identifier = getElfinIdentifier(elfin);
-//		                            if (angular.isUndefined($scope.layerDictionary[identifier])) {
-//		                                $scope.layerDictionary[identifier] = [objectLayer];
-//		                            } else {
-//		                                $scope.layerDictionary[identifier].push(objectLayer);
-//		                            }
-//		                        }
 		                    });
 							
-							// Put currentObjectMarkerLayer on top if available
+							// If available put currentObjectMarkerLayer on top of objects array
 							pushLayer(currentObjectMarkerLayer, objects, $scope.elfin);
 							
 		
@@ -228,11 +223,26 @@
             };
             
             
-            var updateElfinRepresentation = function(elfin) {
+            var updateElfinRepresentation = function(elfin, markerStyle) {
             	$log.debug(">>>> updateElfinRepresentation(elfin.Id = "+elfin.Id+")");
                 var identifier = getElfinIdentifier(elfin);
                 if (angular.isDefined($scope.layerDictionary[identifier])) {
                     angular.forEach($scope.layerDictionary[identifier], function (layer) {
+                    	
+                    	// TODO: investigate cyclic object value. Thought was fixed by
+                    	// removing hbMapService.js angular.extend(result, {elfin:elfin}); from getObjectLayer
+                    	// $log.debug(">>>> layer = " + angular.toJson(layer));
+                    	
+                    	//MapService.updateMarkerLayer(elfin, layer, markerStyle);
+                    	MapService.getObjectLayer(elfin, 'marker', markerStyle);
+                    	// Perform update... >>> $scope.layerDictionary[identifier]
+                    	var identifier = getElfinIdentifier(elfin);
+                        if (angular.isUndefined($scope.layerDictionary[identifier])) {
+                        	$log.debug(">>>> NOT FOUND entry for identifier = " + identifier );
+                        } else {
+                        	$log.debug(">>>> FOUND entry for identifier = " + identifier + "\n" + angular.toJson($scope.layerDictionary[identifier]));
+                        }                    	
+                    	
                         MapService.updateLayerCoords(elfin, layer);
                         MapService.updatePolygonCoords(elfin, layer);
                         MapService.updateLayerPopupContent(elfin, layer);
@@ -385,14 +395,14 @@
             var elfinLoadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
             	// TODO: review: not relevant for all ELFIN@CLASSE !
                 $scope.elfin = elfin;
-                updateElfinRepresentation($scope.elfin);
+                updateElfinRepresentation($scope.elfin, selectedObjectMarkerStyle());
                 $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE +"/"+elfin.Id);
             });
 
             // Elfin has been unloaded, thus no more current elfin
             var elfinUnloadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
                 if (elfin) {
-                    updateElfinRepresentation(elfin);
+                    updateElfinRepresentation(elfin, {});
                 }
                 $log.debug(">>>> MapController: HB_EVENTS.ELFIN_UNLOADED => " + elfin.CLASSE +"/"+elfin.Id);
                 // TODO: This causes problem due to possible reset of formerly updated elfin 
@@ -410,7 +420,8 @@
              * update the ELFIN representation on the map.
              */
             var elfinUpdatedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
-               	updateElfinRepresentation(elfin);            		
+                $log.debug(">>>> MapController: HB_EVENTS.ELFIN_UPDATED => " + elfin.CLASSE +"/"+elfin.Id);            	
+               	updateElfinRepresentation(elfin, {});            		
             });
 
             // Elfin has been deleted, thus remove it from the map

@@ -143,10 +143,8 @@
                if (result !== null) {
                	$log.debug(">>>>    getObjectLayer    ***    START    <<<<");
                    result.bindPopup(getPopupContent(elfin));
-               	//$log.debug(">>>>    \n" + angular.toJson(result));
-                   angular.extend(result, {elfin:elfin});
-               	//$log.debug(">>>>    \n" + angular.toJson(result));
-               	$log.debug(">>>>    getObjectLayer    ***     END     <<<<");
+                // TODO: Test whether this was necessary !?
+                //angular.extend(result, {elfin:elfin});
                }
 
                return result;
@@ -349,7 +347,6 @@
     	            return elfinLayer.getBounds();
                 },                
                 
-
                 updateLayerPopupContent: function(elfin, layer) {
                     if (angular.isDefined(layer.getPopup) && layer.getPopup()) {
                         layer.getPopup().setContent(getPopupContent(elfin));
