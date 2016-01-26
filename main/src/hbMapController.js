@@ -105,6 +105,9 @@
             };
 
 
+            /**
+             * Builds a hbLayer javascript object from HB layer definition as ELFIN.CARACTERISTIQUE.FRACTION.L data structure.
+             */
             var buildHbLayer = function(hbLayerDef) {
                 var hbLayer = {
                         representationStyle : {}
@@ -128,6 +131,21 @@
             };
             
             /**
+             * Pushes hbLayer to objects by reference (your warned) and updates scope dictionary of objects identifiers. 
+             */
+            var pushLayer = function(objectLayer, objects, elfin) {
+                if (objectLayer !== null) {
+                    objects.unshift(objectLayer);
+                    var identifier = getElfinIdentifier(elfin);
+                    if (angular.isUndefined($scope.layerDictionary[identifier])) {
+                        $scope.layerDictionary[identifier] = [objectLayer];
+                    } else {
+                        $scope.layerDictionary[identifier].unshift(objectLayer);
+                    }
+                }            	
+            };             
+            
+            /**
              * Procedure to build and display a HyperBird layer on a map given its ELFIN.CARACTERISTIQUE.FORME.L definition
              * found in an ELFIN of CLASSE='PLAN'
              * IMPORTANT: The term `layer` in HyperBird matches `overlays` in Leaflet context. 
@@ -141,31 +159,18 @@
                 
                 $log.debug(">>>> hbLayer from buildHbLayer = " + angular.toJson(hbLayer));
 
+                // TODO: find documentation about leaflet LayerGroup properties.
                 var layerGroup = {
                     name: hbLayer.label,
                     type: 'group',
                     visible: true
                 };
-                var layerId = hbMapDefId + '#' + hbLayerDef.POS;
-            	$log.debug(">>>> Map ctrler: layerId = "+layerId+ ", layerGroup = " + angular.toJson(layerGroup) );
-                $scope.layers.overlays[layerId] = layerGroup;
-
                 
-                /**
-                 * Pushes hbLayer to objects by reference (your warned) and updates scope dictionary of objects identifiers. 
-                 */
-                var pushLayer = function(objectLayer, objects, elfin) {
-                    if (objectLayer !== null) {
-                        objects.unshift(objectLayer);
-                        var identifier = getElfinIdentifier(elfin);
-                        if (angular.isUndefined($scope.layerDictionary[identifier])) {
-                            $scope.layerDictionary[identifier] = [objectLayer];
-                        } else {
-                            $scope.layerDictionary[identifier].unshift(objectLayer);
-                        }
-                    }            	
-                };                
+                // Build overlay Id from HB definition
+                var overlayId = hbMapDefId + '#' + hbLayerDef.POS;
                 
+            	$log.debug(">>>> Map ctrler: overlayId = "+overlayId+ ", layerGroup = " + angular.toJson(layerGroup) );
+                $scope.layers.overlays[overlayId] = layerGroup;
                 
                 // Using GeoxmlService to obtain layers objects
                 GeoxmlService.getCollection(hbLayer.idg).getList({"xpath" : hbLayer.xpath})
@@ -198,10 +203,10 @@
 		
 		                    leafletData.getLayers().then(function(layers) {
 		                        angular.forEach(objects, function(objectLayer) {
-		                            layers.overlays[layerId].addLayer(objectLayer);
+		                            layers.overlays[overlayId].addLayer(objectLayer);
                                 });
                                 // Handle snapping facilities
-                                $scope.guideLayers.push(layers.overlays[layerId]);
+                                $scope.guideLayers.push(layers.overlays[overlayId]);
 		                    });
 							
 						},
@@ -237,7 +242,7 @@
                         } else {
                         	$log.debug(">>>> FOUND entry for identifier = " + identifier + " with nb entries = " + ($scope.layerDictionary[identifier].length) );
                         	
-                        	//$scope.layers.overlays[layerId].addLayer(objectLayer);
+                        	//$scope.layers.overlays[overlayId].addLayer(objectLayer);
                         	//$log.debug(">>>> FOUND entry for identifier = " + identifier + "\n" + angular.toJson($scope.layerDictionary[identifier]));
                         }                    	
                     	
