@@ -4,7 +4,9 @@
         function ($scope, $rootScope, $log, leafletData, MapService, $location, GeoxmlService, HB_EVENTS) {
 
 
-            // Add Leaflet Directive scope extension
+            /**
+             * Add Leaflet Directive scope extension
+             */ 
             angular.extend($scope, {
                 center: {
                     lat: 0,
@@ -71,61 +73,44 @@
                 }
             });
 
-            /*
-            Reference to current displayed object
+            /**
+            	Reference to current displayed object
              */
             $scope.elfin = null;
             
 			/**
-			 * Listener defining and updating $scope.hasManualOrderLine boolean value
+			 * Listener on current displayed object Id change
 			 */
 			$scope.$watch('elfin.Id', function(newVal, oldVal) {
 				$log.debug(">>>> Map selected elfin.Id changed from: "+oldVal+" to: " + newVal);
 			}, true);            
             
-            
-            
-           /*
-            The objects dictionary holds for each idg/class/id combination as text, all layers in an array
-             */
+			/**
+				The objects dictionary holds for each idg/class/id combination as text, all layers in an array
+			 */
             $scope.layerDictionary = {};
 
-            /*
-            Layer array that serve as guides
+            /**
+            	Layer array that serve as guides
              */
             $scope.guideLayers = [];
 
             $scope.snappedLayer = null;
 
+            /**
+             * Returns an ELFIN identifier as a single string.
+             */
             var getElfinIdentifier = function(elfin) {
                 return elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id;
             };
 
 
-            var selectedObjectMarkerStyle = function() {
-
-        		// zIndexOffset only effective in higher version... 
-        		var CustomIcon = L.Icon.extend({
-        		    options: {
-   		    			iconSize: [25, 41],
-   		    			iconAnchor: [12, 41],
-   		    			popupAnchor: [1, -34],
-   		    			shadowSize: [41, 41],
-   		    			zIndexOffset: 1000
-        		    }
-        		});	                        		
-        		
-//        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-orange.png'});
-        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-purple.png'});
-//        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-red.png'});
-//        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-yellow.png'});
-//        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-green.png'});
-        		var customStyle = {icon: selectedIcon};                	
-            	return customStyle;
-            };
-            
-            
-            
+            /**
+             * Procedure to build and display a HyperBird layer on a map given its ELFIN.CARACTERISTIQUE.FORME.L definition
+             * found in an ELFIN of CLASSE='PLAN'
+             * IMPORTANT: The term `layer` in HyperBird matches `overlays` in Leaflet context. 
+             * While `layer` in Leaflet context is used for basemap or `fond de plan` with regards to HyperBird semantic. 
+             */
             var displayLayer = function (map, id, layerDef) {
             	
             	$log.debug(">>>> Map ctrler: displayLayer: id="+id+", layerDef:\n"+ angular.toJson(layerDef));
@@ -155,7 +140,7 @@
                     visible: true
                 };
                 var layerId = id + '#' + layerDef.POS;
-            	$log.debug(">>>> Map ctrler: layerId = "+layerId+ ", layerGroup = " + layerGroup );
+            	$log.debug(">>>> Map ctrler: layerId = "+layerId+ ", layerGroup = " + angular.toJson(layerGroup) );
                 $scope.layers.overlays[layerId] = layerGroup;
 
                 
@@ -191,7 +176,7 @@
 	                        	var objectLayer = null;
 		                        
 	                        	if ($scope.elfin.Id === elfin.Id && layer.representationType.toLowerCase() == 'marker') {
-	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, layer.representationType, selectedObjectMarkerStyle());
+	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, layer.representationType, MapService.getSelectedObjectMarkerStyle());
 	                        	} else {
 	                        		objectLayerStyle = layer.representationStyle;
 	                        		objectLayer = MapService.getObjectLayer(elfin, layer.representationType, objectLayerStyle);
@@ -235,12 +220,17 @@
                     	
                     	//MapService.updateMarkerLayer(elfin, layer, markerStyle);
                     	MapService.getObjectLayer(elfin, 'marker', markerStyle);
+                    	
+                    	
+                    	
                     	// Perform update... >>> $scope.layerDictionary[identifier]
                     	var identifier = getElfinIdentifier(elfin);
                         if (angular.isUndefined($scope.layerDictionary[identifier])) {
                         	$log.debug(">>>> NOT FOUND entry for identifier = " + identifier );
                         } else {
-                        	$log.debug(">>>> FOUND entry for identifier = " + identifier);
+                        	$log.debug(">>>> FOUND entry for identifier = " + identifier + " with nb entries = " + ($scope.layerDictionary[identifier].length) );
+                        	
+                        	//$scope.layers.overlays[layerId].addLayer(objectLayer);
                         	//$log.debug(">>>> FOUND entry for identifier = " + identifier + "\n" + angular.toJson($scope.layerDictionary[identifier]));
                         }                    	
                     	
@@ -396,7 +386,7 @@
             var elfinLoadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
             	// TODO: review: not relevant for all ELFIN@CLASSE !
                 $scope.elfin = elfin;
-                updateElfinRepresentation($scope.elfin, selectedObjectMarkerStyle());
+                updateElfinRepresentation($scope.elfin, MapService.getSelectedObjectMarkerStyle());
                 $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE +"/"+elfin.Id);
             });
 

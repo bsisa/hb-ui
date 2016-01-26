@@ -20,6 +20,30 @@
                return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
            };
 
+           /**
+            * Returns a custom L.Icon intended for selected object marker styling.
+            */
+           var getSelectedObjectMarkerStyle = function() {
+
+       		// zIndexOffset only effective in higher version... 
+       		var CustomIcon = L.Icon.extend({
+       		    options: {
+  		    			iconSize: [25, 41],
+  		    			iconAnchor: [12, 41],
+  		    			popupAnchor: [1, -34],
+  		    			shadowSize: [41, 41],
+  		    			zIndexOffset: 1000
+       		    }
+       		});	                        		
+       		
+//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-orange.png'});
+       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-purple.png'});
+//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-red.png'});
+//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-yellow.png'});
+//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-green.png'});
+       		var customStyle = {icon: selectedIcon};                	
+           	return customStyle;
+           };           
 
            var getElfinBasePoint = function(elfin) {
                var point = null;
@@ -41,8 +65,8 @@
                }
 
                var coords = getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
-
-               return L.circleMarker(coords, style);
+               var circleMarker = L.circleMarker(coords, style);
+               return circleMarker;
            };
            
            
@@ -51,13 +75,14 @@
 
                var point = getElfinBasePoint(elfin);
                if (!point) {
-               	$log.debug(">>>> missing BASE POINT for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF );
+            	   $log.debug(">>>> missing BASE POINT for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF );
                    return null;
                }
 
                var coords = getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
-               $log.debug(">>>> marker style for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF + " = " + angular.toJson(style) );
-               return L.marker(coords, style);
+               //$log.debug(">>>> marker style for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF + " = " + angular.toJson(style) );
+               var marker = L.marker(coords, style);
+           	   return marker;
            };
            
            
@@ -70,6 +95,7 @@
                });
                return element;
            };
+           
            
            var getPolygonCoords = function(elfin) {
                if (!elfin.FORME) return null;
@@ -99,10 +125,12 @@
                return points;
            };           
            
+           
            var getPolygonLayer = function(elfin, style) {
                var coords = getPolygonCoords(elfin);
                if (coords && coords.length > 0) {
-                   return L.polygon(coords, style);
+            	   var polygon = L.polygon(coords, style);
+                   return polygon;
                } else {
                    return null;                    	
                }
@@ -141,10 +169,10 @@
                }
 
                if (result !== null) {
-               	$log.debug(">>>>    getObjectLayer    ***    START    <<<<");
-                   result.bindPopup(getPopupContent(elfin));
-                // TODO: Test whether this was necessary !?
-                //angular.extend(result, {elfin:elfin});
+            	   //$log.debug(">>>>    getObjectLayer    ***    START    <<<<");
+            	   result.bindPopup(getPopupContent(elfin));
+            	   // TODO: Test whether this was necessary !?
+            	   //angular.extend(result, {elfin:elfin});
                }
 
                return result;
@@ -388,6 +416,11 @@
                 getPolygonLayer:getPolygonLayer,
 
 
+                /**
+                 * Returns an Icon for styling marker. Aimed at selected object marker.
+                 */
+                getSelectedObjectMarkerStyle:getSelectedObjectMarkerStyle,
+                
                 /**
                  * Update `layer` latitude, longitude coordinates from elfin.FORME.ZONE 
                  */
