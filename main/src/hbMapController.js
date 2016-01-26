@@ -275,7 +275,7 @@
 
                 leafletData.getMap().then(function (map) {
 
-                    // First clean all layers and controls
+                    // First clean all layers overlays 
                     angular.forEach($scope.layers.overlays, function(overlay) {
                     	// TODO: https://github.com/bsisa/hb-ui/issues/8 
                     	// Fix the hereafter clearLayers call, it always complains: Error: layer.clearLayers is not a function
@@ -286,12 +286,15 @@
                         map.removeLayer(overlay);
                     });
 
+                    // Reset guideLayers
                     $scope.guideLayers = [];
 
+                    // Remove draw controls
                     if ($scope.drawControl) {
                         map.removeControl($scope.drawControl);
                     }
 
+                    // Load hb map definition center latitude/longitude and zoom level.
                     var center = hbMapDef.CARACTERISTIQUE.CAR2.VALEUR.split(' ');
 
                     $scope.center = {
@@ -300,9 +303,8 @@
                         zoom: parseFloat(center[2])
                     };
 
-
+                    // Display each HB layer of the HB map  
                     angular.forEach(hbMapDef.CARACTERISTIQUE.FRACTION.L, function (hbLayerDef) {
-//TODO:                     	$log.debug("hbLayerDef = " + angular.toJson(hbLayerDef));
                         displayLayer(map, hbMapDef.Id, hbLayerDef);
                     });
 
