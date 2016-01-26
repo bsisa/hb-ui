@@ -109,16 +109,16 @@
              * Procedure to build and display a HyperBird layer on a map given its ELFIN.CARACTERISTIQUE.FORME.L definition
              * found in an ELFIN of CLASSE='PLAN'
              * IMPORTANT: The term `layer` in HyperBird matches `overlays` in Leaflet context. 
-             * While `layer` in Leaflet context is used for basemap or `fond de plan` with regards to HyperBird semantic. 
+             * While `layer` in Leaflet context is used for `basemap` or `fond de plan` with regards to HyperBird semantic. 
              */
-            var displayLayer = function (map, id, layerDef) {
+            var displayLayer = function (map, id, hbLayerDef) {
             	
-            	$log.debug(">>>> Map ctrler: displayLayer: id="+id+", layerDef:\n"+ angular.toJson(layerDef));
+            	$log.debug(">>>> Map ctrler: displayLayer: id="+id+", hbLayerDef:\n"+ angular.toJson(hbLayerDef));
             	
                 var layer = {
                     representationStyle : {}
                 };
-                angular.forEach(layerDef.C, function (c) {
+                angular.forEach(hbLayerDef.C, function (c) {
                     switch (c.POS) {
                         case 1: layer.label = c.VALUE; break;
                         case 2: layer.idg = c.VALUE; break;
@@ -139,7 +139,7 @@
                     type: 'group',
                     visible: true
                 };
-                var layerId = id + '#' + layerDef.POS;
+                var layerId = id + '#' + hbLayerDef.POS;
             	$log.debug(">>>> Map ctrler: layerId = "+layerId+ ", layerGroup = " + angular.toJson(layerGroup) );
                 $scope.layers.overlays[layerId] = layerGroup;
 
@@ -294,9 +294,9 @@
                     };
 
 
-                    angular.forEach(mapDef.CARACTERISTIQUE.FRACTION.L, function (layerDef) {
-//TODO:                     	$log.debug("layerDef = " + angular.toJson(layerDef));
-                        displayLayer(map, mapDef.Id, layerDef);
+                    angular.forEach(mapDef.CARACTERISTIQUE.FRACTION.L, function (hbLayerDef) {
+//TODO:                     	$log.debug("hbLayerDef = " + angular.toJson(hbLayerDef));
+                        displayLayer(map, mapDef.Id, hbLayerDef);
                     });
 
                     // Once all layers are loaded, add the drawing layer and register all events
