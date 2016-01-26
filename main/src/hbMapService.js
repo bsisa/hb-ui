@@ -173,6 +173,7 @@
             	   result.bindPopup(getPopupContent(elfin));
             	   // TODO: Test whether this was necessary !?
             	   //angular.extend(result, {elfin:elfin});
+            	   angular.extend(result, {representation:representation.toLowerCase()});
                }
 
                return result;
