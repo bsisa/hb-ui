@@ -115,27 +115,29 @@
             	
             	$log.debug(">>>> Map ctrler: displayLayer: id="+id+", hbLayerDef:\n"+ angular.toJson(hbLayerDef));
             	
-                var layer = {
+                var hbLayer = {
                     representationStyle : {}
                 };
                 angular.forEach(hbLayerDef.C, function (c) {
                     switch (c.POS) {
-                        case 1: layer.label = c.VALUE; break;
-                        case 2: layer.idg = c.VALUE; break;
-                        case 3: layer.xpath = c.VALUE; break;
-                        case 4: layer.representationType = c.VALUE || 'point'; break;
-                        case 5: layer.representationStyle.color = c.VALUE || null; break;
-                        case 6: layer.representationStyle.opacity = parseFloat(c.VALUE) || null; break;
-                        case 7: layer.representationStyle.weight = parseFloat(c.VALUE) || null; break;
-                        case 8: layer.representationStyle.dashArray = c.VALUE || null; break;
-                        case 9: layer.representationStyle.fillColor = c.VALUE || null; break;
-                        case 10: layer.representationStyle.fillOpacity = parseFloat(c.VALUE) || null; break;
-                        case 11: layer.representationStyle.radius = parseFloat(c.VALUE) || null; break;
+                        case 1: hbLayer.label = c.VALUE; break;
+                        case 2: hbLayer.idg = c.VALUE; break;
+                        case 3: hbLayer.xpath = c.VALUE; break;
+                        case 4: hbLayer.representationType = c.VALUE || 'point'; break;
+                        case 5: hbLayer.representationStyle.color = c.VALUE || null; break;
+                        case 6: hbLayer.representationStyle.opacity = parseFloat(c.VALUE) || null; break;
+                        case 7: hbLayer.representationStyle.weight = parseFloat(c.VALUE) || null; break;
+                        case 8: hbLayer.representationStyle.dashArray = c.VALUE || null; break;
+                        case 9: hbLayer.representationStyle.fillColor = c.VALUE || null; break;
+                        case 10: hbLayer.representationStyle.fillOpacity = parseFloat(c.VALUE) || null; break;
+                        case 11: hbLayer.representationStyle.radius = parseFloat(c.VALUE) || null; break;
                     }
                 });
+                
+                $log.debug(">>>> hbLayer = " + angular.toJson(hbLayer));
 
                 var layerGroup = {
-                    name: layer.label,
+                    name: hbLayer.label,
                     type: 'group',
                     visible: true
                 };
@@ -145,7 +147,7 @@
 
                 
                 /**
-                 * Pushes layer to objects by reference (your warned) and updates scope dictionary of objects identifiers. 
+                 * Pushes hbLayer to objects by reference (your warned) and updates scope dictionary of objects identifiers. 
                  */
                 var pushLayer = function(objectLayer, objects, elfin) {
                     if (objectLayer !== null) {
@@ -161,13 +163,13 @@
                 
                 
                 // Using GeoxmlService to obtain layers objects
-                GeoxmlService.getCollection(layer.idg).getList({"xpath" : layer.xpath})
+                GeoxmlService.getCollection(hbLayer.idg).getList({"xpath" : hbLayer.xpath})
 				.then(
 						function(elfins) {
             				$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " layers objects.");
 							
             				var objects = [];
-            				// We want this marker layer to be on top 
+            				// We want this marker hbLayer to be on top 
             				var currentObjectMarkerLayer = null;
             				
 							angular.forEach(elfins, function (elfin) {
@@ -175,11 +177,11 @@
 		                        var objectLayerStyle = {};
 	                        	var objectLayer = null;
 		                        
-	                        	if ($scope.elfin.Id === elfin.Id && layer.representationType.toLowerCase() == 'marker') {
-	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, layer.representationType, MapService.getSelectedObjectMarkerStyle());
+	                        	if ($scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
+	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, MapService.getSelectedObjectMarkerStyle());
 	                        	} else {
-	                        		objectLayerStyle = layer.representationStyle;
-	                        		objectLayer = MapService.getObjectLayer(elfin, layer.representationType, objectLayerStyle);
+	                        		objectLayerStyle = hbLayer.representationStyle;
+	                        		objectLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, objectLayerStyle);
 	                        	}		                    	
 	                        	
 								pushLayer(objectLayer, objects, elfin);
@@ -269,14 +271,14 @@
                 leafletData.getMap().then(function (map) {
 
                     // First clean all layers and controls
-                    angular.forEach($scope.layers.overlays, function(layer) {
+                    angular.forEach($scope.layers.overlays, function(overlay) {
                     	// TODO: https://github.com/bsisa/hb-ui/issues/8 
                     	// Fix the hereafter clearLayers call, it always complains: Error: layer.clearLayers is not a function
                     	// Possible ex. see: http://stackoverflow.com/questions/22987804/mapbox-clear-marker-not-working
                     	// TODO: Removing the clearLayers() call lead to problems. Notice coordinates display piling up 
                     	// for each new map reload.
-                    	layer.clearLayers();
-                        map.removeLayer(layer);
+                    	overlay.clearLayers();
+                        map.removeLayer(overlay);
                     });
 
                     $scope.guideLayers = [];
