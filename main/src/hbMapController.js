@@ -153,11 +153,9 @@
              */
             var displayLayer = function (map, hbMapDefId, hbLayerDef) {
             	
-            	$log.debug(">>>> Map ctrler: displayLayer: hbMapDefId="+hbMapDefId+", hbLayerDef:\n"+ angular.toJson(hbLayerDef));
+            	//$log.debug(">>>> Map ctrler: displayLayer: hbMapDefId="+hbMapDefId+", hbLayerDef:\n"+ angular.toJson(hbLayerDef));
             	
                 var hbLayer = buildHbLayer(hbLayerDef);
-                
-                $log.debug(">>>> hbLayer from buildHbLayer = " + angular.toJson(hbLayer));
 
                 // TODO: find documentation about leaflet LayerGroup properties.
                 var layerGroup = {
@@ -169,7 +167,7 @@
                 // Build overlay Id from HB definition
                 var overlayId = hbMapDefId + '#' + hbLayerDef.POS;
                 
-            	$log.debug(">>>> Map ctrler: overlayId = "+overlayId+ ", layerGroup = " + angular.toJson(layerGroup) );
+            	//$log.debug(">>>> Map ctrler: overlayId = "+overlayId+ ", layerGroup = " + angular.toJson(layerGroup) );
                 $scope.layers.overlays[overlayId] = layerGroup;
                 
                 // Using GeoxmlService to obtain layers objects
@@ -250,10 +248,9 @@
 		                            		var gdeIdx = $scope.guideLayers.indexOf(overlay);
 		                            		$log.debug(">>>> FOUND MARKER, guide idx = "+gdeIdx+", replacing by new one...");
 
-					                    	for (var property in $scope.drawControl) {
-					                    		$log.debug("Property name 2: " + property );
-					                    	}		                            		
-		                            		
+//					                    	for (var property in $scope.drawControl) {
+//					                    		$log.debug("Property name 2: " + property );
+//					                    	}
 		                            		
 		                            		//$scope.drawControl.draw.marker.guideLayers = $scope.guideLayers;
 					                    	//$scope.drawControl.removeFrom(layer);
@@ -267,13 +264,7 @@
 
 					                    	//$scope.drawControl.addTo(elfinUpdatedMarkerLayer);
 		                            		//$scope.drawControl.addTo(overlay);
-		                            		
-		                            		
-		                            		
-		                            	};
-		                            	
-		                            	
-		                            	
+		                            	};		                            	
 		                            });
                                 // Handle snapping facilities
 		                        // TODO: make it inside loop above where overlay is directly accessible

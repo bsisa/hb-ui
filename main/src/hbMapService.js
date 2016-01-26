@@ -151,8 +151,8 @@
                if (angular.isDefined(layer.setLatLngs)) { 
                    var coords = getPolygonCoords(elfin);
                    if (coords && coords.length > 0) {
-                   	$log.debug("Map service: updatePolygonCoords - layer.setLatLngs(coords)\ncoords =\n" + angular.toJson(coords));
-                       layer.setLatLngs(coords);
+                   	//$log.debug("Map service: updatePolygonCoords - layer.setLatLngs(coords)\ncoords =\n" + angular.toJson(coords));
+                	   layer.setLatLngs(coords);
                    }
                }
 
