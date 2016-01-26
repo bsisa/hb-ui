@@ -266,7 +266,7 @@
             });
 
 
-            var displayMapContentListenerDeregister = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, mapDef) {
+            var displayMapContentListenerDeregister = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, hbMapDef) {
 
                 leafletData.getMap().then(function (map) {
 
@@ -287,7 +287,7 @@
                         map.removeControl($scope.drawControl);
                     }
 
-                    var center = mapDef.CARACTERISTIQUE.CAR2.VALEUR.split(' ');
+                    var center = hbMapDef.CARACTERISTIQUE.CAR2.VALEUR.split(' ');
 
                     $scope.center = {
                         lat: parseFloat(center[0]),
@@ -296,9 +296,9 @@
                     };
 
 
-                    angular.forEach(mapDef.CARACTERISTIQUE.FRACTION.L, function (hbLayerDef) {
+                    angular.forEach(hbMapDef.CARACTERISTIQUE.FRACTION.L, function (hbLayerDef) {
 //TODO:                     	$log.debug("hbLayerDef = " + angular.toJson(hbLayerDef));
-                        displayLayer(map, mapDef.Id, hbLayerDef);
+                        displayLayer(map, hbMapDef.Id, hbLayerDef);
                     });
 
                     // Once all layers are loaded, add the drawing layer and register all events
