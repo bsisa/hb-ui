@@ -201,6 +201,7 @@
 							pushLayer(currentObjectMarkerLayer, objects, $scope.elfin);
 							
 		
+							// TODO: refactor as function => used in replaceLayer... see updateElfinRepresentation
 		                    leafletData.getLayers().then(function(layers) {
 		                        angular.forEach(objects, function(objectLayer) {
 		                            layers.overlays[overlayId].addLayer(objectLayer);
@@ -231,24 +232,60 @@
                     	// $log.debug(">>>> layer = " + angular.toJson(layer));
                     	
                     	//MapService.updateMarkerLayer(elfin, layer, markerStyle);
-                    	MapService.getObjectLayer(elfin, 'marker', markerStyle);
-                    	
-                    	
-                    	
-                    	// Perform update... >>> $scope.layerDictionary[identifier]
-                    	var identifier = getElfinIdentifier(elfin);
-                        if (angular.isUndefined($scope.layerDictionary[identifier])) {
-                        	$log.debug(">>>> NOT FOUND entry for identifier = " + identifier );
-                        } else {
-                        	$log.debug(">>>> FOUND entry for identifier = " + identifier + " with nb entries = " + ($scope.layerDictionary[identifier].length) );
-                        	
-                        	//$scope.layers.overlays[overlayId].addLayer(objectLayer);
-                        	//$log.debug(">>>> FOUND entry for identifier = " + identifier + "\n" + angular.toJson($scope.layerDictionary[identifier]));
-                        }                    	
-                    	
-                        MapService.updateLayerCoords(elfin, layer);
-                        MapService.updatePolygonCoords(elfin, layer);
-                        MapService.updateLayerPopupContent(elfin, layer);
+                   	
+                       	$log.debug(">>>> FOUND entry for identifier = " + identifier + " with nb entries = " + ($scope.layerDictionary[identifier].length) );
+                       	$log.debug(">>>> layer.representation = " + layer.representation);
+
+                       	if (layer.representation === "marker") {
+
+							// TODO: refactor as function => used in replaceLayer... see updateElfinRepresentation
+		                    leafletData.getLayers().then(function(layers) {
+                   	
+		                        	var elfinUpdatedMarkerLayer = MapService.getObjectLayer(elfin, 'marker', markerStyle);
+			                    	
+		                            //[overlayId].addLayer(objectLayer);
+		                            angular.forEach(layers.overlays, function(overlay) {
+		                            	if ( overlay.hasLayer( layer) ) {
+		                            		
+		                            		var gdeIdx = $scope.guideLayers.indexOf(overlay);
+		                            		$log.debug(">>>> FOUND MARKER, guide idx = "+gdeIdx+", replacing by new one...");
+
+					                    	for (var property in $scope.drawControl) {
+					                    		$log.debug("Property name 2: " + property );
+					                    	}		                            		
+		                            		
+		                            		
+		                            		//$scope.drawControl.draw.marker.guideLayers = $scope.guideLayers;
+					                    	//$scope.drawControl.removeFrom(layer);
+					                    	//$scope.drawControl.removeFrom(overlay);
+		                            		
+		                            		overlay.removeLayer(layer);
+		                            		overlay.addLayer(elfinUpdatedMarkerLayer);
+		                            		// Update guideLayers with updated overlay.
+		                            		$scope.guideLayers.splice(gdeIdx,1);
+		                            		$scope.guideLayers.push(overlay);
+
+					                    	//$scope.drawControl.addTo(elfinUpdatedMarkerLayer);
+		                            		//$scope.drawControl.addTo(overlay);
+		                            		
+		                            		
+		                            		
+		                            	};
+		                            	
+		                            	
+		                            	
+		                            });
+                                // Handle snapping facilities
+		                        // TODO: make it inside loop above where overlay is directly accessible
+                                //$scope.guideLayers.push(layers.overlays[overlayId]);
+		                    });                        	
+                       		
+                       	} else {
+                            MapService.updateLayerCoords(elfin, layer);
+                            MapService.updatePolygonCoords(elfin, layer);
+                            MapService.updateLayerPopupContent(elfin, layer);                       		
+                       	}
+
                     });
                 }
             };
@@ -256,10 +293,12 @@
 
 
             $scope.registerSnap = function(event) {
+            	$log.debug(">>>> registerSnap - " (event === null ? "event not null, " : event.layer === null ? "event.layer IS null" : "event.layer NOT null")  );
                 $scope.snappedLayer = event.layer;
             };
 
             $scope.unregisterSnap = function(event) {
+            	$log.debug(">>>> unregisterSnap - " (event === null ? "event not null, " : event.layer === null ? "event.layer IS null" : "event.layer NOT null")  );            	
                 $scope.snappedLayer = null;
             };
 
