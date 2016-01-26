@@ -111,9 +111,9 @@
              * IMPORTANT: The term `layer` in HyperBird matches `overlays` in Leaflet context. 
              * While `layer` in Leaflet context is used for `basemap` or `fond de plan` with regards to HyperBird semantic. 
              */
-            var displayLayer = function (map, id, hbLayerDef) {
+            var displayLayer = function (map, hbMapDefId, hbLayerDef) {
             	
-            	$log.debug(">>>> Map ctrler: displayLayer: id="+id+", hbLayerDef:\n"+ angular.toJson(hbLayerDef));
+            	$log.debug(">>>> Map ctrler: displayLayer: hbMapDefId="+hbMapDefId+", hbLayerDef:\n"+ angular.toJson(hbLayerDef));
             	
                 var hbLayer = {
                     representationStyle : {}
@@ -141,7 +141,7 @@
                     type: 'group',
                     visible: true
                 };
-                var layerId = id + '#' + hbLayerDef.POS;
+                var layerId = hbMapDefId + '#' + hbLayerDef.POS;
             	$log.debug(">>>> Map ctrler: layerId = "+layerId+ ", layerGroup = " + angular.toJson(layerGroup) );
                 $scope.layers.overlays[layerId] = layerGroup;
 
