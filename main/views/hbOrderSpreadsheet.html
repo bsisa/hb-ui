@@ -36,10 +36,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length > 0" class="input-group">
-							<input type="text" class="form-control" ng-model="line.C[2].VALUE" ng-pattern="numericOnlyRegexp" ng-trim='false' autocomplete="off">
+							<input type="text" name="orderLineRate" class="form-control" ng-model="line.C[2].VALUE" ng-pattern="numericOnlyRegexp" ng-trim='false' autocomplete="off">
 							<span class="input-group-addon">{{line.C[3].VALUE}}</span>
 						</div>
-						<input ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length === 0" type="text" class="form-control" ng-model="line.C[2].VALUE"  ng-pattern="numericOnlyRegexp" ng-trim='false' autocomplete="off">
+						<input ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length === 0" type="text" name="orderLineRate"  class="form-control" ng-model="line.C[2].VALUE"  ng-pattern="numericOnlyRegexp" ng-trim='false' autocomplete="off">
 						<div ng-if="line.C[5].VALUE === 'false'" ></div>
 					</div>
 					<div class="col-sm-3 text-right">
@@ -79,6 +79,7 @@
 						<div ng-if="!lineValueEditable(line)" >{{line.C[4].VALUE}}</div>
 					</div>
 					<div class="col-sm-12 text-danger" ng-show="lineForm.orderLineAmount.$error.pattern">Le montant doit être <strong>un nombre</strong> valide!</span></div>
+					<div class="col-sm-12 text-danger" ng-show="lineForm.orderLineRate.$error.pattern">Le taux doit être <strong>un nombre</strong> valide!</span></div>
 				</div>	
 			</td>
 		</tr>
