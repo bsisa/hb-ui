@@ -105,6 +105,28 @@
             };
 
 
+            var buildHbLayer = function(hbLayerDef) {
+                var hbLayer = {
+                        representationStyle : {}
+                    };
+                    angular.forEach(hbLayerDef.C, function (c) {
+                        switch (c.POS) {
+                            case 1: hbLayer.label = c.VALUE; break;
+                            case 2: hbLayer.idg = c.VALUE; break;
+                            case 3: hbLayer.xpath = c.VALUE; break;
+                            case 4: hbLayer.representationType = c.VALUE || 'point'; break;
+                            case 5: hbLayer.representationStyle.color = c.VALUE || null; break;
+                            case 6: hbLayer.representationStyle.opacity = parseFloat(c.VALUE) || null; break;
+                            case 7: hbLayer.representationStyle.weight = parseFloat(c.VALUE) || null; break;
+                            case 8: hbLayer.representationStyle.dashArray = c.VALUE || null; break;
+                            case 9: hbLayer.representationStyle.fillColor = c.VALUE || null; break;
+                            case 10: hbLayer.representationStyle.fillOpacity = parseFloat(c.VALUE) || null; break;
+                            case 11: hbLayer.representationStyle.radius = parseFloat(c.VALUE) || null; break;
+                        }
+                    });
+                 return hbLayer;
+            };
+            
             /**
              * Procedure to build and display a HyperBird layer on a map given its ELFIN.CARACTERISTIQUE.FORME.L definition
              * found in an ELFIN of CLASSE='PLAN'
@@ -115,26 +137,9 @@
             	
             	$log.debug(">>>> Map ctrler: displayLayer: hbMapDefId="+hbMapDefId+", hbLayerDef:\n"+ angular.toJson(hbLayerDef));
             	
-                var hbLayer = {
-                    representationStyle : {}
-                };
-                angular.forEach(hbLayerDef.C, function (c) {
-                    switch (c.POS) {
-                        case 1: hbLayer.label = c.VALUE; break;
-                        case 2: hbLayer.idg = c.VALUE; break;
-                        case 3: hbLayer.xpath = c.VALUE; break;
-                        case 4: hbLayer.representationType = c.VALUE || 'point'; break;
-                        case 5: hbLayer.representationStyle.color = c.VALUE || null; break;
-                        case 6: hbLayer.representationStyle.opacity = parseFloat(c.VALUE) || null; break;
-                        case 7: hbLayer.representationStyle.weight = parseFloat(c.VALUE) || null; break;
-                        case 8: hbLayer.representationStyle.dashArray = c.VALUE || null; break;
-                        case 9: hbLayer.representationStyle.fillColor = c.VALUE || null; break;
-                        case 10: hbLayer.representationStyle.fillOpacity = parseFloat(c.VALUE) || null; break;
-                        case 11: hbLayer.representationStyle.radius = parseFloat(c.VALUE) || null; break;
-                    }
-                });
+                var hbLayer = buildHbLayer(hbLayerDef);
                 
-                $log.debug(">>>> hbLayer = " + angular.toJson(hbLayer));
+                $log.debug(">>>> hbLayer from buildHbLayer = " + angular.toJson(hbLayer));
 
                 var layerGroup = {
                     name: hbLayer.label,
