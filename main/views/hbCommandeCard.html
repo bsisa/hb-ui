@@ -70,7 +70,9 @@
 							 ></div>
 					</div>
 				</div>
-
+			</div>
+			<!-- 2nd column -->
+ 			<div class="col-sm-6">
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.code)">
 					<label for="code" class="col-sm-4 control-label">Code CFC</label>
 					<div class="col-sm-8">
@@ -139,13 +141,14 @@
 				</div>		
 				
 			</div>
+<!-- 			</div> -->
 			<!-- 2nd column -->
- 			<div class="col-sm-6">
+<!--  			<div class="col-sm-6"> -->
 <!-- 				<div class="form-group has-feedback" > -->
 <!-- 					<div hb-order-spreadsheet hb-order-elfin-form="elfinForm" ng-model="elfin"></div> -->
 <!-- 				</div>							 -->
- 			</div>
-			<div class="col-xs-12">
+<!--  			</div> -->
+			<div ng-if="elfin.IDENTIFIANT.QUALITE!=='Bon de commande'" class="col-xs-12">
 <!-- 				<div class="row" style="padding: 8px;"> -->
 				<div style="padding-left: 16px;padding-right: 8px;padding-top: 8px;padding-bottom: 8px;">
 					<div class="form-group has-feedback" >
