@@ -75,7 +75,7 @@
 
                var point = getElfinBasePoint(elfin);
                if (!point) {
-            	   $log.debug(">>>> missing BASE POINT for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF );
+            	   //$log.debug(">>>> missing BASE POINT for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF );
                    return null;
                }
 
