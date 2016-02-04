@@ -1,5 +1,6 @@
-<div hb-card-header>
+<div hb-card-header >
 	<!-- Custom validation message to be defined here -->
+	<span ng-show="elfinForm.email.$error.email">Le champs <strong>Email</strong> n'est pas valide</span>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<div class="col-xs-12">
@@ -96,6 +97,38 @@
 									ng-model="elfin.PARTENAIRE.USAGER.VALUE">
 							</div>
 						</div>
+						<div class="form-group has-feedback"
+							>
+							<label for="cellphone" class="col-sm-4 control-label">Tél. portable</label>
+							<div class="col-sm-8">
+								<input id="cellphone" name="cellphone" type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR">
+							</div>
+						</div>
+						<div class="form-group has-feedback"
+							>
+							<label for="phone" class="col-sm-4 control-label">Tél. fixe</label>
+							<div class="col-sm-8">
+								<input id="phone" name="phone" type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR">
+							</div>
+						</div>
+						<div class="form-group has-feedback"
+							>
+							<label for="fax" class="col-sm-4 control-label">Fax</label>
+							<div class="col-sm-8">
+								<input id="fax" name="fax" type="text" class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR6.VALEUR">
+							</div>
+						</div>
+						<div class="form-group has-feedback"
+							>
+							<label for="email" class="col-sm-4 control-label">Email</label>
+							<div class="col-sm-8">
+								<input id="email" name="email" type="email" class="form-control"
+									ng-model="elfin.IDENTIFIANT.ALIAS">
+							</div>
+						</div>						
 					</div>	
 					
 <!-- 					<div class="row"> -->
