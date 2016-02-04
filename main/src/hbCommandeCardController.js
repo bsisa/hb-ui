@@ -46,6 +46,7 @@
 										"building" : {},
 										"code" : null,
 										"provider" : {},
+										"surface" : {},
 										"initialised" : false
 									};
 								
