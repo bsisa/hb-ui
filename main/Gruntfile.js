@@ -68,6 +68,10 @@ module.exports = function(grunt) {
 								
 								'src/hbChooseOneController.js',
 								'src/hbChooseOneDirective.js',
+								
+								'src/hbChooseSurfaceController.js',
+								'src/hbChooseSurfaceDirective.js',
+								
 								'src/hbCiterneCardController.js',
 								'src/hbCiterneCardDirective.js',
 								

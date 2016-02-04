@@ -70,7 +70,20 @@
 							 hb-choose-building-editable="{{canEdit}}" 
 							 ></div>
 					</div>
-				</div> 			
+				</div>
+				
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.surface)">
+					<label for="surface" class="col-sm-4 control-label">No objet (unité locative)</label>
+					<div class="col-sm-8">
+						<div hb-choose-surface 
+							 hb-choose-surface-id-name="surface"
+							 hb-choose-surface-elfin-form="elfinForm"
+							 hb-choose-surface-elfin-model="selected.surface"
+							 hb-choose-surface-tooltip="Recherche d'unité locative"
+							 hb-choose-surface-editable="{{canEdit}}" 
+							 ></div>
+					</div>
+				</div> 		
  			
 				<div ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.BON_DE_COMMANDE" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.code)">
 					<label for="code" class="col-sm-4 control-label">Code CFC</label>

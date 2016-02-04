@@ -1,0 +1,17 @@
+<div class="input-group">
+	<input 
+		id="{{actorIdName}}" 
+		hb-dynamic-name="surfaceIdName"
+		type="text" 
+		class="form-control" 
+		ng-model="selected.surfaceDisplay" 
+		ng-readonly="true"
+		ng-model-options="{ debounce: 500 }" 
+		ng-required="validateSurface">
+		
+		<span class="input-group-btn" >
+			<button ng-disabled="{{!selectionEnabled}}" class="btn btn-default" type="button" ng-click="hbChooseSurface()">
+				<i class="glyphicon glyphicon-list-alt" ></i>
+			</button>
+		</span>
+</div>
