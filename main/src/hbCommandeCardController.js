@@ -17,17 +17,20 @@
 							'hbAlertMessages',
 							'hbUtil',
 							'HB_EVENTS',
+							'HB_ORDER_TYPE',
 							'userDetails',
 							'hbQueryService',
 							function($attrs, $scope, $rootScope, GeoxmlService,
 									$modal, $routeParams, $location, $log,
 									$timeout, hbAlertMessages, hbUtil,
-									HB_EVENTS, userDetails, hbQueryService) {
+									HB_EVENTS, HB_ORDER_TYPE, userDetails, hbQueryService) {
 
 								
 								// Can be dynamically updated given user roles, functions.
 								$scope.canEdit = true;
 
+								// Expose constants to scope
+								$scope.HB_ORDER_TYPE = HB_ORDER_TYPE;
 								
 						    	GeoxmlService.getNewElfin("COMMANDE").get()
 					            .then(function(order) {
