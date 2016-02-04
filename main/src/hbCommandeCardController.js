@@ -50,6 +50,28 @@
 										"initialised" : false
 									};
 								
+								
+								var setSelectedSurface = function(ID_G, Id) {
+				    				GeoxmlService.getElfin(ID_G, Id).get()
+							        .then(function(surfaceElfin) {
+							        	// Force CAR array sorting by POS attribute
+							        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
+							        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
+							        	//       Need review of other similar operations
+							        	if ( surfaceElfin['CARACTERISTIQUE'] != null && surfaceElfin['CARACTERISTIQUE']['CARSET'] != null && surfaceElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+							        		hbUtil.reorderArrayByPOS(surfaceElfin['CARACTERISTIQUE']['CARSET']['CAR']);
+							        	}
+						    			$scope.selected.surface = surfaceElfin;
+						    			var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI(surfaceElfin.SOURCE);
+						    			// Also manages $scope.selected.initialised state
+						    			setSelectedBuilding(selectedParentIds.ID_G,Id);
+							        }, function(response) {
+							        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + selectedBuildingIds.ID_G + " et l'identifiant: " + selectedBuildingIds.Id + ".";
+							        	$log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
+							        });	
+								};
+								
+								
 								/**
 								 * Set selected.building scope variable given building ID_G, Id identifiers.
 								 */
@@ -64,7 +86,7 @@
 							        		hbUtil.reorderArrayByPOS(buildingElfin['CARACTERISTIQUE']['CARSET']['CAR']);
 							        	}
 						    			$scope.selected.building = buildingElfin;
-						    			// Wait for building initialisation if one if referenced
+						    			// Stop waiting for building initialisation once obtained.
 						    			$scope.selected.initialised = true;
 							        }, function(response) {
 							        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + selectedBuildingIds.ID_G + " et l'identifiant: " + selectedBuildingIds.Id + ".";
@@ -78,12 +100,22 @@
 								$scope.$watch('selected.building', function(newBuilding, oldBuilding) { 
 									if ($scope.selected.initialised === true ) {
 										if ($scope.selected.building) {
-											//$log.debug("building : " + angular.toJson($scope.selected.building));											
-											$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;
-											// Gets building object and set its OBJECTIF to the COMMANDE OBJECTIF (no SAI)
+											//$log.debug("building : " + angular.toJson($scope.selected.building));		
+											// If a SURFACE is defined the order parent is the SURFACE, the building (IMMEUBLE) being the grand-parent. 
+											if ($scope.selected.surface.Id) {
+												$scope.elfin.SOURCE = $scope.selected.surface.ID_G + "/" + $scope.selected.surface.CLASSE + "/" + $scope.selected.surface.Id;
+												// Set order (COMMANDE) ALIAS to SURFACE OBJECTIF (no SAI - no object)
+												$scope.elfin.IDENTIFIANT.ALIAS = $scope.selected.surface.IDENTIFIANT.OBJECTIF;
+											} else {
+												$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;												
+											}
+
+											// Set order (COMMANDE) OBJECTIF to building (IMMEUBLE) OBJECTIF (no SAI)
 											$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.IDENTIFIANT.OBJECTIF;
-											// Gets building object and set its NOM (No construction) to the COMMANDE ORIGINE (The COMMANDE NOM is reserved for COMMANDE number)
+
+											// Set order ORIGINE to building (IMMEUBLE) NOM (No construction)
 											$scope.elfin.IDENTIFIANT.ORIGINE = $scope.selected.building.IDENTIFIANT.NOM;
+											
 											var buildingOwner = {
 													 "Id" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.Id,
 												      "ID_G" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.ID_G,
@@ -96,6 +128,7 @@
 											//$log.debug("building has been reset... ");											
 											$scope.elfin.SOURCE = "";
 											$scope.elfin.IDENTIFIANT.OBJECTIF = "";
+											$scope.elfin.IDENTIFIANT.ALIAS = "";
 											$scope.elfin.IDENTIFIANT.ORIGINE = "";
 											var buildingOwner = {
 													 "Id" : "",
@@ -111,6 +144,14 @@
 									}
 								}, true);								
 								
+								
+								$scope.$watch('selected.surface', function(newSurface, oldSurface) { 
+									if ($scope.selected.initialised === true ) {
+										$log.debug("selected.surface : \n" + angular.toJson($scope.selected.surface));
+									} else {
+										//$log.debug("selected.code : " + angular.toJson($scope.selected.code) + " ... WAITING for initialisation...");
+									}
+								}, true);								
 								
 								$scope.$watch('selected.code', function(newCode, oldCode) { 
 									if ($scope.selected.initialised === true ) {
@@ -216,9 +257,13 @@
 											      "VALUE" : ""
 											    };
 						    			//$scope.elfin.PARTENAIRE.FOURNISSEUR.VALUE
-						    			var selectedBuildingIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.SOURCE);
-						    			if (selectedBuildingIds) {
-						    				setSelectedBuilding(selectedBuildingIds.ID_G, selectedBuildingIds.Id);
+						    			var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.SOURCE);
+						    			if (selectedParentIds) {
+						    				if (selectedParentIds.CLASSE === 'IMMEUBLE') {
+						    					setSelectedBuilding(selectedParentIds.ID_G, selectedParentIds.Id);	
+						    				} else if (selectedParentIds.CLASSE === 'SURFACE') {
+						    					setSelectedSurface(selectedParentIds.ID_G, selectedParentIds.Id);
+						    				}
 						    			} else {
 							    			// If no reference to building exists confirm initialisation is complete.
 							    			$scope.selected.initialised = true;
@@ -312,7 +357,11 @@
 												
 												// Initialise selected building using provided IMMEUBLE parameters
 												if ($routeParams.idg && $routeParams.id) {
-													setSelectedBuilding($routeParams.idg, $routeParams.id);
+													if ($routeParams.classe === 'IMMEUBLE') {
+														setSelectedBuilding($routeParams.idg, $routeParams.id);	
+													} else if ($routeParams.classe === 'SURFACE')  {
+														setSelectedSurface($routeParams.idg, $routeParams.id);
+													}
 												}
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
