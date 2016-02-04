@@ -4,7 +4,7 @@
     /**
      * 
      * hb-choose-surface directive provides specific popup to select 
-     * an ELFIN of CLASSE='IMMEUBLE' 
+     * an ELFIN of CLASSE='SURFACE' 
      * 
      * 
      * elfinForm
@@ -14,7 +14,7 @@
      * 
      * surfaceElfinModel 
      * 
-     * Is a mandatory reference to an object ELFIN of class IMMEUBLE. The target of selection process.
+     * Is a mandatory reference to an object ELFIN of class SURFACE. The target of selection process.
      * 
      * 
      * surfaceIdName 
@@ -39,8 +39,8 @@
 			restrict: 'A',
 			scope : {
 				'elfinForm' : '=hbChooseSurfaceElfinForm',
-				'buildingElfinModel' : '=?hbChooseSurfaceElfinModel',
-				'buildingIdName' : '@hbChooseSurfaceIdName', 
+				'surfaceElfinModel' : '=?hbChooseSurfaceElfinModel',
+				'surfaceIdName' : '@hbChooseSurfaceIdName', 
 				'tooltip' : '@?hbChooseSurfaceTooltip',
 				'editable' : '@?hbChooseSurfaceEditable'
 			},		    
