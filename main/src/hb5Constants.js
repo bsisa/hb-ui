@@ -118,3 +118,13 @@ angular.module('hb5').constant('HB_REGEXP', {
 	NUMERIC_POS_AND_NEG_ONLY : /^[-]?\d*\.?\d*$/
 });
 
+
+/**
+ * Define order types required as `hardcoded` references within application.
+ * There may be more defined within the database but not required as constant.
+ */
+angular.module('hb5').constant('HB_ORDER_TYPE', {
+	BON_DE_COMMANDE : "Bon de commande"
+});
+
+
