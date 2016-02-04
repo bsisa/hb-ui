@@ -92,7 +92,7 @@
 			        	};							
 
 			        	/**
-			        	 * surfaceElfinModel references an ELFIN of CLASSE IMMEUBLE
+			        	 * surfaceElfinModel references an ELFIN of CLASSE SURFACE
 			        	 * This listener is used only for surface initialisation from model binding.
 			        	 */
 			        	var surfaceElfinModelWatchDeregistration = $scope.$watch('surfaceElfinModel.Id', function(newId, oldId) {
@@ -110,21 +110,19 @@
 
 			            // Asychronous surfaces preloading and sorting
 			            // TODO: REPLACE WITH SURFACE CALLS...
-			        	hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE']")		
+			        	hbQueryService.getLocationUnits("//ELFIN[@CLASSE='SURFACE']")		
 						.then(function(surfaces) {
 
 								// order surfaces by IDENTIFIANT.OBJECTIF, IDENTIFIANT.ALIAS, IDENTIFIANT.NOM, PARTENAIRE.PROPRIETAIRE.NOM
 								surfaces.sort(function(a, b) {
 									return a.IDENTIFIANT.OBJECTIF < b.IDENTIFIANT.OBJECTIF ? -1 :
-										a.IDENTIFIANT.OBJECTIF > b.IDENTIFIANT.OBJECTIF ? 1 :
-											a.IDENTIFIANT.ALIAS < b.IDENTIFIANT.ALIAS ? -1 : 
-												a.IDENTIFIANT.ALIAS > b.IDENTIFIANT.ALIAS ? 1 : 
-													a.IDENTIFIANT.NOM < b.IDENTIFIANT.NOM ? -1 : 
-														a.IDENTIFIANT.NOM > b.IDENTIFIANT.NOM ? 1 :
-															a.PARTENAIRE.PROPRIETAIRE.NOM < b.PARTENAIRE.PROPRIETAIRE.NOM ? -1 : 
-																a.PARTENAIRE.PROPRIETAIRE.NOM > b.PARTENAIRE.PROPRIETAIRE.NOM ? 1 :	0;
+										a.IDENTIFIANT.OBJECTIF > b.IDENTIFIANT.OBJECTIF ? 1 : 0;
+//										a.IDENTIFIANT.OBJECTIF > b.IDENTIFIANT.OBJECTIF ? 1 :
+//											a.PARTENAIRE.USAGER.VALUE < b.PARTENAIRE.USAGER.VALUE ? -1 : 
+//												a.PARTENAIRE.USAGER.VALUE > b.PARTENAIRE.USAGER.VALUE ? 1 : 0;
 					            });
 								$scope.surfaces =  surfaces;
+								$log.debug(">>>> $scope.surfaces nb = " + $scope.surfaces.length);
 								$scope.surfacesLoaded = true;
 							},
 							function(response) {
@@ -147,7 +145,7 @@
 				                    	return $scope.surfaces;
 				                    },
 				                    columnsDefinition: function() {
-				                    	return [ { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI"}, { field:"IDENTIFIANT.ALIAS", displayName: "Adresse"}, { field: "IDENTIFIANT.NOM", displayName: "No de constr."}, { field:"PARTENAIRE.PROPRIETAIRE.NOM", displayName: "Propriétaire"} ];
+				                    	return [ { field:"IDENTIFIANT.OBJECTIF", displayName: "No objet"}, { field:"PARTENAIRE.USAGER.VALUE", displayName: "Locataire"} ];
 				                    }
 				                },                
 				                backdrop: 'static'
@@ -193,7 +191,8 @@
 				        	// Update selected surface instance in scope
 				        	$scope.selected.surface = selectedSurface;
 				        	// Update selected surface display string
-				        	$scope.selected.surfaceDisplay = $scope.selected.surface.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.surface.IDENTIFIANT.ALIAS + " - " + $scope.selected.surface.IDENTIFIANT.NOM + " - " + $scope.selected.surface.PARTENAIRE.PROPRIETAIRE.NOM;
+				        	//$scope.selected.surfaceDisplay = $scope.selected.surface.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.surface.PARTENAIRE.USAGER.VALUE;
+				        	$scope.selected.surfaceDisplay = $scope.selected.surface.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.surface.PARTENAIRE.USAGER.VALUE;
 				        };
 
 					} ]); // End of HbChooseSurfaceController definition
@@ -232,7 +231,7 @@
 							
 							$scope.$watch('search.text', function() {
 								// TODO: CHANGE FILTER...
-								$scope.elfins = $filter('immeubleListAnyFilter')(elfins, $scope.search.text , false);
+								$scope.elfins = $filter('uniteLocativeListAnyFilter')(elfins, $scope.search.text , false);
 							}, true);
 							// ============================================================
 							
