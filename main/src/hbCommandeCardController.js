@@ -47,11 +47,11 @@
 						    	$scope.objectsSelectionTypeChoices = hbUtil.buildArrayFromCatalogueDefault($scope.OBJECTS_SELECTION_TYPE_IMMEUBLE+"|"+$scope.OBJECTS_SELECTION_TYPE_SURFACE);
 						    	
 								$scope.selected = { 
-										"building" : {},
+										"building" : undefined,
 										"code" : null,
-										"objectsSelectionType" : {} ,
-										"provider" : {},
-										"surface" : {},
+										"objectsSelectionType" : undefined ,
+										"provider" : undefined,
+										"surface" : undefined,
 										"initialised" : false
 									};
 								
@@ -60,12 +60,17 @@
 								 * creation context is linked to IMMEUBLE or SURFACE. 
 								 */
 								var updateSource = function() {
-									if ($scope.selected.surface.Id) {
+									if ($scope.selected.surface !== null && $scope.selected.surface.Id) {
 										$scope.elfin.SOURCE = $scope.selected.surface.ID_G + "/" + $scope.selected.surface.CLASSE + "/" + $scope.selected.surface.Id;
 										// Set order (COMMANDE) ALIAS to SURFACE OBJECTIF (no SAI - no object)
 										$scope.elfin.IDENTIFIANT.ALIAS = $scope.selected.surface.IDENTIFIANT.OBJECTIF;
+									} else if ($scope.selected.building !== null && $scope.selected.building.Id) {
+										$log.debug("/!\ updateSource NO selected.surface.Id /!\ ");
+										$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;		
+										// TODO: review if it is the best place to reset ALIAS ? 
 									} else {
-										$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;												
+										$log.debug("No relevant information to perform SOURCE update. Reset it to blank.");
+										$scope.elfin.SOURCE = "";
 									}
 								};								
 								
@@ -97,22 +102,11 @@
 								var setSelectedBuilding = function(ID_G, Id) {
 				    				GeoxmlService.getElfin(ID_G, Id).get()
 							        .then(function(buildingElfin) {
-							        	// Force CAR array sorting by POS attribute
-							        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
-							        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
-							        	//       Need review of other similar operations
+							        	// Force array sorting by POS attribute.
 							        	if ( buildingElfin['CARACTERISTIQUE'] != null && buildingElfin['CARACTERISTIQUE']['CARSET'] != null && buildingElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
 							        		hbUtil.reorderArrayByPOS(buildingElfin['CARACTERISTIQUE']['CARSET']['CAR']);
 							        	}
 						    			$scope.selected.building = buildingElfin;
-						    			if($scope.selected.objectsSelectionType === $scope.OBJECTS_SELECTION_TYPE_IMMEUBLE) {
-						    				// Reset any SURFACE INFO
-						    				$scope.selected.surface = {};
-						    				$scope.elfin.IDENTIFIANT.ALIAS = '';
-						    				// COMMANDE SOURCE info update
-						    				updateSource();
-						    			} 
-						    			$log.debug("selected.building : \n" + angular.toJson($scope.selected.building.IDENTIFIANT.OBJECTIF));
 						    			// Stop waiting for building initialisation once obtained.
 						    			$scope.selected.initialised = true;
 							        }, function(response) {
@@ -122,19 +116,22 @@
 								};								
 								
 								
-								$scope.$watch('selected.objectsSelectionType', function() { 
+								$scope.$watch('selected.objectsSelectionType', function(toType,fromType) {
+									
 									if ($scope.selected.initialised === true ) {
-										if (
-												$scope.selected.objectsSelectionType === $scope.OBJECTS_SELECTION_TYPE_IMMEUBLE &&
-												$scope.selected.building && 
-												$scope.selected.building.Id) {
-											$log.debug("selected.objectsSelectionType : " + angular.toJson($scope.selected.objectsSelectionType));
-											setSelectedBuilding($scope.selected.building.ID_G,$scope.selected.building.Id);
-										} else if (
-												$scope.selected.objectsSelectionType === $scope.OBJECTS_SELECTION_TYPE_SURFACE && 
-												$scope.selected.surface &&
-												$scope.selected.surface.Id) {
-											setSelectedSurface($scope.selected.surface.ID_G,$scope.selected.surface.Id);
+										
+										if (fromType === $scope.OBJECTS_SELECTION_TYPE_IMMEUBLE && toType === $scope.OBJECTS_SELECTION_TYPE_SURFACE) {
+						    				// Reset any SURFACE info
+						    				$scope.selected.surface = null;
+						    				// Reset any IMMEUBLE info
+						    				$scope.selected.building = null;
+						    				// COMMANDE SOURCE info update
+						    				updateSource();
+										} else if (fromType === $scope.OBJECTS_SELECTION_TYPE_SURFACE && toType === $scope.OBJECTS_SELECTION_TYPE_IMMEUBLE) {
+						    				// Reset any SURFACE INFO
+						    				$scope.selected.surface = null;
+						    				// COMMANDE SOURCE info update
+						    				updateSource();
 										}
 									}
 								}, true);								
@@ -167,7 +164,7 @@
 												};
 											$scope.elfin.PARTENAIRE.PROPRIETAIRE = buildingOwner; 
 										} else {
-											//$log.debug("building has been reset... ");											
+											$log.debug("building has been reset... ");											
 											$scope.elfin.SOURCE = "";
 											$scope.elfin.IDENTIFIANT.OBJECTIF = "";
 											$scope.elfin.IDENTIFIANT.ALIAS = "";
@@ -198,6 +195,8 @@
 											setSelectedBuilding(selectedParentIds.ID_G,selectedParentIds.Id);
 										} else {
 											$log.debug("no $scope.selected.surface available yet...");
+											// Reset 
+											$scope.elfin.IDENTIFIANT.ALIAS = "";
 										}
 									} else {
 										//$log.debug("selected.code : " + angular.toJson($scope.selected.code) + " ... WAITING for initialisation...");
