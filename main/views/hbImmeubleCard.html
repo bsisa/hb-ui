@@ -767,7 +767,7 @@
 					
 					<tabset>  
 						<tab active="tabState.commande_subtab_ouvertes.active"><!-- COMMANDES 1st sub tab -->
-							<tab-heading>Commandes ouvertes</tab-heading>
+							<tab-heading>Commandes</tab-heading>
 							<div class="hb-tab">
 								<div class="row">
 									<div class="col-sm-12">
@@ -808,92 +808,74 @@
 								</div>
 							</div>
 						</tab>
-						<tab active="tabState.commande_subtab_closes.active"><!-- COMMANDES 2nd sub tab -->
-							<tab-heading>Commandes closes</tab-heading>
-							<div class="hb-tab">
-
-								<div class="row">
-									<div class="col-sm-12">
-									<!-- Table des commandes closes -->
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="2">Commande</th>
-													<th class="col-sm-2">N° commande</th>
-													<th class="col-sm-1">Code CFC</th>
-													<th class="col-sm-1">Date</th>			
-													<th class="col-sm-2">Montant</th>
-													<th class="col-sm-4">Fournisseur</th>
-										<!-- 			<th class="col-sm-2">Description</th> -->
-												</tr>												
-											</thead>
-											<tbody ng-show="commandes">
-												<tr
-													ng-repeat="commande in commandes">
-													<td><div hb-card-view-link hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}"></div></td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="commande"></div></td>
-													<!-- Order nb -->
-													<td class="number">{{commande.IDENTIFIANT.NOM}}</td>
-													<!-- CFC code -->
-													<td>{{commande.GROUPE}}</td>
-													<!-- Estimation/Quote date -->
-													<td class="date">{{commande.IDENTIFIANT.DE}}</td>
-													<!-- Amount -->
-													<td class="number">{{commande.IDENTIFIANT.VALEUR | currency:'CHF'}}</td>
-													<!-- Enterprise name -->
-													<td>{{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}</td>				
-													<!-- Order description... -->
-<!-- 												<td>{{commande.DIVERS.REMARQUE}}</td>																 -->
-												</tr>
-											</tbody>
-										</table>									
-									</div>
-								</div>
-							</div>
-						</tab>						
-						<tab active="tabState.commande_subtab_toutes.active"><!-- COMMANDES 3rd sub tab -->
-							<tab-heading>Commandes toutes</tab-heading>
-							<div class="hb-tab">
-
-								<div class="row">
-									<div class="col-sm-12">
-									<!-- Table de toutes les commandes -->
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th colspan="2">Commande</th>
-													<th class="col-sm-2">N° commande</th>
-													<th class="col-sm-1">Code CFC</th>
-													<th class="col-sm-1">Date</th>			
-													<th class="col-sm-2">Montant</th>
-													<th class="col-sm-4">Fournisseur</th>
-										<!-- 			<th class="col-sm-2">Description</th> -->
-												</tr>												
-											</thead>
-											<tbody ng-show="commandes">
-												<tr
-													ng-repeat="commande in commandes">
-													<td><div hb-card-view-link hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}"></div></td>
-													<td><div hb-annexes-link hb-annexes-link-elfin="commande"></div></td>
-													<!-- Order nb -->
-													<td class="number">{{commande.IDENTIFIANT.NOM}}</td>
-													<!-- CFC code -->
-													<td>{{commande.GROUPE}}</td>
-													<!-- Estimation/Quote date -->
-													<td class="date">{{commande.IDENTIFIANT.DE}}</td>
-													<!-- Amount -->
-													<td class="number">{{commande.IDENTIFIANT.VALEUR | currency:'CHF'}}</td>
-													<!-- Enterprise name -->
-													<td>{{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}</td>				
-													<!-- Order description... -->
-<!-- 												<td>{{commande.DIVERS.REMARQUE}}</td>																 -->
-												</tr>
-											</tbody>
-										</table>											
-									</div>
-								</div>
-							</div>
-						</tab>
+						<!-- COMMANDES 2nd sub tab -->
+<!-- 						<tab active="tabState.commande_subtab_closes.active"> -->
+<!-- 							<tab-heading>Commandes closes</tab-heading> -->
+<!-- 							<div class="hb-tab"> -->
+<!-- 								<div class="row"> -->
+<!-- 									<div class="col-sm-12"> -->
+<!-- 										<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 											<thead> -->
+<!-- 												<tr> -->
+<!-- 													<th colspan="2">Commande</th> -->
+<!-- 													<th class="col-sm-2">N° commande</th> -->
+<!-- 													<th class="col-sm-1">Code CFC</th> -->
+<!-- 													<th class="col-sm-1">Date</th>			 -->
+<!-- 													<th class="col-sm-2">Montant</th> -->
+<!-- 													<th class="col-sm-4">Fournisseur</th> -->
+<!-- 												</tr>												 -->
+<!-- 											</thead> -->
+<!-- 											<tbody ng-show="commandes"> -->
+<!-- 												<tr -->
+<!-- 													ng-repeat="commande in commandes"> -->
+<!-- 													<td><div hb-card-view-link hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}"></div></td> -->
+<!-- 													<td><div hb-annexes-link hb-annexes-link-elfin="commande"></div></td> -->
+<!-- 													<td class="number">{{commande.IDENTIFIANT.NOM}}</td> -->
+<!-- 													<td>{{commande.GROUPE}}</td> -->
+<!-- 													<td class="date">{{commande.IDENTIFIANT.DE}}</td> -->
+<!-- 													<td class="number">{{commande.IDENTIFIANT.VALEUR | currency:'CHF'}}</td> -->
+<!-- 													<td>{{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}</td>				 -->
+<!-- 												</tr> -->
+<!-- 											</tbody> -->
+<!-- 										</table>									 -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</tab>						 -->
+						<!-- COMMANDES 3rd sub tab -->
+<!-- 						<tab active="tabState.commande_subtab_toutes.active"> -->
+<!-- 							<tab-heading>Commandes toutes</tab-heading> -->
+<!-- 							<div class="hb-tab"> -->
+<!-- 								<div class="row"> -->
+<!-- 									<div class="col-sm-12"> -->
+<!-- 										<table class="table table-condensed table-bordered table-striped"> -->
+<!-- 											<thead> -->
+<!-- 												<tr> -->
+<!-- 													<th colspan="2">Commande</th> -->
+<!-- 													<th class="col-sm-2">N° commande</th> -->
+<!-- 													<th class="col-sm-1">Code CFC</th> -->
+<!-- 													<th class="col-sm-1">Date</th>			 -->
+<!-- 													<th class="col-sm-2">Montant</th> -->
+<!-- 													<th class="col-sm-4">Fournisseur</th> -->
+<!-- 												</tr>												 -->
+<!-- 											</thead> -->
+<!-- 											<tbody ng-show="commandes"> -->
+<!-- 												<tr -->
+<!-- 													ng-repeat="commande in commandes"> -->
+<!-- 													<td><div hb-card-view-link hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}"></div></td> -->
+<!-- 													<td><div hb-annexes-link hb-annexes-link-elfin="commande"></div></td> -->
+<!-- 													<td class="number">{{commande.IDENTIFIANT.NOM}}</td> -->
+<!-- 													<td>{{commande.GROUPE}}</td> -->
+<!-- 													<td class="date">{{commande.IDENTIFIANT.DE}}</td> -->
+<!-- 													<td class="number">{{commande.IDENTIFIANT.VALEUR | currency:'CHF'}}</td> -->
+<!-- 													<td>{{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}</td>				 -->
+<!-- 												</tr> -->
+<!-- 											</tbody> -->
+<!-- 										</table>											 -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</tab> -->
 						<tab select="createNewCommande()" ng-show="!createMode"> 
 							<tab-heading tooltip="Créer une nouvelle commande relative à l'objet courant" tooltip-popup-delay="1000">Créer une nouvelle commande <i class="glyphicon glyphicon-plus-sign"></i></tab-heading>
 							<div class="hb-tab">
