@@ -14,14 +14,47 @@
 							'hbAlertMessages',
 							'hbUtil',
 							'hbQueryService', 
+							'hbTabCacheService',
+							'userDetails',
 							'HB_COLLECTIONS',
+							'HB_ROLE_FONCTION',
 							function($scope, $attrs, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout,
-									hbAlertMessages, hbUtil, hbQueryService, HB_COLLECTIONS) {
+									hbAlertMessages, hbUtil, hbQueryService, hbTabCacheService, userDetails, HB_COLLECTIONS, HB_ROLE_FONCTION) {
 
 								//$log.debug("    >>>> Using HbSurfaceCardController");
 
+                                // ================= Tab state management - start =============
+				 				/**
+				 				 * Check parent controller and hbTabStateService for complete overview.
+				 				 */
+				 				var cachedTab = hbTabCacheService.getTabState($location.absUrl());
+				 				
+				 				/** Create tabState object if not already available in cache,
+				 				 */
+				 				if (cachedTab === undefined) {
+				 					$scope.tabState = { 
+					 						"surface" : { "active" : true },
+					 						"commande" : { "active" : false },
+					 						"commande_subtab_ouvertes" : { "active" : false },
+					 						"commande_subtab_closes" : { "active" : false },
+					 						"commande_subtab_toutes" : { "active" : false },
+					 						"annexe" : { "active" : false }
+					 				};
+				 				} else {
+				 					$scope.tabState = cachedTab;
+				 				}
+			 					/**
+			 					 * Link to $parent scope tabState reference.
+			 					 */
+				 				$scope.$parent.tabState = $scope.tabState;
+                                // ================= Tab state management - end ===============								
+								
+								
+								
 								$scope.getMomentDateFromHbTextDateFormat = hbUtil.getMomentDateFromHbTextDateFormat;
+								$scope.canManageOrders = _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.ORDERS_STATISTICS);								
+								
 								
 								$scope.canArchive = function() {
 									// If the form is not pristine we could have a valid archiveMoment which is not
