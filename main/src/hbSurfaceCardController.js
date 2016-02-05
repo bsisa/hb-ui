@@ -80,6 +80,16 @@
 									}
 								};
 								
+								
+					            $scope.createNewCommande = function() {
+					            	if ($attrs.hbMode != "create") {
+								        // Added id,classe,idg for generic link to creation source/parent prototype.
+										var searchObj = {id: $scope.elfin.Id, classe: $scope.elfin.CLASSE, idg: $scope.elfin.ID_G }
+										$location.search(searchObj).path( "/elfin/create/COMMANDE" );
+									}
+					            };								
+								
+								
 						    	// Check when elfin instance becomes available 
 						    	$scope.$watch('elfin.Id', function() { 
 						    		
