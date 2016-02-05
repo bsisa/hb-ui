@@ -307,7 +307,8 @@
 											      "GROUPE" : $scope.elfin.PARTENAIRE.FOURNISSEUR.GROUPE,
 											      "VALUE" : ""
 											    };
-						    			//$scope.elfin.PARTENAIRE.FOURNISSEUR.VALUE
+						    			
+						    			// Supports create mode and avoids repeating selected.initialised setting 
 						    			var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.SOURCE);
 						    			if (selectedParentIds) {
 						    				if (selectedParentIds.CLASSE === 'IMMEUBLE') {
@@ -319,30 +320,7 @@
 							    			// If no reference to building exists confirm initialisation is complete.
 							    			$scope.selected.initialised = true;
 						    			}
-						    			
-						    			// Initialise selected.code from elfin.GROUPE value.
-						    			if ($scope.elfin.GROUPE && $scope.elfin.GROUPE.trim().length > 0) {
-						    				
-											// Select the CODE where GROUPE = 'CFC' and number matches IDENTIFIANT.NOM
-											var xpathForCfcCode = "//ELFIN[@CLASSE='CODE' and @GROUPE='CFC' and IDENTIFIANT/NOM='"+$scope.elfin.GROUPE+"']";
-											// Asychronous buildings preloading
-											hbQueryService.getCodes(xpathForCfcCode)
-												.then(
-														function(cfcCodes) {
-															$log.debug(">>> cfcCodes.length MUST equal 1 : " + cfcCodes.length);
-															if (cfcCodes.length === 1) {
-																$scope.selected.code = cfcCodes[0];																
-															} else {
-																var message = "Le code CFC " + $scope.elfin.GROUPE + " n'est pas valide, veuillez s.v.p. effectuer une sélection parmi les codes existants.";
-																hbAlertMessages.addAlert("danger", message);
-															}
-														},
-														function(response) {
-															var message = "La recherche du code CFC "+ $scope.elfin.GROUPE + " a échoué (statut de retour: " + response.status + ")";
-															hbAlertMessages.addAlert("danger", message);
-														}
-													);						    				
-						    			}
+						    			// ====================================================================						    			
 						    			
 										// Update elfin properties from catalog while in create mode
 										if ($attrs.hbMode === "create") {
@@ -421,14 +399,41 @@
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
-										} else {
+										} else { // Not in create mode
 											// Check whether the COMMANDE.SOURCE points to a SURFACE or IMMEUBLE 
 											if (_.contains($scope.elfin.SOURCE, 'IMMEUBLE') ) {
 												$scope.selected.objectsSelectionType = $scope.OBJECTS_SELECTION_TYPE_IMMEUBLE;
 											} else {
 												$scope.selected.objectsSelectionType = $scope.OBJECTS_SELECTION_TYPE_SURFACE;
 											}
-										}
+										} // end of "Not in create mode" operations
+										
+						    			// Initialises selected.code from elfin.GROUPE value
+						    			// Can be useful in create mode if a default group is defined
+						    			// but requires to be performed after creation initialisation procedure 
+						    			if ($scope.elfin.GROUPE && $scope.elfin.GROUPE.trim().length > 0) {
+						    				
+											// Select the CODE where GROUPE = 'CFC' and number matches IDENTIFIANT.NOM
+											var xpathForCfcCode = "//ELFIN[@CLASSE='CODE' and @GROUPE='CFC' and IDENTIFIANT/NOM='"+$scope.elfin.GROUPE+"']";
+											// Asychronous buildings preloading
+											hbQueryService.getCodes(xpathForCfcCode)
+												.then(
+														function(cfcCodes) {
+															$log.debug(">>> cfcCodes.length MUST equal 1 : " + cfcCodes.length);
+															if (cfcCodes.length === 1) {
+																$scope.selected.code = cfcCodes[0];																
+															} else {
+																var message = "Le code CFC " + $scope.elfin.GROUPE + " n'est pas valide, veuillez s.v.p. effectuer une sélection parmi les codes existants.";
+																hbAlertMessages.addAlert("danger", message);
+															}
+														},
+														function(response) {
+															var message = "La recherche du code CFC "+ $scope.elfin.GROUPE + " a échoué (statut de retour: " + response.status + ")";
+															hbAlertMessages.addAlert("danger", message);
+														}
+													);						    				
+						    			}// end of selected.code init										
+
 									}
 						    	}, true);								
 
