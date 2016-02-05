@@ -150,11 +150,13 @@
          * Either a list, a card or stay on current page if selection is 0. 
          */
         $scope.listOrViewUniteLoc = function() {
-        	// 
-        	if ($scope.filteredUniteLocElfins.length > 1) {
-            	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE').search('search', $scope.uniteLocSearch.text);
-        	} else if ($scope.filteredUniteLocElfins.length == 1) {
-            	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE/' + $scope.filteredUniteLocElfins[0].Id);	
+        	// filteredUniteLocElfins takes time to load
+        	if ($scope.filteredUniteLocElfins) {
+	        	if ($scope.filteredUniteLocElfins.length > 1) {
+	            	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE').search('search', $scope.uniteLocSearch.text);
+	        	} else if ($scope.filteredUniteLocElfins.length == 1) {
+	            	$location.path('/elfin/'+uniteLocCollectionId+'/SURFACE/' + $scope.filteredUniteLocElfins[0].Id);	
+	        	}
         	}
         };      	
 
