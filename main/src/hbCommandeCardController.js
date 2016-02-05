@@ -47,11 +47,11 @@
 						    	$scope.objectsSelectionTypeChoices = hbUtil.buildArrayFromCatalogueDefault($scope.OBJECTS_SELECTION_TYPE_IMMEUBLE+"|"+$scope.OBJECTS_SELECTION_TYPE_SURFACE);
 						    	
 								$scope.selected = { 
-										"building" : undefined,
+										"building" : null,
 										"code" : null,
-										"objectsSelectionType" : undefined ,
-										"provider" : undefined,
-										"surface" : undefined,
+										"objectsSelectionType" : null ,
+										"provider" : null,
+										"surface" : null,
 										"initialised" : false
 									};
 								
