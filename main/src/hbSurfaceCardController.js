@@ -88,8 +88,12 @@
 						    			 * Perform template clean up tasks while in create mode.
 						    			 */
 							    		if ($attrs.hbMode === "create") {
+							    			
 							    			$scope.elfin.GROUPE = "";
-							    			// Get archived SURFACE if any
+
+							    			// When creation is part of SURFACE archiving procedure
+							    			// let's get archived SURFACE information to init the new
+							    			// SURFACE from, saving end-user typing.
 							    			if ($routeParams.ID_G && $routeParams.Id) {
 
 								    			GeoxmlService.getElfin($routeParams.ID_G, $routeParams.Id).get()
@@ -130,7 +134,22 @@
 								    			$scope.elfin.SOURCE = HB_COLLECTIONS.IMMEUBLE_ID + "/IMMEUBLE/" + $routeParams.ORIGINE;
 							    			}
 							    			 
-							    		} 
+							    		} else {
+							    			
+							    			// Need loading related data only when not in create mode
+							    			
+							    			// Only load orders if user as rights to see them
+							    			if ($scope.canManageOrders) {
+												hbQueryService.getCommandesForSource($scope.elfin.ID_G+ "/" +$scope.elfin.CLASSE + "/" +  $scope.elfin.Id).then(function(elfins) {
+													$scope.commandes = elfins;
+												},
+												function(response) {
+													var message = "Le chargement des COMMANDES a échoué (statut de retour: "+ response.status+ ")";
+										            hbAlertMessages.addAlert("danger",message);
+												});
+							    			}							    			
+							    			
+							    		}
 						    		};
 						    		
 						    	}, true);								
