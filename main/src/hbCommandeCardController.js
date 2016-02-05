@@ -55,6 +55,20 @@
 										"initialised" : false
 									};
 								
+								/**
+								 * Update current COMMANDE SOURCE information detecting whether 
+								 * creation context is linked to IMMEUBLE or SURFACE. 
+								 */
+								var updateSource = function() {
+									if ($scope.selected.surface.Id) {
+										$scope.elfin.SOURCE = $scope.selected.surface.ID_G + "/" + $scope.selected.surface.CLASSE + "/" + $scope.selected.surface.Id;
+										// Set order (COMMANDE) ALIAS to SURFACE OBJECTIF (no SAI - no object)
+										$scope.elfin.IDENTIFIANT.ALIAS = $scope.selected.surface.IDENTIFIANT.OBJECTIF;
+									} else {
+										$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;												
+									}
+								};								
+								
 								
 								var setSelectedSurface = function(ID_G, Id) {
 				    				GeoxmlService.getElfin(ID_G, Id).get()
@@ -95,6 +109,7 @@
 						    				// Reset any SURFACE INFO
 						    				$scope.selected.surface = {};
 						    				$scope.elfin.IDENTIFIANT.ALIAS = '';
+						    				// COMMANDE SOURCE info update
 						    				updateSource();
 						    			} 
 						    			$log.debug("selected.building : \n" + angular.toJson($scope.selected.building.IDENTIFIANT.OBJECTIF));
@@ -123,17 +138,7 @@
 										}
 									}
 								}, true);								
-								
-								
-								var updateSource = function() {
-									if ($scope.selected.surface.Id) {
-										$scope.elfin.SOURCE = $scope.selected.surface.ID_G + "/" + $scope.selected.surface.CLASSE + "/" + $scope.selected.surface.Id;
-										// Set order (COMMANDE) ALIAS to SURFACE OBJECTIF (no SAI - no object)
-										$scope.elfin.IDENTIFIANT.ALIAS = $scope.selected.surface.IDENTIFIANT.OBJECTIF;
-									} else {
-										$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;												
-									}
-								};
+
 								
 								/**
 								 * Listen to selected.building change and perform corresponding $scope.elfin updates
@@ -143,19 +148,10 @@
 									if ($scope.selected.initialised === true ) {
 										if ($scope.selected.building) {
 											$log.debug(">>>> selected.building listener: newBuilding = " + newBuilding.IDENTIFIANT.OBJECTIF);
-											//$log.debug("building : " + angular.toJson($scope.selected.building));		
-											// If a SURFACE is defined the order parent is the SURFACE, the building (IMMEUBLE) being the grand-parent.
-											
+
+											// COMMANDE SOURCE info update
 											updateSource();
 											
-//											if ($scope.selected.surface.Id) {
-//												$scope.elfin.SOURCE = $scope.selected.surface.ID_G + "/" + $scope.selected.surface.CLASSE + "/" + $scope.selected.surface.Id;
-//												// Set order (COMMANDE) ALIAS to SURFACE OBJECTIF (no SAI - no object)
-//												$scope.elfin.IDENTIFIANT.ALIAS = $scope.selected.surface.IDENTIFIANT.OBJECTIF;
-//											} else {
-//												$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;												
-//											}
-
 											// Set order (COMMANDE) OBJECTIF to building (IMMEUBLE) OBJECTIF (no SAI)
 											$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.IDENTIFIANT.OBJECTIF;
 
