@@ -191,10 +191,20 @@
 				        	// Update selected surface instance in scope
 				        	$scope.selected.surface = selectedSurface;
 				        	// Update selected surface display string
-				        	//$scope.selected.surfaceDisplay = $scope.selected.surface.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.surface.PARTENAIRE.USAGER.VALUE;
-				        	$scope.selected.surfaceDisplay = $scope.selected.surface.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.surface.PARTENAIRE.USAGER.VALUE;
+				        	if (selectedSurface !== null && angular.isDefined($scope.selected.surface) ) {
+				        		$scope.selected.surfaceDisplay = $scope.selected.surface.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.surface.PARTENAIRE.USAGER.VALUE;
+				        	} else {
+				        		$scope.selected.surfaceDisplay = " - "
+				        	}
 				        };
-
+				        
+				        /**
+				         * Synchronise selected.surface to external surfaceElfinModel changes.
+				         */
+				        $scope.$watch('surfaceElfinModel', function(to, from) {
+				        	selectedSurfaceUpdate(to); 
+				        }, true);
+				        
 					} ]); // End of HbChooseSurfaceController definition
 	
 

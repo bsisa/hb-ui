@@ -192,8 +192,19 @@
 				        	// Update selected building instance in scope
 				        	$scope.selected.building = selectedBuilding;
 				        	// Update selected building display string
-				        	$scope.selected.buildingDisplay = $scope.selected.building.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.building.IDENTIFIANT.ALIAS + " - " + $scope.selected.building.IDENTIFIANT.NOM + " - " + $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM;
+				        	if (selectedBuilding !== null && angular.isDefined($scope.selected.building) ) {
+				        		$scope.selected.buildingDisplay = $scope.selected.building.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.building.IDENTIFIANT.ALIAS + " - " + $scope.selected.building.IDENTIFIANT.NOM + " - " + $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM;
+				        	} else {
+				        		$scope.selected.buildingDisplay = " - ";
+				        	}
 				        };
+
+				        /**
+				         * Synchronise selected.building to external surfaceElfinModel changes.
+				         */
+				        $scope.$watch('buildingElfinModel', function(to, from) {
+				        	selectedBuildingUpdate(to); 
+				        }, true);
 
 					} ]); // End of HbChooseBuildingController definition
 	
