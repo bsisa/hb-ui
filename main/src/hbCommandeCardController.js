@@ -509,7 +509,7 @@
 						         * Prints tenant purchase order.
 						         */
 						        $scope.printTenantPurchaseOrderReport = function (elfin) {
-						        	$window.open("/api/melfin/report/G20050101000012345/G20160112111800000?col="+elfin.ID_G+"&id="+elfin.Id);
+						        	$window.open("/api/melfin/report/G20050101000012345/G20160210190000000?col="+elfin.ID_G+"&id="+elfin.Id);
 						        }							        
 					            
 						        // Set focus to building (orderNb is automatically set and should not be changed)
