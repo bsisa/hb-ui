@@ -20,10 +20,11 @@
 							'HB_ORDER_TYPE',
 							'userDetails',
 							'hbQueryService',
+							'$window',
 							function($attrs, $scope, $rootScope, GeoxmlService,
 									$modal, $routeParams, $location, $log,
 									$timeout, hbAlertMessages, hbUtil,
-									HB_EVENTS, HB_ORDER_TYPE, userDetails, hbQueryService) {
+									HB_EVENTS, HB_ORDER_TYPE, userDetails, hbQueryService, $window) {
 
 								$scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";
 								$scope.OBJECTS_SELECTION_TYPE_SURFACE = "SURFACE";
@@ -495,7 +496,21 @@
 								$scope.createNewCommande = function () {
 		    	                   	var redirUrl = '/elfin/create/COMMANDE';
 		    	                   	$location.path( redirUrl );						        	
-						        };					            
+						        };			
+						        
+						        /**
+						         * Prints provider purchase order.
+						         */
+						        $scope.printProviderPurchaseOrderReport = function (elfin) {
+						        	$window.open("/api/melfin/report/G20050101000012345/G20160112111800000?col="+elfin.ID_G+"&id="+elfin.Id);
+						        }						        
+						        
+						        /**
+						         * Prints tenant purchase order.
+						         */
+						        $scope.printTenantPurchaseOrderReport = function (elfin) {
+						        	$window.open("/api/melfin/report/G20050101000012345/G20160112111800000?col="+elfin.ID_G+"&id="+elfin.Id);
+						        }							        
 					            
 						        // Set focus to building (orderNb is automatically set and should not be changed)
 								var focusOnField = function() {
