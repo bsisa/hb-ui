@@ -55,6 +55,13 @@
 						<div hb-date id="deadline" name="deadline" ng-model="elfin.IDENTIFIANT.A"></div>
 					</div>
 				</div>
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.contact)">
+					<label for="contact" class="col-sm-4 control-label" >Personne à contacter</label>
+					<div class="col-sm-8" >
+						<input id="contact" name="contact" class="form-control" autocomplete="off" 
+							ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR"></input>
+					</div>
+				</div>
 			</div>
 			<!-- 2nd column -->
  			<div class="col-sm-6">
@@ -157,35 +164,27 @@
 <!-- 							ng-model="elfin.IDENTIFIANT.VALEUR" > -->
 <!-- 					</div> -->
 <!-- 				</div> -->
-				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.remark)">
-					<label for="remark" class="col-sm-4 control-label" >Description</label>
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.concerns)">
+					<label for="concerns" class="col-sm-4 control-label" >Concerne</label>
 					<div class="col-sm-8" >
-						<textarea id="remark" name="remark" class="form-control" rows="2"
+						<input id="concerns" name="concerns" class="form-control" autocomplete="off"
+							ng-model="elfin.CARACTERISTIQUE.CAR1.VALEUR"></input>
+					</div>
+				</div>		
+			</div>
+			<div class="col-xs-12">
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.remark)">
+					<label for="remark" class="col-sm-2 control-label" >Description</label>
+					<div class="col-sm-10" >
+						<textarea id="remark" name="remark" class="form-control" rows="6" 
 							autocomplete="off"
 							ng-model="elfin.DIVERS.REMARQUE"></textarea>
 					</div>
-				</div>		
-				
+				</div>
 			</div>
-<!-- 			</div> -->
-			<!-- 2nd column -->
-<!--  			<div class="col-sm-6"> -->
-<!-- 				<div class="form-group has-feedback" > -->
-<!-- 					<div hb-order-spreadsheet hb-order-elfin-form="elfinForm" ng-model="elfin"></div> -->
-<!-- 				</div>							 -->
-<!--  			</div> -->
 			<div class="col-xs-6 col-xs-offset-3 centre">
-<!-- 
-			Lettre d'accompagnement...
-			Titre/intitullé => adresse immeuble + , 2000 Neuchaâtel
-			Choix multiple
- -->
-			<button class="btn btn-default" ng-click="printProviderPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande fournisseur" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande fournisseur</span></button>
-			<button class="btn btn-default" ng-click="printTenantPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande locataire</span></button>
-			
-			
-			
-			
+				<button class="btn btn-default" ng-click="printProviderPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande fournisseur" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande fournisseur</span></button>
+				<button class="btn btn-default" ng-click="printTenantPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande locataire</span></button>
 			</div>
 			<div ng-if="elfin.IDENTIFIANT.QUALITE!=='Bon de commande'" class="col-xs-12">
 <!-- 				<div class="row" style="padding: 8px;"> -->
