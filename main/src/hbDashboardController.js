@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbDashboardController', ['$attrs', '$scope', 'hbQueryService', '$routeParams', '$log', '$filter', '$location', '$timeout', 'userDetails', 'HB_COLLECTIONS', 'HB_ROLE_FONCTION', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, hbQueryService, $routeParams, $log, $filter, $location, $timeout, userDetails, HB_COLLECTIONS, HB_ROLE_FONCTION, hbAlertMessages, hbUtil) {
+    angular.module('hb5').controller('HbDashboardController', ['$attrs', '$scope', 'hbQueryService', 'GeoxmlService', '$routeParams', '$log', '$filter', '$location', '$timeout', 'userDetails', 'HB_COLLECTIONS', 'HB_ROLE_FONCTION', 'hbAlertMessages', 'hbUtil', function($attrs, $scope, hbQueryService, GeoxmlService, $routeParams, $log, $filter, $location, $timeout, userDetails, HB_COLLECTIONS, HB_ROLE_FONCTION, hbAlertMessages, hbUtil) {
     
     	//$log.debug("    >>>> HbDashboardController called at " + new Date());
     	
@@ -403,7 +403,10 @@
         $scope.commandeElfins = null;
         
         /** User entered COMMANDE search criterion */
-        $scope.commandeSearch = { "text" : "" };                    
+        $scope.commandeSearch = { 
+        		"text" : "" ,
+        		"id" : ""
+        	};                    
 
         /** Query all available COMMANDE */ 
         hbQueryService.getCommandes()
@@ -439,6 +442,33 @@
     		}
     	}, true);        
 			
+    	
+    	// ==== Order creation function ===========================
+    	
+        $scope.createNewCommande = function() {
+			$location.path( "/elfin/create/COMMANDE" );
+        };
+    	
+        /**
+         * Generic find ELFIN by Id function. Currently intended to COMMANDE by will work for any valid ELFIN Id.
+         */
+        $scope.findById = function(elfinId) {
+        	
+            /* Load global configuration */
+            GeoxmlService.getElfinById(elfinId).get()      
+              .then(function(elfin) {
+            	  var redirectUrl = "/elfin/"+ elfin.ID_G +"/"+elfin.CLASSE+"/"+elfin.Id;
+            	  $location.path(redirectUrl);
+              }, function(response) {
+              	var errorMessage = (response.status === 404) ? "Aucun objet trouvé pour l'identifiant `Id` = " + idParam : "Error with status code " + response.status + " while getting object for Id = " + idParam;
+               	$log.error(errorMessage);
+                hbAlertMessages.addAlert("danger",errorMessage);
+              }
+            );         	
+        	
+        };
+    	
+    	
     	// ============================================================
         // COMMANDE Section - end
     	// ============================================================

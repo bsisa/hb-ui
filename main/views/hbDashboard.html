@@ -144,7 +144,24 @@
 		</tr>
 		<tr>
 			<td ><div style="width: 150px; height: 105px;"></div></td>
-			<td ><img ng-click="listOrViewCommandes()" src="/assets/images/commandes.jpeg" ng-src="/assets/images/commandes.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;"></td>
+			<td >
+<!-- 				<div class="col-xs-12 visible-xs">xs</div> -->
+<!-- 				<div class="col-sm-12 visible-sm">sm</div> -->
+<!-- 				<div class="col-md-12 visible-md">md</div> -->
+<!-- 				<div class="col-lg-12 visible-lg">lg</div> -->
+				<div class="col-lg-4 col-md-12" style="padding-left: 0; padding-right: 0;">
+					<img ng-click="listOrViewCommandes()" src="/assets/images/commandes.jpeg" ng-src="/assets/images/commandes.jpeg" class="img-thumbnail" style="width: 150px; height: 105px;">
+				</div>
+				<div class="col-lg-8 col-md-12" style="padding-left: 0; padding-right: 0; padding-top: 4px; height: 52px;">
+					<button class="btn btn-default col-lg-offset-1 col-lg-10 col-md-12" ng-click="createNewCommande()" tooltip="Créer une nouvelle commande" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-plus-sign"></i><span> Nouvelle commande</span></button>
+				</div>
+				<div class="col-lg-8 col-md-12" style="padding-left: 0; padding-right: 0; height: 52px;" >
+<!-- 					<label for="commandeSearchIdInput" class="col-xs-2 control-label" style="padding-top: 4px; height: 52px;">Id</label> -->
+ 					<div class="col-lg-offset-1 col-lg-10 col-md-12" style="padding-left: 0; padding-right: 0;">
+						<input class="form-control" hb-enter="findById(commandeSearch.id)" tabindex="15" id="commandeSearchIdInput" name="commandeSearchIdInput" type="text" ng-model="commandeSearch.id" hb-no-dirty-check placeholder="Id COMMANDE">
+ 					</div>
+				</div>
+			</td>
 			<td ><div style="width: 150px; height: 105px;"></div></td>
 		</tr>		
 		<tr>			
