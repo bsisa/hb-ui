@@ -4,6 +4,7 @@
 		<thead>
 			<tr>
 				<th class="col-md-1">Annexe</th>
+				<th class="col-md-1">Fusion</th>
 				<th class="col-md-11">Nom</th>
 			</tr>
 		</thead>
@@ -17,6 +18,11 @@
 					</tr>
 				</table>
 				</td>
+				<td><a class="btn btn-default btn-xs btn-block" ng-click="merge(renvoi)">
+					<i ng-if="isMerged(renvoi)" class="glyphicon glyphicon-check"></i>
+					<i ng-if="!isMerged(renvoi)" class="glyphicon glyphicon-unchecked"></i>
+					
+					</a></td>
 				<td>{{hbUtil.getLinkFileName(renvoi.LIEN)}}</td>
 			</tr>
 		</tbody>

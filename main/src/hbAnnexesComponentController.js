@@ -13,7 +13,7 @@
 							'hbAlertMessages', 
 							function($attrs, $scope, $log, $modal, hbUtil, hbAlertMessages) {
     
-									//$log.debug("    >>>> Using HbAnnexesComponentController");
+									$log.debug("    >>>> Using HbAnnexesComponentController");
 							        
 						        	// Set a default to 0 before computation.
 						        	$scope.annexesNoPhotoNb = 0;
@@ -44,6 +44,54 @@
 							    			$scope.annexesNoPhotoNb = $scope.annexesWithoutPhoto.length;
 							    		}
 							        });	
+							    	
+							    	/**
+							    	 * Returns a new trimmed string with leading and trailing commas removed. 
+							    	 */
+							    	var cleanUpCommas = function(stringToCleanUp) {
+							    		// Trim
+							    		var cleanedUpString = stringToCleanUp.trim()
+							    		// Check for leading ','
+							    		var STR_TO_CLEAN = ",";
+							    		// Found leading clean up to perform
+							    		if (cleanedUpString.indexOf(STR_TO_CLEAN) === 0) {
+							    			cleanedUpString = cleanedUpString.substring( 0 + STR_TO_CLEAN.length)
+							    		}
+							    		if ( cleanedUpString.endsWith(STR_TO_CLEAN) ) {
+							    			cleanedUpString = cleanedUpString.substring(0, cleanedUpString.length - STR_TO_CLEAN.length)
+							    		}
+							    		return cleanedUpString;
+							    	};
+
+							    	var MERGE_ACTION_TAG_PART = "action::merge";
+							    	var MERGE_BEFORE_TAG = "action::merge::before";
+						    		var MERGE_AFTER_TAG = "action::merge::after";
+							    	
+							    	/**
+							    	 * Set or unset renvoi for report merge. 
+							    	 */
+							    	$scope.merge = function(renvoi) {
+							    		$log.debug("merge called for renvoi: " + angular.toJson(renvoi));
+							    		
+
+							    		var mergeBeforeTagIdx = renvoi.VALUE.indexOf(MERGE_BEFORE_TAG) 
+							    		if( mergeBeforeTagIdx != -1 ) {
+							    			renvoi.VALUE = renvoi.VALUE.replace(MERGE_BEFORE_TAG, '');
+							    		} else {
+							    			renvoi.VALUE = renvoi.VALUE + "," + MERGE_BEFORE_TAG;
+							    		}
+							    		
+							    		renvoi.VALUE = cleanUpCommas(renvoi.VALUE);
+							    		// Auto-save
+							    		$scope.saveElfin($scope.elfin);
+							    		
+							    		$log.debug("merge tag value: " + angular.toJson(renvoi.VALUE));
+							    		
+							    	};
+							    	
+							    	$scope.isMerged = function(renvoi) {
+							    		return (renvoi.VALUE.indexOf(MERGE_ACTION_TAG_PART) != -1);
+							    	};
 							    	
 							    	/**
 							    	 * Delete the corresponding RENVOI node from ELFIN.
