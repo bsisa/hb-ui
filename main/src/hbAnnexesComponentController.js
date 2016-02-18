@@ -13,7 +13,7 @@
 							'hbAlertMessages', 
 							function($attrs, $scope, $log, $modal, hbUtil, hbAlertMessages) {
     
-									$log.debug("    >>>> Using HbAnnexesComponentController");
+									//$log.debug("    >>>> Using HbAnnexesComponentController");
 							        
 						        	// Set a default to 0 before computation.
 						        	$scope.annexesNoPhotoNb = 0;
@@ -91,7 +91,23 @@
 						    			} else {
 						    				return newString;
 						    			}
-						    		}
+						    		};
+						    		
+						    		/**
+						    		 * Moves `targetArray` element at `fromIndex` position to `toIndex` position.
+						    		 * Check closely inspired by: http://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another#5306832
+						    		 * for more on this.
+						    		 */
+						    		var moveArrayItemFromTo = function (targetArray, fromIndex, toIndex) {
+						    		    if (toIndex >= targetArray.length) {
+						    		        var k = toIndex - targetArray.length;
+						    		        while ((k--) + 1) {
+						    		        	targetArray.push(undefined);
+						    		        }
+						    		    }
+						    		    targetArray.splice(toIndex, 0, targetArray.splice(fromIndex, 1)[0]);
+						    		};						    		
+						    		
 						    		
 							    	$scope.isMerged = function(renvoi) {
 							    		return (contains(renvoi.VALUE, MERGE_ACTION_TAG_PART));
@@ -142,13 +158,50 @@
 							    			}
 						    			}
 						    		};
+
+					    			var MOVE_UP = -1;
+					    			var MOVE_DOWN = +1;
 						    		
 						    		/**
-						    		 * TODO: implement
+						    		 * moveDirection is expected to be -1 (up) or +1 (down)
 						    		 */
-						    		$scope.moveUpDown = function(renvoi) {
-						    			
-						    		};							    	
+						    		var moveRenvoi = function(renvoi, move) {
+
+						    			if (move === MOVE_UP || move === MOVE_DOWN ) {
+							    			var arrayIdx = -1;
+							    			for (var i = 0; i < $scope.elfin.ANNEXE.RENVOI.length; i++) {
+												var currRenvoi = $scope.elfin.ANNEXE.RENVOI[i];
+												if (currRenvoi.POS === renvoi.POS) {
+													arrayIdx = i;
+													break;
+												}
+											}
+							    			// Reorder array only if selected element is not out of bound with new pos. 
+							    			if ( 
+							    					!(arrayIdx === 0 && move === MOVE_UP) && 
+							    					!(arrayIdx === $scope.elfin.ANNEXE.RENVOI.length - 1 && move === MOVE_DOWN ) ) {
+							    				
+								    			moveArrayItemFromTo($scope.elfin.ANNEXE.RENVOI, arrayIdx, arrayIdx + move);
+								    			hbUtil.renumberPos($scope.elfin.ANNEXE.RENVOI);
+									    		// Auto-save
+									    		$scope.saveElfin($scope.elfin);
+							    			}
+						    			};
+						    		};
+						    		
+						    		/**
+						    		 * Move RENVOI element up both dealing with array and XML POS positions.
+						    		 */
+						    		$scope.moveUp = function(renvoi) {
+						    			moveRenvoi(renvoi, MOVE_UP);
+						    		};
+						    		
+						    		/**
+						    		 * Move RENVOI element down both dealing with array and XML POS positions.
+						    		 */
+						    		$scope.moveDown = function(renvoi) {
+						    			moveRenvoi(renvoi, MOVE_DOWN);
+						    		};							    		
 							    	
 							    	/**
 							    	 * Delete the corresponding RENVOI node from ELFIN.
