@@ -4,7 +4,7 @@
 		<thead>
 			<tr>
 				<th class="col-md-1">Annexe</th>
-				<th class="col-md-1">Fusion</th>
+				<th ng-if="isMergeFeatureOn" class="col-md-1">Fusion</th>
 				<th class="col-md-11">Nom</th>
 			</tr>
 		</thead>
@@ -18,7 +18,7 @@
 					</tr>
 				</table>
 				</td>
-				<td>
+				<td ng-if="isMergeFeatureOn">
 					<table class="layout" >
 						<tr>
 							<td>

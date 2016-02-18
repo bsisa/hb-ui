@@ -19,6 +19,9 @@
 						        	$scope.annexesNoPhotoNb = 0;
 						        	
 									$scope.annexes = [];
+
+									$scope.isMergeFeatureOn = ($attrs.hbAnnexesMerge === 'true');									
+									
 									// By default validate. Special case where successful validation
 									// requires upload to be performed need to prevent this default
 									// to set free from a dead lock situation.
