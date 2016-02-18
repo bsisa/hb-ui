@@ -241,8 +241,8 @@
 	 * will be used for filtering in a case insensitive way, excluding
 	 * matching tags.
 	 * 
-	 * Usage: annexExcludeTabFilter:tag 
-	 * For instance: annexExcludeTabFilter:photo
+	 * Usage: annexExcludeTagFilter:tag 
+	 * For instance: annexExcludeTagFilter:photo
 	 */
 	angular.module('hb5').filter('annexExcludeTag', [function () {
 
