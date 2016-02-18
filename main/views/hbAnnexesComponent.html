@@ -18,11 +18,30 @@
 					</tr>
 				</table>
 				</td>
-				<td><a class="btn btn-default btn-xs btn-block" ng-click="merge(renvoi)">
-					<i ng-if="isMerged(renvoi)" class="glyphicon glyphicon-check"></i>
-					<i ng-if="!isMerged(renvoi)" class="glyphicon glyphicon-unchecked"></i>
-					
-					</a></td>
+				<td>
+					<table class="layout" >
+						<tr>
+							<td>
+								<a class="btn btn-default btn-xs btn-block" ng-click="merge(renvoi)">
+								<i ng-if="isMerged(renvoi)" class="glyphicon glyphicon-check"></i>
+								<i ng-if="!isMerged(renvoi)" class="glyphicon glyphicon-unchecked"></i>					
+								</a>
+							</td>
+							<td>
+								<a class="btn btn-default btn-xs btn-block" ng-click="mergeBeforeAfter(renvoi)">
+								<i ng-if="isMergedBefore(renvoi)" class="glyphicon glyphicon-chevron-left"></i>
+								<i ng-if="isMergedAfter(renvoi)" class="glyphicon glyphicon-chevron-right"></i>					
+								</a>							
+							</td>
+							<td>
+								<a class="btn btn-default btn-xs btn-block" ng-click="moveUpDown(renvoi)">
+								<i ng-if="isMerged(renvoi)" class="glyphicon glyphicon-chevron-up"></i>
+								<i ng-if="!isMerged(renvoi)" class="glyphicon glyphicon-chevron-down"></i>					
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
 				<td>{{hbUtil.getLinkFileName(renvoi.LIEN)}}</td>
 			</tr>
 		</tbody>

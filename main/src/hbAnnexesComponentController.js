@@ -66,32 +66,89 @@
 							    	var MERGE_ACTION_TAG_PART = "action::merge";
 							    	var MERGE_BEFORE_TAG = "action::merge::before";
 						    		var MERGE_AFTER_TAG = "action::merge::after";
+						    		
+						    		/**
+						    		 * Return true if `string` contains `searchedString`
+						    		 */
+						    		var contains = function(stringParam, searchedString) {
+						    			if (stringParam.length < searchedString.length) {
+						    				return false;
+						    			} else {
+						    				return (stringParam.indexOf(searchedString) != -1)
+						    			}						    				
+						    		};
+						    		
+						    		/**
+						    		 * Removes `tag` from `stringParam` returning a new string
+						    		 * leaving stringParam unmodified.
+						    		 */
+						    		var remove = function(stringParam, tag) {
+						    			var newString = _.clone(stringParam);
+						    			if ( contains(newString, tag) ) {
+								    		newString = newString.replace(tag, '');
+								    		newString = cleanUpCommas(newString);
+								    		return newString;
+						    			} else {
+						    				return newString;
+						    			}
+						    		}
+						    		
+							    	$scope.isMerged = function(renvoi) {
+							    		return (contains(renvoi.VALUE, MERGE_ACTION_TAG_PART));
+							    	};
 							    	
+							    	$scope.isMergedBefore = function(renvoi) {
+							    		return (contains(renvoi.VALUE, MERGE_BEFORE_TAG));
+							    	};
+							    	
+							    	$scope.isMergedAfter = function(renvoi) {
+							    		return (contains(renvoi.VALUE, MERGE_AFTER_TAG));
+							    	};							    	
+
 							    	/**
-							    	 * Set or unset renvoi for report merge. 
+							    	 * Set or unset renvoi for report merge action. 
 							    	 */
 							    	$scope.merge = function(renvoi) {
-							    		$log.debug("merge called for renvoi: " + angular.toJson(renvoi));
-							    		
-
-							    		var mergeBeforeTagIdx = renvoi.VALUE.indexOf(MERGE_BEFORE_TAG) 
-							    		if( mergeBeforeTagIdx != -1 ) {
+							    		if ( contains(renvoi.VALUE, MERGE_ACTION_TAG_PART) ) {
+							    			renvoi.VALUE = renvoi.VALUE.replace(MERGE_AFTER_TAG, '');
+							    			renvoi.VALUE = cleanUpCommas(renvoi.VALUE);
 							    			renvoi.VALUE = renvoi.VALUE.replace(MERGE_BEFORE_TAG, '');
+							    			renvoi.VALUE = cleanUpCommas(renvoi.VALUE);
 							    		} else {
 							    			renvoi.VALUE = renvoi.VALUE + "," + MERGE_BEFORE_TAG;
+							    			renvoi.VALUE = cleanUpCommas(renvoi.VALUE);
 							    		}
-							    		
-							    		renvoi.VALUE = cleanUpCommas(renvoi.VALUE);
 							    		// Auto-save
 							    		$scope.saveElfin($scope.elfin);
-							    		
-							    		$log.debug("merge tag value: " + angular.toJson(renvoi.VALUE));
-							    		
-							    	};
+							    	};							    	
 							    	
-							    	$scope.isMerged = function(renvoi) {
-							    		return (renvoi.VALUE.indexOf(MERGE_ACTION_TAG_PART) != -1);
-							    	};
+						    		/**
+						    		 * Switch back and forth from merge before to merge after actions
+						    		 * updating `RENVOI.LIEN.VALUE` by reference.
+						    		 * If neither actions exists it does nothing.
+						    		 */
+						    		$scope.mergeBeforeAfter = function(renvoi) {
+						    			if (angular.isDefined(renvoi)) {
+							    			if ( contains(renvoi.VALUE, MERGE_BEFORE_TAG) ) {
+							    				renvoi.VALUE = remove(renvoi.VALUE, MERGE_BEFORE_TAG)
+							    				renvoi.VALUE = renvoi.VALUE + "," + MERGE_AFTER_TAG;
+									    		// Auto-save
+									    		$scope.saveElfin($scope.elfin);
+							    			} else if ( contains(renvoi.VALUE, MERGE_AFTER_TAG) ) {
+							    				renvoi.VALUE = remove(renvoi.VALUE, MERGE_AFTER_TAG)
+							    				renvoi.VALUE = renvoi.VALUE + "," + MERGE_BEFORE_TAG;
+									    		// Auto-save
+									    		$scope.saveElfin($scope.elfin);
+							    			}
+						    			}
+						    		};
+						    		
+						    		/**
+						    		 * TODO: implement
+						    		 */
+						    		$scope.moveUpDown = function(renvoi) {
+						    			
+						    		};							    	
 							    	
 							    	/**
 							    	 * Delete the corresponding RENVOI node from ELFIN.
