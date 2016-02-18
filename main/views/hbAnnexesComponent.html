@@ -28,16 +28,21 @@
 								</a>
 							</td>
 							<td>
-								<a class="btn btn-default btn-xs btn-block" ng-click="mergeBeforeAfter(renvoi)">
-								<i ng-if="isMergedBefore(renvoi)" class="glyphicon glyphicon-chevron-left"></i>
-								<i ng-if="isMergedAfter(renvoi)" class="glyphicon glyphicon-chevron-right"></i>					
+								<a ng-if="!isMerged(renvoi)" class="btn btn-default btn-xs btn-block" ng-disabled="true">
+									<i class="glyphicon glyphicon-chevron-left" ></i>
+								</a>
+								<a ng-if="isMerged(renvoi)" class="btn btn-default btn-xs btn-block" ng-click="mergeBeforeAfter(renvoi)">						
+									<i ng-if="isMergedBefore(renvoi)" class="glyphicon glyphicon-chevron-left" tooltip="Fusionner avant le rapport" tooltip-popup-delay="1000"></i>
+									<i ng-if="isMergedAfter(renvoi)" class="glyphicon glyphicon-chevron-right" tooltip="Fusionner après le rapport" tooltip-popup-delay="1000"></i>					
 								</a>							
 							</td>
 							<td>
-								<a class="btn btn-default btn-xs btn-block" ng-click="moveUp(renvoi)">
+								<a class="btn btn-default btn-xs btn-block" ng-click="moveUp(renvoi)" tooltip="Déplacer vers le haut" tooltip-popup-delay="1000">
 									<i class="glyphicon glyphicon-chevron-up"></i>
 								</a>
-								<a class="btn btn-default btn-xs btn-block" ng-click="moveDown(renvoi)">
+							</td>
+							<td>
+								<a class="btn btn-default btn-xs btn-block" ng-click="moveDown(renvoi)" tooltip="Déplacer vers le bas" tooltip-popup-delay="1000">
 									<i class="glyphicon glyphicon-chevron-down"></i>					
 								</a>
 							</td>
