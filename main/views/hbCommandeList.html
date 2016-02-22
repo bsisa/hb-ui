@@ -52,13 +52,13 @@
 					</div>
 				</div>
 			</th>
-			<th class="col-sm-1">
-				<div class="form-group">
-					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
-						<input type="text" class="form-control" ng-model="search.amount" hb-no-dirty-check placeholder="">
-					</div>
-				</div>
-			</th>
+<!-- 			<th class="col-sm-1"> -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;"> -->
+<!-- 						<input type="text" class="form-control" ng-model="search.amount" hb-no-dirty-check placeholder=""> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</th> -->
 			<th class="col-sm-2">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
@@ -73,7 +73,7 @@
 					</div>
 				</div>
 			</th>
-			<th class="col-sm-2">
+			<th class="col-sm-3">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
 						<input type="text" class="form-control" ng-model="search.description" hb-no-dirty-check placeholder="">
@@ -97,16 +97,16 @@
 			<th class="col-sm-1">
 				<a href="" ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse">Date</a>
 			</th>			
-			<th class="col-sm-1">
-				<a href="" ng-click="predicate = 'IDENTIFIANT.VALEUR'; reverse=!reverse">Montant</a>
-			</th>
+<!-- 			<th class="col-sm-1"> -->
+<!-- 				<a href="" ng-click="predicate = 'IDENTIFIANT.VALEUR'; reverse=!reverse">Montant</a> -->
+<!-- 			</th> -->
 			<th class="col-sm-2">
 				<a href="" ng-click="predicate = 'PARTENAIRE.FOURNISSEUR.GROUPE'; reverse=!reverse">Fournisseur</a>
 			</th>
 			<th class="col-sm-2">
 				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.GROUPE'; reverse=!reverse">Propriétaire</a>
 			</th>
-			<th class="col-sm-2">
+			<th class="col-sm-3">
 				<a href="" ng-click="predicate = 'DIVERS.REMARQUE'; reverse=!reverse">Description</a>
 			</th>
 		</tr>
@@ -127,13 +127,13 @@
 			<!-- Estimation/Quote date -->
 			<td class="date">{{elfin.IDENTIFIANT.DE}}</td>
 			<!-- Amount -->
-			<td class="number">{{elfin.IDENTIFIANT.VALEUR | currency:'CHF'}}</td>
+<!-- 			<td class="number">{{elfin.IDENTIFIANT.VALEUR | currency:'CHF'}}</td> -->
 			<!-- Enterprise name -->
 			<td>{{elfin.PARTENAIRE.FOURNISSEUR.GROUPE}}</td>				
 			<!-- Owner at order time / copy of building owner -->
 			<td>{{elfin.PARTENAIRE.PROPRIETAIRE.GROUPE}}</td>			
 			<!-- Order description... -->
-			<td>{{elfin.DIVERS.REMARQUE}}</td>			
+			<td>{{elfin.DIVERS.REMARQUE.substring(0, 30).concat("(...)")}}</td>			
 		</tr>
 	</tbody>
 
