@@ -24,6 +24,8 @@
 
 				$log.debug(">>>> HbOrderSpreadsheetController...");				
 
+				$scope.orderLinesComputationsStack = new Array();
+				
 				/**
 				 * Constants used in L data model:
 				 * 
@@ -134,9 +136,22 @@
 					if (formValid && isCaracteristiqueAvailable()) {
 						var restGeoxml = GeoxmlService.getService();				
 						
+						if (angular.isDefined($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6)) {
+							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR = "" + moment().format("YYYYMMDDHHmmssSSS") + "";
+							$log.debug(">>>> SEND >>>> ORDER LINES id, CARACTERISTIQUE.CAR6.VALEUR = " + $scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR);							
+						} else {
+							$log.debug(">>>> SEND >>>> ORDER LINES id, CARACTERISTIQUE.CAR6.VALEUR NOT AVAILABLE CREATING...");
+							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6 = {
+								      "NOM" : "OrderLine Id",
+								      "UNITE" : "",
+								      "VALEUR" : "" + moment().format("YYYYMMDDHHmmssSSS") + ""
+								    }
+							$log.debug(">>>> SEND >>>> ORDER LINES id, CARACTERISTIQUE.CAR6.VALEUR = " + $scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR);
+						}
+						
 		        		restGeoxml.all("orders/compute/order-lines").post($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE).then( 
 		               			function(updatedCaracteristique) {
-
+		               				$log.debug(">>>> RECV >>>> ORDER LINES id, POS6.VALEUR = " + updatedCaracteristique.CAR6.VALEUR);
 		               				if ( diffUpdate($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE, updatedCaracteristique) ) {
 			               				// Notify view of model update.
 			               				$scope.ngModelCtrl.$render();		               				
