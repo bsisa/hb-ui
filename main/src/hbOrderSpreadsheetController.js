@@ -156,7 +156,8 @@
 
 
 				/**
-				 * Updates any localCar value different from newCar 
+				 * Updates any localCar value different from newCar.
+				 * 
 				 * Updates are performed by reference.
 				 * 
 				 * Returns true if anything has been updated false otherwise. 
