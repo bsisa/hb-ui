@@ -503,15 +503,33 @@
 						         */
 						        $scope.printProviderPurchaseOrderReport = function (elfin) {
 						        	$window.open("/api/melfin/report/G20050101000012345/G20160112111800000?col="+elfin.ID_G+"&id="+elfin.Id);
-						        }						        
+						        };					        
 						        
 						        /**
 						         * Prints tenant purchase order.
 						         */
 						        $scope.printTenantPurchaseOrderReport = function (elfin) {
 						        	$window.open("/api/melfin/report/G20050101000012345/G20160210190000000?col="+elfin.ID_G+"&id="+elfin.Id);
-						        }							        
+						        };							        
 					            
+
+						        /**
+						         * Prints entreprise contract.
+						         */
+						        $scope.printEntrepriseContractReport = function (elfin) {
+						        	$window.open("/api/melfin/report/G20050101000012345/G20160226150000001?col="+elfin.ID_G+"&id="+elfin.Id);
+						        };
+						        
+
+						        /**
+						         * Prints order confirmation.
+						         */
+						        $scope.printOrderConfirmationReport = function (elfin) {
+						        	$window.open("/api/melfin/report/G20050101000012345/G20160226150000002?col="+elfin.ID_G+"&id="+elfin.Id);
+						        };
+						        
+						        
+						        
 						        // Set focus to building (orderNb is automatically set and should not be changed)
 								var focusOnField = function() {
 									$('#building').focus();
