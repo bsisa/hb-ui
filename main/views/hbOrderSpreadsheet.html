@@ -36,7 +36,11 @@
 					</div>
 					<div class="col-sm-3">
 						<div ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length > 0" class="input-group">
-							<input type="text" name="orderLineRate" class="form-control" ng-model="line.C[2].VALUE" ng-pattern="numericOnlyRegexp" ng-trim='false' autocomplete="off">
+							<span class="input-group-addon">
+								<span ng-if="isNeg(line.C[2].VALUE)" >-</span>
+								<span ng-if="!isNeg(line.C[2].VALUE)" >+</span>							
+							</span>
+							<input type="text" name="orderLineRate" class="form-control" style="text-align: right;padding-right:4px;" ng-model="line.C[2].VALUE" ng-pattern="numericOnlyRegexp" ng-trim='false' autocomplete="off">
 							<span class="input-group-addon">{{line.C[3].VALUE}}</span>
 						</div>
 						<input ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length === 0" type="text" name="orderLineRate"  class="form-control" ng-model="line.C[2].VALUE"  ng-pattern="numericOnlyRegexp" ng-trim='false' autocomplete="off">

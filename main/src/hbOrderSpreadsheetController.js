@@ -76,9 +76,14 @@
 				/**
 				 * Expose constant to scope
 				 */				
-				$scope.numericOnlyRegexp = HB_REGEXP.NUMERIC_POS_ONLY;
+				//$scope.numericOnlyRegexp = HB_REGEXP.NUMERIC_POS_ONLY;
+				$scope.numericOnlyRegexp = HB_REGEXP.NUMERIC_POS_AND_NEG_ONLY;
 
 
+				$scope.isNeg = function(num) {
+					return (num < 0);
+				};
+				
 				/**
 				 * Reference to hb-single-select ng-model sibling directive controller
 				 */
