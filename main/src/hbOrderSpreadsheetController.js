@@ -66,13 +66,90 @@
 				
 				$scope.MANUAL_AMOUNT = "MANUAL_AMOUNT";
 				$scope.GROSS_AMOUNT_TOTAL = "TOTAL_GROSS";
+				
 				$scope.REDUCTION_RATE = "REDUCTION_RATE";
 				$scope.DISCOUNT_RATE = "DISCOUNT_RATE";
 				$scope.ROUNDING_AMOUNT = "ROUNDING_AMOUNT";
 				$scope.VAT_RATE = "VAT_RATE";
+				
+				$scope.APPLIED_RATE = "APPLIED_RATE"; // Reduction (-), discount (-), VAT (+), ...
+				$scope.APPLIED_AMOUNT = "APPLIED_AMOUNT"; // Rounding (+/-), ...
+				
 				$scope.NET_AMOUNT_TOTAL = "TOTAL_NET";
 
+				var getLine = function(orderLineType, orderLineLabel, orderLineParameter, orderLineParameterLabel, orderLineValue, orderLineIsWithParameter ) {
+					
+					var L = {
+					    "C" : [ {
+					      "POS" : 1,
+					      "VALUE" : orderLineType
+					    }, {
+					      "POS" : 2,
+					      "VALUE" : orderLineLabel
+					    }, {
+					      "POS" : 3,
+					      "VALUE" : orderLineParameter
+					    }, {
+					      "POS" : 4,
+					      "VALUE" : orderLineParameterLabel
+					    }, {
+					      "POS" : 5,
+					      "VALUE" : orderLineValue
+					    }, {
+					      "POS" : 6,
+					      "VALUE" : orderLineIsWithParameter
+					    } ],
+					    "POS" : 1
+					  };
+					
+					return L;
+				};
+				
+				
+				
 
+				$scope.lineTypes = [
+				                    getLine($scope.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
+				                    getLine($scope.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
+									{
+										"constantType" : $scope.APPLIED_RATE,
+										"label" : "Rabais",
+										"value" : "-0.00"
+									},
+									{
+										"constantType" : $scope.APPLIED_RATE,
+										"label" : "Escompte",
+										"value" : "-0.00"
+									},
+									{
+										"constantType" : $scope.APPLIED_RATE,
+										"label" : "TVA",
+										"value" : "8.00"
+									},
+									{
+										"constantType" : $scope.APPLIED_RATE,
+										"label" : "Autre taux...",
+										"value" : "0.00"
+									},
+									{
+										"constantType" : $scope.APPLIED_AMOUNT,
+										"label" : "Arrondi",
+										"value" : "0.00"
+									},
+									{
+										"constantType" : $scope.APPLIED_AMOUNT,
+										"label" : "Autre montant...",
+										"value" : "0.00"
+									}
+				                   ];				
+				
+				
+				$scope.selectedLineType = {};
+				
+				
+				
+				
+				
 				/**
 				 * Expose constant to scope
 				 */				
@@ -324,6 +401,43 @@
 					// Notify Form of model model change
        				$scope.elfinForm.$setDirty();
 				};
+				
+				
+				/**
+				 * Adds a user selected entry {APPLIED_RATE, APPLIED_AMOUNT} to orders line, applied to GROSS_AMOUNT 
+				 */
+				$scope.addAppliedLine = function (index, lineType, formValid) {
+
+					var L = {
+						          "C" : [ {
+						            "POS" : 1,
+						            "VALUE" : lineType.constantType
+						          }, {
+						            "POS" : 2,
+						            "VALUE" : lineType.label
+						          }, {
+						            "POS" : 3,
+						            "VALUE" : ""
+						          }, {
+						            "POS" : 4,
+						            "VALUE" : ""
+						          }, {
+						            "POS" : 5,
+						            "VALUE" : "0.00"
+						          }, {
+						            "POS" : 6,
+						            "VALUE" : "false"
+						          } ],
+						          "POS" : 1
+						        };
+
+					// Add new line
+					hbUtil.addFractionLByIndex($scope.ngModelCtrl.$modelValue,index,L);
+					// Perform computation and update
+					$scope.updateOrderLines(formValid);
+					// Notify Form of model model change
+       				$scope.elfinForm.$setDirty();
+				};				
 				
 				
 				/**
