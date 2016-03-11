@@ -310,6 +310,110 @@
 			return moment(textDateTime, ISO_8601_DATE_TIME_IN_UTC_FORMAT);
 		};		
 		
+		// ============================================================
+		// JavaScript asynchronous processing utilities
+		// ============================================================		
+
+		/**
+		 * Provides a new string token which satisfies `processMostRecentOnly` 
+		 * compare tests. 
+		 * 
+		 * Checkout `processMostRecentOnly` implementation
+		 * before using different token type. String was chosen instead 
+		 * of numeric for XML persistence requirements, avoiding conversions. 
+		 * 
+		 * Token generation centralisation allow easy implementation 
+		 * improvement if needed. 
+		 */
+		var getToken = function() { moment().format("YYYYMMDDHHmmssSSS"); };
+		
+		/**
+		 * Adds `token` at top of `tokensStack` 
+		 */
+		var addToTokensStack = function(token, tokensStack) {
+			tokensStack.unshift(token);
+		};
+		
+		/**
+		 * Removes `token` from `tokensStack` and resize stack
+		 * Note: currently not exposed as a service.
+		 */
+		var removeFromTokensStack = function(token, tokensStack) {
+			var tokenIdx = -1;
+			for (var i = 0; i < tokensStack.length; i++) {
+				var currProcId = tokensStack[i];
+				if ( currProcId === token) {
+					tokenIdx = i;
+					break;
+				}
+			}
+			if (tokenIdx > -1) {
+				tokensStack.splice(tokenIdx, 1);
+			};
+		};
+
+		/**
+		 * Empties `tokensStack`
+		 * Note: currently not exposed as a service.
+		 */
+		var emptyTokensStack = function(tokensStack) {
+			tokensStack = new Array();
+		};		
+		
+		/**
+		 * Call `callBackFunction` with `callBackFunctionParam` when `token` 
+		 * matches the most recent `token` from `tokensStack`.
+		 * 
+		 * `tokensStack` must be an array object managed as a stack using the following functions:
+		 * `addToTokensStack(token, tokensStack)`
+		 * `removeFromTokensStack(token, tokensStack)`
+		 * `emptyTokensStack(tokensStack)`
+		 */
+		var processMostRecentOnly = function(token, tokensStack, callBackFunction, callBackFunctionParam) {
+			
+			// ====================================================
+			// proceed with or drop update algorithm
+			// ====================================================
+			// 
+			// 1) If there is only one pending token
+			if (tokensStack.length === 1) {
+				
+			// 1.1) We expected the last pending token to equal the received token
+				if (tokensStack[0] === token) {
+					// => proceed 
+					callBackFunction.apply(this, callBackFunctionParam);
+					// remove token
+					removeFromTokensStack(token, tokensStack);	               						
+				} else {
+					// Do nothing. Unexpected.
+				}
+			// 2) If there is more than one pending token
+			} else if (tokensStack.length > 1) {
+				// 2.1) If the received token equals the most recent token 
+				if (tokensStack[0] === token) {
+					// => proceed
+					callBackFunction.apply(this, callBackFunctionParam);
+					// drop all remaining older tokens to prevent processing of older request 
+					emptyTokensStack(tokensStack);
+					// 2.2) If the received token does not equal the most recent token and is older
+				} else if (tokensStack[0] > token) {
+	   				// => drop and remove the token to prevent processing of older request 
+					removeFromTokensStack(token, tokensStack);
+				} else if (tokensStack[0] < token) {
+					// 2.2) If the received update token does not equal the most recent token and is younger
+					// Do nothing. Unexpected, most likely uncomplete management of addToTokensStack from 
+					// calling code.
+					$log.warn("Unexpected 'processMostRecentOnly' state 2.2). Possible uncomplete addToTokensStack implementation.");
+				}
+			// 3) If there is no pending update
+			// => drop (regular situation)
+			} else {
+				// Do nothing. Ok.
+			}
+		
+		};
+		
+		
 		
 		// ============================================================
 		// JavaScript data structures utilities
@@ -788,6 +892,11 @@
         	isActionAuthorised:isActionAuthorised,
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
+        	
+        	addToTokensStack:addToTokensStack,
+        	processMostRecentOnly:processMostRecentOnly,
+        	getToken:getToken,
+        	
         	removeAnnexeRenvoiByPos:removeAnnexeRenvoiByPos,
         	addFractionLByIndex:addFractionLByIndex,
         	removeFractionLByPos:removeFractionLByPos,

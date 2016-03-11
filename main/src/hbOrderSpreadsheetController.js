@@ -24,47 +24,11 @@
 
 				//$log.debug(">>>> HbOrderSpreadsheetController...");				
 
+				// ========== processMostRecentOnly optimisation ==============
+
 				// Init computation stack to empty array.
-				$scope.orderLinesComputationsStack = new Array();
-
-				// ============================================================
-				// Computation stack related functions
-				// ============================================================				
+				$scope.orderLinesComputationsStack = new Array();				
 				
-				/**
-				 * Adds `updateToken` at top of stack 
-				 */
-				var addToComputationStack = function(updateToken) {
-					$scope.orderLinesComputationsStack.unshift(updateToken);
-				};
-				
-				/**
-				 * Removes `updateToken` from and resize stack
-				 */
-				var removeFromComputationStack = function(processingId) {
-					var processingIdIdx = -1;
-					for (var i = 0; i < $scope.orderLinesComputationsStack.length; i++) {
-						var currProcId = $scope.orderLinesComputationsStack[i];
-						if ( currProcId === processingId) {
-							processingIdIdx = i;
-							break;
-						}
-					}
-					if (processingIdIdx > -1) {
-						$scope.orderLinesComputationsStack.splice(processingIdIdx, 1);
-					};
-				};
-
-				/**
-				 * Empties stack
-				 */
-				var emptyComputationStack = function() {
-					$scope.orderLinesComputationsStack = new Array();
-				};
-
-				// ============================================================
-				
-
 				/**
 				 * Proceed with model update and view refresh if computation effectively 
 				 * lead to any model change.
@@ -76,9 +40,9 @@
            				$scope.ngModelCtrl.$render();		               				
            				$scope.elfinForm.$setDirty();
        				} else {
-       					//$log.debug(">>>> no diff, no update.");
+       					// Do nothing. 
+       					// $log.debug(">>>> no diff, no update.");
        				};										
-					
 				}
 				
 				// ============================================================
@@ -185,9 +149,17 @@
 					return (line.C[0].VALUE === $scope.MANUAL_AMOUNT) || (line.C[0].VALUE === $scope.ROUNDING_AMOUNT) || ((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine )
 				};
 				
+   				var test = function(a,b,c) {
+   					console.log(">>>> console.log: a = " + a + " , b = " + b + ", c = " + c);
+   					$log.debug( ">>>> $log.debug : a = " + a + " , b = " + b + ", c = " + c);
+   				};
 				
 				/**
 				 * Call HB-API service to obtain order lines computation.
+				 * As HB-API processing is asychronous there is no guarantee that responses
+				 * are returned in the same order than requests were submitted.
+				 * Use FIFO logic of `updateToken` to only proceed with most recent update and
+				 * drop any old pending requests to prevent backward model updates.   
 				 */
 				$scope.updateOrderLines = function(formValid) {
 					
@@ -196,83 +168,23 @@
 						
 						// Update computation token
 						if (angular.isDefined($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6)) {
-							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR = "" + moment().format("YYYYMMDDHHmmssSSS") + "";
-							//$log.debug(">>>> SEND >>>> ORDER LINES id, CARACTERISTIQUE.CAR6.VALEUR = " + $scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR);							
+							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR = "" + hbUtil.getToken() + "";
 						} else {
-							//$log.debug(">>>> SEND >>>> ORDER LINES id, CARACTERISTIQUE.CAR6.VALEUR NOT AVAILABLE CREATING...");
 							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6 = {
-								      "NOM" : "OrderLine Id",
+								      "NOM" : "OrderLine computation request token",
 								      "UNITE" : "",
-								      "VALEUR" : "" + moment().format("YYYYMMDDHHmmssSSS") + ""
+								      "VALEUR" : "" + hbUtil.getToken() + ""
 								    }
-							//$log.debug(">>>> SEND >>>> ORDER LINES id, CARACTERISTIQUE.CAR6.VALEUR = " + $scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR);
 						}
 						
 						// Add computation token to stack
-						addToComputationStack($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR);
+						hbUtil.addToTokensStack($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR, $scope.orderLinesComputationsStack);
 						
 						// Asynchronous call (promise/future)
 		        		restGeoxml.all("orders/compute/order-lines").post($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE).then( 
 		               			function(updatedCaracteristique) {
 		               				var receivedUpdateToken = updatedCaracteristique.CAR6.VALEUR;
-		               				//$log.debug(">>>> RECV >>>> ORDER LINES id, POS6.VALEUR = " + receivedUpdateToken);
-		               				// ====================================================
-		               				// proceed with or drop update algorithm
-		               				// ====================================================
-		               				// 
-		               				// 1) If there is only one pending update
-		               				if ($scope.orderLinesComputationsStack.length === 1) {
-		               					
-			               				// 1.1) If the pending update token equals the received update token
-		               					if ($scope.orderLinesComputationsStack[0] === receivedUpdateToken) {
-		               						// => proceed with update
-		               						proceedWithUpdateOnChange(updatedCaracteristique);
-		               						// remove token
-		               						removeFromComputationStack(receivedUpdateToken);	               						
-		               						//$log.debug(">>>> Proceed with or drop update algorithm: OK - 1.1) ");
-			               				// 1.2) If the pending update token does not equal the received update token
-			               				// => unexpected: drop and notify the user of possible data inconsistency and log...
-		               					} else {
-		               						//TODO: end user notification ?
-				    	       				var message = "Le calcul du montant de commande peut comporter des incohérences. Veuillez vérifier et informer l'administrateur de l'application.";
-				    						hbAlertMessages.addAlert("danger",message);
-		               						$log.warn(">>>> Proceed with or drop update algorithm: !! - 1.2) pending update token does not equal the received update token!");
-		               					}
-
-		               				//
-		               				// 2) If there is more than one pending update
-		               				} else if ($scope.orderLinesComputationsStack.length > 1) {
-			               				// 2.1) If the received update token equals the most recent token 
-		               					if ($scope.orderLinesComputationsStack[0] === receivedUpdateToken) {
-		               						// => proceed with update
-		               						proceedWithUpdateOnChange(updatedCaracteristique);
-		               						// drop all remaining older tokens to prevent backward updates
-		               						emptyComputationStack();
-			               					//$log.debug(">>>> Proceed with or drop update algorithm: OK - 2.1) ");		               						
-			               				// 2.2) If the received update token does not equal the most recent token and is older
-		               					} else if ($scope.orderLinesComputationsStack[0] > receivedUpdateToken) {
-				               				// 2.2.1) If found
-				               				// => drop and remove the token to prevent backward updates
-			               					//$log.debug(">>>> Proceed with or drop update algorithm: OK - 2.2.1) ");
-				               				// 2.2.2) else 
-				               				// => drop (regular situation (debug log)
-			               					//$log.debug(">>>> Proceed with or drop update algorithm: OK - 2.2.2) ");
-			               					removeFromComputationStack(receivedUpdateToken);
-			               					//$log.debug(">>>> Proceed with or drop update algorithm: OK - 2.2) ");
-			               					
-		               					} else if ($scope.orderLinesComputationsStack[0] < receivedUpdateToken) {
-				               				// 2.2) If the received update token does not equal the most recent token and is younger
-		               					    //TODO: end user notification ?
-				               				// => unexpected: drop and notify the user of possible data inconsistency (computationStack missing token!)
-				    	       				var message = "Le calcul du montant de commande peut comporter des incohérences. Veuillez vérifier et informer l'administrateur de l'application.";
-				    						hbAlertMessages.addAlert("danger",message);
-			               					$log.warn(">>>> Proceed with or drop update algorithm: !! - 2.2) ");
-		               					}
-		               				// 3) If there is no pending update
-		               				// => drop (regular situation) (debug log)
-		               				} else {
-		               					//$log.debug(">>>> Proceed with or drop update algorithm: OK - 3) ");
-		               				}
+               						hbUtil.processMostRecentOnly(receivedUpdateToken, $scope.orderLinesComputationsStack, proceedWithUpdateOnChange, [updatedCaracteristique]);
 		    	       			}, 
 		    	       			function(response) { 
 		    	       				$log.debug("Error in computeOrderLines POST operation with status code", response.status);
@@ -401,9 +313,10 @@
 						        };
 
 					// Add new line
-					//GeoxmlService.addRow($scope.ngModelCtrl.$modelValue, "CARACTERISTIQUE.FRACTION.L", L);
 					hbUtil.addFractionLByIndex($scope.ngModelCtrl.$modelValue,index,L);
+					// Perform computation and update
 					$scope.updateOrderLines(formValid);
+					// Notify Form of model model change
        				$scope.elfinForm.$setDirty();
 				};
 				
@@ -412,7 +325,9 @@
 				 * Removes a `manual entry` order line
 				 */
 				$scope.removeLine = function (index, formValid) {
+					// Remove order line at `index`
 					hbUtil.removeFractionLByIndex($scope.ngModelCtrl.$modelValue,index);
+					// Perform computation and update
 					$scope.updateOrderLines(formValid);
 				};
 
