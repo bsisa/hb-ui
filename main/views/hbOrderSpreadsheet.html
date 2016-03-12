@@ -33,20 +33,15 @@
 							<input ng-if="line.C[0].VALUE === MANUAL_AMOUNT" type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
 						</div>
 						<div ng-if="line.C[0].VALUE !== MANUAL_AMOUNT">
-							<span ng-if="line.C[0].VALUE !== MANUAL_AMOUNT">{{line.C[1].VALUE}}</span>						
-							<div hb-single-select hb-single-select-options="lineTypes" ng-model="selected.lineType" ></div>
-							
-							<select name="selectedLineType" id="selectedLineType" ng-model="selected.lineType">
-						      <option ng-repeat="lineType in lineTypes" value="{{lineType}}">{{lineType.label}}</option>
-						    </select>							
-							
+							<span ng-if="line.C[0].VALUE !== MANUAL_AMOUNT">{{line.C[1].VALUE}}</span>
+							<select name="selectedLineType" id="selectedLineType" 
+								ng-model="selected.lineType" 
+								ng-options="lineType as lineType.C[1].VALUE for lineType in lineTypes track by lineType.C[1].VALUE" 
+							>
+							</select>
 						</div>
-						
 					</div>
 					<div class="col-sm-3">
-					
-											
-					
 						<div ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length > 0" class="input-group">
 							<span class="input-group-addon">
 								<span ng-if="isNeg(line.C[2].VALUE)" >-</span>

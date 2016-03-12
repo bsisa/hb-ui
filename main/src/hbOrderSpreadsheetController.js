@@ -24,6 +24,27 @@
 
 				//$log.debug(">>>> HbOrderSpreadsheetController...");				
 
+				$scope.selected = { "lineType" : {} };
+				
+				
+				$scope.$watch('selected.lineType', function(newL,oldL) {
+					$log.debug(">>>> lineType:\noldL = " + oldL + "\nnewL = " + newL );
+					
+					$log.debug(">>>> typeof newL = " + 
+							( 
+									(typeof newL === 'object') ? 'object TYPE' : (typeof newL === 'string') ? 'string' : '???')
+					);
+					
+//					$log.debug("newL.POS      = " + newL.POS);
+//					$log.debug("newL.C[0].VALUE = " + newL.C[0].VALUE);
+					
+//					var test = angular.fromJson(newL);
+//					$log.debug("test      = " + test);
+//					$log.debug("test.POS      = " + test.POS);
+//					$log.debug("test.C[0].VALUE = " + test.C[0].VALUE);
+					
+				},true);
+				
 				// ========== processMostRecentOnly optimisation ==============
 
 				// Init computation stack to empty array.
@@ -79,6 +100,7 @@
 
 				var getLine = function(orderLineType, orderLineLabel, orderLineParameter, orderLineParameterLabel, orderLineValue, orderLineIsWithParameter ) {
 					
+					// Return L as object on text type.
 					var L = {
 					    "C" : [ {
 					      "POS" : 1,
@@ -105,48 +127,18 @@
 					return L;
 				};
 				
-				
-				
 
 				$scope.lineTypes = [
 				                    getLine($scope.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
-				                    getLine($scope.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
-									{
-										"constantType" : $scope.APPLIED_RATE,
-										"label" : "Rabais",
-										"value" : "-0.00"
-									},
-									{
-										"constantType" : $scope.APPLIED_RATE,
-										"label" : "Escompte",
-										"value" : "-0.00"
-									},
-									{
-										"constantType" : $scope.APPLIED_RATE,
-										"label" : "TVA",
-										"value" : "8.00"
-									},
-									{
-										"constantType" : $scope.APPLIED_RATE,
-										"label" : "Autre taux...",
-										"value" : "0.00"
-									},
-									{
-										"constantType" : $scope.APPLIED_AMOUNT,
-										"label" : "Arrondi",
-										"value" : "0.00"
-									},
-									{
-										"constantType" : $scope.APPLIED_AMOUNT,
-										"label" : "Autre montant...",
-										"value" : "0.00"
-									}
+				                    getLine($scope.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
+				                    getLine($scope.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
+				                    getLine($scope.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
+				                    getLine($scope.APPLIED_AMOUNT, "Arrondi", "-0.00", "%", "", "true" ),
+				                    getLine($scope.APPLIED_AMOUNT, "Autre montant...", "0.00", "%", "", "true" )
 				                   ];				
 				
-				
-				$scope.selectedLineType = {};
-				
-				
+				$log.debug(">>>> lineTypes: " + angular.toJson($scope.lineTypes) );
+			
 				
 				
 				
@@ -231,11 +223,7 @@
 					return (line.C[0].VALUE === $scope.MANUAL_AMOUNT) || (line.C[0].VALUE === $scope.ROUNDING_AMOUNT) || ((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine )
 				};
 				
-   				var test = function(a,b,c) {
-   					console.log(">>>> console.log: a = " + a + " , b = " + b + ", c = " + c);
-   					$log.debug( ">>>> $log.debug : a = " + a + " , b = " + b + ", c = " + c);
-   				};
-				
+
 				/**
 				 * Call HB-API service to obtain order lines computation.
 				 * As HB-API processing is asychronous there is no guarantee that responses
