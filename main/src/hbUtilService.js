@@ -314,19 +314,21 @@
 		// JavaScript asynchronous processing utilities
 		// ============================================================		
 
-		/**
-		 * Provides a new string token which satisfies `processMostRecentOnly` 
-		 * compare tests. 
-		 * 
-		 * Checkout `processMostRecentOnly` implementation
-		 * before using different token type. String was chosen instead 
-		 * of numeric for XML persistence requirements, avoiding conversions. 
-		 * 
-		 * Token generation centralisation allow easy implementation 
-		 * improvement if needed. 
-		 */
-		var getToken = function() { moment().format("YYYYMMDDHHmmssSSS"); };
-		
+// moment() not available in this context - to review - angular-moment might be a good fit.
+//		/**
+//		 * Provides a new string token which satisfies `processMostRecentOnly` 
+//		 * compare tests. 
+//		 * 
+//		 * Checkout `processMostRecentOnly` implementation
+//		 * before using different token type. String was chosen instead 
+//		 * of numeric for XML persistence requirements, avoiding conversions. 
+//		 * 
+//		 * Token generation centralisation allow easy implementation 
+//		 * improvement if needed. 
+//		 */
+//		var getToken = function() { moment().format("YYYYMMDDHHmmssSSS"); };
+
+
 		/**
 		 * Adds `token` at top of `tokensStack` 
 		 */
@@ -357,7 +359,7 @@
 		 * Note: currently not exposed as a service.
 		 */
 		var emptyTokensStack = function(tokensStack) {
-			tokensStack = new Array();
+			tokensStack = tokensStack.splice(0,tokensStack.length);
 		};		
 		
 		/**
@@ -371,12 +373,17 @@
 		 */
 		var processMostRecentOnly = function(token, tokensStack, callBackFunction, callBackFunctionParam) {
 			
+			$log.debug(">>>> ");
+			$log.debug(">>>> token              = " + angular.toJson(token));
+			$log.debug(">>>> tokensStack BEFORE = " + angular.toJson(tokensStack));
+			
 			// ====================================================
 			// proceed with or drop update algorithm
 			// ====================================================
 			// 
 			// 1) If there is only one pending token
 			if (tokensStack.length === 1) {
+				$log.debug(">>>> 1) ");
 				
 			// 1.1) We expected the last pending token to equal the received token
 				if (tokensStack[0] === token) {
@@ -389,14 +396,19 @@
 				}
 			// 2) If there is more than one pending token
 			} else if (tokensStack.length > 1) {
+				
+				$log.debug(">>>> 2) ");
+				
 				// 2.1) If the received token equals the most recent token 
 				if (tokensStack[0] === token) {
+					$log.debug(">>>> 2.1) ");
 					// => proceed
 					callBackFunction.apply(this, callBackFunctionParam);
 					// drop all remaining older tokens to prevent processing of older request 
 					emptyTokensStack(tokensStack);
 					// 2.2) If the received token does not equal the most recent token and is older
 				} else if (tokensStack[0] > token) {
+					$log.debug(">>>> 2.2) ");
 	   				// => drop and remove the token to prevent processing of older request 
 					removeFromTokensStack(token, tokensStack);
 				} else if (tokensStack[0] < token) {
@@ -408,9 +420,13 @@
 			// 3) If there is no pending update
 			// => drop (regular situation)
 			} else {
+				$log.debug(">>>> 3) ");
 				// Do nothing. Ok.
 			}
 		
+			$log.debug(">>>> tokensStack AFTER  = " + angular.toJson(tokensStack));
+			$log.debug(">>>> ");
+			
 		};
 		
 		
@@ -895,7 +911,6 @@
         	
         	addToTokensStack:addToTokensStack,
         	processMostRecentOnly:processMostRecentOnly,
-        	getToken:getToken,
         	
         	removeAnnexeRenvoiByPos:removeAnnexeRenvoiByPos,
         	addFractionLByIndex:addFractionLByIndex,
