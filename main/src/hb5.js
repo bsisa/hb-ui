@@ -367,8 +367,10 @@
     	        		// annoying dialog to the end-user with information he cannot act
     	        		// upon. Keep logging error in case annother true exception case 
     	        		// need investigations.
-    	        		hbAlertMessages.addAlert("danger",errMsg);
-    	        	} else if (response.status == 566) { // 566 - Custom code for connect exception
+//    	        		hbAlertMessages.addAlert("danger",errMsg);
+    	        		return response;
+    	        	} 
+    	        	else if (response.status == 566) { // 566 - Custom code for connect exception
     	        		var errMsg = "La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur. ( " + response.data.DESCRIPTION +" )";
     	        		$log.error(errMsg);
     	        		hbAlertMessages.addAlert("danger",errMsg);    	        		
