@@ -33,12 +33,24 @@
 							<input ng-if="line.C[0].VALUE === MANUAL_AMOUNT" type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
 						</div>
 						<div ng-if="line.C[0].VALUE !== MANUAL_AMOUNT">
-							<span ng-if="line.C[0].VALUE !== MANUAL_AMOUNT">{{line.C[1].VALUE}}</span>
-							<select name="selectedLineType" id="selectedLineType" 
+
+								<button class="btn btn-default" tooltip="Ajouter"
+									ng-click="addEmptyLine($index+1,elfinForm.$valid)">
+									<i class="icon-plus-sign"></i>
+								</button>								
+								<button class="btn btn-default" tooltip="Supprimer"
+									ng-click="removeLine($index,elfinForm.$valid)">
+									<i class="icon-remove-sign"></i>
+								</button>
+						
+							<select ng-if="line.C[0].VALUE === EMPTY" name="selectedLineType" id="selectedLineType" 
 								ng-model="selected.lineType" 
-								ng-options="lineType as lineType.C[1].VALUE for lineType in lineTypes track by lineType.C[1].VALUE" 
+								ng-options="lineType as lineType.C[1].VALUE for lineType in lineTypes track by lineType.C[1].VALUE"
+								ng-change="replaceLine($index,selected.lineType,elfinForm.$valid)" 
 							>
 							</select>
+							<span ng-if="line.C[0].VALUE !== MANUAL_AMOUNT">{{line.C[1].VALUE}}</span>
+							
 						</div>
 					</div>
 					<div class="col-sm-3">

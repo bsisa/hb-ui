@@ -26,25 +26,6 @@
 
 				$scope.selected = { "lineType" : {} };
 				
-				
-				$scope.$watch('selected.lineType', function(newL,oldL) {
-					$log.debug(">>>> lineType:\noldL = " + oldL + "\nnewL = " + newL );
-					
-					$log.debug(">>>> typeof newL = " + 
-							( 
-									(typeof newL === 'object') ? 'object TYPE' : (typeof newL === 'string') ? 'string' : '???')
-					);
-					
-//					$log.debug("newL.POS      = " + newL.POS);
-//					$log.debug("newL.C[0].VALUE = " + newL.C[0].VALUE);
-					
-//					var test = angular.fromJson(newL);
-//					$log.debug("test      = " + test);
-//					$log.debug("test.POS      = " + test.POS);
-//					$log.debug("test.C[0].VALUE = " + test.C[0].VALUE);
-					
-				},true);
-				
 				// ========== processMostRecentOnly optimisation ==============
 
 				// Init computation stack to empty array.
@@ -85,6 +66,7 @@
 				var ORDER_LINE_PARAM_POS = 3;
 				var ORDER_LINE_AMOUNT_POS = 5;				
 				
+				$scope.EMPTY = "EMPTY";
 				$scope.MANUAL_AMOUNT = "MANUAL_AMOUNT";
 				$scope.GROSS_AMOUNT_TOTAL = "TOTAL_GROSS";
 				
@@ -133,14 +115,9 @@
 				                    getLine($scope.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
 				                    getLine($scope.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
 				                    getLine($scope.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
-				                    getLine($scope.APPLIED_AMOUNT, "Arrondi", "-0.00", "%", "", "true" ),
-				                    getLine($scope.APPLIED_AMOUNT, "Autre montant...", "0.00", "%", "", "true" )
+				                    getLine($scope.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
+				                    getLine($scope.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" )
 				                   ];				
-				
-				$log.debug(">>>> lineTypes: " + angular.toJson($scope.lineTypes) );
-			
-				
-				
 				
 				/**
 				 * Expose constant to scope
@@ -220,7 +197,7 @@
 				 * Boolean expression to make order line value conditionally editable
 				 */
 				$scope.lineValueEditable = function(line) {
-					return (line.C[0].VALUE === $scope.MANUAL_AMOUNT) || (line.C[0].VALUE === $scope.ROUNDING_AMOUNT) || ((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine )
+					return (line.C[0].VALUE === $scope.MANUAL_AMOUNT) || (line.C[0].VALUE === $scope.APPLIED_AMOUNT) || (line.C[0].VALUE === $scope.ROUNDING_AMOUNT) || ((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine )
 				};
 				
 
@@ -238,12 +215,12 @@
 						
 						// Update computation token
 						if (angular.isDefined($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6)) {
-							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR = "" + hbUtil.getToken() + "";
+							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR = "" + moment().format("YYYYMMDDHHmmssSSS") + "";
 						} else {
 							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6 = {
 								      "NOM" : "OrderLine computation request token",
 								      "UNITE" : "",
-								      "VALEUR" : "" + hbUtil.getToken() + ""
+								      "VALEUR" : "" + moment().format("YYYYMMDDHHmmssSSS") + ""
 								    }
 						}
 						
@@ -257,8 +234,11 @@
                						hbUtil.processMostRecentOnly(receivedUpdateToken, $scope.orderLinesComputationsStack, proceedWithUpdateOnChange, [updatedCaracteristique]);
 		    	       			}, 
 		    	       			function(response) { 
+		    	       				// Reset pending requests stack to avoid keeping track of failing request
+		    	       				$scope.orderLinesComputationsStack.splice(0,$scope.orderLinesComputationsStack.length);
+		    	       				
 		    	       				$log.debug("Error in computeOrderLines POST operation with status code", response.status);
-		    	       				var message = "Le calcul du montant de commande a échoué (statut de retour: "+ response.status+ ")";
+		    	       				var message = "Le calcul du montant de commande a échoué. Corrigez s.v.p. votre saisie. Si le problème persiste, veuillez contacter l'administrateur système.";
 		    						hbAlertMessages.addAlert("danger",message);
 		    	       			}
 		            		);			
@@ -327,6 +307,7 @@
 						
 						// Manual and rounding amount change are input by user and must trigger computation
 						if (
+								localLineTypeCell.VALUE === $scope.APPLIED_AMOUNT ||
 								localLineTypeCell.VALUE === $scope.MANUAL_AMOUNT || 
 								localLineTypeCell.VALUE === $scope.ROUNDING_AMOUNT) {
 							
@@ -336,6 +317,7 @@
 						
 						// Rate parameter cell value change is input by user and must trigger computation
 						if (
+								localLineTypeCell.VALUE === $scope.APPLIED_RATE ||
 								localLineTypeCell.VALUE === $scope.REDUCTION_RATE ||
 								localLineTypeCell.VALUE === $scope.DISCOUNT_RATE ||
 								localLineTypeCell.VALUE === $scope.VAT_RATE) {
@@ -394,15 +376,17 @@
 				/**
 				 * Adds a user selected entry {APPLIED_RATE, APPLIED_AMOUNT} to orders line, applied to GROSS_AMOUNT 
 				 */
-				$scope.addAppliedLine = function (index, lineType, formValid) {
+				$scope.addEmptyLine = function (index, formValid) {
 
+					$log.debug(">>>> addEmptyLine(" + index + ", " + formValid +")");
+					
 					var L = {
 						          "C" : [ {
 						            "POS" : 1,
-						            "VALUE" : lineType.constantType
+						            "VALUE" : "EMPTY"
 						          }, {
 						            "POS" : 2,
-						            "VALUE" : lineType.label
+						            "VALUE" : ""
 						          }, {
 						            "POS" : 3,
 						            "VALUE" : ""
@@ -422,7 +406,26 @@
 					// Add new line
 					hbUtil.addFractionLByIndex($scope.ngModelCtrl.$modelValue,index,L);
 					// Perform computation and update
-					$scope.updateOrderLines(formValid);
+					//$scope.updateOrderLines(formValid);
+					// Notify Form of model model change
+       				$scope.elfinForm.$setDirty();
+				};				
+				
+				
+				/**
+				 * Replace an order line by provided newLine. 
+				 * New line is expected to match user drop down selected 
+				 * entry {APPLIED_RATE, APPLIED_AMOUNT}
+				 */
+				$scope.replaceLine = function (index, newLine, formValid) {
+
+					$log.debug("newLine = " + angular.toJson(newLine));
+					
+					// Replace by new line
+					$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L[index] = newLine;
+					
+					// Perform computation and update
+					//$scope.updateOrderLines(formValid);
 					// Notify Form of model model change
        				$scope.elfinForm.$setDirty();
 				};				
