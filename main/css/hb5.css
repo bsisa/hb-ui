@@ -121,6 +121,7 @@ td.number {
 }
 
 
+
 /* Align right */
 .right {
     float: right;
@@ -593,6 +594,14 @@ div.modal-body.ng-pristine {
 /* Define OK buttons width for all modal dialogs */
 div.modal-footer button.btn-primary {
 	width: 200px;
+}
+
+/**********************************************************************
+    Orders related styling
+**********************************************************************/
+
+.order-sum {
+	font-weight: bold;
 }
 
 
