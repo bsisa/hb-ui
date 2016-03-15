@@ -211,6 +211,17 @@
 				
 
 				/**
+				 * Provides dynamic style info to ng-class expression.
+				 */
+				$scope.amountStyleClass = function (line) {
+					if (!$scope.lineLabelEditable(line)) {
+						return "order-sum";
+					} else {
+						return "";
+					}
+				}
+				
+				/**
 				 * Call HB-API service to obtain order lines computation.
 				 * As HB-API processing is asynchronous there is no guarantee that responses
 				 * are returned in the same order than requests were submitted.
