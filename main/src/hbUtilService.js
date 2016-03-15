@@ -136,7 +136,18 @@
 			renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
 		};		
 		
-		
+		/**
+		 * Replaces L entry at `index` by `lEntry` in elfin.CARACTERISTIQUE.FRACTION.L
+		 * Takes care of POS renumbering to avoid discontinuous POS values. 
+		 */
+		var replaceFractionLByIndex = function(elfin, index, lEntry) {
+
+			// Replace L entry at index by lEntry 
+			elfin.CARACTERISTIQUE.FRACTION.L[index] = lEntry;
+
+			// Renumber all POS of elfin.CARACTERISTIQUE.FRACTION.L array.
+			renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
+		};		
 		
 		var getAnnexeRenvoiIndexByPos = function(elfin, RenvoiPos) {
 			
@@ -314,19 +325,20 @@
 		// JavaScript asynchronous processing utilities
 		// ============================================================		
 
-// moment() not available in this context - to review - angular-moment might be a good fit.
-//		/**
-//		 * Provides a new string token which satisfies `processMostRecentOnly` 
-//		 * compare tests. 
-//		 * 
-//		 * Checkout `processMostRecentOnly` implementation
-//		 * before using different token type. String was chosen instead 
-//		 * of numeric for XML persistence requirements, avoiding conversions. 
-//		 * 
-//		 * Token generation centralisation allow easy implementation 
-//		 * improvement if needed. 
-//		 */
-//		var getToken = function() { moment().format("YYYYMMDDHHmmssSSS"); };
+		/**
+		 * Provides a new string token which satisfies `processMostRecentOnly` 
+		 * compare tests. 
+		 * 
+		 * Checkout `processMostRecentOnly` implementation
+		 * before using different token type. String was chosen instead 
+		 * of numeric for XML persistence requirements, avoiding conversions. 
+		 * 
+		 * Token generation centralisation allow easy implementation 
+		 * improvement if needed. 
+		 */
+		var getToken = function() { 
+			return moment().format("YYYYMMDDHHmmssSSS"); 
+		};
 
 
 		/**
@@ -904,6 +916,7 @@
         	getMomentDateFromHbTextDateTimeFormat:getMomentDateFromHbTextDateTimeFormat,
         	getMomentInHbTextFormat:getMomentInHbTextFormat,
         	getPrestationGroupForTransactionGroup:getPrestationGroupForTransactionGroup,
+        	getToken:getToken,
         	getValueAtPath:getValueAtPath,
         	isActionAuthorised:isActionAuthorised,
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
@@ -916,6 +929,7 @@
         	addFractionLByIndex:addFractionLByIndex,
         	removeFractionLByPos:removeFractionLByPos,
         	removeFractionLByIndex:removeFractionLByIndex,
+        	replaceFractionLByIndex:replaceFractionLByIndex,
         	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS,
         	sortElfinByDEDescending:sortElfinByDEDescending
