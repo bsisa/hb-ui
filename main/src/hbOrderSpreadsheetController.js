@@ -197,13 +197,22 @@
 				 * Boolean expression to make order line value conditionally editable
 				 */
 				$scope.lineValueEditable = function(line) {
-					return (line.C[0].VALUE === $scope.MANUAL_AMOUNT) || (line.C[0].VALUE === $scope.APPLIED_AMOUNT) || (line.C[0].VALUE === $scope.ROUNDING_AMOUNT) || ((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine )
+					var isLineValueEditable = (line.C[0].VALUE === $scope.MANUAL_AMOUNT) || (line.C[0].VALUE === $scope.APPLIED_AMOUNT) || (line.C[0].VALUE === $scope.ROUNDING_AMOUNT) || ((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine );
+					return isLineValueEditable;
 				};
+				
+				/**
+				 * Boolean expression to make order line label conditionally editable
+				 */
+				$scope.lineLabelEditable = function(line) {
+					var isLineLabelEditable = !((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) || (line.C[0].VALUE === $scope.NET_AMOUNT_TOTAL) || (line.C[0].VALUE === $scope.EMPTY));
+					return isLineLabelEditable;
+				};				
 				
 
 				/**
 				 * Call HB-API service to obtain order lines computation.
-				 * As HB-API processing is asychronous there is no guarantee that responses
+				 * As HB-API processing is asynchronous there is no guarantee that responses
 				 * are returned in the same order than requests were submitted.
 				 * Use FIFO logic of `updateToken` to only proceed with most recent update and
 				 * drop any old pending requests to prevent backward model updates.   
@@ -215,12 +224,12 @@
 						
 						// Update computation token
 						if (angular.isDefined($scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6)) {
-							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR = "" + moment().format("YYYYMMDDHHmmssSSS") + "";
+							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6.VALEUR = "" + hbUtil.getToken() + "";
 						} else {
 							$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.CAR6 = {
 								      "NOM" : "OrderLine computation request token",
 								      "UNITE" : "",
-								      "VALEUR" : "" + moment().format("YYYYMMDDHHmmssSSS") + ""
+								      "VALEUR" : "" + hbUtil.getToken() + ""
 								    }
 						}
 						
@@ -308,8 +317,7 @@
 						// Manual and rounding amount change are input by user and must trigger computation
 						if (
 								localLineTypeCell.VALUE === $scope.APPLIED_AMOUNT ||
-								localLineTypeCell.VALUE === $scope.MANUAL_AMOUNT || 
-								localLineTypeCell.VALUE === $scope.ROUNDING_AMOUNT) {
+								localLineTypeCell.VALUE === $scope.MANUAL_AMOUNT) {
 							
 							auditedCell.push(localLineTypeCell.VALUE);
 							auditedCell.push(localLineAmountCell.VALUE);							
@@ -317,10 +325,7 @@
 						
 						// Rate parameter cell value change is input by user and must trigger computation
 						if (
-								localLineTypeCell.VALUE === $scope.APPLIED_RATE ||
-								localLineTypeCell.VALUE === $scope.REDUCTION_RATE ||
-								localLineTypeCell.VALUE === $scope.DISCOUNT_RATE ||
-								localLineTypeCell.VALUE === $scope.VAT_RATE) {
+								localLineTypeCell.VALUE === $scope.APPLIED_RATE) {
 							
 							auditedCell.push(localLineTypeCell.VALUE);
 							auditedCell.push(localLineParamCell.VALUE);
@@ -378,8 +383,6 @@
 				 */
 				$scope.addEmptyLine = function (index, formValid) {
 
-					$log.debug(">>>> addEmptyLine(" + index + ", " + formValid +")");
-					
 					var L = {
 						          "C" : [ {
 						            "POS" : 1,
@@ -405,8 +408,7 @@
 
 					// Add new line
 					hbUtil.addFractionLByIndex($scope.ngModelCtrl.$modelValue,index,L);
-					// Perform computation and update
-					//$scope.updateOrderLines(formValid);
+					// Note: No computation nor update necessary
 					// Notify Form of model model change
        				$scope.elfinForm.$setDirty();
 				};				
@@ -419,15 +421,10 @@
 				 */
 				$scope.replaceLine = function (index, newLine, formValid) {
 
-					$log.debug("newLine = " + angular.toJson(newLine));
-					
 					// Replace by new line
-					$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L[index] = newLine;
-					
-					// Perform computation and update
-					//$scope.updateOrderLines(formValid);
-					// Notify Form of model model change
-       				$scope.elfinForm.$setDirty();
+					hbUtil.replaceFractionLByIndex($scope.ngModelCtrl.$modelValue, index, newLine);
+					// Perform computation and amounts update
+					$scope.updateOrderLines(formValid);
 				};				
 				
 				
@@ -437,7 +434,7 @@
 				$scope.removeLine = function (index, formValid) {
 					// Remove order line at `index`
 					hbUtil.removeFractionLByIndex($scope.ngModelCtrl.$modelValue,index);
-					// Perform computation and update
+					// Perform computation and amounts update
 					$scope.updateOrderLines(formValid);
 				};
 
