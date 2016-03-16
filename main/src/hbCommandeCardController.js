@@ -26,6 +26,15 @@
 									$timeout, hbAlertMessages, hbUtil,
 									HB_EVENTS, HB_ORDER_TYPE, userDetails, hbQueryService, $window) {
 
+								
+								
+								$scope.$watch('elfin.IDENTIFIANT.QUALITE', function(newQ, oldQ) { 
+									$log.debug(">>>> qualité: " + oldQ + " => " + newQ);
+								}, true);
+								
+								
+								
+								
 								$scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";
 								$scope.OBJECTS_SELECTION_TYPE_SURFACE = "SURFACE";
 								

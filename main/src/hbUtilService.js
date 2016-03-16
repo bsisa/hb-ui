@@ -148,6 +148,101 @@
 			// Renumber all POS of elfin.CARACTERISTIQUE.FRACTION.L array.
 			renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
 		};		
+
+		
+		
+		
+		/**
+		 * Replace FRACTION from CARACTERISTIQUE at elfin.CARACTERISTIQUE.FRACTION 
+		 * Takes care of POS renumbering for all FRACTION.L to avoid inconsistent POS values. 
+		 */
+		var replaceFraction = function(elfin, newFraction) {
+			// Replace FRACTION entry  
+			elfin.CARACTERISTIQUE.FRACTION = newFraction;
+			// Renumber all POS of elfin.CARACTERISTIQUE.FRACTION.L array.
+			renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
+		};		
+		
+		
+		// ====================================================================
+		//     Order specific FRACTION management
+		// ====================================================================
+		
+		/**
+		 * Produce a C entry valid in Order management context.
+		 */
+		var getLine = function(orderLineType, orderLineLabel, orderLineParameter, orderLineParameterLabel, orderLineValue, orderLineIsWithParameter ) {
+			
+			// L entry object
+			var L = {
+			    "C" : [ {
+			      "POS" : 1,
+			      "VALUE" : orderLineType
+			    }, {
+			      "POS" : 2,
+			      "VALUE" : orderLineLabel
+			    }, {
+			      "POS" : 3,
+			      "VALUE" : orderLineParameter
+			    }, {
+			      "POS" : 4,
+			      "VALUE" : orderLineParameterLabel
+			    }, {
+			      "POS" : 5,
+			      "VALUE" : orderLineValue
+			    }, {
+			      "POS" : 6,
+			      "VALUE" : orderLineIsWithParameter
+			    } ],
+			    "POS" : 1
+			  };
+			
+			return L;
+		};
+		
+		
+		var getOrderConfirmationLines = function() {
+			
+			var Ls = {
+				"L" : [
+						getLine($scope.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
+						getLine($scope.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
+						getLine($scope.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
+						getLine($scope.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
+						getLine($scope.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
+						getLine($scope.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" )				       
+			    ]
+			};
+			
+			return Ls;
+		};
+			
+	    var getOrderContractLines = function() {
+			
+			var Ls = {
+				"L" : [
+						getLine($scope.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
+						getLine($scope.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
+						getLine($scope.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
+						getLine($scope.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
+						getLine($scope.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
+						getLine($scope.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" )				       
+			    ]
+			};
+			
+			return Ls;
+		}; 
+	    	
+	    var getOrderPurchaseLines = function() {
+			
+			var Ls = {
+				"L" : [ ]
+			};
+			
+			return Ls;
+		}; 
+		
+		
 		
 		var getAnnexeRenvoiIndexByPos = function(elfin, RenvoiPos) {
 			
