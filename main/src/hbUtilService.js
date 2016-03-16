@@ -1025,6 +1025,11 @@
         	removeFractionLByPos:removeFractionLByPos,
         	removeFractionLByIndex:removeFractionLByIndex,
         	replaceFractionLByIndex:replaceFractionLByIndex,
+        	
+        	getOrderConfirmationLines:getOrderConfirmationLines,
+        	getOrderContractLines:getOrderContractLines,
+        	getOrderPurchaseLines:getOrderPurchaseLines,
+        	
         	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS,
         	sortElfinByDEDescending:sortElfinByDEDescending

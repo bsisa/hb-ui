@@ -30,9 +30,19 @@
 								
 								$scope.$watch('elfin.IDENTIFIANT.QUALITE', function(newQ, oldQ) { 
 									$log.debug(">>>> qualité: " + oldQ + " => " + newQ);
+//									
+//									getOrderConfirmationLines:getOrderConfirmationLines,
+//						        	getOrderContractLines:getOrderContractLines,
+//						        	getOrderPurchaseLines:getOrderPurchaseLines,
+									
 								}, true);
 								
-								
+								$scope.test = function(selectedType){
+									$log.debug("ng-change activated by ng-model on div, no input.selectedType = " + selectedType );
+									// TODO: Define constants for order types 
+									// If condition to call hbUtil.getOrder....
+									// Reasign FRACTION.L value
+								};
 								
 								
 								$scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";

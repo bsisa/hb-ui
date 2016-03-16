@@ -35,7 +35,7 @@
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.type)">				
 					<label for="type" class="col-sm-4 control-label">Type</label>
 					<div class="col-sm-8">
-						<div id="type" name="type" hb-single-select hb-single-select-options="typeChoices" ng-model="elfin.IDENTIFIANT.QUALITE" ></div>
+						<div id="type" name="type" hb-single-select hb-single-select-options="typeChoices" ng-model="elfin.IDENTIFIANT.QUALITE" ng-change="test(elfin.IDENTIFIANT.QUALITE)"></div>
 					</div>
 				</div>
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.date)">				
