@@ -19,8 +19,9 @@
 					'GeoxmlService',
 					'hbQueryService',
 					'HB_REGEXP',
+					'HB_ORDER_LINE_TYPE',
 					function($attrs, $scope, $modal, $routeParams,
-							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService, HB_REGEXP) {
+							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService, HB_REGEXP, HB_ORDER_LINE_TYPE) {
 
 				//$log.debug(">>>> HbOrderSpreadsheetController...");				
 
@@ -66,19 +67,22 @@
 				var ORDER_LINE_PARAM_POS = 3;
 				var ORDER_LINE_AMOUNT_POS = 5;				
 				
-				$scope.EMPTY = "EMPTY";
-				$scope.MANUAL_AMOUNT = "MANUAL_AMOUNT";
-				$scope.GROSS_AMOUNT_TOTAL = "TOTAL_GROSS";
+				// Expose HB_ORDER_LINE_TYPE constants to scope for use in view.
+				$scope.HB_ORDER_LINE_TYPE = HB_ORDER_LINE_TYPE;
 				
-				$scope.REDUCTION_RATE = "REDUCTION_RATE";
-				$scope.DISCOUNT_RATE = "DISCOUNT_RATE";
-				$scope.ROUNDING_AMOUNT = "ROUNDING_AMOUNT";
-				$scope.VAT_RATE = "VAT_RATE";
+				//$scope.EMPTY = "EMPTY";
+				//$scope.MANUAL_AMOUNT = "MANUAL_AMOUNT";
+				//$scope.GROSS_AMOUNT_TOTAL = "TOTAL_GROSS";
 				
-				$scope.APPLIED_RATE = "APPLIED_RATE"; // Reduction (-), discount (-), VAT (+), ...
-				$scope.APPLIED_AMOUNT = "APPLIED_AMOUNT"; // Rounding (+/-), ...
+				//$scope.REDUCTION_RATE = "REDUCTION_RATE";
+				//$scope.DISCOUNT_RATE = "DISCOUNT_RATE";
+				//$scope.ROUNDING_AMOUNT = "ROUNDING_AMOUNT";
+				//$scope.VAT_RATE = "VAT_RATE";
 				
-				$scope.NET_AMOUNT_TOTAL = "TOTAL_NET";
+				//$scope.APPLIED_RATE = "APPLIED_RATE"; // Reduction (-), discount (-), VAT (+), ...
+				//$scope.APPLIED_AMOUNT = "APPLIED_AMOUNT"; // Rounding (+/-), ...
+				
+				//$scope.NET_AMOUNT_TOTAL = "TOTAL_NET";
 
 				var getLine = function(orderLineType, orderLineLabel, orderLineParameter, orderLineParameterLabel, orderLineValue, orderLineIsWithParameter ) {
 					
@@ -111,12 +115,12 @@
 				
 
 				$scope.lineTypes = [
-				                    getLine($scope.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
-				                    getLine($scope.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
-				                    getLine($scope.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
-				                    getLine($scope.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
-				                    getLine($scope.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
-				                    getLine($scope.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" )
+				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
+				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
+				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
+				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
+				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
+				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" )
 				                   ];				
 				
 				/**
@@ -164,7 +168,7 @@
 								$scope.ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L, 
 								function(L){ 
 									// Loop on array of Cs (cells)
-									var manualAmtCell =_.find( L.C, function(C) { return ( C.POS === 1 && C.VALUE === $scope.MANUAL_AMOUNT) } );
+									var manualAmtCell =_.find( L.C, function(C) { return ( C.POS === 1 && C.VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) } );
 									return ( manualAmtCell !== undefined) 
 								}
 							);
@@ -197,7 +201,7 @@
 				 * Boolean expression to make order line value conditionally editable
 				 */
 				$scope.lineValueEditable = function(line) {
-					var isLineValueEditable = (line.C[0].VALUE === $scope.MANUAL_AMOUNT) || (line.C[0].VALUE === $scope.APPLIED_AMOUNT) || (line.C[0].VALUE === $scope.ROUNDING_AMOUNT) || ((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine );
+					var isLineValueEditable = (line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.APPLIED_AMOUNT) || ((line.C[0].VALUE === HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine );
 					return isLineValueEditable;
 				};
 				
@@ -205,7 +209,7 @@
 				 * Boolean expression to make order line label conditionally editable
 				 */
 				$scope.lineLabelEditable = function(line) {
-					var isLineLabelEditable = !((line.C[0].VALUE === $scope.GROSS_AMOUNT_TOTAL) || (line.C[0].VALUE === $scope.NET_AMOUNT_TOTAL) || (line.C[0].VALUE === $scope.EMPTY));
+					var isLineLabelEditable = !((line.C[0].VALUE === HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY));
 					return isLineLabelEditable;
 				};				
 				
@@ -320,15 +324,15 @@
 						var localLineAmountCell = hbUtil.getCByPos(currentLine.C, ORDER_LINE_AMOUNT_POS);
 
 						// Gross amount change triggers computation only when input by user
-						if (localLineTypeCell.VALUE === $scope.GROSS_AMOUNT_TOTAL && !$scope.hasManualOrderLine) {
+						if (localLineTypeCell.VALUE === HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL && !$scope.hasManualOrderLine) {
 							auditedCell.push(localLineTypeCell.VALUE);
 							auditedCell.push(localLineAmountCell.VALUE);
 						};
 						
 						// Manual and rounding amount change are input by user and must trigger computation
 						if (
-								localLineTypeCell.VALUE === $scope.APPLIED_AMOUNT ||
-								localLineTypeCell.VALUE === $scope.MANUAL_AMOUNT) {
+								localLineTypeCell.VALUE === HB_ORDER_LINE_TYPE.APPLIED_AMOUNT ||
+								localLineTypeCell.VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) {
 							
 							auditedCell.push(localLineTypeCell.VALUE);
 							auditedCell.push(localLineAmountCell.VALUE);							
@@ -336,7 +340,7 @@
 						
 						// Rate parameter cell value change is input by user and must trigger computation
 						if (
-								localLineTypeCell.VALUE === $scope.APPLIED_RATE) {
+								localLineTypeCell.VALUE === HB_ORDER_LINE_TYPE.APPLIED_RATE) {
 							
 							auditedCell.push(localLineTypeCell.VALUE);
 							auditedCell.push(localLineParamCell.VALUE);
@@ -360,7 +364,7 @@
 					var L = {
 						          "C" : [ {
 						            "POS" : 1,
-						            "VALUE" : "MANUAL_AMOUNT"
+						            "VALUE" : HB_ORDER_LINE_TYPE.MANUAL_AMOUNT
 						          }, {
 						            "POS" : 2,
 						            "VALUE" : "Description"
@@ -397,7 +401,7 @@
 					var L = {
 						          "C" : [ {
 						            "POS" : 1,
-						            "VALUE" : "EMPTY"
+						            "VALUE" : HB_ORDER_LINE_TYPE.EMPTY
 						          }, {
 						            "POS" : 2,
 						            "VALUE" : ""

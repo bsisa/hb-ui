@@ -21,7 +21,7 @@
 			<td>
 				<div class="form-group">
 					<div class="col-sm-6">
-						<div ng-if="line.C[0].VALUE === MANUAL_AMOUNT" class="input-group">
+						<div ng-if="line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT" class="input-group">
 							<span class="input-group-btn">
 								<button class="btn btn-default" tooltip="Ajouter"
 									ng-click="addLine($index+1,elfinForm.$valid)">
@@ -34,7 +34,7 @@
 							</span>
 							<input type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
 						</div>
-						<div ng-if="!((line.C[0].VALUE === MANUAL_AMOUNT) || (line.C[0].VALUE === EMPTY))" class="input-group" >
+						<div ng-if="!((line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY))" class="input-group" >
 							<span class="input-group-btn">
 								<button class="btn btn-default" role="button" tooltip="Ajouter"
 									ng-click="addEmptyLine($index+1,elfinForm.$valid)">
@@ -48,7 +48,7 @@
 							<input ng-if="lineLabelEditable(line)"  class="form-control" type="text" name="lineLabel" ng-model="line.C[1].VALUE"  />
 							<span  ng-if="!lineLabelEditable(line)" class="form-control-static col-sm-12" ><b>{{line.C[1].VALUE}}</b></span>
 						</div>
-						<select ng-if="line.C[0].VALUE === EMPTY" class="form-control-static" name="selectedLineType" id="selectedLineType" 
+						<select ng-if="line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY" class="form-control-static" name="selectedLineType" id="selectedLineType" 
 								ng-model="selected.lineType" 
 								ng-options="lineType as lineType.C[1].VALUE for lineType in lineTypes track by lineType.C[1].VALUE"
 								ng-change="replaceLine($index, selected.lineType, elfinForm.$valid, lineLabel)" 

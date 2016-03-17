@@ -5,10 +5,9 @@
 	 * without code duplication.
 	 */
 	
-	angular.module('hb5').service('hbUtil', ['$log','$window','$filter','HB_API', 'userDetails' ,function ($log,$window,$filter,HB_API,userDetails) {
+	angular.module('hb5').service('hbUtil', ['$log','$window','$filter','HB_API', 'HB_ORDER_LINE_TYPE', 'userDetails' ,function ($log,$window,$filter,HB_API,HB_ORDER_LINE_TYPE,userDetails) {
 
-		
-		
+				
 		// ============================================================
 		// HyperBird authorisation related utilities
 		// ============================================================		
@@ -20,7 +19,6 @@
         		return true;
         	}
         };	
-		
 		
 		
 		// ============================================================
@@ -200,44 +198,41 @@
 			return L;
 		};
 		
-		
 		var getOrderConfirmationLines = function() {
 			
-			var Ls = {
-				"L" : [
-						getLine($scope.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
-						getLine($scope.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
-						getLine($scope.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
-						getLine($scope.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
-						getLine($scope.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
-						getLine($scope.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" )				       
-			    ]
-			};
+			var Ls = [
+						getLine(HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL, "Total brut", "", "", "0.00", "false" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
+//						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
+//						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" ),
+						getLine(HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL, "Total net", "", "", "0.00", "false" )
+			    ];
 			
 			return Ls;
 		};
 			
 	    var getOrderContractLines = function() {
 			
-			var Ls = {
-				"L" : [
-						getLine($scope.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
-						getLine($scope.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
-						getLine($scope.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
-						getLine($scope.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
-						getLine($scope.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
-						getLine($scope.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" )				       
-			    ]
-			};
+			var Ls = [
+						getLine(HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL, "Total brut", "", "", "0.00", "false" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
+//						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
+//						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" ),
+						getLine(HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL, "Total net", "", "", "0.00", "false" )
+			    ];
 			
 			return Ls;
 		}; 
 	    	
 	    var getOrderPurchaseLines = function() {
 			
-			var Ls = {
-				"L" : [ ]
-			};
+			var Ls = [ ];
 			
 			return Ls;
 		}; 

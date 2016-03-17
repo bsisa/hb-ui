@@ -6,6 +6,7 @@
  * @author Patrick Refondini 
  */
 
+
 /**
  * Define collections ids
  */
@@ -37,6 +38,7 @@ angular.module('hb5').constant('HB_COLLECTIONS', {
 
 });
 
+
 /**
  * Define accounting groups used as `hardcoded` references within application.
  * There are many more defined within the database but not required as constant.
@@ -50,8 +52,6 @@ angular.module('hb5').constant('HB_ACCOUNTING_GROUPS', {
 	DOM_HANGAR_DEPOT : "Hangar et dépôt"
 
 });
-
-
 
 
 /**
@@ -85,7 +85,6 @@ angular.module('hb5').constant('HB_API', {
 });
 
 
-
 /**
  * Access rights roles are categorized in three groups: 
  * CLASSE (class), METIER (business), FONCTIONNALITE (functionality) 
@@ -109,7 +108,6 @@ angular.module('hb5').constant('HB_ROLE_FONCTION', {
 });
 
 
-
 /**
  * Standard regexp patterns used throughout code.
  */
@@ -129,4 +127,20 @@ angular.module('hb5').constant('HB_ORDER_TYPE', {
 	CONTRACT : "Contrat d\'entreprise"
 });
 
+
+/**
+ * Define order line types required as `hardcoded` references within application.
+ */
+angular.module('hb5').constant('HB_ORDER_LINE_TYPE', {
+	EMPTY : "EMPTY",
+	MANUAL_AMOUNT : "MANUAL_AMOUNT" ,
+	GROSS_AMOUNT_TOTAL : "TOTAL_GROSS",	
+	REDUCTION_RATE : "REDUCTION_RATE",
+	DISCOUNT_RATE : "DISCOUNT_RATE",
+	ROUNDING_AMOUNT : "ROUNDING_AMOUNT",
+	VAT_RATE : "VAT_RATE",
+	APPLIED_RATE : "APPLIED_RATE",
+	APPLIED_AMOUNT : "APPLIED_AMOUNT",
+	NET_AMOUNT_TOTAL : "TOTAL_NET"
+});
 
