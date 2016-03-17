@@ -60,25 +60,18 @@
 							ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR"></input>
 					</div>
 				</div>
-				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.resp)">
+				<div ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE)" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.resp)">
 					<label for="resp" class="col-sm-4 control-label" >Responsable</label>
 					<div class="col-sm-8" >
-						<input id="resp" name="resp" class="form-control" autocomplete="off" 
-							ng-model="elfin.IDENTIFIANT.RES"></input>
-							
-							<div 
-								hb-choose-actor 
-								hb-choose-actor-id-name="respAct" 
-								hb-choose-actor-elfin-form="elfinForm"
-								hb-choose-actor-model="respActorModel"
-								hb-choose-actor-elfin-model="respActorElfinModel"
-								hb-choose-actor-tooltip="Recherche de responsable"
-								hb-choose-actor-role="Collaborateur"
-								hb-choose-actor-editable="true"
-								></div>							
-							Resp: {{respActorElfinModel.ID_G}}/{{respActorElfinModel.CLASSE}}/{{respActorElfinModel.Id}} : {{respActorElfinModel.IDENTIFIANT.NOM}}
-							Resp: local model = {{respActorModel}}   
-							
+						<div 
+							hb-choose-actor 
+							hb-choose-actor-id-name="respAct" 
+							hb-choose-actor-elfin-form="elfinForm"
+							hb-choose-actor-model="respActorModel"
+							hb-choose-actor-tooltip="Recherche de responsable"
+							hb-choose-actor-role="Collaborateur"
+							hb-choose-actor-editable="true"
+							></div>							
 					</div>
 				</div>				
 			</div>

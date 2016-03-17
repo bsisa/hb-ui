@@ -58,7 +58,7 @@
 
 								// Set respActorModel.Id to undefined to prevent validation activation if unused.
 								$scope.respActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""}; //
-								$scope.respActorElfinModel;
+								//$scope.respActorElfinModel;
 								
 								/**
 								 * Proceed with CARACTERISTIQUE.FRACTION.L update depending on order type selection.
@@ -315,12 +315,12 @@
 											}
 										);								
 								
-								$scope.watch('respActorModel', function(newResp, oldResp) {
-									if ($scope.respActorModel.Id !== undefined) {
-										$log.debug("respActorModel CHANGE: Updating RES...");
-										$scope.elfin.IDENTIFIANT.RES = $scope.respActorModel.ID_G + "/ACTEUR/" + $scope.respActorModel.Id;
+								// Manage contract / confirmation manager
+								$scope.$watch('respActorModel', function(newResp, oldResp) {
+									if (newResp.Id !== undefined) {
+										$scope.elfin.IDENTIFIANT.RES = newResp.ID_G + "/ACTEUR/" + newResp.Id;
 									}
-								}, true);
+								}, true);								
 								
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
@@ -336,13 +336,12 @@
 											      "GROUPE" : $scope.elfin.PARTENAIRE.FOURNISSEUR.GROUPE,
 											      "VALUE" : ""
 											    };
-						    			
+
+						    			// Initialise contract/confirmation manager
 						    			var respActorModelRef = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.IDENTIFIANT.RES);
 						    			if (respActorModelRef === undefined) {
-						    				$log.debug(">>>> respActorModelRef === undefined ");
 						    				$scope.respActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""};
 						    			} else {
-						    				$log.debug(">>>> respActorModelRef DEFINED ");
 						    				$scope.respActorModel = {Id : respActorModelRef.Id, ID_G : respActorModelRef.ID_G, GROUPE : "", NOM : ""};
 						    			}
 						    			
