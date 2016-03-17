@@ -61,20 +61,18 @@
 								 * 
 								 */
 								$scope.processOrderTypeChange = function(selectedType){
-									$log.debug("ng-change activated by ng-model on div, no input.selectedType = " + selectedType );
- 
-									if (selectedType === HB_ORDER_TYPE.PURCHASE) {
-										$log.debug(">>>> PURCHASE");
+ 									if (selectedType === HB_ORDER_TYPE.PURCHASE) {
+										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderPurchaseLines();
 									} else if (selectedType === HB_ORDER_TYPE.CONFIRMATION) {
-										$log.debug(">>>> CONFIRMATION");
+										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderConfirmationLines();
 									} else if (selectedType === HB_ORDER_TYPE.CONTRACT) {
-										$log.debug(">>>> CONTRACT");
+										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderContractLines();
 									} else {
 										var message = "Le type de COMMANDE "+ selectedType +" n'est pas encore pris en compte veuillez s.v.p. contacter l'administrateur du système.";
 										hbAlertMessages.addAlert("danger",message);
 									}
 								};								
-								
+
 								
 								/**
 								 * Update current COMMANDE SOURCE information detecting whether 
