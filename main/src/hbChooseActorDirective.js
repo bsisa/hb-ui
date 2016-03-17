@@ -43,7 +43,7 @@
      * 
      * Optional property which allows defining an ACTEUR entity by name as a default.
      * For instance: hb-choose-actor-default-by-name="NE" provided an ACTEUR for which
-     * INDENTIFIANT/NAME matches 'NE'. 
+     * IDENTIFIANT/NAME matches 'NE'. 
      * 
      * 
      * tooltip
