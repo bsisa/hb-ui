@@ -33,7 +33,7 @@
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.type)">				
 					<label for="type" class="col-sm-4 control-label">Type</label>
 					<div class="col-sm-8">
-						<div id="type" name="type" hb-single-select hb-single-select-options="typeChoices" ng-model="elfin.IDENTIFIANT.QUALITE" ng-change="test(elfin.IDENTIFIANT.QUALITE)"></div>
+						<div id="type" name="type" hb-single-select hb-single-select-options="typeChoices" ng-model="elfin.IDENTIFIANT.QUALITE" ng-change="processOrderTypeChange(elfin.IDENTIFIANT.QUALITE)"></div>
 					</div>
 				</div>
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.date)">				
@@ -104,7 +104,7 @@
 					
 				</div> 		
  			
-				<div ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.BON_DE_COMMANDE" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.code)">
+				<div ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.ORDER_PURCHASE" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.code)">
 					<label for="code" class="col-sm-4 control-label">Code CFC</label>
 					<div class="col-sm-8">
 						<div hb-choose-code 
@@ -181,12 +181,12 @@
 				</div>
 			</div>
 			<div class="col-xs-6 col-xs-offset-3 centre">
-				<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE=='Bon de commande'" ng-click="printProviderPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande fournisseur" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande fournisseur</span></button>
-				<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE=='Bon de commande'" ng-click="printTenantPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande locataire</span></button>
-				<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE=='Confirmation de commande'" ng-click="printOrderConfirmationReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Confirmation de commande</span></button>
-				<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE=='Contrat d\'entreprise'" ng-click="printEntrepriseContractReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Contrat d'entreprise</span></button>				
+				<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.PURCHASE" ng-click="printProviderPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande fournisseur" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande fournisseur</span></button>
+				<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.PURCHASE" ng-click="printTenantPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande locataire</span></button>
+				<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONFIRMATION" ng-click="printOrderConfirmationReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Confirmation de commande</span></button>
+				<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT" ng-click="printEntrepriseContractReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Contrat d'entreprise</span></button>				
 			</div>
-			<div ng-if="elfin.IDENTIFIANT.QUALITE!=='Bon de commande'" class="col-xs-12">
+			<div ng-if="elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE" class="col-xs-12">
 <!-- 				<div class="row" style="padding: 8px;"> -->
 				<div style="padding-left: 16px;padding-right: 8px;padding-top: 8px;padding-bottom: 8px;">
 					<div class="form-group has-feedback" >

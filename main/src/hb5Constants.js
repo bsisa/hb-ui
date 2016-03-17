@@ -124,7 +124,9 @@ angular.module('hb5').constant('HB_REGEXP', {
  * There may be more defined within the database but not required as constant.
  */
 angular.module('hb5').constant('HB_ORDER_TYPE', {
-	BON_DE_COMMANDE : "Bon de commande"
+	PURCHASE : "Bon de commande",
+	CONFIRMATION : "Confirmation de commande" ,
+	CONTRACT : "Contrat d\'entreprise"
 });
 
 

@@ -25,25 +25,6 @@
 									$modal, $routeParams, $location, $log,
 									$timeout, hbAlertMessages, hbUtil,
 									HB_EVENTS, HB_ORDER_TYPE, userDetails, hbQueryService, $window) {
-
-								
-								
-								$scope.$watch('elfin.IDENTIFIANT.QUALITE', function(newQ, oldQ) { 
-									$log.debug(">>>> qualité: " + oldQ + " => " + newQ);
-//									
-//									getOrderConfirmationLines:getOrderConfirmationLines,
-//						        	getOrderContractLines:getOrderContractLines,
-//						        	getOrderPurchaseLines:getOrderPurchaseLines,
-									
-								}, true);
-								
-								$scope.test = function(selectedType){
-									$log.debug("ng-change activated by ng-model on div, no input.selectedType = " + selectedType );
-									// TODO: Define constants for order types 
-									// If condition to call hbUtil.getOrder....
-									// Reasign FRACTION.L value
-								};
-								
 								
 								$scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";
 								$scope.OBJECTS_SELECTION_TYPE_SURFACE = "SURFACE";
@@ -51,7 +32,7 @@
 								// Can be dynamically updated given user roles, functions.
 								$scope.canEdit = true;
 
-								// Expose constants to scope
+								// Expose order type constants to scope
 								$scope.HB_ORDER_TYPE = HB_ORDER_TYPE;
 								
 						    	GeoxmlService.getNewElfin("COMMANDE").get()
@@ -74,6 +55,26 @@
 										"surface" : null,
 										"initialised" : false
 									};
+
+								/**
+								 * Proceed with CARACTERISTIQUE.FRACTION.L update depending on order type selection.
+								 * 
+								 */
+								$scope.processOrderTypeChange = function(selectedType){
+									$log.debug("ng-change activated by ng-model on div, no input.selectedType = " + selectedType );
+ 
+									if (selectedType === HB_ORDER_TYPE.PURCHASE) {
+										$log.debug(">>>> PURCHASE");
+									} else if (selectedType === HB_ORDER_TYPE.CONFIRMATION) {
+										$log.debug(">>>> CONFIRMATION");
+									} else if (selectedType === HB_ORDER_TYPE.CONTRACT) {
+										$log.debug(">>>> CONTRACT");
+									} else {
+										var message = "Le type de COMMANDE "+ selectedType +" n'est pas encore pris en compte veuillez s.v.p. contacter l'administrateur du système.";
+										hbAlertMessages.addAlert("danger",message);
+									}
+								};								
+								
 								
 								/**
 								 * Update current COMMANDE SOURCE information detecting whether 
