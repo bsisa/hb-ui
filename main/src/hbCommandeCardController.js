@@ -322,6 +322,12 @@
 									}
 								}, true);								
 								
+								$scope.editEmployee = function(elfin) {
+									var link = "/elfin/"+elfin.ID_G+"/"+elfin.CLASSE+"/"+elfin.Id;
+									//$window.location.href = link;
+									$window.open(link);
+								};
+								
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */

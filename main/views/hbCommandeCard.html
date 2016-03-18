@@ -68,10 +68,19 @@
 							hb-choose-actor-id-name="respAct" 
 							hb-choose-actor-elfin-form="elfinForm"
 							hb-choose-actor-model="respActorModel"
+							hb-choose-actor-elfin-model="respActorElfinModel"
 							hb-choose-actor-tooltip="Recherche de responsable"
 							hb-choose-actor-role="Collaborateur"
 							hb-choose-actor-editable="true"
-							></div>							
+							></div>
+					</div>
+					<label for="respPhone" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR4.NOM}}</label>
+					<div class="col-sm-8" >
+						<div id="respPhone" class="form-control-static" >{{respActorElfinModel.CARACTERISTIQUE.CAR4.VALEUR.trim.length > 0 ? respActorElfinModel.CARACTERISTIQUE.CAR4.VALEUR : "Non spécifié"}}</div>
+					</div>
+					<label for="respEmail" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR5.NOM}}</label>
+					<div class="col-sm-8" >
+						<div id="respEmail" class="form-control-static" >{{respActorElfinModel.CARACTERISTIQUE.CAR5.VALEUR.trim.length > 0 ? respActorElfinModel.CARACTERISTIQUE.CAR5.VALEUR : "Non spécifié"}}</div>
 					</div>
 				</div>				
 			</div>
