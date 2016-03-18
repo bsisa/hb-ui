@@ -35,8 +35,12 @@
 		 * positions do not match XML POS values reliably.
 		 */
 		var getCARByPos = function(elfin, pos) {
-    		var currentCAR = _.find(elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === pos; });
-    		return currentCAR;
+			if (elfin) {
+	    		var currentCAR = _.find(elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === pos; });
+	    		return currentCAR;
+			} else {
+				return undefined;
+			}
 		};
 		
 		
