@@ -245,6 +245,18 @@
 		}; 
 		
 		
+		var getOrderConfirmationIntroduction = function() {
+			return "Monsieur,\n\nVeuillez s'il vous plaît, exécuter les travaux selon votre OFFRE DU 01.01.1901 pour le montant suivant:";
+		};
+		
+		var getOrderContractIntroduction = function() {
+			return "TODO...";
+		};
+		
+		var getOrderPurchaseIntroduction = function() {
+			return "";
+		};	
+		
 		
 		var getAnnexeRenvoiIndexByPos = function(elfin, RenvoiPos) {
 			
@@ -1031,6 +1043,9 @@
         	getOrderConfirmationLines:getOrderConfirmationLines,
         	getOrderContractLines:getOrderContractLines,
         	getOrderPurchaseLines:getOrderPurchaseLines,
+        	getOrderConfirmationIntroduction:getOrderConfirmationIntroduction,
+        	getOrderContractIntroduction:getOrderContractIntroduction,
+        	getOrderPurchaseIntroduction:getOrderPurchaseIntroduction,
         	
         	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS,
