@@ -60,33 +60,34 @@
 							ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR"></input>
 					</div>
 				</div>
-				<div ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE)" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.resp)">
-					<label for="resp" class="col-sm-4 control-label" >Responsable</label>
-					<div class="col-sm-8" >
-						<div 
-							hb-choose-actor 
-							hb-choose-actor-id-name="respAct" 
-							hb-choose-actor-elfin-form="elfinForm"
-							hb-choose-actor-model="respActorModel"
-							hb-choose-actor-elfin-model="respActorElfinModel"
-							hb-choose-actor-tooltip="Recherche de responsable"
-							hb-choose-actor-role="Collaborateur"
-							hb-choose-actor-editable="true"
-							></div>
-					</div>
-					<label for="respPhone" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR6.NOM}}</label>
-					<div class="col-sm-8" >
-						<div id="respPhone" class="form-control-static" >{{getRole(respActorElfinModel)}}</div>
-					</div>
-					<label for="respPhone" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR4.NOM}}</label>
-					<div class="col-sm-8" >
-						<div id="respPhone" class="form-control-static" >{{getPhone(respActorElfinModel)}}</div>
-					</div>
-					<label for="respEmail" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR5.NOM}}</label>
-					<div class="col-sm-8" >
-						<div id="respEmail" class="form-control-static" >{{getEmail(respActorElfinModel)}}</div>
-					</div>
-				</div>				
+<!-- Manager displayed in first column including its attributes 				 -->
+<!-- 				<div ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE)" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.resp)"> -->
+<!-- 					<label for="resp" class="col-sm-4 control-label" >Responsable</label> -->
+<!-- 					<div class="col-sm-8" > -->
+<!-- 						<div  -->
+<!-- 							hb-choose-actor  -->
+<!-- 							hb-choose-actor-id-name="respAct"  -->
+<!-- 							hb-choose-actor-elfin-form="elfinForm" -->
+<!-- 							hb-choose-actor-model="respActorModel" -->
+<!-- 							hb-choose-actor-elfin-model="respActorElfinModel" -->
+<!-- 							hb-choose-actor-tooltip="Recherche de responsable" -->
+<!-- 							hb-choose-actor-role="Collaborateur" -->
+<!-- 							hb-choose-actor-editable="true" -->
+<!-- 							></div> -->
+<!-- 					</div> -->
+<!-- 					<label for="respPhone" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR6.NOM}}</label> -->
+<!-- 					<div class="col-sm-8" > -->
+<!-- 						<div id="respPhone" class="form-control-static" >{{getRole(respActorElfinModel)}}</div> -->
+<!-- 					</div> -->
+<!-- 					<label for="respPhone" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR4.NOM}}</label> -->
+<!-- 					<div class="col-sm-8" > -->
+<!-- 						<div id="respPhone" class="form-control-static" >{{getPhone(respActorElfinModel)}}</div> -->
+<!-- 					</div> -->
+<!-- 					<label for="respEmail" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR5.NOM}}</label> -->
+<!-- 					<div class="col-sm-8" > -->
+<!-- 						<div id="respEmail" class="form-control-static" >{{getEmail(respActorElfinModel)}}</div> -->
+<!-- 					</div> -->
+<!-- 				</div>				 -->
 			</div>
 			<!-- 2nd column -->
  			<div class="col-sm-6">
@@ -134,6 +135,7 @@
 				<div ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.ORDER_PURCHASE" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.code)">
 					<label for="code" class="col-sm-4 control-label">Code CFC</label>
 					<div class="col-sm-8">
+<!-- 					<pre>{{ elfinForm.cfcCode.$error | json }}</pre> -->
 						<div hb-choose-code 
 							 hb-choose-code-id-name="code"
 							 hb-choose-code-elfin-form="elfinForm"
@@ -182,22 +184,51 @@
 <!-- 						</div> -->
 					</div>
 				</div>
-<!-- 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.amount)"> -->
-<!-- 					<label for="amount" class="col-sm-4 control-label">Montant</label> -->
-<!-- 					<div class="col-sm-8"> -->
-<!-- 						<input type="number" id="amount" name="amount" class="form-control" -->
-<!-- 							ng-model="elfin.IDENTIFIANT.VALEUR" > -->
+<!-- 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.concerns)"> -->
+<!-- 					<label for="concerns" class="col-sm-4 control-label" >Concerne</label> -->
+<!-- 					<div class="col-sm-8" > -->
+<!-- 						<input id="concerns" name="concerns" class="form-control" autocomplete="off" -->
+<!-- 							ng-model="elfin.CARACTERISTIQUE.CAR1.VALEUR"></input> -->
 <!-- 					</div> -->
-<!-- 				</div> -->
+<!-- 				</div>		 -->
+			</div>
+			<div class="col-xs-12">
+			
+				<div ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE)" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.resp)">
+					<label for="resp" class="col-sm-2 control-label" >Responsable</label>
+					<div class="col-sm-4" >
+						<div 
+							hb-choose-actor 
+							hb-choose-actor-id-name="respAct" 
+							hb-choose-actor-elfin-form="elfinForm"
+							hb-choose-actor-model="respActorModel"
+							hb-choose-actor-elfin-model="respActorElfinModel"
+							hb-choose-actor-tooltip="Recherche de responsable"
+							hb-choose-actor-role="Collaborateur"
+							hb-choose-actor-editable="true"
+							></div>
+					</div>
+					<label for="respPhone" class="col-sm-2 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR6.NOM}}</label>
+					<div class="col-sm-4" >
+						<div id="respPhone" class="form-control-static" >{{getRole(respActorElfinModel)}}</div>
+					</div>
+					<label for="respPhone" class="col-sm-2 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR4.NOM}}</label>
+					<div class="col-sm-4" >
+						<div id="respPhone" class="form-control-static" >{{getPhone(respActorElfinModel)}}</div>
+					</div>
+					<label for="respEmail" class="col-sm-offset-6 col-sm-2 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR5.NOM}}</label>
+					<div class="col-sm-4" >
+						<div id="respEmail" class="form-control-static" >{{getEmail(respActorElfinModel)}}</div>
+					</div>
+				</div>			
+			
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.concerns)">
-					<label for="concerns" class="col-sm-4 control-label" >Concerne</label>
-					<div class="col-sm-8" >
+					<label for="concerns" class="col-sm-2 control-label" >Concerne</label>
+					<div class="col-sm-10" >
 						<input id="concerns" name="concerns" class="form-control" autocomplete="off"
 							ng-model="elfin.CARACTERISTIQUE.CAR1.VALEUR"></input>
 					</div>
-				</div>		
-			</div>
-			<div class="col-xs-12">
+				</div>
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.remark)">
 					<label for="remark" class="col-sm-2 control-label" >Description</label>
 					<div class="col-sm-10" >
