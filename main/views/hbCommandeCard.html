@@ -74,13 +74,17 @@
 							hb-choose-actor-editable="true"
 							></div>
 					</div>
+					<label for="respPhone" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR6.NOM}}</label>
+					<div class="col-sm-8" >
+						<div id="respPhone" class="form-control-static" >{{getRole(respActorElfinModel)}}</div>
+					</div>
 					<label for="respPhone" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR4.NOM}}</label>
 					<div class="col-sm-8" >
-						<div id="respPhone" class="form-control-static" >{{respActorElfinModel.CARACTERISTIQUE.CAR4.VALEUR.trim.length > 0 ? respActorElfinModel.CARACTERISTIQUE.CAR4.VALEUR : "Non spécifié"}}</div>
+						<div id="respPhone" class="form-control-static" >{{getPhone(respActorElfinModel)}}</div>
 					</div>
 					<label for="respEmail" class="col-sm-4 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR5.NOM}}</label>
 					<div class="col-sm-8" >
-						<div id="respEmail" class="form-control-static" >{{respActorElfinModel.CARACTERISTIQUE.CAR5.VALEUR.trim.length > 0 ? respActorElfinModel.CARACTERISTIQUE.CAR5.VALEUR : "Non spécifié"}}</div>
+						<div id="respEmail" class="form-control-static" >{{getEmail(respActorElfinModel)}}</div>
 					</div>
 				</div>				
 			</div>

@@ -56,9 +56,10 @@
 										"initialised" : false
 									};
 
-								// Set respActorModel.Id to undefined to prevent validation activation if unused.
+								/**
+								 * Set respActorModel.Id to undefined to prevent validation activation if unused.
+								 */
 								$scope.respActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""}; //
-								//$scope.respActorElfinModel;
 								
 								/**
 								 * Proceed with CARACTERISTIQUE.FRACTION.L update depending on order type selection.
@@ -67,6 +68,8 @@
 								$scope.processOrderTypeChange = function(selectedType){
  									if (selectedType === HB_ORDER_TYPE.PURCHASE) {
 										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderPurchaseLines();
+										// Reset field information meaningless to purchase order context.
+										$scope.elfin.IDENTIFIANT.RES = "";
 									} else if (selectedType === HB_ORDER_TYPE.CONFIRMATION) {
 										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderConfirmationLines();
 									} else if (selectedType === HB_ORDER_TYPE.CONTRACT) {
@@ -138,6 +141,38 @@
 							        });	
 								};								
 								
+								var getCARX = function(elfin, nbX ) {
+									var carX = "CAR" + nbX;
+									if (elfin && elfin.CARACTERISTIQUE && elfin.CARACTERISTIQUE[carX]) {
+										var emailLength = elfin.CARACTERISTIQUE[carX].VALEUR.trim().length;
+										if (emailLength > 0) {
+											return elfin.CARACTERISTIQUE[carX].VALEUR; 
+										} else {
+											return "Non spécifié";
+										};
+									} else {
+										return "Non spécifié";
+									}									
+								};
+
+								$scope.getPhone = function(elfin) {
+									return getCARX(elfin,"4");
+								};								
+								
+								$scope.getEmail = function(elfin) {
+									return getCARX(elfin,"5");
+								};
+								
+								$scope.getRole = function(elfin) {
+									return getCARX(elfin,"6");
+								};																
+								
+								// Manage contract / confirmation manager
+								$scope.$watch('respActorModel', function(newResp, oldResp) {
+									if (newResp.Id !== undefined) {
+										$scope.elfin.IDENTIFIANT.RES = newResp.ID_G + "/ACTEUR/" + newResp.Id;
+									}
+								}, true);								
 								
 								$scope.$watch('selected.objectsSelectionType', function(toType,fromType) {
 									
@@ -315,19 +350,7 @@
 											}
 										);								
 								
-								// Manage contract / confirmation manager
-								$scope.$watch('respActorModel', function(newResp, oldResp) {
-									if (newResp.Id !== undefined) {
-										$scope.elfin.IDENTIFIANT.RES = newResp.ID_G + "/ACTEUR/" + newResp.Id;
-									}
-								}, true);								
-								
-								$scope.editEmployee = function(elfin) {
-									var link = "/elfin/"+elfin.ID_G+"/"+elfin.CLASSE+"/"+elfin.Id;
-									//$window.location.href = link;
-									$window.open(link);
-								};
-								
+				
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
@@ -346,8 +369,10 @@
 						    			// Initialise contract/confirmation manager
 						    			var respActorModelRef = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.IDENTIFIANT.RES);
 						    			if (respActorModelRef === undefined) {
+						    				$log.debug(">>>> respActorModelRef undefined ! = " + angular.toJson(respActorModelRef));
 						    				$scope.respActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""};
 						    			} else {
+						    				$log.debug(">>>> respActorModelRef defined !   = " + angular.toJson(respActorModelRef));
 						    				$scope.respActorModel = {Id : respActorModelRef.Id, ID_G : respActorModelRef.ID_G, GROUPE : "", NOM : ""};
 						    			}
 						    			
