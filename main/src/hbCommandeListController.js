@@ -17,6 +17,7 @@
     			"registerNb" : "",
     			"buildingNb" : "",
     			"cfc" : "",
+    			"orderType" : "",
     			"date" : "",
     			"amount" : "",
     			"provider_group" : "",

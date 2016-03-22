@@ -367,6 +367,7 @@
                     	 icontains(commande.IDENTIFIANT.OBJECTIF, predicate.registerNb) && 
                     	 icontains(commande.IDENTIFIANT.ORIGINE, predicate.buildingNb) &&
                     	 icontains(commande.GROUPE, predicate.cfc) &&
+                    	 icontains(commande.IDENTIFIANT.QUALITE, predicate.orderType) &&
                     	 icontains(commande.IDENTIFIANT.DE, predicate.date) &&
                     	 icontains(commande.IDENTIFIANT.VALEUR, predicate.amount) &&
                     	 icontains(commande.PARTENAIRE.FOURNISSEUR.GROUPE, predicate.provider_group) &&
@@ -398,6 +399,7 @@
 					icontains(commande.IDENTIFIANT.OBJECTIF, searchtext) ||
 					icontains(commande.IDENTIFIANT.ORIGINE, searchtext) ||
 					icontains(commande.GROUPE, searchtext) ||
+					icontains(commande.IDENTIFIANT.QUALITE, searchtext) ||
 					icontains(commande.IDENTIFIANT.DE, searchtext) ||
 					icontains(commande.IDENTIFIANT.VALEUR, searchtext) ||
 					icontains(commande.PARTENAIRE.FOURNISSEUR.GROUPE, searchtext) ||

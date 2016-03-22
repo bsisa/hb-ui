@@ -44,7 +44,14 @@
 						<input type="text" class="form-control" ng-model="search.cfc" hb-no-dirty-check placeholder="">
 					</div>
 				</div>
-			</th>			
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.orderType" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>					
 			<th class="col-sm-1">
 				<div class="form-group">
 					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
@@ -95,6 +102,9 @@
 				<a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Code CFC</a>
 			</th>
 			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse">Type</a>
+			</th>
+			<th class="col-sm-1">
 				<a href="" ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse">Date</a>
 			</th>			
 <!-- 			<th class="col-sm-1"> -->
@@ -103,7 +113,7 @@
 			<th class="col-sm-2">
 				<a href="" ng-click="predicate = 'PARTENAIRE.FOURNISSEUR.GROUPE'; reverse=!reverse">Fournisseur</a>
 			</th>
-			<th class="col-sm-2">
+			<th class="col-sm-1">
 				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.GROUPE'; reverse=!reverse">Propriétaire</a>
 			</th>
 			<th class="col-sm-3">
@@ -124,6 +134,8 @@
 			<td class="number">{{elfin.IDENTIFIANT.ORIGINE}}</td>
 			<!-- CFC code -->
 			<td>{{elfin.GROUPE}}</td>
+			<!-- Order type  -->
+			<td class="type">{{elfin.IDENTIFIANT.QUALITE}}</td>			
 			<!-- Estimation/Quote date -->
 			<td class="date">{{elfin.IDENTIFIANT.DE}}</td>
 			<!-- Amount -->
