@@ -71,12 +71,18 @@
 										// Reset field information meaningless to purchase order context.
 										$scope.elfin.IDENTIFIANT.RES = "";
 										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR = hbUtil.getOrderPurchaseIntroduction();
+										// Object / building type and location - Unused 
+										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR = "";
 									} else if (selectedType === HB_ORDER_TYPE.CONFIRMATION) {
 										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderConfirmationLines();
 										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR = hbUtil.getOrderConfirmationIntroduction();
+										// Object / building type and location - Unused 
+										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR = "";
 									} else if (selectedType === HB_ORDER_TYPE.CONTRACT) {
 										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderContractLines();
 										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR = hbUtil.getOrderContractIntroduction();
+										// Object / building type and location - Used: free text. 
+										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR = "";
 									} else {
 										var message = "Le type de COMMANDE "+ selectedType +" n'est pas encore pris en compte veuillez s.v.p. contacter l'administrateur du système.";
 										hbAlertMessages.addAlert("danger",message);
@@ -361,6 +367,12 @@
 
 						    		if ($scope.elfin!==null) {
 
+						    			/**
+						    			 * Delegate CARACTERISTIQUE.CAR data structure
+						    			 * check and extension to hbUtil.checkUpdateOrderCar
+						    			 */
+						    			hbUtil.checkUpdateOrderCar($scope.elfin);
+						    			
 						    			$scope.selected.provider = {
 											      "Id" : $scope.elfin.PARTENAIRE.FOURNISSEUR.Id,
 											      "ID_G" : $scope.elfin.PARTENAIRE.FOURNISSEUR.ID_G,

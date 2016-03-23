@@ -257,6 +257,52 @@
 			return "";
 		};	
 		
+		var expectedCAR = [ 
+		                   {
+		                	   "POS" : 1,
+		                	   "NOM" : "Introduction",
+		                	   "UNITE" : "",
+		                	   "VALEUR" : ""
+		                   },
+		                   {
+		                	   "POS" : 2,
+		                	   "NOM" : "Objet ou type de bâtiment et localisation",
+		                	   "UNITE" : "",
+		                	   "VALEUR" : ""
+		                   }						    			                   
+		                   ];
+		
+		var checkUpdateOrderCar = function(orderElfin) {
+			
+			/**
+			 * We expect CAR array to be defined otherwise the catalog 
+			 * must be reviewed.
+			 */
+			if (orderElfin.CARACTERISTIQUE.CARSET.CAR) {
+				$log.debug(">>>> FOUND CAR array");
+				var nbOfExistingEntries = orderElfin.CARACTERISTIQUE.CARSET.CAR.length;
+				var nbOfExpectedEntries = expectedCAR.length;
+				if (nbOfExistingEntries < nbOfExpectedEntries) {
+    				$log.debug(">>>> FOUND CAR array length = " + nbOfExistingEntries + ", expected = " + nbOfExpectedEntries);
+	    			for ( var i = nbOfExistingEntries; i < nbOfExpectedEntries; i++) {
+	    				$log.debug(">>>> Trying to add " + angular.toJson(expectedCAR[i]));								    				
+	    				orderElfin.CARACTERISTIQUE.CARSET.CAR.push(expectedCAR[i]);
+	    			}
+				} else {
+					$log.debug(">>>> FOUND CAR array length = " + nbOfExistingEntries + ", expected = " + nbOfExpectedEntries + "NOTHING TO DO...");
+				}
+			} else {
+				$log.debug(">>>> NOT FOUND CAR array /!\\");
+			}			
+			
+			
+		};
+		
+		
+		
+		
+		
+		
 		
 		var getAnnexeRenvoiIndexByPos = function(elfin, RenvoiPos) {
 			
@@ -1040,12 +1086,15 @@
         	removeFractionLByIndex:removeFractionLByIndex,
         	replaceFractionLByIndex:replaceFractionLByIndex,
         	
+        	checkUpdateOrderCar:checkUpdateOrderCar,
         	getOrderConfirmationLines:getOrderConfirmationLines,
         	getOrderContractLines:getOrderContractLines,
         	getOrderPurchaseLines:getOrderPurchaseLines,
         	getOrderConfirmationIntroduction:getOrderConfirmationIntroduction,
         	getOrderContractIntroduction:getOrderContractIntroduction,
         	getOrderPurchaseIntroduction:getOrderPurchaseIntroduction,
+        	
+        	
         	
         	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS,
