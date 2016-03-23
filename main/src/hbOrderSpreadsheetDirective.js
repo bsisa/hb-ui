@@ -33,6 +33,7 @@
 			controller: 'HbOrderSpreadsheetController',
 			scope : {
 				'elfinForm' : '=hbOrderElfinForm',
+				'editable' : '=hbOrderEditable'
 			},		 
 			link: function ($scope, $element, $attrs, ctrls) {
 				var hbOrderSpreadsheetController = ctrls[0];

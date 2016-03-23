@@ -28,6 +28,7 @@
 								
 								$scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";
 								$scope.OBJECTS_SELECTION_TYPE_SURFACE = "SURFACE";
+								$scope.READ_ONLY_STATUS_KEYWORD = "status::readonly";
 								
 								// Can be dynamically updated given user roles, functions.
 								$scope.canEdit = true;
@@ -175,6 +176,49 @@
 								$scope.getRole = function(elfin) {
 									return getCARX(elfin,"6");
 								};																
+								
+								$scope.isReadOnly = false; 
+								
+								
+								var updateIsReadOnlyStatus = function() { 
+									if ($scope.elfin.IDENTIFIANT.MOTCLE && $scope.elfin.IDENTIFIANT.MOTCLE.length > 0) {
+										
+										var keywordIdx = hbUtil.getKeywordIndex($scope.elfin.IDENTIFIANT.MOTCLE, $scope.READ_ONLY_STATUS_KEYWORD);
+										if (keywordIdx > -1) {
+											$scope.isReadOnly = true;
+										} else {
+											$scope.isReadOnly = false;
+										}
+									} else {
+										$scope.isReadOnly = false;
+									}
+								};
+								
+								$scope.setIsReadOnlyStatus = function() {
+									// Make sure the keyword does not already exist
+									updateIsReadOnlyStatus();
+									// If not yet set to read only status add the necessary keyword and update status.
+									if (!$scope.isReadOnly) {
+										$scope.elfin.IDENTIFIANT.MOTCLE.push({"VALUE" : $scope.READ_ONLY_STATUS_KEYWORD})
+										$scope.elfinForm.$setDirty();
+									};
+									updateIsReadOnlyStatus();
+								};
+								
+								// TODO: should only be available with specific "admin" role...
+								$scope.unsetIsReadOnlyStatus = function() {
+									// Make sure the keyword does already exist
+									updateIsReadOnlyStatus();
+									// If set to read only status remove the keyword and update status otherwise do nothing
+									if ($scope.isReadOnly) {
+										var keywordIdx = hbUtil.getKeywordIndex($scope.elfin.IDENTIFIANT.MOTCLE, $scope.READ_ONLY_STATUS_KEYWORD);
+										if (keywordIdx > -1) {
+											$scope.elfin.IDENTIFIANT.MOTCLE.splice(keywordIdx, 1);
+											$scope.elfinForm.$setDirty();
+										}
+									};
+									updateIsReadOnlyStatus();
+								};								
 								
 								// Manage contract / confirmation manager
 								$scope.$watch('respActorModel', function(newResp, oldResp) {
@@ -367,6 +411,8 @@
 
 						    		if ($scope.elfin!==null) {
 
+						    			updateIsReadOnlyStatus();
+						    			
 						    			/**
 						    			 * Delegate CARACTERISTIQUE.CAR data structure
 						    			 * check and extension to hbUtil.checkUpdateOrderCar

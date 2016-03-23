@@ -26,21 +26,30 @@
 
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.orderNb)">				
 					<label for="orderNb" class="col-sm-4 control-label">No commande</label>
-					<div class="col-sm-8">
+					<div class="col-sm-4">
 						<p class="form-control-static">{{elfin.IDENTIFIANT.NOM}}</p>
+					</div>
+					<label class="col-sm-2 control-label">Statut</label>
+					<div class="col-sm-2">
+						<p class="form-control-static">
+							<span class="label label-success" ng-if="isReadOnly" >Valide</span>
+							<span class="label label-warning" ng-if="!isReadOnly" >A valider</span>
+						</p>
 					</div>
 				</div>
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.type)">				
 					<label for="type" class="col-sm-4 control-label">Type</label>
 					<div class="col-sm-8">
-						<div id="type" name="type" hb-single-select hb-single-select-options="typeChoices" ng-model="elfin.IDENTIFIANT.QUALITE" ng-change="processOrderTypeChange(elfin.IDENTIFIANT.QUALITE)"></div>
+						<div ng-if="!isReadOnly" id="type" name="type" hb-single-select hb-single-select-options="typeChoices" ng-model="elfin.IDENTIFIANT.QUALITE" ng-change="processOrderTypeChange(elfin.IDENTIFIANT.QUALITE)"></div>
+						<p ng-if="isReadOnly" class="form-control-static">{{elfin.IDENTIFIANT.QUALITE}}</p>
 					</div>
 				</div>
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.date)">				
 					<label for="date" class="col-sm-4 control-label">Date</label>
 					<div class="col-sm-4">
-						<div hb-date id="date" name="date"
+						<div ng-if="!isReadOnly" hb-date id="date" name="date"
 								ng-model="elfin.IDENTIFIANT.DE"></div>
+						<p ng-if="isReadOnly" class="form-control-static">{{elfin.IDENTIFIANT.DE | date}}</p>
 					</div>
 					<label for="auteur" class="col-sm-2 control-label">Auteur</label>
 					<div class="col-sm-2">
@@ -50,14 +59,16 @@
 				<div class="form-group">
 					<label for="deadline" class="col-sm-4 control-label">Délai d'exécution</label>
 					<div class="col-sm-4">
-						<div hb-date id="deadline" name="deadline" ng-model="elfin.IDENTIFIANT.A"></div>
+						<div ng-if="!isReadOnly" hb-date id="deadline" name="deadline" ng-model="elfin.IDENTIFIANT.A"></div>
+						<p ng-if="isReadOnly" class="form-control-static">{{elfin.IDENTIFIANT.A | date}}</p>
 					</div>
 				</div>
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.contact)">
 					<label for="contact" class="col-sm-4 control-label" >Personne à contacter</label>
 					<div class="col-sm-8" >
-						<input id="contact" name="contact" class="form-control" autocomplete="off" 
+						<input ng-if="isReadOnly" id="contact" name="contact" class="form-control" autocomplete="off" 
 							ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR"></input>
+						<p ng-if="isReadOnly" class="form-control-static">{{elfin.CARACTERISTIQUE.CAR2.VALEUR}}</p>
 					</div>
 				</div>
 <!-- Manager displayed in first column including its attributes 				 -->
@@ -95,13 +106,14 @@
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.objectsSelectionType)">				
 					<label for="objectsSelectionType" class="col-sm-4 control-label">Séléction par</label>
 					<div class="col-sm-8">
-						<div id="objectsSelectionType" name="objectsSelectionType" hb-single-select hb-single-select-options="objectsSelectionTypeChoices" ng-model="selected.objectsSelectionType" ></div>
+						<div ng-if="!isReadOnly" id="objectsSelectionType" name="objectsSelectionType" hb-single-select hb-single-select-options="objectsSelectionTypeChoices" ng-model="selected.objectsSelectionType" ></div>
+						<p ng-if="isReadOnly" class="form-control-static">{{selected.objectsSelectionType}}</p>
 					</div>
 				</div> 			
  			
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.building)">
 					<label for="building" class="col-sm-4 control-label">No SAI</label>
-					<div ng-show="selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_IMMEUBLE" class="col-sm-8">
+					<div ng-show="!isReadOnly && (selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_IMMEUBLE)" class="col-sm-8">
 						<div hb-choose-building 
 							 hb-choose-building-id-name="building"
 							 hb-choose-building-elfin-form="elfinForm"
@@ -110,14 +122,14 @@
 							 hb-choose-building-editable="{{canEdit}}" 
 							 ></div>
 					</div>
-					<div ng-show="selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_IMMEUBLE" class="col-sm-8">
+					<div ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_IMMEUBLE)" class="col-sm-8">
 					    <p class="form-control-static">{{selected.building.IDENTIFIANT.OBJECTIF}}  - {{selected.building.IDENTIFIANT.ALIAS}} - {{selected.building.PARTENAIRE.PROPRIETAIRE.NOM}}</p>
 					</div>
 				</div>
 				
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.surface)">
 					<label for="surface" class="col-sm-4 control-label">No objet</label>
-					<div ng-show="selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_SURFACE" class="col-sm-8">
+					<div ng-show="!isReadOnly && (selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_SURFACE)" class="col-sm-8">
 						<div hb-choose-surface 
 							 hb-choose-surface-id-name="surface"
 							 hb-choose-surface-elfin-form="elfinForm"
@@ -126,7 +138,7 @@
 							 hb-choose-surface-editable="{{canEdit}}" 
 							 ></div>
 					</div>
-					<div ng-show="selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_SURFACE" class="col-sm-8">
+					<div ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_SURFACE)" class="col-sm-8">
 					    <p class="form-control-static">{{selected.surface.IDENTIFIANT.OBJECTIF}} - {{selected.surface.PARTENAIRE.USAGER.VALUE}}</p>
 					</div>					
 					
@@ -136,7 +148,8 @@
 					<label for="code" class="col-sm-4 control-label">Code CFC</label>
 					<div class="col-sm-8">
 <!-- 					<pre>{{ elfinForm.cfcCode.$error | json }}</pre> -->
-						<div hb-choose-code 
+						<div ng-show="!isReadOnly"
+							 hb-choose-code 
 							 hb-choose-code-id-name="code"
 							 hb-choose-code-elfin-form="elfinForm"
 							 hb-choose-code-elfin-model="selected.code"
@@ -144,6 +157,7 @@
 							 hb-choose-code-editable="{{canEdit}}" 
 							 hb-choose-code-validate-code="true"
 							 ></div>					
+						<p ng-show="isReadOnly" class="form-control-static"> {{selected.code.IDENTIFIANT.NOM}} - {{selected.code.DIVERS.REMARQUE}}</p>
 					</div>
 				</div>
 				
@@ -167,12 +181,14 @@
 					<div class="col-sm-8">
 <!-- 						<pre>{{ elfinForm.fournisseur.$error | json }}</pre> -->
 <!-- 						<div class="input-group"> -->
-							<input id="fournisseur" name="fournisseur" type="text" class="form-control"
+							<input ng-if="!isReadOnly" id="fournisseur" name="fournisseur" type="text" class="form-control"
 								autocomplete="off"
 								typeahead="actor as actor.GROUPE for actor in entrepriseActors | orderBy:'GROUPE' | actorListFilter:{'groupe': $viewValue} | limitTo:18"
 								typeahead-editable="false"
 								ng-model="selected.provider"
 								ng-required="true">
+							
+							<p ng-if="isReadOnly" class="form-control-static" >{{selected.provider.GROUPE}}</p>
 <!-- 								<span -->
 <!-- 								class="input-group-btn" tooltip="Recherche d'entreprise" -->
 <!-- 								 > -->
@@ -200,6 +216,7 @@
 					<label for="resp" class="col-sm-2 control-label" >Responsable</label>
 					<div class="col-sm-4" >
 						<div 
+ 							ng-show="!isReadOnly"
 							hb-choose-actor 
 							hb-choose-actor-id-name="respAct" 
 							hb-choose-actor-elfin-form="elfinForm"
@@ -207,13 +224,18 @@
 							hb-choose-actor-elfin-model="respActorElfinModel"
 							hb-choose-actor-tooltip="Recherche de responsable"
 							hb-choose-actor-role="Collaborateur"
-							hb-choose-actor-editable="true"
+							hb-choose-actor-editable="!isReadOnly"
 							></div>
+						<!-- Invisible CSS border (white on white) fixes strange bootstrap grid alignment mis-behaviour -->
+						<div ng-show="isReadOnly" style="border: solid 1px white;">
+							<p  class="form-control-static" >{{respActorElfinModel.IDENTIFIANT.NOM}} - {{respActorElfinModel.GROUPE}}</p>
+						</div>
 					</div>
 					<label for="respPhone" class="col-sm-2 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR6.NOM}}</label>
 					<div class="col-sm-4" >
 						<div id="respPhone" class="form-control-static" >{{getRole(respActorElfinModel)}}</div>
 					</div>
+					
 					<label for="respPhone" class="col-sm-2 control-label" >{{respActorElfinModel.CARACTERISTIQUE.CAR4.NOM}}</label>
 					<div class="col-sm-4" >
 						<div id="respPhone" class="form-control-static" >{{getPhone(respActorElfinModel)}}</div>
@@ -225,25 +247,27 @@
 				</div>			
 			
 				<div ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.objectTypeOrLocation)">
-					<label for="objectTypeOrLocation" class="col-sm-2 control-label" >Objet ou type de bâtiment et localisation</label>
+					<label for="objectTypeOrLocation" class="col-sm-2 control-label" tooltip="Objet ou type de bâtiment et localisation" tooltip-popup-delay="1000">Type / localisation</label>
 					<div class="col-sm-10" >
-						<input id="objectTypeOrLocation" name="objectTypeOrLocation" class="form-control" autocomplete="off"
+						<input ng-if="!isReadOnly" id="objectTypeOrLocation" name="objectTypeOrLocation" class="form-control" autocomplete="off"
 							ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR"></input>
+						<p ng-if="isReadOnly" class="form-control-static" >{{elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR}}</p>
 					</div>
-				</div>			
+				</div>
 			
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.concerns)">
 					<label for="concerns" class="col-sm-2 control-label" >Concerne</label>
 					<div class="col-sm-10" >
-						<input id="concerns" name="concerns" class="form-control" autocomplete="off"
+						<input ng-if="!isReadOnly" id="concerns" name="concerns" class="form-control" autocomplete="off"
 							ng-model="elfin.CARACTERISTIQUE.CAR1.VALEUR"></input>
+						<p ng-if="isReadOnly" class="form-control-static" >{{elfin.CARACTERISTIQUE.CAR1.VALEUR}}</p>
 					</div>
 				</div>
 				
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.introduction)">
 					<label for="introduction" class="col-sm-2 control-label" >introduction</label>
 					<div class="col-sm-10" >
-						<textarea id="introduction" name="introduction" class="form-control" rows="3" 
+						<textarea ng-disabled="isReadOnly" id="introduction" name="introduction" class="form-control" rows="3" 
 							autocomplete="off"
 							ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR"></textarea>							
 					</div>
@@ -252,7 +276,7 @@
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.remark)">
 					<label for="remark" class="col-sm-2 control-label" >Description</label>
 					<div class="col-sm-10" >
-						<textarea id="remark" name="remark" class="form-control" rows="6" 
+						<textarea ng-disabled="isReadOnly" id="remark" name="remark" class="form-control" rows="6" 
 							autocomplete="off"
 							ng-model="elfin.DIVERS.REMARQUE"></textarea>
 					</div>
@@ -268,10 +292,14 @@
 <!-- 				<div class="row" style="padding: 8px;"> -->
 				<div style="padding-left: 16px;padding-right: 8px;padding-top: 8px;padding-bottom: 8px;">
 					<div class="form-group has-feedback" >
-						<div hb-order-spreadsheet hb-order-elfin-form="elfinForm" ng-model="elfin"></div>
+						<div hb-order-spreadsheet hb-order-elfin-form="elfinForm" hb-order-editable="!isReadOnly" ng-model="elfin"></div>
 					</div>
 				</div>
-			</div> 			
+			</div> 	
+			<div class="col-xs-6 col-xs-offset-3 centre">
+				<button class="btn btn-warning" ng-if="!isReadOnly" ng-click="setIsReadOnlyStatus()" ><span>Valider</span></button>
+				<button class="btn btn-danger" ng-if="isReadOnly" ng-click="unsetIsReadOnlyStatus()" ><span>UNSET READ ONLY</span></button>		
+ 			</div>
  			</div>
 		</div>
 		</tab> 

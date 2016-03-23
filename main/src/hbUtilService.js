@@ -165,6 +165,23 @@
 			renumberPos(elfin.CARACTERISTIQUE.FRACTION.L);
 		};		
 		
+		/**
+		 * Expects keywords as an array of {"VALUE":"the keyword value"}
+		 * Design for elfin.IDENTITIFIANT.MOTCLE but will work with any array of above objects such as: 
+		 * [ {"VALUE":"my first value"}, {"VALUE":"my second value"} ]
+		 */
+		var getKeywordIndex = function(keywords, keywordValue) {
+			var idx = -1;
+			for ( var i = 0; i < keywords.length; i++) {
+				var keyword = keywords[i];
+				if (keyword.VALUE === keywordValue) {
+					idx = i;
+					break;
+				}
+			};
+			return idx;
+		};
+		
 		
 		// ====================================================================
 		//     Order specific FRACTION management
@@ -1065,6 +1082,7 @@
         	getFractionLIndexByPos:getFractionLIndexByPos,
         	getFractionLCByPos:getFractionLCByPos,
         	getIdentifiersFromStandardSourceURI:getIdentifiersFromStandardSourceURI,
+        	getKeywordIndex:getKeywordIndex,
         	getLinkFileName:getLinkFileName,
         	getLinkFileApiUrl:getLinkFileApiUrl,
         	getMomentDateFromHbTextDateFormat:getMomentDateFromHbTextDateFormat,
@@ -1093,8 +1111,6 @@
         	getOrderConfirmationIntroduction:getOrderConfirmationIntroduction,
         	getOrderContractIntroduction:getOrderContractIntroduction,
         	getOrderPurchaseIntroduction:getOrderPurchaseIntroduction,
-        	
-        	
         	
         	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS,
