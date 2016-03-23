@@ -36,7 +36,7 @@
 						</div>
 						<div ng-if="!((line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY))" class="input-group" >
 							<span class="input-group-btn">
-								<button ng-disabled="!editable" class="btn btn-default" role="button" tooltip="Ajouter"
+								<button ng-disabled="line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL || !editable" class="btn btn-default" role="button" tooltip="Ajouter"
 									ng-click="addEmptyLine($index+1,elfinForm.$valid)">
 									<i class="icon-plus-sign"></i>
 								</button>								
