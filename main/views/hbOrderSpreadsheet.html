@@ -32,7 +32,7 @@
 									<i class="icon-remove-sign"></i>
 								</button>
 							</span>
-							<input type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
+							<input ng-disabled="!editable" type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
 						</div>
 						<div ng-if="!((line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY))" class="input-group" >
 							<span class="input-group-btn">
