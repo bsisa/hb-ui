@@ -1,7 +1,9 @@
 /**
  * 
+ * Provides report definition for elfin CLASSE/GROUPE or generic classifiers LEVEL1/LEVEL2
+ *  
  * Caches activeJob and provide it as a service.
- * 
+ *  
  * @author Patrick Refondini
  * 
  */
@@ -13,6 +15,66 @@
 				var activeJob = null;
 				var reportDefinitions = [];
 
+				/**
+				 * Extends report definition matching CLASSE, GROUP information to generic
+				 * LEVEL1, LEVEL2 classifiers strings. 
+				 * Nothing prevents IMPRESSION CLASSE configuration to contain: 
+				 * 
+			    <L POS="1">
+                    <C POS="1">Report name</C>
+                    <C POS="2">CLASSE or LEVEL1 classifier</C>
+                    <C POS="3">GROUPE or LEVEL2 classifier (applies to any LEVEL1 if empty)</C>
+                    <C POS="4">IDG</C>
+                    <C POS="5">RAPPORTId</C>
+                </L>
+                 *
+                 * Note: function - getReportMatchingReportDefinition (elfin) is currently 
+                 * preserved for backward compatibility.
+				 */
+				var getReportMatchingReportDefinitionForClassifiers = function (level1,level2) {
+	        		var reportDefinitionsForLevel1 = [];
+	        		for (var i = 0; i < reportDefinitions.length ;i++) {
+	        			var reportDefinition = reportDefinitions[i];
+	        			//$log.debug("Report reportDefinition CLASSE: " + reportDefinition.CLASSE);
+	        			if (reportDefinition.CLASSE === level1) {
+	        				// Add reportDefinition matching this level1 value. There can be several if defined for level1/level2.
+	        				reportDefinitionsForLevel1.push(reportDefinition);
+	        				//$log.debug("Report reportDefinition MATCH FOUND FOR level 1: " + level1);
+	        				//return true;
+	        			} else {
+	        				// continue searching
+	        			}
+	        		}
+	        		
+	        		// No definition found matching level1 value
+	        		if (reportDefinitionsForLevel1.length === 0) {
+	        			return undefined;
+	        		} else if (reportDefinitionsForLevel1.length === 1) {
+	        			// GROUPE must be empty or match the current elfin.GROUPE
+	        			if (reportDefinitionsForLevel1[0].GROUPE === level2 || reportDefinitionsForLevel1[0].GROUPE === "") {
+	        				return reportDefinitionsForLevel1[0];
+	        			} else {
+	        				return undefined;
+	        			}
+	        		} else if (reportDefinitionsForLevel1.length > 1) {
+	        			var reportDefinitionForClasseWithoutGroupe = null;
+	        			for (var i = 0; i < reportDefinitionsForLevel1.length; i++) {
+	        				var reportDefinitionForClasse = reportDefinitionsForLevel1[i];
+		        			if (reportDefinitionForClasse.GROUPE === level2) {
+		        				return reportDefinitionForClasse;
+		        			} else if (reportDefinitionForClasse.GROUPE === "") {
+		        				reportDefinitionForClasseWithoutGroupe = reportDefinitionForClasse;
+		        			}
+	        			}
+	        			if (reportDefinitionForClasseWithoutGroupe == null) {
+	        				return undefined;
+	        			} else {
+	        				return reportDefinitionForClasseWithoutGroupe;
+	        			}
+	        		}
+				};
+				
+				
 				var getReportMatchingReportDefinition = function(elfin) {
 	        		var reportDefinitionsForClasse = [];
 	        		for (var i = 0; i < reportDefinitions.length ;i++) {
@@ -77,6 +139,16 @@
 	        		}
 				};
 				
+				var buildReportUrlForClassifiers = function(elfin, level1, level2) {
+	        		var mrd = getReportMatchingReportDefinitionForClassifiers(level1,level2);
+	        		if (mrd == undefined) {
+	        			return "";
+	        		} else {
+	        			return "/api/melfin/report/"+mrd.ID_G+"/"+mrd.Id+"?col="+elfin.ID_G+"&id="+elfin.Id;
+	        		}
+				};				
+				
+				
 				return {
 					setActiveJob : function(activeJob_p) {
 						// Update activeJob referenced by getActiveJob used for instance 
@@ -128,6 +200,9 @@
 												var reportID_G = currPrintElfinLine.C[3].VALUE;
 												var reportId = currPrintElfinLine.C[4].VALUE;
 												
+												/**
+												 * CLASSE and GROUPE semantic also applies to LEVEL1 and LEVEL2 generic reports classification.
+												 */
 												var currReportDefinition = {
 													"title" : reportTitle,
 													"CLASSE" : reportClasse, 
@@ -165,6 +240,9 @@
 					},
 					getReportUrl : function(elfin) {
 						return buildReportUrl(elfin);
+					},
+					getReportUrlForClassifiers : function(elfin, level1, level2) {
+						return buildReportUrlForClassifiers(elfin, level1, level2);
 					}
 				};
 			} ]);
