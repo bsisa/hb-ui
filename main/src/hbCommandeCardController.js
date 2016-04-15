@@ -21,11 +21,12 @@
 							'HB_ROLE_FONCTION',
 							'userDetails',
 							'hbQueryService',
+							'hbPrintService', 
 							'$window',
 							function($attrs, $scope, $rootScope, GeoxmlService,
 									$modal, $routeParams, $location, $log,
 									$timeout, hbAlertMessages, hbUtil,
-									HB_EVENTS, HB_ORDER_TYPE, HB_ROLE_FONCTION, userDetails, hbQueryService, $window) {
+									HB_EVENTS, HB_ORDER_TYPE, HB_ROLE_FONCTION, userDetails, hbQueryService, hbPrintService, $window) {
 								
 								$scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";
 								$scope.OBJECTS_SELECTION_TYPE_SURFACE = "SURFACE";
@@ -637,14 +638,20 @@
 						         * Prints provider purchase order.
 						         */
 						        $scope.printProviderPurchaseOrderReport = function (elfin) {
-						        	$window.open("/api/melfin/report/G20050101000012345/G20160112111800000?col="+elfin.ID_G+"&id="+elfin.Id);
+						        	var reportUrl = hbPrintService.getReportUrlForClassifiers(elfin, "ORDER_PURCHASE_PROVIDER", elfin.PARTENAIRE.PROPRIETAIRE.NOM);
+						        	$window.open(reportUrl);
+						        	
+						        	//$window.open("/api/melfin/report/G20050101000012345/G20160112111800000?col="+elfin.ID_G+"&id="+elfin.Id);
 						        };					        
 						        
 						        /**
 						         * Prints tenant purchase order.
 						         */
 						        $scope.printTenantPurchaseOrderReport = function (elfin) {
-						        	$window.open("/api/melfin/report/G20050101000012345/G20160210190000000?col="+elfin.ID_G+"&id="+elfin.Id);
+						        	var reportUrl = hbPrintService.getReportUrlForClassifiers(elfin, "ORDER_PURCHASE_TENANT", elfin.PARTENAIRE.PROPRIETAIRE.NOM);
+						        	$window.open(reportUrl);
+						        	
+						        	//$window.open("/api/melfin/report/G20050101000012345/G20160210190000000?col="+elfin.ID_G+"&id="+elfin.Id);
 						        };							        
 					            
 
