@@ -18,20 +18,26 @@
 							'hbUtil',
 							'HB_EVENTS',
 							'HB_ORDER_TYPE',
+							'HB_ROLE_FONCTION',
 							'userDetails',
 							'hbQueryService',
 							'$window',
 							function($attrs, $scope, $rootScope, GeoxmlService,
 									$modal, $routeParams, $location, $log,
 									$timeout, hbAlertMessages, hbUtil,
-									HB_EVENTS, HB_ORDER_TYPE, userDetails, hbQueryService, $window) {
+									HB_EVENTS, HB_ORDER_TYPE, HB_ROLE_FONCTION, userDetails, hbQueryService, $window) {
 								
 								$scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";
 								$scope.OBJECTS_SELECTION_TYPE_SURFACE = "SURFACE";
 								$scope.READ_ONLY_STATUS_KEYWORD = "status::readonly";
 								
-								// Can be dynamically updated given user roles, functions.
-								$scope.canEdit = true;
+								// Modifying an order after its validation requires admin role in addition to 
+								// orders-statistics function. This action should not be performed after an 
+								// order has been sent, printed.			
+								$scope.canUnlockValidatedOrders = (
+										_.contains(userDetails.getRoles(), HB_ROLE_FONCTION.ORDERS_STATISTICS) && 
+										_.contains(userDetails.getRoles(), HB_ROLE_FONCTION.ADMIN)
+										);
 
 								// Expose order type constants to scope
 								$scope.HB_ORDER_TYPE = HB_ORDER_TYPE;
