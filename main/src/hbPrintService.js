@@ -2,7 +2,7 @@
  * 
  * Provides report definition for elfin CLASSE/GROUPE or generic classifiers LEVEL1/LEVEL2
  *  
- * Caches activeJob and provide it as a service.
+ * Caches activeJob and provides it as a service.
  *  
  * @author Patrick Refondini
  * 
@@ -16,11 +16,10 @@
 				var reportDefinitions = [];
 
 				/**
-				 * Extends report definition matching CLASSE, GROUP information to generic
-				 * LEVEL1, LEVEL2 classifiers strings. 
-				 * Nothing prevents IMPRESSION CLASSE configuration to contain: 
+				 * Returns report definition matching generic LEVEL1, LEVEL2 classifiers strings. 
+				 * IMPRESSION CLASSE configuration contains: 
 				 * 
-			    <L POS="1">
+			    <L POS="x">
                     <C POS="1">Report name</C>
                     <C POS="2">CLASSE or LEVEL1 classifier</C>
                     <C POS="3">GROUPE or LEVEL2 classifier (applies to any LEVEL1 if empty)</C>
@@ -28,8 +27,6 @@
                     <C POS="5">RAPPORTId</C>
                 </L>
                  *
-                 * Note: function - getReportMatchingReportDefinition (elfin) is currently 
-                 * preserved for backward compatibility.
 				 */
 				var getReportMatchingReportDefinitionForClassifiers = function (level1,level2) {
 	        		var reportDefinitionsForLevel1 = [];
@@ -74,51 +71,17 @@
 	        		}
 				};
 				
-				
+				/**
+				 * 
+				 * Returns report definition matching CLASSE, GROUP information from elfin object:
+				 * elfin.CLASSE, elfin.GROUPE.
+				 * See getReportMatchingReportDefinitionForClassifiers(classe, groupe) for details.
+				 */ 
 				var getReportMatchingReportDefinition = function(elfin) {
-	        		var reportDefinitionsForClasse = [];
-	        		for (var i = 0; i < reportDefinitions.length ;i++) {
-	        			var reportDefinition = reportDefinitions[i];
-	        			//$log.debug("Report reportDefinition CLASSE: " + reportDefinition.CLASSE);
-	        			if (reportDefinition.CLASSE === elfin.CLASSE) {
-	        				// Add reportDefinition for this CLASSE. There can be several if defined for CLASSE/GROUPE.
-	        				reportDefinitionsForClasse.push(reportDefinition);
-	        				//$log.debug("Report reportDefinition MATCH FOUND FOR " + reportDefinition.CLASSE);
-	        				//return true;
-	        			} else {
-	        				// continue searching
-	        			}
-	        		}
-	        		
-	        		// No definition found for this CLASSE
-	        		if (reportDefinitionsForClasse.length === 0) {
-	        			return undefined;
-	        		} else if (reportDefinitionsForClasse.length === 1) {
-	        			// GROUPE must be empty or match the current elfin.GROUPE
-	        			if (reportDefinitionsForClasse[0].GROUPE === elfin.GROUPE || reportDefinitionsForClasse[0].GROUPE === "") {
-	        				return reportDefinitionsForClasse[0];
-	        			} else {
-	        				return undefined;
-	        			}
-	        		} else if (reportDefinitionsForClasse.length > 1) {
-	        			var reportDefinitionForClasseWithoutGroupe = null;
-	        			for (var i = 0; i < reportDefinitionsForClasse.length; i++) {
-	        				var reportDefinitionForClasse = reportDefinitionsForClasse[i];
-		        			if (reportDefinitionForClasse.GROUPE === elfin.GROUPE) {
-		        				return reportDefinitionForClasse;
-		        			} else if (reportDefinitionForClasse.GROUPE === "") {
-		        				reportDefinitionForClasseWithoutGroupe = reportDefinitionForClasse;
-		        			}
-	        			}
-	        			if (reportDefinitionForClasseWithoutGroupe == null) {
-	        				return undefined;
-	        			} else {
-	        				return reportDefinitionForClasseWithoutGroupe;
-	        			}
-	        		}
+					return getReportMatchingReportDefinitionForClassifiers(elfin.CLASSE, elfin.GROUPE);
 				};
-				
-				
+
+
 				var hasReportDefinition = function(elfin) {
 	        		//$log.debug("Report definitions available.");
 	        		var mrd = getReportMatchingReportDefinition(elfin);
@@ -188,11 +151,13 @@
 												var currPrintElfinLine = printElfin.CARACTERISTIQUE.FRACTION.L[i]; 
 												hbUtil.reorderArrayByPOS(currPrintElfinLine.C);
 												/*
-													<C POS="1">Nom du rapport </C>
-													<C POS="2">CLASSE (classe à laquelle s'applique le rapport)</C>
-													<C POS="3">GROUPE (groupe à laquelle s'applique le rapport - si vide s'applique à tous les groupes)</C>
-													<C POS="4">IDG</C>
-													<C POS="5">RAPPORTId</C>
+												    <L POS="x">
+									                    <C POS="1">Report name</C>
+									                    <C POS="2">CLASSE or LEVEL1 classifier</C>
+									                    <C POS="3">GROUPE or LEVEL2 classifier (applies to any LEVEL1 if empty)</C>
+									                    <C POS="4">IDG</C>
+									                    <C POS="5">RAPPORTId</C>
+									                </L>
 												*/
 												var reportTitle = currPrintElfinLine.C[0].VALUE;
 												var reportClasse = currPrintElfinLine.C[1].VALUE;
