@@ -10,7 +10,7 @@
 
 (function() {
 	angular.module('hb5').service('hbPrintService',
-			[ '$log', 'GeoxmlService', 'hbUtil', function($log, GeoxmlService, hbUtil) {
+			[ '$window' ,'$log', 'GeoxmlService', 'hbUtil', 'hbAlertMessages', function($window, $log, GeoxmlService, hbUtil, hbAlertMessages) {
 
 				var activeJob = null;
 				var reportDefinitions = [];
@@ -32,12 +32,11 @@
 	        		var reportDefinitionsForLevel1 = [];
 	        		for (var i = 0; i < reportDefinitions.length ;i++) {
 	        			var reportDefinition = reportDefinitions[i];
-	        			//$log.debug("Report reportDefinition CLASSE: " + reportDefinition.CLASSE);
+	        			$log.debug("Report reportDefinition CLASSE: " + reportDefinition.CLASSE);
 	        			if (reportDefinition.CLASSE === level1) {
 	        				// Add reportDefinition matching this level1 value. There can be several if defined for level1/level2.
 	        				reportDefinitionsForLevel1.push(reportDefinition);
-	        				//$log.debug("Report reportDefinition MATCH FOUND FOR level 1: " + level1);
-	        				//return true;
+	        				$log.debug("Report reportDefinition MATCH FOUND FOR level 1: " + level1);
 	        			} else {
 	        				// continue searching
 	        			}
@@ -47,6 +46,7 @@
 	        		if (reportDefinitionsForLevel1.length === 0) {
 	        			return undefined;
 	        		} else if (reportDefinitionsForLevel1.length === 1) {
+	        			$log.debug("Report definition single match");
 	        			// GROUPE must be empty or match the current elfin.GROUPE
 	        			if (reportDefinitionsForLevel1[0].GROUPE === level2 || reportDefinitionsForLevel1[0].GROUPE === "") {
 	        				return reportDefinitionsForLevel1[0];
@@ -54,18 +54,23 @@
 	        				return undefined;
 	        			}
 	        		} else if (reportDefinitionsForLevel1.length > 1) {
+	        			$log.debug("Report definition multiple match = " + reportDefinitionsForLevel1.length );
 	        			var reportDefinitionForClasseWithoutGroupe = null;
 	        			for (var i = 0; i < reportDefinitionsForLevel1.length; i++) {
 	        				var reportDefinitionForClasse = reportDefinitionsForLevel1[i];
+	        				$log.debug("Report level2 test: " + reportDefinitionForClasse.GROUPE + " === " + level2);
 		        			if (reportDefinitionForClasse.GROUPE === level2) {
+		        				$log.debug("Report level2 test MATCHED " + level2);
 		        				return reportDefinitionForClasse;
 		        			} else if (reportDefinitionForClasse.GROUPE === "") {
 		        				reportDefinitionForClasseWithoutGroupe = reportDefinitionForClasse;
 		        			}
 	        			}
 	        			if (reportDefinitionForClasseWithoutGroupe == null) {
+	        				$log.debug("Report reportDefinitionForClasseWithoutGroupe == null ");
 	        				return undefined;
 	        			} else {
+	        				$log.debug("Report reportDefinitionForClasseWithoutGroupe NOT null ");
 	        				return reportDefinitionForClasseWithoutGroupe;
 	        			}
 	        		}
@@ -82,6 +87,9 @@
 				};
 
 
+				/**
+				 * Test whether a report definition exists for this elfin.CLASSE, elfin.GROUPE
+				 */
 				var hasReportDefinition = function(elfin) {
 	        		//$log.debug("Report definitions available.");
 	        		var mrd = getReportMatchingReportDefinition(elfin);
@@ -102,6 +110,10 @@
 	        		}
 				};
 				
+				/**
+				 * Obtains report definition, builds corresponding URL to obtain report and returns it.
+				 * If no report definition is found returns an empty string.
+				 */
 				var buildReportUrlForClassifiers = function(elfin, level1, level2) {
 	        		var mrd = getReportMatchingReportDefinitionForClassifiers(level1,level2);
 	        		if (mrd == undefined) {
@@ -110,6 +122,20 @@
 	        			return "/api/melfin/report/"+mrd.ID_G+"/"+mrd.Id+"?col="+elfin.ID_G+"&id="+elfin.Id;
 	        		}
 				};				
+				
+				
+		        /**
+		         * Provides feedback to end-user if no report definition is available for provided parameters.
+		         */
+		        var getReportOrProvideFeedbackForMissingConfig = function (elfin, classifierLevel1, classifierLevel2) {
+		        	var reportUrl = buildReportUrlForClassifiers(elfin, classifierLevel1 , classifierLevel2);
+		        	if (reportUrl.length > 0) {
+		        		$window.open(reportUrl);	
+		        	} else {
+		        		hbAlertMessages.addAlert(
+								"danger", "Pas de rapport configuré pour (`"+classifierLevel1+"`,`"+classifierLevel2+"`) . Contactez s.v.p. l'administrateur du système.");
+		        	}
+		        };				
 				
 				
 				return {
@@ -208,6 +234,9 @@
 					},
 					getReportUrlForClassifiers : function(elfin, level1, level2) {
 						return buildReportUrlForClassifiers(elfin, level1, level2);
+					},
+					getReportOrProvideFeedbackForMissingConfig : function(elfin, level1, level2) {
+						return getReportOrProvideFeedbackForMissingConfig(elfin, level1, level2);
 					}
 				};
 			} ]);
