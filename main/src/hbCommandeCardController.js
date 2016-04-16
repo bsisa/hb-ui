@@ -18,6 +18,7 @@
 							'hbUtil',
 							'HB_EVENTS',
 							'HB_ORDER_TYPE',
+							'HB_ORDER_REPORT_TYPE',
 							'HB_ROLE_FONCTION',
 							'userDetails',
 							'hbQueryService',
@@ -26,7 +27,7 @@
 							function($attrs, $scope, $rootScope, GeoxmlService,
 									$modal, $routeParams, $location, $log,
 									$timeout, hbAlertMessages, hbUtil,
-									HB_EVENTS, HB_ORDER_TYPE, HB_ROLE_FONCTION, userDetails, hbQueryService, hbPrintService, $window) {
+									HB_EVENTS, HB_ORDER_TYPE, HB_ORDER_REPORT_TYPE, HB_ROLE_FONCTION, userDetails, hbQueryService, hbPrintService, $window) {
 								
 								$scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";
 								$scope.OBJECTS_SELECTION_TYPE_SURFACE = "SURFACE";
@@ -638,28 +639,21 @@
 						         * Prints provider purchase order.
 						         */
 						        $scope.printProviderPurchaseOrderReport = function (elfin) {
-						        	var reportUrl = hbPrintService.getReportUrlForClassifiers(elfin, "ORDER_PURCHASE_PROVIDER", elfin.PARTENAIRE.PROPRIETAIRE.NOM);
-						        	$window.open(reportUrl);
-						        	
-						        	//$window.open("/api/melfin/report/G20050101000012345/G20160112111800000?col="+elfin.ID_G+"&id="+elfin.Id);
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.PURCHASE_ORDER_PROVIDER,elfin.PARTENAIRE.PROPRIETAIRE.NOM);
 						        };					        
 						        
 						        /**
 						         * Prints tenant purchase order.
 						         */
 						        $scope.printTenantPurchaseOrderReport = function (elfin) {
-						        	var reportUrl = hbPrintService.getReportUrlForClassifiers(elfin, "ORDER_PURCHASE_TENANT", elfin.PARTENAIRE.PROPRIETAIRE.NOM);
-						        	$window.open(reportUrl);
-						        	
-						        	//$window.open("/api/melfin/report/G20050101000012345/G20160210190000000?col="+elfin.ID_G+"&id="+elfin.Id);
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.PURCHASE_ORDER_TENANT,elfin.PARTENAIRE.PROPRIETAIRE.NOM);						        	
 						        };							        
 					            
-
 						        /**
 						         * Prints entreprise contract.
 						         */
 						        $scope.printEntrepriseContractReport = function (elfin) {
-						        	$window.open("/api/melfin/report/G20050101000012345/G20160226150000001?col="+elfin.ID_G+"&id="+elfin.Id);
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM);
 						        };
 						        
 
@@ -667,7 +661,7 @@
 						         * Prints order confirmation.
 						         */
 						        $scope.printOrderConfirmationReport = function (elfin) {
-						        	$window.open("/api/melfin/report/G20050101000012345/G20160226150000002?col="+elfin.ID_G+"&id="+elfin.Id);
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.ORDER_CONFIRMATION,elfin.PARTENAIRE.PROPRIETAIRE.NOM);						        	
 						        };
 						        
 						        
