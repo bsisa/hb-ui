@@ -32,11 +32,9 @@
 	        		var reportDefinitionsForLevel1 = [];
 	        		for (var i = 0; i < reportDefinitions.length ;i++) {
 	        			var reportDefinition = reportDefinitions[i];
-	        			$log.debug("Report reportDefinition CLASSE: " + reportDefinition.CLASSE);
 	        			if (reportDefinition.CLASSE === level1) {
 	        				// Add reportDefinition matching this level1 value. There can be several if defined for level1/level2.
 	        				reportDefinitionsForLevel1.push(reportDefinition);
-	        				$log.debug("Report reportDefinition MATCH FOUND FOR level 1: " + level1);
 	        			} else {
 	        				// continue searching
 	        			}
@@ -46,7 +44,6 @@
 	        		if (reportDefinitionsForLevel1.length === 0) {
 	        			return undefined;
 	        		} else if (reportDefinitionsForLevel1.length === 1) {
-	        			$log.debug("Report definition single match");
 	        			// GROUPE must be empty or match the current elfin.GROUPE
 	        			if (reportDefinitionsForLevel1[0].GROUPE === level2 || reportDefinitionsForLevel1[0].GROUPE === "") {
 	        				return reportDefinitionsForLevel1[0];
@@ -54,23 +51,18 @@
 	        				return undefined;
 	        			}
 	        		} else if (reportDefinitionsForLevel1.length > 1) {
-	        			$log.debug("Report definition multiple match = " + reportDefinitionsForLevel1.length );
 	        			var reportDefinitionForClasseWithoutGroupe = null;
 	        			for (var i = 0; i < reportDefinitionsForLevel1.length; i++) {
 	        				var reportDefinitionForClasse = reportDefinitionsForLevel1[i];
-	        				$log.debug("Report level2 test: " + reportDefinitionForClasse.GROUPE + " === " + level2);
 		        			if (reportDefinitionForClasse.GROUPE === level2) {
-		        				$log.debug("Report level2 test MATCHED " + level2);
 		        				return reportDefinitionForClasse;
 		        			} else if (reportDefinitionForClasse.GROUPE === "") {
 		        				reportDefinitionForClasseWithoutGroupe = reportDefinitionForClasse;
 		        			}
 	        			}
 	        			if (reportDefinitionForClasseWithoutGroupe == null) {
-	        				$log.debug("Report reportDefinitionForClasseWithoutGroupe == null ");
 	        				return undefined;
 	        			} else {
-	        				$log.debug("Report reportDefinitionForClasseWithoutGroupe NOT null ");
 	        				return reportDefinitionForClasseWithoutGroupe;
 	        			}
 	        		}
@@ -100,7 +92,8 @@
 	        		}
 				};
 				
-				//TODO: Test and change API to deal with parameter in a generic way: requires original elfin ID_G,Id to be passed...
+				//TODO: Test and change REST API to deal with parameter in a generic way: 
+				// requires original elfin ID_G,Id to be part of REST URL not URL parameters.
 				var buildReportUrl = function(elfin) {
 	        		var mrd = getReportMatchingReportDefinition(elfin);
 	        		if (mrd == undefined) {
