@@ -116,6 +116,18 @@ angular.module('hb5').constant('HB_REGEXP', {
 	NUMERIC_POS_AND_NEG_ONLY : /^[-]?\d*\.?\d*$/
 });
 
+/**
+ * There is not 1-1 relationship from order type to order report type.
+ * Check hbCommandeCardController for up to date relationship as well 
+ * as ELFIN @CLASSE='IMPRESSION' level1 classifiers for available report types.
+ */
+angular.module('hb5').constant('HB_ORDER_REPORT_TYPE', {
+	PURCHASE_ORDER_PROVIDER : "ORDER_PURCHASE_PROVIDER",
+	PURCHASE_ORDER_TENANT : "ORDER_PURCHASE_TENANT",
+	ORDER_CONFIRMATION : "ORDER_CONFIRMATION" ,
+	CONTRACT : "ORDER_CONTRACT"
+});
+
 
 /**
  * Define order types required as `hardcoded` references within application.
