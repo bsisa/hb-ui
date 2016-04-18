@@ -659,8 +659,7 @@
 							        	var currentContractNb = count;
 							        	$log.debug(">>>> currentContractNb = " + angular.toJson(currentContractNb) );
 							        	
-							        	var contractNumber = elfin.IDENTIFIANT.OBJECTIF + "_" + new Date().getFullYear() + "_" + currentContractNb;
-							        	var next2DigitsFormattedContractNumber = ("00"+(contractNumber + 1)).slice(-2)
+							        	var next2DigitsFormattedContractNumber = elfin.IDENTIFIANT.OBJECTIF + "_" + new Date().getFullYear() + "_" + ("00"+(currentContractNb + 1)).slice(-2);
 							        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, next2DigitsFormattedContractNumber , undefined);							        	
 							        	
 						    		}, function(response) {
