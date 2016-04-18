@@ -297,6 +297,13 @@
 												};
 											$scope.elfin.PARTENAIRE.PROPRIETAIRE = buildingOwner;
 										}
+										
+										// Update contract number on building change.
+										if ($scope.elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONTRACT) {
+											setContractNumber($scope.elfin);
+										} else {
+											resetContractNumber($scope.elfin);
+										}
 									} else {
 										$log.debug("building : " + angular.toJson($scope.selected.building) + " ... WAITING for initialisation...");
 									}
@@ -410,8 +417,44 @@
 												hbAlertMessages.addAlert("danger", message);
 											}
 										);								
+
+
+								/**
+								 * Updates elfin parameter `CARACTERISTIQUE.CAR5.VALEUR` with computed contract number.
+								 * It requires elfin.IDENTIFIANT.OBJECTIF, elfin.IDENTIFIANT.DE.slice(4), elfin.Id to be set.
+								 */
+								var setContractNumber = function(elfin) {
+									hbQueryService.getJsonNbOfContracts(elfin.IDENTIFIANT.OBJECTIF, elfin.IDENTIFIANT.DE.slice(4), elfin.Id).then(function(currentContractNb) {
+							        	// Build full contract number
+										var next2DigitsFormattedContractNumber = elfin.IDENTIFIANT.OBJECTIF + "_" + new Date().getFullYear() + "_" + ("00"+(currentContractNb + 1)).slice(-2);
+							        	elfin.CARACTERISTIQUE.CAR5.VALEUR = next2DigitsFormattedContractNumber;
+						    		}, function(response) {
+						            	var errorMessage = "Error with status code " + response.status + " while getting JSON NbOfContracts.";
+						            	$log.error(errorMessage);
+						            	hbAlertMessages.addAlert("danger","Le nombre de contrats existant n'a pas pu être déterminé.");
+						            });								
+								};
 								
-				
+								var resetContractNumber = function(elfin) {
+									// Reset contract number to ""
+									elfin.CARACTERISTIQUE.CAR5.VALEUR = "";									
+								};
+								
+								
+								$scope.$watch('elfin.IDENTIFIANT.QUALITE', function(newQualite, oldQualite) { 
+									if (newQualite !== null && newQualite !== undefined && newQualite.length > 0) {
+										$log.debug("newQualite : change to: " + newQualite);
+										if (newQualite === HB_ORDER_TYPE.CONTRACT) {
+											setContractNumber($scope.elfin);
+										} else {
+											resetContractNumber($scope.elfin);
+										}
+									} else {
+										$log.debug("newQualite : NULL or length === 0");
+									}
+								}, true);																
+								
+								
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
@@ -484,14 +527,13 @@
 												$scope.elfin.IDENTIFIANT.VALEUR = "";
 
 												GeoxmlService.getNewOrderNumber().get().then(function(number) {
-														// Reserved for future semantic identifier nb. 
-														$scope.elfin.IDENTIFIANT.NOM = number;													
-													},
-													function(response) {
-														var message = "Le numéro de commande n'a pas pu être obtenu. (statut de retour: "+ response.status+ ")";
-														hbAlertMessages.addAlert("danger",message);
-													});	
-												
+													// End-user order number. 
+													$scope.elfin.IDENTIFIANT.NOM = number;													
+												},
+												function(response) {
+													var message = "Le numéro de commande n'a pas pu être obtenu. (statut de retour: "+ response.status+ ")";
+													hbAlertMessages.addAlert("danger",message);
+												});	
 												
 												// Reset entreprise service provider 
 												$scope.elfin.PARTENAIRE.FOURNISSEUR.Id = "";
@@ -533,6 +575,7 @@
 												} else {
 													$scope.selected.objectsSelectionType = $scope.OBJECTS_SELECTION_TYPE_SURFACE;
 												}
+												
 											} else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
@@ -653,22 +696,7 @@
 						         * Prints entreprise contract.
 						         */
 						        $scope.printEntrepriseContractReport = function (elfin) {
-						        	
-						        	var currentContractNb = 0;
-						        	hbQueryService.getJsonNbOfContracts(elfin.IDENTIFIANT.OBJECTIF, new Date().getFullYear(), elfin.Id).then(function(count) {
-							        	var currentContractNb = count;
-							        	$log.debug(">>>> currentContractNb = " + angular.toJson(currentContractNb) );
-							        	
-							        	var next2DigitsFormattedContractNumber = elfin.IDENTIFIANT.OBJECTIF + "_" + new Date().getFullYear() + "_" + ("00"+(currentContractNb + 1)).slice(-2);
-							        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, next2DigitsFormattedContractNumber , undefined);							        	
-							        	
-						    		}, function(response) {
-						            	var errorMessage = "Error with status code " + response.status + " while getting JSON NbOfContracts.";
-						            	$log.error(errorMessage);
-						            	hbAlertMessages.addAlert("danger","Le nombre de contrats existant n'a pas pu être déterminé.");
-						            });						
-
-
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, elfin.CARACTERISTIQUE.CAR5.VALEUR , undefined);							        	
 						        };
 						        
 
