@@ -660,7 +660,8 @@
 							        	$log.debug(">>>> currentContractNb = " + angular.toJson(currentContractNb) );
 							        	
 							        	var contractNumber = elfin.IDENTIFIANT.OBJECTIF + "_" + new Date().getFullYear() + "_" + currentContractNb;
-							        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, "0"+(contractNumber + 1), undefined);							        	
+							        	var next2DigitsFormattedContractNumber = ("00"+(contractNumber + 1)).slice(-2)
+							        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, next2DigitsFormattedContractNumber , undefined);							        	
 							        	
 						    		}, function(response) {
 						            	var errorMessage = "Error with status code " + response.status + " while getting JSON NbOfContracts.";
