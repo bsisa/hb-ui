@@ -107,12 +107,12 @@
 				 * Obtains report definition, builds corresponding URL to obtain report and returns it.
 				 * If no report definition is found returns an empty string.
 				 */
-				var buildReportUrlForClassifiers = function(elfin, level1, level2) {
+				var buildReportUrlForClassifiers = function(elfin, level1, level2, headerParam1, headerParam2) {
 	        		var mrd = getReportMatchingReportDefinitionForClassifiers(level1,level2);
 	        		if (mrd == undefined) {
 	        			return "";
 	        		} else {
-	        			return "/api/melfin/report/"+mrd.ID_G+"/"+mrd.Id+"?col="+elfin.ID_G+"&id="+elfin.Id;
+	        			return "/api/melfin/report/"+mrd.ID_G+"/"+mrd.Id+"?col="+elfin.ID_G+"&id="+elfin.Id + (headerParam1 ? "&reportHeaderParam1="+headerParam1:"") + (headerParam2 ? "&reportHeaderParam2="+headerParam2:"") ;
 	        		}
 				};				
 				
@@ -121,15 +121,23 @@
 		         * Provides feedback to end-user if no report definition is available for provided parameters.
 		         */
 		        var getReportOrProvideFeedbackForMissingConfig = function (elfin, classifierLevel1, classifierLevel2) {
-		        	var reportUrl = buildReportUrlForClassifiers(elfin, classifierLevel1 , classifierLevel2);
+		        	getReportOrProvideFeedbackForMissingConfig(elfin, classifierLevel1, classifierLevel2, undefined, undefined);
+		        };				
+				
+		        
+		        /**
+		         * Provides feedback to end-user if no report definition is available for provided parameters.
+		         * Passes header parameters on to report building system. 
+		         */		        
+		        var getReportOrProvideFeedbackForMissingConfig = function (elfin, classifierLevel1, classifierLevel2, headerParam1, headerParam2) {
+		        	var reportUrl = buildReportUrlForClassifiers(elfin, classifierLevel1 , classifierLevel2, headerParam1, headerParam2);
 		        	if (reportUrl.length > 0) {
 		        		$window.open(reportUrl);	
 		        	} else {
 		        		hbAlertMessages.addAlert(
 								"danger", "Pas de rapport configuré pour (`"+classifierLevel1+"`,`"+classifierLevel2+"`) . Contactez s.v.p. l'administrateur du système.");
-		        	}
-		        };				
-				
+		        	}		        	
+		        };
 				
 				return {
 					setActiveJob : function(activeJob_p) {
@@ -230,7 +238,10 @@
 					},
 					getReportOrProvideFeedbackForMissingConfig : function(elfin, level1, level2) {
 						return getReportOrProvideFeedbackForMissingConfig(elfin, level1, level2);
-					}
+					},
+					getReportOrProvideFeedbackForMissingConfig : function(elfin, level1, level2, headerParam1, headerParam2) {
+						return getReportOrProvideFeedbackForMissingConfig(elfin, level1, level2, headerParam1, headerParam2);
+					}					
 				};
 			} ]);
 
