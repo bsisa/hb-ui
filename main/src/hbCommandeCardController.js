@@ -653,7 +653,8 @@
 						         * Prints entreprise contract.
 						         */
 						        $scope.printEntrepriseContractReport = function (elfin) {
-						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM);
+						        	var contractNumber = elfin.IDENTIFIANT.OBJECTIF + "_" + new Date().getFullYear() + "_xx";
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, contractNumber, undefined);
 						        };
 						        
 
