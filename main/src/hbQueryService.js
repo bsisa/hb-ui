@@ -365,7 +365,16 @@
 		 */
 		var getJsonAccountingGroups = function() {
 			return GeoxmlService.getXqueryResult("jsonPrestationAccountingGroups.xq").get();
-		};	
+		};
+		
+		/**
+		 * Get the number of contracts for a given SAI number and year. 
+		 * The orderId parameter is necessary to exclude the `contract` 
+		 * order from count if already persisted to database.
+		 */
+		var getJsonNbOfContracts = function(saiNb, year, orderId) {
+			return GeoxmlService.getXqueryResult("jsonNextContractNbForSaiNb.xq").get({"saiNb" : saiNb, "year" : year , "orderId" : orderId});
+		};			
 		
 		
 		
@@ -396,7 +405,8 @@
         	getUserList:getUserList,
         	getVentilationList:getVentilationList,
         	getWcList:getWcList,
-        	getJsonAccountingGroups:getJsonAccountingGroups
+        	getJsonAccountingGroups:getJsonAccountingGroups,
+        	getJsonNbOfContracts:getJsonNbOfContracts
         };
 
     }]);

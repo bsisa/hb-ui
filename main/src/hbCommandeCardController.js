@@ -653,8 +653,22 @@
 						         * Prints entreprise contract.
 						         */
 						        $scope.printEntrepriseContractReport = function (elfin) {
-						        	var contractNumber = elfin.IDENTIFIANT.OBJECTIF + "_" + new Date().getFullYear() + "_xx";
-						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, contractNumber, undefined);
+						        	
+						        	var currentContractNb = 0;
+						        	hbQueryService.getJsonNbOfContracts(elfin.IDENTIFIANT.OBJECTIF, new Date().getFullYear(), elfin.Id).then(function(count) {
+							        	var currentContractNb = count;
+							        	$log.debug(">>>> currentContractNb = " + angular.toJson(currentContractNb) );
+							        	
+							        	var contractNumber = elfin.IDENTIFIANT.OBJECTIF + "_" + new Date().getFullYear() + "_" + currentContractNb;
+							        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, "0"+(contractNumber + 1), undefined);							        	
+							        	
+						    		}, function(response) {
+						            	var errorMessage = "Error with status code " + response.status + " while getting JSON NbOfContracts.";
+						            	$log.error(errorMessage);
+						            	hbAlertMessages.addAlert("danger","Le nombre de contrats existant n'a pas pu être déterminé.");
+						            });						
+
+
 						        };
 						        
 
