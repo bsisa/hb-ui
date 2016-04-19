@@ -31,7 +31,8 @@
 
 		        			  $log.debug("hbValidCode: found " + codesList.length + " codes.");
 		        			  
-		        			  // DOM to model validation
+		        			  // Add DOM to model validation function to $parsers functions array, 
+		        			  // leaving value unchanged
 		    		          ngModel.$parsers.unshift(function(value) {
 		    		        	  var valid = checkValid(codesList, value);
 		    		        	  ngModel.$setValidity('hbValidCode', valid);
@@ -39,7 +40,8 @@
 		    		        	  return value;
 		    		          });
 	
-		    		          // Model to DOM validation
+		    		          // Add model to DOM validation function to $formatters functions array, 
+		        			  // leaving value unchanged
 		    		          ngModel.$formatters.unshift(function(value) {
 		    		             ngModel.$setValidity('hbValidCode', checkValid(codesList, value));
 		    		             return value;
