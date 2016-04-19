@@ -557,9 +557,9 @@
 		 */
 		var processMostRecentOnly = function(token, tokensStack, callBackFunction, callBackFunctionParam) {
 			
-			$log.debug(">>>> ");
-			$log.debug(">>>> token              = " + angular.toJson(token));
-			$log.debug(">>>> tokensStack BEFORE = " + angular.toJson(tokensStack));
+			//$log.debug(">>>> ");
+			//$log.debug(">>>> token              = " + angular.toJson(token));
+			//$log.debug(">>>> tokensStack BEFORE = " + angular.toJson(tokensStack));
 			
 			// ====================================================
 			// proceed with or drop update algorithm
@@ -567,7 +567,7 @@
 			// 
 			// 1) If there is only one pending token
 			if (tokensStack.length === 1) {
-				$log.debug(">>>> 1) ");
+				//$log.debug(">>>> 1) ");
 				
 			// 1.1) We expected the last pending token to equal the received token
 				if (tokensStack[0] === token) {
@@ -581,18 +581,18 @@
 			// 2) If there is more than one pending token
 			} else if (tokensStack.length > 1) {
 				
-				$log.debug(">>>> 2) ");
+				//$log.debug(">>>> 2) ");
 				
 				// 2.1) If the received token equals the most recent token 
 				if (tokensStack[0] === token) {
-					$log.debug(">>>> 2.1) ");
+					//$log.debug(">>>> 2.1) ");
 					// => proceed
 					callBackFunction.apply(this, callBackFunctionParam);
 					// drop all remaining older tokens to prevent processing of older request 
 					emptyTokensStack(tokensStack);
 					// 2.2) If the received token does not equal the most recent token and is older
 				} else if (tokensStack[0] > token) {
-					$log.debug(">>>> 2.2) ");
+					//$log.debug(">>>> 2.2) ");
 	   				// => drop and remove the token to prevent processing of older request 
 					removeFromTokensStack(token, tokensStack);
 				} else if (tokensStack[0] < token) {
@@ -604,12 +604,12 @@
 			// 3) If there is no pending update
 			// => drop (regular situation)
 			} else {
-				$log.debug(">>>> 3) ");
+				//$log.debug(">>>> 3) ");
 				// Do nothing. Ok.
 			}
 		
-			$log.debug(">>>> tokensStack AFTER  = " + angular.toJson(tokensStack));
-			$log.debug(">>>> ");
+			//$log.debug(">>>> tokensStack AFTER  = " + angular.toJson(tokensStack));
+			//$log.debug(">>>> ");
 			
 		};
 		
