@@ -364,9 +364,18 @@
 											// typeahead manual typing, then solving selection through hbChooseOne selection.
 											// The latter selection will not be noticed by the view model and thus not reset
 											// the field validity state correctly.
-											$scope.elfinForm.fournisseur.$setValidity('editable', true)
+											// Note: above behaviour not currently implemented as hbChooseOne is not used.
+											//$scope.elfinForm.fournisseur.$setValidity('editable', true);	
+											
+											if ($scope.selected.provider.Id !== "") {
+												$scope.elfinForm.fournisseur.$setValidity('required', true);
+												//$scope.elfinForm.fournisseur.$setValidity('editable', true);	
+											} else {
+												$scope.elfinForm.fournisseur.$setValidity('required', false);
+												//$scope.elfinForm.fournisseur.$setValidity('editable', false);
+											}
 										} else {
-											//$log.debug("provider has been reset... ");											
+											$log.debug("provider has been reset... ");											
 											var provider = {
 												      "Id" : "",
 												      "ID_G" : "",
@@ -374,7 +383,8 @@
 												      "GROUPE" : "",
 												      "VALUE" : ""
 												};
-											$scope.elfin.PARTENAIRE.FOURNISSEUR = provider;											
+											$scope.elfin.PARTENAIRE.FOURNISSEUR = provider;				
+											$scope.elfinForm.fournisseur.$setValidity('required', false);											
 										}
 									} else {
 										$log.debug("provider : " + angular.toJson($scope.selected.provider) + " ... WAITING for initialisation...");

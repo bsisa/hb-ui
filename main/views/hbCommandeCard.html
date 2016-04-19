@@ -8,9 +8,10 @@
 <!-- 	<li ng-show="elfinForm.amount.$error.number">Le <strong>montant</strong> n'est pas valide. Exemple valide: 100.50</li> -->
 	<!-- If required is set the number exception is never triggered. (Might be fixed with Angular > 1.2.x) -->
 <!-- 	<li ng-show="elfinForm.amount.$error.required">Le <strong>montant</strong> est obligatoire</li> -->
-<!-- 	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire!</li> -->
+	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire!</li>
 <!-- 	<li ng-show="elfinForm.fournisseur.$error.required">Le <strong>fournisseur</strong> est obligatoire!</li> -->
-<!-- 	<li ng-show="elfinForm.building.$error.required">Le <strong>No SAI</strong> est obligatoire!</li> -->
+	<li ng-show="elfinForm.building.$error.required">Le (building) <strong>No SAI</strong> est obligatoire!</li>
+	<li ng-show="elfinForm.objectif.$error.required">Le (objectif) <strong>No SAI</strong> est obligatoire!</li>
 	</ul>
 </div>
 <div class="row" style="padding-top: 8px;">
@@ -24,10 +25,10 @@
 			<!-- 1st column -->
 			<div class="col-sm-6">
 
-				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.orderNb)">				
-					<label for="orderNb" class="col-sm-4 control-label">No commande</label>
+				<div class="form-group">				
+					<label class="col-sm-4 control-label">No <span ng-if="elfin.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT" >contrat/cmde.</span><span ng-if="elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.CONTRACT" >commande</span></label>
 					<div class="col-sm-4">
-						<p class="form-control-static">{{elfin.IDENTIFIANT.NOM}}</p>
+						<p class="form-control-static"><span ng-if="elfin.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT" >{{elfin.CARACTERISTIQUE.CAR5.VALEUR}} / </span>{{elfin.IDENTIFIANT.NOM}}</p>
 					</div>
 					<label class="col-sm-2 control-label">Statut</label>
 					<div class="col-sm-2">
@@ -104,14 +105,14 @@
  			<div class="col-sm-6">
  			
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.objectsSelectionType)">				
-					<label for="objectsSelectionType" class="col-sm-4 control-label">Séléction par</label>
+					<label for="objectsSelectionType" class="col-sm-4 control-label">Sélection par</label>
 					<div class="col-sm-8">
 						<div ng-if="!isReadOnly" id="objectsSelectionType" name="objectsSelectionType" hb-single-select hb-single-select-options="objectsSelectionTypeChoices" ng-model="selected.objectsSelectionType" ></div>
 						<p ng-if="isReadOnly" class="form-control-static">{{selected.objectsSelectionType}}</p>
 					</div>
 				</div> 			
  			
-				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.building)">
+				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.objectif)">
 					<label for="building" class="col-sm-4 control-label">No SAI</label>
 					<div ng-show="!isReadOnly && (selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_IMMEUBLE)" class="col-sm-8">
 						<div hb-choose-building 
@@ -125,6 +126,9 @@
 					<div ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_IMMEUBLE)" class="col-sm-8">
 					    <p class="form-control-static">{{selected.building.IDENTIFIANT.OBJECTIF}}  - {{selected.building.IDENTIFIANT.ALIAS}} - {{selected.building.PARTENAIRE.PROPRIETAIRE.NOM}}</p>
 					</div>
+					<!-- Used to manage validation only -->
+					<input ng-show="false" id="objectif" name="objectif" class="form-control" autocomplete="off" 
+							ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-required="true"></input>					
 				</div>
 				
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.surface)">
@@ -141,7 +145,6 @@
 					<div ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_SURFACE)" class="col-sm-8">
 					    <p class="form-control-static">{{selected.surface.IDENTIFIANT.OBJECTIF}} - {{selected.surface.PARTENAIRE.USAGER.VALUE}}</p>
 					</div>					
-					
 				</div> 		
  			
 				<div ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.ORDER_PURCHASE" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.code)">
