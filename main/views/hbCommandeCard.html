@@ -5,13 +5,9 @@
 	<li ng-show="elfinForm.cfcCode.$error.hbValidCode">Le <strong>code CFC</strong> n'est pas valide</li>
 	<li ng-show="elfinForm.fournisseur.$error.required">Le <strong>fournisseur</strong> est obligatoire</li>
 	<li ng-show="elfinForm.fournisseur.$error.editable">Le <strong>fournisseur</strong> doit être saisi à partir de la liste de sélection</li>
-<!-- 	<li ng-show="elfinForm.amount.$error.number">Le <strong>montant</strong> n'est pas valide. Exemple valide: 100.50</li> -->
-	<!-- If required is set the number exception is never triggered. (Might be fixed with Angular > 1.2.x) -->
-<!-- 	<li ng-show="elfinForm.amount.$error.required">Le <strong>montant</strong> est obligatoire</li> -->
-	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire!</li>
+	<li ng-show="elfinForm.groupe.$error.required">Le <strong>code CFC</strong> est obligatoire!</li>
 <!-- 	<li ng-show="elfinForm.fournisseur.$error.required">Le <strong>fournisseur</strong> est obligatoire!</li> -->
-	<li ng-show="elfinForm.building.$error.required">Le (building) <strong>No SAI</strong> est obligatoire!</li>
-	<li ng-show="elfinForm.objectif.$error.required">Le (objectif) <strong>No SAI</strong> est obligatoire!</li>
+	<li ng-show="elfinForm.objectif.$error.required">Le <strong>No SAI</strong> est obligatoire!</li>
 	</ul>
 </div>
 <div class="row" style="padding-top: 8px;">
@@ -128,7 +124,7 @@
 					</div>
 					<!-- Used to manage validation only -->
 					<input ng-show="false" id="objectif" name="objectif" class="form-control" autocomplete="off" 
-							ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-required="true"></input>					
+							ng-model="elfin.IDENTIFIANT.OBJECTIF" ng-required="validate"></input>					
 				</div>
 				
 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.surface)">
@@ -147,7 +143,7 @@
 					</div>					
 				</div> 		
  			
-				<div ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.ORDER_PURCHASE" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.code)">
+				<div ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.PURCHASE" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.groupe)">
 					<label for="code" class="col-sm-4 control-label">Code CFC</label>
 					<div class="col-sm-8">
 <!-- 					<pre>{{ elfinForm.cfcCode.$error | json }}</pre> -->
@@ -162,6 +158,9 @@
 							 ></div>					
 						<p ng-show="isReadOnly" class="form-control-static"> {{selected.code.IDENTIFIANT.NOM}} - {{selected.code.DIVERS.REMARQUE}}</p>
 					</div>
+					<!-- Used to manage validation only -->
+					<input ng-show="false" id="groupe" name="groupe" class="form-control" autocomplete="off" 
+							ng-model="elfin.GROUPE" ng-required="(validate && (elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.PURCHASE))"></input>
 				</div>
 				
 <!-- 				<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cfcCode)"> -->
@@ -189,7 +188,7 @@
 								typeahead="actor as actor.GROUPE for actor in entrepriseActors | orderBy:'GROUPE' | actorListFilter:{'groupe': $viewValue} | limitTo:18"
 								typeahead-editable="false"
 								ng-model="selected.provider"
-								ng-required="true">
+								ng-required="validate">
 							
 							<p ng-if="isReadOnly" class="form-control-static" >{{selected.provider.GROUPE}}</p>
 <!-- 								<span -->
@@ -300,7 +299,7 @@
 				</div>
 			</div> 	
 			<div class="col-xs-6 col-xs-offset-3 centre">
-				<button class="btn btn-warning" ng-if="!isReadOnly" ng-click="setIsReadOnlyStatus()" ><span>Valider</span></button>
+				<button class="btn btn-warning" ng-if="!isReadOnly" ng-click="validateEntry()" ><span>Valider</span></button>
 				<button class="btn btn-danger" ng-if="(isReadOnly && canUnlockValidatedOrders)" ng-click="unsetIsReadOnlyStatus()" ><span>Modifier une commande validée</span></button>		
  			</div>
  			</div>

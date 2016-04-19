@@ -202,11 +202,23 @@
 									}
 								};
 								
+								$scope.validateEntry = function() {
+									// If not yet set to read only status 
+									// 1.) Check submission is valid by activating form validation
+									$scope.validate = true;
+									
+									// 2.) setIsReadOnlyStatus will add the necessary keyword and update status only if submission valid
+									
+									// Timeout with 3rd param true forces setIsReadOnlyStatus execution within 
+									// $apply block, which lets form validation following $scope.validate value change
+									// to be effective. 
+									$timeout($scope.setIsReadOnlyStatus, 0, true);
+								};
+								
 								$scope.setIsReadOnlyStatus = function() {
 									// Make sure the keyword does not already exist
 									updateIsReadOnlyStatus();
-									// If not yet set to read only status add the necessary keyword and update status.
-									if (!$scope.isReadOnly) {
+									if (!$scope.isReadOnly && $scope.elfinForm.$valid) {
 										$scope.elfin.IDENTIFIANT.MOTCLE.push({"VALUE" : $scope.READ_ONLY_STATUS_KEYWORD})
 										$scope.elfinForm.$setDirty();
 									};
@@ -366,13 +378,15 @@
 											// the field validity state correctly.
 											// Note: above behaviour not currently implemented as hbChooseOne is not used.
 											//$scope.elfinForm.fournisseur.$setValidity('editable', true);	
-											
-											if ($scope.selected.provider.Id !== "") {
-												$scope.elfinForm.fournisseur.$setValidity('required', true);
-												//$scope.elfinForm.fournisseur.$setValidity('editable', true);	
-											} else {
-												$scope.elfinForm.fournisseur.$setValidity('required', false);
-												//$scope.elfinForm.fournisseur.$setValidity('editable', false);
+
+											if ($scope.validate) {
+												if ($scope.selected.provider.Id !== "" ) {
+													$scope.elfinForm.fournisseur.$setValidity('required', true);
+													//$scope.elfinForm.fournisseur.$setValidity('editable', true);	
+												} else {
+													$scope.elfinForm.fournisseur.$setValidity('required', false);
+													//$scope.elfinForm.fournisseur.$setValidity('editable', false);
+												}
 											}
 										} else {
 											$log.debug("provider has been reset... ");											
@@ -384,7 +398,9 @@
 												      "VALUE" : ""
 												};
 											$scope.elfin.PARTENAIRE.FOURNISSEUR = provider;				
-											$scope.elfinForm.fournisseur.$setValidity('required', false);											
+											if ($scope.validate) {
+												$scope.elfinForm.fournisseur.$setValidity('required', false);
+											}
 										}
 									} else {
 										$log.debug("provider : " + angular.toJson($scope.selected.provider) + " ... WAITING for initialisation...");
@@ -434,10 +450,17 @@
 								 * It requires elfin.IDENTIFIANT.OBJECTIF, elfin.IDENTIFIANT.DE.slice(4), elfin.Id to be set.
 								 */
 								var setContractNumber = function(elfin) {
-									hbQueryService.getJsonNbOfContracts(elfin.IDENTIFIANT.OBJECTIF, elfin.IDENTIFIANT.DE.slice(4), elfin.Id).then(function(currentContractNb) {
+									var saiNb = elfin.IDENTIFIANT.OBJECTIF;
+									var year = elfin.IDENTIFIANT.DE.slice(0,4);
+									var orderId = elfin.Id;
+									hbQueryService.getJsonNbOfContracts(saiNb, year, orderId).then(function(currentContractNb) {
+							        	// Increment current nb of contracts
+							        	var nextContractNb = parseInt(currentContractNb)+1;
+							        	// Pad next contract number on two digits with leading zero.
+							        	var nextContractNbPaddedString = ("00"+nextContractNb).slice(-2);
 							        	// Build full contract number
-										var next2DigitsFormattedContractNumber = elfin.IDENTIFIANT.OBJECTIF + "_" + new Date().getFullYear() + "_" + ("00"+(currentContractNb + 1)).slice(-2);
-							        	elfin.CARACTERISTIQUE.CAR5.VALEUR = next2DigitsFormattedContractNumber;
+										var fullContractNumberAsString = saiNb + "_" + year + "_" + nextContractNbPaddedString ;
+							        	elfin.CARACTERISTIQUE.CAR5.VALEUR = fullContractNumberAsString;
 						    		}, function(response) {
 						            	var errorMessage = "Error with status code " + response.status + " while getting JSON NbOfContracts.";
 						            	$log.error(errorMessage);
