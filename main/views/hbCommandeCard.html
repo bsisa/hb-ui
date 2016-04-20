@@ -245,23 +245,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-6 col-xs-offset-3 centre">
-						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.PURCHASE" ng-click="printProviderPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande fournisseur" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande fournisseur</span></button>
-						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.PURCHASE" ng-click="printTenantPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande locataire</span></button>
-						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONFIRMATION" ng-click="printOrderConfirmationReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Confirmation de commande</span></button>
-						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT" ng-click="printEntrepriseContractReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Contrat d'entreprise</span></button>				
+					<div ng-if="elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE" class="col-xs-12" >
+						<div hb-order-spreadsheet hb-order-elfin-form="elfinForm" hb-order-editable="!isReadOnly" ng-model="elfin"></div>
 					</div>
-					<div ng-if="elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE" class="col-xs-12">
-						<div style="padding-left: 16px;padding-right: 8px;padding-top: 8px;padding-bottom: 8px;">
-							<div class="form-group has-feedback" >
-								<div hb-order-spreadsheet hb-order-elfin-form="elfinForm" hb-order-editable="!isReadOnly" ng-model="elfin"></div>
-							</div>
-						</div>
-					</div> 	
-					<div class="col-xs-6 col-xs-offset-3 centre">
+					<div class="col-xs-6 text-center" >
 						<button class="btn btn-warning" ng-if="!isReadOnly" ng-click="validateEntry()" ><span>Valider</span></button>
 						<button class="btn btn-danger" ng-if="(isReadOnly && canUnlockValidatedOrders)" ng-click="unsetIsReadOnlyStatus()" ><span>Modifier une commande validée</span></button>		
 		 			</div>
+					<div class="col-xs-6 text-center" >
+						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.PURCHASE" ng-click="printProviderPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande fournisseur" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande fournisseur</span></button>
+						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.PURCHASE" ng-click="printTenantPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande locataire</span></button>
+						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONFIRMATION" ng-click="printOrderConfirmationReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Confirmation de commande</span></button>
+						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT" ng-click="printEntrepriseContractReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Contrat d'entreprise</span></button>
+					</div>
  				</div><!-- row encapsulation end -->
 			</div><!-- hb-tab end -->
 		</tab> 
