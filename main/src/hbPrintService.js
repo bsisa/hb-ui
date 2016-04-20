@@ -68,34 +68,24 @@
 	        		}
 				};
 				
-				/**
-				 * 
-				 * Returns report definition matching CLASSE, GROUP information from elfin object:
-				 * elfin.CLASSE, elfin.GROUPE.
-				 * See getReportMatchingReportDefinitionForClassifiers(classe, groupe) for details.
-				 */ 
-				var getReportMatchingReportDefinition = function(elfin) {
-					return getReportMatchingReportDefinitionForClassifiers(elfin.CLASSE, elfin.GROUPE);
-				};
-
 
 				/**
-				 * Test whether a report definition exists for this elfin.CLASSE, elfin.GROUPE
+				 * Test whether a report definition exists for level1, level2 classifiers.
 				 */
-				var hasReportDefinition = function(elfin) {
-	        		//$log.debug("Report definitions available.");
-	        		var mrd = getReportMatchingReportDefinition(elfin);
+				var hasReportDefinition = function(level1,level2) {
+	        		var mrd = getReportMatchingReportDefinitionForClassifiers(level1,level2);
 	        		if (mrd == undefined) {
 	        			return false;
 	        		} else {
 	        			return true;
 	        		}
-				};
+				};				
+				
 				
 				//TODO: Test and change REST API to deal with parameter in a generic way: 
 				// requires original elfin ID_G,Id to be part of REST URL not URL parameters.
 				var buildReportUrl = function(elfin) {
-	        		var mrd = getReportMatchingReportDefinition(elfin);
+	        		var mrd = getReportMatchingReportDefinitionForClassifiers(elfin.CLASSE, elfin.GROUPE);
 	        		if (mrd == undefined) {
 	        			return "";
 	        		} else {
@@ -227,8 +217,8 @@
 					getReportDefinitions : function() {
 						return reportDefinitions;
 					},
-					hasReportDefinition : function(elfin) {
-						return hasReportDefinition(elfin);
+					hasReportDefinition : function(level1, level2) {
+						return hasReportDefinition(level1, level2);
 					},
 					getReportUrl : function(elfin) {
 						return buildReportUrl(elfin);

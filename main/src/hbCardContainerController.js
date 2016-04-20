@@ -39,8 +39,8 @@
      * See: hb-immeuble-card, hb-constat-card, hb-acteur-card for examples. 
      */
     angular.module('hb5').controller('HbCardContainerController', [
-        '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', '$window', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'HB_ROLE_FONCTION', 'MapService','hbPrintService', 'hbTabCacheService', 'userDetails',
-        function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, $window, hbAlertMessages, hbUtil, HB_EVENTS, HB_ROLE_FONCTION, MapService, hbPrintService, hbTabCacheService, userDetails) {
+        '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', '$window', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'HB_ROLE_FONCTION', 'HB_REPORT', 'MapService','hbPrintService', 'hbTabCacheService', 'userDetails',
+        function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, $window, hbAlertMessages, hbUtil, HB_EVENTS, HB_ROLE_FONCTION, HB_REPORT, MapService, hbPrintService, hbTabCacheService, userDetails) {
     
         	
         // Provide dev access rights information to scope
@@ -144,7 +144,7 @@
          */        
         $scope.canPrint = function() {
         	if ($scope.elfin!=null) {
-	        	return hbPrintService.hasReportDefinition($scope.elfin);
+	        	return hbPrintService.hasReportDefinition($scope.elfin.CLASSE,$scope.elfin.GROUPE);
         	} else {
         		return false;
         	}
@@ -358,18 +358,14 @@
          * Helper to deal with enabled / disabled status for labels report.
          */
         $scope.hasLabelsReport = function (elfin) {
-        	if (elfin!=null && angular.isDefined(elfin.CLASSE)) {
-        		return (elfin.CLASSE === 'IMMEUBLE');
-        	} else {
-        		return false;
-        	}
+        	return hbPrintService.hasReportDefinition(elfin.CLASSE,HB_REPORT.CLASSIFIER_LEVEL2_LABELS);
         }
         
         /**
          * Prints labels report designed for IMMEUBLE only.
          */
         $scope.printLabelsReport = function (elfin) {
-        	$window.open("/api/melfin/report/G20050101000012345/G20150928113000000?col="+elfin.ID_G+"&id="+elfin.Id);
+        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,elfin.CLASSE,HB_REPORT.CLASSIFIER_LEVEL2_LABELS);
         }
         
         /**
