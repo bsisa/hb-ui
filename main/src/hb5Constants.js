@@ -156,3 +156,11 @@ angular.module('hb5').constant('HB_ORDER_LINE_TYPE', {
 	NET_AMOUNT_TOTAL : "TOTAL_NET"
 });
 
+
+/**
+ * Define constants related to report service.
+ */
+angular.module('hb5').constant('HB_REPORT', {
+	CLASSIFIER_LEVEL2_LABELS : "labels"
+});
+
