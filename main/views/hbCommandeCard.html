@@ -58,6 +58,15 @@
 								<p ng-if="isReadOnly" class="form-control-static">{{elfin.IDENTIFIANT.A | date}}</p>
 							</div>
 						</div>
+						<div ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT" class="form-group">
+							<label for="deadlineText" class="col-sm-4 control-label">Délais (texte)</label>
+							<div class="col-sm-4" >
+								<input ng-if="!isReadOnly" id="deadlineText" name="deadlineText" class="form-control"  
+									autocomplete="off"
+									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR"></input>
+								<p ng-if="isReadOnly" class="form-control-static">{{elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR}}</p>		
+							</div>
+						</div>									
 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.contact)">
 							<label for="contact" class="col-sm-4 control-label" >
 								<span ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.CONTRACT)">Personne à contacter</span>
