@@ -245,10 +245,9 @@
 						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Assurance TC", "0.00", "%", "", "true" ),
 						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Panneau de chantier", "", "", "0.00", "false" ),
 						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
-						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
-//						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
-//						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" ),
-						getLine(HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL, "Total net TTC adjugé", "", "", "0.00", "false" )
+						getLine(HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL, "Total net", "", "", "0.00", "false" ),
+						getLine(HB_ORDER_LINE_TYPE.TAX_RATE, "TVA", "8.00", "%", "", "true" ),
+						getLine(HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL_INCL_TAX, "Total net TTC adjugé", "", "", "0.00", "false" )
 			    ];
 			
 			return Ls;
@@ -267,7 +266,7 @@
 		};
 		
 		var getOrderContractIntroduction = function() {
-			return "TODO...";
+			return "";
 		};
 		
 		var getOrderPurchaseIntroduction = function() {
