@@ -440,6 +440,8 @@
 					hbUtil.replaceFractionLByIndex($scope.ngModelCtrl.$modelValue, index, newLine);
 					// Perform computation and amounts update
 					$scope.updateOrderLines(formValid);
+					// Avoid preserving selected.lineType state
+					$scope.selected.lineType = "";
 				};				
 				
 				
