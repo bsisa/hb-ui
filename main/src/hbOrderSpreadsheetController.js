@@ -209,7 +209,12 @@
 				 * Boolean expression to make order line label conditionally editable
 				 */
 				$scope.lineLabelEditable = function(line) {
-					var isLineLabelEditable = !((line.C[0].VALUE === HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY));
+					var isLineLabelEditable = !(
+							(line.C[0].VALUE === HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL) || 
+							(line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL) || 
+							(line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL_INCL_TAX) ||
+							(line.C[0].VALUE === HB_ORDER_LINE_TYPE.TAX_RATE) ||
+							(line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY));
 					return isLineLabelEditable;
 				};				
 				
@@ -340,6 +345,7 @@
 						
 						// Rate parameter cell value change is input by user and must trigger computation
 						if (
+								localLineTypeCell.VALUE === HB_ORDER_LINE_TYPE.TAX_RATE ||
 								localLineTypeCell.VALUE === HB_ORDER_LINE_TYPE.APPLIED_RATE) {
 							
 							auditedCell.push(localLineTypeCell.VALUE);
