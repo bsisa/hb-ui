@@ -22,6 +22,7 @@
 			<td>
 				<div class="form-group">
 					<div class="col-sm-6">
+						<!-- Manual amount entry line -->
 						<div ng-if="line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT" class="input-group">
 							<span class="input-group-btn">
 								<button ng-disabled="!editable" class="btn btn-default" tooltip="Ajouter"
@@ -35,20 +36,26 @@
 							</span>
 							<input ng-disabled="!editable" type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
 						</div>
+						<!-- Any entry line except manual amount and empty -->
 						<div ng-if="!((line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY))" class="input-group" >
 							<span class="input-group-btn">
+								<!-- Forbid adding line following tax rate, total net and total net incl. entry lines. -->
 								<button ng-disabled="line.C[0].VALUE === HB_ORDER_LINE_TYPE.TAX_RATE || line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL || line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL_INCL_TAX || !editable" class="btn btn-default" role="button" tooltip="Ajouter"
 									ng-click="addEmptyLine($index+1,elfinForm.$valid)">
 									<i class="icon-plus-sign"></i>
-								</button>								
+								</button>
+								<!-- Allow editable lines only deletion. -->								
 								<button ng-disabled="!lineLabelEditable(line) || !editable" class="btn btn-default"  role="button" tooltip="Supprimer"
 									ng-click="removeLine($index,elfinForm.$valid)">
 									<i class="icon-remove-sign"></i>
 								</button>
 							</span>
+							<!-- Allow editable lines only label editing. -->
 							<input ng-disabled="!editable" ng-if="lineLabelEditable(line)"  class="form-control" type="text" name="lineLabel" ng-model="line.C[1].VALUE"  />
+							<!-- Display non-editable lines label information. -->
 							<span  ng-if="!lineLabelEditable(line)" class="form-control-static col-sm-12" ><b>{{line.C[1].VALUE}}</b></span>
 						</div>
+						<!-- Empty entry line (line type selection a creation time.) -->
 						<select ng-if="line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY" class="form-control-static" name="selectedLineType" id="selectedLineType" 
 								ng-model="selected.lineType" 
 								ng-options="lineType as lineType.C[1].VALUE for lineType in lineTypes track by lineType.C[1].VALUE"
@@ -58,6 +65,7 @@
 						</select>
 					</div>
 					<div class="col-sm-3">
+						<!-- For order line with parameter (C(5)=true) and a defined symbol value (C(3)>0 surround input with value sign and symbol. -->
 						<div ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length > 0" class="input-group">
 							<span class="input-group-addon">
 								<span ng-if="isNeg(line.C[2].VALUE)" >-</span>
@@ -66,10 +74,12 @@
 							<input ng-disabled="!editable" type="text" name="orderLineRate" class="form-control" style="text-align: right;padding-right:4px;" ng-model="line.C[2].VALUE" ng-pattern="numericOnlyRegexp" ng-trim='false' autocomplete="off">
 							<span class="input-group-addon">{{line.C[3].VALUE}}</span>
 						</div>
+						<!-- For order line with parameter (C(5)=true) and not defined symbol value (C(3)=0 display standard input. -->
 						<input ng-if="line.C[5].VALUE === 'true' && line.C[3].VALUE.length === 0" type="text" name="orderLineRate"  class="form-control" ng-model="line.C[2].VALUE"  ng-pattern="numericOnlyRegexp" ng-trim='false' autocomplete="off">
 <!-- 						<div ng-if="line.C[5].VALUE === 'false'" ></div> -->
 					</div>
 					<div class="col-sm-3 text-right">
+						<!-- Entry line with editable amount -->
 						<input 
 							ng-if="lineValueEditable(line) && editable"
 							name="orderLineAmount"
@@ -103,6 +113,7 @@
 <!-- 								ng-pattern="numericOnlyRegexp"  -->
 <!-- 								ng-trim='false' > -->
 <!-- 						</div> -->
+						<!-- Entry line with non editable amount (for instance compute from rate parameter and gross amount...) -->
 						<div class="form-control-static" ng-if="!lineValueEditable(line) || !editable" ng-class="amountStyleClass(line)" >{{line.C[4].VALUE}}</div>
 					</div>
 					<div class="col-sm-6 col-sm-offset-6 text-danger text-right" ng-if="lineForm.orderLineAmount.$error.pattern">Le montant doit être <strong>un nombre</strong> valide!</span></div>
