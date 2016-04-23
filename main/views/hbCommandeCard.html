@@ -57,16 +57,22 @@
 								<div ng-if="!isReadOnly" hb-date id="deadline" name="deadline" ng-model="elfin.IDENTIFIANT.A"></div>
 								<p ng-if="isReadOnly" class="form-control-static">{{elfin.IDENTIFIANT.A | date}}</p>
 							</div>
-						</div>
-						<div ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT" class="form-group">
-							<label for="deadlineText" class="col-sm-4 control-label">Délais (texte)</label>
 							<div class="col-sm-4" >
 								<input ng-if="!isReadOnly" id="deadlineText" name="deadlineText" class="form-control"  
 									autocomplete="off"
 									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR"></input>
 								<p ng-if="isReadOnly" class="form-control-static">{{elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR}}</p>		
-							</div>
-						</div>									
+							</div>							
+						</div>
+<!-- 						<div ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT" class="form-group"> -->
+<!-- 							<label for="deadlineText" class="col-sm-4 control-label">Délais (texte)</label> -->
+<!-- 							<div class="col-sm-4" > -->
+<!-- 								<input ng-if="!isReadOnly" id="deadlineText" name="deadlineText" class="form-control"   -->
+<!-- 									autocomplete="off" -->
+<!-- 									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR"></input> -->
+<!-- 								<p ng-if="isReadOnly" class="form-control-static">{{elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR}}</p>		 -->
+<!-- 							</div> -->
+<!-- 						</div>									 -->
 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.contact)">
 							<label for="contact" class="col-sm-4 control-label" >
 								<span ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.CONTRACT)">Personne à contacter</span>
@@ -239,8 +245,8 @@
 							</div>
 						</div>
 						
-						<div ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONFIRM" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.introduction)">
-							<label for="introduction" class="col-sm-2 control-label" >introduction</label>
+						<div ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONFIRMATION" class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.introduction)">
+							<label for="introduction" class="col-sm-2 control-label" >Introduction</label>
 							<div class="col-sm-10" >
 								<textarea ng-disabled="isReadOnly" id="introduction" name="introduction" class="form-control" rows="3" 
 									autocomplete="off"
