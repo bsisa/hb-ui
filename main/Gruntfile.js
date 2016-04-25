@@ -137,6 +137,7 @@ module.exports = function(grunt) {
 								'src/hbMapController.js',
 								'src/hbNoDirtyCheckDirective.js', 
 								
+								'src/hbOfflineService.js',
 								'src/hbOrderSpreadsheetController.js',
 								'src/hbOrderSpreadsheetDirective.js',
 								
