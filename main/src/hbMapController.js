@@ -659,9 +659,13 @@
             };
             	
             	
-            $scope.updateFleet = function(name) {
+            $scope.updateFleet = function(name, elfin) {
                 	
             	$log.debug(">>>> updateFleet "+name);
+            	var basePoint = MapService.getElfinBasePoint(elfin);
+            	$log.debug(">>>> updateFleet elfin X = "+basePoint.X + ", Y = " + basePoint.Y);
+            	basePoint.Y = basePoint.Y + 5; 
+            	$log.debug(">>>> updateFleet elfin X = "+basePoint.X + ", Y = " + basePoint.Y);
             	
             	leafletData.getMap().then(function (map) {
                     // Search for overlay matching fleet
@@ -679,7 +683,7 @@
                         	// could be obtain from getElfinIdentifier(elfin);
                         	//var objId = "G20040930101030005/IMMEUBLE/G20050725170559296";
                         	// Use $scope.elfin for test.
-                        	var objId = getElfinIdentifier($scope.elfin);
+                        	var objId = getElfinIdentifier(elfin);
                         	$log.debug(">>>> layer per id from dict: nb = " + $scope.layerDictionary[objId].length );
                         	for (var i = 0; i < $scope.layerDictionary[objId].length; i++) {
 								var layer = $scope.layerDictionary[objId][i];
@@ -696,8 +700,12 @@
 				        		
 									var hbLayer = buildHbLayer(hbLayerDef);
 									// Use scope elfin for tests
-									var elfin = $scope.elfin;
+									//var elfin = $scope.elfin;
 									var elfinUpdatedMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
+		                            //MapService.updateLayerCoords(elfin, layer);
+		                            //MapService.updatePolygonCoords(elfin, layer);
+		                            //MapService.updateLayerPopupContent(elfin, layer);
+									
 									
                             		var gdeIdx = $scope.guideLayers.indexOf(overlay);
                             		overlay.removeLayer(layer);
