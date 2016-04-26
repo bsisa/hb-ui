@@ -36,6 +36,25 @@
 			ng-click="removeFleet(fleet.name)">
 			<i class="glyphicon glyphicon-off"></i>
 	</button>	
+	<span ng-if="sseSupport && sseConnected" tooltip="Connexion établie" tooltip-placement="bottom">
+		<button class="btn btn-group btn-default" ng-click="checkConnectionStatus()" >
+			<i class="glyphicon glyphicon-flash" style="color: green;"></i>
+		</button>
+     	<div><span>Current message: {{sseMessage.text}} - {{sseMessage.time}}</span></div>
+		<input id="time" name="time" type="text" class="form-control" ng-model="sseMessage.time" >
+     	<input id="user_message" name="userMessage" type="text" class="form-control" ng-model="sse.userMessage" >
+		<button class="btn btn-group btn-default" ng-click="sendMessage(sse.userMessage)" >Send</button>
+	</span>
+	<span ng-if="sseSupport && !sseConnected" tooltip="Connexion interrompue" tooltip-placement="bottom">
+		<button class="btn btn-group btn-default" ng-click="checkConnectionStatus()" >
+			<i class="glyphicon glyphicon-flash" style="color: red;"></i>
+		</button>
+	</span>
+	<span ng-if="!sseSupport" tooltip="Vérification automatique de la connexion impossible" tooltip-placement="bottom">
+		<button class="btn btn-group btn-default" ng-click="checkConnectionStatus()" >
+			<i class="glyphicon glyphicon-flash" style="color: grey;"></i>
+		</button>
+	</span>	
 	</div>
 	</div>
 <!-- 	<div>Current object Id = {{elfin.Id}}</div>								 -->
