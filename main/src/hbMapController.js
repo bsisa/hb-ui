@@ -36,7 +36,6 @@
 //                              attribution: 'Custom map <a href="http://www.bsisa.ch/">by BSI SA</a>'
 //                            }
 //                        }
-                
                      // www.toolserver.org moved and could not find resource anymore.
 //                      black_white: {
 //                          name: 'Noir et Blanc',
@@ -47,12 +46,14 @@
 //                          name: 'HOT',
 //                          url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
 //                          type: 'xyz'
-//                      },
-//                      transport: {
-//                          name: 'Transport',
-//                          url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-//                          type: 'xyz'
-//                      },
+//                      }
+                		,
+                      transport: {
+                          name: 'Transport',
+                          url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+                          type: 'xyz'
+                      }
+//                		,
 //                      landscape: {
 //                          name: 'Paysage',
 //                          url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
@@ -149,8 +150,10 @@
             };             
             
             /**
-             * Procedure to build and display a HyperBird layer on a map given its ELFIN.CARACTERISTIQUE.FORME.L definition
-             * found in an ELFIN of CLASSE='PLAN'
+             * Procedure to build and display a HyperBird layer on a map given its definition found in an ELFIN of CLASSE='PLAN' 
+             * Parameter: `hbMapDefId` is the map definition `ELFIN.Id` 
+             * Parameter: `hbLayerDef` is a given layer definition found in a line L of list `ELFIN.CARACTERISTIQUE.FORME.L` 
+             * 
              * IMPORTANT: The term `layer` in HyperBird matches `overlays` in Leaflet context. 
              * While `layer` in Leaflet context is used for `basemap` or `fond de plan` with regards to HyperBird semantic. 
              */
@@ -191,7 +194,11 @@
 	                        	if ($scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
 	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, MapService.getSelectedObjectMarkerStyle());
 	                        	} else {
-	                        		objectLayerStyle = hbLayer.representationStyle;
+	                        		if (hbLayer.representationType.toLowerCase() == 'marker') {
+	                        			objectLayerStyle = MapService.getStandardObjectMarkerStyle();
+	                        		} else {
+	                        			objectLayerStyle = hbLayer.representationStyle;
+	                        		}
 	                        		objectLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, objectLayerStyle);
 	                        	}		                    	
 	                        	
@@ -570,8 +577,105 @@
             	leafletData.getMap().then(function (map) {
             		map.fitBounds(MapService.getObjectBounds($scope.elfin, 'polygon'));
                 });
+            };           
+            
+            $scope.fleet = {
+            		"name" : "",
+            		"color" : ""
+            };
+            
+            $scope.createFleet = function(name, color) {
+            	
+            	$log.debug(">>>> Start "+color+" "+name+" fleet.");
+            	var posNb = leafletData.getLayers().size + 1;
+            	var label = name;
+            	var collectionId = "G20040930101030005"; // IMMEUBLE
+            	var xpath = "//ELFIN[@CLASSE='IMMEUBLE']";
+            	var type = "circle";
+            	var styleColor = "black";
+            	var styleOpacity = "1";
+            	var styleWeight = "";
+        		var styleDashArray = "";
+        		var styleFillColor = color;
+        		var styleFillOpacity = "0.5"; 
+        		var styleRadius = "10";
+        		
+        		// Create leaflet overlay / hb layer
+            	var hbLayerDef = getHbLayerDefLine(posNb, label, collectionId, xpath, type, styleColor, styleOpacity, 
+                		styleWeight, styleDashArray, styleFillColor, styleFillOpacity, styleRadius);
+            	
+            	leafletData.getMap().then(function (map) {
+            		displayLayer(map, name, hbLayerDef);
+            	});
+            	
+                // Once all layers are loaded, add the drawing layer and register all events
+                leafletData.getLayers().then(function(layers) {
+                    $log.debug(">>>> LEAFLET LAYERS");
+                });
+    	
+            	
+            	
+            };
+
+            $scope.removeFleet = function(name) {
+            	
+            	$log.debug(">>>> Shutdown "+name+" fleet.");
+            	
+            	
             };            
             
+            
+/*            
+            <L POS="3">
+            <C POS="1">Immeubles Surface</C> <!-- Layer name -->
+            <C POS="2">G20040930101030005</C> <!-- Base Collection -->
+            <C POS="3">//ELFIN[@CLASSE='IMMEUBLE']</C> <!-- XPath -->
+            <C POS="4">polygon</C> <!-- Representation Type -->
+            <C POS="5">#0f0</C> <!-- Stroke Color : color -->
+            <C POS="6">1</C> <!-- Stroke Opacity : opacity-->
+            <C POS="7">1</C> <!-- Stroke weight -->
+            <C POS="8">2,10</C> <!-- Stroke dash : dashArray -->
+            <C POS="9">#3f3</C> <!-- Fill Color : fillColor -->
+            <C POS="10">0.2</C> <!-- Fill Opacity : fillOpacity-->
+            <C POS="11"/> <!-- Point Radius : radius -->
+        </L>
+        <L POS="4">
+            <C POS="1">Immeubles Point...</C>
+            <C POS="2">G20040930101030005</C>
+            <C POS="3">//ELFIN[@CLASSE='IMMEUBLE']</C>
+            <C POS="4">point</C>
+            <C POS="5">blue</C> <!-- Stroke Color -->
+            <C POS="6">1</C> <!-- Stroke Opacity -->
+            <C POS="7"/> <!-- Stroke weight -->
+            <C POS="8"/> <!-- Stroke dash -->
+            <C POS="9">yellow</C> <!-- Fill Color -->
+            <C POS="10">0.7</C> <!-- Fill Opacity -->
+            <C POS="11">8</C> <!-- Point Radius -->
+        </L>            
+*/
+
+       
+            var getHbLayerDefLine = function(posNb, label, collectionId, xpath, type, styleColor, styleOpacity, 
+            		styleWeight, styleDashArray, styleFillColor, styleFillOpacity, styleRadius) {
+                var L = {
+                        "C" : [ { "POS" : 1, "VALUE" : label }, 
+                                { "POS" : 2, "VALUE" : collectionId },
+                                { "POS" : 3, "VALUE" : xpath }, 
+                                { "POS" : 4, "VALUE" : type }, 
+                                { "POS" : 5, "VALUE" : styleColor }, 
+                                { "POS" : 6, "VALUE" : styleOpacity }, 
+                                { "POS" : 7, "VALUE" : styleWeight }, 
+                                { "POS" : 8, "VALUE" : styleDashArray }, 
+                                { "POS" : 9, "VALUE" : styleFillColor },
+                                { "POS" : 10,"VALUE" : styleFillOpacity},
+                                { "POS" : 11,"VALUE" : styleRadius} ],
+                        "POS" : posNb // Must be unique among used layers.
+                      };
+                
+                return L;
+                
+			};
+        
             // ================================================================
             // ================================================================
             

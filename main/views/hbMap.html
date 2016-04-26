@@ -7,11 +7,31 @@
             markers="markers"
             paths="paths"
     ></leaflet>
-<!--     <button  -->
-<!--     		class="btn btn-default"  -->
-<!--     		tooltip="Focus and zoom to current object" -->
-<!-- 			ng-click="zoomToCurrentObject()"> -->
-<!-- 			<i class="glyphicon glyphicon-screenshot"></i> -->
-<!-- 	</button> -->
+    <button 
+    		class="btn btn-default" 
+    		tooltip="Focus and zoom to current object"
+			ng-click="zoomToCurrentObject()">
+			<i class="glyphicon glyphicon-screenshot"></i>
+	</button>
+	
+	<input type="text" ng-model="fleet.name"></input>
+	<input type="text" ng-model="fleet.color"></input>
+    <button 
+    		class="btn btn-default" 
+    		tooltip="Launch a new fleet"
+			ng-click="createFleet(fleet.name, fleet.color)">
+			<i class="glyphicon glyphicon-cog"></i>
+	</button>
+	
+	
+
+    <button 
+    		class="btn btn-default" 
+    		tooltip="Shutdown a fleet by its name"
+			ng-click="removeFleet(fleet.name)">
+			<i class="glyphicon glyphicon-off"></i>
+	</button>	
+	
+	
 <!-- 	<div>Current object Id = {{elfin.Id}}</div>								 -->
 </div>
