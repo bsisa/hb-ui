@@ -139,11 +139,15 @@
              */
             var pushLayer = function(objectLayer, objects, elfin) {
                 if (objectLayer !== null) {
+                	// Adds hbLayer for object on top of existing hb layer objects.
                     objects.unshift(objectLayer);
+                    // Get triplet ID_G/CLASSE/Id
                     var identifier = getElfinIdentifier(elfin);
                     if (angular.isUndefined($scope.layerDictionary[identifier])) {
+                    	// Create a new single element array of hb layer objects.
                         $scope.layerDictionary[identifier] = [objectLayer];
                     } else {
+                    	// Adds hbLayer for object on top of existing hb layer objects for that specific ELFIN
                         $scope.layerDictionary[identifier].unshift(objectLayer);
                     }
                 }            	
@@ -256,8 +260,19 @@
 		                            	if ( overlay.hasLayer( layer) ) {
 		                            		
 		                            		var gdeIdx = $scope.guideLayers.indexOf(overlay);
-		                            		$log.debug(">>>> FOUND MARKER, guide idx = "+gdeIdx+", replacing by new one...");
-
+		                            		overlay.removeLayer(layer);
+		                            		overlay.addLayer(elfinUpdatedMarkerLayer);
+		                            		// Update guideLayers with updated overlay.
+		                            		$scope.guideLayers.splice(gdeIdx,1);
+		                            		$scope.guideLayers.push(overlay);
+		                            		$log.debug(">>>> Found marker, guide idx = "+gdeIdx+", replacing by new one...");
+		                            		
+		                            		// Required - layer dictionary update
+		                            		var dictIdx = $scope.layerDictionary[identifier].indexOf(layer);
+		                            		$scope.layerDictionary[identifier].splice(dictIdx,1);
+		                            		$scope.layerDictionary[identifier].push(elfinUpdatedMarkerLayer);
+		                            		$log.debug(">>>> Found layer, idx = "+dictIdx+", replacing by new one...");		                            		
+		                            		
 //					                    	for (var property in $scope.drawControl) {
 //					                    		$log.debug("Property name 2: " + property );
 //					                    	}
@@ -265,13 +280,6 @@
 		                            		//$scope.drawControl.draw.marker.guideLayers = $scope.guideLayers;
 					                    	//$scope.drawControl.removeFrom(layer);
 					                    	//$scope.drawControl.removeFrom(overlay);
-		                            		
-		                            		overlay.removeLayer(layer);
-		                            		overlay.addLayer(elfinUpdatedMarkerLayer);
-		                            		// Update guideLayers with updated overlay.
-		                            		$scope.guideLayers.splice(gdeIdx,1);
-		                            		$scope.guideLayers.push(overlay);
-
 					                    	//$scope.drawControl.addTo(elfinUpdatedMarkerLayer);
 		                            		//$scope.drawControl.addTo(overlay);
 		                            	};		                            	
@@ -318,6 +326,8 @@
 
             var displayMapContentListenerDeregister = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, hbMapDef) {
 
+            	$log.debug(">>>> HB_EVENTS.DISPLAY_MAP_CONTENT event : " + HB_EVENTS.DISPLAY_MAP_CONTENT + " " + angular.toJson(event));
+            	
                 leafletData.getMap().then(function (map) {
 
                     // First clean all layers overlays 
@@ -383,9 +393,6 @@
 
                         map.addControl($scope.drawControl);
 
-
-
-
                         var coordinatesPlugin = L.control.coordinates({
                             position:"bottomright", //optional default "bootomright"
                             decimals:2, //optional default 4
@@ -440,21 +447,32 @@
             var elfinLoadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
             	// TODO: review: not relevant for all ELFIN@CLASSE !
                 $scope.elfin = elfin;
-                updateElfinRepresentation($scope.elfin, MapService.getSelectedObjectMarkerStyle());
+                //updateElfinRepresentation($scope.elfin, MapService.getSelectedObjectMarkerStyle());
                 $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE +"/"+elfin.Id);
+        		if (elfin !== null) {
+	    			// Set newly selected elfin style to selected style.
+	    			var selStyle = MapService.getSelectedObjectMarkerStyle();
+	    			$log.debug("Setting new val to selected style: " + angular.toJson(selStyle));
+	    			updateElfinRepresentation(elfin, selStyle);					
+        		}                            
+                
+                
             });
+
 
             // Elfin has been unloaded, thus no more current elfin
             var elfinUnloadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
-                if (elfin) {
-                    updateElfinRepresentation(elfin, {});
-                }
-                $log.debug(">>>> MapController: HB_EVENTS.ELFIN_UNLOADED => " + elfin.CLASSE +"/"+elfin.Id);
-                // TODO: This causes problem due to possible reset of formerly updated elfin 
-                // on ELFIN_LOADED event. Indeed the events order is not necessarily as UNLOAD => LOAD but can be
-                // reversed due to asynchronous execution. 
-                //$scope.elfin = null; 
 
+            	$log.debug(">>>> MapController: HB_EVENTS.ELFIN_UNLOADED => " + elfin.CLASSE +"/"+elfin.Id);
+    			if (elfin !== null) {
+	    			// Reset former selected elfin style to standard.
+	    			var stdStyle = MapService.getStandardObjectMarkerStyle();
+	    			$log.debug("Resetting old val to standard style: " + angular.toJson(stdStyle));
+	    			updateElfinRepresentation(elfin, stdStyle);
+    			}                
+                
+                // Do not perform $scope.elfin = null; Indeed on ELFIN_LOADED event may happen 
+    			// before or after ELFIN_UNLOADED event. This could reset newly loaded data. 
             });
 
 
@@ -466,7 +484,8 @@
              */
             var elfinUpdatedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
                 $log.debug(">>>> MapController: HB_EVENTS.ELFIN_UPDATED => " + elfin.CLASSE +"/"+elfin.Id);            	
-               	updateElfinRepresentation(elfin, {});            		
+                // TODO: Review if this update is required and set correct style if required.
+                //updateElfinRepresentation(elfin, {});            		
             });
 
             // Elfin has been deleted, thus remove it from the map
@@ -613,6 +632,8 @@
                     $log.debug(">>>> LEAFLET LAYERS");
                 });
     	
+                // TODO: trigger new layer display ???
+                //$scope.$emit(HB_EVENTS.ELFIN_FORM_DRAW_EVENT, event);
             	
             	
             };
