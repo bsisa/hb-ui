@@ -44,6 +44,27 @@
        		var customStyle = {icon: selectedIcon};                	
            	return customStyle;
            };           
+           
+           /**
+            * Returns a custom L.Icon intended for standard object marker styling.
+            */
+           var getStandardObjectMarkerStyle = function() {
+        	   
+       		// zIndexOffset only effective in higher version... 
+       		var CustomIcon = L.Icon.extend({
+       		    options: {
+  		    			iconSize: [25, 41],
+  		    			iconAnchor: [12, 41],
+  		    			popupAnchor: [1, -34],
+  		    			shadowSize: [41, 41],
+  		    			zIndexOffset: 1000
+       		    }
+       		});	                        		
+       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon.png'});
+       		var customStyle = {icon: selectedIcon};
+           	return customStyle;
+           };
+           
 
            var getElfinBasePoint = function(elfin) {
                var point = null;
@@ -158,7 +179,10 @@
 
            };
            
-           
+           /**
+            * TODO: review, pitfall with marker management. 
+            * See monkey patching while used in hbMapController.
+            */
            var getObjectLayer = function(elfin, representation, style) {
                var result = null;
 
@@ -421,6 +445,10 @@
                  * Returns an Icon for styling marker. Aimed at selected object marker.
                  */
                 getSelectedObjectMarkerStyle:getSelectedObjectMarkerStyle,
+                /**
+                 * Returns an Icon for styling marker. Aimed at standard object marker.
+                 */
+                getStandardObjectMarkerStyle:getStandardObjectMarkerStyle,
                 
                 /**
                  * Update `layer` latitude, longitude coordinates from elfin.FORME.ZONE 

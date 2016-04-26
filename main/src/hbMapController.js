@@ -191,7 +191,11 @@
 	                        	if ($scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
 	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, MapService.getSelectedObjectMarkerStyle());
 	                        	} else {
-	                        		objectLayerStyle = hbLayer.representationStyle;
+	                        		if (hbLayer.representationType.toLowerCase() == 'marker') {
+	                        			objectLayerStyle = MapService.getStandardObjectMarkerStyle();
+	                        		} else {
+	                        			objectLayerStyle = hbLayer.representationStyle;
+	                        		}	                        		
 	                        		objectLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, objectLayerStyle);
 	                        	}		                    	
 	                        	
