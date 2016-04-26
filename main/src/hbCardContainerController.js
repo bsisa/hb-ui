@@ -358,7 +358,7 @@
          * Helper to deal with enabled / disabled status for labels report.
          */
         $scope.hasLabelsReport = function (elfin) {
-        	return hbPrintService.hasReportDefinition(elfin.CLASSE,HB_REPORT.CLASSIFIER_LEVEL2_LABELS);
+        	return (elfin !== null) ? hbPrintService.hasReportDefinition(elfin.CLASSE,HB_REPORT.CLASSIFIER_LEVEL2_LABELS) : false;
         }
         
         /**
