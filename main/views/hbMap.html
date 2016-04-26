@@ -16,17 +16,20 @@
 			<i class="glyphicon glyphicon-screenshot"></i>
 	</button>
 	
-	<input type="text" ng-model="fleet.name"></input>
-	<input type="text" ng-model="fleet.color"></input>
+	<input type="text" ng-model="fleet.name" hb-no-dirty-check></input>
+	<input type="text" ng-model="fleet.color" hb-no-dirty-check></input>
     <button 
     		class="btn btn-default" 
     		tooltip="Launch a new fleet"
 			ng-click="createFleet(fleet.name, fleet.color)">
 			<i class="glyphicon glyphicon-cog"></i>
 	</button>
-	
-	
-
+    <button 
+    		class="btn btn-default" 
+    		tooltip="Test update..."
+			ng-click="updateFleet(fleet.name)">
+			<i class="glyphicon glyphicon-cloud"></i>
+	</button>
     <button 
     		class="btn btn-default" 
     		tooltip="Shutdown a fleet by its name"

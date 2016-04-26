@@ -82,12 +82,13 @@
              */
             $scope.elfin = null;
             
-			/**
-			 * Listener on current displayed object Id change
-			 */
-			$scope.$watch('elfin.Id', function(newVal, oldVal) {
-				$log.debug(">>>> Map selected elfin.Id changed from: "+oldVal+" to: " + newVal);
-			}, true);            
+// TODO: useless. Remove
+//			/**
+//			 * Listener on current displayed object Id change
+//			 */
+//			$scope.$watch('elfin.Id', function(newVal, oldVal) {
+//				$log.debug(">>>> Map selected elfin.Id changed from: "+oldVal+" to: " + newVal);
+//			}, true);            
             
 			/**
 				The objects dictionary holds for each idg/class/id combination as text, all layers in an array
@@ -599,52 +600,144 @@
             };           
             
             $scope.fleet = {
-            		"name" : "",
-            		"color" : ""
+            		"name" : "Fleet1",
+            		"color" : "orange"
+            };
+            
+            
+            /**
+             * 
+             */
+            var getFleetHbLayerDefault = function() {
+            		
+            		var fleetHbLayerDefault = {
+                        	"posNb" : "1",
+                        	"label" : "",
+                        	"collectionId" : "G20040930101030005",
+                        	"xpath" : "//ELFIN[@CLASSE='IMMEUBLE']",
+                        	"type" : "point",
+                        	"styleColor" : "black",
+                        	"styleOpacity" : "1",
+                        	"styleWeight" : "",
+                    		"styleDashArray" : "",
+                    		"styleFillColor" : "orange",
+                    		"styleFillOpacity" : "0.5", 
+                    		"styleRadius" : "10"
+            		};
+            		
+            	return angular.fromJson(angular.toJson(fleetHbLayerDefault));
             };
             
             $scope.createFleet = function(name, color) {
             	
             	$log.debug(">>>> Start "+color+" "+name+" fleet.");
-            	var posNb = leafletData.getLayers().size + 1;
-            	var label = name;
-            	var collectionId = "G20040930101030005"; // IMMEUBLE
-            	var xpath = "//ELFIN[@CLASSE='IMMEUBLE']";
-            	var type = "point";
-            	var styleColor = "black";
-            	var styleOpacity = "1";
-            	var styleWeight = "";
-        		var styleDashArray = "";
-        		var styleFillColor = color;
-        		var styleFillOpacity = "0.5"; 
-        		var styleRadius = "10";
+            	//var posNb = leafletData.getLayers().size + 1;
+//            	var posNb = "1";
+//            	var label = name;
+//            	var collectionId = "G20040930101030005"; // IMMEUBLE
+//            	var xpath = "//ELFIN[@CLASSE='IMMEUBLE']";
+//            	var type = "point";
+//            	var styleColor = "black";
+//            	var styleOpacity = "1";
+//            	var styleWeight = "";
+//        		var styleDashArray = "";
+//        		var styleFillColor = color;
+//        		var styleFillOpacity = "0.5"; 
+//        		var styleRadius = "10";
+        		
+        		var createfleetLayerConf = getFleetHbLayerDefault();
+        		createfleetLayerConf.label = name;
+        		createfleetLayerConf.styleFillColor = color;
         		
         		// Create leaflet overlay / hb layer
-            	var hbLayerDef = getHbLayerDefLine(posNb, label, collectionId, xpath, type, styleColor, styleOpacity, 
-                		styleWeight, styleDashArray, styleFillColor, styleFillOpacity, styleRadius);
+            	var hbLayerDef = getHbLayerDefLine(createfleetLayerConf.posNb, createfleetLayerConf.label, createfleetLayerConf.collectionId, createfleetLayerConf.xpath, createfleetLayerConf.type, createfleetLayerConf.styleColor, createfleetLayerConf.styleOpacity, 
+            			createfleetLayerConf.styleWeight, createfleetLayerConf.styleDashArray, createfleetLayerConf.styleFillColor, createfleetLayerConf.styleFillOpacity, createfleetLayerConf.styleRadius);
             	
             	leafletData.getMap().then(function (map) {
             		displayLayer(map, name, hbLayerDef);
+            	});            	
+            };
+            	
+            	
+            $scope.updateFleet = function(name) {
+                	
+            	$log.debug(">>>> updateFleet "+name);
+            	
+            	leafletData.getMap().then(function (map) {
+                    // Search for overlay matching fleet
+                    leafletData.getLayers().then(function(layers) {
+                        $log.debug(">>>> Layers");
+//                        angular.forEach(layers.overlays, function(overlay) {
+//                        	$log.debug(">>>> Overlay...");
+//                        });
+                        var overlayId = name + "#" + 1;
+                        $log.debug(">>>> Overlay - search [" + overlayId +"]");
+                        if ( layers.overlays[overlayId] ) {
+                        	$log.debug(">>>> Overlay - " + overlayId + " found!");
+                        	// Fleet obj collection
+                        	var overlay = layers.overlays[overlayId]
+                        	// could be obtain from getElfinIdentifier(elfin);
+                        	//var objId = "G20040930101030005/IMMEUBLE/G20050725170559296";
+                        	// Use $scope.elfin for test.
+                        	var objId = getElfinIdentifier($scope.elfin);
+                        	$log.debug(">>>> layer per id from dict: nb = " + $scope.layerDictionary[objId].length );
+                        	for (var i = 0; i < $scope.layerDictionary[objId].length; i++) {
+								var layer = $scope.layerDictionary[objId][i];
+								if (overlay.hasLayer(layer)) {
+									$log.debug(">>>> Layer i="+i+" found in overlay id:     "+ overlayId);
+									// Let change layer color to red for this object
+									
+					        		var updatefleetLayerConf = getFleetHbLayerDefault();
+					        		updatefleetLayerConf.label = "no used";
+					        		updatefleetLayerConf.styleFillColor = "red";
+
+					            	var hbLayerDef = getHbLayerDefLine(updatefleetLayerConf.posNb, updatefleetLayerConf.label, updatefleetLayerConf.collectionId, updatefleetLayerConf.xpath, updatefleetLayerConf.type, updatefleetLayerConf.styleColor, updatefleetLayerConf.styleOpacity, 
+					            			updatefleetLayerConf.styleWeight, updatefleetLayerConf.styleDashArray, updatefleetLayerConf.styleFillColor, updatefleetLayerConf.styleFillOpacity, updatefleetLayerConf.styleRadius);					        		
+				        		
+									var hbLayer = buildHbLayer(hbLayerDef);
+									// Use scope elfin for tests
+									var elfin = $scope.elfin;
+									var elfinUpdatedMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
+									
+                            		var gdeIdx = $scope.guideLayers.indexOf(overlay);
+                            		overlay.removeLayer(layer);
+                            		overlay.addLayer(elfinUpdatedMarkerLayer);
+//                            		// Update guideLayers with updated overlay.
+                            		$scope.guideLayers.splice(gdeIdx,1);
+                            		$scope.guideLayers.push(overlay);
+                            		$log.debug(">>>> Found marker, guide idx = "+gdeIdx+", replacing by new one...");
+//                            		
+//                            		// Required - layer dictionary update
+                            		var dictIdx = $scope.layerDictionary[objId].indexOf(layer);
+                            		$scope.layerDictionary[objId].splice(dictIdx,1);
+                            		$scope.layerDictionary[objId].push(elfinUpdatedMarkerLayer);
+                            		$log.debug(">>>> Found layer, idx = "+dictIdx+", replacing by new one...");									
+									
+									
+								} else {
+									$log.debug(">>>> Layer i="+i+" not found in overlay id: "+ overlayId);
+								}
+							}
+                        } else {
+                        	$log.debug(">>>> Overlay - " + overlayId + " no match found");
+                        } 
+                    });            		
             	});
             	
-                // Once all layers are loaded, add the drawing layer and register all events
-                leafletData.getLayers().then(function(layers) {
-                    $log.debug(">>>> LEAFLET LAYERS");
-                });
-    	
-                // TODO: trigger new layer display ???
-                //$scope.$emit(HB_EVENTS.ELFIN_FORM_DRAW_EVENT, event);
-            	
-            	
+            	//$scope.resetFleetFlds();
             };
 
             $scope.removeFleet = function(name) {
             	
             	$log.debug(">>>> Shutdown "+name+" fleet.");
             	
-            	
+            	$scope.resetFleetFlds();
             };            
             
+            $scope.resetFleetFlds = function() {
+            	$scope.fleet.name ="";
+            	$scope.fleet.color ="";
+            };
             
 /*            
             <L POS="3">
@@ -697,6 +790,73 @@
                 
 			};
         
+			
+            var updateFleetObjRepresentation = function(fleetName, elfin) {
+            	$log.debug(">>>> updateFleetObjRepresentation (fleetName, elfin.Id = "+fleetName + ", "+elfin.Id+")");
+                var identifier = getElfinIdentifier(elfin);
+                if (angular.isDefined($scope.layerDictionary[identifier])) {
+                    angular.forEach($scope.layerDictionary[identifier], function (layer) {
+                    	
+                    	// TODO: investigate cyclic object value. Thought was fixed by
+                    	// removing hbMapService.js angular.extend(result, {elfin:elfin}); from getObjectLayer
+                    	// $log.debug(">>>> layer = " + angular.toJson(layer));
+                    	
+                    	//MapService.updateMarkerLayer(elfin, layer, markerStyle);
+                   	
+                       	$log.debug(">>>> FOUND entry for identifier = " + identifier + " with nb entries = " + ($scope.layerDictionary[identifier].length) );
+                       	$log.debug(">>>> layer.representation = " + layer.representation);
+
+                       	if (layer.representation === "marker") {
+
+							// TODO: refactor as function => used in replaceLayer... see updateElfinRepresentation
+		                    leafletData.getLayers().then(function(layers) {
+                   	
+		                        	var elfinUpdatedMarkerLayer = MapService.getObjectLayer(elfin, 'marker', markerStyle);
+			                    	
+		                            //[overlayId].addLayer(objectLayer);
+		                            angular.forEach(layers.overlays, function(overlay) {
+		                            	if ( overlay.hasLayer( layer) ) {
+		                            		
+		                            		var gdeIdx = $scope.guideLayers.indexOf(overlay);
+		                            		overlay.removeLayer(layer);
+		                            		overlay.addLayer(elfinUpdatedMarkerLayer);
+		                            		// Update guideLayers with updated overlay.
+		                            		$scope.guideLayers.splice(gdeIdx,1);
+		                            		$scope.guideLayers.push(overlay);
+		                            		$log.debug(">>>> Found marker, guide idx = "+gdeIdx+", replacing by new one...");
+		                            		
+		                            		// Required - layer dictionary update
+		                            		var dictIdx = $scope.layerDictionary[identifier].indexOf(layer);
+		                            		$scope.layerDictionary[identifier].splice(dictIdx,1);
+		                            		$scope.layerDictionary[identifier].push(elfinUpdatedMarkerLayer);
+		                            		$log.debug(">>>> Found layer, idx = "+dictIdx+", replacing by new one...");		                            		
+		                            		
+//					                    	for (var property in $scope.drawControl) {
+//					                    		$log.debug("Property name 2: " + property );
+//					                    	}
+		                            		
+		                            		//$scope.drawControl.draw.marker.guideLayers = $scope.guideLayers;
+					                    	//$scope.drawControl.removeFrom(layer);
+					                    	//$scope.drawControl.removeFrom(overlay);
+					                    	//$scope.drawControl.addTo(elfinUpdatedMarkerLayer);
+		                            		//$scope.drawControl.addTo(overlay);
+		                            	};		                            	
+		                            });
+                                // Handle snapping facilities
+		                        // TODO: make it inside loop above where overlay is directly accessible
+                                //$scope.guideLayers.push(layers.overlays[overlayId]);
+		                    });                        	
+                       		
+                       	} else {
+                            MapService.updateLayerCoords(elfin, layer);
+                            MapService.updatePolygonCoords(elfin, layer);
+                            MapService.updateLayerPopupContent(elfin, layer);                       		
+                       	}
+
+                    });
+                }
+            };			
+			
             // ================================================================
             // ================================================================
             
