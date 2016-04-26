@@ -610,7 +610,7 @@
             	var label = name;
             	var collectionId = "G20040930101030005"; // IMMEUBLE
             	var xpath = "//ELFIN[@CLASSE='IMMEUBLE']";
-            	var type = "circle";
+            	var type = "point";
             	var styleColor = "black";
             	var styleOpacity = "1";
             	var styleWeight = "";
