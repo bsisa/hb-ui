@@ -824,44 +824,7 @@
 					hbAlertMessages.addAlert("danger",message);
 				});	
             	
-            	$scope.resetFleetFlds();
             };            
-            
-            $scope.resetFleetFlds = function() {
-            	$scope.fleet.name ="";
-            	$scope.fleet.color ="";
-            };
-            
-            
-            
-/*            
-            <L POS="3">
-            <C POS="1">Immeubles Surface</C> <!-- Layer name -->
-            <C POS="2">G20040930101030005</C> <!-- Base Collection -->
-            <C POS="3">//ELFIN[@CLASSE='IMMEUBLE']</C> <!-- XPath -->
-            <C POS="4">polygon</C> <!-- Representation Type -->
-            <C POS="5">#0f0</C> <!-- Stroke Color : color -->
-            <C POS="6">1</C> <!-- Stroke Opacity : opacity-->
-            <C POS="7">1</C> <!-- Stroke weight -->
-            <C POS="8">2,10</C> <!-- Stroke dash : dashArray -->
-            <C POS="9">#3f3</C> <!-- Fill Color : fillColor -->
-            <C POS="10">0.2</C> <!-- Fill Opacity : fillOpacity-->
-            <C POS="11"/> <!-- Point Radius : radius -->
-        </L>
-        <L POS="4">
-            <C POS="1">Immeubles Point...</C>
-            <C POS="2">G20040930101030005</C>
-            <C POS="3">//ELFIN[@CLASSE='IMMEUBLE']</C>
-            <C POS="4">point</C>
-            <C POS="5">blue</C> <!-- Stroke Color -->
-            <C POS="6">1</C> <!-- Stroke Opacity -->
-            <C POS="7"/> <!-- Stroke weight -->
-            <C POS="8"/> <!-- Stroke dash -->
-            <C POS="9">yellow</C> <!-- Fill Color -->
-            <C POS="10">0.7</C> <!-- Fill Opacity -->
-            <C POS="11">8</C> <!-- Point Radius -->
-        </L>            
-*/
 
        
             var getHbLayerDefLine = function(posNb, label, collectionId, xpath, type, styleColor, styleOpacity, 
@@ -884,73 +847,6 @@
                 return L;
                 
 			};
-        
-			
-            var updateFleetObjRepresentation = function(fleetName, elfin) {
-            	$log.debug(">>>> updateFleetObjRepresentation (fleetName, elfin.Id = "+fleetName + ", "+elfin.Id+")");
-                var identifier = getElfinIdentifier(elfin);
-                if (angular.isDefined($scope.layerDictionary[identifier])) {
-                    angular.forEach($scope.layerDictionary[identifier], function (layer) {
-                    	
-                    	// TODO: investigate cyclic object value. Thought was fixed by
-                    	// removing hbMapService.js angular.extend(result, {elfin:elfin}); from getObjectLayer
-                    	// $log.debug(">>>> layer = " + angular.toJson(layer));
-                    	
-                    	//MapService.updateMarkerLayer(elfin, layer, markerStyle);
-                   	
-                       	$log.debug(">>>> FOUND entry for identifier = " + identifier + " with nb entries = " + ($scope.layerDictionary[identifier].length) );
-                       	$log.debug(">>>> layer.representation = " + layer.representation);
-
-                       	if (layer.representation === "marker") {
-
-							// TODO: refactor as function => used in replaceLayer... see updateElfinRepresentation
-		                    leafletData.getLayers().then(function(layers) {
-                   	
-		                        	var elfinUpdatedMarkerLayer = MapService.getObjectLayer(elfin, 'marker', markerStyle);
-			                    	
-		                            //[overlayId].addLayer(objectLayer);
-		                            angular.forEach(layers.overlays, function(overlay) {
-		                            	if ( overlay.hasLayer( layer) ) {
-		                            		
-		                            		var gdeIdx = $scope.guideLayers.indexOf(overlay);
-		                            		overlay.removeLayer(layer);
-		                            		overlay.addLayer(elfinUpdatedMarkerLayer);
-		                            		// Update guideLayers with updated overlay.
-		                            		$scope.guideLayers.splice(gdeIdx,1);
-		                            		$scope.guideLayers.push(overlay);
-		                            		$log.debug(">>>> Found marker, guide idx = "+gdeIdx+", replacing by new one...");
-		                            		
-		                            		// Required - layer dictionary update
-		                            		var dictIdx = $scope.layerDictionary[identifier].indexOf(layer);
-		                            		$scope.layerDictionary[identifier].splice(dictIdx,1);
-		                            		$scope.layerDictionary[identifier].push(elfinUpdatedMarkerLayer);
-		                            		$log.debug(">>>> Found layer, idx = "+dictIdx+", replacing by new one...");		                            		
-		                            		
-//					                    	for (var property in $scope.drawControl) {
-//					                    		$log.debug("Property name 2: " + property );
-//					                    	}
-		                            		
-		                            		//$scope.drawControl.draw.marker.guideLayers = $scope.guideLayers;
-					                    	//$scope.drawControl.removeFrom(layer);
-					                    	//$scope.drawControl.removeFrom(overlay);
-					                    	//$scope.drawControl.addTo(elfinUpdatedMarkerLayer);
-		                            		//$scope.drawControl.addTo(overlay);
-		                            	};		                            	
-		                            });
-                                // Handle snapping facilities
-		                        // TODO: make it inside loop above where overlay is directly accessible
-                                //$scope.guideLayers.push(layers.overlays[overlayId]);
-		                    });                        	
-                       		
-                       	} else {
-                            MapService.updateLayerCoords(elfin, layer);
-                            MapService.updatePolygonCoords(elfin, layer);
-                            MapService.updateLayerPopupContent(elfin, layer);                       		
-                       	}
-
-                    });
-                }
-            };			
 			
             // ================================================================
             // ================================================================
