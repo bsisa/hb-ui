@@ -18,7 +18,7 @@
             
             // Process SSE message {"group" : "", "text" : "", "user" : "" , "time" : ""} 
     		statusEventSource.onmessage = function(event) {  
-    			$log.debug("onmessage: Received server side event.data = " + event.data);
+    			//$log.debug("onmessage: Received server side event.data = " + event.data);
     			$scope.$apply(function () {
     				$scope.sseConnected = true;
     				$scope.sseMessage = JSON.parse(event.data);
@@ -60,7 +60,7 @@
 			
             // Process SSE message {"group" : "", "text" : "", "user" : "" , "time" : "", "elfin" : ""} 
 			fleet1EventSource.onmessage = function(event) {  
-    			$log.debug("fleet1EventSource.onmessage: Received server side event.data = " + event.data);
+    			$log.debug("fleet1EventSource.onmessage: Received server side event.data ");
     			$scope.$apply(function () {
     				var fleet1Message = JSON.parse(event.data);
     				$scope.updateFleet(FLEET_1, fleet1Message.elfin);
