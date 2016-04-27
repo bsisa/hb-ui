@@ -50,7 +50,39 @@
 						break;
 				}
 				$log.debug("onerror: " + txt);
-			}    		
+			}    	
+			
+			/**
+			 * TODO: Make it a dynamic list of listener per fleet... 
+			 */
+			var FLEET_1 = "Fleet1";
+			var fleet1EventSource = hbOffline.createEvenSourceForGroup(FLEET_1);
+			
+            // Process SSE message {"group" : "", "text" : "", "user" : "" , "time" : "", "elfin" : ""} 
+			fleet1EventSource.onmessage = function(event) {  
+    			$log.debug("fleet1EventSource.onmessage: Received server side event.data = " + event.data);
+    			$scope.$apply(function () {
+    				var fleet1Message = JSON.parse(event.data);
+    				$scope.updateFleet(FLEET_1, fleet1Message.elfin);
+    			});
+    		}
+    		
+			fleet1EventSource.onopen = function(event) {
+				$log.debug("fleet1EventSource.onopen: Connected to server. Waiting for data...");
+			}
+
+			fleet1EventSource.onerror = function(event) {
+				var txt;
+				switch (event.target.readyState) {
+					case EventSource.CONNECTING:
+						txt = 'fleet1EventSource Reconnecting...';
+						break;
+					case EventSource.CLOSED:
+						txt = 'fleet1EventSource Connection failed. Will not retry.';
+						break;
+				}
+				$log.debug("onerror: " + txt);
+			}			
 
         } else {
         	$scope.sseConnected = false;
@@ -107,17 +139,6 @@
 //                              attribution: 'Custom map <a href="http://www.bsisa.ch/">by BSI SA</a>'
 //                            }
 //                        }
-                     // www.toolserver.org moved and could not find resource anymore.
-//                      black_white: {
-//                          name: 'Noir et Blanc',
-//                          url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
-//                          type: 'xyz'
-//                      },
-//                      hot: {
-//                          name: 'HOT',
-//                          url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-//                          type: 'xyz'
-//                      }
                 		,
                       transport: {
                           name: 'Transport',
@@ -152,14 +173,6 @@
             	Reference to current displayed object
              */
             $scope.elfin = null;
-            
-// TODO: useless. Remove
-//			/**
-//			 * Listener on current displayed object Id change
-//			 */
-//			$scope.$watch('elfin.Id', function(newVal, oldVal) {
-//				$log.debug(">>>> Map selected elfin.Id changed from: "+oldVal+" to: " + newVal);
-//			}, true);            
             
 			/**
 				The objects dictionary holds for each idg/class/id combination as text, all layers in an array
@@ -671,7 +684,7 @@
             };           
             
             $scope.fleet = {
-            		"name" : "Fleet1",
+            		"name" : FLEET_1,
             		"color" : "orange"
             };
             
@@ -692,30 +705,34 @@
                         	"styleWeight" : "",
                     		"styleDashArray" : "",
                     		"styleFillColor" : "orange",
-                    		"styleFillOpacity" : "0.5", 
+                    		"styleFillOpacity" : "0.6", 
                     		"styleRadius" : "10"
             		};
             		
             	return angular.fromJson(angular.toJson(fleetHbLayerDefault));
             };
             
+            
+            // REST examples
+//              http://localhost:9000/api/actview/launch?name=Fleet1
+//            	http://localhost:9000/api/actview/broadcast/Fleet1?message=Hi
+//            	http://localhost:9000/api/actview/position/Fleet1/G20040203114700011
+//            	http://localhost:9000/api/actview/destination/test1/G20040203114700011
+//            	http://localhost:9000/api/actview/shutdown?name=Fleet1
+            
             $scope.createFleet = function(name, color) {
             	
+            	
+				GeoxmlService.fleetStart().get({"name" : name}).then(function(resp) {
+					$log.debug("Start "+name+" actor system " + angular.toJson(resp));
+				},
+				function(response) {
+					var message = "Problem starting "+name+": "+ response.status+ ")";
+					hbAlertMessages.addAlert("danger",message);
+				});	            	
+            	
+            	
             	$log.debug(">>>> Start "+color+" "+name+" fleet.");
-            	//var posNb = leafletData.getLayers().size + 1;
-//            	var posNb = "1";
-//            	var label = name;
-//            	var collectionId = "G20040930101030005"; // IMMEUBLE
-//            	var xpath = "//ELFIN[@CLASSE='IMMEUBLE']";
-//            	var type = "point";
-//            	var styleColor = "black";
-//            	var styleOpacity = "1";
-//            	var styleWeight = "";
-//        		var styleDashArray = "";
-//        		var styleFillColor = color;
-//        		var styleFillOpacity = "0.5"; 
-//        		var styleRadius = "10";
-        		
         		var createfleetLayerConf = getFleetHbLayerDefault();
         		createfleetLayerConf.label = name;
         		createfleetLayerConf.styleFillColor = color;
@@ -733,38 +750,27 @@
             $scope.updateFleet = function(name, elfin) {
                 	
             	$log.debug(">>>> updateFleet "+name);
-            	var basePoint = MapService.getElfinBasePoint(elfin);
-            	$log.debug(">>>> updateFleet elfin X = "+basePoint.X + ", Y = " + basePoint.Y);
-            	basePoint.Y = basePoint.Y + 5; 
-            	$log.debug(">>>> updateFleet elfin X = "+basePoint.X + ", Y = " + basePoint.Y);
-            	
+          	
             	leafletData.getMap().then(function (map) {
                     // Search for overlay matching fleet
                     leafletData.getLayers().then(function(layers) {
-                        $log.debug(">>>> Layers");
-//                        angular.forEach(layers.overlays, function(overlay) {
-//                        	$log.debug(">>>> Overlay...");
-//                        });
                         var overlayId = name + "#" + 1;
-                        $log.debug(">>>> Overlay - search [" + overlayId +"]");
+                        //$log.debug(">>>> Overlay - search [" + overlayId +"]");
                         if ( layers.overlays[overlayId] ) {
                         	$log.debug(">>>> Overlay - " + overlayId + " found!");
                         	// Fleet obj collection
                         	var overlay = layers.overlays[overlayId]
-                        	// could be obtain from getElfinIdentifier(elfin);
-                        	//var objId = "G20040930101030005/IMMEUBLE/G20050725170559296";
-                        	// Use $scope.elfin for test.
                         	var objId = getElfinIdentifier(elfin);
-                        	$log.debug(">>>> layer per id from dict: nb = " + $scope.layerDictionary[objId].length );
+
                         	for (var i = 0; i < $scope.layerDictionary[objId].length; i++) {
 								var layer = $scope.layerDictionary[objId][i];
 								if (overlay.hasLayer(layer)) {
 									$log.debug(">>>> Layer i="+i+" found in overlay id:     "+ overlayId);
 									// Let change layer color to red for this object
-									
 					        		var updatefleetLayerConf = getFleetHbLayerDefault();
 					        		updatefleetLayerConf.label = "no used";
 					        		updatefleetLayerConf.styleFillColor = "red";
+					        		updatefleetLayerConf.styleFillOpacity = "1";
 
 					            	var hbLayerDef = getHbLayerDefLine(updatefleetLayerConf.posNb, updatefleetLayerConf.label, updatefleetLayerConf.collectionId, updatefleetLayerConf.xpath, updatefleetLayerConf.type, updatefleetLayerConf.styleColor, updatefleetLayerConf.styleOpacity, 
 					            			updatefleetLayerConf.styleWeight, updatefleetLayerConf.styleDashArray, updatefleetLayerConf.styleFillColor, updatefleetLayerConf.styleFillOpacity, updatefleetLayerConf.styleRadius);					        		
@@ -810,6 +816,14 @@
             	
             	$log.debug(">>>> Shutdown "+name+" fleet.");
             	
+				GeoxmlService.fleetStop().get({"name" : name}).then(function(resp) {
+					$log.debug("Stop "+name+" actor system " + angular.toJson(resp));
+				},
+				function(response) {
+					var message = "Problem stopping "+name+": "+ response.status+ ")";
+					hbAlertMessages.addAlert("danger",message);
+				});	
+            	
             	$scope.resetFleetFlds();
             };            
             
@@ -817,6 +831,8 @@
             	$scope.fleet.name ="";
             	$scope.fleet.color ="";
             };
+            
+            
             
 /*            
             <L POS="3">

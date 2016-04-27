@@ -171,6 +171,21 @@
                 },
                 getCurrentDataManagerAccessRightsCreateUpdate: function() {
                 	return currentDataManagerAccessRightsCreateUpdate;
+                },
+                fleetStart: function() {
+                	return _geoxmlService.one("actview/launch");
+                },
+                fleetStop: function() {
+                	return _geoxmlService.one("actview/shutdown");
+                }, 
+                fleetBroadcast: function() {
+                	return _geoxmlService.one("actview/broadcast/Fleet1");
+                }, 
+                fleetObjectDestination: function() {
+                	return _geoxmlService.one("actview/destination/Fleet1/G20040203114700011");
+                },
+                fleetObjectPosition: function() {
+                	return _geoxmlService.one("actview/position/Fleet1/G20040203114700011");
                 }
                 
             };

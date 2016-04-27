@@ -16,8 +16,8 @@
 			<i class="glyphicon glyphicon-screenshot"></i>
 	</button>
 	
-	<input type="text" ng-model="fleet.name" hb-no-dirty-check></input>
-	<input type="text" ng-model="fleet.color" hb-no-dirty-check></input>
+	<input type="text" ng-model="fleet.name" hb-no-dirty-check ng-disabled="true"></input>
+	<input type="text" ng-model="fleet.color" hb-no-dirty-check ng-disabled="true"></input>
     <button 
     		class="btn btn-default" 
     		tooltip="Launch a new fleet"
@@ -41,9 +41,9 @@
 			<i class="glyphicon glyphicon-flash" style="color: green;"></i>
 		</button>
      	<div><span>Current message: {{sseMessage.text}} - {{sseMessage.time}}</span></div>
-		<input id="time" name="time" type="text" class="form-control" ng-model="sseMessage.time" >
-     	<input id="user_message" name="userMessage" type="text" class="form-control" ng-model="sse.userMessage" >
-		<button class="btn btn-group btn-default" ng-click="sendMessage(sse.userMessage)" >Send</button>
+<!-- 		<input id="time" name="time" type="text" class="form-control" ng-model="sseMessage.time" > -->
+<!--      	<input id="user_message" name="userMessage" type="text" class="form-control" ng-model="sse.userMessage" > -->
+<!-- 		<button class="btn btn-group btn-default" ng-click="sendMessage(sse.userMessage)" >Send</button> -->
 	</span>
 	<span ng-if="sseSupport && !sseConnected" tooltip="Connexion interrompue" tooltip-placement="bottom">
 		<button class="btn btn-group btn-default" ng-click="checkConnectionStatus()" >
@@ -56,6 +56,7 @@
 		</button>
 	</span>	
 	</div>
+	<div>{{fleet1Message.elfin}}</div>
 	</div>
 <!-- 	<div>Current object Id = {{elfin.Id}}</div>								 -->
 </div>
