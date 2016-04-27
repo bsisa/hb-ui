@@ -779,20 +779,16 @@
 									// Use scope elfin for tests
 									//var elfin = $scope.elfin;
 									var elfinUpdatedMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
-		                            //MapService.updateLayerCoords(elfin, layer);
-		                            //MapService.updatePolygonCoords(elfin, layer);
-		                            //MapService.updateLayerPopupContent(elfin, layer);
-									
-									
+								
                             		var gdeIdx = $scope.guideLayers.indexOf(overlay);
                             		overlay.removeLayer(layer);
                             		overlay.addLayer(elfinUpdatedMarkerLayer);
-//                            		// Update guideLayers with updated overlay.
+                            		// Update guideLayers with updated overlay.
                             		$scope.guideLayers.splice(gdeIdx,1);
                             		$scope.guideLayers.push(overlay);
                             		$log.debug(">>>> Found marker, guide idx = "+gdeIdx+", replacing by new one...");
-//                            		
-//                            		// Required - layer dictionary update
+                            		
+                            		// Required - layer dictionary update
                             		var dictIdx = $scope.layerDictionary[objId].indexOf(layer);
                             		$scope.layerDictionary[objId].splice(dictIdx,1);
                             		$scope.layerDictionary[objId].push(elfinUpdatedMarkerLayer);
