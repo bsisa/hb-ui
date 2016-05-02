@@ -178,8 +178,8 @@
                 fleetStop: function() {
                 	return _geoxmlService.one("actview/shutdown");
                 }, 
-                fleetBroadcast: function() {
-                	return _geoxmlService.one("actview/broadcast/Fleet1");
+                fleetBroadcast: function(fleetName) {
+                	return _geoxmlService.one("actview/broadcast/" + fleetName);
                 }, 
                 fleetObjectDestination: function() {
                 	return _geoxmlService.one("actview/destination/Fleet1/G20040203114700011");

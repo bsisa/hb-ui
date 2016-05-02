@@ -768,7 +768,7 @@
 									$log.debug(">>>> Layer i="+i+" found in overlay id:     "+ overlayId);
 									// Let change layer color to red for this object
 					        		var updatefleetLayerConf = getFleetHbLayerDefault();
-					        		updatefleetLayerConf.label = "no used";
+					        		updatefleetLayerConf.label = "not used";
 					        		updatefleetLayerConf.styleFillColor = "red";
 					        		updatefleetLayerConf.styleFillOpacity = "1";
 
@@ -808,6 +808,23 @@
             	//$scope.resetFleetFlds();
             };
 
+            
+            $scope.testFleetMovement = function(fleetName) {
+            	
+            	var message = "go";
+            	
+            	$log.debug(">>>> Move "+fleetName+" fleet to predefined test destination.");
+            	
+				GeoxmlService.fleetBroadcast(fleetName).get({"message" : message}).then(function(resp) {
+					$log.debug("Broadcast to fleet "+fleetName+" actor system " + angular.toJson(resp));
+				},
+				function(response) {
+					var message = "Problem broadcasting "+fleetName+": "+ response.status+ ")";
+					hbAlertMessages.addAlert("danger",message);
+				});            	
+            	
+            };
+            
             $scope.removeFleet = function(name) {
             	
             	$log.debug(">>>> Shutdown "+name+" fleet.");
