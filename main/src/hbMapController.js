@@ -60,10 +60,12 @@
 			
             // Process SSE message {"group" : "", "text" : "", "user" : "" , "time" : "", "elfin" : ""} 
 			fleet1EventSource.onmessage = function(event) {  
-    			$log.debug("fleet1EventSource.onmessage: Received server side event.data ");
+    			$log.debug("fleet1EventSource.onmessage: Received server side event.data at " + new Date());
     			$scope.$apply(function () {
     				var fleet1Message = JSON.parse(event.data);
-    				$scope.updateFleet(FLEET_1, fleet1Message.elfin);
+    				var newElfinUpdatedLayer = getLayerForElfin(fleet1Message.elfin, fleet1Message.state);
+    				$log.debug("fleet1EventSource.onmessage: updateFleet at " + new Date());
+    				$scope.updateFleet(FLEET_1, fleet1Message.elfin, newElfinUpdatedLayer);
     			});
     		}
     		
@@ -78,10 +80,10 @@
 						txt = 'fleet1EventSource Reconnecting...';
 						break;
 					case EventSource.CLOSED:
-						txt = 'fleet1EventSource Connection failed. Will not retry.';
+						txt = 'fleet1EventSource Reconnection failed, EventSource.CLOSED, will not retry.';
 						break;
 				}
-				$log.debug("onerror: " + txt);
+				$log.debug("fleet1EventSource on error: " + txt);
 			}			
 
         } else {
@@ -746,10 +748,35 @@
             	});            	
             };
             	
+            
+            var getHbLayerForStyle = function(color, opacity) {
             	
-            $scope.updateFleet = function(name, elfin) {
+				// Let change layer color to red for this object
+        		var updatefleetLayerConf = getFleetHbLayerDefault();
+        		updatefleetLayerConf.label = "not used";
+        		updatefleetLayerConf.styleFillColor = color;
+        		updatefleetLayerConf.styleFillOpacity = opacity;
+
+            	var hbLayerDef = getHbLayerDefLine(updatefleetLayerConf.posNb, updatefleetLayerConf.label, updatefleetLayerConf.collectionId, updatefleetLayerConf.xpath, updatefleetLayerConf.type, updatefleetLayerConf.styleColor, updatefleetLayerConf.styleOpacity, 
+            			updatefleetLayerConf.styleWeight, updatefleetLayerConf.styleDashArray, updatefleetLayerConf.styleFillColor, updatefleetLayerConf.styleFillOpacity, updatefleetLayerConf.styleRadius);					        		
+    		
+				var hbLayer = buildHbLayer(hbLayerDef);            	
+            	return hbLayer;
+            }; 
+            
+            var getLayerForElfin = function(elfin, state) {
+            	var color = (state === "moving") ? "red" : "green";
+            	var opacity = (state === "moving") ? "0.8" : "0.6";
+            	// Builds hb layer customising styles.
+            	var hbLayer = getHbLayerForStyle(color, opacity);
+            	// Builds leaflet layer for hbLayer representation type and style and sets position and popup information using elfin data. 
+            	var elfinUpdatedLeafletLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
+            	return elfinUpdatedLeafletLayer;
+            };
+            	
+            $scope.updateFleet = function(name, elfin, newElfinLayer) {
                 	
-            	$log.debug(">>>> updateFleet "+name);
+            	$log.debug(">>>> updateFleet " + name + ", elfin.Id = " + elfin.Id);
           	
             	leafletData.getMap().then(function (map) {
                     // Search for overlay matching fleet
@@ -767,22 +794,26 @@
 								if (overlay.hasLayer(layer)) {
 									$log.debug(">>>> Layer i="+i+" found in overlay id:     "+ overlayId);
 									// Let change layer color to red for this object
-					        		var updatefleetLayerConf = getFleetHbLayerDefault();
-					        		updatefleetLayerConf.label = "not used";
-					        		updatefleetLayerConf.styleFillColor = "red";
-					        		updatefleetLayerConf.styleFillOpacity = "1";
-
-					            	var hbLayerDef = getHbLayerDefLine(updatefleetLayerConf.posNb, updatefleetLayerConf.label, updatefleetLayerConf.collectionId, updatefleetLayerConf.xpath, updatefleetLayerConf.type, updatefleetLayerConf.styleColor, updatefleetLayerConf.styleOpacity, 
-					            			updatefleetLayerConf.styleWeight, updatefleetLayerConf.styleDashArray, updatefleetLayerConf.styleFillColor, updatefleetLayerConf.styleFillOpacity, updatefleetLayerConf.styleRadius);					        		
+//					        		var updatefleetLayerConf = getFleetHbLayerDefault();
+//					        		updatefleetLayerConf.label = "not used";
+//					        		updatefleetLayerConf.styleFillColor = "red";
+//					        		updatefleetLayerConf.styleFillOpacity = "1";
+//
+//					            	var hbLayerDef = getHbLayerDefLine(updatefleetLayerConf.posNb, updatefleetLayerConf.label, updatefleetLayerConf.collectionId, updatefleetLayerConf.xpath, updatefleetLayerConf.type, updatefleetLayerConf.styleColor, updatefleetLayerConf.styleOpacity, 
+//					            			updatefleetLayerConf.styleWeight, updatefleetLayerConf.styleDashArray, updatefleetLayerConf.styleFillColor, updatefleetLayerConf.styleFillOpacity, updatefleetLayerConf.styleRadius);					        		
 				        		
-									var hbLayer = buildHbLayer(hbLayerDef);
+									//var hbLayer = buildHbLayer(hbLayerDef);
 									// Use scope elfin for tests
 									//var elfin = $scope.elfin;
-									var elfinUpdatedMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
+									
+									//var elfinUpdatedMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
 								
+									//var elfinUpdatedMarkerLayer = getLayerForElfin(elfin, state);
+									
                             		var gdeIdx = $scope.guideLayers.indexOf(overlay);
                             		overlay.removeLayer(layer);
-                            		overlay.addLayer(elfinUpdatedMarkerLayer);
+                            		//overlay.addLayer(elfinUpdatedMarkerLayer);
+                            		overlay.addLayer(newElfinLayer);
                             		// Update guideLayers with updated overlay.
                             		$scope.guideLayers.splice(gdeIdx,1);
                             		$scope.guideLayers.push(overlay);
@@ -791,7 +822,8 @@
                             		// Required - layer dictionary update
                             		var dictIdx = $scope.layerDictionary[objId].indexOf(layer);
                             		$scope.layerDictionary[objId].splice(dictIdx,1);
-                            		$scope.layerDictionary[objId].push(elfinUpdatedMarkerLayer);
+                            		//$scope.layerDictionary[objId].push(elfinUpdatedMarkerLayer);
+                            		$scope.layerDictionary[objId].push(newElfinLayer);
                             		$log.debug(">>>> Found layer, idx = "+dictIdx+", replacing by new one...");									
 									
 									
