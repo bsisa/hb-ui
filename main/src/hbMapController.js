@@ -1,8 +1,72 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', '$location', 'GeoxmlService', 'HB_EVENTS',
-        function ($scope, $rootScope, $log, leafletData, MapService, $location, GeoxmlService, HB_EVENTS) {
+    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
+        function ($scope, $rootScope, $log, leafletData, MapService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
 
+        // =======================================================================================
+        // =========================== Display connection status using SSE =======================
+        // =======================================================================================        	
+        
+        $scope.sseConnected = true;
+        $scope.sseLastCheck = new Date();
+        $scope.sseSupport = hbOffline.getIsSseSupported;
+
+        // Set up status EventSource listeners only if SSE is supported
+        if (hbOffline.getIsSseSupported) {
+        	
+            var statusEventSource = hbOffline.getStatusEventSource();
+            
+            // Process SSE message {"group" : "", "text" : "", "user" : "" , "time" : ""} 
+    		statusEventSource.onmessage = function(event) {  
+    			//$log.debug("onmessage: Received server side event.data = " + event.data);
+    			$scope.$apply(function () {
+    				$scope.sseConnected = true;
+    				$scope.sseMessage = JSON.parse(event.data);
+    				$scope.sseLastCheck = new Date();
+    			});
+    		}
+    		
+			statusEventSource.onopen = function(event) {
+				$log.debug("onopen: Connected to server. Waiting for data...");
+				$scope.$apply(function () {
+					$scope.sseConnected = false;
+				});
+			}
+
+			statusEventSource.onerror = function(event) {
+				var txt;
+				switch (event.target.readyState) {
+					case EventSource.CONNECTING:
+						$scope.$apply(function () {
+							$scope.sseConnected = false;
+						});
+						txt = 'Reconnecting...';
+						break;
+					case EventSource.CLOSED:
+						$scope.$apply(function () {
+							$scope.sseConnected = false;
+						});
+						txt = 'Connection failed. Will not retry.';
+						break;
+				}
+				$log.debug("onerror: " + txt);
+			}    	
+
+        } else {
+        	$scope.sseConnected = false;
+        	$scope.sseMessage = {"group" : "status", "text" : "no SSE support", "user" : "client", "time" : new Date() };
+        	$scope.sseLastCheck = new Date();
+        }
+        
+        $scope.sse = {
+        	"userMessage" : ""
+        };
+
+        $scope.checkConnectionStatus = function() {
+        	hbOffline.forceStatusEvenSourceReload();
+        };
+        
+        // =======================================================================================
 
             /**
              * Add Leaflet Directive scope extension
@@ -36,23 +100,13 @@
 //                              attribution: 'Custom map <a href="http://www.bsisa.ch/">by BSI SA</a>'
 //                            }
 //                        }
-                
-                     // www.toolserver.org moved and could not find resource anymore.
-//                      black_white: {
-//                          name: 'Noir et Blanc',
-//                          url: 'http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png',
-//                          type: 'xyz'
-//                      },
-//                      hot: {
-//                          name: 'HOT',
-//                          url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-//                          type: 'xyz'
-//                      },
-//                      transport: {
-//                          name: 'Transport',
-//                          url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-//                          type: 'xyz'
-//                      },
+                		,
+                      transport: {
+                          name: 'Transport',
+                          url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+                          type: 'xyz'
+                      }
+//                		,
 //                      landscape: {
 //                          name: 'Paysage',
 //                          url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
@@ -80,13 +134,6 @@
             	Reference to current displayed object
              */
             $scope.elfin = null;
-            
-			/**
-			 * Listener on current displayed object Id change
-			 */
-			$scope.$watch('elfin.Id', function(newVal, oldVal) {
-				$log.debug(">>>> Map selected elfin.Id changed from: "+oldVal+" to: " + newVal);
-			}, true);            
             
 			/**
 				The objects dictionary holds for each idg/class/id combination as text, all layers in an array
@@ -138,19 +185,25 @@
              */
             var pushLayer = function(objectLayer, objects, elfin) {
                 if (objectLayer !== null) {
+                	// Adds hbLayer for object on top of existing hb layer objects.
                     objects.unshift(objectLayer);
+                    // Get triplet ID_G/CLASSE/Id
                     var identifier = getElfinIdentifier(elfin);
                     if (angular.isUndefined($scope.layerDictionary[identifier])) {
+                    	// Create a new single element array of hb layer objects.
                         $scope.layerDictionary[identifier] = [objectLayer];
                     } else {
+                    	// Adds hbLayer for object on top of existing hb layer objects for that specific ELFIN
                         $scope.layerDictionary[identifier].unshift(objectLayer);
                     }
                 }            	
             };             
             
             /**
-             * Procedure to build and display a HyperBird layer on a map given its ELFIN.CARACTERISTIQUE.FORME.L definition
-             * found in an ELFIN of CLASSE='PLAN'
+             * Procedure to build and display a HyperBird layer on a map given its definition found in an ELFIN of CLASSE='PLAN' 
+             * Parameter: `hbMapDefId` is the map definition `ELFIN.Id` 
+             * Parameter: `hbLayerDef` is a given layer definition found in a line L of list `ELFIN.CARACTERISTIQUE.FORME.L` 
+             * 
              * IMPORTANT: The term `layer` in HyperBird matches `overlays` in Leaflet context. 
              * While `layer` in Leaflet context is used for `basemap` or `fond de plan` with regards to HyperBird semantic. 
              */
@@ -195,7 +248,7 @@
 	                        			objectLayerStyle = MapService.getStandardObjectMarkerStyle();
 	                        		} else {
 	                        			objectLayerStyle = hbLayer.representationStyle;
-	                        		}	                        		
+	                        		}
 	                        		objectLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, objectLayerStyle);
 	                        	}		                    	
 	                        	
@@ -253,8 +306,19 @@
 		                            	if ( overlay.hasLayer( layer) ) {
 		                            		
 		                            		var gdeIdx = $scope.guideLayers.indexOf(overlay);
-		                            		$log.debug(">>>> FOUND MARKER, guide idx = "+gdeIdx+", replacing by new one...");
-
+		                            		overlay.removeLayer(layer);
+		                            		overlay.addLayer(elfinUpdatedMarkerLayer);
+		                            		// Update guideLayers with updated overlay.
+		                            		$scope.guideLayers.splice(gdeIdx,1);
+		                            		$scope.guideLayers.push(overlay);
+		                            		$log.debug(">>>> Found marker, guide idx = "+gdeIdx+", replacing by new one...");
+		                            		
+		                            		// Required - layer dictionary update
+		                            		var dictIdx = $scope.layerDictionary[identifier].indexOf(layer);
+		                            		$scope.layerDictionary[identifier].splice(dictIdx,1);
+		                            		$scope.layerDictionary[identifier].push(elfinUpdatedMarkerLayer);
+		                            		$log.debug(">>>> Found layer, idx = "+dictIdx+", replacing by new one...");		                            		
+		                            		
 //					                    	for (var property in $scope.drawControl) {
 //					                    		$log.debug("Property name 2: " + property );
 //					                    	}
@@ -262,13 +326,6 @@
 		                            		//$scope.drawControl.draw.marker.guideLayers = $scope.guideLayers;
 					                    	//$scope.drawControl.removeFrom(layer);
 					                    	//$scope.drawControl.removeFrom(overlay);
-		                            		
-		                            		overlay.removeLayer(layer);
-		                            		overlay.addLayer(elfinUpdatedMarkerLayer);
-		                            		// Update guideLayers with updated overlay.
-		                            		$scope.guideLayers.splice(gdeIdx,1);
-		                            		$scope.guideLayers.push(overlay);
-
 					                    	//$scope.drawControl.addTo(elfinUpdatedMarkerLayer);
 		                            		//$scope.drawControl.addTo(overlay);
 		                            	};		                            	
@@ -315,6 +372,8 @@
 
             var displayMapContentListenerDeregister = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, hbMapDef) {
 
+            	$log.debug(">>>> HB_EVENTS.DISPLAY_MAP_CONTENT event : " + HB_EVENTS.DISPLAY_MAP_CONTENT + " " + angular.toJson(event));
+            	
                 leafletData.getMap().then(function (map) {
 
                     // First clean all layers overlays 
@@ -380,9 +439,6 @@
 
                         map.addControl($scope.drawControl);
 
-
-
-
                         var coordinatesPlugin = L.control.coordinates({
                             position:"bottomright", //optional default "bootomright"
                             decimals:2, //optional default 4
@@ -437,21 +493,32 @@
             var elfinLoadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
             	// TODO: review: not relevant for all ELFIN@CLASSE !
                 $scope.elfin = elfin;
-                updateElfinRepresentation($scope.elfin, MapService.getSelectedObjectMarkerStyle());
+                //updateElfinRepresentation($scope.elfin, MapService.getSelectedObjectMarkerStyle());
                 $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE +"/"+elfin.Id);
+        		if (elfin !== null) {
+	    			// Set newly selected elfin style to selected style.
+	    			var selStyle = MapService.getSelectedObjectMarkerStyle();
+	    			$log.debug("Setting new val to selected style: " + angular.toJson(selStyle));
+	    			updateElfinRepresentation(elfin, selStyle);					
+        		}                            
+                
+                
             });
+
 
             // Elfin has been unloaded, thus no more current elfin
             var elfinUnloadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
-                if (elfin) {
-                    updateElfinRepresentation(elfin, {});
-                }
-                $log.debug(">>>> MapController: HB_EVENTS.ELFIN_UNLOADED => " + elfin.CLASSE +"/"+elfin.Id);
-                // TODO: This causes problem due to possible reset of formerly updated elfin 
-                // on ELFIN_LOADED event. Indeed the events order is not necessarily as UNLOAD => LOAD but can be
-                // reversed due to asynchronous execution. 
-                //$scope.elfin = null; 
 
+            	$log.debug(">>>> MapController: HB_EVENTS.ELFIN_UNLOADED => " + elfin.CLASSE +"/"+elfin.Id);
+    			if (elfin !== null) {
+	    			// Reset former selected elfin style to standard.
+	    			var stdStyle = MapService.getStandardObjectMarkerStyle();
+	    			$log.debug("Resetting old val to standard style: " + angular.toJson(stdStyle));
+	    			updateElfinRepresentation(elfin, stdStyle);
+    			}                
+                
+                // Do not perform $scope.elfin = null; Indeed on ELFIN_LOADED event may happen 
+    			// before or after ELFIN_UNLOADED event. This could reset newly loaded data. 
             });
 
 
@@ -463,7 +530,8 @@
              */
             var elfinUpdatedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
                 $log.debug(">>>> MapController: HB_EVENTS.ELFIN_UPDATED => " + elfin.CLASSE +"/"+elfin.Id);            	
-               	updateElfinRepresentation(elfin, {});            		
+                // TODO: Review if this update is required and set correct style if required.
+                //updateElfinRepresentation(elfin, {});            		
             });
 
             // Elfin has been deleted, thus remove it from the map
@@ -574,8 +642,35 @@
             	leafletData.getMap().then(function (map) {
             		map.fitBounds(MapService.getObjectBounds($scope.elfin, 'polygon'));
                 });
-            };            
+            };           
+
+            var getHbLayerForStyle = function(color, opacity) {
+            	
+				// Let change layer color to red for this object
+        		var updatefleetLayerConf = getFleetHbLayerDefault();
+        		updatefleetLayerConf.label = "not used";
+        		updatefleetLayerConf.styleFillColor = color;
+        		updatefleetLayerConf.styleFillOpacity = opacity;
+
+            	var hbLayerDef = getHbLayerDefLine(updatefleetLayerConf.posNb, updatefleetLayerConf.label, updatefleetLayerConf.collectionId, updatefleetLayerConf.xpath, updatefleetLayerConf.type, updatefleetLayerConf.styleColor, updatefleetLayerConf.styleOpacity, 
+            			updatefleetLayerConf.styleWeight, updatefleetLayerConf.styleDashArray, updatefleetLayerConf.styleFillColor, updatefleetLayerConf.styleFillOpacity, updatefleetLayerConf.styleRadius);					        		
+    		
+				var hbLayer = buildHbLayer(hbLayerDef);            	
+            	return hbLayer;
+            }; 
             
+            var getLayerForElfin = function(elfin, state) {
+            	var color = (state === "moving") ? "red" : "green";
+            	var opacity = (state === "moving") ? "0.8" : "0.6";
+            	// Builds hb layer customising styles.
+            	var hbLayer = getHbLayerForStyle(color, opacity);
+            	// Builds leaflet layer for hbLayer representation type and style and sets position and popup information using elfin data. 
+            	var elfinUpdatedLeafletLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
+            	return elfinUpdatedLeafletLayer;
+            };
+
+
+
             // ================================================================
             // ================================================================
             
