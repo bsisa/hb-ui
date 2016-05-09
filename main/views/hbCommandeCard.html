@@ -179,7 +179,12 @@
 						</div>
 
 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.fournisseur)">
-							<label for="fournisseur" class="col-sm-4 control-label">Fournisseur</label>
+							<label for="fournisseur" class="col-sm-4 control-label">
+								<div ng-if="containsStandardSourceURI(elfin.SOURCE)" class="col-xs-1" style="padding-left: 4px;">
+									<div  hb-card-view-link hb-href="/elfin/{{selected.provider.ID_G}}/ACTEUR/{{selected.provider.Id}}" hb-tooltip="Détails"></div>
+								</div>
+								Fournisseur
+							</label>
 							<div class="col-sm-8">
 	<!-- 						<pre>{{ elfinForm.fournisseur.$error | json }}</pre> -->
 								<input ng-if="!isReadOnly" id="fournisseur" name="fournisseur" type="text" class="form-control"
