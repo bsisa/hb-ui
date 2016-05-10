@@ -57,7 +57,7 @@
   		    			iconAnchor: [12, 41],
   		    			popupAnchor: [1, -34],
   		    			shadowSize: [41, 41],
-  		    			zIndexOffset: 1000
+  		    			zIndexOffset: 999
        		    }
        		});	                        		
        		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon.png'});
