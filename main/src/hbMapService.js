@@ -19,51 +19,26 @@
            var isMapDisplayed = function() {
                return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
            };
-
-           /**
-            * Returns a custom L.Icon intended for selected object marker styling.
-            */
-           var getSelectedObjectMarkerStyle = function() {
-
-       		// zIndexOffset only effective in higher version... 
-       		var CustomIcon = L.Icon.extend({
-       		    options: {
-  		    			iconSize: [25, 41],
-  		    			iconAnchor: [12, 41],
-  		    			popupAnchor: [1, -34],
-  		    			shadowSize: [41, 41],
-  		    			zIndexOffset: 1000
-       		    }
-       		});	                        		
-       		
-//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-orange.png'});
-       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-purple.png'});
-//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-red.png'});
-//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-yellow.png'});
-//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-green.png'});
-       		var customStyle = {icon: selectedIcon};                	
-           	return customStyle;
-           };           
            
            /**
             * Returns a custom L.Icon intended for standard object marker styling.
             */
-           var getStandardObjectMarkerStyle = function() {
-        	   
-       		// zIndexOffset only effective in higher version... 
-       		var CustomIcon = L.Icon.extend({
-       		    options: {
-  		    			iconSize: [25, 41],
-  		    			iconAnchor: [12, 41],
-  		    			popupAnchor: [1, -34],
-  		    			shadowSize: [41, 41],
-  		    			zIndexOffset: 999
-       		    }
-       		});	                        		
-       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon.png'});
-       		var customStyle = {icon: selectedIcon};
-           	return customStyle;
-           };
+//           var getStandardObjectMarkerStyle = function() {
+//        	   
+//       		// zIndexOffset only effective in higher version... 
+//       		var CustomIcon = L.Icon.extend({
+//       		    options: {
+//  		    			iconSize: [25, 41],
+//  		    			iconAnchor: [12, 41],
+//  		    			popupAnchor: [1, -34],
+//  		    			shadowSize: [41, 41],
+//  		    			zIndexOffset: 999
+//       		    }
+//       		});	                        		
+//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon.png'});
+//       		var customStyle = {icon: selectedIcon};
+//           	return customStyle;
+//           };
            
 
            var getElfinBasePoint = function(elfin) {
@@ -355,7 +330,6 @@
            
            
            
-           
             return {
 
                 /**
@@ -444,11 +418,11 @@
                 /**
                  * Returns an Icon for styling marker. Aimed at selected object marker.
                  */
-                getSelectedObjectMarkerStyle:getSelectedObjectMarkerStyle,
+//                getSelectedObjectMarkerStyle:getSelectedObjectMarkerStyle,
                 /**
                  * Returns an Icon for styling marker. Aimed at standard object marker.
                  */
-                getStandardObjectMarkerStyle:getStandardObjectMarkerStyle,
+//                getStandardObjectMarkerStyle:getStandardObjectMarkerStyle,
                 
                 /**
                  * Update `layer` latitude, longitude coordinates from elfin.FORME.ZONE 

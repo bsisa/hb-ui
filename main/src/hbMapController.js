@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
-        function ($scope, $rootScope, $log, leafletData, MapService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
+    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'HbMapLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
+        function ($scope, $rootScope, $log, leafletData, MapService, HbMapLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
 
         // =======================================================================================
         // =========================== Display connection status using SSE =======================
@@ -68,71 +68,13 @@
         
         // =======================================================================================
 
+        
             /**
              * Add Leaflet Directive scope extension
              */ 
-            angular.extend($scope, {
-            	iconStyles: {
-            		selectedMarker: MapService.getSelectedObjectMarkerStyle(),
-            		standardMarker: MapService.getStandardObjectMarkerStyle()
-            	},
-                center: {
-                    lat: 0,
-                    lng: 0,
-                    zoom: 10
-                },
-                defaults: {
-                    drawControl: true
-                },
-                layers: {
-                    baselayers: {
-                        standard: {
-                            name: 'Standard',
-                            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                            type: 'xyz'
-                        }
-                // Image overlay test (WIP. GIS funct. dev.)
-//                		,
-//                        gespatri: {
-//                            name: 'Gespatri',
-//                            type: 'imageOverlay',
-//                            url: '/assets/images/abribus.jpeg',
-//                            bounds: [[46.992737010038404, 6.931471483187033], [46.99302251894073, 6.931947239697114]],
-//                            //{"_southWest":{"lat":46.992737010038404,"lng":6.931471483187033},"_northEast":{"lat":46.99302251894073,"lng":6.931947239697114}}
-//                            layerParams: {
-//                              noWrap: true,
-//                              attribution: 'Custom map <a href="http://www.bsisa.ch/">by BSI SA</a>'
-//                            }
-//                        }
-                		,
-                      transport: {
-                          name: 'Transport',
-                          url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
-                          type: 'xyz'
-                      }
-//                		,
-//                      landscape: {
-//                          name: 'Paysage',
-//                          url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
-//                          type: 'xyz'
-//                      },
-//                      grayscale: {
-//                          name: 'Routes - Gris',
-//                          url: 'http://openmapsurfer.uni-hd.de/tiles/roadsg/x={x}&y={y}&z={z}',
-//                          type: 'xyz'
-//                      },
-//                      watercoloe: {
-//                          name: 'Aquarelle',
-//                          url: 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
-//                          type: 'xyz'
-//                      },                        
-
-                    },
-                    overlays: {
-
-                    }
-                }
-            });
+            angular.extend($scope, HbMapLeafletService.getDefaultLeafletScopeVars());
+            
+            $log.debug(">>>> extended scope: $scope.iconStyles = " + angular.toJson($scope.iconStyles) );
 
             /**
             	Reference to current displayed object
@@ -246,10 +188,10 @@
 	                        	var objectLayer = null;
 		                        
 	                        	if ($scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
-	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, MapService.getSelectedObjectMarkerStyle());
+	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, HbMapLeafletService.getSelectedObjectMarkerStyle());
 	                        	} else {
 	                        		if (hbLayer.representationType.toLowerCase() == 'marker') {
-	                        			objectLayerStyle = MapService.getStandardObjectMarkerStyle();
+	                        			objectLayerStyle = HbMapLeafletService.getStandardObjectMarkerStyle();
 	                        		} else {
 	                        			objectLayerStyle = hbLayer.representationStyle;
 	                        		}
@@ -500,11 +442,11 @@
             var elfinLoadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
             	// TODO: review: not relevant for all ELFIN@CLASSE !
                 $scope.elfin = elfin;
-                //updateElfinRepresentation($scope.elfin, MapService.getSelectedObjectMarkerStyle());
+                //updateElfinRepresentation($scope.elfin, HbMapLeafletService.getSelectedObjectMarkerStyle());
                 $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE +"/"+elfin.Id);
         		if (elfin !== null) {
 	    			// Set newly selected elfin style to selected style.
-	    			var selStyle = MapService.getSelectedObjectMarkerStyle();
+	    			var selStyle = HbMapLeafletService.getSelectedObjectMarkerStyle();
 	    			$log.debug("Setting new val to selected style: " + angular.toJson(selStyle));
 	    			updateElfinRepresentation(elfin, selStyle);					
         		}                            
@@ -519,7 +461,7 @@
             	$log.debug(">>>> MapController: HB_EVENTS.ELFIN_UNLOADED => " + elfin.CLASSE +"/"+elfin.Id);
     			if (elfin !== null) {
 	    			// Reset former selected elfin style to standard.
-	    			var stdStyle = MapService.getStandardObjectMarkerStyle();
+	    			var stdStyle = HbMapLeafletService.getStandardObjectMarkerStyle();
 	    			$log.debug("Resetting old val to standard style: " + angular.toJson(stdStyle));
 	    			updateElfinRepresentation(elfin, stdStyle);
     			}                
@@ -603,7 +545,9 @@
                 }
             });
 
+            // TODO: Review
             var updateBasePoint = function(marker, scope) {
+            	
                 if (!scope.drawModeFlag) {
                     return;
                 }
@@ -615,6 +559,7 @@
                     scope.snappedLayer &&
                     scope.snappedLayer.elfin.ID_G + scope.snappedLayer.elfin.Id !== scope.elfin.ID_G + scope.elfin.Id
                 ) {
+                	// External means on snaped layer thus moved on drawnlayer = snappedLayer.... ???
                     var externalBasePoint = MapService.getElfinBasePoint(scope.snappedLayer.elfin);
                     basePoint.X = externalBasePoint.X;
                     basePoint.Y = externalBasePoint.Y;
