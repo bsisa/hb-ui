@@ -2,6 +2,8 @@
 	<!-- Custom validation message to be defined here -->
 	<ul>
 		<li ng-show="elfinForm.groupe.$error.required">Le <strong>code CFC</strong> est obligatoire!</li>
+		<li ng-show="elfinForm.deadline.$error.required">Le <strong>Délai d'exécution</strong> est obligatoire!</li>
+		
 	<!-- 	<li ng-show="elfinForm.cfcCode.$error.required">Le <strong>code CFC</strong> est obligatoire</li> -->
 	<!-- 	<li ng-show="elfinForm.cfcCode.$error.hbValidCode">Le <strong>code CFC</strong> n'est pas valide</li> -->
 		<li ng-show="elfinForm.fournisseur.$error.required">Le <strong>fournisseur</strong> est obligatoire</li>
@@ -54,10 +56,10 @@
 						<div class="form-group">
 							<label for="deadline" class="col-sm-4 control-label">Délai d'exécution</label>
 							<div class="col-sm-4">
-								<div ng-if="!isReadOnly" hb-date id="deadline" name="deadline" ng-model="elfin.IDENTIFIANT.A"></div>
+								<div ng-if="!isReadOnly" hb-date id="deadline" name="deadline" ng-model="elfin.IDENTIFIANT.A" ng-required="true"></div>
 								<p ng-if="isReadOnly" class="form-control-static">{{elfin.IDENTIFIANT.A | date}}</p>
 							</div>
-							<div class="col-sm-4" >
+							<div class="col-sm-4" ng-if="(elfin.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT)" >
 								<input ng-if="!isReadOnly" id="deadlineText" name="deadlineText" class="form-control"  
 									autocomplete="off"
 									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[2].VALEUR"></input>
