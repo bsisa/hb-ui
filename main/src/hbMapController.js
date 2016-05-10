@@ -72,6 +72,11 @@
              * Add Leaflet Directive scope extension
              */ 
             angular.extend($scope, {
+            	iconStyles: {
+            		selectedMarker: MapService.getSelectedObjectMarkerStyle(),
+            		standardMarker: MapService.getStandardObjectMarkerStyle()
+            		
+            	},
                 center: {
                     lat: 0,
                     lng: 0,
@@ -323,11 +328,11 @@
 //					                    		$log.debug("Property name 2: " + property );
 //					                    	}
 		                            		
-		                            		//$scope.drawControl.draw.marker.guideLayers = $scope.guideLayers;
-					                    	//$scope.drawControl.removeFrom(layer);
-					                    	//$scope.drawControl.removeFrom(overlay);
-					                    	//$scope.drawControl.addTo(elfinUpdatedMarkerLayer);
-		                            		//$scope.drawControl.addTo(overlay);
+//		                            		$scope.drawControl.draw.marker.guideLayers = $scope.guideLayers;
+//					                    	$scope.drawControl.removeFrom(layer);
+//					                    	$scope.drawControl.removeFrom(overlay);
+//					                    	$scope.drawControl.addTo(elfinUpdatedMarkerLayer);
+//		                            		$scope.drawControl.addTo(overlay);
 		                            	};		                            	
 		                            });
                                 // Handle snapping facilities
@@ -348,12 +353,12 @@
 
 
             $scope.registerSnap = function(event) {
-            	$log.debug(">>>> registerSnap - " (event === null ? "event not null, " : event.layer === null ? "event.layer IS null" : "event.layer NOT null")  );
+            	$log.debug(">>>> registerSnap - " + (event === null ? "event not null, " : event.layer === null ? "event.layer IS null" : "event.layer NOT null")  );
                 $scope.snappedLayer = event.layer;
             };
 
             $scope.unregisterSnap = function(event) {
-            	$log.debug(">>>> unregisterSnap - " (event === null ? "event not null, " : event.layer === null ? "event.layer IS null" : "event.layer NOT null")  );            	
+            	$log.debug(">>>> unregisterSnap - " + (event === null ? "event not null, " : event.layer === null ? "event.layer IS null" : "event.layer NOT null")  );            	
                 $scope.snappedLayer = null;
             };
 
@@ -421,7 +426,10 @@
                             draw: {
                                 rectangle: false,
                                 circle: false,
-                                marker: { guideLayers: $scope.guideLayers },
+                                marker: { 
+                                	guideLayers: $scope.guideLayers ,
+                                    icon: $scope.iconStyles.selectedMarker.icon
+                                },
                                 polyline: { guideLayers: $scope.guideLayers },
                                 polygon: { guideLayers: $scope.guideLayers }
                             },
