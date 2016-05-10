@@ -75,7 +75,6 @@
             	iconStyles: {
             		selectedMarker: MapService.getSelectedObjectMarkerStyle(),
             		standardMarker: MapService.getStandardObjectMarkerStyle()
-            		
             	},
                 center: {
                     lat: 0,
