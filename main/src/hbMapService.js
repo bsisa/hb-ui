@@ -311,17 +311,20 @@
            };
 
            /**
-            * TODO: Change signature for function(L.latLng) to function(latitude, longitude)
-            * There is no point being dependant on Leaflet data structure for this.
-            * 
-            * Returns swiss federal coordinates {x,y} corresponding to transformed latitude, longitude provided as L.latLng
+            * Returns swiss federal coordinates {x,y} for latitude, longitude
             * 
             * See http://www.swisstopo.admin.ch/internet/swisstopo/fr/home/topics/survey/sys/refsys/switzerland.parsysrelated1.31216.downloadList.63873.DownloadFile.tmp/swissprojectionfr.pdf
             * and http://mapref.org/LinkedDocuments/swiss_projection_en.pdf section 4.1
-            * @param latLong
+            * 
+            * @param lat_param
+            * @param lng_param
             */
-           var getSwissFederalCoordinates = function(latLng) {
-               if (!latLng) return {x: 0, y : 0};
+           //var getSwissFederalCoordinates = function(latLng) {
+           var getSwissFederalCoordinates = function(lat_param,lng_param) {
+               // TODO: Review this condition
+        	   if (!lat_param || ! lng_param) return {x: 0, y : 0};
+        	   //if (!latLng) return {x: 0, y : 0};
+        	   var latLng = {lat: parseFloat(lat_param), lng: parseFloat(lng_param)}
 
                var latPrime = (latLng.lat * 36 / 100 - 169028.66 / 10000) ,
                    latPrime2 = latPrime * latPrime,

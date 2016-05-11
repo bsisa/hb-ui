@@ -404,8 +404,14 @@
 
                         // Override update function to get swiss federal coordinates
                         coordinatesPlugin._update = function (evt) {
-                            var pos = MapService.getSwissFederalCoordinates(evt.latlng),
-                                opts = this.options;
+                        	var pos = undefined;
+                        	if (evt.latlng) {
+                        		pos = MapService.getSwissFederalCoordinates(evt.latlng.lat, evt.latlng.lng);	
+                        	} else {
+                        		pos = {x:0,y:0};
+                        	}
+                            
+                            var opts = this.options;
                             if (pos) {
                                 // pos = pos.wrap();
                                 this._currentPos = pos;
@@ -587,7 +593,7 @@
                     currentElfinBasePoint.CLASSE = scope.snappedLayer.elfin.CLASSE;
 
                 } else {
-                    var coords = MapService.getSwissFederalCoordinates(marker.getLatLng());
+                    var coords = MapService.getSwissFederalCoordinates(marker.getLatLng().lat,marker.getLatLng().lng);
 
                     currentElfinBasePoint.X = coords.x;
                     currentElfinBasePoint.Y = coords.y;
