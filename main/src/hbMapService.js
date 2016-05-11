@@ -154,6 +154,7 @@
            };
            
            /**
+            * TODO: Move to hbMapLeafletService
             * TODO: review, pitfall with marker management. 
             * See monkey patching while used in hbMapController.
             */
@@ -171,6 +172,7 @@
             	   result.bindPopup(getPopupContent(elfin));
             	   // TODO: Test whether this was necessary !?
             	   //angular.extend(result, {elfin:elfin});
+            	   // TODO: CURRENT
             	   angular.extend(result, {representation:representation.toLowerCase()});
                }
 
@@ -179,7 +181,10 @@
 
            
            
-           
+           /**
+            * TODO: Move to hbMapLeafletService
+            * Updates leaflet layer object with ELFIN FORME BASE POINT coordinates
+            */
            var updateLayerCoords = function(elfin, layer) {
 
                if (angular.isDefined(layer.setLatLng)) {
@@ -193,6 +198,7 @@
            
            
            /**
+            * TODO: Move to ctrler
             * Code block dealing with div toggle operation
             */
            var toggle = function(mainMarginsDiv, mainCardViewDiv, mainMapViewDiv) {
@@ -202,6 +208,7 @@
            };
            
            /**
+            * TODO: Move to ctrler
             * Refresh map layout dimensions, position and visibility 
             * depending on display type and current visibility status.
             */
