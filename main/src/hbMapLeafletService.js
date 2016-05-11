@@ -135,12 +135,117 @@
            };
            
            
+           /**
+            * See doc at bottom service return definition. 
+            */
+           var getDrawLocalTranslation = function() {
+        	   
+        	   var drawLocalTranslation_fr = {
+								               draw: {
+								                   toolbar: {
+								                       actions: {
+								                           title: 'Annuler le dessin',
+								                           text: 'Annuler'
+								                       },
+								                       undo : {
+								                           title: 'Effacer le dernier point dessiné',
+								                           text: 'Effacer le dernier point'
+								                       },
+								                       buttons: {
+								                           polyline: 'Dessiner une polyligne',
+								                           polygon: 'Dessiner un polygone',
+								                           marker: 'Dessiner un point',
+								                           rectangle: 'Draw a rectangle',
+								                           circle: 'Draw a circle'
+								                       }
+								                   },
+								                   handlers: {
+								                       circle: {
+								                           tooltip: {
+								                               start: 'Click and drag to draw circle.'
+								                           }
+								                       },
+								                       rectangle: {
+								                           tooltip: {
+								                               start: 'Click and drag to draw rectangle.'
+								                           }
+								                       },
+								                       simpleshape: {
+								                           tooltip: {
+								                               end: 'Release mouse to finish drawing.'
+								                           }
+								                       },
+								                       marker: {
+								                           tooltip: {
+								                               start: 'Click sur le plan pour placer un point.'
+								                           }
+								                       },
+								                       polygon: {
+								                           tooltip: {
+								                               start: 'Click pour commencer à dessiner la forme.',
+								                               cont: 'Click pour continuer de dessiner.',
+								                               end: 'Click sur le premier point pour fermer la forme.'
+								                           }
+								                       },
+								                       polyline: {
+								                           error: '<strong>Erreur:</strong> les côtés ne peuvent pas se croiser!',
+								                           tooltip: {
+								                               start: 'Click our commencer à dessiner la ligne.',
+								                               cont: 'Click pour continuer de dessiner.',
+								                               end: 'Click sur le dernier point pour terminer.'
+								                           }
+								                       }
+								                   }
+								               },
+								               edit: {
+								                   toolbar: {
+								                       actions: {
+								                           save: {
+								                               title: 'Save changes.',
+								                               text: 'Save'
+								                           },
+								                           cancel: {
+								                               title: 'Cancel editing, discards all changes.',
+								                               text: 'Cancel'
+								                           }
+								                       },
+								                       buttons: {
+								                           edit: 'Edit layers.',
+								                           editDisabled: 'No layers to edit.',
+								                           remove: 'Delete layers.',
+								                           removeDisabled: 'No layers to delete.'
+								                       }
+								                   },
+								                   handlers: {
+								                       edit: {
+								                           tooltip: {
+								                               text: 'Drag handles, or marker to edit feature.',
+								                               subtext: 'Click cancel to undo changes.'
+								                           }
+								                       },
+								                       remove: {
+								                           tooltip: {
+								                               text: 'Click on a feature to remove'
+								                           }
+								                       }
+								                   }
+								               }
+								           };
+
+        	   return drawLocalTranslation_fr;
+           };        	   
+           
            
             return {
                 /**
                  * Provides default for angular-leaflet-directive variables extending controllers using leaftlet.
                  */
             	getDefaultLeafletScopeVars: getDefaultLeafletScopeVars,
+                /**
+                 * Returns tooltips, buttons, actions, toolbar,... labels translated properties to extend/merge with L.drawLocal. 
+                 * (Currently hardcoded to french only, can be extended to database configured per language locale as needed).
+                 */            	
+            	getDrawLocalTranslation: getDrawLocalTranslation,
                 /**
                  * Returns a custom L.Icon intended for selected object marker styling.
                  */
