@@ -481,9 +481,15 @@
              * update the ELFIN representation on the map.
              */
             var elfinUpdatedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UPDATED, function(event, elfin) {
-                $log.debug(">>>> MapController: HB_EVENTS.ELFIN_UPDATED => " + elfin.CLASSE +"/"+elfin.Id);            	
-                // TODO: Review if this update is required and set correct style if required.
-                //updateElfinRepresentation(elfin, {});            		
+                // Check if updated elfin is the currently end user selected elfin.
+            	// Note: Only `marker` style is different for selected and non selected objects.
+                if ($scope.elfin.Id === elfin.Id) {
+	    			// Update with selected marker style.
+                	updateElfinRepresentation(elfin, HbMapLeafletService.getSelectedObjectMarkerStyle());	
+                } else {
+	    			// Update with default marker style
+                	updateElfinRepresentation(elfin, HbMapLeafletService.getStandardObjectMarkerStyle());
+                }
             });
 
             // Elfin has been deleted, thus remove it from the map
@@ -535,6 +541,9 @@
             };
 
 
+            /**
+             * 
+             */
             $scope.$on(HB_EVENTS.ELFIN_FORM_DRAW_EVENT, function(e, mapEvent){
                 if (angular.isUndefined($scope.elfin) || $scope.elfin === null) {
                     return;
@@ -542,8 +551,8 @@
 
                 switch (mapEvent.layerType) {
                     case 'marker': updateBasePoint(mapEvent.layer, $scope); break;
-                    case 'polyline': break;
-                    case 'polygon': break;
+                    case 'polyline': break; // TODO: implement polyline update
+                    case 'polygon': break; // TODO: implement polygon update
 
                 }
             });
@@ -555,32 +564,31 @@
                     return;
                 }
 
+                var currentElfinBasePoint = MapService.getElfinBasePoint(scope.elfin);
 
-                var basePoint = MapService.getElfinBasePoint(scope.elfin);
-
-                if (basePoint &&
+                if (currentElfinBasePoint &&
                     scope.snappedLayer &&
                     scope.snappedLayer.elfin.ID_G + scope.snappedLayer.elfin.Id !== scope.elfin.ID_G + scope.elfin.Id
                 ) {
-                	// External means on snaped layer thus moved on drawnlayer = snappedLayer.... ???
-                    var externalBasePoint = MapService.getElfinBasePoint(scope.snappedLayer.elfin);
-                    basePoint.X = externalBasePoint.X;
-                    basePoint.Y = externalBasePoint.Y;
-                    basePoint.Id = scope.snappedLayer.elfin.Id + '#' + externalBasePoint.POS;
-                    basePoint.ID_G = scope.snappedLayer.elfin.ID_G;
-                    basePoint.CLASSE = scope.snappedLayer.elfin.CLASSE;
+                	// If the snappedLayer elfin is not the same elfin as the current selected elfin update 
+                	// base point Id, ID_G, CLASSE with snapped elfin.
+                    var snappedExternalBasePoint = MapService.getElfinBasePoint(scope.snappedLayer.elfin);
+                    currentElfinBasePoint.X = snappedExternalBasePoint.X;
+                    currentElfinBasePoint.Y = snappedExternalBasePoint.Y;
+                    currentElfinBasePoint.Id = scope.snappedLayer.elfin.Id + '#' + snappedExternalBasePoint.POS;
+                    currentElfinBasePoint.ID_G = scope.snappedLayer.elfin.ID_G;
+                    currentElfinBasePoint.CLASSE = scope.snappedLayer.elfin.CLASSE;
 
                 } else {
                     var coords = MapService.getSwissFederalCoordinates(marker.getLatLng());
 
-                    basePoint.X = coords.x;
-                    basePoint.Y = coords.y;
-                    basePoint.Id = null;
-                    basePoint.ID_G = null;
-                    basePoint.CLASSE = null;
+                    currentElfinBasePoint.X = coords.x;
+                    currentElfinBasePoint.Y = coords.y;
+                    // TODO: Shouldn't we preserve existing Id, ID_G, CLASSE instead of resetting them ?
+                    currentElfinBasePoint.Id = null;
+                    currentElfinBasePoint.ID_G = null;
+                    currentElfinBasePoint.CLASSE = null;
                 }
-
-
 
                 $scope.$emit(HB_EVENTS.ELFIN_UPDATED, scope.elfin);
             };
@@ -646,8 +654,5 @@
             
         }]);
 
-
-//    // Translations 
-//    angular.extend( L.drawLocal, HbMapLeafletService.getDrawLocalTranslation() );
 })();
 
