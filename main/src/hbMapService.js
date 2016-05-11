@@ -251,7 +251,14 @@
 	           }
            };
            
-           
+           /**
+            * 
+            * TODO: change signature to: function(x,y) returning {lat: , lng: }
+            * There is no point being dependant on Leaflet or GeoXML data structure for this transformation.
+            * 
+            * Returns a L.latLng( <Number> latitude, <Number> longitude, <Number> altitude? ) object corresponding to GeoXML ELFIN POINT 
+            * 
+            */
            var getLongitudeLatitudeCoordinates = function(point) {
                var x = (point.Y - Y_OFFSET_OBSERVED) / 1000000;
                var x2 = x * x;
@@ -300,6 +307,11 @@
            };
 
            /**
+            * TODO: Change signature for function(L.latLng) to function(latitude, longitude)
+            * There is no point being dependant on Leaflet data structure for this.
+            * 
+            * Returns swiss federal coordinates {x,y} corresponding to transformed latitude, longitude provided as L.latLng
+            * 
             * See http://www.swisstopo.admin.ch/internet/swisstopo/fr/home/topics/survey/sys/refsys/switzerland.parsysrelated1.31216.downloadList.63873.DownloadFile.tmp/swissprojectionfr.pdf
             * and http://mapref.org/LinkedDocuments/swiss_projection_en.pdf section 4.1
             * @param latLong

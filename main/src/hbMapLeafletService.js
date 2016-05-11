@@ -1,5 +1,13 @@
 /**
- * Provides helper functions for Leaflet related objects 
+ * Provides helper functions for Leaflet related objects. 
+ * `L` is freely used as abbreviation for `Leaflet`
+ * 
+ * Useful references to Leaflet documentation:
+ * <ul>
+ * <li>Leaflet API Reference: http://leafletjs.com/reference.html</li>
+ * <li>LatLng: Represents a geographical point with a certain latitude and longitude: http://leafletjs.com/reference.html#latlng</li> 
+ * </ul>
+ *  
  */
 
 (function() {
