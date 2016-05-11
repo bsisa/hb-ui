@@ -190,7 +190,7 @@
 								                       polyline: {
 								                           error: '<strong>Erreur:</strong> les côtés ne peuvent pas se croiser!',
 								                           tooltip: {
-								                               start: 'Click our commencer à dessiner la ligne.',
+								                               start: 'Click pour commencer à dessiner la ligne.',
 								                               cont: 'Click pour continuer de dessiner.',
 								                               end: 'Click sur le dernier point pour terminer.'
 								                           }
