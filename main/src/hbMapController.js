@@ -557,7 +557,13 @@
                 }
             });
 
-            // TODO: Review
+            /**
+             * Update current `scope` parameter elfin base point with snappedLayer.elfin base point if available 
+             * and has different Id than current scope elfin. Otherwise updates current scope elfin base point
+             * with marker coordinates.
+             * Emits HB_EVENTS.ELFIN_UPDATED for current 
+             */
+            // TODO: Noticed exception for snappedLayer without elfin. Check if this is a valid or invalid state.  
             var updateBasePoint = function(marker, scope) {
             	
                 if (!scope.drawModeFlag) {
@@ -568,6 +574,7 @@
 
                 if (currentElfinBasePoint &&
                     scope.snappedLayer &&
+                    scope.snappedLayer.elfin && // TODO: Noticed exception for snappedLayer without elfin. Check if this is a valid or invalid state.  
                     scope.snappedLayer.elfin.ID_G + scope.snappedLayer.elfin.Id !== scope.elfin.ID_G + scope.elfin.Id
                 ) {
                 	// If the snappedLayer elfin is not the same elfin as the current selected elfin update 
