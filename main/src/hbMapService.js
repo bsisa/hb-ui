@@ -16,31 +16,15 @@
            		"HIDDEN":"HIDDEN"
            };
     	   
+           // TODO: move to ctrler
            var isMapDisplayed = function() {
                return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
            };
            
-           /**
-            * Returns a custom L.Icon intended for standard object marker styling.
-            */
-//           var getStandardObjectMarkerStyle = function() {
-//        	   
-//       		// zIndexOffset only effective in higher version... 
-//       		var CustomIcon = L.Icon.extend({
-//       		    options: {
-//  		    			iconSize: [25, 41],
-//  		    			iconAnchor: [12, 41],
-//  		    			popupAnchor: [1, -34],
-//  		    			shadowSize: [41, 41],
-//  		    			zIndexOffset: 999
-//       		    }
-//       		});	                        		
-//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon.png'});
-//       		var customStyle = {icon: selectedIcon};
-//           	return customStyle;
-//           };
-           
 
+           /**
+            * TODO: move to hbUtil
+            */
            var getElfinBasePoint = function(elfin) {
                var point = null;
                angular.forEach(elfin.FORME.POINT, function(p) {
@@ -52,6 +36,7 @@
            };
            
            
+           // TODO: move to hbMapLeafletService
            var getPointLayer = function(elfin, style) {
                if (!elfin.FORME) return null;
 
@@ -66,6 +51,7 @@
            };
            
            
+           // TODO: move to hbMapLeafletService
            var getMarkerLayer = function(elfin, style) {
                if (!elfin.FORME) return null;
 
@@ -81,7 +67,7 @@
            	   return marker;
            };
            
-           
+           // TODO: move to hbUtil
            var findElementWithPos = function(array, pos) {
                var element = null;
                angular.forEach(array, function(e) {
@@ -93,6 +79,11 @@
            };
            
            
+           // TODO: keep it here or move to hbUtil ! 
+           // Create new hbGeoUtil/Service to deal with GeoXML FORME actions TODO: move to hbMapLeafletService
+           /**
+            * Returns an array of GeoXML POINT defining a polygon.
+            */
            var getPolygonCoords = function(elfin) {
                if (!elfin.FORME) return null;
                // Check if at least a ZONE is defined, at POS 1. 
@@ -121,7 +112,10 @@
                return points;
            };           
            
-           
+           // TODO: move to hbMapLeafletService
+           /**
+            * Returns a L.polygon with provided `style` for the given `elfin` parameter. 
+            */
            var getPolygonLayer = function(elfin, style) {
                var coords = getPolygonCoords(elfin);
                if (coords && coords.length > 0) {
@@ -135,6 +129,7 @@
            /**
             * TODO: This is not generic: Re-design and refactor. 
             * (I.e.: Have template per CLASSE and template list loaded from database at startup.)
+            * Microservice architecture: => geo database accessed by hbGeoService...
             */
            var getPopupContent = function(elfin) {
                var popup = '<b>' + elfin.IDENTIFIANT.NOM + ' ' + elfin.IDENTIFIANT.ALIAS + '</b><br>';
@@ -143,6 +138,10 @@
                return popup;
            };
            
+
+           /**
+            * TODO: Move to hbMapLeafletService
+            */
            var updatePolygonCoords = function(elfin, layer) {
                if (angular.isDefined(layer.setLatLngs)) { 
                    var coords = getPolygonCoords(elfin);
@@ -414,15 +413,6 @@
                  */
                 getPolygonLayer:getPolygonLayer,
 
-
-                /**
-                 * Returns an Icon for styling marker. Aimed at selected object marker.
-                 */
-//                getSelectedObjectMarkerStyle:getSelectedObjectMarkerStyle,
-                /**
-                 * Returns an Icon for styling marker. Aimed at standard object marker.
-                 */
-//                getStandardObjectMarkerStyle:getStandardObjectMarkerStyle,
                 
                 /**
                  * Update `layer` latitude, longitude coordinates from elfin.FORME.ZONE 
