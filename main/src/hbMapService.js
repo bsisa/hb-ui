@@ -45,8 +45,8 @@
                    return null;
                }
 
-               var coords = getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
-               var circleMarker = L.circleMarker(coords, style);
+               var coords = getLongitudeLatitudeCoordinates(point.X, point.Y);
+               var circleMarker = L.circleMarker(L.latLng(coords.lat, coords.lng), style);
                return circleMarker;
            };
            
@@ -61,9 +61,9 @@
                    return null;
                }
 
-               var coords = getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
+               var coords = getLongitudeLatitudeCoordinates(point.X, point.Y);
                //$log.debug(">>>> marker style for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF + " = " + angular.toJson(style) );
-               var marker = L.marker(coords, style);
+               var marker = L.marker(L.latLng(coords.lat, coords.lng), style);
            	   return marker;
            };
            
@@ -105,7 +105,8 @@
                        // TODO: HBGeo? - This assumes LINE Id, ID_G only point to the same ELFIN.
                        // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
                        var pointDef = findElementWithPos(elfin.FORME.POINT, pPos);
-                       points.push(getLongitudeLatitudeCoordinates({X: parseFloat(pointDef.X), Y: parseFloat(pointDef.Y)}));
+                       var coords = getLongitudeLatitudeCoordinates(pointDef.X,pointDef.Y);
+                       points.push(L.latLng(coords.lat, coords.lng));
                    });
                });
 
@@ -190,8 +191,8 @@
                if (angular.isDefined(layer.setLatLng)) {
                    var point = getElfinBasePoint(elfin);
                    if (point) {
-                       var coords = getLongitudeLatitudeCoordinates({X: parseFloat(point.X), Y: parseFloat(point.Y)});
-                       layer.setLatLng(coords);
+                       var coords = getLongitudeLatitudeCoordinates(point.X, point.Y);
+                       layer.setLatLng(L.latLng(coords.lat, coords.lng));
                    }
                }
            };
@@ -253,13 +254,15 @@
            
            /**
             * 
-            * TODO: change signature to: function(x,y) returning {lat: , lng: }
-            * There is no point being dependant on Leaflet or GeoXML data structure for this transformation.
+            * Returns an object with properties {lat: float, lng: float } for swiss federal coordinates {x_param, y_param}
             * 
             * Returns a L.latLng( <Number> latitude, <Number> longitude, <Number> altitude? ) object corresponding to GeoXML ELFIN POINT 
             * 
             */
-           var getLongitudeLatitudeCoordinates = function(point) {
+           var getLongitudeLatitudeCoordinates = function(x_param, y_param) {
+        	   
+        	   var point = {X: parseFloat(x_param), Y: parseFloat(y_param)}
+        	   
                var x = (point.Y - Y_OFFSET_OBSERVED) / 1000000;
                var x2 = x * x;
                var x3 = x2 * x;
@@ -303,7 +306,8 @@
                var latitude = latPrime * 100 / 36;
                var longitude = lonPrime * 100 / 36;
 
-               return L.latLng(latitude, longitude);
+               //return L.latLng(latitude, longitude);
+               return {lat: latitude, lng: longitude};
            };
 
            /**
