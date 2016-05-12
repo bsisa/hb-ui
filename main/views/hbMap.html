@@ -1,5 +1,5 @@
 
-<div class="map-view-wrapper" ng-controller="MapController">
+<div class="map-view-wrapper" ng-controller="MapController as mapctl">
     <leaflet
             class="map-view-leaflet"
             center="center"
@@ -13,5 +13,7 @@
 <!-- 			ng-click="zoomToCurrentObject()"> -->
 <!-- 			<i class="glyphicon glyphicon-screenshot"></i> -->
 <!-- 	</button> -->
-<!-- 	<div>Current object Id = {{elfin.Id}}</div>								 -->
+<!-- Controller AS test -->
+<!-- 	<div>Current object Id (in parent controller no in mapctl) = {{elfin.Id}}</div> -->
+<!-- 	<div>Map controller test = {{mapctl.test}}</div>								 -->
 </div>

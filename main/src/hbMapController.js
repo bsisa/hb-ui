@@ -3,6 +3,11 @@
     angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
         function ($scope, $rootScope, $log, leafletData, MapService, hbGeoService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
 
+    	// Controller as test...
+        var mc = this;
+        mc.test = "Hello " + new Date();
+    	
+    	
         // Translations 
         angular.extend( L.drawLocal, hbGeoLeafletService.getDrawLocalTranslation() );
     	
