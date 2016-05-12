@@ -1,6 +1,6 @@
 /**
  * 
- * hbGeo module provides GIS JS client functionalities relying on hb-geo microservice.  
+ * hbGeo module provides GIS JS client functionalities relying on hb-geo-api microservice.  
  * 
  * Intended for module dependencies, config, run definitions. 
  * Constants, controllers, factories, filters should be package to their own hbGeoXXX.js 
