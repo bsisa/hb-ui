@@ -71,12 +71,6 @@
         
         // =======================================================================================
 
-        var MAP_DISPLAY_TYPE = {
-        		"FULL": "FULL",
-           		"SPLIT": "SPLIT",
-           		"HIDDEN":"HIDDEN"
-           	};        
-        
         /**
          * Add Leaflet Directive scope extension
          */ 
