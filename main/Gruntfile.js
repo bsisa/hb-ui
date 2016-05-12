@@ -21,8 +21,9 @@ module.exports = function(grunt) {
             },
             dist: {
             	src : [         'src/geoxmlModule.js',
-                                'src/hbMapServiceModule.js',
-                                'src/hbMapLeafletService.js',
+
+            	                'src/hbMapServiceModule.js',
+
                                 'src/hb5Module.js',
                                 'src/hb5Constants.js',
                                 'src/hb5Filters.js',
@@ -123,6 +124,7 @@ module.exports = function(grunt) {
 								'src/hbFormeComponentDirective.js',
 								
 								'src/hbGeoModule.js',
+                                'src/hbGeoLeafletService.js',
 								'src/hbGeoService.js',
 								
 								'src/hbHorlogeCardController.js',
