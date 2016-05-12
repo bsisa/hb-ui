@@ -249,20 +249,38 @@
            	   return marker;
            };    	   
 
-           // TODO: move to hbUtil or already in it ?
-           /*
-       		Return polygons coordinates for ELFIN.FORME.ZONE if any.
-       		TODO: check behaviour for n ZONE definition
-            */
-           var findElementWithPos = function(array, pos) {
-               var element = null;
-               angular.forEach(array, function(e) {
-                   if (e.POS === parseInt(pos)) {
-                       element = e;
-                   }
-               });
-               return element;
-           };           
+           
+	   		/**
+	   		 * Get element `el` given its position `elPos`   
+	   		 * where `els` is an array of elements (XML=>JSON) or objects 
+	   		 * having the property POS.
+	   		 * 
+	   		 * @param els
+	   		 * @param elPos (must be a parseable Int, either number or string).
+	   		 * 
+	   		 * TODO: hbUtil duplicate. Requires hbUtil to be split out from hb5 
+	   		 * module, removing 'HB_API', 'HB_ORDER_LINE_TYPE', 'userDetails' 
+	   		 * dependencies.
+	   		 * A new hbGeoXml module containing hbGeoXmlUtil and existing 
+	   		 * GeoxmlService is necessary.
+	   		 * 
+	   		 * Remark: requires underscorejs.
+	   		 */
+           	var getElByPos = function(els, elPos) {
+           		var elPosInt = parseInt(elPos);
+           		if (!isNaN(elPosInt)) {
+           			if (els) {
+						// _.find returns undefined if no match is found.
+						var searchedEl = _.find(els, function(el){ return el.POS === elPosInt; });
+						return searchedEl;
+					} else {
+						return undefined;
+					}
+           		} else {
+           			return undefined;
+           		}
+        	};    
+
            
            // TODO: keep it here or move to hbUtil ! 
            // TODO: Split logic to 1) obtain an array of GeoXML POINT 2) transform array of GeoXML POINT to Leaflet latLng.
@@ -273,7 +291,7 @@
            var getPolygonCoords = function(elfin) {
                if (!elfin.FORME) return null;
                // Check if at least a ZONE is defined, at POS 1. 
-               var zoneDef = findElementWithPos(elfin.FORME.ZONE, '1');
+               var zoneDef = getElByPos(elfin.FORME.ZONE, '1');
                if (!zoneDef) return null;
 
                var points = [];
@@ -283,14 +301,14 @@
                    var lPos = l.Id.split('#')[1];
                    // TODO: HBGeo? - This assumes ZONE Id, ID_G only point to the same ELFIN.
                    // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
-                   var lineDef = findElementWithPos(elfin.FORME.LIGNE, lPos);
+                   var lineDef = getElByPos(elfin.FORME.LIGNE, lPos);
 
                    // Process each line passage which in turn reference a POINT whose coordinates will be extracted and drawn. 
                    angular.forEach(lineDef.PASSAGE, function(p) {
                        var pPos = p.Id.split('#')[1];
                        // TODO: HBGeo? - This assumes LINE Id, ID_G only point to the same ELFIN.
                        // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
-                       var pointDef = findElementWithPos(elfin.FORME.POINT, pPos);
+                       var pointDef = getElByPos(elfin.FORME.POINT, pPos);
                        var coords = hbGeoService.getLongitudeLatitudeCoordinates(pointDef.X,pointDef.Y);
                        points.push(L.latLng(coords.lat, coords.lng));
                    });
