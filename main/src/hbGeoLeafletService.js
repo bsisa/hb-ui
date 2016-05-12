@@ -281,14 +281,31 @@
            		}
         	};    
 
-           
-           // TODO: keep it here or move to hbUtil ! 
-           // TODO: Split logic to 1) obtain an array of GeoXML POINT 2) transform array of GeoXML POINT to Leaflet latLng.
-           // Create new hbGeoUtil/Service to deal with GeoXML FORME actions TODO: move to hbMapLeafletService
            /**
-            * Returns an array of GeoXML POINT defining a polygon.
+            * Returns an array of L.latLng defining a polygon corresponding to 
+            * the `elfin` FORME.ZONE at POS=1  
             */
            var getPolygonCoords = function(elfin) {
+
+        	   var points = getElfinZone1Points(elfin);
+        	   // Transform each GeoXml POINT to Leaflet L.latLng 
+        	   var latLngs = _.map(points, function(point){
+        		   var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X,point.Y);
+        		   return L.latLng(coords.lat, coords.lng); 
+        		 });
+        	   return latLngs;
+           };
+           
+           /**
+            * Returns an array of ELFIN.FORME.POINT corresponding at the elfin
+            * zone at position POS=1.
+            * Returns an empty array if ZONE at POS 1 has no corresponding POINT.
+            * Returns null if no FORME is available. 
+            * Returns null if no ZONE is found at POS 1. 
+            * 
+            * @param elfin
+            */
+           var getElfinZone1Points = function(elfin) {
                if (!elfin.FORME) return null;
                // Check if at least a ZONE is defined, at POS 1. 
                var zoneDef = getElByPos(elfin.FORME.ZONE, '1');
@@ -309,13 +326,13 @@
                        // TODO: HBGeo? - This assumes LINE Id, ID_G only point to the same ELFIN.
                        // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
                        var pointDef = getElByPos(elfin.FORME.POINT, pPos);
-                       var coords = hbGeoService.getLongitudeLatitudeCoordinates(pointDef.X,pointDef.Y);
-                       points.push(L.latLng(coords.lat, coords.lng));
+                       points.push(pointDef);
                    });
                });
 
                return points;
            };           
+           
 
            
            /**
