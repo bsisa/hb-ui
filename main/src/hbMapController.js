@@ -76,8 +76,6 @@
              * Add Leaflet Directive scope extension
              */ 
             angular.extend($scope, HbMapLeafletService.getDefaultLeafletScopeVars());
-            
-            $log.debug(">>>> extended scope: $scope.iconStyles = " + angular.toJson($scope.iconStyles) );
 
             /**
             	Reference to current displayed object
