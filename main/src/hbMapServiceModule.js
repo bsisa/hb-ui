@@ -11,7 +11,7 @@
     hbMapModule.factory('MapService', [
        '$log', 'hbGeoService', function($log, hbGeoService) {
 
-           //TODO: move to constants
+           //TODO: move to controller or constants 
            var MAP_DISPLAY_TYPE = {
            		"FULL": "FULL",
            		"SPLIT": "SPLIT",
