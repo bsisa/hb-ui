@@ -249,45 +249,13 @@
            	   return marker;
            };    	   
 
-           
-	   		/**
-	   		 * Get element `el` given its position `elPos`   
-	   		 * where `els` is an array of elements (XML=>JSON) or objects 
-	   		 * having the property POS.
-	   		 * 
-	   		 * @param els
-	   		 * @param elPos (must be a parseable Int, either number or string).
-	   		 * 
-	   		 * TODO: hbUtil duplicate. Requires hbUtil to be split out from hb5 
-	   		 * module, removing 'HB_API', 'HB_ORDER_LINE_TYPE', 'userDetails' 
-	   		 * dependencies.
-	   		 * A new hbGeoXml module containing hbGeoXmlUtil and existing 
-	   		 * GeoxmlService is necessary.
-	   		 * 
-	   		 * Remark: requires underscorejs.
-	   		 */
-           	var getElByPos = function(els, elPos) {
-           		var elPosInt = parseInt(elPos);
-           		if (!isNaN(elPosInt)) {
-           			if (els) {
-						// _.find returns undefined if no match is found.
-						var searchedEl = _.find(els, function(el){ return el.POS === elPosInt; });
-						return searchedEl;
-					} else {
-						return undefined;
-					}
-           		} else {
-           			return undefined;
-           		}
-        	};    
-
            /**
             * Returns an array of L.latLng defining a polygon corresponding to 
             * the `elfin` FORME.ZONE at POS=1  
             */
            var getPolygonCoords = function(elfin) {
 
-        	   var points = getElfinZone1Points(elfin);
+        	   var points = hbGeoService.getElfinZone1Points(elfin);
         	   // Transform each GeoXml POINT to Leaflet L.latLng 
         	   var latLngs = _.map(points, function(point){
         		   var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X,point.Y);
@@ -295,46 +263,8 @@
         		 });
         	   return latLngs;
            };
-           
-           /**
-            * Returns an array of ELFIN.FORME.POINT corresponding at the elfin
-            * zone at position POS=1.
-            * Returns an empty array if ZONE at POS 1 has no corresponding POINT.
-            * Returns null if no FORME is available. 
-            * Returns null if no ZONE is found at POS 1. 
-            * 
-            * @param elfin
-            */
-           var getElfinZone1Points = function(elfin) {
-               if (!elfin.FORME) return null;
-               // Check if at least a ZONE is defined, at POS 1. 
-               var zoneDef = getElByPos(elfin.FORME.ZONE, '1');
-               if (!zoneDef) return null;
 
-               var points = [];
 
-               // Process lines (LIGNE) defined by ZONEs
-               angular.forEach(zoneDef.LIGNE, function(l) {
-                   var lPos = l.Id.split('#')[1];
-                   // TODO: HBGeo? - This assumes ZONE Id, ID_G only point to the same ELFIN.
-                   // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
-                   var lineDef = getElByPos(elfin.FORME.LIGNE, lPos);
-
-                   // Process each line passage which in turn reference a POINT whose coordinates will be extracted and drawn. 
-                   angular.forEach(lineDef.PASSAGE, function(p) {
-                       var pPos = p.Id.split('#')[1];
-                       // TODO: HBGeo? - This assumes LINE Id, ID_G only point to the same ELFIN.
-                       // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
-                       var pointDef = getElByPos(elfin.FORME.POINT, pPos);
-                       points.push(pointDef);
-                   });
-               });
-
-               return points;
-           };           
-           
-
-           
            /**
             * Returns a L.polygon with provided `style` for the given `elfin` parameter. 
             */
