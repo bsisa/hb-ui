@@ -20,10 +20,10 @@ module.exports = function(grunt) {
                 separator: ''
             },
             dist: {
-            	src : [         'src/geoxml.js',
-                                'src/hbMapService.js',
+            	src : [         'src/geoxmlModule.js',
+                                'src/hbMapServiceModule.js',
                                 'src/hbMapLeafletService.js',
-                                'src/hb5.js',
+                                'src/hb5Module.js',
                                 'src/hb5Constants.js',
                                 'src/hb5Filters.js',
                                 'src/menu.js',
@@ -121,6 +121,10 @@ module.exports = function(grunt) {
 								'src/hbFontaineListDirective.js',
 								'src/hbFormeComponentController.js',
 								'src/hbFormeComponentDirective.js',
+								
+								'src/hbGeoModule.js',
+								
+								
 								'src/hbHorlogeCardController.js',
 								'src/hbHorlogeCardDirective.js',
 								'src/hbHorlogeListController.js',
