@@ -12,57 +12,17 @@
 
 (function() {
 
+    angular.module('hbGeo').factory('hbGeoLeafletService', [
+       '$log', 'hbGeoService', function($log, hbGeoService) {
 
-    angular.module('hbMap').factory('hbGeoLeafletService', [
-       '$log', function($log) {
+    	   // =================================================================
+    	   //     Leaflet configuration objects
+    	   //     Might move in a hbGeoConfig service in the future 
+    	   // =================================================================
 
            /**
-            * See doc at bottom service return definition. 
-            */
-           var getSelectedObjectMarkerStyle = function() {
-
-       		// zIndexOffset only effective in higher version... 
-       		var CustomIcon = L.Icon.extend({
-       		    options: {
-  		    			iconSize: [25, 41],
-  		    			iconAnchor: [12, 41],
-  		    			popupAnchor: [1, -34],
-  		    			shadowSize: [41, 41],
-  		    			zIndexOffset: 1000
-       		    }
-       		});	                        		
-       		
-//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-orange.png'});
-       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-purple.png'});
-//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-red.png'});
-//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-yellow.png'});
-//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-green.png'});
-       		var customStyle = {icon: selectedIcon};                	
-           	return customStyle;
-           };           
-           
-           /**
-            * See doc at bottom service return definition. 
-            */
-           var getStandardObjectMarkerStyle = function() {
-        	   
-       		// zIndexOffset only effective in higher version... 
-       		var CustomIcon = L.Icon.extend({
-       		    options: {
-  		    			iconSize: [25, 41],
-  		    			iconAnchor: [12, 41],
-  		    			popupAnchor: [1, -34],
-  		    			shadowSize: [41, 41],
-  		    			zIndexOffset: 999
-       		    }
-       		});	                        		
-       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon.png'});
-       		var customStyle = {icon: selectedIcon};
-           	return customStyle;
-           };
-           
-           /**
-            * See doc at bottom service return definition. 
+            * Provides default for angular-leaflet-directive variables 
+            * extending controllers using leaflet.
             */
            var getDefaultLeafletScopeVars = function() {
         	 
@@ -136,7 +96,11 @@
            
            
            /**
-            * See doc at bottom service return definition. 
+            * Returns tooltips, buttons, actions, toolbar,... labels translated
+            * properties to extend/merge with L.drawLocal. 
+            * 
+            * (Currently hardcoded to french only, can be extended to database 
+            * configured per language locale as needed).
             */
            var getDrawLocalTranslation = function() {
         	   
@@ -233,29 +197,264 @@
 								           };
 
         	   return drawLocalTranslation_fr;
-           };        	   
+           };    	   
+    	   
+           
+           /**
+            * TODO: This is not generic: Re-design and refactor. 
+            * (I.e.: Have template per CLASSE and template list loaded from database at startup.)
+            * Microservice architecture: => geo database accessed by hbGeoService...
+            */
+           var getPopupContent = function(elfin) {
+               var popup = '<b>' + elfin.IDENTIFIANT.NOM + ' ' + elfin.IDENTIFIANT.ALIAS + '</b><br>';
+               popup += 'No SAI <b>' + elfin.IDENTIFIANT.OBJECTIF + '</b> - ' + elfin.CLASSE + '<br>';
+               popup += '<a href="/elfin/' + elfin.ID_G + '/' + elfin.CLASSE + '/' + elfin.Id + '">Détails</a>';
+               return popup;
+           };            
+    	   
+    	   // =================================================================
+    	   //     Leaflet objects from/to GeoXml utilities
+    	   // =================================================================           
+           
+    	   /**
+    	    * Returns L.circleMarker for `elfin` base point translated swiss 
+    	    * coordinates to latitudes, longitudes and `style`.
+    	    */
+           var getPointLayer = function(elfin, style) {
+
+               var point = hbGeoService.getElfinBasePoint(elfin);
+               if (!point) {
+                   return null;
+               }
+
+               var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
+               var circleMarker = L.circleMarker(L.latLng(coords.lat, coords.lng), style);
+               return circleMarker;
+           };
            
            
-            return {
-                /**
-                 * Provides default for angular-leaflet-directive variables extending controllers using leaftlet.
-                 */
-            	getDefaultLeafletScopeVars: getDefaultLeafletScopeVars,
-                /**
-                 * Returns tooltips, buttons, actions, toolbar,... labels translated properties to extend/merge with L.drawLocal. 
-                 * (Currently hardcoded to french only, can be extended to database configured per language locale as needed).
-                 */            	
-            	getDrawLocalTranslation: getDrawLocalTranslation,
-                /**
-                 * Returns a custom L.Icon intended for selected object marker styling.
-                 */
-            	getSelectedObjectMarkerStyle:getSelectedObjectMarkerStyle,
-                /**
-                 * Returns a custom L.Icon intended for standard object marker styling.
-                 */
-            	getStandardObjectMarkerStyle:getStandardObjectMarkerStyle
-            	
-            }
+    	   /**
+    	    * Returns L.marker for `elfin` base point translated swiss 
+    	    * coordinates to latitudes, longitudes and `style`.
+    	    */
+           var getMarkerLayer = function(elfin, style) {
+
+               var point = hbGeoService.getElfinBasePoint(elfin);
+               if (!point) {
+                   return null;
+               }
+
+               var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
+               var marker = L.marker(L.latLng(coords.lat, coords.lng), style);
+           	   return marker;
+           };    	   
+
+           // TODO: move to hbUtil or already in it ?
+           /*
+       		Return polygons coordinates for ELFIN.FORME.ZONE if any.
+       		TODO: check behaviour for n ZONE definition
+            */
+           var findElementWithPos = function(array, pos) {
+               var element = null;
+               angular.forEach(array, function(e) {
+                   if (e.POS === parseInt(pos)) {
+                       element = e;
+                   }
+               });
+               return element;
+           };           
+           
+           // TODO: keep it here or move to hbUtil ! 
+           // TODO: Split logic to 1) obtain an array of GeoXML POINT 2) transform array of GeoXML POINT to Leaflet latLng.
+           // Create new hbGeoUtil/Service to deal with GeoXML FORME actions TODO: move to hbMapLeafletService
+           /**
+            * Returns an array of GeoXML POINT defining a polygon.
+            */
+           var getPolygonCoords = function(elfin) {
+               if (!elfin.FORME) return null;
+               // Check if at least a ZONE is defined, at POS 1. 
+               var zoneDef = findElementWithPos(elfin.FORME.ZONE, '1');
+               if (!zoneDef) return null;
+
+               var points = [];
+
+               // Process lines (LIGNE) defined by ZONEs
+               angular.forEach(zoneDef.LIGNE, function(l) {
+                   var lPos = l.Id.split('#')[1];
+                   // TODO: HBGeo? - This assumes ZONE Id, ID_G only point to the same ELFIN.
+                   // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
+                   var lineDef = findElementWithPos(elfin.FORME.LIGNE, lPos);
+
+                   // Process each line passage which in turn reference a POINT whose coordinates will be extracted and drawn. 
+                   angular.forEach(lineDef.PASSAGE, function(p) {
+                       var pPos = p.Id.split('#')[1];
+                       // TODO: HBGeo? - This assumes LINE Id, ID_G only point to the same ELFIN.
+                       // Shouldn't we query the whole database collection for CLASSE/Id/ID_G ?
+                       var pointDef = findElementWithPos(elfin.FORME.POINT, pPos);
+                       var coords = hbGeoService.getLongitudeLatitudeCoordinates(pointDef.X,pointDef.Y);
+                       points.push(L.latLng(coords.lat, coords.lng));
+                   });
+               });
+
+               return points;
+           };           
+
+           
+           /**
+            * Returns a L.polygon with provided `style` for the given `elfin` parameter. 
+            */
+           var getPolygonLayer = function(elfin, style) {
+               var coords = getPolygonCoords(elfin);
+               if (coords && coords.length > 0) {
+            	   var polygon = L.polygon(coords, style);
+                   return polygon;
+               } else {
+                   return null;                    	
+               }
+           };
+           
+           
+           /**
+            * Returns ILayer object {L.circleMarker, L.marker, L.polygon} given
+            * @param elfin
+            * @param representation {'point', 'marker', 'polygon'}
+            * @param style
+            * 
+            * TODO: review, pitfall with marker management. 
+            * See monkey patching while used in hbMapController.
+            */
+           var getObjectLayer = function(elfin, representation, style) {
+               var result = null;
+
+               switch (representation.toLowerCase()) {
+                   case 'point': result = getPointLayer(elfin, style); break;
+                   case 'marker': result = getMarkerLayer(elfin, style); break;
+                   case 'polygon': result = getPolygonLayer(elfin, style); break;
+               }
+
+               if (result !== null) {
+            	   //$log.debug(">>>>    getObjectLayer    ***    START    <<<<");
+            	   result.bindPopup(getPopupContent(elfin));
+            	   // TODO: Test whether this was necessary !?
+            	   //angular.extend(result, {elfin:elfin});
+            	   // TODO: CURRENT
+            	   angular.extend(result, {representation:representation.toLowerCase()});
+               }
+
+               return result;
+           };           
+
+           
+           /**
+            * Returns a custom L.Icon intended for selected object marker styling.
+            */
+           var getSelectedObjectMarkerStyle = function() {
+
+       		// zIndexOffset only effective in higher version... 
+       		var CustomIcon = L.Icon.extend({
+       		    options: {
+  		    			iconSize: [25, 41],
+  		    			iconAnchor: [12, 41],
+  		    			popupAnchor: [1, -34],
+  		    			shadowSize: [41, 41],
+  		    			zIndexOffset: 1000
+       		    }
+       		});	                        		
+       		
+//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-orange.png'});
+       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-purple.png'});
+//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-red.png'});
+//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-yellow.png'});
+//       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon-green.png'});
+       		var customStyle = {icon: selectedIcon};                	
+           	return customStyle;
+           };           
+
+
+           /**
+            * Returns a custom L.Icon intended for standard object marker styling.
+            */
+           var getStandardObjectMarkerStyle = function() {
+        	   
+       		// zIndexOffset only effective in higher version... 
+       		var CustomIcon = L.Icon.extend({
+       		    options: {
+  		    			iconSize: [25, 41],
+  		    			iconAnchor: [12, 41],
+  		    			popupAnchor: [1, -34],
+  		    			shadowSize: [41, 41],
+  		    			zIndexOffset: 999
+       		    }
+       		});	                        		
+       		var selectedIcon = new CustomIcon({iconUrl: '/assets/lib/leaflet/custom/markers/marker-icon.png'});
+       		var customStyle = {icon: selectedIcon};
+           	return customStyle;
+           };
+
+
+           /**
+            * Returns L.bounds for the layer identified by 
+            * @param elfin 
+            * @param representation
+            */
+           var getObjectBounds = function (elfin, representation) {
+        	   // No need for style when computing bounds
+        	   var style = {};
+        	   var elfinLayer = getObjectLayer(elfin, representation, style);
+        	   return elfinLayer.getBounds();
+           };
+           
+
+           /**
+            * Updates `layer` popup content with `elfin` data if layer has a popup.
+            */
+           var updateLayerPopupContent = function(elfin, layer) {
+               if (angular.isDefined(layer.getPopup) && layer.getPopup()) {
+                   layer.getPopup().setContent(getPopupContent(elfin));
+               }
+           };
+           
+           
+           /**
+            * Updates `layer` latitude, longitude coordinates from elfin.FORME.ZONE 
+            */
+           var updatePolygonCoords = function(elfin, layer) {
+               if (angular.isDefined(layer.setLatLngs)) { 
+                   var coords = getPolygonCoords(elfin);
+                   if (coords && coords.length > 0) {
+                   	//$log.debug("Map service: updatePolygonCoords - layer.setLatLngs(coords)\ncoords =\n" + angular.toJson(coords));
+                	   layer.setLatLngs(coords);
+                   }
+               }
+
+           };           
+           
+           
+           /**
+            * Updates leaflet layer object with ELFIN FORME BASE POINT coordinates
+            */
+           var updateLayerCoords = function(elfin, layer) {
+
+               if (angular.isDefined(layer.setLatLng)) {
+                   var point = hbGeoService.getElfinBasePoint(elfin);
+                   if (point) {
+                       var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
+                       layer.setLatLng(L.latLng(coords.lat, coords.lng));
+                   }
+               }
+           };
+           
+           return {
+           	   getDefaultLeafletScopeVars: getDefaultLeafletScopeVars,
+        	   getDrawLocalTranslation: getDrawLocalTranslation,
+        	   getObjectBounds: getObjectBounds,
+        	   getObjectLayer: getObjectLayer,
+        	   getSelectedObjectMarkerStyle: getSelectedObjectMarkerStyle,
+        	   getStandardObjectMarkerStyle: getStandardObjectMarkerStyle,
+               updateLayerCoords: updateLayerCoords,
+        	   updateLayerPopupContent: updateLayerPopupContent,
+        	   updatePolygonCoords: updatePolygonCoords
+           }
     }]);
 
 })();

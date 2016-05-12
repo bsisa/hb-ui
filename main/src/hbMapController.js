@@ -189,14 +189,14 @@
 	                        	var objectLayer = null;
 		                        
 	                        	if ($scope.elfin && $scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
-	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbGeoLeafletService.getSelectedObjectMarkerStyle());
+	                        		currentObjectMarkerLayer = hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, hbGeoLeafletService.getSelectedObjectMarkerStyle());
 	                        	} else {
 	                        		if (hbLayer.representationType.toLowerCase() == 'marker') {
 	                        			objectLayerStyle = hbGeoLeafletService.getStandardObjectMarkerStyle();
 	                        		} else {
 	                        			objectLayerStyle = hbLayer.representationStyle;
 	                        		}
-	                        		objectLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, objectLayerStyle);
+	                        		objectLayer = hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, objectLayerStyle);
 	                        	}		                    	
 	                        	
 								pushLayer(objectLayer, objects, elfin);
@@ -246,7 +246,7 @@
 							// TODO: refactor as function => used in replaceLayer... see updateElfinRepresentation
 		                    leafletData.getLayers().then(function(layers) {
                    	
-		                        	var elfinUpdatedMarkerLayer = MapService.getObjectLayer(elfin, 'marker', markerStyle);
+		                        	var elfinUpdatedMarkerLayer = hbGeoLeafletService.getObjectLayer(elfin, 'marker', markerStyle);
 			                    	
 		                            //[overlayId].addLayer(objectLayer);
 		                            angular.forEach(layers.overlays, function(overlay) {
@@ -283,9 +283,9 @@
 		                    });                        	
                        		
                        	} else {
-                            MapService.updateLayerCoords(elfin, layer);
-                            MapService.updatePolygonCoords(elfin, layer);
-                            MapService.updateLayerPopupContent(elfin, layer);                       		
+                       		hbGeoLeafletService.updateLayerCoords(elfin, layer);
+                            hbGeoLeafletService.updatePolygonCoords(elfin, layer);
+                            hbGeoLeafletService.updateLayerPopupContent(elfin, layer);                       		
                        	}
 
                     });
@@ -614,7 +614,7 @@
             $scope.zoomToCurrentObject = function() {
 	            // zoom the map to the currentElfinLayerToZoomTo
             	leafletData.getMap().then(function (map) {
-            		map.fitBounds(MapService.getObjectBounds($scope.elfin, 'polygon'));
+            		map.fitBounds(hbGeoLeafletService.getObjectBounds($scope.elfin, 'polygon'));
                 });
             };           
 
@@ -639,7 +639,7 @@
             	// Builds hb layer customising styles.
             	var hbLayer = getHbLayerForStyle(color, opacity);
             	// Builds leaflet layer for hbLayer representation type and style and sets position and popup information using elfin data. 
-            	var elfinUpdatedLeafletLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
+            	var elfinUpdatedLeafletLayer = hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
             	return elfinUpdatedLeafletLayer;
             };
 

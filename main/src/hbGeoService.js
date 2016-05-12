@@ -36,20 +36,6 @@
 			return point;
 		};
            
-          
-
-//		// TODO: Check existence in hbUtil ... remove from hbMapService
-//		var findElementWithPos = function(array, pos) {
-//			var element = null;
-//			angular.forEach(array, function(e) {
-//				if (e.POS === parseInt(pos)) {
-//					element = e;
-//				}
-//			});
-//			return element;
-//		};
-           
-		
 		
 		// ====================================================================
 		//     Swiss Federal Coordinates conversion utilities
