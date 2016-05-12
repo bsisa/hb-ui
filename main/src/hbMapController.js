@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'HbMapLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
-        function ($scope, $rootScope, $log, leafletData, MapService, HbMapLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
+    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'hbGeoService', 'HbMapLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
+        function ($scope, $rootScope, $log, leafletData, MapService, hbGeoService, HbMapLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
 
         // Translations 
         angular.extend( L.drawLocal, HbMapLeafletService.getDrawLocalTranslation() );
@@ -404,7 +404,7 @@
                         coordinatesPlugin._update = function (evt) {
                         	var pos = undefined;
                         	if (evt.latlng) {
-                        		pos = MapService.getSwissFederalCoordinates(evt.latlng.lat, evt.latlng.lng);	
+                        		pos = hbGeoService.getSwissFederalCoordinates(evt.latlng.lat, evt.latlng.lng);	
                         	} else {
                         		pos = {x:0,y:0};
                         	}
@@ -591,7 +591,7 @@
                     currentElfinBasePoint.CLASSE = scope.snappedLayer.elfin.CLASSE;
 
                 } else {
-                    var coords = MapService.getSwissFederalCoordinates(marker.getLatLng().lat,marker.getLatLng().lng);
+                    var coords = hbGeoService.getSwissFederalCoordinates(marker.getLatLng().lat,marker.getLatLng().lng);
 
                     currentElfinBasePoint.X = coords.x;
                     currentElfinBasePoint.Y = coords.y;

@@ -123,7 +123,7 @@ module.exports = function(grunt) {
 								'src/hbFormeComponentDirective.js',
 								
 								'src/hbGeoModule.js',
-								
+								'src/hbGeoService.js',
 								
 								'src/hbHorlogeCardController.js',
 								'src/hbHorlogeCardDirective.js',
