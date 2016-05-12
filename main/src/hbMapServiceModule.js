@@ -4,7 +4,7 @@
  */
 (function() {
 
-    var hbMapModule = angular.module('hbMap');
+    var hbMapModule = angular.module('hbMap', []);
     
     hbMapModule.factory('MapService', [
        '$log', function($log) {
@@ -18,9 +18,9 @@
            		"HIDDEN":"HIDDEN"
            };
     	   
-           /**
-            * Returns true if the geographic map is displayed.
-            */
+    	   /**
+    	    * Returns true if the map is currently displayed. 
+    	    */
            var isMapDisplayed = function() {
                return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
            };
@@ -75,31 +75,30 @@
 	               mainCardViewDiv.width('');
 	           }
            };
+
+    	   /**
+			* Switches map display types in turn: HIDDEN > SPLIT > FULL > HIDDEN
+			*/
+           var switchMapDisplayType = function (mapDisplayType) {
+     		  var newMapDisplayType = undefined;
+    		  if (mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) {
+    			  newMapDisplayType = MAP_DISPLAY_TYPE.SPLIT;
+    			  refreshLayout(newMapDisplayType);
+    			  return newMapDisplayType;
+    		  } else if (mapDisplayType === MAP_DISPLAY_TYPE.SPLIT) {
+    			  newMapDisplayType = MAP_DISPLAY_TYPE.FULL;
+    			  refreshLayout(newMapDisplayType);
+    			  return newMapDisplayType;
+    		  } else if (mapDisplayType === MAP_DISPLAY_TYPE.FULL) {
+    			  newMapDisplayType = MAP_DISPLAY_TYPE.HIDDEN;
+    			  refreshLayout(newMapDisplayType);
+    			  return newMapDisplayType;
+    		  }
+    	   };
            
            return {
-        	   /**
-        	    * Provides a function to test whether or not the map is currently displayed. 
-        	    */
         	   isMapDisplayed: isMapDisplayed,
-        	   /**
-				* Switches map display types in turn: HIDDEN > SPLIT > FULL > HIDDEN
-				*/
-        	   switchMapDisplayType: function (mapDisplayType) {
-        		  var newMapDisplayType = undefined;
-        		  if (mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) {
-        			  newMapDisplayType = MAP_DISPLAY_TYPE.SPLIT;
-        			  refreshLayout(newMapDisplayType);
-        			  return newMapDisplayType;
-        		  } else if (mapDisplayType === MAP_DISPLAY_TYPE.SPLIT) {
-        			  newMapDisplayType = MAP_DISPLAY_TYPE.FULL;
-        			  refreshLayout(newMapDisplayType);
-        			  return newMapDisplayType;
-        		  } else if (mapDisplayType === MAP_DISPLAY_TYPE.FULL) {
-        			  newMapDisplayType = MAP_DISPLAY_TYPE.HIDDEN;
-        			  refreshLayout(newMapDisplayType);
-        			  return newMapDisplayType;
-        		  }
-        	   }
+        	   switchMapDisplayType:switchMapDisplayType
            }
     }]);
 
