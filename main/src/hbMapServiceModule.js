@@ -2,51 +2,30 @@
  Service to manage the main view layout
  It mainly relies on JQuery to manipulate top level divs
  */
-
 (function() {
 
-
-    var hbMapModule = angular.module('hbMap', ['hbGeo']);
+    var hbMapModule = angular.module('hbMap');
     
     hbMapModule.factory('MapService', [
-       '$log', 'hbGeoService', function($log, hbGeoService) {
+       '$log', function($log) {
 
-           //TODO: move to controller or constants 
+    	   /**
+    	    * Constants corresponding to available map display types.
+    	    */
            var MAP_DISPLAY_TYPE = {
            		"FULL": "FULL",
            		"SPLIT": "SPLIT",
            		"HIDDEN":"HIDDEN"
            };
     	   
-           // TODO: move to ctrler
+           /**
+            * Returns true if the geographic map is displayed.
+            */
            var isMapDisplayed = function() {
                return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
            };
-
-           
-
-           
-
-           
-           
-           
-           
-
-           
-
-           
-
-
-           
-
-
-           
-           
-
-           
            
            /**
-            * TODO: Move to ctrler
             * Code block dealing with div toggle operation
             */
            var toggle = function(mainMarginsDiv, mainCardViewDiv, mainMapViewDiv) {
@@ -56,7 +35,6 @@
            };
            
            /**
-            * TODO: Move to ctrler
             * Refresh map layout dimensions, position and visibility 
             * depending on display type and current visibility status.
             */
@@ -67,15 +45,17 @@
 	           var mainMapViewDiv = $('#views-wrapper div.map-view');
 	           var mainMapViewLeafletDiv = $('#views-wrapper div.map-view-leaflet');
 	           
-	           if (!isMapDisplayed() && mapDisplayType !== MAP_DISPLAY_TYPE.HIDDEN) { // Make map visible for all display types except HIDDEN 
+	           // Make map visible for all display types except HIDDEN
+	           if (!isMapDisplayed() && mapDisplayType !== MAP_DISPLAY_TYPE.HIDDEN) {  
 	        	   toggle(mainMarginsDiv, mainCardViewDiv, mainMapViewDiv);
-	           } 
-	           if (isMapDisplayed() && mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) { // Hide map for display type HIDDEN
+	           }
+	           
+	           // Hide map for display type HIDDEN
+	           if (isMapDisplayed() && mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) { 
 	        	   toggle(mainMarginsDiv, mainCardViewDiv, mainMapViewDiv);
 	           }
 	           
 	           if (mainCardViewDiv.hasClass('splitViewMargin')) {
-	           	//$log.debug(">>>>>> hbMapService mainCardViewDiv HAS Class splitViewMargin <<<<<<");
 	               var bodyWidth = $('body').width();
 	               var windowHeight = $(window).height() - 100;
 	               var cardViewWidth = undefined;
@@ -90,44 +70,37 @@
 	               mainMapViewLeafletDiv.width((bodyWidth - cardViewWidth - 20 - 100) + 'px');
 	               mainMapViewDiv.height(windowHeight + 'px');
 	               mainMapViewLeafletDiv.height(windowHeight + 'px');
-	               return true; // TODO: Legacy behaviour, no return result required, remove 
 	           } else {
-	           	//$log.debug(">>>>>> hbMapService mainCardViewDiv DOES NOT HAVE Class splitViewMargin <<<<<<");
 	               mainMarginsDiv.width('');
 	               mainCardViewDiv.width('');
-	               return false; // TODO: Legacy behaviour, no return result required, remove
 	           }
            };
            
-           
-            return {
-
-                /**
-                 * Provides a function to test whether or not the map is currently displayed. 
-                 */
-                isMapDisplayed: isMapDisplayed,
-                
-                /**
-                 * Switches map display types in turn: HIDDEN > SPLIT > FULL > HIDDEN
-                 */
-                switchMapDisplayType: function (mapDisplayType) {
-                	var newMapDisplayType = undefined;
-                	if (mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) {
-                		newMapDisplayType = MAP_DISPLAY_TYPE.SPLIT;
-                		refreshLayout(newMapDisplayType);
-                		return newMapDisplayType;
-                	} else if (mapDisplayType === MAP_DISPLAY_TYPE.SPLIT) {
-                		newMapDisplayType = MAP_DISPLAY_TYPE.FULL;
-                		refreshLayout(newMapDisplayType);
-                		return newMapDisplayType;
-                	} else if (mapDisplayType === MAP_DISPLAY_TYPE.FULL) {
-                		newMapDisplayType = MAP_DISPLAY_TYPE.HIDDEN;
-                		refreshLayout(newMapDisplayType);
-                		return newMapDisplayType;
-                	}
-                }
-                
-            }
+           return {
+        	   /**
+        	    * Provides a function to test whether or not the map is currently displayed. 
+        	    */
+        	   isMapDisplayed: isMapDisplayed,
+        	   /**
+				* Switches map display types in turn: HIDDEN > SPLIT > FULL > HIDDEN
+				*/
+        	   switchMapDisplayType: function (mapDisplayType) {
+        		  var newMapDisplayType = undefined;
+        		  if (mapDisplayType === MAP_DISPLAY_TYPE.HIDDEN) {
+        			  newMapDisplayType = MAP_DISPLAY_TYPE.SPLIT;
+        			  refreshLayout(newMapDisplayType);
+        			  return newMapDisplayType;
+        		  } else if (mapDisplayType === MAP_DISPLAY_TYPE.SPLIT) {
+        			  newMapDisplayType = MAP_DISPLAY_TYPE.FULL;
+        			  refreshLayout(newMapDisplayType);
+        			  return newMapDisplayType;
+        		  } else if (mapDisplayType === MAP_DISPLAY_TYPE.FULL) {
+        			  newMapDisplayType = MAP_DISPLAY_TYPE.HIDDEN;
+        			  refreshLayout(newMapDisplayType);
+        			  return newMapDisplayType;
+        		  }
+        	   }
+           }
     }]);
 
 })();
