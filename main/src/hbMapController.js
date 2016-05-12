@@ -574,7 +574,7 @@
                     return;
                 }
 
-                var currentElfinBasePoint = MapService.getElfinBasePoint(scope.elfin);
+                var currentElfinBasePoint = hbGeoService.getElfinBasePoint(scope.elfin);
 
                 if (currentElfinBasePoint &&
                     scope.snappedLayer &&
@@ -583,7 +583,7 @@
                 ) {
                 	// If the snappedLayer elfin is not the same elfin as the current selected elfin update 
                 	// base point Id, ID_G, CLASSE with snapped elfin.
-                    var snappedExternalBasePoint = MapService.getElfinBasePoint(scope.snappedLayer.elfin);
+                    var snappedExternalBasePoint = hbGeoService.getElfinBasePoint(scope.snappedLayer.elfin);
                     currentElfinBasePoint.X = snappedExternalBasePoint.X;
                     currentElfinBasePoint.Y = snappedExternalBasePoint.Y;
                     currentElfinBasePoint.Id = scope.snappedLayer.elfin.Id + '#' + snappedExternalBasePoint.POS;

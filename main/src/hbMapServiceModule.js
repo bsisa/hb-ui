@@ -22,29 +22,12 @@
            var isMapDisplayed = function() {
                return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
            };
-           
-           
-           /**
-            * TODO: move to hbUtil
-            */
-           var getElfinBasePoint = function(elfin) {
 
-        	   if (!elfin.FORME) return null;
-        	   
-        	   var point = null;               
-               angular.forEach(elfin.FORME.POINT, function(p) {
-                   if (p.FONCTION.toLowerCase() === 'base') {
-                       point = p;
-                   }
-               });
-               return point;
-           };
-           
            
            // TODO: move to hbMapLeafletService
            var getPointLayer = function(elfin, style) {
 
-               var point = getElfinBasePoint(elfin);
+               var point = hbGeoService.getElfinBasePoint(elfin);
                if (!point) {
                    return null;
                }
@@ -58,7 +41,7 @@
            // TODO: move to hbMapLeafletService
            var getMarkerLayer = function(elfin, style) {
 
-               var point = getElfinBasePoint(elfin);
+               var point = hbGeoService.getElfinBasePoint(elfin);
                if (!point) {
                    return null;
                }
@@ -191,7 +174,7 @@
            var updateLayerCoords = function(elfin, layer) {
 
                if (angular.isDefined(layer.setLatLng)) {
-                   var point = getElfinBasePoint(elfin);
+                   var point = hbGeoService.getElfinBasePoint(elfin);
                    if (point) {
                        var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
                        layer.setLatLng(L.latLng(coords.lat, coords.lng));
@@ -304,17 +287,6 @@
                         layer.getPopup().setContent(getPopupContent(elfin));
                     }
                 },
-
-                /**
-                 * Returns BASE point. 
-                 * 
-                 * There should only be a single BASE point defined.
-                 *  
-                 * If more than one BASE point is defined the latest 
-                 * only will be considered (the one with the greatest
-                 * POS value). 
-                 */
-                getElfinBasePoint:getElfinBasePoint,
 
                 getPointLayer:getPointLayer,
 
