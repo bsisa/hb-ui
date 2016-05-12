@@ -253,11 +253,7 @@
            };
            
            /**
-            * 
-            * Returns an object with properties {lat: float, lng: float } for swiss federal coordinates {x_param, y_param}
-            * 
-            * Returns a L.latLng( <Number> latitude, <Number> longitude, <Number> altitude? ) object corresponding to GeoXML ELFIN POINT 
-            * 
+            * Returns an object with properties {lat: float, lng: float } for swiss federal coordinates {x_param, y_param} 
             */
            var getLongitudeLatitudeCoordinates = function(x_param, y_param) {
         	   
@@ -306,12 +302,12 @@
                var latitude = latPrime * 100 / 36;
                var longitude = lonPrime * 100 / 36;
 
-               //return L.latLng(latitude, longitude);
                return {lat: latitude, lng: longitude};
            };
 
            /**
-            * Returns swiss federal coordinates {x,y} for latitude, longitude
+            * Returns swiss federal coordinates {x,y} for latitude, longitude.
+            * Returns {0,0} If one of the parameter is missing 
             * 
             * See http://www.swisstopo.admin.ch/internet/swisstopo/fr/home/topics/survey/sys/refsys/switzerland.parsysrelated1.31216.downloadList.63873.DownloadFile.tmp/swissprojectionfr.pdf
             * and http://mapref.org/LinkedDocuments/swiss_projection_en.pdf section 4.1
@@ -319,11 +315,10 @@
             * @param lat_param
             * @param lng_param
             */
-           //var getSwissFederalCoordinates = function(latLng) {
            var getSwissFederalCoordinates = function(lat_param,lng_param) {
-               // TODO: Review this condition
-        	   if (!lat_param || ! lng_param) return {x: 0, y : 0};
-        	   //if (!latLng) return {x: 0, y : 0};
+        	   
+        	   if (!lat_param || !lng_param) return {x: 0, y : 0};
+
         	   var latLng = {lat: parseFloat(lat_param), lng: parseFloat(lng_param)}
 
                var latPrime = (latLng.lat * 36 / 100 - 169028.66 / 10000) ,
