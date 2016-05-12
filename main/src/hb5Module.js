@@ -7,9 +7,10 @@
  * @author Patrick Refondini 
  */
 (function() {
-	
-    var hb5 = angular.module('hb5',
-        ['hbServerNotification','flow','ui.grid','ui.grid.selection','ngAnimate', 'geoxml', 'hbMap', 'ngRoute', 'ui.bootstrap', 'localytics.directives', 'leaflet-directive', 'ui.utils','angular.filter']);
+	var hb5 = angular.module('hb5', [ 'hbServerNotification', 'flow',
+			'ui.grid', 'ui.grid.selection', 'ngAnimate', 'geoxml', 'hbMap',
+			'hbGeo', 'ngRoute', 'ui.bootstrap', 'localytics.directives',
+			'leaflet-directive', 'ui.utils', 'angular.filter' ]);
 	
     // ================================================================
     // ====                      Config                            ====
