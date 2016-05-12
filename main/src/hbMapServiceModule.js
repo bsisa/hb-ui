@@ -6,7 +6,9 @@
 (function() {
 
 
-    angular.module('hbMap', []).factory('MapService', [
+    var hbMapModule = angular.module('hbMap', []);
+    
+    hbMapModule.factory('MapService', [
        '$log', 'GeoxmlService', function($log, GeoxmlService) {
 
            //TODO: move to constants
@@ -252,6 +254,12 @@
 	           }
            };
            
+           
+           var X_OFFSET_OFFICIAL = 600072.37; // Official
+           var X_OFFSET_OBSERVED = 600067; // Observed
+           var Y_OFFSET_OFFICIAL = 200147.07; // Official
+           var Y_OFFSET_OBSERVED = 200147.07; // Observed
+           
            /**
             * Returns an object with properties {lat: float, lng: float } for swiss federal coordinates {x_param, y_param} 
             */
@@ -457,11 +465,5 @@
                 getSwissFederalCoordinates:getSwissFederalCoordinates
             }
     }]);
-
-    var X_OFFSET_OFFICIAL = 600072.37; // Official
-    var X_OFFSET_OBSERVED = 600067; // Observed
-    var Y_OFFSET_OFFICIAL = 200147.07; // Official
-    var Y_OFFSET_OBSERVED = 200147.07; // Observed
-
 
 })();
