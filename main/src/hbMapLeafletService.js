@@ -13,7 +13,7 @@
 (function() {
 
 
-    angular.module('hbMap').factory('HbMapLeafletService', [
+    angular.module('hbMap').factory('hbGeoLeafletService', [
        '$log', function($log) {
 
            /**

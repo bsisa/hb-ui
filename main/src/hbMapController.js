@@ -1,10 +1,10 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'hbGeoService', 'HbMapLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
-        function ($scope, $rootScope, $log, leafletData, MapService, hbGeoService, HbMapLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
+    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
+        function ($scope, $rootScope, $log, leafletData, MapService, hbGeoService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
 
         // Translations 
-        angular.extend( L.drawLocal, HbMapLeafletService.getDrawLocalTranslation() );
+        angular.extend( L.drawLocal, hbGeoLeafletService.getDrawLocalTranslation() );
     	
         // =======================================================================================
         // =========================== Display connection status using SSE =======================
@@ -75,7 +75,7 @@
             /**
              * Add Leaflet Directive scope extension
              */ 
-            angular.extend($scope, HbMapLeafletService.getDefaultLeafletScopeVars());
+            angular.extend($scope, hbGeoLeafletService.getDefaultLeafletScopeVars());
 
             /**
             	Reference to current displayed object
@@ -189,10 +189,10 @@
 	                        	var objectLayer = null;
 		                        
 	                        	if ($scope.elfin && $scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
-	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, HbMapLeafletService.getSelectedObjectMarkerStyle());
+	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, hbGeoLeafletService.getSelectedObjectMarkerStyle());
 	                        	} else {
 	                        		if (hbLayer.representationType.toLowerCase() == 'marker') {
-	                        			objectLayerStyle = HbMapLeafletService.getStandardObjectMarkerStyle();
+	                        			objectLayerStyle = hbGeoLeafletService.getStandardObjectMarkerStyle();
 	                        		} else {
 	                        			objectLayerStyle = hbLayer.representationStyle;
 	                        		}
@@ -449,11 +449,11 @@
             var elfinLoadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
             	// TODO: review: not relevant for all ELFIN@CLASSE !
                 $scope.elfin = elfin;
-                //updateElfinRepresentation($scope.elfin, HbMapLeafletService.getSelectedObjectMarkerStyle());
+                //updateElfinRepresentation($scope.elfin, hbGeoLeafletService.getSelectedObjectMarkerStyle());
                 $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE +"/"+elfin.Id);
         		if (elfin !== null) {
 	    			// Set newly selected elfin style to selected style.
-	    			var selStyle = HbMapLeafletService.getSelectedObjectMarkerStyle();
+	    			var selStyle = hbGeoLeafletService.getSelectedObjectMarkerStyle();
 	    			$log.debug("Setting new val to selected style: " + angular.toJson(selStyle));
 	    			updateElfinRepresentation(elfin, selStyle);					
         		}                            
@@ -468,7 +468,7 @@
             	$log.debug(">>>> MapController: HB_EVENTS.ELFIN_UNLOADED => " + elfin.CLASSE +"/"+elfin.Id);
     			if (elfin !== null) {
 	    			// Reset former selected elfin style to standard.
-	    			var stdStyle = HbMapLeafletService.getStandardObjectMarkerStyle();
+	    			var stdStyle = hbGeoLeafletService.getStandardObjectMarkerStyle();
 	    			$log.debug("Resetting old val to standard style: " + angular.toJson(stdStyle));
 	    			updateElfinRepresentation(elfin, stdStyle);
     			}                
@@ -489,10 +489,10 @@
             	// Note: Only `marker` style is different for selected and non selected objects.
                 if ($scope.elfin.Id === elfin.Id) {
 	    			// Update with selected marker style.
-                	updateElfinRepresentation(elfin, HbMapLeafletService.getSelectedObjectMarkerStyle());	
+                	updateElfinRepresentation(elfin, hbGeoLeafletService.getSelectedObjectMarkerStyle());	
                 } else {
 	    			// Update with default marker style
-                	updateElfinRepresentation(elfin, HbMapLeafletService.getStandardObjectMarkerStyle());
+                	updateElfinRepresentation(elfin, hbGeoLeafletService.getStandardObjectMarkerStyle());
                 }
             });
 
