@@ -26,6 +26,20 @@
 		// ============================================================
 
 		/**
+		 * Get element El given its position El.POS  
+		 * where Els is an array of elements/objects. 
+		 */
+		var getElByPos = function(Els, ElPos) {
+			if (Els) {
+				// _.find returns undefined if no match is found.
+				var searchedEl = _.find(Els, function(El){ return El.POS === ElPos; });
+				return searchedEl;
+			} else {
+				return undefined;
+			}
+		};        
+        
+		/**
 		 * Get ELFIN/CARACTERISTIQUE/CARSET/CAR by CAR.POS (CAR@POS)
 		 * instead of array position. If not found currentCAR === undefined
 		 *  
@@ -1052,7 +1066,6 @@
 
 		};		
 		
-		
         
         return {
         	applyPath:applyPath,
@@ -1076,6 +1089,7 @@
         	getDateFromHbTextDateFormat:getDateFromHbTextDateFormat,
         	getDateTimeFromHbTextDateTimeFormat:getDateTimeFromHbTextDateTimeFormat,
         	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue,
+        	getElByPos:getElByPos,
         	getFractionLByPos:getFractionLByPos,
         	getFractionLIndexByPos:getFractionLIndexByPos,
         	getFractionLCByPos:getFractionLCByPos,
@@ -1113,7 +1127,6 @@
         	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS,
         	sortElfinByDEDescending:sortElfinByDEDescending
-        	
         };
     }]);
 	
