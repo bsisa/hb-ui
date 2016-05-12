@@ -21,12 +21,15 @@
                return $('#views-wrapper div.card-view').hasClass('splitViewMargin');
            };
            
-
+           
            /**
             * TODO: move to hbUtil
             */
            var getElfinBasePoint = function(elfin) {
-               var point = null;
+
+        	   if (!elfin.FORME) return null;
+        	   
+        	   var point = null;               
                angular.forEach(elfin.FORME.POINT, function(p) {
                    if (p.FONCTION.toLowerCase() === 'base') {
                        point = p;
@@ -38,7 +41,6 @@
            
            // TODO: move to hbMapLeafletService
            var getPointLayer = function(elfin, style) {
-               if (!elfin.FORME) return null;
 
                var point = getElfinBasePoint(elfin);
                if (!point) {
@@ -53,16 +55,13 @@
            
            // TODO: move to hbMapLeafletService
            var getMarkerLayer = function(elfin, style) {
-               if (!elfin.FORME) return null;
 
                var point = getElfinBasePoint(elfin);
                if (!point) {
-            	   //$log.debug(">>>> missing BASE POINT for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF );
                    return null;
                }
 
                var coords = getLongitudeLatitudeCoordinates(point.X, point.Y);
-               //$log.debug(">>>> marker style for elfin SAI: " + elfin.IDENTIFIANT.OBJECTIF + " = " + angular.toJson(style) );
                var marker = L.marker(L.latLng(coords.lat, coords.lng), style);
            	   return marker;
            };
@@ -80,6 +79,7 @@
            
            
            // TODO: keep it here or move to hbUtil ! 
+           // TODO: Split logic to 1) obtain an array of GeoXML POINT 2) transform array of GeoXML POINT to Leaflet latLng.
            // Create new hbGeoUtil/Service to deal with GeoXML FORME actions TODO: move to hbMapLeafletService
            /**
             * Returns an array of GeoXML POINT defining a polygon.
