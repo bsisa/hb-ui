@@ -190,7 +190,7 @@
 		                        var objectLayerStyle = {};
 	                        	var objectLayer = null;
 		                        
-	                        	if ($scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
+	                        	if ($scope.elfin && $scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
 	                        		currentObjectMarkerLayer = MapService.getObjectLayer(elfin, hbLayer.representationType, HbMapLeafletService.getSelectedObjectMarkerStyle());
 	                        	} else {
 	                        		if (hbLayer.representationType.toLowerCase() == 'marker') {
