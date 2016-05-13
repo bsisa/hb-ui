@@ -10,7 +10,7 @@
  */
 (function() {
 	
-    var hbGeo = angular.module('hbGeo', ['geoxml']);
+    var hbGeo = angular.module('hbGeo', []);
 	
     // ================================================================
     // ====                      Config                            ====
