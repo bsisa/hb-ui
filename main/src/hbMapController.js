@@ -257,7 +257,12 @@
 
         var displayMapContentListenerDeregister = $rootScope.$on(HB_EVENTS.DISPLAY_MAP_CONTENT, function(event, hbMapDef) {
 
-        	$log.debug(">>>> HB_EVENTS.DISPLAY_MAP_CONTENT event : " + HB_EVENTS.DISPLAY_MAP_CONTENT + " " + angular.toJson(event));
+        	// Store hb map definition in controller.  
+        	vm.hbMapDef = hbMapDef;
+            // Load hb map definition center latitude/longitude and zoom level.        	
+        	vm.center = vm.hbMapDef.CARACTERISTIQUE.CAR2.VALEUR.split(' ');
+        	
+        	//$log.debug(">>>> HB_EVENTS.DISPLAY_MAP_CONTENT event : " + HB_EVENTS.DISPLAY_MAP_CONTENT + " " + angular.toJson(event));
         	
             leafletData.getMap().then(function (map) {
 
@@ -283,20 +288,14 @@
                     map.removeControl($scope.drawControl);
                 }
 
-                // Load hb map definition center latitude/longitude and zoom level.
-                var center = hbMapDef.CARACTERISTIQUE.CAR2.VALEUR.split(' ');
-
-                $scope.center = {
-                    lat: parseFloat(center[0]),
-                    lng: parseFloat(center[1]),
-                    zoom: parseFloat(center[2])
-                };
-
                 // Display each HB layer of the HB map  
                 angular.forEach(hbMapDef.CARACTERISTIQUE.FRACTION.L, function (hbLayerDef) {
                     displayLayer(map, hbMapDef.Id, hbLayerDef);
                 });
 
+                // Center map
+                updateCenter();                
+                
                 // Once all layers are loaded, add the drawing layer and register all events
                 leafletData.getLayers().then(function(layers) {
                     var drawLayerId = "drawLayer";
@@ -382,40 +381,70 @@
         });
 
 
-            /*
-         Elfin Card Events
+        /**
+         * Updates leaflet bound `center` property with current 
+         * elfin BASE POINT if available, otherwise uses the 
+         * map configuration center and zoom default from ELFIN @ CLASSE='PLAN'  
          */
+        function updateCenter() {
+        	// Cannot center without initialised configuration.
+        	if (vm.center) {
+		    	var point = hbGeoService.getElfinBasePoint($scope.elfin);
+		    	// Use base point if available
+		        if (point) {
+		        	var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
+		            $scope.center = {
+		                    lat: parseFloat(coords.lat),
+		                    lng: parseFloat(coords.lng),
+		                    zoom: parseFloat(vm.center[2])
+		            };               
+		        } else { // Otherwise fall back to configuration
+		            $scope.center = {
+		                    lat: parseFloat(vm.center[0]),
+		                    lng: parseFloat(vm.center[1]),
+		                    zoom: parseFloat(vm.center[2])
+		            };                                   	
+		        }
+            }
+        };
 
-        // Elfin has been loaded
+        // ================================================================
+        // ====                    Elfin Card Events                   ====
+        // ================================================================
+
+        /**
+         * An Elfin has been loaded
+         */
         var elfinLoadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_LOADED, function(event, elfin) {
-        	// TODO: review: not relevant for all ELFIN@CLASSE !
+        	// TODO: review: not relevant for all ELFIN@CLASSE, should we filter ? Base on which criteria ? FORME...
             $scope.elfin = elfin;
-            //updateElfinRepresentation($scope.elfin, hbGeoLeafletService.getSelectedObjectMarkerStyle());
             $log.debug(">>>> MapController: HB_EVENTS.ELFIN_LOADED => " + elfin.CLASSE +"/"+elfin.Id);
     		if (elfin !== null) {
     			// Set newly selected elfin style to selected style.
     			var selStyle = hbGeoLeafletService.getSelectedObjectMarkerStyle();
-    			$log.debug("Setting new val to selected style: " + angular.toJson(selStyle));
-    			updateElfinRepresentation(elfin, selStyle);					
-    		}                            
-            
-            
+    			updateElfinRepresentation(elfin, selStyle);
+                // Center map on newly selected elfin.
+                updateCenter();
+    		}
         });
 
 
-        // Elfin has been unloaded, thus no more current elfin
+        /**
+         * An Elfin has been unloaded, thus no more current elfin.
+         * 
+         * Warning note: On ELFIN_LOADED event may happen before or after 
+         * ELFIN_UNLOADED event.
+         * Do not perform operations which assert any event sequence, such as
+         * $scope.elfin = null; This could reset newly loaded data! 
+         */
         var elfinUnloadedListenerDeregister = $rootScope.$on(HB_EVENTS.ELFIN_UNLOADED, function(event, elfin) {
 
         	$log.debug(">>>> MapController: HB_EVENTS.ELFIN_UNLOADED => " + elfin.CLASSE +"/"+elfin.Id);
 			if (elfin !== null) {
     			// Reset former selected elfin style to standard.
     			var stdStyle = hbGeoLeafletService.getStandardObjectMarkerStyle();
-    			$log.debug("Resetting old val to standard style: " + angular.toJson(stdStyle));
     			updateElfinRepresentation(elfin, stdStyle);
-			}                
-            
-            // Do not perform $scope.elfin = null; Indeed on ELFIN_LOADED event may happen 
-			// before or after ELFIN_UNLOADED event. This could reset newly loaded data. 
+			}
         });
 
 
