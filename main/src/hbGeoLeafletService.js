@@ -12,7 +12,7 @@
 
 (function() {
 
-    angular.module('hbGeo').factory('hbGeoLeafletService', [
+    angular.module('hbUi.geo').factory('hbGeoLeafletService', [
        '$log', 'hbGeoService', function($log, hbGeoService) {
 
     	   // =================================================================

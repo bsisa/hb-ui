@@ -6,7 +6,7 @@
 
 
 
-	angular.module('hbGeo').factory('hbGeoService', ['$log', function($log) {
+	angular.module('hbUi.geo').factory('hbGeoService', ['$log', function($log) {
 
 		// ====================================================================
 		//     GeoXML ELFIN.FORME utilities
