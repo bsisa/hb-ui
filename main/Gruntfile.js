@@ -145,7 +145,6 @@ module.exports = function(grunt) {
 
 								'src/hbNoDirtyCheckDirective.js', 
 								
-								'src/hbOfflineService.js',
 								'src/hbOrderSpreadsheetController.js',
 								'src/hbOrderSpreadsheetDirective.js',
 								
@@ -182,6 +181,9 @@ module.exports = function(grunt) {
 								'src/hbTypeaheadCodeController.js',
 								'src/hbTypeaheadCodeDirective.js',
 
+								'src/hbUiSseModule.js',
+								'src/hbUiSseOfflineService.js',
+								
 								'src/hbUniqueRoleDirective.js',
 								'src/hbUniqueUserDirective.js',
 
