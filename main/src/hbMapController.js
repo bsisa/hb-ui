@@ -3,10 +3,8 @@
     angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
         function ($scope, $rootScope, $log, leafletData, MapService, hbGeoService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
 
-    	// Controller as test...
+    	// Get controller reference as "view model" var. 
         var vm = this;
-        vm.test = "Hello " + new Date();
-    	
     	
         // Translations 
         angular.extend( L.drawLocal, hbGeoLeafletService.getDrawLocalTranslation() );
@@ -549,7 +547,7 @@
         /**
          * Zoom map to current selected ELFIN
          */
-        $scope.zoomToCurrentObject = function() {
+        vm.zoomToCurrentObject = function() {
             // zoom the map to the currentElfinLayerToZoomTo
         	leafletData.getMap().then(function (map) {
         		map.fitBounds(hbGeoLeafletService.getObjectBounds($scope.elfin, 'polygon'));
