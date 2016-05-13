@@ -10,71 +10,6 @@
     	
         // Translations 
         angular.extend( L.drawLocal, hbGeoLeafletService.getDrawLocalTranslation() );
-    	
-        // =======================================================================================
-        // =========================== Display connection status using SSE =======================
-        // =======================================================================================        	
-        
-        $scope.sseConnected = true;
-        $scope.sseLastCheck = new Date();
-        $scope.sseSupport = hbOffline.getIsSseSupported;
-
-        // Set up status EventSource listeners only if SSE is supported
-        if (hbOffline.getIsSseSupported) {
-        	
-            var statusEventSource = hbOffline.getStatusEventSource();
-            
-            // Process SSE message {"group" : "", "text" : "", "user" : "" , "time" : ""} 
-    		statusEventSource.onmessage = function(event) {  
-    			//$log.debug("onmessage: Received server side event.data = " + event.data);
-    			$scope.$apply(function () {
-    				$scope.sseConnected = true;
-    				$scope.sseMessage = JSON.parse(event.data);
-    				$scope.sseLastCheck = new Date();
-    			});
-    		}
-    		
-			statusEventSource.onopen = function(event) {
-				$log.debug("onopen: Connected to server. Waiting for data...");
-				$scope.$apply(function () {
-					$scope.sseConnected = false;
-				});
-			}
-
-			statusEventSource.onerror = function(event) {
-				var txt;
-				switch (event.target.readyState) {
-					case EventSource.CONNECTING:
-						$scope.$apply(function () {
-							$scope.sseConnected = false;
-						});
-						txt = 'Reconnecting...';
-						break;
-					case EventSource.CLOSED:
-						$scope.$apply(function () {
-							$scope.sseConnected = false;
-						});
-						txt = 'Connection failed. Will not retry.';
-						break;
-				}
-				$log.debug("onerror: " + txt);
-			}    	
-
-        } else {
-        	$scope.sseConnected = false;
-        	$scope.sseMessage = {"group" : "status", "text" : "no SSE support", "user" : "client", "time" : new Date() };
-        	$scope.sseLastCheck = new Date();
-        }
-        
-        $scope.sse = {
-        	"userMessage" : ""
-        };
-
-        $scope.checkConnectionStatus = function() {
-        	hbOffline.forceStatusEvenSourceReload();
-        };
-        
-        // =======================================================================================
 
         /**
          * Add Leaflet Directive scope extension
@@ -666,6 +601,72 @@
         	elfinDeletedListenerDeregister();
         });
         
+        
+        // =======================================================================================
+        // =========================== Display connection status using SSE =======================
+        // =======================================================================================        	
+        
+        $scope.sseConnected = true;
+        $scope.sseLastCheck = new Date();
+        $scope.sseSupport = hbOffline.getIsSseSupported;
+
+        // Set up status EventSource listeners only if SSE is supported
+        if (hbOffline.getIsSseSupported) {
+        	
+            var statusEventSource = hbOffline.getStatusEventSource();
+            
+            // Process SSE message {"group" : "", "text" : "", "user" : "" , "time" : ""} 
+    		statusEventSource.onmessage = function(event) {  
+    			//$log.debug("onmessage: Received server side event.data = " + event.data);
+    			$scope.$apply(function () {
+    				$scope.sseConnected = true;
+    				$scope.sseMessage = JSON.parse(event.data);
+    				$scope.sseLastCheck = new Date();
+    			});
+    		}
+    		
+			statusEventSource.onopen = function(event) {
+				$log.debug("onopen: Connected to server. Waiting for data...");
+				$scope.$apply(function () {
+					$scope.sseConnected = false;
+				});
+			}
+
+			statusEventSource.onerror = function(event) {
+				var txt;
+				switch (event.target.readyState) {
+					case EventSource.CONNECTING:
+						$scope.$apply(function () {
+							$scope.sseConnected = false;
+						});
+						txt = 'Reconnecting...';
+						break;
+					case EventSource.CLOSED:
+						$scope.$apply(function () {
+							$scope.sseConnected = false;
+						});
+						txt = 'Connection failed. Will not retry.';
+						break;
+				}
+				$log.debug("onerror: " + txt);
+			}    	
+
+        } else {
+        	$scope.sseConnected = false;
+        	$scope.sseMessage = {"group" : "status", "text" : "no SSE support", "user" : "client", "time" : new Date() };
+        	$scope.sseLastCheck = new Date();
+        }
+        
+        $scope.sse = {
+        	"userMessage" : ""
+        };
+
+        $scope.checkConnectionStatus = function() {
+        	hbOffline.forceStatusEvenSourceReload();
+        };
+        
+        // =======================================================================================        
+
     }]);
 
 })();
