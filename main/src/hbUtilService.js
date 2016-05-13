@@ -25,36 +25,6 @@
 		// HyperBird GeoXML data structure to JSON utilities
 		// ============================================================
 
-   		/**
-   		 * Get element `el` given its position `elPos`   
-   		 * where `els` is an array of elements (XML=>JSON) or objects 
-   		 * having the property POS.
-   		 * 
-   		 * @param els
-   		 * @param elPos (must be a parseable Int, either number or string).
-   		 * 
-   		 * TODO: hbUtil duplicate. Requires hbUtil to be split out from hb5 
-   		 * module, removing 'HB_API', 'HB_ORDER_LINE_TYPE', 'userDetails' 
-   		 * dependencies.
-   		 * A new hbGeoXml module containing hbGeoXmlUtil and existing 
-   		 * GeoxmlService is necessary.
-   		 * 
-   		 * Remark: requires underscorejs.
-   		 */
-       	var getElByPos = function(els, elPos) {
-       		var elPosInt = parseInt(elPos);
-       		if (!isNaN(elPosInt)) {
-       			if (els) {
-					// _.find returns undefined if no match is found.
-					var searchedEl = _.find(els, function(el){ return el.POS === elPosInt; });
-					return searchedEl;
-				} else {
-					return undefined;
-				}
-       		} else {
-       			return undefined;
-       		}
-    	};      
         
 		/**
 		 * Get ELFIN/CARACTERISTIQUE/CARSET/CAR by CAR.POS (CAR@POS)
@@ -1106,7 +1076,6 @@
         	getDateFromHbTextDateFormat:getDateFromHbTextDateFormat,
         	getDateTimeFromHbTextDateTimeFormat:getDateTimeFromHbTextDateTimeFormat,
         	getEcheanceTemplateFromCatalogue:getEcheanceTemplateFromCatalogue,
-        	getElByPos:getElByPos,
         	getFractionLByPos:getFractionLByPos,
         	getFractionLIndexByPos:getFractionLIndexByPos,
         	getFractionLCByPos:getFractionLCByPos,
