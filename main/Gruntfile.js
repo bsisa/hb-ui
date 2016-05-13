@@ -180,9 +180,6 @@ module.exports = function(grunt) {
 								
 								'src/hbTypeaheadCodeController.js',
 								'src/hbTypeaheadCodeDirective.js',
-
-								'src/hbUiSseModule.js',
-								'src/hbUiSseOfflineService.js',
 								
 								'src/hbUniqueRoleDirective.js',
 								'src/hbUniqueUserDirective.js',
