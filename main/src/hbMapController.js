@@ -262,6 +262,13 @@
             // Load hb map definition center latitude/longitude and zoom level.        	
         	vm.center = vm.hbMapDef.CARACTERISTIQUE.CAR2.VALEUR.split(' ');
         	
+        	// Initialise leaflet tag center attribute (could be changed to vm.center...)
+            $scope.center = {
+                    lat: parseFloat(vm.center[0]),
+                    lng: parseFloat(vm.center[1]),
+                    zoom: parseFloat(vm.center[2])
+            };        	
+        	
         	//$log.debug(">>>> HB_EVENTS.DISPLAY_MAP_CONTENT event : " + HB_EVENTS.DISPLAY_MAP_CONTENT + " " + angular.toJson(event));
         	
             leafletData.getMap().then(function (map) {
@@ -390,14 +397,25 @@
         function updateCenter(map) {
         	// Cannot center without initialised configuration.
         	if (vm.center) {
+        		var zoomVal = parseFloat(vm.center[2]);
+        		
     	    	var point = hbGeoService.getElfinBasePoint($scope.elfin);
     	    	// Use base point if available
     	        if (point) {
     	        	var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
     	        	var centerLatLng = L.latLng(coords.lat, coords.lng);
-    	        	var zoom = parseFloat(vm.center[2]);
-    	        	map.setZoom( zoom );
-    	        	map.panTo( centerLatLng , {animate: true, duration: 2.0} );
+    	        	
+    	        	// Smooth panning creates angular digest loops problems in some map load situations.
+    	        	// Check if upgrading leaflet / leaflet directive solves it.
+					// map.setZoom( zoomVal );
+					// map.panTo( centerLatLng , {animate: true, duration: 2.0} );
+
+    	        	// KISS solution.
+    	            $scope.center = {
+    	                    lat: centerLatLng.lat,
+    	                    lng: centerLatLng.lng,
+    	                    zoom: zoomVal
+    	            };
     	        } else { // Otherwise fall back to configuration
     	            $scope.center = {
     	                    lat: parseFloat(vm.center[0]),
