@@ -294,7 +294,7 @@
                 });
 
                 // Center map
-                updateCenter();                
+                updateCenter(map);                
                 
                 // Once all layers are loaded, add the drawing layer and register all events
                 leafletData.getLayers().then(function(layers) {
@@ -385,26 +385,26 @@
          * Updates leaflet bound `center` property with current 
          * elfin BASE POINT if available, otherwise uses the 
          * map configuration center and zoom default from ELFIN @ CLASSE='PLAN'  
+         * @param map - a leaflet map
          */
-        function updateCenter() {
+        function updateCenter(map) {
         	// Cannot center without initialised configuration.
         	if (vm.center) {
-		    	var point = hbGeoService.getElfinBasePoint($scope.elfin);
-		    	// Use base point if available
-		        if (point) {
-		        	var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
-		            $scope.center = {
-		                    lat: parseFloat(coords.lat),
-		                    lng: parseFloat(coords.lng),
-		                    zoom: parseFloat(vm.center[2])
-		            };               
-		        } else { // Otherwise fall back to configuration
-		            $scope.center = {
-		                    lat: parseFloat(vm.center[0]),
-		                    lng: parseFloat(vm.center[1]),
-		                    zoom: parseFloat(vm.center[2])
-		            };                                   	
-		        }
+    	    	var point = hbGeoService.getElfinBasePoint($scope.elfin);
+    	    	// Use base point if available
+    	        if (point) {
+    	        	var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
+    	        	var centerLatLng = L.latLng(coords.lat, coords.lng);
+    	        	var zoom = parseFloat(vm.center[2]);
+    	        	map.setZoom( zoom );
+    	        	map.panTo( centerLatLng , {animate: true, duration: 2.0} );
+    	        } else { // Otherwise fall back to configuration
+    	            $scope.center = {
+    	                    lat: parseFloat(vm.center[0]),
+    	                    lng: parseFloat(vm.center[1]),
+    	                    zoom: parseFloat(vm.center[2])
+    	            };
+    	        }
             }
         };
 
@@ -424,7 +424,9 @@
     			var selStyle = hbGeoLeafletService.getSelectedObjectMarkerStyle();
     			updateElfinRepresentation(elfin, selStyle);
                 // Center map on newly selected elfin.
-                updateCenter();
+    			leafletData.getMap().then(function (map) {
+    				updateCenter(map);
+    			});
     		}
         });
 
