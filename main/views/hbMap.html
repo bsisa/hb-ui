@@ -1,5 +1,5 @@
 
-<div class="map-view-wrapper" ng-controller="MapController as map">
+<div class="map-view-wrapper" ng-controller="MapController as mapVm">
     <leaflet
             class="map-view-leaflet"
             center="center"
@@ -10,10 +10,7 @@
 <!--     <button  -->
 <!--     		class="btn btn-default"  -->
 <!--     		tooltip="Focus and zoom to current object" -->
-<!-- 			ng-click="zoomToCurrentObject()"> -->
+<!-- 			ng-click="mapVm.zoomToCurrentObject()"> -->
 <!-- 			<i class="glyphicon glyphicon-screenshot"></i> -->
 <!-- 	</button> -->
-<!-- Controller AS test -->
-	<div>Current object Id (in parent controller no in map) = {{elfin.Id}}</div>
-	<div>Map controller test = {{map.test}}</div>								
 </div>
