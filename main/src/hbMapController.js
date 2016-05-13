@@ -6,7 +6,9 @@
     	// Get controller reference as "view model" var. 
         var vm = this;
     	
-        // Translations 
+        /**
+         * Sets Leaflet translations to drawLocal object.
+         */ 
         angular.extend( L.drawLocal, hbGeoLeafletService.getDrawLocalTranslation() );
 
         /**
@@ -259,6 +261,9 @@
         	
             leafletData.getMap().then(function (map) {
 
+            	// Add scale control to map with metric only (m/km, no mi/ft). 
+            	L.control.scale({imperial:false, updateWhenIdle: true}).addTo(map);
+            	
                 // First clean all layers overlays 
                 angular.forEach($scope.layers.overlays, function(overlay) {
                 	// TODO: https://github.com/bsisa/hb-ui/issues/8 
