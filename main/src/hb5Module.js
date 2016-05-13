@@ -7,7 +7,7 @@
  * @author Patrick Refondini 
  */
 (function() {
-	var hb5 = angular.module('hb5', [ 'hbServerNotification', 'flow',
+	var hb5 = angular.module('hb5', [ 'hbUi.sse', 'flow',
 			'ui.grid', 'ui.grid.selection', 'ngAnimate', 'geoxml', 'hbMap',
 			'hbGeo', 'ngRoute', 'ui.bootstrap', 'localytics.directives',
 			'leaflet-directive', 'ui.utils', 'angular.filter' ]);

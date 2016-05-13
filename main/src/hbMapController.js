@@ -4,8 +4,8 @@
         function ($scope, $rootScope, $log, leafletData, MapService, hbGeoService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
 
     	// Controller as test...
-        var mc = this;
-        mc.test = "Hello " + new Date();
+        var vm = this;
+        vm.test = "Hello " + new Date();
     	
     	
         // Translations 

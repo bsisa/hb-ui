@@ -1,14 +1,18 @@
 (function() {
 
 	/**
-	 * hbServerNotification module - hbOffline service
+	 * hbUi.sse - Server Sent Events module
 	 * 
+	 * TODO: Refactor module to its own project hbUi.sse with 
+	 * 
+	 * hbOffline service 
+	 *  
 	 * Service that leverage EventSource server side notification to provide a
 	 * simple way to deal with offline mode
 	 */
 
 	angular
-			.module('hbServerNotification', [])
+			.module('hbUi.sse', [])
 			.service('hbOffline',['$log', function($log) {
 
 				var statusEventSource = undefined;
