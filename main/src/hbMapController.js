@@ -273,6 +273,34 @@
         	
             leafletData.getMap().then(function (map) {
 
+            	$log.debug("Map zoom options before: min = " + map.options.minZoom + ", max = " +  map.options.maxZoom);
+            	
+            	// TODO: review hardcoded zoom limits.
+            	map.options.minZoom = 1;
+            	map.options.maxZoom = 40;
+            	
+            	// TODO: review hardcoded WIP for raster layer based on a single image.
+            	var imageUrl = '/assets/images/Morges-CentreCharpentiers-RezSup.jpg';
+
+//                <POINT POS="1" X="550000.0" Y="150000.0" Z="0.0" ALPHA="0" XS="335.98797607421875" YS="717.868896484375" ZS="0.0" ALPHAS="0" FONCTION="LIBRE" REMARQUE="repérage"/>
+//                <POINT POS="2" X="550000.0" Y="150061.41" Z="0.0" ALPHA="0" XS="2813.943115234375" YS="718.0824584960938" ZS="0.0" ALPHAS="0" FONCTION="LIBRE" REMARQUE="repérage"/>
+            	var point1 = {"x" : 550000.85, "y" : 150002.65};
+            	var latLng1 = hbGeoService.getLongitudeLatitudeCoordinates(point1.x, point1.y);
+
+            	//var point2 = {"x" : 550000.0, "y" : 150061.41};
+            	var point2 = {"x" : 550020.45, "y" : 150014.91};
+            	var latLng2 = hbGeoService.getLongitudeLatitudeCoordinates(point2.x, point2.y);
+            	
+            	var southWest = L.latLng(latLng1.lat, latLng1.lng);
+                var northEast = L.latLng(latLng2.lat, latLng2.lng);
+                var imageBounds = L.latLngBounds(southWest, northEast);
+
+            	L.imageOverlay(imageUrl, imageBounds).addTo(map);
+            	
+
+            	
+            	$log.debug("Map zoom options after:  min = " + map.options.minZoom + ", max = " +  map.options.maxZoom);            	
+            	
             	// Add scale control to map with metric only (m/km, no mi/ft). 
             	L.control.scale({imperial:false, updateWhenIdle: true}).addTo(map);
             	
@@ -604,7 +632,8 @@
         vm.zoomToCurrentObject = function() {
             // zoom the map to the currentElfinLayerToZoomTo
         	leafletData.getMap().then(function (map) {
-        		map.fitBounds(hbGeoLeafletService.getObjectBounds($scope.elfin, 'polygon'));
+//        		map.fitBounds(hbGeoLeafletService.getObjectBounds($scope.elfin, 'polygon'));
+        		map.fitBounds(hbGeoLeafletService.getObjectBounds($scope.elfin, 'marker'));
             });
         };           
 
