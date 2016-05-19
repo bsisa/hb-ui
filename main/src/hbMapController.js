@@ -291,6 +291,16 @@
             	var point2 = {"x" : 550020.45, "y" : 150014.91};
             	var latLng2 = hbGeoService.getLongitudeLatitudeCoordinates(point2.x, point2.y);
             	
+            	$log.debug("    >>>>>>>>>>>>>>>>>>>>>>>>>>>>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<    ");
+            	$log.debug("point1                : " + angular.toJson(point1));
+            	$log.debug("point1  => latLng1    : " + angular.toJson(latLng1));
+            	var point1bis = hbGeoService.getSwissFederalCoordinates(latLng1.lat, latLng1.lng);
+            	$log.debug("latLng1 => point1bis  : " + angular.toJson(point1bis));
+            	
+            	$log.debug("point2  : " + angular.toJson(point2));
+            	$log.debug("latLng2 : " + angular.toJson(latLng2));
+            	$log.debug("    >>>>>>>>>>>>>>>>>>>>>>>>>>>>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<    ");
+            	
             	var southWest = L.latLng(latLng1.lat, latLng1.lng);
                 var northEast = L.latLng(latLng2.lat, latLng2.lng);
                 var imageBounds = L.latLngBounds(southWest, northEast);
