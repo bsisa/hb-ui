@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
-        function ($scope, $rootScope, $log, leafletData, MapService, hbGeoService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
+    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
+        function ($scope, $rootScope, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
 
     	// Get controller reference as "view model" var. 
         var vm = this;
@@ -295,7 +295,30 @@
             	$log.debug("point1                : " + angular.toJson(point1));
             	$log.debug("point1  => latLng1    : " + angular.toJson(latLng1));
             	var point1bis = hbGeoService.getSwissFederalCoordinates(latLng1.lat, latLng1.lng);
+            	var point1ter = hbGeoSwissCoordinatesService.getSwissFederalCoordinates(latLng1.lat, latLng1.lng);
+            	//var cvpoint1ter = hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(point1.x,point1.y);
+            	//console.log("REMOTE: cvpoint1ter result : " + cvpoint1ter.xEastingLng + ", " + cvpoint1ter.yNorthingLat);
+            	hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(point1.x,point1.y).get().then(
+        				function(latLng1) {
+        					$log.debug("REMOTE: latLng1.xEastingLng = " + latLng1.xEastingLng + ", latLng1.yNorthingLat = " + latLng1.yNorthingLat);
+        	            	$log.debug("REMOTE: latLng1" + angular.toJson(latLng1));
+        				}, 
+        				function(response) {
+        					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+        				}
+        			);            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
             	$log.debug("latLng1 => point1bis  : " + angular.toJson(point1bis));
+            	$log.debug("latLng1 => point1ter  : " + angular.toJson(point1ter));
+
+            	
             	
             	$log.debug("point2  : " + angular.toJson(point2));
             	$log.debug("latLng2 : " + angular.toJson(latLng2));
