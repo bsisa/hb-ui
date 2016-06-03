@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
-        function ($scope, $rootScope, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
+    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$timeout', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
+        function ($scope, $rootScope, $timeout, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
 
     	// Get controller reference as "view model" var. 
         var vm = this;
@@ -117,13 +117,47 @@
 			.then(
 					function(elfins) {
         				$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " layers objects.");
-						
+						var elfinsAgmt = elfins; 
+        				// ================= Augment elfins with LatLng
+        				angular.forEach(elfinsAgmt, function (elfin) {
+        					
+							var point = hbGeoService.getElfinBasePoint(elfin);
+							
+							if (point) {
+        					
+	        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(point.X,point.Y).get().then(
+	        						function(latLng) {
+	        							elfin.latLng = latLng;
+	        						}, 
+		            				function(response) {
+		            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+		            				}
+	        					);
+        					
+							}
+        				});
+        				// =================
+        				
+        				$timeout(function() {
+                			$log.debug("Wait 5 seconds...");
+                    	 
+        				
+        				
         				var objects = [];
         				// We want this marker hbLayer to be on top 
         				var currentObjectMarkerLayer = null;
+
+						var countWithLatLng = 0;
+						var countWithoutLatLng = 0;
         				
-						angular.forEach(elfins, function (elfin) {
-	                    	
+						angular.forEach(elfinsAgmt, function (elfin) {
+
+							if (elfin.hasOwnProperty("latLng")) {
+								countWithLatLng++;
+							} else {
+								countWithoutLatLng++;
+							}
+							
 	                        var objectLayerStyle = {};
                         	var objectLayer = null;
 	                        
@@ -141,6 +175,8 @@
 							pushLayer(objectLayer, objects, elfin);
 	                    });
 						
+						$log.debug(">>>> layer had " + countWithLatLng + " elfins with latLng, " + countWithoutLatLng + " without latLng." );
+						
 						// If available put currentObjectMarkerLayer on top of objects array
 						pushLayer(currentObjectMarkerLayer, objects, $scope.elfin);
 						
@@ -154,6 +190,8 @@
                             $scope.guideLayers.push(layers.overlays[overlayId]);
 	                    });
 						
+        				}, 1000, true);
+	                    
 					},
 					function(response) {
 						var message = "Le chargement des objets du plan a échoué (statut de retour: "+ response.status+ ")";
