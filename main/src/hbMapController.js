@@ -321,48 +321,9 @@
 //                <POINT POS="1" X="550000.0" Y="150000.0" Z="0.0" ALPHA="0" XS="335.98797607421875" YS="717.868896484375" ZS="0.0" ALPHAS="0" FONCTION="LIBRE" REMARQUE="repérage"/>
 //                <POINT POS="2" X="550000.0" Y="150061.41" Z="0.0" ALPHA="0" XS="2813.943115234375" YS="718.0824584960938" ZS="0.0" ALPHAS="0" FONCTION="LIBRE" REMARQUE="repérage"/>
             	var point1 = {"x" : 550000.85, "y" : 150002.65};
-            	//var point2 = {"x" : 550000.0, "y" : 150061.41};
             	var point2 = {"x" : 550020.45, "y" : 150014.91};            	
             	
             	setImageBounds(imageUrl, point1, point2, map);
-
-//            	var latLng2 = hbGeoService.getLongitudeLatitudeCoordinates(point2.x, point2.y);
-//            	var latLng1 = hbGeoService.getLongitudeLatitudeCoordinates(point1.x, point1.y);
-            	
-
-//            	$log.debug("point1                : " + angular.toJson(point1));
-//            	$log.debug("point1  => latLng1    : " + angular.toJson(latLng1));
-//            	var point1bis = hbGeoService.getSwissFederalCoordinates(latLng1.lat, latLng1.lng);
-//            	var point1ter = hbGeoSwissCoordinatesService.getSwissFederalCoordinates(latLng1.lat, latLng1.lng);
-            	//var cvpoint1ter = hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(point1.x,point1.y);
-            	//console.log("REMOTE: cvpoint1ter result : " + cvpoint1ter.xEastingLng + ", " + cvpoint1ter.yNorthingLat);
-            	
-//            	hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(point1.x,point1.y).get().then(
-//        				function(latLng1) {
-//        					$log.debug("REMOTE: latLng1.xEastingLng = " + latLng1.xEastingLng + ", latLng1.yNorthingLat = " + latLng1.yNorthingLat);
-//        	            	$log.debug("REMOTE: latLng1" + angular.toJson(latLng1));
-//        				}, 
-//        				function(response) {
-//        					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
-//        				}
-//        			);            	
-//
-//            	$log.debug("latLng1 => point1bis  : " + angular.toJson(point1bis));
-//            	$log.debug("latLng1 => point1ter  : " + angular.toJson(point1ter));
-//            	$log.debug("point2  : " + angular.toJson(point2));
-//            	$log.debug("latLng2 : " + angular.toJson(latLng2));
-            	$log.debug("    >>>>>>>>>>>>>>>>>>>>>>>>>>>>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<    ");
-            	
-            	
-
-            	
-//            	var southWest = L.latLng(latLng1.lat, latLng1.lng);
-//                var northEast = L.latLng(latLng2.lat, latLng2.lng);
-//                var imageBounds = L.latLngBounds(southWest, northEast);
-//
-//            	L.imageOverlay(imageUrl, imageBounds).addTo(map);
-            	
-
             	
             	$log.debug("Map zoom options after:  min = " + map.options.minZoom + ", max = " +  map.options.maxZoom);            	
             	
