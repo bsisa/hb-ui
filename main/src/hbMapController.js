@@ -463,20 +463,39 @@
     	    	var point = hbGeoService.getElfinBasePoint($scope.elfin);
     	    	// Use base point if available
     	        if (point) {
-    	        	var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
-    	        	var centerLatLng = L.latLng(coords.lat, coords.lng);
     	        	
-    	        	// Smooth panning creates angular digest loops problems in some map load situations.
-    	        	// Check if upgrading leaflet / leaflet directive solves it.
-					// map.setZoom( zoomVal );
-					// map.panTo( centerLatLng , {animate: true, duration: 2.0} );
-
-    	        	// KISS solution.
-    	            $scope.center = {
-    	                    lat: centerLatLng.lat,
-    	                    lng: centerLatLng.lng,
-    	                    zoom: zoomVal
-    	            };
+                	hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(point.X, point.Y).get().then(
+            				function(latLng) {
+            					$log.debug("REMOTE: CENTER: latLng.xEastingLng = " + latLng.xEastingLng + ", latLng.yNorthingLat = " + latLng.yNorthingLat);
+            	            	$log.debug("REMOTE: CENTER: latLng" + angular.toJson(latLng));
+          	            	
+            	            	var centerLatLng = L.latLng(latLng.yNorthingLat, latLng.xEastingLng);
+                	        	// KISS solution.
+                	            $scope.center = {
+                	                    lat: centerLatLng.lat,
+                	                    lng: centerLatLng.lng,
+                	                    zoom: zoomVal
+                	            };
+            				}, 
+            				function(response) {
+            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+            				}
+            			);   
+    	        	
+//    	        	var coords = hbGeoService.getLongitudeLatitudeCoordinates(point.X, point.Y);
+//    	        	var centerLatLng = L.latLng(coords.lat, coords.lng);
+//    	        	
+//    	        	// Smooth panning creates angular digest loops problems in some map load situations.
+//    	        	// Check if upgrading leaflet / leaflet directive solves it.
+//					// map.setZoom( zoomVal );
+//					// map.panTo( centerLatLng , {animate: true, duration: 2.0} );
+//
+//    	        	// KISS solution.
+//    	            $scope.center = {
+//    	                    lat: centerLatLng.lat,
+//    	                    lng: centerLatLng.lng,
+//    	                    zoom: zoomVal
+//    	            };
     	        } else { // Otherwise fall back to configuration
     	            $scope.center = {
     	                    lat: parseFloat(vm.center[0]),
