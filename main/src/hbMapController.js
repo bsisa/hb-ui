@@ -117,25 +117,50 @@
 			.then(
 					function(elfins) {
         				$log.debug("Using GeoxmlService service from HbMapController. Obtained " + elfins.length + " layers objects.");
-						var elfinsAgmt = elfins; 
+ 
         				// ================= Augment elfins with LatLng
-        				angular.forEach(elfinsAgmt, function (elfin) {
-        					
+						
+						// Build a request for convertin all elfin base point coordinates in one go
+						var elfinsLv03CoordList = new Array(0);
+						for (var i = 0; i < elfins.length; i++) {
+							var elfin = elfins[i];
 							var point = hbGeoService.getElfinBasePoint(elfin);
-							
 							if (point) {
-        					
-	        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(point.X,point.Y).get().then(
-	        						function(latLng) {
-	        							elfin.latLng = latLng;
-	        						}, 
-		            				function(response) {
-		            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
-		            				}
-	        					);
-        					
+								elfinsLv03CoordList.push( {"xEastingLng":point.X,"yNorthingLat":point.Y,"zAltitude":500});
 							}
-        				});
+						}
+						
+						//getLongitudeLatitudeCoordinatesList
+						if (elfinsLv03CoordList.length > 0) {
+        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinatesList().post(elfinsLv03CoordList).then(
+        						function(latLngList) {
+                					console.debug(">>>> received 2 latLngList: \n" + angular.toJson(latLngList));
+        						}, 
+	            				function(response) {
+	            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+	            				}
+        					);
+        					
+
+						}
+						
+//        				angular.forEach(elfins, function (elfin) {
+//        					
+//							var point = hbGeoService.getElfinBasePoint(elfin);
+//							
+//							if (point) {
+//        					
+//	        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(point.X,point.Y).get().then(
+//	        						function(latLng) {
+//	        							elfin.latLng = latLng;
+//	        						}, 
+//		            				function(response) {
+//		            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+//		            				}
+//	        					);
+//        					
+//							}
+//        				});
         				// =================
         				
         				$timeout(function() {
@@ -150,7 +175,7 @@
 						var countWithLatLng = 0;
 						var countWithoutLatLng = 0;
         				
-						angular.forEach(elfinsAgmt, function (elfin) {
+						angular.forEach(elfins, function (elfin) {
 
 							if (elfin.hasOwnProperty("latLng")) {
 								countWithLatLng++;
