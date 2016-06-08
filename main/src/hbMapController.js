@@ -120,29 +120,30 @@
  
         				// ================= Augment elfins with LatLng
 						
-						// Build a request for convertin all elfin base point coordinates in one go
-						var elfinsLv03CoordList = new Array(0);
-						for (var i = 0; i < elfins.length; i++) {
-							var elfin = elfins[i];
-							var point = hbGeoService.getElfinBasePoint(elfin);
-							if (point) {
-								elfinsLv03CoordList.push( {"xEastingLng":point.X,"yNorthingLat":point.Y,"zAltitude":500});
-							}
-						}
-						
-						//getLongitudeLatitudeCoordinatesList
-						if (elfinsLv03CoordList.length > 0) {
-        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinatesList().post(elfinsLv03CoordList).then(
-        						function(latLngList) {
-                					console.debug(">>>> received 2 latLngList: \n" + angular.toJson(latLngList));
-        						}, 
-	            				function(response) {
-	            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
-	            				}
-        					);
-        					
-
-						}
+//						// Build a request for convertin all elfin base point coordinates in one go
+//						var elfinsLv03CoordList = new Array(0);
+//						for (var i = 0; i < elfins.length; i++) {
+//							var elfin = elfins[i];
+//							var point = hbGeoService.getElfinBasePoint(elfin);
+//							if (point) {
+//								elfinsLv03CoordList.push( {"xEastingLng":point.X,"yNorthingLat":point.Y,"zAltitude":500});
+//							}
+//						}
+//						
+//						//getLongitudeLatitudeCoordinatesList
+//						if (elfinsLv03CoordList.length > 0) {
+//        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinatesList().post(elfinsLv03CoordList).then(
+//        						function(latLngList) {
+//                					//console.debug(">>>> received latLngList: \n" + angular.toJson(latLngList));
+//                					$log.debug(">>>> received latLngList");
+//        						}, 
+//	            				function(response) {
+//	            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+//	            				}
+//        					);
+//        					
+//
+//						}
 						
 //        				angular.forEach(elfins, function (elfin) {
 //        					
@@ -163,8 +164,8 @@
 //        				});
         				// =================
         				
-        				$timeout(function() {
-                			$log.debug("Wait 5 seconds...");
+//        				$timeout(function() {
+//                			$log.debug("Wait 5 seconds...");
                     	 
         				
         				
@@ -215,7 +216,7 @@
                             $scope.guideLayers.push(layers.overlays[overlayId]);
 	                    });
 						
-        				}, 1000, true);
+//        				}, 1000, true);
 	                    
 					},
 					function(response) {
@@ -378,15 +379,15 @@
             	};            	
             	
             	
-            	// TODO: review hardcoded WIP for raster layer based on a single image.
-            	var imageUrl = '/assets/images/Morges-CentreCharpentiers-RezSup.jpg';
-
-//                <POINT POS="1" X="550000.0" Y="150000.0" Z="0.0" ALPHA="0" XS="335.98797607421875" YS="717.868896484375" ZS="0.0" ALPHAS="0" FONCTION="LIBRE" REMARQUE="repérage"/>
-//                <POINT POS="2" X="550000.0" Y="150061.41" Z="0.0" ALPHA="0" XS="2813.943115234375" YS="718.0824584960938" ZS="0.0" ALPHAS="0" FONCTION="LIBRE" REMARQUE="repérage"/>
-            	var point1 = {"x" : 550000.85, "y" : 150002.65};
-            	var point2 = {"x" : 550020.45, "y" : 150014.91};            	
-            	
-            	setImageBounds(imageUrl, point1, point2, map);
+//            	// TODO: review hardcoded WIP for raster layer based on a single image.
+//            	var imageUrl = '/assets/images/Morges-CentreCharpentiers-RezSup.jpg';
+//
+////                <POINT POS="1" X="550000.0" Y="150000.0" Z="0.0" ALPHA="0" XS="335.98797607421875" YS="717.868896484375" ZS="0.0" ALPHAS="0" FONCTION="LIBRE" REMARQUE="repérage"/>
+////                <POINT POS="2" X="550000.0" Y="150061.41" Z="0.0" ALPHA="0" XS="2813.943115234375" YS="718.0824584960938" ZS="0.0" ALPHAS="0" FONCTION="LIBRE" REMARQUE="repérage"/>
+//            	var point1 = {"x" : 550000.85, "y" : 150002.65};
+//            	var point2 = {"x" : 550020.45, "y" : 150014.91};            	
+//            	
+//            	setImageBounds(imageUrl, point1, point2, map);
             	
             	$log.debug("Map zoom options after:  min = " + map.options.minZoom + ", max = " +  map.options.maxZoom);            	
             	
