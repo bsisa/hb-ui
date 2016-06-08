@@ -117,7 +117,7 @@
 				$scope.lineTypes = [
 				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
 				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
-				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ),
+//				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "TVA", "8.00", "%", "", "true" ), // Not relevant
 				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Autre taux...", "0.00", "%", "", "true" ),
 				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
 				                    getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Autre montant...", "", "", "0.00", "false" )
@@ -210,6 +210,7 @@
 				 */
 				$scope.lineLabelEditable = function(line) {
 					var isLineLabelEditable = !(
+							(line.C[0].VALUE === HB_ORDER_LINE_TYPE.APPLIED_AMOUNT && line.C[1].VALUE === 'Arrondi') || // Exception introduced by end user request. 
 							(line.C[0].VALUE === HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL) || 
 							(line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL) || 
 							(line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL_INCL_TAX) ||
