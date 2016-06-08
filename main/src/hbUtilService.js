@@ -226,8 +226,8 @@
 						getLine(HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL, "Total brut", "", "", "0.00", "false" ),
 						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
 						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
-						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
 						getLine(HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL, "Total net", "", "", "0.00", "false" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),						
 						getLine(HB_ORDER_LINE_TYPE.TAX_RATE, "TVA", "8.00", "%", "", "true" ),
 						getLine(HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL_INCL_TAX, "Total net TTC adjugé", "", "", "0.00", "false" )
 			    ];
@@ -241,11 +241,11 @@
 						getLine(HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL, "Total brut", "", "", "0.00", "false" ),
 						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Rabais", "-0.00", "%", "", "true" ),
 						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Escompte", "-0.00", "%", "", "true" ),
-						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Prorata", "0.00", "%", "", "true" ),
-						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Assurance TC", "0.00", "%", "", "true" ),
-						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Panneau de chantier", "", "", "0.00", "false" ),
-						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),
+//						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Prorata", "0.00", "%", "", "true" ),
+//						getLine(HB_ORDER_LINE_TYPE.APPLIED_RATE, "Assurance TC", "0.00", "%", "", "true" ),
+//						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Panneau de chantier", "", "", "0.00", "false" ),
 						getLine(HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL, "Total net", "", "", "0.00", "false" ),
+						getLine(HB_ORDER_LINE_TYPE.APPLIED_AMOUNT, "Arrondi", "", "", "0.00", "false" ),						
 						getLine(HB_ORDER_LINE_TYPE.TAX_RATE, "TVA", "8.00", "%", "", "true" ),
 						getLine(HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL_INCL_TAX, "Total net TTC adjugé", "", "", "0.00", "false" )
 			    ];
