@@ -441,8 +441,10 @@
 				 * New line is expected to match user drop down selected 
 				 * entry {APPLIED_RATE, APPLIED_AMOUNT}
 				 */
-				$scope.replaceLine = function (index, newLine, formValid) {
+				$scope.replaceLine = function (index, newLine_p, formValid) {
 
+					var newLine = hbUtil.deepCopy(newLine_p);
+					
 					// Replace by new line
 					hbUtil.replaceFractionLByIndex($scope.ngModelCtrl.$modelValue, index, newLine);
 					// Perform computation and amounts update
