@@ -59,7 +59,7 @@
 						<select ng-if="line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY" class="form-control-static" name="selectedLineType" id="selectedLineType" 
 								ng-model="selected.lineType" 
 								ng-options="lineType as lineType.C[1].VALUE for lineType in lineTypes track by lineType.C[1].VALUE"
-								ng-change="replaceLine($index, selected.lineType, elfinForm.$valid, lineLabel)" 
+								ng-change="replaceLine($index, selected.lineType, elfinForm.$valid)" 
 						>
 							<option value=''><i>--Sélectionnez--</i></option>
 						</select>
