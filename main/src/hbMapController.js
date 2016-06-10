@@ -120,30 +120,37 @@
  
         				// ================= Augment elfins with LatLng
 						
-//						// Build a request for convertin all elfin base point coordinates in one go
-//						var elfinsLv03CoordList = new Array(0);
-//						for (var i = 0; i < elfins.length; i++) {
-//							var elfin = elfins[i];
-//							var point = hbGeoService.getElfinBasePoint(elfin);
-//							if (point) {
-//								elfinsLv03CoordList.push( {"xEastingLng":point.X,"yNorthingLat":point.Y,"zAltitude":500});
-//							}
-//						}
-//						
-//						//getLongitudeLatitudeCoordinatesList
-//						if (elfinsLv03CoordList.length > 0) {
-//        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinatesList().post(elfinsLv03CoordList).then(
-//        						function(latLngList) {
-//                					//console.debug(">>>> received latLngList: \n" + angular.toJson(latLngList));
-//                					$log.debug(">>>> received latLngList");
-//        						}, 
-//	            				function(response) {
-//	            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
-//	            				}
-//        					);
-//        					
-//
-//						}
+						// Build a request for converting all elfin base point coordinates in one go
+						var elfinsLv03CoordList = new Array(0);
+						for (var i = 0; i < elfins.length; i++) {
+							var elfin = elfins[i];
+							var point = hbGeoService.getElfinBasePoint(elfin);
+							if (point) {
+								elfinsLv03CoordList.push( {"xEastingLng":point.X,"yNorthingLat":point.Y,"zAltitude":500});
+							}
+						}
+						
+						//getLongitudeLatitudeCoordinatesList
+						if (elfinsLv03CoordList.length > 0) {
+        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinatesList().post(elfinsLv03CoordList).then(
+        						function(latLngList) {
+                					//console.debug(">>>> received latLngList: \n" + angular.toJson(latLngList));
+                					$log.debug(">>>> received latLngList");
+                					
+                					for (var i = 0; i < elfins.length; i++) {
+										var elfin = elfins[i];
+										var elfinBasePointLatLng = latLngList[i];
+										elfin[augment][basePoint][latLng] = elfinBasePointLatLng;
+									}
+                					
+        						}, 
+	            				function(response) {
+	            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+	            				}
+        					);
+        					
+
+						}
 						
 //        				angular.forEach(elfins, function (elfin) {
 //        					
