@@ -335,6 +335,7 @@
             	$log.debug("    >>>>>>>>>>>>>>>>>>>>>>>>>>>>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<    ");            	
             	
             	/**
+            	 * Add raster image `imageUrl_p` to leaflet map `map_p` using L.imageOverlay raster layer. 
             	 * Updates map_p by reference.
             	 * sw: South West, ne: North East.
             	 */
@@ -354,6 +355,7 @@
                         					
                                             var imageBounds = L.latLngBounds(southWest, northEast);
 
+                                            // Add raster layer to map
                                         	L.imageOverlay(imageUrl_p, imageBounds).addTo(map_p);
             							}, 
                         				function(response) {
