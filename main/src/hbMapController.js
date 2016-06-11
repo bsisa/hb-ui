@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$timeout', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline', 'hbUtil',
-        function ($scope, $rootScope, $timeout, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline, hbUtil) {
+    angular.module('hb5').controller('MapController', ['$scope', '$modal', '$rootScope', '$timeout', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline', 'hbUtil',
+        function ($scope, $modal, $rootScope, $timeout, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline, hbUtil) {
 
     	// Get controller reference as "view model" var. 
         var vm = this;
@@ -728,6 +728,56 @@
         // ======================= geographie test bed ====================
         // ================================================================
 
+        // TODO: Review for SUPPORT positioning. Need a modal associating
+        // user entered LV03 or GPS coordinates (dropdown selection GPS/Swiss)
+        // Two consecutive selection are necessary.
+        vm.doClick = function(event){
+
+        	var offsetX = event.offsetX;
+            var offsetY = event.offsetY;
+
+            $log.debug("(offsetX,offsetY)=("+offsetX+"," +offsetY+ ")");
+            
+            var modalInstance = $modal.open({
+                templateUrl: '/assets/views/chooseParams.html',
+                scope: $scope,
+                controller: 'ChooseParamsCtrl',
+                resolve: {
+                	itemDefinition: function () {
+                		
+                		var itDef = {
+                                "type": "modal",
+                                "functionName": "findById",
+                                "newWindow": "false",
+                                "parameters": [
+                                    {
+                                        "label": "Id",
+                                        "name": "Id",
+                                        "value": ""
+                                    }
+                                ]
+                            };
+                		
+                    	return itDef;
+                    }               
+                },                
+                backdrop: 'static'
+            });            
+            
+            /**
+             * Process modalInstance.close action
+             */
+            modalInstance.result.then(function (modalModel) {
+                
+            	var idParam = modalModel[0].value;
+            	$log.debug("idParam = " + idParam);
+            	
+            }, function () {
+            	$log.debug('Choose params modal dismissed at: ' + new Date());
+            });            
+            
+        };
+        
         /**
          * Zoom map to current selected ELFIN
          */
