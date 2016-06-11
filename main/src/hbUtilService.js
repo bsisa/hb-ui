@@ -618,6 +618,27 @@
 		// JavaScript data structures utilities
 		// ============================================================
 
+
+		/**
+		 * Test if object[property0][property1][...] exists.  
+		 */
+		var hasNestedProperty = function (object /*, property0, property1, ... */) {
+			// Make an array of any argument following the object to test properties for.
+			  var properties = Array.prototype.slice.call(arguments, 1);
+
+			  // Test each nested property in turn 
+			  for (var i = 0; i < properties.length; i++) {
+				  var currProp = properties[i];
+				  if (!object || !object.hasOwnProperty(currProp)) {
+					  return false;
+				  } else {
+					  object = object[currProp];  
+				  }
+			  }
+			  return true;
+		};
+		
+		
 		/**
 		 * Provides object deep copy with type loss for date. 
 		 */
@@ -1089,6 +1110,7 @@
         	getPrestationGroupForTransactionGroup:getPrestationGroupForTransactionGroup,
         	getToken:getToken,
         	getValueAtPath:getValueAtPath,
+        	hasNestedProperty:hasNestedProperty,
         	isActionAuthorised:isActionAuthorised,
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
