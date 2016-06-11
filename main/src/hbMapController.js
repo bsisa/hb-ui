@@ -1,7 +1,7 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$timeout', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline',
-        function ($scope, $rootScope, $timeout, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline) {
+    angular.module('hb5').controller('MapController', ['$scope', '$rootScope', '$timeout', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline', 'hbUtil',
+        function ($scope, $rootScope, $timeout, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline, hbUtil) {
 
     	// Get controller reference as "view model" var. 
         var vm = this;
@@ -125,8 +125,9 @@
 						for (var i = 0; i < elfins.length; i++) {
 							var elfin = elfins[i];
 							var point = hbGeoService.getElfinBasePoint(elfin);
+							// Not every elfin has a base point
 							if (point) {
-								elfinsLv03CoordList.push( {"xEastingLng":point.X,"yNorthingLat":point.Y,"zAltitude":500});
+								elfinsLv03CoordList.push( { "id": elfin.Id , "coord" : {"xEastingLng":point.X,"yNorthingLat":point.Y,"zAltitude":500} });
 							}
 						}
 						
@@ -135,95 +136,76 @@
         					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinatesList().post(elfinsLv03CoordList).then(
         						function(latLngList) {
                 					//console.debug(">>>> received latLngList: \n" + angular.toJson(latLngList));
-                					$log.debug(">>>> received latLngList");
+                					if (latLngList.length === elfinsLv03CoordList.length) {
+                    					$log.debug(">>>> Received latLngList with identical size to elfins, proceed augmenting elfins with latLng: " + new Date());
+                    					for (var i = 0; i < elfins.length; i++) {
+    										var elfin = elfins[i];
+    										var elfinBasePointLatLng = latLngList[i];
+    										// TODO: WRONG: elfinsLv03CoordList is a subset of elfins, positions are not reliable...
+    										elfin.augment = {"basePoint":{"latLng" : elfinBasePointLatLng}};
+    									}
+                    					$log.debug(">>>> Augmenting elfins with latLng done: " + new Date());
                 					
-                					for (var i = 0; i < elfins.length; i++) {
-										var elfin = elfins[i];
-										var elfinBasePointLatLng = latLngList[i];
-										elfin[augment][basePoint][latLng] = elfinBasePointLatLng;
-									}
+                        				var objects = [];
+                        				// We want this marker hbLayer to be on top 
+                        				var currentObjectMarkerLayer = null;
+
+                						var countWithLatLng = 0;
+                						var countWithoutLatLng = 0;
+                        				
+                						angular.forEach(elfins, function (elfin) {
+
+                							// [augment][basePoint][latLng]
+                							
+                							//if (elfin.hasOwnProperty("latLng")) {
+                							if (hbUtil.hasNestedProperty(elfin, "augment", "basePoint", "latLng")) {
+                								countWithLatLng++;
+                							} else {
+                								countWithoutLatLng++;
+                							}
+                							
+                	                        var objectLayerStyle = {};
+                                        	var objectLayer = null;
+                	                        
+                                        	if ($scope.elfin && $scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
+                                        		currentObjectMarkerLayer = hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, hbGeoLeafletService.getSelectedObjectMarkerStyle());
+                                        	} else {
+                                        		if (hbLayer.representationType.toLowerCase() == 'marker') {
+                                        			objectLayerStyle = hbGeoLeafletService.getStandardObjectMarkerStyle();
+                                        		} else {
+                                        			objectLayerStyle = hbLayer.representationStyle;
+                                        		}
+                                        		objectLayer = hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, objectLayerStyle);
+                                        	}		                    	
+                                        	
+                							pushLayer(objectLayer, objects, elfin);
+                	                    });
+                						
+                						$log.debug(">>>> layer had " + countWithLatLng + " elfins with latLng, " + countWithoutLatLng + " without latLng." );
+                						
+                						// If available put currentObjectMarkerLayer on top of objects array
+                						pushLayer(currentObjectMarkerLayer, objects, $scope.elfin);
+                						
+                	
+                						// TODO: refactor as function => used in replaceLayer... see updateElfinRepresentation
+                	                    leafletData.getLayers().then(function(layers) {
+                	                        angular.forEach(objects, function(objectLayer) {
+                	                            layers.overlays[overlayId].addLayer(objectLayer);
+                                            });
+                                            // Handle snapping facilities
+                                            $scope.guideLayers.push(layers.overlays[overlayId]);
+                	                    });
+
+                					} else {
+                    					$log.debug(">>>> ERROR: Received latLngList with size " + latLngList.length + ", elfins size = " + elfins.length);
+                					}
                 					
         						}, 
 	            				function(response) {
 	            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
 	            				}
         					);
-        					
-
 						}
-						
-//        				angular.forEach(elfins, function (elfin) {
-//        					
-//							var point = hbGeoService.getElfinBasePoint(elfin);
-//							
-//							if (point) {
-//        					
-//	        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(point.X,point.Y).get().then(
-//	        						function(latLng) {
-//	        							elfin.latLng = latLng;
-//	        						}, 
-//		            				function(response) {
-//		            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
-//		            				}
-//	        					);
-//        					
-//							}
-//        				});
-        				// =================
-        				
-//        				$timeout(function() {
-//                			$log.debug("Wait 5 seconds...");
-                    	 
-        				
-        				
-        				var objects = [];
-        				// We want this marker hbLayer to be on top 
-        				var currentObjectMarkerLayer = null;
-
-						var countWithLatLng = 0;
-						var countWithoutLatLng = 0;
-        				
-						angular.forEach(elfins, function (elfin) {
-
-							if (elfin.hasOwnProperty("latLng")) {
-								countWithLatLng++;
-							} else {
-								countWithoutLatLng++;
-							}
-							
-	                        var objectLayerStyle = {};
-                        	var objectLayer = null;
-	                        
-                        	if ($scope.elfin && $scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
-                        		currentObjectMarkerLayer = hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, hbGeoLeafletService.getSelectedObjectMarkerStyle());
-                        	} else {
-                        		if (hbLayer.representationType.toLowerCase() == 'marker') {
-                        			objectLayerStyle = hbGeoLeafletService.getStandardObjectMarkerStyle();
-                        		} else {
-                        			objectLayerStyle = hbLayer.representationStyle;
-                        		}
-                        		objectLayer = hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, objectLayerStyle);
-                        	}		                    	
-                        	
-							pushLayer(objectLayer, objects, elfin);
-	                    });
-						
-						$log.debug(">>>> layer had " + countWithLatLng + " elfins with latLng, " + countWithoutLatLng + " without latLng." );
-						
-						// If available put currentObjectMarkerLayer on top of objects array
-						pushLayer(currentObjectMarkerLayer, objects, $scope.elfin);
-						
-	
-						// TODO: refactor as function => used in replaceLayer... see updateElfinRepresentation
-	                    leafletData.getLayers().then(function(layers) {
-	                        angular.forEach(objects, function(objectLayer) {
-	                            layers.overlays[overlayId].addLayer(objectLayer);
-                            });
-                            // Handle snapping facilities
-                            $scope.guideLayers.push(layers.overlays[overlayId]);
-	                    });
-						
-//        				}, 1000, true);
 	                    
 					},
 					function(response) {
