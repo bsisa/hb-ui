@@ -728,11 +728,80 @@
         // ======================= geographie test bed ====================
         // ================================================================
 
+        vm.pixelsToCoordinates = function() {
+        	// 3508 × 4967
+        	var rasterSizePixels = {"x" : 3508, "y" : 4967};
+        	var record1 = vm.last2Records[0];
+        	var record2 = vm.last2Records[1];
+        	var boundsReq = { "rasterImgSize" : rasterSizePixels , "record1" : record1 , "record2" : record2 };
+			hbGeoSwissCoordinatesService.getCoordinatesBoundsForRaster().post(boundsReq).then(
+					function(boundsResp) {
+    					$log.debug("REMOTE: boundsResp = " + angular.toJson(boundsResp));
+    					// Convert swiss lv03 to gps coordinates
+// ===
+                    	hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(boundsResp.swCoord.xEastingLng,boundsResp.swCoord.yNorthingLat).get().then(
+                				function(swLatLng) {
+                					$log.debug("REMOTE: swLatLng.xEastingLng = " + swLatLng.xEastingLng + ", swLatLng.yNorthingLat = " + swLatLng.yNorthingLat);
+                	            	$log.debug("REMOTE: swLatLng" + angular.toJson(swLatLng));
+                					var southWest = L.latLng(swLatLng.yNorthingLat, swLatLng.xEastingLng);
+                					
+                					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(boundsResp.neCoord.xEastingLng, boundsResp.neCoord.yNorthingLat).get().then(
+                							function(neLatLng) {
+                            					$log.debug("REMOTE: neLatLng.xEastingLng = " + neLatLng.xEastingLng + ", neLatLng.yNorthingLat = " + neLatLng.yNorthingLat);
+                            	            	$log.debug("REMOTE: neLatLng" + angular.toJson(neLatLng));
+                            					
+                            	            	var northEast = L.latLng(neLatLng.yNorthingLat, neLatLng.xEastingLng);	
+                            					
+                                                var imageBounds = L.latLngBounds(southWest, northEast);
+
+                                                // HARDCODED TEST
+                                            	var imageUrl = '/assets/images/Morges-CentreCharpentiers-RezSup.jpg';
+                                            	
+                                            	leafletData.getMap().then(function (map) {                        
+                        	                        // Add raster layer to map
+                        	                    	var rasterOverlay = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+                        	                    	rasterOverlay.bringToFront();
+                        	                    	$log.debug(">>>> overlay set up to front...");
+                                            	});                                            	
+                                            	
+                                            	
+                							}, 
+                            				function(response) {
+                            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+                            				}
+                            			);        
+                				}, 
+                				function(response) {
+                					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+                				}
+                			);
+// ===
+
+					}, 
+    				function(response) {
+    					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+    				}
+    			);        	
+        	
+        	
+        };
+        
+        vm.getNewEmptyPixelsCoordinates = function(x,y,xEastingLng, yNorthingLat) {
+       	 	var record = {"pixels" : {"x" : x,"y" : y},"coord" : {"xEastingLng":xEastingLng,"yNorthingLat":yNorthingLat,"zAltitude":500}};
+       	 	return hbUtil.deepCopy(record);
+        };
+        
+        vm.last2Records = [
+                           	vm.getNewEmptyPixelsCoordinates(0,0,0,0),
+                           	vm.getNewEmptyPixelsCoordinates(0,0,0,0)];
+        
         // TODO: Review for SUPPORT positioning. Need a modal associating
         // user entered LV03 or GPS coordinates (dropdown selection GPS/Swiss)
         // Two consecutive selection are necessary.
         vm.doClick = function(event){
 
+        	$log.debug("image click event: " + angular.toJson(event));
+        	
         	var offsetX = event.offsetX;
             var offsetY = event.offsetY;
 
@@ -751,10 +820,15 @@
                                 "newWindow": "false",
                                 "parameters": [
                                     {
-                                        "label": "Id",
-                                        "name": "Id",
+                                        "label": "Longitude (x)",
+                                        "name": "Lng",
                                         "value": ""
-                                    }
+                                    },
+                                    {
+                                        "label": "Latitude (y)",
+                                        "name": "Lat",
+                                        "value": ""
+                                    }                                    
                                 ]
                             };
                 		
@@ -768,9 +842,20 @@
              * Process modalInstance.close action
              */
             modalInstance.result.then(function (modalModel) {
-                
-            	var idParam = modalModel[0].value;
-            	$log.debug("idParam = " + idParam);
+
+            	// Get end-user submitted parameters back
+            	var xEastingLng = new Number(modalModel[0].value);
+            	var yNorthingLat = new Number(modalModel[1].value);
+            	// Build new record with x,y click event position and end user entered coordinates.
+            	var record = vm.getNewEmptyPixelsCoordinates(offsetX,offsetY,xEastingLng, yNorthingLat);
+            	$log.debug("record = " + angular.toJson(record));
+            	// Remove last2Records array last record  
+            	//vm.last2Records.splice(vm.last2Records.length-1, 1);
+            	// Add new record at last position
+            	vm.last2Records.push(record);
+            	vm.last2Records.shift();
+            	
+            	$log.debug("vm.last2Records = " + angular.toJson(vm.last2Records));
             	
             }, function () {
             	$log.debug('Choose params modal dismissed at: ' + new Date());
