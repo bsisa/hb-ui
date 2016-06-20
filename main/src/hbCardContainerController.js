@@ -160,8 +160,10 @@
          * there to help prevent operations errors. It is also easier
          * to track objects modifications than objects deletions.
          */
-        $scope.canDelete = _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.DELETE);
-
+        $scope.canDelete = function() {
+			// Only users with global delete role can delete data
+        	return _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.DELETE);
+        };  
         
         /** 
          * Help manage button class depending on pristine/dirty
@@ -303,47 +305,52 @@
         	}
 
         };
+
         
     	// Wrapper for ELFIN DELETE operation
         $scope.delElfin = function (elfin) {
-        	
-        	var modalInstance = $modal.open({
-                templateUrl: '/assets/views/deleteConfirmModalPanel.html',
-                controller: 'DeleteConfirmController',
-                scope: $scope,
-                backdrop: 'static'
-            });
+        	if ($scope.canDelete()) {
 
-            modalInstance.result.then(function () {
-            	elfin.remove().then( 
-               			function() { 
-                        	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
-               				hbAlertMessages.addAlert("success",message);
-
-               				// Flag information useful not to perform GET on deleted resource.
-               				$scope.elfinDeleted = true;
-
-               				// If the current deleted ELFIN contains a valid link to a parent object redirect to the parent object 
-               				// else redirect to the root navigation path
-               				if (hbUtil.containsStandardSourceURI(elfin.SOURCE) ) {
-               					$location.path("/elfin/" + elfin.SOURCE);
-               				} else {
-               					$scope.home();
-               				}
-               				
-               				// Notify other controllers this elfin has been deleted (used by map)
-                            $scope.$emit(HB_EVENTS.ELFIN_DELETED, elfin);
-                        },
-               			function(response) { 
-               				var message = "La suppression a échoué. Veuillez s.v.p. recommencer. Si le problème persiste contactez votre administrateur système et lui communiquer le message suivant: " + response.status;
-               				hbAlertMessages.addAlert("danger",message);
-               				$log.debug("Error: ELFIN delete failure with status code", response.status);
-               			} 
-               		);
-            }, function () {
-            	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " annulée.";
-   				hbAlertMessages.addAlert("warning",message);
-            });        	
+	        	var modalInstance = $modal.open({
+	                templateUrl: '/assets/views/deleteConfirmModalPanel.html',
+	                controller: 'DeleteConfirmController',
+	                scope: $scope,
+	                backdrop: 'static'
+	            });
+	
+	            modalInstance.result.then(function () {
+	            	elfin.remove().then( 
+	               			function() { 
+	                        	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " effectuée avec succès.";
+	               				hbAlertMessages.addAlert("success",message);
+	
+	               				// Flag information useful not to perform GET on deleted resource.
+	               				$scope.elfinDeleted = true;
+	
+	               				// If the current deleted ELFIN contains a valid link to a parent object redirect to the parent object 
+	               				// else redirect to the root navigation path
+	               				if (hbUtil.containsStandardSourceURI(elfin.SOURCE) ) {
+	               					$location.path("/elfin/" + elfin.SOURCE);
+	               				} else {
+	               					$scope.home();
+	               				}
+	               				
+	               				// Notify other controllers this elfin has been deleted (used by map)
+	                            $scope.$emit(HB_EVENTS.ELFIN_DELETED, elfin);
+	                        },
+	               			function(response) { 
+	               				var message = "La suppression a échoué. Veuillez s.v.p. recommencer. Si le problème persiste contactez votre administrateur système et lui communiquer le message suivant: " + response.status;
+	               				hbAlertMessages.addAlert("danger",message);
+	               				$log.debug("Error: ELFIN delete failure with status code", response.status);
+	               			} 
+	               		);
+	            }, function () {
+	            	var message = "Suppression de l'object " + elfin.CLASSE + " - " + elfin.ID_G + "/" + elfin.Id + " annulée.";
+	   				hbAlertMessages.addAlert("warning",message);
+	            });        	
+        	} else {
+        		hbAlertMessages.addAlert("warning","Vous n'avez pas les droits suffisants pour effectuer cette opération.");
+        	}            
         };
         
         /**
