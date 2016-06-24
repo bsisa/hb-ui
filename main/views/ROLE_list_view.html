@@ -8,19 +8,20 @@
 			</tr>
 			<tr>
 				<th />
+				<th>Type</th>
 				<th>Nom</th>
-<!-- 				<th>Rôle</th> -->
-<!-- 				<th>N° de téléphone</th> -->
+				<th>Description</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="elfin in elfins | orderBy:'IDENTIFIANT.NOM'">
+<!-- 			<tr ng-repeat="elfin in elfins | orderBy:'IDENTIFIANT.NOM'"> -->
+			<tr ng-repeat="elfin in elfins | orderBy:['GROUPE','IDENTIFIANT.NOM']">
 				<td>
 					<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
 				</td>
+				<td>{{elfin.GROUPE}}</td>
 				<td>{{elfin.IDENTIFIANT.NOM}}</td>
-<!-- 				<td>{{elfin.IDENTIFIANT.QUALITE}}</td> -->
-<!-- 				<td>{{elfin.CARACTERISTIQUE.CAR4.VALEUR}}</td> -->
+				<td>{{elfin.DIVERS.REMARQUE}}</td>
 			</tr>
 		</tbody>
 	</table>
