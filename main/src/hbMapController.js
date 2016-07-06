@@ -140,9 +140,12 @@
                     					$log.debug(">>>> Received latLngList with identical size to elfins, proceed augmenting elfins with latLng: " + new Date());
                     					for (var i = 0; i < elfins.length; i++) {
     										var elfin = elfins[i];
-    										var elfinBasePointLatLng = latLngList[i];
     										// TODO: WRONG: elfinsLv03CoordList is a subset of elfins, positions are not reliable...
-    										elfin.augment = {"basePoint":{"latLng" : elfinBasePointLatLng}};
+    										//var elfinBasePointLatLng = latLngList[i];
+    										// DONE: fix: 
+    										//{ "id" : "G20050614154558416", "coord" : {"xEastingLng":6.870381147999981,"yNorthingLat":46.75041887900018,"zAltitude":526.5498500065878} }
+    										var elfinBasePointLatLng = _.find(latLngList, function(latLngEl){ return latLngEl.id == elfin.Id; });
+    										elfin.augment = {"basePoint":{"latLng" : elfinBasePointLatLng.coord}};
     									}
                     					$log.debug(">>>> Augmenting elfins with latLng done: " + new Date());
                 					
