@@ -145,7 +145,11 @@
     										// DONE: fix: 
     										//{ "id" : "G20050614154558416", "coord" : {"xEastingLng":6.870381147999981,"yNorthingLat":46.75041887900018,"zAltitude":526.5498500065878} }
     										var elfinBasePointLatLng = _.find(latLngList, function(latLngEl){ return latLngEl.id == elfin.Id; });
-    										elfin.augment = {"basePoint":{"latLng" : elfinBasePointLatLng.coord}};
+    										if (elfinBasePointLatLng) {
+    											elfin.augment = {"basePoint":{"latLng" : elfinBasePointLatLng.coord}};
+    										} else {
+    											$log.debug(">>>> Not augmenting elfin with Id " + elfin.Id );
+    										}
     									}
                     					$log.debug(">>>> Augmenting elfins with latLng done: " + new Date());
                 					
