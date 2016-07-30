@@ -47,7 +47,7 @@
         $scope.immeubleElfins = null;
         
         // Query all available buildings IMMEUBLE 
-        hbQueryService.getAugmentedImmeubles()
+        hbQueryService.getAugmentedImmeubles("//ELFIN[@CLASSE='IMMEUBLE']")
 	        .then(function(immeubleElfins) {
         		$scope.immeubleElfins = immeubleElfins;
         		$scope.filteredImmeubleElfins = filterImmeubleElfins($scope.immeubleElfins, $scope.immeubleSearch);
