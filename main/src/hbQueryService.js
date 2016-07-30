@@ -186,7 +186,7 @@
 
 		
 		/**
-		 * POC - deferred list of immeubles with added GROUPE_COMPTABLE property from current year PRESTATION
+		 *  Deferred list of immeubles with added GROUPE_COMPTABLE property from current year PRESTATION
 		 * 
 		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
 		 *   
@@ -195,18 +195,25 @@
 		 */
 		var getAugmentedImmeubles = function(immeublesXpath) {
 	        
+			$log.debug(">>>> getAugmentedImmeubles - start");
+			
 			var deferred = $q.defer();
 			
 		    getImmeubles(immeublesXpath)
 	        .then(function(immeubleElfins) {
+	        	
+	        	$log.debug(">>>> getAugmentedImmeubles - immeubleElfins.length = " + immeubleElfins.length);
+	        	
 	        	// Get all current year PRESTATIONs at once (most efficient)
 	        	var currentYear = moment().year();
 	        	var prestationsXpath = "//ELFIN[@CLASSE='PRESTATION' and IDENTIFIANT/DE='"+currentYear+"']";
 	        	getPrestations(prestationsXpath).then(function(prestationElfins) {
+	        		$log.debug(">>>> getAugmentedImmeubles - prestationElfins.length = " + prestationElfins.length);
 					var augmentedImmeubles = new Array();
 					for (var i = 0; i < immeubleElfins.length; i++) {
 						var currImmeuble = immeubleElfins[i];
-						var xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION' and PARTENAIRE/PROPRIETAIRE/@NOM='"+currImmeuble.PARTENAIRE.PROPRIETAIRE.NOM+"' and IDENTIFIANT/DE='"+currentYear+"'][substring-before(IDENTIFIANT/OBJECTIF,'.')='"+currImmeuble.IDENTIFIANT.OBJECTIF+"']";				
+						$log.debug(">>>> getAugmentedImmeubles - immeubleElfins[i].Id = " + currImmeuble.Id);						
+						//var xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION' and PARTENAIRE/PROPRIETAIRE/@NOM='"+currImmeuble.PARTENAIRE.PROPRIETAIRE.NOM+"' and IDENTIFIANT/DE='"+currentYear+"'][substring-before(IDENTIFIANT/OBJECTIF,'.')='"+currImmeuble.IDENTIFIANT.OBJECTIF+"']";				
 						// Perform PRESTATION query work
 						var currPrestation = _.find(prestationElfins, function(prestaElfin){ 
 							return ( 
@@ -219,6 +226,7 @@
 						}
 						augmentedImmeubles.push(currImmeuble);
 					}		        	
+					$log.debug(">>>> getAugmentedImmeubles - augmentedImmeubles.length = " + augmentedImmeubles.length);
 					// Return list of augmented immeubles as a promise
 					deferred.resolve(augmentedImmeubles);
 	        	}, function(response) {
