@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('hb5').controller('HbSearchController', ['$scope', 'GeoxmlService', '$log', '$filter', '$location', 'HB_COLLECTIONS', 'hbAlertMessages', function($scope, GeoxmlService, $log, $filter, $location, HB_COLLECTIONS, hbAlertMessages) {
+    angular.module('hb5').controller('HbSearchController', ['$scope', 'hbQueryService', '$log', '$filter', '$location', 'HB_COLLECTIONS', 'hbAlertMessages', function($scope, hbQueryService, $log, $filter, $location, HB_COLLECTIONS, hbAlertMessages) {
     
     	//$log.debug("    >>>> HbSearchController called at " + new Date());
     	
@@ -23,7 +23,8 @@
         $scope.immeubleElfins = null;
         
         // Query all available buildings IMMEUBLE 
-        GeoxmlService.getCollection(immeublesCollectionId).getList()
+        //GeoxmlService.getCollection(immeublesCollectionId).getList()
+        hbQueryService.getAugmentedImmeubles("//ELFIN[@CLASSE='IMMEUBLE']")        
 	        .then(function(immeubleElfins) {
         		$scope.immeubleElfins = immeubleElfins;
 	        }, function(response) {
