@@ -82,6 +82,10 @@ tr.grandtotal {
 	border-top: double black 4px
 }
 
+.hb-date-em {
+	color:red;
+}
+
 td.date {
     text-align: center;
 } 
