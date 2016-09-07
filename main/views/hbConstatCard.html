@@ -154,7 +154,10 @@
 				<div class="col-sm-3">
 					<div class="form-group has-feedback" 
 						ng-class="getCssHasFeedback(elfinForm.dateReloc)">
-						<label for="date_reloc" class="col-sm-4 control-label" style="color: red;">Re-location</label>
+						<label for="date_reloc" class="col-sm-2 control-label" style="color: red;">Re-loc</label>
+						<div class="col-sm-2"><a 
+								href="mailto:Carine.Maillard@ne.ch;?subject=Constat Gespatri : {{elfin.IDENTIFIANT.NOM}} - No SAI {{elfin.IDENTIFIANT.OBJECTIF}} / No constr {{elfin.IDENTIFIANT.COMPTE}} (Id {{elfin.Id}}) &amp;body=Type de constat: {{elfin.GROUPE}} %0D%0ASignalé par: {{elfin.PARTENAIRE.FOURNISSEUR.VALUE}} le {{elfin.IDENTIFIANT.DE | date}} %0D%0ARelocation: {{elfin.CARACTERISTIQUE.CAR4.VALEUR | date}} %0D%0A"
+								target="_self"> <span class="btn btn-default">@</span></a></div>						
 						<div class="col-sm-8" >
 							<div hb-date id="date_reloc" name="dateReloc" 
 								ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"></div>
