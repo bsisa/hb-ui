@@ -9,6 +9,8 @@
 					'hbUtil',
 					function($scope, $log, $filter, hbUtil) {
 
+						$scope.dateCss = '';
+						
 						// TODO: should be automatic with $locale providing the correct id i.e.: fr-ch, de-ch,...
 						// UI date format
 						$scope.dateFormat = 'dd.MM.yyyy';												
