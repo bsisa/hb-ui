@@ -15,6 +15,7 @@
  * <li>commandeListAnyFilter</li>
  * <li>codeListAnyFilter</li>
  * <li>constatListFilter</li> 
+ * <li>contractPerCompanyGroupListFilter</li>
  * <li>contractTerminatedListFilter</li>
  * <li>fontaineListFilter</li>
  * <li>fontaineListAnyFilter</li>
@@ -464,6 +465,39 @@
 	        }
 	    };
 	}]);
+	
+	
+	/**
+     * Filter CONTRAT per company group (ELFIN.GROUPE / ELFIN@GROUPE)
+     * 
+	 */
+	angular.module('hb5').filter('contractPerCompanyGroupListFilter', ['$log','hbUtil', function ($log,hbUtil) {
+	
+		return function (contracts, companyGroup) {
+
+	        if (!angular.isUndefined(contracts)) {
+
+	            // Temp array to store results to
+		    	var tempcontracts = [ ];
+	            
+	            angular.forEach(contracts, function (contract) {
+
+	            	if (
+	            			angular.isDefined(contract.PARTENAIRE) && 
+	            			angular.isDefined(contract.PARTENAIRE.FOURNISSEUR) && 
+	            			angular.isDefined(contract.PARTENAIRE.FOURNISSEUR.VALUE) && 
+	            			!(contract.PARTENAIRE.FOURNISSEUR.VALUE === null) &&  
+	            			contract.PARTENAIRE.FOURNISSEUR.VALUE === companyGroup) {
+	            		tempcontracts.push(contract);
+	            	}
+  		    		
+                });
+	            return tempcontracts;
+	        } else {
+	            return contracts;
+	        }
+	    };
+	}]);	
 	
 	
 	/**
