@@ -18,9 +18,16 @@
 	<span ng-show="elfinForm.ecapVolume.$error.pattern">Le volume ECAP doit être <strong>un nombre</strong>!</span>
 	<span ng-show="elfinForm.ecapVolume.$error.maxlength">Le volume ECAP doit être <strong>un nombre</strong>! (Max 12 positions)</span>	
 		
-<!-- 		ecapVolumePrice -->
-<!-- 		ecapFee -->
-<!-- 		ecapSelfInsuranceFnd -->
+<!-- ecapVolumePrice Prix au m³ -->
+<!-- ecapFee Prime ECAP TTC -->
+<!-- ecapSelfInsuranceFnd   Fond auto assurance -->
+<!-- ecapBuildingNb  Bâtiment assuré no -->
+<!-- ecapObject Objet assuré -->
+<!-- ecapConstructionRisk Classe risque construction -->
+<!-- ecapUsageRisk Classe risque usage -->
+<!-- ecapLightningRod  Paratonnerre -->
+<!-- ecapFireDetection Détection incendie -->
+<!-- ecapPeculiarities Particularités -->
 		
 	<span ng-show="elfinForm.goal.$error.required">Le champs <strong>No
 			de gérance</strong> est obligatoire!
@@ -1254,8 +1261,98 @@
 									required>
 							</div>
 						</div>				
-					</div>	
-					
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapBuildingNb)">
+							<label for="ecapBuildingNb" class="col-md-4 control-label">Bâtiment assuré no</label>
+							<div class="col-md-8" >
+								<input id="ecapBuildingNb" name="ecapBuildingNb" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_14.VALEUR"
+									ng-readonly="!canEdit"
+									>
+							</div>
+						</div>				
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapObject)">
+							<label for="ecapObject" class="col-md-4 control-label">Objet assuré</label>
+							<div class="col-md-8" >
+								<input id="ecapObject" name="ecapObject" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_15.VALEUR"
+									ng-readonly="!canEdit"
+									>
+							</div>
+						</div>				
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapConstructionRisk)">
+							<label for="ecapConstructionRisk" class="col-md-4 control-label">Classe risque construction</label>
+							<div class="col-md-8" >
+								<input id="ecapConstructionRisk" name="ecapConstructionRisk" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_16.VALEUR"
+									ng-readonly="!canEdit"
+									>
+							</div>
+						</div>				
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapUsageRisk)">
+							<label for="ecapUsageRisk" class="col-md-4 control-label">Classe risque usage</label>
+							<div class="col-md-8" >
+								<input id="ecapUsageRisk" name="ecapUsageRisk" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_17.VALEUR"
+									ng-readonly="!canEdit"
+									>
+							</div>
+						</div>				
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapLightningRod)">
+							<label for="ecapLightningRod" class="col-md-4 control-label">Paratonnerre</label>
+							<div class="col-md-8" >
+								<input id="ecapLightningRod" name="ecapLightningRod" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_18.VALEUR"
+									ng-readonly="!canEdit"
+									>
+							</div>
+						</div>				
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapFireDetection)">
+							<label for="ecapFireDetection" class="col-md-4 control-label">Détection incendie</label>
+							<div class="col-md-8" >
+								<input id="ecapFireDetection" name="ecapFireDetection" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_19.VALEUR"
+									ng-readonly="!canEdit"
+									>
+							</div>
+						</div>				
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapPeculiarities)">
+							<label for="ecapPeculiarities" class="col-md-4 control-label">Particularités</label>
+							<div class="col-md-8" >
+								<input id="ecapPeculiarities" name="ecapPeculiarities" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_20.VALEUR"
+									ng-readonly="!canEdit"
+									>
+							</div>
+						</div>				
+					</div>
 				</div>
 			</div>
 		</tab>				
