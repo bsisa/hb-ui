@@ -14,6 +14,9 @@
 
 	<span ng-show="elfinForm.cadastralEvaluationYear.$error.pattern">L'année d'estimation cadastrale doit être <strong>un nombre</strong> à quatre positions!</span>
 	<span ng-show="elfinForm.cadastralEvaluationYear.$error.maxlength">L'année d'estimation cadastrale doit être un nombre <strong>à quatre positions!</strong></span>
+	
+	<span ng-show="elfinForm.ecapVolume.$error.pattern">Le volume ECAP doit être <strong>un nombre</strong>!</span>
+	<span ng-show="elfinForm.ecapVolume.$error.maxlength">Le volume ECAP doit être <strong>un nombre</strong>! (Max 12 positions)</span>	
 		
 	<span ng-show="elfinForm.goal.$error.required">Le champs <strong>No
 			de gérance</strong> est obligatoire!
@@ -1146,8 +1149,6 @@
 								<input id="ecapValue" name="ecapValue" type="text"
 									class="form-control"
 									ng-model="CARSET_CAR_POS_5.VALEUR" ng-readonly="!canEdit">
-<!-- 									ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[4].VALEUR" ng-readonly="!canEdit"> -->
-									
 							</div>
 						</div>
 					</div>
@@ -1185,6 +1186,21 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapVolume)">
+							<label for="ecapVolume" class="col-md-4 control-label">Volume ECAP</label>
+							<div class="col-md-8" >
+								<input id="ecapVolume" name="ecapVolume" type="text"
+									class="form-control"
+									ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR" ng-readonly="!canEdit"
+									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
+									>
+							</div>
+						</div>
+					</div>
+					
+					
 				</div>
 			</div>
 		</tab>				
