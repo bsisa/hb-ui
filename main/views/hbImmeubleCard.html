@@ -18,6 +18,10 @@
 	<span ng-show="elfinForm.ecapVolume.$error.pattern">Le volume ECAP doit être <strong>un nombre</strong>!</span>
 	<span ng-show="elfinForm.ecapVolume.$error.maxlength">Le volume ECAP doit être <strong>un nombre</strong>! (Max 12 positions)</span>	
 		
+<!-- 		ecapVolumePrice -->
+<!-- 		ecapFee -->
+<!-- 		ecapSelfInsuranceFnd -->
+		
 	<span ng-show="elfinForm.goal.$error.required">Le champs <strong>No
 			de gérance</strong> est obligatoire!
 	</span>
@@ -1199,7 +1203,58 @@
 							</div>
 						</div>
 					</div>
-					
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapFee)">
+							<label for="ecapFee" class="col-md-4 control-label">Prime ECAP TTC</label>
+							<div class="col-md-8" >
+								<input id="ecapFee" name="ecapFee" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_11.VALEUR" ng-readonly="!canEdit"
+									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
+									>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapVolumePrice)">
+							<label for="ecapVolumePrice" class="col-md-4 control-label">Prix au m³</label>
+							<div class="col-md-8" >
+								<input id="ecapFee" name="ecapVolumePrice" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_12.VALEUR" ng-readonly="!canEdit"
+									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
+									>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.ecapSelfInsuranceFnd)">
+							<label for="ecapSelfInsuranceFnd" class="col-md-4 control-label">Fond auto assurance</label>
+							<div class="col-md-8" >
+								<input id="ecapFee" name="ecapSelfInsuranceFnd" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_13.VALEUR" ng-readonly="!canEdit"
+									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
+									>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group has-feedback"
+							ng-class="getCssHasFeedback(elfinForm.author)">
+							<label for="author" class="col-md-4 control-label">No ECAP</label>
+							<div class="col-md-8" >
+								<input id="author" name="author" type="text"
+									class="form-control"
+									ng-model="CARSET_CAR_POS_3.VALEUR"
+									ng-readonly="!canEdit"
+									required>
+							</div>
+						</div>				
+					</div>	
 					
 				</div>
 			</div>
