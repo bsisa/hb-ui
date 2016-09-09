@@ -477,7 +477,27 @@
 											$scope.CARSET_CAR_POS_9 = linkCARByPos(9);
 											// Nombre de place de travail
 											$scope.CARSET_CAR_POS_10 = linkCARByPos(10);
-
+											
+											// Prime ECAP TTC
+											$scope.CARSET_CAR_POS_11 = linkCARByPos(11);
+											// Prix au m³
+											$scope.CARSET_CAR_POS_12 = linkCARByPos(12);	
+											// Fond auto assurance
+											$scope.CARSET_CAR_POS_13 = linkCARByPos(13);
+											// Bâtiment assuré no
+											$scope.CARSET_CAR_POS_14 = linkCARByPos(14);
+											// Objet assuré
+											$scope.CARSET_CAR_POS_15 = linkCARByPos(15);
+											// Classe risque construction
+											$scope.CARSET_CAR_POS_16 = linkCARByPos(16);
+											// Classe risque usage
+											$scope.CARSET_CAR_POS_17 = linkCARByPos(17);
+											// Paratonnerre
+											$scope.CARSET_CAR_POS_18 = linkCARByPos(18);
+											// Détection incendie
+											$scope.CARSET_CAR_POS_19 = linkCARByPos(19);										
+											// Particularités
+											$scope.CARSET_CAR_POS_20 = linkCARByPos(20);
 											// ===========================================================							    			
 
 							    			/**
