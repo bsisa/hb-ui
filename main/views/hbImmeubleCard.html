@@ -1153,6 +1153,40 @@
 			<tab-heading>Valeur ECAP</tab-heading>
 			<div class="hb-tab">
 				<div class="row">
+					<div class="col-sm-12">
+					<!-- Table des contrats ECAP actifs -->
+						<table class="table table-condensed table-bordered table-striped">
+							<thead>
+								<tr>
+									<th colspan="2">Contrat</th>
+									<th><a href=""
+										ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
+											I</a></th>
+									<th><a href=""
+										ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
+											II</a></th>
+									<th><a href=""
+										ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
+									<th><a href=""
+										ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
+								<th><a href=""
+										ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
+								</tr>
+							</thead>
+							<tbody ng-show="contrats">
+								<tr
+									ng-repeat="contrat in contrats | contractPerCompanyGroupListFilter:'ECAP' | contractTerminatedListFilter:false | orderBy:contractPredicate:contractReverse">
+									<td><div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div></td>
+									<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
+									<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
+									<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+									<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+									<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td>
+									<td><span >{{contrat.GROUPE}}</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 					<div class="col-md-6">
 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.ecapValue)">
 							<label for="ecapValue" class="col-md-4 control-label">Valeur ECAP</label>
