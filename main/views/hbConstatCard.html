@@ -401,7 +401,7 @@
 									<td>{{formerEvent.E_DATE}}</td>
 									<td>{{formerEvent.E_ACTION}}</td>
 									<td>{{formerEvent.E_POUR_QUI}}</td>
-									<td>{{formerEvent.E_PAR_QUI}}</td>
+									<td class="number">{{formerEvent.E_PAR_QUI | currency:'CHF'}}</td>
 								</tr>
 								<tr ng-repeat-end>
 									<td colspan="7">{{formerEvent.REMARQUE}}</td>
