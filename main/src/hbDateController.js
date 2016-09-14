@@ -9,6 +9,8 @@
 					'hbUtil',
 					function($scope, $log, $filter, hbUtil) {
 
+						$log.debug("    >>>> Using HbDateController");
+						
 						$scope.dateCss = '';
 						
 						// TODO: should be automatic with $locale providing the correct id i.e.: fr-ch, de-ch,...
@@ -22,19 +24,18 @@
 						$scope.hbDateNgModelCtrl = null;
 
 						this.setHbDateNgModelCtrl = function(ctrl) {
+							$log.debug("hbDate.setHbDateNgModelCtrl ...");
 							$scope.hbDateNgModelCtrl = ctrl;						
 						};
 						
-						//$log.debug("    >>>> Using HbDateController");	
-
-						// datepicke-popup ng-model date
+						// datepicker-popup ng-model date
 						$scope.date = null;
 						
 						
 						// Update ngModel on user date change
 						$scope.$watch('date', function (newDate, oldDate) {
 
-							//$log.debug("Date change from " + oldDate + " to " + newDate);
+							$log.debug("Date change from " + oldDate + " to " + newDate);
 							
 							if (newDate && (newDate !== null)) {
 								// Convert $scope.date to GeoXML string format suitable for hbDateNgModelCtrl
@@ -66,9 +67,12 @@
 						// Listen to hbDateNgModelCtrl model value change. (reference to method is safe thanks angular.noop)
 						$scope.$watch('hbDateNgModelCtrl.$modelValue', function (newValue, oldValue) {
 							
-							//$log.debug("hbDateNgModelCtrl.$modelValue changed : " + oldValue + " => " + newValue);
+							$log.debug("hbDateNgModelCtrl.$modelValue changed : " + oldValue + " => " + newValue);
 							
-							if ($scope.hbDateNgModelCtrl && (newValue !== oldValue) && (newValue !== null)) {								
+							// Fix not updating to model value date in some situation where initialisation to model value 
+							// did not occur yet due to asynchronous intialisation, by removing:
+							// "update optimisation condition" && (newValue !== oldValue)
+							if ($scope.hbDateNgModelCtrl && (newValue !== null)) {
 								// update datepicker date with hbDate
 								var milliseconds = Date.parse($scope.hbDateNgModelCtrl.$modelValue);
 					            if (!isNaN(milliseconds)) {
