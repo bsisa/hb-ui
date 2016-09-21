@@ -348,12 +348,14 @@
             	 */
             	function setImageBounds(imageUrl_p, swLv03Point, neLv03Point, map_p) {
             		
+            		// TODO: XGYGZG instead of remote call
                 	hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(swLv03Point.x,swLv03Point.y).get().then(
             				function(swLatLng) {
             					$log.debug("REMOTE: swLatLng.xEastingLng = " + swLatLng.xEastingLng + ", swLatLng.yNorthingLat = " + swLatLng.yNorthingLat);
             	            	$log.debug("REMOTE: swLatLng" + angular.toJson(swLatLng));
             					var southWest = L.latLng(swLatLng.yNorthingLat, swLatLng.xEastingLng);
             					
+            					// TODO: XGYGZG instead of remote call
             					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(neLv03Point.x,neLv03Point.y).get().then(
             							function(neLatLng) {
                         					$log.debug("REMOTE: neLatLng.xEastingLng = " + neLatLng.xEastingLng + ", neLatLng.yNorthingLat = " + neLatLng.yNorthingLat);
