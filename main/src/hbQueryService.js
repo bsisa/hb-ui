@@ -216,6 +216,7 @@
 						//var xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION' and PARTENAIRE/PROPRIETAIRE/@NOM='"+currImmeuble.PARTENAIRE.PROPRIETAIRE.NOM+"' and IDENTIFIANT/DE='"+currentYear+"'][substring-before(IDENTIFIANT/OBJECTIF,'.')='"+currImmeuble.IDENTIFIANT.OBJECTIF+"']";				
 						// Perform PRESTATION query work
 						var currPrestation = _.find(prestationElfins, function(prestaElfin){ 
+							// TODO: Adapt for "Migration Identifiant Unique Immeubles"
 							return ( 
 									prestaElfin.PARTENAIRE.PROPRIETAIRE.NOM === currImmeuble.PARTENAIRE.PROPRIETAIRE.NOM && 
 									prestaElfin.IDENTIFIANT.OBJECTIF.substr(0, prestaElfin.IDENTIFIANT.OBJECTIF.indexOf('.')) === 
