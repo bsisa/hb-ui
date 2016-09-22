@@ -121,55 +121,55 @@
         				// ================= Augment elfins with LatLng
 						
 						// Build a request for converting all elfin base point coordinates in one go
-						var elfinsLv03CoordList = new Array(0);
-						for (var i = 0; i < elfins.length; i++) {
-							var elfin = elfins[i];
-							var point = hbGeoService.getElfinBasePoint(elfin);
-							// Not every elfin has a base point
-							if (point) {
-								elfinsLv03CoordList.push( { "id": elfin.Id , "coord" : {"xEastingLng":point.X,"yNorthingLat":point.Y,"zAltitude":500} });
-							}
-						}
+//						var elfinsLv03CoordList = new Array(0);
+//						for (var i = 0; i < elfins.length; i++) {
+//							var elfin = elfins[i];
+//							var point = hbGeoService.getElfinBasePoint(elfin);
+//							// Not every elfin has a base point
+//							if (point) {
+//								elfinsLv03CoordList.push( { "id": elfin.Id , "coord" : {"xEastingLng":point.X,"yNorthingLat":point.Y,"zAltitude":500} });
+//							}
+//						}
 						
 						//getLongitudeLatitudeCoordinatesList
-						if (elfinsLv03CoordList.length > 0) {
-        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinatesList().post(elfinsLv03CoordList).then(
-        						function(latLngList) {
+//						if (elfinsLv03CoordList.length > 0) {
+//        					hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinatesList().post(elfinsLv03CoordList).then(
+//        						function(latLngList) {
                 					//console.debug(">>>> received latLngList: \n" + angular.toJson(latLngList));
-                					if (latLngList.length === elfinsLv03CoordList.length) {
-                    					$log.debug(">>>> Received latLngList with identical size to elfins, proceed augmenting elfins with latLng: " + new Date());
-                    					for (var i = 0; i < elfins.length; i++) {
-    										var elfin = elfins[i];
-    										// TODO: WRONG: elfinsLv03CoordList is a subset of elfins, positions are not reliable...
-    										//var elfinBasePointLatLng = latLngList[i];
-    										// DONE: fix: 
-    										//{ "id" : "G20050614154558416", "coord" : {"xEastingLng":6.870381147999981,"yNorthingLat":46.75041887900018,"zAltitude":526.5498500065878} }
-    										var elfinBasePointLatLng = _.find(latLngList, function(latLngEl){ return latLngEl.id == elfin.Id; });
-    										if (elfinBasePointLatLng) {
-    											elfin.augment = {"basePoint":{"latLng" : elfinBasePointLatLng.coord}};
-    										} else {
-    											$log.debug(">>>> Not augmenting elfin with Id " + elfin.Id );
-    										}
-    									}
-                    					$log.debug(">>>> Augmenting elfins with latLng done: " + new Date());
+//                					if (latLngList.length === elfinsLv03CoordList.length) {
+//                    					$log.debug(">>>> Received latLngList with identical size to elfins, proceed augmenting elfins with latLng: " + new Date());
+//                    					for (var i = 0; i < elfins.length; i++) {
+//    										var elfin = elfins[i];
+//    										// TODO: WRONG: elfinsLv03CoordList is a subset of elfins, positions are not reliable...
+//    										//var elfinBasePointLatLng = latLngList[i];
+//    										// DONE: fix: 
+//    										//{ "id" : "G20050614154558416", "coord" : {"xEastingLng":6.870381147999981,"yNorthingLat":46.75041887900018,"zAltitude":526.5498500065878} }
+//    										var elfinBasePointLatLng = _.find(latLngList, function(latLngEl){ return latLngEl.id == elfin.Id; });
+//    										if (elfinBasePointLatLng) {
+//    											elfin.augment = {"basePoint":{"latLng" : elfinBasePointLatLng.coord}};
+//    										} else {
+//    											$log.debug(">>>> Not augmenting elfin with Id " + elfin.Id );
+//    										}
+//    									}
+//                    					$log.debug(">>>> Augmenting elfins with latLng done: " + new Date());
                 					
                         				var objects = [];
                         				// We want this marker hbLayer to be on top 
                         				var currentObjectMarkerLayer = null;
 
-                						var countWithLatLng = 0;
-                						var countWithoutLatLng = 0;
+//                						var countWithLatLng = 0;
+//                						var countWithoutLatLng = 0;
                         				
                 						angular.forEach(elfins, function (elfin) {
 
                 							// [augment][basePoint][latLng]
                 							
                 							//if (elfin.hasOwnProperty("latLng")) {
-                							if (hbUtil.hasNestedProperty(elfin, "augment", "basePoint", "latLng")) {
-                								countWithLatLng++;
-                							} else {
-                								countWithoutLatLng++;
-                							}
+//                							if (hbUtil.hasNestedProperty(elfin, "augment", "basePoint", "latLng")) {
+//                								countWithLatLng++;
+//                							} else {
+//                								countWithoutLatLng++;
+//                							}
                 							
                 	                        var objectLayerStyle = {};
                                         	var objectLayer = null;
@@ -188,7 +188,7 @@
                 							pushLayer(objectLayer, objects, elfin);
                 	                    });
                 						
-                						$log.debug(">>>> layer had " + countWithLatLng + " elfins with latLng, " + countWithoutLatLng + " without latLng." );
+//                						$log.debug(">>>> layer had " + countWithLatLng + " elfins with latLng, " + countWithoutLatLng + " without latLng." );
                 						
                 						// If available put currentObjectMarkerLayer on top of objects array
                 						pushLayer(currentObjectMarkerLayer, objects, $scope.elfin);
@@ -203,16 +203,19 @@
                                             $scope.guideLayers.push(layers.overlays[overlayId]);
                 	                    });
 
-                					} else {
-                    					$log.debug(">>>> ERROR: Received latLngList with size " + latLngList.length + ", elfins size = " + elfins.length);
-                					}
+//                					} else {
+//                    					$log.debug(">>>> ERROR: Received latLngList with size " + latLngList.length + ", elfins size = " + elfins.length);
+//                					}
                 					
-        						}, 
-	            				function(response) {
-	            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
-	            				}
-        					);
-						}
+//        						}, 
+//	            				function(response) {
+//	            					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+//	            				}
+//        					);
+        					// END with hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinatesList().post
+        					
+        					
+//						}
 	                    
 					},
 					function(response) {
@@ -347,7 +350,7 @@
             	 * sw: South West, ne: North East.
             	 */
             	function setImageBounds(imageUrl_p, swLv03Point, neLv03Point, map_p) {
-            		
+            		$log.debug(">>>>>>>>>>>>>>>>>>>>>> EXPECTED NOT USED setImageBounds() <<<<<<<<<<<<<<<<<<<<<<<<<<");
             		// TODO: XGYGZG instead of remote call
                 	hbGeoSwissCoordinatesService.getLongitudeLatitudeCoordinates(swLv03Point.x,swLv03Point.y).get().then(
             				function(swLatLng) {
