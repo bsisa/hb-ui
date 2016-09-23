@@ -212,7 +212,7 @@
 					var augmentedImmeubles = new Array();
 					for (var i = 0; i < immeubleElfins.length; i++) {
 						var currImmeuble = immeubleElfins[i];
-						$log.debug(">>>> getAugmentedImmeubles - immeubleElfins[i].Id = " + currImmeuble.Id);						
+						//$log.debug(">>>> getAugmentedImmeubles - immeubleElfins[i].Id = " + currImmeuble.Id);						
 						//var xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION' and PARTENAIRE/PROPRIETAIRE/@NOM='"+currImmeuble.PARTENAIRE.PROPRIETAIRE.NOM+"' and IDENTIFIANT/DE='"+currentYear+"'][substring-before(IDENTIFIANT/OBJECTIF,'.')='"+currImmeuble.IDENTIFIANT.OBJECTIF+"']";				
 						// Perform PRESTATION query work
 						var currPrestation = _.find(prestationElfins, function(prestaElfin){ 
