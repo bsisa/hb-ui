@@ -19,30 +19,31 @@
 		<table class="table table-condensed table-bordered table-striped">
 			<thead>
 				<tr>
-					<th class="col-md-1">POS</th>
-					<th class="col-md-1">FONCTION</th>
-					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC"><strong>X</strong></th>
-					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><strong>XS</strong></th>
+					<th rowspan="{{coordinateType === COORDINATE_TYPE.GEOGRAPHIC ? 3 : 2;}}" class="col-md-1" style="vertical-align: top;">POS</th>
+					<th rowspan="{{coordinateType === COORDINATE_TYPE.GEOGRAPHIC ? 3 : 2;}}" class="col-md-1" style="vertical-align: top;">FONCTION</th>
+					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">X</th>
+					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">XS</th>
 					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Y</th>
 					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">YS</th>
 					<th class="col-md-3 label label-primary" ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">Z</th>
 					<th class="col-md-3 label label-success" ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC">ZS</th>					
-					
-<!-- 					<th class="col-md-1" ></th> -->
+				</tr>
+				<tr ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">
+					<th class="col-md-3 label label-primary" >XG</th>
+					<th class="col-md-3 label label-primary" >YG</th>
+					<th class="col-md-3 label label-primary" >ZG</th>				
 				</tr>
 				<tr>					
-					<th colspan="2" class="col-md-2" ></th>
 					<th class="col-md-3" >CLASSE</th>
 					<th class="col-md-3" >Id</th>
 					<th class="col-md-3" >ID_G</th>
-<!-- 					<th class="col-md-1" ></th> -->
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat-start="point in elfin.FORME.POINT">
-					<td rowspan="2"><input type="text" class="form-control"
+					<td rowspan="{{coordinateType === COORDINATE_TYPE.GEOGRAPHIC ? 3 : 2;}}"><input type="text" class="form-control"
 						ng-model="point.POS"></td>
-					<td rowspan="2"><input type="text" class="form-control"
+					<td rowspan="{{coordinateType === COORDINATE_TYPE.GEOGRAPHIC ? 3 : 2;}}"><input type="text" class="form-control"
 						ng-model="point.FONCTION"></td>
 					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC" ><input type="number" class="form-control" ng-model="point.X"></td>
 					<td ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC"><input type="number" class="form-control" ng-model="point.Y"></td>
@@ -50,19 +51,19 @@
 					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC" ><input type="number" class="form-control" ng-model="point.XS"></td>
 					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><input type="number" class="form-control" ng-model="point.YS"></td>
 					<td ng-show="coordinateType === COORDINATE_TYPE.SCHEMATIC"><input type="number" class="form-control" ng-model="point.ZS"></td>
-
-<!-- 					<td>Détail</td> -->
+				</tr>
+				<tr ng-show="coordinateType === COORDINATE_TYPE.GEOGRAPHIC">
+					<td><input type="number" class="form-control" ng-model="point.XG"></td>
+					<td><input type="number" class="form-control" ng-model="point.YG"></td>
+					<td><input type="number" class="form-control" ng-model="point.ZG"></td>
 				</tr>
 				<tr ng-repeat-end>
-<!-- 					<td ></td> -->
-<!-- 					<td ></td> -->
 					<td><input type="text" class="form-control"
 						ng-model="point.CLASSE"></td>
 					<td><input type="text" class="form-control"
 						ng-model="point.Id"></td>
 					<td><input type="text" class="form-control"
 						ng-model="point.ID_G"></td>
-<!-- 					<td ></td> -->
 				<tr>
 			</tbody>
 		</table>
