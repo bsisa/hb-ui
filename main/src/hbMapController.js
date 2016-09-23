@@ -716,24 +716,62 @@
             	// If the snappedLayer elfin is not the same elfin as the current selected elfin update 
             	// base point Id, ID_G, CLASSE with snapped elfin.
                 var snappedExternalBasePoint = hbGeoService.getElfinBasePoint(scope.snappedLayer.elfin);
+                
+                $log.debug("UPDATE BASE POINT (New ELFIN) with: X,Y,Z and XG, YG, ZG = " + snappedExternalBasePoint.X + ", " + snappedExternalBasePoint.Y + ", " + snappedExternalBasePoint.Z + " and " + snappedExternalBasePoint.XG + ", " + snappedExternalBasePoint.YG + ", " + snappedExternalBasePoint.ZG);
+                
                 currentElfinBasePoint.X = snappedExternalBasePoint.X;
                 currentElfinBasePoint.Y = snappedExternalBasePoint.Y;
+                // TODO: Review general behaviour to altitude/elevation missing data
+                //currentElfinBasePoint.Z = snappedExternalBasePoint.Z;
+                currentElfinBasePoint.XG = snappedExternalBasePoint.XG;
+                currentElfinBasePoint.YG = snappedExternalBasePoint.YG;
+                // TODO: Review general behaviour to altitude/elevation missing data
+                //currentElfinBasePoint.ZG = snappedExternalBasePoint.ZG;
                 currentElfinBasePoint.Id = scope.snappedLayer.elfin.Id + '#' + snappedExternalBasePoint.POS;
                 currentElfinBasePoint.ID_G = scope.snappedLayer.elfin.ID_G;
                 currentElfinBasePoint.CLASSE = scope.snappedLayer.elfin.CLASSE;
 
+                $scope.$emit(HB_EVENTS.ELFIN_UPDATED, scope.elfin);
+                
             } else {
-                var coords = hbGeoService.getSwissFederalCoordinates(marker.getLatLng().lat,marker.getLatLng().lng);
+            	
+            	var mLat = marker.getLatLng().lat;
+            	var mLng = marker.getLatLng().lng;
 
-                currentElfinBasePoint.X = coords.x;
-                currentElfinBasePoint.Y = coords.y;
-                // TODO: Shouldn't we preserve existing Id, ID_G, CLASSE instead of resetting them ?
-                currentElfinBasePoint.Id = null;
-                currentElfinBasePoint.ID_G = null;
-                currentElfinBasePoint.CLASSE = null;
+                // TODO: Review general behaviour to altitude/elevation missing data
+            	// Not defined...
+            	//var mAlt = marker.getLatLng().alt;
+            	//$log.debug("mAlt value is: " + mAlt);
+            	
+            	// TODO: Replace with precise remote service.
+                var coords = hbGeoService.getSwissFederalCoordinates(mLat,mLng);
+                
+                //{"xEastingLng":556579.9999894347,"yNorthingLat":177849.99994494472,"zAltitude":477.0001448848506}
+                hbGeoSwissCoordinatesService.getSwissFederalCoordinates(mLng, mLat).get().then(
+                		function(mLatLng) {
+
+                			// Precise GPS to LV03 conversion
+        	                currentElfinBasePoint.X = mLatLng.xEastingLng;
+        	                currentElfinBasePoint.Y = mLatLng.yNorthingLat;
+        	                //currentElfinBasePoint.Z = mLatLng.zAltitude
+        	                // Direct end user leaflet selected values. 
+        	                currentElfinBasePoint.XG = mLng;
+        	                currentElfinBasePoint.YG = mLat;
+        	                // currentElfinBasePoint.ZG = mAlt;
+        	                
+        	                // TODO: Shouldn't we preserve existing Id, ID_G, CLASSE instead of resetting them ?
+        	                // This means BASE point refers to self elfin.Id/CLASSE/ID_G 
+        	                currentElfinBasePoint.Id = null;
+        	                currentElfinBasePoint.ID_G = null;
+        	                currentElfinBasePoint.CLASSE = null;        					
+        	
+        	                $scope.$emit(HB_EVENTS.ELFIN_UPDATED, scope.elfin);
+						}, 
+        				function(response) {
+        					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
+        				}
+        			);
             }
-
-            $scope.$emit(HB_EVENTS.ELFIN_UPDATED, scope.elfin);
         };
         
         // ================================================================
