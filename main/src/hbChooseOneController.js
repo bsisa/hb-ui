@@ -85,11 +85,21 @@
 							
 							// ============================================================
 							// Custom search field used to filter elfins
-							// ============================================================    	
+							// ============================================================
+							// End user search field
 							$scope.search = { text: ""};
+							// Filter search criterion restraining search to property named: columnsDefinition[0].field
+							$scope.dynCol = {};  
 							
-							$scope.$watch('search.text', function() { 
-								$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);								
+							$scope.$watch('search.text', function() {
+								// Create dynamic search object with property name matching target elfin 
+								// property name only.
+								$scope.dynCol[columnsDefinition[0].field] = $scope.search.text;
+								$scope.elfins = $filter('filter')(elfins, $scope.dynCol , false);
+								// The following filters on any property of each elfin which provides
+								// unexpected matches to end user only presented with:
+								// ELFIN[columnsDefinition[0].field] information.
+								//$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);
 							}, true);
 							// ============================================================
 							
