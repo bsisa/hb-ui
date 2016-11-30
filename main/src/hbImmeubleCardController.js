@@ -30,6 +30,8 @@
     
 									//$log.debug("    >>>> Using HbImmeubleCardController with $locale.id = " + $locale.id);
 					 			
+					 				// Expose hbUtil function to scope for use from view.
+					 				var hbUtil = hbUtil;
 
                                     // ================= Tab state management - start =============
 					 				/**

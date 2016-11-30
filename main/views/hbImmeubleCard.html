@@ -800,7 +800,7 @@
 											</thead>
 											<tbody ng-show="commandes">
 												<tr
-													ng-repeat="commande in commandes">
+													ng-repeat="commande in commandes" ng-init="totalRes = hbUtil.getOrderTotalNetInclTaxes(commande)">
 													<td><div hb-card-view-link hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}"></div></td>
 													<td><div hb-annexes-link hb-annexes-link-elfin="commande"></div></td>
 													<!-- Order nb -->
@@ -810,7 +810,9 @@
 													<!-- Estimation/Quote date -->
 													<td class="date">{{commande.IDENTIFIANT.DE}}</td>
 													<!-- Amount -->
-													<td class="number">{{commande.IDENTIFIANT.VALEUR | currency:'CHF'}}</td>
+													<td class="number" ng-show="totalRes.exists">{{totalRes.value | currency:'CHF'}}</td>
+													<td class="number" ng-show="!totalRes.exists">-</td>
+													
 													<!-- Enterprise name -->
 													<td>{{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}</td>				
 													<!-- Order description... -->

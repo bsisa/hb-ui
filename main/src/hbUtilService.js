@@ -327,6 +327,36 @@
 			
 		};
 		
+		/**
+		 * Returns a result { "exists" : boolean, "value" : totalNetInclTaxes } object 
+		 * with the "exists" property set to true if the result if found and 
+		 * "value" property set to amount defined. Otherwise return false/0.  
+		 */
+		var getOrderTotalNetInclTaxes = function(order) {
+			console.log("CONSOLE: getOrderTotalNetInclTaxes");
+			$log.debug(">>>> getOrderTotalNetInclTaxes");
+			var totalNetInclTaxesResult = {
+											"exists" : false,
+											"value" : 0
+										};
+			for (var i = 0; i < order.CARACTERISTIQUE.FRACTION.L.length; i++) {
+				var line = order.CARACTERISTIQUE.FRACTION.L[i];
+				if (line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL_INCL_TAX ) {
+					// Parse string to float
+					totalNetInclTaxesResult.value = parseFloat(line.C[4].VALUE);
+					// Set result exists only if present AND is a number.
+					if (typeof NaN !== totalNetInclTaxesResult.value) {
+						totalNetInclTaxesResult.exists = true;	
+					}
+					break; // Only a single total net incl. taxes amount can be defined.
+				}
+				
+			}
+			return totalNetInclTaxesResult;
+		};
+		
+		
+		
 		
 		// ====================================================================
 		//     ELFIN.ANNEXE specific management
@@ -1151,6 +1181,7 @@
         	getOrderConfirmationIntroduction:getOrderConfirmationIntroduction,
         	getOrderContractIntroduction:getOrderContractIntroduction,
         	getOrderPurchaseIntroduction:getOrderPurchaseIntroduction,
+        	getOrderTotalNetInclTaxes:getOrderTotalNetInclTaxes,
         	
         	renumberPos:renumberPos,
         	reorderArrayByPOS:reorderArrayByPOS,
