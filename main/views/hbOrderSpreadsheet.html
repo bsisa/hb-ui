@@ -114,7 +114,7 @@
 <!-- 								ng-trim='false' > -->
 <!-- 						</div> -->
 						<!-- Entry line with non editable amount (for instance compute from rate parameter and gross amount...) -->
-						<div class="form-control-static" ng-if="!lineValueEditable(line) || !editable" ng-class="amountStyleClass(line)" >{{line.C[4].VALUE}}</div>
+						<div class="form-control-static" ng-if="!lineValueEditable(line) || !editable" ng-class="amountStyleClass(line)" >{{line.C[4].VALUE | currency:'CHF'}}</div>
 					</div>
 					<div class="col-sm-6 col-sm-offset-6 text-danger text-right" ng-if="lineForm.orderLineAmount.$error.pattern">Le montant doit être <strong>un nombre</strong> valide!</span></div>
 					<div class="col-sm-3 col-sm-offset-6 text-danger text-right" ng-if="lineForm.orderLineRate.$error.pattern">Le taux doit être <strong>un nombre</strong> valide!</span></div>
