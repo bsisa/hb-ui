@@ -16,9 +16,10 @@
 							'hbAlertMessages',
 							'hbUtil',
 							'hbQueryService',
+							'uiGridConstants',
 							function($scope, $attrs, GeoxmlService, $modal,
 									$routeParams, $location, $log, $timeout,
-									hbAlertMessages, hbUtil, hbQueryService) {
+									hbAlertMessages, hbUtil, hbQueryService, uiGridConstants) {
 
 								//$log.debug("    >>>> Using HbContratCardController");
 
@@ -269,8 +270,9 @@
 
 					            // Parameters to hbChooseOne service function for ACTOR selection
 					            $scope.actorChooseOneColumnsDefinition = [
-						                        		   		            { field:"GROUPE", displayName: "Groupe"}
-						                        		   	 		   		];
+						                        		   		            { field:"GROUPE", displayName: "Groupe", sort: { direction: uiGridConstants.ASC, priority: 1} }
+						                        		   	 		   		];					            
+					            
 					            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';								
 
 							} ]);
