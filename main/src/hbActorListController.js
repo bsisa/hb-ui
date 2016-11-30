@@ -4,8 +4,8 @@
     
     	$log.debug("    >>>> HbActorListController called... " );
 
-    	// Default order is by "Building management" 
-    	$scope.predicate = 'IDENTIFIANT.OBJECTIF';
+    	// Default order is by "ELFIN.GROUPE" 
+    	$scope.predicate = 'GROUPE';
     	$scope.reverse = false;
 
     	// Object holding user entered search (filter) criteria 
