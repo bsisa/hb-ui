@@ -333,8 +333,7 @@
 		 * "value" property set to amount defined. Otherwise return false/0.  
 		 */
 		var getOrderTotalNetInclTaxes = function(order) {
-			console.log("CONSOLE: getOrderTotalNetInclTaxes");
-			$log.debug(">>>> getOrderTotalNetInclTaxes");
+
 			var totalNetInclTaxesResult = {
 											"exists" : false,
 											"value" : 0
