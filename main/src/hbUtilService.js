@@ -220,6 +220,9 @@
 			return L;
 		};
 		
+		/**
+		 * Returns an empty set of lines design for order confirmation.
+		 */
 		var getOrderConfirmationLines = function() {
 			
 			var Ls = [
@@ -235,6 +238,11 @@
 			return Ls;
 		};
 			
+		/**
+		 * Returns an empty set of lines design for order contract. Order contract means 
+		 * contract "in the context of order management", indeed other contract already 
+		 * exists in a different context.
+		 */		
 	    var getOrderContractLines = function() {
 			
 			var Ls = [
@@ -253,6 +261,11 @@
 			return Ls;
 		}; 
 	    	
+		/**
+		 * Returns an empty set of lines design for purchase order.
+		 * Currently purchase order does not have any amount nor lines
+		 * thus resetting any by an empty array.
+		 */
 	    var getOrderPurchaseLines = function() {
 			
 			var Ls = [ ];
