@@ -315,11 +315,10 @@
 		};
 		
 		
-		
-		
-		
-		
-		
+		// ====================================================================
+		//     ELFIN.ANNEXE specific management
+		// ====================================================================		
+	
 		var getAnnexeRenvoiIndexByPos = function(elfin, RenvoiPos) {
 			
 			for (var i=0; i < elfin.ANNEXE.RENVOI.length; i++) {
@@ -348,6 +347,10 @@
 		};			
 		
 		
+		// ====================================================================
+		//     Generic POS attribute management
+		// ====================================================================
+		
         /**
          * Function used to renumber POS attributes for instance when element removal takes place.
          */
@@ -367,6 +370,10 @@
             }
         }		
 		
+		// ====================================================================
+		//     ELFIN.IDENTIFIANT.DE specific management
+		// ====================================================================        
+        
     	/**
     	 * Sort elfins by IDENTIFIANT.DE
     	 */
