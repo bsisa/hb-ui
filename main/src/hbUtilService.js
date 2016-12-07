@@ -833,6 +833,42 @@
                 }        		
         	}
         };
+        
+        /**
+         * Performs create or update of 'target' object property at 'path' with newValue 
+         * given a target object a path defined JSON path as string and a new 
+         * value to assign.
+         * 
+         * For instance: initPath(elfin, 'IDENTIFIANT.NOM', 'Nouveau nom')
+         * It will support elfin without previous IDENTIFIANT property on the contrary
+         * of corresponding applyPath function. Refactoring to avoid code duplication
+         * between the two functions must be carried out. Although initPath MODIFIES 
+         * target data structure on the contrary of applyPath which only updates values
+         * of existing data structure, thus great care must be taken not to introduce
+         * unintended potentialy catastrophic side effects.
+         * 
+         */
+        var initPath = function(target, path, newValue) {
+        	// The path is expected to be a string.
+        	if (!angular.isString(path)) {
+                  return;
+            }
+            var pathComponents = path.split('.');
+            var objectRef = target;
+            var index;
+            for (index = 0; index < pathComponents.length; ++index) {
+                var pathElement = pathComponents[index];
+                if (index == pathComponents.length - 1) {
+                	// Assign the new value
+                    objectRef[pathElement] = newValue;
+                } else {
+                	// Create empty prop
+                	objectRef[pathElement] = {};
+                    // Go down a level
+                    objectRef = objectRef[pathElement];
+                }
+            }
+        };	        
                 
 
 		// ============================================================
@@ -1195,6 +1231,7 @@
         	getValueAtPath:getValueAtPath,
         	hasNestedProperty:hasNestedProperty,
         	icontains:icontains,
+        	initPath:initPath,
         	isActionAuthorised:isActionAuthorised,
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
