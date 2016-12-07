@@ -88,18 +88,48 @@
 							// ============================================================
 							// End user search field
 							$scope.search = { text: ""};
-							// Filter search criterion restraining search to property named: columnsDefinition[0].field
-							$scope.dynCol = {};  
 							
+							// Filter search criterion restraining search to property named: columnsDefinition[i].field
+							$scope.dynSearchObj = { };
+
+							// Create properties defined in columns definition for dynamic search object, supporting
+							// multilevels nested properties.
+							for (var i = 0; i < columnsDefinition.length; i++) {
+								var colDefFieldPath = columnsDefinition[i].field;
+								hbUtil.initPath($scope.dynSearchObj, colDefFieldPath, "");
+							}
+
+							// Custom filter predicate function 
+					        var matchAny = function(actual, index, array) {
+					        	var expected = $scope.dynSearchObj;
+					        	
+					        	for (var i = 0; i < columnsDefinition.length; i++) {
+									var colDefFieldPath = columnsDefinition[i].field;
+									var actualValue = hbUtil.getValueAtPath(actual, colDefFieldPath);
+									var expectedValue = hbUtil.getValueAtPath(expected, colDefFieldPath);
+									if ( hbUtil.icontains(actualValue, expectedValue) ) {
+										return true;
+									}
+					        	}
+					        	
+					        	return false;
+					        };
+								
 							$scope.$watch('search.text', function() {
-								// Create dynamic search object with property name matching target elfin 
-								// property name only.
-								$scope.dynCol[columnsDefinition[0].field] = $scope.search.text;
-								$scope.elfins = $filter('filter')(elfins, $scope.dynCol , false);
-								// The following filters on any property of each elfin which provides
-								// unexpected matches to end user only presented with:
-								// ELFIN[columnsDefinition[0].field] information.
-								//$scope.elfins = $filter('filter')(elfins, $scope.search.text , false);
+
+								//
+								// Update dynamic search object
+								//
+								// Warning: Information at columnsDefinition[x].field can be nested 
+								// multilevel property such as: 'IDENTIFIANT.OBJECTIF'
+								for (var i = 0; i < columnsDefinition.length; i++) {
+									var colDefFieldPath = columnsDefinition[i].field;
+									hbUtil.applyPath($scope.dynSearchObj, colDefFieldPath, $scope.search.text);	
+								}
+
+								// Use custom predicate function `matchAny` to achieve `OR` search on 
+								// defined properties only.
+								$scope.elfins = $filter('filter')(elfins, matchAny);
 							}, true);
 							// ============================================================
 							
