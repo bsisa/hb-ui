@@ -34,6 +34,12 @@
 							    		if ($attrs.hbMode === "create") {
 							    			if ($routeParams.sai) {
 							    				$scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
+							    				
+										        // Prototype generic link to creation source/parent - done for SDS.
+										        $scope.elfin.SOURCE = $routeParams.idg +"/"+$routeParams.classe+"/"+$routeParams.id;							    				
+//										        $scope.elfin.FILIATION.PARENT[0].Id = $routeParams.id;
+//										        $scope.elfin.FILIATION.PARENT[0].ID_G = $routeParams.idg;
+//										        $scope.elfin.FILIATION.PARENT[0].CLASSE = $routeParams.classe;
 							    				// Reset choices list init. values.
 							    				$scope.elfin.CARACTERISTIQUE.CAR1.UNITE = '';
 							    				$scope.elfin.CARACTERISTIQUE.CAR1.VALEUR = '';
