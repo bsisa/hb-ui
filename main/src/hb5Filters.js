@@ -48,7 +48,9 @@
 	// ================================================================
 	
 	/** 
-	 * case insensitive string contains check
+	 * TODO: Move to hbUtil. 
+	 * 
+	 * Case insensitive string contains check
 	 */
 	var icontains = function (targetString, matchString) {
 		
@@ -1100,7 +1102,42 @@
 	}]);	
 	
 	
+	angular.module('hb5').filter('matchAnyFilter', [function () {
+		
 	
+		return function (os, expected) {
+			
+			var checkAnyMatch = function(obj, exp) {
+				
+				var anyMatch = false;
+				
+				for (var property in exp) {
+				   console.log("Property name: " + property + ", obj value: " + obj[property] + ", exp value: " + exp[property]);
+				   if ( icontains(obj[property], exp[property]) ) {
+					   anyMatch = true;
+					   break;
+				   }
+				}
+				return anyMatch;				
+			};
+			
+	        if (!angular.isUndefined(os) && !angular.isUndefined(expected)) {
+			
+	        	var tmpOs = [ ];
+			
+				for (var i = 0; i < os.length; i++) {
+					var currObj = os[i];
+					if (checkAnyMatch(currObj, expected) ) {
+						tmpOs.push(currObj);
+					}
+				}
+				return tmpOs;
+	        } else {
+	        	return os;
+	        }
+		};
+
+	}]);	
 	
 	
 	/**

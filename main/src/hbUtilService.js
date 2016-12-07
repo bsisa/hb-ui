@@ -26,6 +26,40 @@
 		// ============================================================
 
         
+        
+        
+    	/** 
+    	 * TODO: Remove from hb5Filters 
+    	 * 
+    	 * Case insensitive string contains check
+    	 */
+    	var icontains = function (targetString, matchString) {
+    		
+    		// Support textual search for number type
+    		if (typeof targetString === "number" && targetString !== NaN && targetString !== undefined && targetString !== null) {
+    			targetString = targetString.toString();
+    		}
+    		
+    		if (matchString && matchString.trim().length > 0) {
+    			if (targetString) {
+    				if (targetString.toLowerCase().indexOf(matchString.toLowerCase()) != -1) {
+    					return true;
+    				} else {
+    					return false;
+    				}					
+    			} else { // If a match string is defined and there is no target string we consider it a non match.
+    				return false;
+    			}
+    		} else {
+    			// returns true if match string empty or undefined.
+    			return true;
+    		}
+
+    	};        
+        
+        
+        
+        
 		/**
 		 * Get ELFIN/CARACTERISTIQUE/CARSET/CAR by CAR.POS (CAR@POS)
 		 * instead of array position. If not found currentCAR === undefined
@@ -1160,6 +1194,7 @@
         	getToken:getToken,
         	getValueAtPath:getValueAtPath,
         	hasNestedProperty:hasNestedProperty,
+        	icontains:icontains,
         	isActionAuthorised:isActionAuthorised,
         	isValidDateFromHbTextDateFormat:isValidDateFromHbTextDateFormat,
         	isValidDateTimeFromHbTextDateTimeFormat:isValidDateTimeFromHbTextDateTimeFormat,
