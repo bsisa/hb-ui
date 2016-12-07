@@ -19,8 +19,9 @@
 					'HB_ROLE_FONCTION',
 					'userDetails',
 					'hbQueryService',
+					'uiGridConstants',
 					function($attrs, $rootScope, $scope, GeoxmlService, $modal, $routeParams,
-							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, HB_REGEXP, HB_ROLE_FONCTION, userDetails, hbQueryService) {
+							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, HB_REGEXP, HB_ROLE_FONCTION, userDetails, hbQueryService, uiGridConstants) {
 
 						//$log.debug("    >>>> Using ConstatCardController ");
 
@@ -349,29 +350,25 @@
 			            
 			            // Parameters to hbChooseOne service function for ACTOR selection
 			            $scope.actorCollaboratorChooseOneColumnsDefinition = [
-			                        		   		            { field:"GROUPE", displayName: "Groupe"},
-			                        		   		            { field:"IDENTIFIANT.NOM", displayName: "Nom"},
-			                        		   		            { field:"IDENTIFIANT.ALIAS", displayName: "Prénom"}
+			                        		   		            { field:"GROUPE", displayName: "Groupe", sort: { direction: uiGridConstants.ASC, priority: 3} },
+			                        		   		            { field:"IDENTIFIANT.NOM", displayName: "Nom", sort: { direction: uiGridConstants.ASC, priority: 1} },
+			                        		   		            { field:"IDENTIFIANT.ALIAS", displayName: "Prénom", sort: { direction: uiGridConstants.ASC, priority: 2} }
 			                        		   	 		   		];
 
 			            $scope.actorReportedByChooseOneColumnsDefinition = [
-				                        		   		            { field:"GROUPE", displayName: "Nom/Abréviation"},
-				                        		   		            { field:"IDENTIFIANT.QUALITE", displayName: "Role"},				                        		   		         
+				                        		   		            { field:"GROUPE", displayName: "Nom/Abréviation", sort: { direction: uiGridConstants.ASC, priority: 1} },
+				                        		   		            { field:"IDENTIFIANT.QUALITE", displayName: "Role" , sort: { direction: uiGridConstants.ASC, priority: 2} },				                        		   		         
 				                        		   	 		   		];
-			            
 			            $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';
 
 			            // Parameter to hbChooseOne service function for ConstatType selection
-			            $scope.constatTypeChooseOneColumnsDefinition = [
-			                        		   		            { field:"value", displayName: "name"}
-			                        		   	 		   		];
+			            $scope.constatTypeChooseOneColumnsDefinition = [ { field:"value", displayName: "name", sort: { direction: uiGridConstants.ASC, priority: 1} } ];
 			            $scope.constatTypesChooseOneTemplate = '/assets/views/chooseOneConstatType.html';
 			            
 			            $scope.uniteLocativeChooseOneColumnsDefinition = [
-						                        		   		            { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI"},
-						                        		   		         { field:"PARTENAIRE.USAGER.VALUE", displayName: "Locataire"}
-						                        		   	 		   		]; 
-			            
+						                        		   		         { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI", sort: { direction: uiGridConstants.ASC, priority: 1} },
+						                        		   		         { field:"PARTENAIRE.USAGER.VALUE", displayName: "Locataire", sort: { direction: uiGridConstants.ASC, priority: 2} }
+						                        		   	 		   ];			            
 			            $scope.uniteLocativesChooseOneTemplate = '/assets/views/chooseOneUniteLocative.html';
 			            
 						
