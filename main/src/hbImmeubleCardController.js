@@ -184,7 +184,7 @@
 									 */
 									$scope.createNewProductionChaleur  = function() {
 										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF, id: $scope.elfin.Id, classe : $scope.elfin.CLASSE, idg : $scope.elfin.ID_G}
 											$location.search(searchObj).path( "/elfin/create/PRODUCTION_CHALEUR" );
 										}
 									};

@@ -89,6 +89,10 @@
 									});
 					            
 								if ( $attrs.hbMode === "create" ) {
+
+							        // Prototype generic link to creation source/parent - done for SDS.
+							        $scope.elfin.SOURCE = $routeParams.idg +"/"+$routeParams.classe+"/"+$routeParams.id;
+									
 									// Reset default xxx from catalogue
 									$scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
 									$scope.elfin.IDENTIFIANT.ORIGINE = $routeParams.nocons;
