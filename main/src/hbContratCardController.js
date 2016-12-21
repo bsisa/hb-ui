@@ -22,8 +22,7 @@
 									hbAlertMessages, hbUtil, hbQueryService, uiGridConstants) {
 
 								//$log.debug("    >>>> Using HbContratCardController");
-
-								
+							
 						    	// Check when elfin instance becomes available 
 						    	$scope.$watch('elfin.Id', function() { 
 						    		
@@ -51,6 +50,42 @@
 							    			$scope.elfin.GROUPE = "";
 							    		} else {
 						    				updatePrestationIIOptions($scope.prestationsOptionsData, $scope.elfin.CARACTERISTIQUE.CAR1.UNITE);
+						    				
+						    				
+						    				// ====
+						    				
+							    			// Links to buildings - Process selectionImmeuble if available
+											if ($routeParams.selectionImmeuble) {
+												
+							 					$log.debug("$routeParams.selectionImmeuble = " + $routeParams.selectionImmeuble);
+							 					// Parse building selection string
+							 					var parentSelectionStrSplit = $routeParams.selectionImmeuble.split('/');
+							 					var parentSelection = {
+							 						"ID_G" : parentSelectionStrSplit[0],
+							 						"CLASSE" : parentSelectionStrSplit[1],
+							 						"Id" : parentSelectionStrSplit[2]
+							 					}
+							 					
+							 					// Get full parent elfin to allow details display in current context.
+							 					GeoxmlService.getElfin(parentSelection.ID_G, parentSelection.Id).get().then(function(elfin) {
+							 						$scope.parentElfin = elfin;
+								 					// Set SOURCE to selected building reference triplet ID_G/CLASSE/Id
+								 					$scope.elfin.SOURCE = $routeParams.selectionImmeuble;
+								 					// Update OBJECTIF information to preserve historic behaviour. With SOURCE triple it creates data redundancy. 
+							 						$scope.elfin.IDENTIFIANT.OBJECTIF = elfin.IDENTIFIANT.OBJECTIF;
+							 						// Notify and allow end-user to save parent selection modification.
+							 						$scope.elfinForm.$setDirty();
+									            }, function() {
+									            	var message = "L'objet sélectionné ID_G = " + parentSelection.ID_G + ", Id = " + parentSelection.Id +" n'a pu être obtenu. Un ajustement des configurations peut être nécessaire. Veuillez contacter votre administrateur système. (statut de retour: "+ response.status+ ")";
+										            hbAlertMessages.addAlert("warning",message);
+									            });						    								 					
+
+							 					//$scope.addBuilding($scope.selectionImmeuble);
+							 				}							    				
+						    				
+						    				// ====
+						    				
+						    				
 							    		}
 							    		
 						    		};

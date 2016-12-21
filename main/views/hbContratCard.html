@@ -27,12 +27,15 @@
 						</div>
 						<div class="form-group has-feedback col-sm-6"
 							ng-class="getCssHasFeedback(elfinForm.objectif)">
-							<label for="objectif" class="col-sm-4 control-label">Immeuble</label>
-							<div class="col-sm-8">
-								<input id="objectif" name="objectif"  type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.OBJECTIF" required>
+							<div class="col-sm-4">
+								<label for="objectif" class="col-sm-12 control-label">Immeuble <div style="display: inline-block !important;" hb-building-select-link hb-building-select-source="elfin" >affecter</div></label>
+								
+							</div>
+							<div ng-if="(parentElfin.IDENTIFIANT.OBJECTIF.trim().length > 0 ? true : false)" class="col-sm-8">
+								{{parentElfin.IDENTIFIANT.OBJECTIF}}, {{parentElfin.IDENTIFIANT.ALIAS}}
 							</div>
 						</div>
+						
 						<div class="form-group has-feedback col-sm-12"
 							ng-class="getCssHasFeedback(elfinForm.fournisseur_valeur)">
 							<label for="fournisseur_valeur" class="col-sm-2 control-label">Entreprise</label>
