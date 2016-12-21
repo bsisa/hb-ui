@@ -9,6 +9,7 @@
 
     	return {
 			restrict: 'A',
+			transclude: true,
 		    templateUrl : "/assets/views/hbBuildingSelectLink.html",
 		    scope: {
 		    	source: "=hbBuildingSelectSource"
