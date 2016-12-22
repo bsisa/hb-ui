@@ -359,8 +359,12 @@
 
 							    		//$log.debug("$watchCollection for OBJECTIF, NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 							    		
+							    		
+							    		
 							    		if ($scope.elfin!=null && $attrs.hbMode != "create") {
-								            var xpathForProductionChaleur = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and IDENTIFIANT/ORIGINE='"+$scope.elfin.IDENTIFIANT.NOM+"' and @CLASSE='PRODUCTION_CHALEUR']";
+							    			var xpathForProductionChaleurTODO = "//ELFIN[@SOURCE='"+hbUtil.getStandardSourceURI($scope.elfin)+"' and @CLASSE='PRODUCTION_CHALEUR']";
+							    			$log.debug(">>>> xpathForProductionChaleurTODO = " + xpathForProductionChaleurTODO + "<<<<");
+							    			var xpathForProductionChaleur = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and IDENTIFIANT/ORIGINE='"+$scope.elfin.IDENTIFIANT.NOM+"' and @CLASSE='PRODUCTION_CHALEUR']";
 								            hbQueryService.getProductionChaleurList(xpathForProductionChaleur)
 												.then(function(elfins) {
 														$scope.productionChaleurList = elfins;
@@ -450,7 +454,7 @@
 							    	$scope.$watch('elfin.Id', function() { 
 							    		
 							    		if ($scope.elfin!=null) {
-								            
+							    			
 											// ===========================================================
 											// Safe access to elfin.CARACTERISTIQUE.CARSET.CAR by POS 
 							    			// Relying on Js array position is not a safe option when 
