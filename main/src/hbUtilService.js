@@ -948,6 +948,14 @@
         
         
         /**
+         * Centralise standard elfin.SOURCE URI pattern
+         * 
+         */
+        var getStandardSourceURI = function(elfin) {
+        	return elfin.ID_G +"/"+elfin.CLASSE+"/"+elfin.Id;
+        };
+        
+        /**
          * Returns the dashboard URI in provided 'job' parameter if present and valid, '/' otherwise.
          */
         var getDashboarUri = function(job) {
@@ -1227,6 +1235,7 @@
         	getMomentDateFromHbTextDateTimeFormat:getMomentDateFromHbTextDateTimeFormat,
         	getMomentInHbTextFormat:getMomentInHbTextFormat,
         	getPrestationGroupForTransactionGroup:getPrestationGroupForTransactionGroup,
+        	getStandardSourceURI:getStandardSourceURI,
         	getToken:getToken,
         	getValueAtPath:getValueAtPath,
         	hasNestedProperty:hasNestedProperty,
