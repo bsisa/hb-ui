@@ -184,28 +184,28 @@
 									 */
 									$scope.createNewProductionChaleur  = function() {
 										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF, id: $scope.elfin.Id, classe : $scope.elfin.CLASSE, idg : $scope.elfin.ID_G}
+											var searchObj = {idg : $scope.elfin.ID_G, id: $scope.elfin.Id}
 											$location.search(searchObj).path( "/elfin/create/PRODUCTION_CHALEUR" );
 										}
 									};
 									
 									$scope.createNewProductionFroid  = function() {
 										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+											var searchObj = {idg: $scope.elfin.ID_G, id: $scope.elfin.Id}
 											$location.search(searchObj).path( "/elfin/create/PRODUCTION_FROID" );
 										}
 									};									
 									
 									$scope.createNewVentilation  = function() {
 										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+											var searchObj = {idg : $scope.elfin.ID_G, id: $scope.elfin.Id}
 											$location.search(searchObj).path( "/elfin/create/VENTILATION" );
 										}
 									};	
 																		
 									$scope.createNewCiterne  = function() {
 										if ($attrs.hbMode != "create") {
-											var searchObj = {nocons: $scope.elfin.IDENTIFIANT.NOM, sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
+											var searchObj = {idg : $scope.elfin.ID_G, id: $scope.elfin.Id}
 											$location.search(searchObj).path( "/elfin/create/CITERNE" );
 										}
 									};										
@@ -380,7 +380,9 @@
 											            hbAlertMessages.addAlert("danger",message);
 													});
 								            
-								            var xpathForProductionFroid = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='PRODUCTION_FROID']";								            
+								            var xpathForProductionFroid = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and @CLASSE='PRODUCTION_FROID']";
+								            // TODO: REMOVE SAI Link (requires batch data migration) 
+								            // var xpathForProductionFroid = "//ELFIN[@SOURCE='"+hbUtil.getStandardSourceURI($scope.elfin)+"']";
 								            hbQueryService.getProductionFroidList(xpathForProductionFroid)
 												.then(function(elfins) {
 														$scope.productionFroidList = elfins;
