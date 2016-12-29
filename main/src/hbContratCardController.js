@@ -23,6 +23,38 @@
 
 								//$log.debug("    >>>> Using HbContratCardController");
 							
+								
+								/**
+								 * Perform current elfin updates related to parent reference
+								 */
+								var updateElfinParentRef = function(parentElfin) {
+				 					// Set SOURCE to selected building reference triplet ID_G/CLASSE/Id
+				 					$scope.elfin.SOURCE = hbUtil.getStandardSourceURI(parentElfin);
+				 					// Update OBJECTIF information to preserve historic behaviour. With SOURCE triple it creates data redundancy. 
+			 						$scope.elfin.IDENTIFIANT.OBJECTIF = parentElfin.IDENTIFIANT.OBJECTIF;
+			 						// Notify and allow end-user to save parent selection modification.
+			 						$scope.elfinForm.$setDirty();
+								};
+								
+								/**
+								 * Loads elfin parent in scope. `updateElfinParentRef` need to be called from 
+								 * within the `GeoxmlService.getElfin` promise thus the ugly `forUpdate` pattern.
+								 */
+								var getParentElfinInScope = function(idg, id, forUpdate) {
+
+				 					// Get full parent elfin to allow details display in current context.
+				 					GeoxmlService.getElfin(idg, id).get().then(function(elfin) {
+				 						$scope.parentElfin = elfin;
+				 						if (forUpdate) {
+				 							updateElfinParentRef(elfin);
+				 						}
+						            }, function() {
+						            	var message = "L'objet sélectionné ID_G = " + parentSelection.ID_G + ", Id = " + parentSelection.Id +" n'a pu être obtenu. Un ajustement des configurations peut être nécessaire. Veuillez contacter votre administrateur système. (statut de retour: "+ response.status+ ")";
+							            hbAlertMessages.addAlert("warning",message);
+						            });									
+								};
+								
+								
 						    	// Check when elfin instance becomes available 
 						    	$scope.$watch('elfin.Id', function() { 
 						    		
@@ -31,12 +63,10 @@
 						    			 * Perform template clean up tasks while in create mode.
 						    			 */
 							    		if ($attrs.hbMode === "create") {
-							    			if ($routeParams.sai) {
-							    				// Cosmetic information duplicate as of HB 5.5.x
-							    				$scope.elfin.IDENTIFIANT.OBJECTIF = $routeParams.sai;
-							    				
-										        // Prototype generic link to creation source/parent - done for SDS.
-										        $scope.elfin.SOURCE = $routeParams.idg +"/"+$routeParams.classe+"/"+$routeParams.id;
+							    			if ($routeParams.id && $routeParams.idg) {
+
+							 					var forUpdate = true;
+							 					getParentElfinInScope($routeParams.idg, $routeParams.id, forUpdate);
 										        
 										        // Possibly manage 1-n, n-n relationships using FILIATION 
 //										        $scope.elfin.FILIATION.PARENT[0].Id = $routeParams.id;
@@ -50,10 +80,7 @@
 							    			$scope.elfin.GROUPE = "";
 							    		} else {
 						    				updatePrestationIIOptions($scope.prestationsOptionsData, $scope.elfin.CARACTERISTIQUE.CAR1.UNITE);
-						    				
-						    				
-						    				// ====
-						    				
+					    				
 							    			// Links to buildings - Process selectionImmeuble if available
 											if ($routeParams.selectionImmeuble) {
 												
@@ -65,27 +92,20 @@
 							 						"CLASSE" : parentSelectionStrSplit[1],
 							 						"Id" : parentSelectionStrSplit[2]
 							 					}
+							 					var forUpdate = true;
+							 					getParentElfinInScope(parentSelection.ID_G, parentSelection.Id, forUpdate);
 							 					
-							 					// Get full parent elfin to allow details display in current context.
-							 					GeoxmlService.getElfin(parentSelection.ID_G, parentSelection.Id).get().then(function(elfin) {
-							 						$scope.parentElfin = elfin;
-								 					// Set SOURCE to selected building reference triplet ID_G/CLASSE/Id
-								 					$scope.elfin.SOURCE = $routeParams.selectionImmeuble;
-								 					// Update OBJECTIF information to preserve historic behaviour. With SOURCE triple it creates data redundancy. 
-							 						$scope.elfin.IDENTIFIANT.OBJECTIF = elfin.IDENTIFIANT.OBJECTIF;
-							 						// Notify and allow end-user to save parent selection modification.
-							 						$scope.elfinForm.$setDirty();
-									            }, function() {
-									            	var message = "L'objet sélectionné ID_G = " + parentSelection.ID_G + ", Id = " + parentSelection.Id +" n'a pu être obtenu. Un ajustement des configurations peut être nécessaire. Veuillez contacter votre administrateur système. (statut de retour: "+ response.status+ ")";
-										            hbAlertMessages.addAlert("warning",message);
-									            });						    								 					
-
-							 					//$scope.addBuilding($scope.selectionImmeuble);
+							 				} else {
+							 					// Load parent reference
+							 					var sourceStrSplit = $scope.elfin.SOURCE.split('/');
+							 					var source = {
+							 						"ID_G" : sourceStrSplit[0],
+							 						"CLASSE" : sourceStrSplit[1],
+							 						"Id" : sourceStrSplit[2]
+							 					}
+							 					var forUpdate = false;
+							 					getParentElfinInScope(source.ID_G, source.Id, forUpdate);
 							 				}							    				
-						    				
-						    				// ====
-						    				
-						    				
 							    		}
 							    		
 						    		};
