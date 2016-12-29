@@ -28,7 +28,7 @@
 		 					// Update OBJECTIF information to preserve historic behaviour. With SOURCE triple it creates data redundancy. 
 	 						$scope.elfin.IDENTIFIANT.OBJECTIF = parentElfin.IDENTIFIANT.OBJECTIF;
 	 						// No construction 
-	 						$scope.elfin.IDENTIFIANT.ORIGINE = parentElfin.NAME;
+	 						$scope.elfin.IDENTIFIANT.ORIGINE = parentElfin.IDENTIFIANT.NOM;
 	 						// Notify and allow end-user to save parent selection modification.
 	 						$scope.elfinForm.$setDirty();
 						};
