@@ -12,7 +12,8 @@
 			transclude: true,
 		    templateUrl : "/assets/views/hbBuildingSelectLink.html",
 		    scope: {
-		    	source: "=hbBuildingSelectSource"
+		    	source: "=hbBuildingSelectSource",
+		    	target: "=hbBuildingSelectTarget"
 	        }
 		    
 		    
