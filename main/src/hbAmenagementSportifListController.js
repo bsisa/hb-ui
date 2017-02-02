@@ -28,6 +28,12 @@
     		$scope.search.group = $routeParams.group; 
     	}    	
     	
+    	// Support for AMENAGEMENT_SPORTIF selection
+    	if ($routeParams.source) {
+    		$scope.source = $routeParams.source
+    		$log.debug("$scope.source = " + $scope.source);
+    	}    	
+    	
 
     	/**
     	 * Helper to access to place information by POS instead of array index.

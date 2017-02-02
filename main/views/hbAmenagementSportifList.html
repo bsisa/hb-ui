@@ -71,7 +71,24 @@
 		<tr ng-repeat="elfin in filteredElfins">
 		
 			<td>
-				<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
+				
+				<!-- Ugly 90s table style layout that works. -->			
+				<table width="100%" height="100%">
+					<tr>
+						<td style="text-align: center; vertical-align: middle;">
+							<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}"></div>
+						</td>
+						<td ng-if="source" style="text-align: center; vertical-align: middle;">
+							<div tooltip="Sélectionner" tooltip-popup-delay="1500">
+								<div style="width: 38px;">
+									<a class="btn btn-default btn-xs btn-block" href="/elfin/{{source}}?selectionImmeuble={{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" role="button">
+										<i class="glyphicon glyphicon-plus-sign"></i>
+									</a>
+								</div>
+							</div>						
+						</td>
+					</tr>
+				</table>				
 			</td>
 			<!-- Remark: always empty on tested data -->
 			<!-- <td>{{elfin.GROUPE}}</td>  -->
