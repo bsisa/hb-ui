@@ -298,6 +298,20 @@
 	
 	
 	/**
+	 * Capitalize a string 
+	 */
+	angular.module('hb5').filter('capitalise', [function() {
+
+		return function(input, scope) {
+		    if (input!=null)
+		    input = input.toLowerCase();
+		    return input.substring(0,1).toUpperCase()+input.substring(1);
+		};
+		  
+	}]);
+	
+	
+	/**
 	 * Filter tailored to CODE list requirements.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual code list. 
 	 */
