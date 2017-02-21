@@ -73,6 +73,12 @@
 								        // Remove ECHEANCE template from elfin
 								        $scope.elfin.ACTIVITE.EVENEMENT.ECHEANCE.splice(0, 1);
 								        
+								        $scope.elfin.FILIATION.PARENT.id = $routeParams.id ;
+								        $scope.elfin.FILIATION.PARENT.idg = $routeParams.idg ;
+								        $scope.elfin.FILIATION.PARENT.classe = $routeParams.classe ;
+								        $scope.elfin.FILIATION.PARENT.remarque = "ascendant" ;
+
+								        
 									} else {
 										$log.error("elfin should be available after HB_EVENTS.ELFIN_CREATED event notification.");
 									}

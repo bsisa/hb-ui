@@ -422,6 +422,7 @@
 								<th>Montant</th>
 								<th>Delai</th>
 								<th>Resp</th>
+								<th>Filiation</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -439,6 +440,9 @@
 									</span></td>
 								<td ><span>
 									{{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI}}
+									</span></td>
+									<td ><span>
+									{{constat.FILIATION.PARENT[constat.FILIATION.PARENT.length-1].Id}}
 									</span></td>
 							</tr>
 						</tbody>
@@ -463,6 +467,8 @@
 									<th>Montant</th>
 									<th>Annoncé le</th>
 									<th>Traité le</th>
+																	<th>Filiation</th>
+									
 								</tr>
 							</thead>
 							<tbody>
@@ -476,6 +482,9 @@
 										</span></td>
 									<td class="date"><span >{{constat.IDENTIFIANT.DE | date}}</span></td>
 									<td class="date"><span >{{constat.IDENTIFIANT.A | date}}</span></td>
+									<td ><span>
+									{{constat.FILIATION.PARENT[constat.FILIATION.PARENT.length-1].Id}}
+									</span></td>
 								</tr>
 							</tbody>
 						</table>

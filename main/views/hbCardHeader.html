@@ -1,34 +1,88 @@
 <div class="row" style="padding-top: 8px;">
-	<div class="col-xs-4">
-		<div ng-if="containsStandardSourceURI(elfin.SOURCE)" class="col-xs-1" style="padding-left: 4px;">
-			<div  hb-card-view-link hb-href="/elfin/{{elfin.SOURCE}}" hb-tooltip="Consulter l'objet parent"></div>
+	<div class="col-xs-12">
+		<div ng-if="containsStandardSourceURI(elfin.SOURCE)" class="col-xs-1"
+			style="padding-left: 4px;">
+			<div hb-card-view-link hb-href="/elfin/{{elfin.SOURCE}}"
+				hb-tooltip="Consulter l'objet parent (source)"></div>
 		</div>
-		<div ng-if="!containsStandardSourceURI(elfin.SOURCE)" class="col-xs-1" style="padding-left: 4px;">
-			<div style="width: 38px;" tooltip="Pas d'objet parent" tooltip-popup-delay="1500"><a class="btn btn-default btn-xs btn-block disabled" href="#" role="button"><i class="glyphicon glyphicon-eye-close"></i></a></div>
-		</div>		
-		<div class="col-xs-11" style="padding-left: 15px;" tooltip="{{elfin.ID_G}}/{{elfin.Id}} - ({{elfin.MUTATIONS.MUTATION[0].UTILISATEUR}})" >
-			<span class="h4">
-				<span class="label label-primary" ng-class="getCssLabelFeedback(elfinForm)">
-					<i class="icon-tag"></i> <span ng-bind="elfin.CLASSE"></span> - <span ng-bind="elfin.IDENTIFIANT.OBJECTIF"></span>
-					<button ng-if="devRights" class="btn btn-primary btn-xs" ng-click="displayJson(elfin)">JS</button>
-					<button ng-if="devRights" class="btn btn-primary btn-xs" ng-click="displayXml(elfin)">XML</button>
-				</span>				
-			</span>
-			<span ng-if="elfin.CLASSE==='IMMEUBLE' || elfin.CLASSE==='WC'">&nbsp;{{elfin.IDENTIFIANT.ALIAS}}</span>
-			<span ng-if="elfin.CLASSE==='FONTAINE' || elfin.CLASSE==='ABRIBUS'">&nbsp;{{elfin.IDENTIFIANT.NOM}}</span>
+		<div ng-if="!containsStandardSourceURI(elfin.SOURCE)" class="col-xs-1"
+			style="padding-left: 4px;">
+			<div style="width: 38px;" tooltip="Pas d'objet parent"
+				tooltip-popup-delay="1500">
+				<a class="btn btn-default btn-xs btn-block disabled" href="#"
+					role="button"><i class="glyphicon glyphicon-eye-close"></i></a>
+			</div>
 		</div>
 
-<!-- <span style="width: 38px;"><a class="btn btn-default btn-xs btn-block" href="/elfin/{{elfin.SOURCE}}" role="button" tooltip="Consulter" tooltip-popup-delay="1500"><i class="glyphicon glyphicon-eye-open"></i></a></span>		 -->
-	</div>
-	<div class="col-xs-1">
-		<span ng-show="elfinForm.$invalid && elfinForm.$dirty" class="text-danger"><i class="glyphicon glyphicon-warning-sign" style="font-size: 1.2em;"></i></span>
-		<span ng-show="elfinForm.$invalid && elfinForm.$pristine" class="text-warning"><i class="glyphicon glyphicon-warning-sign" style="font-size: 1.2em;"></i></span>
-	</div>
-	<div class="col-xs-7">
-<!-- 		<ul ng-show="elfinForm.$invalid"> -->
-			<!-- Custom validation messages to be defined via transclusion. See: hbConstatCard.html for usage example. -->
-			<span ng-transclude ></span>
-<!-- 		</ul> -->
+		<div class="col-xs-5" style="padding-left: 0px;"
+			tooltip="{{elfin.ID_G}}/{{elfin.Id}} - ({{elfin.MUTATIONS.MUTATION[0].UTILISATEUR}})">
+			<span class="h4"> <span class="label label-primary"
+				ng-class="getCssLabelFeedback(elfinForm)"> <i
+					class="icon-tag"></i> <span ng-bind="elfin.CLASSE"></span> - <span
+					ng-bind="elfin.IDENTIFIANT.OBJECTIF"></span>
+					<button ng-if="devRights" class="btn btn-primary btn-xs"
+						ng-click="displayJson(elfin)">JS</button>
+					<button ng-if="devRights" class="btn btn-primary btn-xs"
+						ng-click="displayXml(elfin)">XML</button>
+			</span>
+			</span> <span ng-if="elfin.CLASSE==='IMMEUBLE' || elfin.CLASSE==='WC'">&nbsp;{{elfin.IDENTIFIANT.ALIAS}}</span>
+			<span ng-if="elfin.CLASSE==='FONTAINE' || elfin.CLASSE==='ABRIBUS'">&nbsp;{{elfin.IDENTIFIANT.NOM}}</span>
+		</div>
+		<div class="col-xs-5"
+			style="padding-left: 0px;">
+			<span>objet courant - {{elfin.ID_G}} - {{elfin.CLASSE}} - {{elfin.Id}}</span>
+		</div>
 	</div>
 </div>
+<!--  PYS 20170221 -->
+	<!-- pas abouti<div class="col-xs-28" style="padding-left: 100px;">
+
+			<span class="h4"> <div hb-parent-view-link
+					hb-href="/elfin/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].ID_G}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].CLASSE}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].Id}}"
+					hb-tooltip="Consulter l'objet parent (filiation)" hb-label="{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].CLASSE}}">
+					</div>
+			</span>
+		</div> -->
+<div class="row">
+	<div class="col-sm-3">
+		<span class="h4"><a
+			href="/elfin/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].ID_G}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].CLASSE}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].Id}}"
+			tooltip="Consulter le parent (Filiation) /elfin/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].ID_G}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].CLASSE}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].Id}}">{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].CLASSE}}</a></span>
+	</div>
+	<!-- temporaire  saisie manuelle de la filiation-->
+	<div class="col-sm-3">
+		<label for="ID_G" class="control-label">IDG.</label> <input
+			id="pareidgnt" type="text" class="form-control"
+			ng-model="elfin.FILIATION.PARENT[0].ID_G">
+	</div>
+	<div class="col-sm-3">
+		<label for="CLASSE" class="control-label">CLASSE.</label> <input
+			id="pareidgnt" type="text" class="form-control"
+			ng-model="elfin.FILIATION.PARENT[0].CLASSE">
+	</div>
+	<div class="col-sm-3">
+		<label for="Id" class="control-label">Id.</label> <input
+			id="pareidgnt" type="text" class="form-control"
+			ng-model="elfin.FILIATION.PARENT[0].Id">
+	</div>
+		<!-- fin temporaire  saisie manuelle de la filiation-->
 	
+</div>
+<!--  fin PYS 20170221 -->
+
+
+	<div class="col-xs-1">
+		<span ng-show="elfinForm.$invalid && elfinForm.$dirty"
+			class="text-danger"><i
+			class="glyphicon glyphicon-warning-sign" style="font-size: 1.2em;"></i></span>
+		<span ng-show="elfinForm.$invalid && elfinForm.$pristine"
+			class="text-warning"><i
+			class="glyphicon glyphicon-warning-sign" style="font-size: 1.2em;"></i></span>
+	</div>
+	<div class="col-xs-7">
+		<!-- 		<ul ng-show="elfinForm.$invalid"> -->
+		<!-- Custom validation messages to be defined via transclusion. See: hbConstatCard.html for usage example. -->
+		<span ng-transclude></span>
+		<!-- 		</ul> -->
+	</div>
+
