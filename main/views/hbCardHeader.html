@@ -35,7 +35,8 @@
 	</div>
 </div>
 <!--  PYS 20170221 -->
-	<!-- pas abouti<div class="col-xs-28" style="padding-left: 100px;">
+	<!-- pas abouti
+	<div class="col-xs-28" style="padding-left: 100px;">
 
 			<span class="h4"> <div hb-parent-view-link
 					hb-href="/elfin/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].ID_G}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].CLASSE}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].Id}}"
@@ -43,14 +44,20 @@
 					</div>
 			</span>
 		</div> -->
+<!-- PYS lien vers parent selon Filiation -->
+<!-- 
 <div class="row">
 	<div class="col-sm-3">
 		<span class="h4"><a
 			href="/elfin/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].ID_G}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].CLASSE}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].Id}}"
 			tooltip="Consulter le parent (Filiation) /elfin/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].ID_G}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].CLASSE}}/{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].Id}}">{{elfin.FILIATION.PARENT[elfin.FILIATION.PARENT.length-1].CLASSE}}</a></span>
 	</div>
-	<!-- temporaire  saisie manuelle de la filiation-->
-	<div class="col-sm-3">
+	 -->
+	<!-- PYS lien vers parent selon Filiation -->
+	
+	<!-- PYS temporaire  saisie manuelle de la filiation-->
+	<!-- 
+		<div class="col-sm-3">
 		<label for="ID_G" class="control-label">IDG.</label> <input
 			id="pareidgnt" type="text" class="form-control"
 			ng-model="elfin.FILIATION.PARENT[0].ID_G">
@@ -65,8 +72,17 @@
 			id="pareidgnt" type="text" class="form-control"
 			ng-model="elfin.FILIATION.PARENT[0].Id">
 	</div>
-		<!-- fin temporaire  saisie manuelle de la filiation-->
+	-->
+		<!-- PYS fin temporaire  saisie manuelle de la filiation-->
+		
+		<!-- PYS temporaire  saisie manuelle de la source-->
 	
+	<div class="col-sm-6">
+		<label for="SOURCE" class="control-label">Source</label> <input
+			id="pareidgnt" type="text" class="form-control"
+			ng-model="elfin.SOURCE">
+	</div>
+		<!-- PYS fin temporaire  saisie manuelle de la source-->
 </div>
 <!--  fin PYS 20170221 -->
 
