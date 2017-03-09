@@ -403,6 +403,40 @@
 	
 	
 	/**
+	 * Filter tailored to CONTRAT list requirements.
+	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual code list.
+	 */
+	angular.module('hb5').filter('contratListFilter', ['$log','hbUtil', function ($log,hbUtil) {
+		
+		return function (contrats, predicate) {
+	        if (!angular.isUndefined(contrats) && !angular.isUndefined(predicate)) {
+	            var tempContrats = [ ];
+	            angular.forEach(contrats, function (contrat) {
+                    if ( 
+                       	 icontains(contrat.IDENTIFIANT.NOM, predicate.contratNb) 
+//                       	 &&
+//                    	 icontains(contrat.IDENTIFIANT.OBJECTIF, predicate.registerNb) && 
+//                    	 icontains(contrat.IDENTIFIANT.ORIGINE, predicate.buildingNb) &&
+//                    	 icontains(contrat.GROUPE, predicate.cfc) &&
+//                    	 icontains(contrat.IDENTIFIANT.QUALITE, predicate.orderType) &&
+//                    	 icontains(contrat.IDENTIFIANT.DE, predicate.date) &&
+//                    	 icontains(contrat.IDENTIFIANT.VALEUR, predicate.amount) &&
+//                    	 icontains(contrat.PARTENAIRE.FOURNISSEUR.GROUPE, predicate.provider_group) &&
+//                    	 icontains(contrat.PARTENAIRE.PROPRIETAIRE.GROUPE, predicate.owner_group) &&
+//                    	 icontains(contrat.DIVERS.REMARQUE, predicate.description)
+                    ) {
+                    	tempContrats.push(contrat);
+                    }
+                });
+	            return tempContrats;
+	        } else {
+	            return contrats;
+	        }
+	    };
+	}]);	
+	
+	
+	/**
 	 * Filter tailored to COMMANDE list requirements.
 	 * Keeping 'Filter' postfix naming is useful to avoid naming conflict with actual code list. 
 	 */
