@@ -12,17 +12,9 @@
 
     	// Object holding user entered search (filter) criteria 
     	$scope.search = {
-    			"active" : "any",
-    			"owner" : "",
-    			"registerNb" : "",
-    			"place" : "",
-    			"buildingNb" : "",
-    			"address" : "",
-    			"text" : "",
-    			"GER" :"",
-    			"GROUPE_COMPTABLE" : ""
+    			"contratNb" : ""
     	};
-
+	
     	// Initialise general search text with search request parameter if defined.
     	// This is only expected from Dashboard calls.
     	if ($routeParams.search) {
@@ -54,23 +46,23 @@
     	// Init distinct PRESTATION groupe comptable
     	$scope.accountingGroups = new Array();
 
-		hbQueryService.getJsonAccountingGroups().then(function(jsonAccountingGroups) {
-			$scope.accountingGroups = jsonAccountingGroups.choices;
-		}, function(response) {
-        	var errorMessage = "Error with status code " + response.status + " while getting JSON accountingGroups.";
-        	$log.error(errorMessage);
-        	hbAlertMessages.addAlert("danger","Les groupes comptables n'ont pu être obtenus.");
-        });    	
+//		hbQueryService.getJsonAccountingGroups().then(function(jsonAccountingGroups) {
+//			$scope.accountingGroups = jsonAccountingGroups.choices;
+//		}, function(response) {
+//        	var errorMessage = "Error with status code " + response.status + " while getting JSON accountingGroups.";
+//        	$log.error(errorMessage);
+//        	hbAlertMessages.addAlert("danger","Les groupes comptables n'ont pu être obtenus.");
+//        });    	
     	
     	
 
     	/**
     	 * Helper to access to place information by POS instead of array index.
     	 */
-    	$scope.getPlace = function(elfin) {
-    		var place = hbUtil.getCARByPos(elfin, 1);
-    		return (place === undefined) ? "" : place;
-    	};
+//    	$scope.getPlace = function(elfin) {
+//    		var place = hbUtil.getCARByPos(elfin, 1);
+//    		return (place === undefined) ? "" : place;
+//    	};
     	
 		/**
 		 * Proceed to elfin_p collection `immeubleListFilter` filtering and sorting
@@ -80,8 +72,8 @@
 		 */
 		var filterSortElfins = function(elfins_p, search_p, predicate_p, reverse_p) {
 			// Apply prestationListFilter
-	    	var filteredSortedElfins = $filter('immeubleListFilter')(elfins_p, search_p);
-	    	filteredSortedElfins = $filter('immeubleListAnyFilter')(filteredSortedElfins, search_p.text, search_p.active);
+	    	var filteredSortedElfins = $filter('contratListFilter')(elfins_p, search_p);
+	    	//filteredSortedElfins = $filter('immeubleListAnyFilter')(filteredSortedElfins, search_p.text, search_p.active);
 	    	// Apply predicate, reverse sorting
 	    	filteredSortedElfins = $filter('orderBy')(filteredSortedElfins, predicate_p, reverse_p);
 	    	return filteredSortedElfins;
