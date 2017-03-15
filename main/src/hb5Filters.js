@@ -413,9 +413,10 @@
 	            var tempContrats = [ ];
 	            angular.forEach(contrats, function (contrat) {
                     if ( 
-                       	 icontains(contrat.IDENTIFIANT.NOM, predicate.contratNb) 
-//                       	 &&
-//                    	 icontains(contrat.IDENTIFIANT.OBJECTIF, predicate.registerNb) && 
+                         icontains(contrat.IDENTIFIANT.NOM, predicate.contratNb) &&
+                         icontains(contrat.IDENTIFIANT.OBJECTIF, predicate.contratSAI) &&
+                    	 icontains(contrat.SOURCE, predicate.contratSource) 
+                    	  
 //                    	 icontains(contrat.IDENTIFIANT.ORIGINE, predicate.buildingNb) &&
 //                    	 icontains(contrat.GROUPE, predicate.cfc) &&
 //                    	 icontains(contrat.IDENTIFIANT.QUALITE, predicate.orderType) &&

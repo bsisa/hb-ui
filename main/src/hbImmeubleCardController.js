@@ -218,7 +218,7 @@
 									 */ 
 									$scope.createNewPrestation = function() {
 										if ($attrs.hbMode != "create") {
-											var searchObj = {Id: $scope.elfin.Id, ID_G: $scope.elfin.ID_G}
+											var searchObj = {Id: $scope.elfin.Id, classe: $scope.elfin.CLASSE, ID_G: $scope.elfin.ID_G}
 											$location.search(searchObj).path( "/elfin/create/PRESTATION" );
 										}
 									};

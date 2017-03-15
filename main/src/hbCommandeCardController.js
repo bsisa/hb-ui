@@ -732,7 +732,15 @@
 						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, elfin.CARACTERISTIQUE.CAR5.VALEUR , undefined);							        	
 						        };
 						        
+						        /**
+						         * TEst PYS impression vers Excel.
+						         */
+						        $scope.printEntrepriseContractReportExcel = function (elfin) {
+						        	var reportUrl = "/api/melfin/spreadsheet/Commande-Modele.xls?Id=" + elfin.Id;
+					        		$window.open(reportUrl);	
 
+						        	
+						        };
 						        /**
 						         * Prints order confirmation.
 						         */

@@ -285,6 +285,8 @@
 						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.PURCHASE" ng-click="printTenantPurchaseOrderReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Bon de commande locataire</span></button>
 						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONFIRMATION" ng-click="printOrderConfirmationReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Confirmation de commande</span></button>
 						<button class="btn btn-default" ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT" ng-click="printEntrepriseContractReport(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Contrat d'entreprise</span></button>
+										<button class="btn btn-default" ng-click="printEntrepriseContractReportExcel(elfin)" tooltip="Format d'impression du bon de commande locataire" tooltip-popup-delay="1000" tooltip-placement="right" ><i class="glyphicon glyphicon-print"></i><span> Contrat (excel)</span></button>
+					
 					</div>
  				</div><!-- row encapsulation end -->
 			</div><!-- hb-tab end -->

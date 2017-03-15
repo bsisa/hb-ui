@@ -52,6 +52,10 @@
 												// Template fields clean up.
 												$scope.elfin.GROUPE = '';
 												// CAR2.NOM = 'Motif'
+												
+										        // Prototype generic link to creation source/parent - done for SDS.
+										        $scope.elfin.SOURCE = $routeParams.ID_G +"/"+$routeParams.classe+"/"+$routeParams.Id;
+							
 												$scope.elfin.CARACTERISTIQUE.CAR2.VALEUR = '';
 												/* Check URL parameters calling IMMEUBLE instance Id, ID_G are valid. 
 												 * (Prevents against wrong manual URL typing). 

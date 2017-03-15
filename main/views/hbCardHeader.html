@@ -28,11 +28,25 @@
 			</span> <span ng-if="elfin.CLASSE==='IMMEUBLE' || elfin.CLASSE==='WC'">&nbsp;{{elfin.IDENTIFIANT.ALIAS}}</span>
 			<span ng-if="elfin.CLASSE==='FONTAINE' || elfin.CLASSE==='ABRIBUS'">&nbsp;{{elfin.IDENTIFIANT.NOM}}</span>
 		</div>
+		
 		<div class="col-xs-5"
 			style="padding-left: 0px;">
 			<span>objet courant : {{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}</span>
 		</div>
 	</div>
+</div>
+<div class="row" style="padding-top: 8px;">
+	<!-- PYS temporaire  saisie manuelle de la source-->
+	<div class="col-xs-12">
+		<div class="col-xs-7"></div>
+		<div class="col-xs-1"><span>source : </span></div>
+		<div class="col-xs-4">
+			<input
+			id="pareidgnt" type="text" class="form-control"
+			ng-model="elfin.SOURCE">
+		</div>
+	</div>
+		<!-- PYS fin temporaire  saisie manuelle de la source-->
 </div>
 <!--  PYS 20170221 -->
 	<!-- pas abouti
@@ -75,14 +89,7 @@
 	-->
 		<!-- PYS fin temporaire  saisie manuelle de la filiation-->
 		
-		<!-- PYS temporaire  saisie manuelle de la source-->
-	
-	<div class="col-sm-6">
-		<label for="SOURCE" class="control-label">Source</label> <input
-			id="pareidgnt" type="text" class="form-control"
-			ng-model="elfin.SOURCE">
-	</div>
-		<!-- PYS fin temporaire  saisie manuelle de la source-->
+		
 </div>
 <!--  fin PYS 20170221 -->
 
