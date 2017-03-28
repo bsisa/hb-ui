@@ -6,3 +6,5 @@
 /main/bower_components/
 /main/.sass-cache
 rsync_ui_to_api_to_789.sh
+
+.idea
