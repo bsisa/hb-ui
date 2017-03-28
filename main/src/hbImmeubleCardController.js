@@ -281,8 +281,24 @@
 											            hbAlertMessages.addAlert("danger",message);
 													});								            
 								            	}
-							    	}, true);     
-							    	
+							    	}, true);
+
+
+                                /**
+								 * Calculates automatically the price/m3 when the vlaue or the volume changes
+                                 */
+                                $scope.$watchCollection('[elfin.CARACTERISTIQUE.CAR5.VALEUR, CARSET_CAR_POS_5.VALEUR]', function(newValues, oldValues, scope) {
+                                    if (!!scope.elfin
+                                        && !!scope.CARSET_CAR_POS_5
+                                        && !!scope.CARSET_CAR_POS_12
+                                        && (scope.$parent.elfinForm['ecapVolume'].$dirty || scope.$parent.elfinForm['ecapValue'].$dirty)
+                                    ) {
+                                        var volume = parseFloat(scope.elfin.CARACTERISTIQUE.CAR5.VALEUR || "1");
+                                        var price = parseFloat(scope.CARSET_CAR_POS_5.VALEUR || "0");
+                                        scope.CARSET_CAR_POS_12.VALEUR = "" + (Math.round(100 * price / volume) / 100);
+                                        scope.$parent.elfinForm['ecapVolumePrice'].$dirty = true;
+                                    }
+                                });
 							    	/**
 							    	 * Listener used to load PRESTATION, CONTRAT lists related to this IMMEUBLE 
 							    	 * Only relevant while not in create mode.
