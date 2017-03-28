@@ -1202,9 +1202,11 @@
 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.ecapValue)">
 							<label for="ecapValue" class="col-md-4 control-label">Valeur ECAP</label>
 							<div class="col-md-8">
-								<input id="ecapValue" name="ecapValue" type="text"
-									class="form-control"
-									ng-model="CARSET_CAR_POS_5.VALEUR" ng-readonly="!canEdit">
+								<input id="ecapValue" name="ecapValue" type="text" ng-if="canEdit"
+									class="form-control" ng-model="CARSET_CAR_POS_5.VALEUR">
+
+								<input id="ecapValueView" type="text" ng-if="!canEdit" readonly
+									   class="form-control" value="{{ CARSET_CAR_POS_5.VALEUR | currency:'CHF' }}">
 							</div>
 						</div>
 					</div>
@@ -1224,9 +1226,12 @@
 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralValue)">
 							<label for="cadastralValue" class="col-md-4 control-label">Valeur cadastrale</label>
 							<div class="col-md-8" >
-								<input id="cadastralValue" name="cadastralValue" type="text"
+								<input id="cadastralValue" name="cadastralValue" type="text" ng-if="canEdit"
+									class="form-control" ng-model="CARSET_CAR_POS_7.VALEUR">
+
+								<input id="cadastralValueView" type="text" ng-if="!canEdit"
 									class="form-control"
-									ng-model="CARSET_CAR_POS_7.VALEUR" ng-readonly="!canEdit">
+									value="{{ CARSET_CAR_POS_7.VALEUR | currency:'CHF' }}" readonly>
 							</div>
 						</div>
 					</div>
@@ -1260,11 +1265,15 @@
 							ng-class="getCssHasFeedback(elfinForm.ecapFee)">
 							<label for="ecapFee" class="col-md-4 control-label">Prime ECAP TTC</label>
 							<div class="col-md-8" >
-								<input id="ecapFee" name="ecapFee" type="text"
+								<input id="ecapFee" name="ecapFee" type="text" ng-if="canEdit"
 									class="form-control"
-									ng-model="CARSET_CAR_POS_11.VALEUR" ng-readonly="!canEdit"
+									ng-model="CARSET_CAR_POS_11.VALEUR"
 									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
 									>
+
+								<input id="ecapFeeView" type="text" ng-if="!canEdit" readonly
+									   class="form-control"
+									   value="{{ CARSET_CAR_POS_11.VALEUR | currency:'CHF' }}">
 							</div>
 						</div>
 					</div>
@@ -1273,11 +1282,15 @@
 							ng-class="getCssHasFeedback(elfinForm.ecapVolumePrice)">
 							<label for="ecapVolumePrice" class="col-md-4 control-label">Prix au m³</label>
 							<div class="col-md-8" >
-								<input id="ecapFee" name="ecapVolumePrice" type="text"
+								<input id="ecapVolumePrice" name="ecapVolumePrice" type="text" ng-if="canEdit"
 									class="form-control"
-									ng-model="CARSET_CAR_POS_12.VALEUR" ng-readonly="!canEdit"
+									ng-model="CARSET_CAR_POS_12.VALEUR"
 									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
 									>
+
+								<input id="ecapVolumePriceView" type="text" ng-if="!canEdit" readonly
+									   class="form-control" value="{{ CARSET_CAR_POS_12.VALEUR | currency:'CHF' }}">
+
 							</div>
 						</div>
 					</div>
@@ -1286,11 +1299,14 @@
 							ng-class="getCssHasFeedback(elfinForm.ecapSelfInsuranceFnd)">
 							<label for="ecapSelfInsuranceFnd" class="col-md-4 control-label">Fond auto assurance</label>
 							<div class="col-md-8" >
-								<input id="ecapFee" name="ecapSelfInsuranceFnd" type="text"
-									class="form-control"
-									ng-model="CARSET_CAR_POS_13.VALEUR" ng-readonly="!canEdit"
+								<input id="ecapSelfInsuranceFnd" name="ecapSelfInsuranceFnd" type="text" ng-if="canEdit"
+									   class="form-control" ng-model="CARSET_CAR_POS_13.VALEUR"
 									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
 									>
+
+								<input id="ecapSelfInsuranceFndView" type="text" ng-if="!canEdit" readonly
+									   class="form-control"
+									   value="{{ CARSET_CAR_POS_13.VALEUR | currency:'CHF' }}">
 							</div>
 						</div>
 					</div>
