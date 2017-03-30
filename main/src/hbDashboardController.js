@@ -425,12 +425,10 @@
          * Either a list, a card or stay on current page if selection is 0.
          */
         $scope.listOrViewCommandes = function() {
-        	if (!$scope.commandeElfins) {
-        		return;
-			}
-        	if ($scope.commandeElfins.length > 1) {
+
+        	if (!!$scope.commandeElfins && $scope.commandeElfins.length > 1) {
             	$location.path('/elfin/'+commandeCollectionId+'/COMMANDE').search('search', $scope.commandeSearch.text);
-        	} else if ($scope.commandeElfins.length == 1) {
+        	} else if (!!$scope.commandeElfins && $scope.commandeElfins.length === 1) {
             	$location.path('/elfin/'+commandeCollectionId+'/COMMANDE/' + $scope.commandeElfins[0].Id);	
         	}
         };      	
