@@ -174,15 +174,10 @@ div.row(style="padding-top: 8px;")
                                 div.col-sm-10
                                     textarea.form-control#introduction(ng-disabled="isReadOnly", name="introduction", rows="3", autocomplete="off", ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR")
 
-                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.remark)")
-                                label.col-sm-2.control-label(for="remark")
-                                    span(ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.CONTRACT)") Description
-                                    span(ng-if="(elfin.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT)") Remarque
-                                div.col-sm-10
-                                    textarea.form-control#remark(ng-disabled="isReadOnly", name="remark", rows="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.CONTRACT ? 6 : 2)", autocomplete="off", ng-model="elfin.DIVERS.REMARQUE")
 
                         div.col-xs-12(ng-if="elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE")
                             div(hb-order-spreadsheet, hb-order-elfin-form="elfinForm", hb-order-editable="!isReadOnly", ng-model="elfin")
+
                         div.col-xs-6.text-center
                             button.btn.btn-warning(ng-if="!isReadOnly" ng-click="validateEntry()")
                                 span Valider

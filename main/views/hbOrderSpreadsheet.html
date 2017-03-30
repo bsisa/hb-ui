@@ -1,25 +1,8 @@
 <table class="table table-condensed table-bordered table-striped" >
-	<thead>
-		<tr>
-			<th>
-				<div class="col-sm-12" >
-					<div class="input-group">
-						<div class="col-sm-12" >Montant de la commande 
-<!-- 							<button ng-disabled="!editable" ng-show="!hasManualOrderLine" class="btn btn-xs btn-default" tooltip="Ajouter une ligne de commande" -->
-<!-- 								ng-click="addLine(0,elfinForm.$valid)"> -->
-							<button ng-disabled="!editable"  class="btn btn-xs btn-default" tooltip="Ajouter une ligne de commande"
-								ng-click="addLine(0,elfinForm.$valid)">
-								<i class="icon-plus-sign"></i>
-							</button>
-						</div>
-					</div>
-				</div>
-			</th>
-		</tr>
-	</thead>
+
 	<tbody ng-show="ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L.length > 0">
 		<tr ng-repeat="line in ngModelCtrl.$modelValue.CARACTERISTIQUE.FRACTION.L"  ng-form="lineForm">	
-			<td>
+			<td ng-if="$last">
 				<div class="form-group">
 					<div class="col-sm-6">
 						<!-- Manual amount entry line -->
