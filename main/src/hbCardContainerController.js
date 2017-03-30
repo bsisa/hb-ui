@@ -41,7 +41,12 @@
     angular.module('hb5').controller('HbCardContainerController', [
         '$attrs', '$scope', '$rootScope', 'GeoxmlService', '$modal', '$routeParams', '$location', '$log', '$window', 'hbAlertMessages', 'hbUtil', 'HB_EVENTS', 'HB_ROLE_FONCTION', 'HB_REPORT', 'MapService','hbPrintService', 'hbTabCacheService', 'userDetails',
         function($attrs, $scope, $rootScope, GeoxmlService, $modal, $routeParams, $location, $log, $window, hbAlertMessages, hbUtil, HB_EVENTS, HB_ROLE_FONCTION, HB_REPORT, MapService, hbPrintService, hbTabCacheService, userDetails) {
-    
+
+    	$("#elfinForm").bind('keydown', function(e) {
+            if (e.keyCode == 13 || e.keyCode == 10) {
+                e.preventDefault();
+            }
+        });
         	
         // Provide dev access rights information to scope
         $scope.devRights = _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.DEV);
@@ -78,8 +83,9 @@
         	}
         	$event.preventDefault();
         };
-        
-        
+
+
+
         // ============================================================
         // Global navigation buttons (also found in MenuController and
         // hbListContainerController).

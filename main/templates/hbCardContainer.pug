@@ -1,3 +1,28 @@
-//
-   Created by guy on 3/30/17.
+div.hb-card.clearfix
+    div(ng-show="!elfin")
+        h5
+            div.loading
+            | Chargement des informations
+
+    div(ng-show="elfin")
+        form.form-horizontal#elfinForm(name="elfinForm", role="form" novalidate)
+            div.hb-btn-bar.btn-group-vertical
+                button.btn.btn-default(ng-click="home()", tooltip="Home - Dashboard", tooltip-popup-delay="1000", tooltip-placement="right")
+                    i.glyphicon.glyphicon-home
+                button.btn.btn-default(ng-class="getBtnClasses(elfinForm)", ng-click="saveElfin(elfin)", ng-disabled="!canSave()", tooltip="{{canSave() ? 'Sauver' : ''}}", tooltip-popup-delay="1000", tooltip-placement="right")
+                    i.glyphicon.glyphicon-save(ng-show="canSave()")
+                    i.glyphicon.glyphicon-saved(ng-show="!canSave()")
+                button.btn.btn-default(ng-click="delElfin(elfin)", ng-disabled="!canDelete()", tooltip="Supprimer", tooltip-popup-delay="1000", tooltip-placement="right")
+                    i.glyphicon.glyphicon-remove-circle
+                button.btn.btn-default(ng-click="printReport(elfin)", ng-disabled="!canPrint()", tooltip="Impression", tooltip-popup-delay="1000", tooltip-placement="right")
+                    i.glyphicon.glyphicon-print
+                button.btn.btn-default(ng-click="printLabelsReport(elfin)", ng-show="hasLabelsReport(elfin)", tooltip="Rapport des étiquettes", tooltip-popup-delay="1000", tooltip-placement="right")
+                    i.glyphicon.glyphicon-tags
+                button.btn.btn-danger(ng-click="switchMapDisplayType()", tooltip="Changement de mode d'affichage plan", tooltip-popup-delay="1000", tooltip-placement="right")
+                    i.glyphicon.glyphicon-picture
+
+            div.hb-card-content(ng-show="!isMapToggled() || (isMapToggled() && mapDisplayType === 'SPLIT')", ng-transclude)
+
+
+
 
