@@ -1,0 +1,214 @@
+div(hb-card-header)
+    ul
+        li(ng-show="elfinForm.groupe.$error.required")
+            != 'Le <strong>code CFC</strong> est obligatoire!'
+        li(ng-show="elfinForm.deadline.$error.required")
+            != 'Le <strong>Délai d\'exécution</strong> est obligatoire!'
+        li(ng-show="elfinForm.fournisseur.$error.required")
+            != 'Le <strong>fournisseur</strong> est obligatoire'
+        li(ng-show="elfinForm.fournisseur.$error.editable")
+            != 'Le <strong>fournisseur</strong> doit être saisi à partir de la liste de sélection'
+        li(ng-show="elfinForm.objectif.$error.required")
+            != 'Le <strong>No SAI</strong> est obligatoire!'
+
+div.row(style="padding-top: 8px;")
+    div.col-xs-12
+        tabset
+            tab
+                tab-heading Commande
+                div.hb-tab
+                    div.row(style="padding-right: 8px;")
+                        <!-- 1st column -->
+                        div.col-sm-6
+                            div.form-group
+                                label.col-sm-4.control-label
+                                    != 'No <span ng-if="elfin.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT" >contrat/cmde.</span><span ng-if="elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.CONTRACT" >commande</span>'
+                                div.col-sm-4
+                                    p.form-control-static
+                                    != '<span ng-if="elfin.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT" >{{elfin.CARACTERISTIQUE.CAR5.VALEUR}} / </span>{{elfin.IDENTIFIANT.NOM}}'
+                                label.col-sm-2.control-label Statut
+                                div.col-sm-2
+                                    p.form-control-static
+                                        span.label.label-success(ng-if="isReadOnly") Valide
+                                        span.label.label-warning(ng-if="!isReadOnly") A valider
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.type)")
+                                label.col-sm-4.control-label(for="type") Type
+                                div.col-sm-8
+                                    div#type(ng-if="!isReadOnly", name="type", hb-single-select, hb-single-select-options="typeChoices", ng-model="elfin.IDENTIFIANT.QUALITE", ng-change="processOrderTypeChange(elfin.IDENTIFIANT.QUALITE)")
+                                    p.form-control-static(ng-if="isReadOnly") {{elfin.IDENTIFIANT.QUALITE}}
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.date)")
+                                label.col-sm-4.control-label(for="date") Date
+                                div.col-sm-4
+                                    div#date(ng-if="!isReadOnly", hb-date, name="date", ng-model="elfin.IDENTIFIANT.DE")
+                                    p.form-control-static(ng-if="isReadOnly") {{elfin.IDENTIFIANT.DE | date}}
+                                label.col-sm-2.control-label(for="auteur") Auteur
+                                div.col-sm-2
+                                    p.form-control-static {{elfin.IDENTIFIANT.AUT}}
+
+                            div.form-group
+                                label.col-sm-4.control-label(for="deadline") Délai d'exécution
+                                div.col-sm-4
+                                    div#deadline(ng-if="!isReadOnly", hb-date, name="deadline", ng-model="elfin.IDENTIFIANT.A", ng-required="true")
+                                    p(ng-if="isReadOnly", class="form-control-static") {{elfin.IDENTIFIANT.A | date}}
+
+                            div.form-group.has-feedback(ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE)", ng-class="getCssHasFeedback(elfinForm.resp)")
+                                div.row
+                                    label.col-sm-4.control-label(for="resp") &nbsp;
+                                    div.col-sm-8
+                                        div(ng-show="!isReadOnly",
+                                            hb-choose-actor,
+                                            hb-choose-actor-id-name="respAct",
+                                            hb-choose-actor-elfin-form="elfinForm",
+                                            hb-choose-actor-model="respActorModel",
+                                            hb-choose-actor-elfin-model="respActorElfinModel",
+                                            hb-choose-actor-tooltip="Recherche de responsable",
+                                            hb-choose-actor-role="Collaborateur",
+                                            hb-choose-actor-editable="true")
+                                        div(ng-show="isReadOnly", style="border: solid 1px white;")
+                                            p.form-control-static {{respActorElfinModel.IDENTIFIANT.NOM}} - {{respActorElfinModel.GROUPE}}
+
+                                div.row
+                                    label.col-sm-4.control-label(for="respRole") {{respActorElfinModel.CARACTERISTIQUE.CAR6.NOM}}
+                                    div.col-sm-8
+                                        div.form-control-static#respRole {{getRole(respActorElfinModel)}}
+
+                                div.row
+                                    label.col-sm-4.control-label(for="respPhone") {{respActorElfinModel.CARACTERISTIQUE.CAR4.NOM}}
+                                    div.col-sm-8
+                                        div.form-control-static#respPhone {{getPhone(respActorElfinModel)}}
+
+                                div.row
+                                    label.col-sm-4.control-label(for="respEmail") {{respActorElfinModel.CARACTERISTIQUE.CAR5.NOM}}
+                                    div.col-sm-8
+                                        div.form-control-static#respEmail {{getEmail(respActorElfinModel)}}
+
+                        <!-- 2nd column -->
+                        div.col-sm-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.objectsSelectionType)")
+                                label.col-sm-4.control-label(for="objectsSelectionType") Sélection par
+                                div.col-sm-8
+                                    div#objectsSelectionType(ng-if="!isReadOnly", name="objectsSelectionType", hb-single-select, hb-single-select-options="objectsSelectionTypeChoices", ng-model="selected.objectsSelectionType")
+                                    p.form-control-static(ng-if="isReadOnly") {{selected.objectsSelectionType}}
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.objectif)")
+                                label.col-sm-4.control-label(for="building") No SAI
+                                div.col-sm-8(ng-show="!isReadOnly && (selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_IMMEUBLE)")
+                                    div(hb-choose-building,
+                                        hb-choose-building-id-name="building",
+                                        hb-choose-building-elfin-form="elfinForm",
+                                        hb-choose-building-elfin-model="selected.building",
+                                        hb-choose-building-tooltip="Recherche d'immeuble",
+                                        hb-choose-building-editable="{{!isReadOnly}}")
+                                div.col-sm-8(ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_IMMEUBLE)")
+                                    p.form-control-static {{selected.building.IDENTIFIANT.OBJECTIF}} - {{selected.building.IDENTIFIANT.ALIAS}} - {{selected.building.PARTENAIRE.PROPRIETAIRE.NOM}}
+                                input.form-control#objectif(ng-show="false", name="objectif", autocomplete="off", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-required="validate")
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.surface)")
+                                label.col-sm-4.control-label(for="surface")
+                                div.col-sm-8(ng-show="!isReadOnly && (selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_SURFACE)")
+                                    div(hb-choose-surface,
+                                        hb-choose-surface-id-name="surface",
+                                        hb-choose-surface-elfin-form="elfinForm",
+                                        hb-choose-surface-elfin-model="selected.surface",
+                                        hb-choose-surface-tooltip="Recherche d'unité locative",
+                                        hb-choose-surface-editable="{{!isReadOnly}}")
+                                div.col-sm-8(ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_SURFACE)")
+                                    p.form-control-static {{selected.surface.IDENTIFIANT.OBJECTIF}} - {{selected.surface.PARTENAIRE.USAGER.VALUE}}
+
+                            div.form-group.has-feedback(ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.PURCHASE", ng-class="getCssHasFeedback(elfinForm.groupe)")
+                                label.col-sm-4.control-label(for="code") Code CFC
+                                div.col-sm-8
+                                    div(ng-show="!isReadOnly",
+                                        hb-choose-code,
+                                        hb-choose-code-id-name="code",
+                                        hb-choose-code-elfin-form="elfinForm",
+                                        hb-choose-code-elfin-model="selected.code",
+                                        hb-choose-code-tooltip="Recherche de code CFC",
+                                        hb-choose-code-editable="{{!isReadOnly}}",
+                                        hb-choose-code-validate-code="true")
+                                    p.form-control-static(ng-show="isReadOnly") {{selected.code.IDENTIFIANT.NOM}} - {{selected.code.DIVERS.REMARQUE}}
+                                input.form-control#groupe(ng-show="false", name="groupe", autocomplete="off", ng-model="elfin.GROUPE", ng-required="(validate && (elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONTRACT))")
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.fournisseur)")
+                                label.col-sm-4.control-label(for="fournisseur")
+                                    div.col-xs-1(ng-if="containsStandardSourceURI(elfin.SOURCE)",style="padding-left: 4px;")
+                                        div(hb-card-view-link, hb-href="/elfin/{{selected.provider.ID_G}}/ACTEUR/{{selected.provider.Id}}", hb-tooltip="Détails")
+                                    | Fournisseur
+                                div.col-sm-8
+                                    input.form-control#fournisseur(ng-if="!isReadOnly", name="fournisseur", type="text", autocomplete="off",
+                                        typeahead="actor as actor.GROUPE for actor in entrepriseActors | orderBy:'GROUPE' | actorListFilter:{'groupe': $viewValue} | limitTo:18",
+                                        typeahead-editable="false",
+                                        ng-model="selected.provider",
+                                        ng-required="validate")
+                                    p.form-control-static(ng-if="isReadOnly") {{selected.provider.GROUPE}}
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.contact)")
+                                label.col-sm-4.control-label(for="contact")
+                                    span(ng-if="(elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.CONTRACT)") Personne à contacter
+                                    span(ng-if="(elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONTRACT)") Responsable fournisseur
+                                div.col-sm-8
+                                    input.form-control#contact(ng-if="!isReadOnly", name="contact", autocomplete="off", ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR")
+                                    p.form-control-static(ng-if="isReadOnly") {{elfin.CARACTERISTIQUE.CAR2.VALEUR}}
+
+
+
+                        div.col-xs-12
+
+
+                            div.form-group.has-feedback(ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT", ng-class="getCssHasFeedback(elfinForm.objectTypeOrLocation)")
+                                label.col-sm-2.control-label(for="objectTypeOrLocation", tooltip="Objet ou type de bâtiment et localisation", tooltip-popup-delay="1000") Type / localisation
+                                div.col-sm-10
+                                   input.form-control#objectTypeOrLocation(ng-if="!isReadOnly", name="objectTypeOrLocation", autocomplete="off", ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR")
+                                   p.form-control-static(ng-if="isReadOnly") {{elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR}}
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.concerns)")
+                                label.col-sm-2.control-label(for="concerns") Concerne
+                                div.col-sm-10
+                                    input.form-control#concerns(ng-if="!isReadOnly", name="concerns", autocomplete="off", ng-model="elfin.CARACTERISTIQUE.CAR1.VALEUR")
+                                    p.form-control-static(ng-if="isReadOnly") {{elfin.CARACTERISTIQUE.CAR1.VALEUR}}
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.introduction)", ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONFIRMATION")
+                                label.col-sm-2.control-label(for="introduction") Introduction
+                                div.col-sm-10
+                                    textarea.form-control#introduction(ng-disabled="isReadOnly", name="introduction", rows="3", autocomplete="off", ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR")
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.remark)")
+                                label.col-sm-2.control-label(for="remark")
+                                    span(ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.CONTRACT)") Description
+                                    span(ng-if="(elfin.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT)") Remarque
+                                div.col-sm-10
+                                    textarea.form-control#remark(ng-disabled="isReadOnly", name="remark", rows="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.CONTRACT ? 6 : 2)", autocomplete="off", ng-model="elfin.DIVERS.REMARQUE")
+
+                        div.col-xs-12(ng-if="elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE")
+                            div(hb-order-spreadsheet, hb-order-elfin-form="elfinForm", hb-order-editable="!isReadOnly", ng-model="elfin")
+                        div.col-xs-6.text-center
+                            button.btn.btn-warning(ng-if="!isReadOnly" ng-click="validateEntry()")
+                                span Valider
+                            button.btn.btn-danger(ng-if="(isReadOnly && canUnlockValidatedOrders)" ng-click="unsetIsReadOnlyStatus()")
+                                span Modifier une commande validée
+                        div.col-xs-6.text-center
+                            button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.PURCHASE", ng-click="printProviderPurchaseOrderReport(elfin)", tooltip="Format d'impression du bon de commande fournisseur", tooltip-popup-delay="1000", tooltip-placement="right")
+                                i.glyphicon.glyphicon-print
+                                span Bon de commande fournisseur
+                            button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.PURCHASE", ng-click="printTenantPurchaseOrderReport(elfin)", tooltip="Format d'impression du bon de commande locataire", tooltip-popup-delay="1000", tooltip-placement="right")
+                                i.glyphicon.glyphicon-print
+                                span Bon de commande locataire
+                            button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONFIRMATION", ng-click="printOrderConfirmationReport(elfin)", tooltip="Format d'impression du bon de commande locataire", tooltip-popup-delay="1000", tooltip-placement="right")
+                                i.glyphicon.glyphicon-print
+                                span Confirmation de commande
+                            button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT", ng-click="printEntrepriseContractReport(elfin)", tooltip="Format d'impression du bon de commande locataire", tooltip-popup-delay="1000", tooltip-placement="right")
+                                i.glyphicon.glyphicon-print
+                                span Contrat d'entreprise
+                            button.btn.btn-default(ng-click="printEntrepriseContractReportExcel(elfin)", tooltip="Format d'impression du bon de commande locataire", tooltip-popup-delay="1000", tooltip-placement="right")
+                                i.glyphicon.glyphicon-print
+                                span Contrat (excel)
+
+
+            <!-- Annexes tab -->
+            tab
+                tab-heading
+                    div(hb-annexes-number)
+                div.hb-tab
+                    div(hb-annexes-component, hb-annexes-merge="true")
