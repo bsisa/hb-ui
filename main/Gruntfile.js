@@ -227,18 +227,41 @@ module.exports = function(grunt) {
                 dest: 'dist/',
                 ext: '.min.css'
             }
-        }
+        },
+		pug: {
+            compile: {
+                options: {
+                    data: {
+                        debug: false
+                    }
+                },
+                files: [
+					{
+						cwd: "templates",
+						src: "**/*.pug",
+						dest: "views",
+						expand: true,
+						ext: ".html"
+					}
+				]
+            }
+        },
 
+        watch: {
+            files: ["templates/**/*.pug"],
+            tasks: ["pug"]
+        }
     });
 
     // Load the plugin that provides the "concat" and "uglify" tasks.
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks("grunt-contrib-pug");
     grunt.loadNpmTasks('grunt-html2js');
-    grunt.loadNpmTasks('grunt-karma');
 
     // Default task(s).
-    grunt.registerTask('default', ['concat:dist', 'uglify', 'cssmin' ]);
+    grunt.registerTask('default', ['concat:dist', "pug", 'uglify', 'cssmin' ]);
+    grunt.registerTask('watch', ['watch']);
 
 };
