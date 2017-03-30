@@ -6,46 +6,16 @@
 				<div class="form-group">
 					<div class="col-sm-6">
 						<!-- Manual amount entry line -->
-						<div ng-if="line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT" class="input-group">
-							<span class="input-group-btn">
-								<button ng-disabled="!editable" class="btn btn-default" tooltip="Ajouter"
-									ng-click="addLine($index+1,elfinForm.$valid)">
-									<i class="icon-plus-sign"></i>
-								</button>								
-								<button ng-disabled="!editable" class="btn btn-default" tooltip="Supprimer"
-									ng-click="removeLine($index,elfinForm.$valid)">
-									<i class="icon-remove-sign"></i>
-								</button>
-							</span>
-							<input ng-disabled="!editable" type="text" class="form-control" ng-model="line.C[1].VALUE" placeholder="Description..." />
-						</div>
+
 						<!-- Any entry line except manual amount and empty -->
 						<div ng-if="!((line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY))" class="input-group" >
-							<span class="input-group-btn">
-								<!-- Forbid adding line following tax rate, total net and total net incl. entry lines. -->
-								<button ng-disabled="line.C[0].VALUE === HB_ORDER_LINE_TYPE.TAX_RATE || line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL || line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL_INCL_TAX || !editable" class="btn btn-default" role="button" tooltip="Ajouter"
-									ng-click="addEmptyLine($index+1,elfinForm.$valid)">
-									<i class="icon-plus-sign"></i>
-								</button>
-								<!-- Allow editable lines only deletion. -->								
-								<button ng-disabled="!lineLabelEditable(line) || !editable" class="btn btn-default"  role="button" tooltip="Supprimer"
-									ng-click="removeLine($index,elfinForm.$valid)">
-									<i class="icon-remove-sign"></i>
-								</button>
-							</span>
 							<!-- Allow editable lines only label editing. -->
 							<input ng-disabled="!editable" ng-if="lineLabelEditable(line)"  class="form-control" type="text" name="lineLabel" ng-model="line.C[1].VALUE"  />
 							<!-- Display non-editable lines label information. -->
 							<span  ng-if="!lineLabelEditable(line)" class="form-control-static col-sm-12" ><b>{{line.C[1].VALUE}}</b></span>
 						</div>
 						<!-- Empty entry line (line type selection a creation time.) -->
-						<select ng-if="line.C[0].VALUE === HB_ORDER_LINE_TYPE.EMPTY" class="form-control-static" name="selectedLineType" id="selectedLineType" 
-								ng-model="selected.lineType" 
-								ng-options="lineType as lineType.C[1].VALUE for lineType in lineTypes track by lineType.C[1].VALUE"
-								ng-change="replaceLine($index, selected.lineType, elfinForm.$valid)" 
-						>
-							<option value=''><i>--Sélectionnez--</i></option>
-						</select>
+
 					</div>
 					<div class="col-sm-3">
 						<!-- For order line with parameter (C(5)=true) and a defined symbol value (C(3)>0 surround input with value sign and symbol. -->
