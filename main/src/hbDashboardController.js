@@ -425,6 +425,9 @@
          * Either a list, a card or stay on current page if selection is 0.
          */
         $scope.listOrViewCommandes = function() {
+        	if (!$scope.commandeElfins) {
+        		return;
+			}
         	if ($scope.commandeElfins.length > 1) {
             	$location.path('/elfin/'+commandeCollectionId+'/COMMANDE').search('search', $scope.commandeSearch.text);
         	} else if ($scope.commandeElfins.length == 1) {
@@ -437,7 +440,7 @@
 		 * Update filtered collection when search or sorting criteria are modified. 
 		 */
     	$scope.$watch('commandeSearch', function(newSearch, oldSearch) {
-    		if ($scope.commandeElfins!=null) {
+    		if (!!$scope.commandeElfins) {
 				$scope.filteredCommandeElfins = filterCommandeElfins($scope.commandeElfins, $scope.commandeSearch);
     		}
     	}, true);        
