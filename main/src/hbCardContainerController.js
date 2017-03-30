@@ -45,6 +45,7 @@
         	
         // Provide dev access rights information to scope
         $scope.devRights = _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.DEV);
+        $scope.canEditSource =  _.contains(userDetails.getRoles(),HB_ROLE_FONCTION.EDIT_SOURCE);
         	
         // Expose hbUtil.containsStandardSourceURI function to scope
         $scope.containsStandardSourceURI = hbUtil.containsStandardSourceURI;	

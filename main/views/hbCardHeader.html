@@ -31,13 +31,13 @@
 		
 		<div class="col-xs-5"
 			style="padding-left: 0px;">
-			<span>objet courant : {{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}</span>
+			<span ng-if="canEditSource">objet courant : {{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}</span>
 		</div>
 	</div>
 </div>
 <div class="row" style="padding-top: 8px;">
 	<!-- PYS temporaire  saisie manuelle de la source-->
-	<div class="col-xs-12">
+	<div class="col-xs-12"  ng-if="canEditSource">
 		<div class="col-xs-7"></div>
 		<div class="col-xs-1"><span>source : </span></div>
 		<div class="col-xs-4">
