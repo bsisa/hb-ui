@@ -1203,7 +1203,7 @@
 							<label for="ecapValue" class="col-md-4 control-label">Valeur ECAP</label>
 							<div class="col-md-8">
 								<input id="ecapValue" name="ecapValue" type="text" ng-if="canEdit"
-									class="form-control" ng-model="CARSET_CAR_POS_5.VALEUR">
+									class="form-control" ng-model="CARSET_CAR_POS_5.VALEUR" format-currency>
 
 								<input id="ecapValueView" type="text" ng-if="!canEdit" readonly
 									   class="form-control" value="{{ CARSET_CAR_POS_5.VALEUR | currency:'CHF' }}">
@@ -1227,7 +1227,7 @@
 							<label for="cadastralValue" class="col-md-4 control-label">Valeur cadastrale</label>
 							<div class="col-md-8" >
 								<input id="cadastralValue" name="cadastralValue" type="text" ng-if="canEdit"
-									class="form-control" ng-model="CARSET_CAR_POS_7.VALEUR">
+									class="form-control" ng-model="CARSET_CAR_POS_7.VALEUR" format-currency>
 
 								<input id="cadastralValueView" type="text" ng-if="!canEdit"
 									class="form-control"
@@ -1267,7 +1267,7 @@
 							<div class="col-md-8" >
 								<input id="ecapFee" name="ecapFee" type="text" ng-if="canEdit"
 									class="form-control"
-									ng-model="CARSET_CAR_POS_11.VALEUR"
+									ng-model="CARSET_CAR_POS_11.VALEUR" format-currency
 									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
 									>
 
@@ -1284,7 +1284,7 @@
 							<div class="col-md-8" >
 								<input id="ecapVolumePrice" name="ecapVolumePrice" type="text" ng-if="canEdit"
 									class="form-control"
-									ng-model="CARSET_CAR_POS_12.VALEUR"
+									ng-model="CARSET_CAR_POS_12.VALEUR" format-currency
 									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
 									>
 
@@ -1300,7 +1300,7 @@
 							<label for="ecapSelfInsuranceFnd" class="col-md-4 control-label">Fond auto assurance</label>
 							<div class="col-md-8" >
 								<input id="ecapSelfInsuranceFnd" name="ecapSelfInsuranceFnd" type="text" ng-if="canEdit"
-									   class="form-control" ng-model="CARSET_CAR_POS_13.VALEUR"
+									   class="form-control" ng-model="CARSET_CAR_POS_13.VALEUR" format-currency
 									ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
 									>
 
