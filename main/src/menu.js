@@ -99,7 +99,7 @@
         	
       	// Force service initialisation 
         // Check $$activeConfiguration watch for actual initialisation).
-       	userDetails.getAbbreviation;
+       	// userDetails.getAbbreviation;
        	
     	// Functions used in alert ui.bootstrap component found in menu.html
     	$scope.getAlerts = hbAlertMessages.getAlerts();
@@ -826,7 +826,7 @@
    			// Note former solution $location.url($location.path(dashboardUri)); 
    			// to this problem triggers an unwanted reload of welcome page
     		var searchObj = {};
-			$location.search(searchObj).path( dashboardUri );
+			$location.search(searchObj)/*.path( dashboardUri )*/;
         };
         
 
