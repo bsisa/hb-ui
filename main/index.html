@@ -17,9 +17,9 @@
     <link rel="stylesheet" type="text/css" href="/assets/bower_components/bootstrap/dist/css/bootstrap.min.css" />
 
     <!-- Kickstart -->
-    <!-- 
-    TODO: try removing dependency on HTMLKickstart in favour of Bootstrap only 
-    to avoid CSS conflicts and benefit from AngularJS tigther integration. 
+    <!--
+    TODO: try removing dependency on HTMLKickstart in favour of Bootstrap only
+    to avoid CSS conflicts and benefit from AngularJS tigther integration.
     Nice icons could be kept by preserving font-awesome. -->
     <!-- TODO: To remove -->
 	<!--     <link rel="stylesheet" type="text/css" href="/assets/css/kickstart/kickstart.css" media="all"/> -->
@@ -44,7 +44,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/dist/hb5-0.1.1.css" media="all"/>
     <!-- Added ui-grid for enhanced data tables -->
     <link rel="stylesheet" type="text/css" href="/assets/bower_components/angular-ui-grid/ui-grid.css" media="all"/>
-    
+
     <link rel="stylesheet" type="text/css" href="/assets/bower_components/leaflet.draw/dist/leaflet.draw.css" media="all"/>
 
 
@@ -57,11 +57,11 @@
 
 	<!-- <script type="text/javascript" src="/assets/bower_components/jquery/dist/jquery.js"></script> -->
     <script type="text/javascript" src="/assets/bower_components/jquery/dist/jquery.min.js"></script>
-    
+
     <script type="text/javascript" src="/assets/bower_components/angular/angular.js"></script>
 <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_fr-ch.js"></script> -->
     <script type="text/javascript" src="/assets/lib/custom/angular-i18n/angular-locale_fr-ch.js"></script>
-    
+
 <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_de-ch.js"></script> -->
 <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_it-ch.js"></script> -->
 <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_fr.js"></script> -->
@@ -70,12 +70,12 @@
 
     <script type="text/javascript" src="/assets/bower_components/angular-route/angular-route.js"></script>
 <!--     <script type="text/javascript" src="/assets/bower_components/angular-cookies/angular-cookies.min.js"></script> -->
-    
+
     <!-- Added ngAnimate module to provide animations to Angular directives like ng-dirty... -->
     <script type="text/javascript" src="/assets/bower_components/angular-animate/angular-animate.min.js"></script>
     <!-- Added ui-grid for enhanced data tables -->
     <script type="text/javascript" src="/assets/bower_components/angular-ui-grid/ui-grid.min.js"></script>
-    
+
     <!-- Added all angular-ui-utils modules -->
 	<script type="text/javascript" src="/assets/bower_components/angular-ui-utils/ui-utils.min.js"></script>
 	<!-- Added angular-filter. It provides i.e. groupBy filter -->
@@ -83,7 +83,7 @@
 
     <script type="text/javascript" src="/assets/bower_components/lodash/dist/lodash.compat.min.js"></script>
     <script type="text/javascript" src="/assets/bower_components/restangular/dist/restangular.js"></script>
-    
+
 	<script type="text/javascript" src="/assets/lib/ui-bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
 <!-- Requires menus and dates refactoring. Check hb-eehive project -->
 <!-- 	<script type="text/javascript" src="/assets/lib/ui-bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script> -->
@@ -93,13 +93,13 @@
     <!-- ui-bootstrap version 0.11.0 test -->
 	<!--     <script type="text/javascript" src="/assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script> -->
     <!-- ui.bootstrap upgrade from 0.10.0 to 0.11.0 requires testing (menus, datepicker). -->
-    
+
     <!-- hbUi.geo -->
     <script type="text/javascript" src="/assets/lib/hbUi.geo/hbUi.geo-0.0.1.min.js"></script>
 <!--     <script type="text/javascript" src="/assets/lib/hbUi.geo/hbUi.geo-0.0.1.js"></script> -->
     <!-- hbUi.sse -->
     <script type="text/javascript" src="/assets/lib/hbUi.sse/hbUi.sse-0.0.1.min.js"></script>
-    
+
     <!-- Chosen -->
     <script type="text/javascript" src="/assets/lib/chosen/chosen.jquery.js"></script>
     <script type="text/javascript" src="/assets/lib/chosen/chosen.js"></script>
@@ -121,10 +121,10 @@
     <script type="text/javascript" src="/assets/bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
 
     <!-- HyperBird -->
-    <!-- 
-    To allow single configuration point on the server side conf.js 
-    file is dynamically created providing hb5-x.x.x.js with hb-api 
-    REST service baseURL. 
+    <!--
+    To allow single configuration point on the server side conf.js
+    file is dynamically created providing hb5-x.x.x.js with hb-api
+    REST service baseURL.
       -->
     <script src="/conf.js"></script>
 <!--     <script src="/assets/dist/hb5-0.1.1.min.js"></script> -->
@@ -153,5 +153,9 @@
 		</div>
 	</div>
 <!-- 	<div class="footer" ><a <a href="mailto:mail@bsisa.ch">Contacter BSI SA</a></div> -->
+    <div wc-overlay wc-overlay-delay="300">
+        Chargement des données
+    </div>
+
 </body>
 </html>

@@ -10,7 +10,7 @@
 	var hb5 = angular.module('hb5', [ 'hbUi.sse', 'flow',
 			'ui.grid', 'ui.grid.selection', 'ngAnimate', 'geoxml', 'hbMap',
 			'hbUi.geo', 'ngRoute', 'ui.bootstrap', 'localytics.directives',
-			'leaflet-directive', 'ui.utils', 'angular.filter' ]);
+			'leaflet-directive', 'ui.utils', 'angular.filter', 'wc.Directives' ]);
 	
     // ================================================================
     // ====                      Config                            ====

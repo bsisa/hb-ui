@@ -197,7 +197,9 @@ module.exports = function(grunt) {
 								'src/hbWcListDirective.js',
 								'src/hbWcListController.js',
 								'src/spreadsheetSelect.js',
-								'src/userDetailsService.js'],
+								'src/userDetailsService.js',
+							    'src/wcAngularOverlay.js'
+				],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
