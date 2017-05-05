@@ -2,41 +2,7 @@
 
     angular
         .module('hb5')
-        .directive('formatCurrency', ['$filter', function ($filter) {
-            return {
-                require: '?ngModel',
-                link: function (scope, elem, attrs, ctrl) {
-                    if (!ctrl) return;
-                    var focus = false;
 
-
-                    ctrl.$formatters.unshift(function () {
-                        return $filter("currency")(ctrl.$modelValue, "CHF");
-                    });
-
-                    ctrl.$parsers.unshift(function (viewValue) {
-                        if (focus) {
-                            return viewValue;
-                        } else {
-                            return viewValue.replace(/[^\d|\-+|\.+]/g, '').replace(/[\sCHF]/g, '');
-                        }
-                    });
-
-                    elem.bind("blur", function() {
-                        focus = false;
-                        elem.val($filter("currency")(ctrl.$modelValue, "CHF"));
-                    });
-
-                    elem.bind("focus", function() {
-                        focus = true;
-                        var plainNumber = elem.val().replace(/[^\d|\-+|\.+]/g, '').replace(/[\sCHF]/g, '');
-                        elem.val(plainNumber);
-                    });
-
-
-                }
-            };
-        }])
         .controller(
             'HbImmeubleCardController',
             [
