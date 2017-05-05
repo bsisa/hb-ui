@@ -953,56 +953,268 @@
 					</div>		
 				</div>
 			</div>
-		</tab>		
-		<!-- VALEUR tab -->
-<!-- 		<tab active="tabState.valeur.active"> -->
-<!-- 			<tab-heading>Valeur ECAP</tab-heading> -->
-<!-- 			<div class="hb-tab"> -->
-<!-- 				<div class="row"> -->
-<!-- 					<div class="col-md-6"> -->
-<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.ecapValue)"> -->
-<!-- 							<label for="ecapValue" class="col-md-4 control-label">Valeur ECAP</label> -->
-<!-- 							<div class="col-md-8"> -->
-<!-- 								<input id="ecapValue" name="ecapValue" type="text" -->
-<!-- 									class="form-control" -->
-<!-- 									ng-model="CARSET_CAR_POS_5.VALEUR" ng-readonly="!canEdit"> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-md-6"> -->
-<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.constructionYear)"> -->
-<!-- 							<label for="constructionYear" class="col-md-4 control-label">Année estimation ECAP</label> -->
-<!-- 							<div class="col-md-8" > -->
-<!-- 								<input id="constructionYear" name="constructionYear" type="text" -->
-<!-- 									class="form-control" -->
-<!-- 									ng-model="CARSET_CAR_POS_6.VALEUR" ng-readonly="!canEdit"> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-md-6"> -->
-<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralValue)"> -->
-<!-- 							<label for="cadastralValue" class="col-md-4 control-label">Valeur cadastrale</label> -->
-<!-- 							<div class="col-md-8" > -->
-<!-- 								<input id="cadastralValue" name="cadastralValue" type="text" -->
-<!-- 									class="form-control" -->
-<!-- 									ng-model="CARSET_CAR_POS_7.VALEUR" ng-readonly="!canEdit"> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-md-6">					 -->
-<!-- 						<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralEvaluationYear)"> -->
-<!-- 							<label for="cadastralEvaluationYear" class="col-md-4 control-label">Année estimation cadastrale</label> -->
-<!-- 							<div class="col-md-8" > -->
-<!-- 								<input id="cadastralEvaluationYear" name="cadastralEvaluationYear" type="text" -->
-<!-- 									class="form-control" -->
-<!-- 									ng-model="CARSET_CAR_POS_8.VALEUR" ng-readonly="!canEdit"> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</tab>				 -->
-		<!-- INSTALLATION_SPORTIVE tab --> 
+		</tab>
+
+			<!-- VALEUR tab -->
+			<tab active="tabState.valeur.active">
+				<tab-heading>Valeur ECAP</tab-heading>
+				<div class="hb-tab">
+					<div class="row">
+						<div class="col-sm-12">
+							<!-- Table des contrats ECAP actifs -->
+							<table class="table table-condensed table-bordered table-striped">
+								<thead>
+								<tr>
+									<th colspan="2">Contrat</th>
+									<th><a href=""
+										   ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse">Prestation
+										I</a></th>
+									<th><a href=""
+										   ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse">Prestation
+										II</a></th>
+									<th><a href=""
+										   ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse">Entreprise</a></th>
+									<th><a href=""
+										   ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse">Montant</a></th>
+									<th><a href=""
+										   ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse">Groupe</a></th>
+								</tr>
+								</thead>
+								<tbody ng-show="contrats">
+								<tr
+										ng-repeat="contrat in contrats | contractPerCompanyGroupListFilter:'ECAP' | contractTerminatedListFilter:false | orderBy:contractPredicate:contractReverse">
+									<td><div hb-card-view-link hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}"></div></td>
+									<td><div hb-annexes-link hb-annexes-link-elfin="contrat"></div></td>
+									<td><span >{{contrat.CARACTERISTIQUE.CAR1.UNITE}}</span></td>
+									<td><span >{{contrat.CARACTERISTIQUE.CAR1.VALEUR}}</span></td>
+									<td><span >{{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}</span></td>
+									<td class="number"><span >{{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}</span></td>
+									<td><span >{{contrat.GROUPE}}</span></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.ecapValue)">
+								<label for="ecapValue" class="col-md-4 control-label">Valeur ECAP</label>
+								<div class="col-md-8">
+									<input id="ecapValue" name="ecapValue" type="text" ng-if="canEdit"
+										   class="form-control" ng-model="CARSET_CAR_POS_5.VALEUR" format-currency>
+
+									<input id="ecapValueView" type="text" ng-if="!canEdit" readonly
+										   class="form-control" value="{{ CARSET_CAR_POS_5.VALEUR | currency:'CHF' }}">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.ecapEstimYear)">
+								<label for="ecapEstimYear" class="col-md-4 control-label">Année estimation ECAP</label>
+								<div class="col-md-8" >
+									<input id="ecapEstimYear" name="ecapEstimYear" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_6.VALEUR" ng-readonly="!canEdit"
+										   ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="4"
+									>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralValue)">
+								<label for="cadastralValue" class="col-md-4 control-label">Valeur cadastrale</label>
+								<div class="col-md-8" >
+									<input id="cadastralValue" name="cadastralValue" type="text" ng-if="canEdit"
+										   class="form-control" ng-model="CARSET_CAR_POS_7.VALEUR" format-currency>
+
+									<input id="cadastralValueView" type="text" ng-if="!canEdit"
+										   class="form-control"
+										   value="{{ CARSET_CAR_POS_7.VALEUR | currency:'CHF' }}" readonly>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.cadastralEvaluationYear)">
+								<label for="cadastralEvaluationYear" class="col-md-4 control-label">Année estimation cadastrale</label>
+								<div class="col-md-8" >
+									<input id="cadastralEvaluationYear" name="cadastralEvaluationYear" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_8.VALEUR" ng-readonly="!canEdit"
+										   ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="4"
+									>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapVolume)">
+								<label for="ecapVolume" class="col-md-4 control-label">Volume ECAP</label>
+								<div class="col-md-8" >
+									<input id="ecapVolume" name="ecapVolume" type="text"
+										   class="form-control"
+										   ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR" ng-readonly="!canEdit"
+										   ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
+									>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapFee)">
+								<label for="ecapFee" class="col-md-4 control-label">Prime ECAP TTC</label>
+								<div class="col-md-8" >
+									<input id="ecapFee" name="ecapFee" type="text" ng-if="canEdit"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_11.VALEUR" format-currency
+										   ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
+									>
+
+									<input id="ecapFeeView" type="text" ng-if="!canEdit" readonly
+										   class="form-control"
+										   value="{{ CARSET_CAR_POS_11.VALEUR | currency:'CHF' }}">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapVolumePrice)">
+								<label for="ecapVolumePrice" class="col-md-4 control-label">Prix au m³</label>
+								<div class="col-md-8" >
+									<input id="ecapVolumePrice" name="ecapVolumePrice" type="text" ng-if="canEdit"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_12.VALEUR" format-currency
+										   ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
+									>
+
+									<input id="ecapVolumePriceView" type="text" ng-if="!canEdit" readonly
+										   class="form-control" value="{{ CARSET_CAR_POS_12.VALEUR | currency:'CHF' }}">
+
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapSelfInsuranceFnd)">
+								<label for="ecapSelfInsuranceFnd" class="col-md-4 control-label">Fond auto assurance</label>
+								<div class="col-md-8" >
+									<input id="ecapSelfInsuranceFnd" name="ecapSelfInsuranceFnd" type="text" ng-if="canEdit"
+										   class="form-control" ng-model="CARSET_CAR_POS_13.VALEUR" format-currency
+										   ng-pattern="numericOnlyRegexp" ng-trim='false' ng-maxlength="12"
+									>
+
+									<input id="ecapSelfInsuranceFndView" type="text" ng-if="!canEdit" readonly
+										   class="form-control"
+										   value="{{ CARSET_CAR_POS_13.VALEUR | currency:'CHF' }}">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.author)">
+								<label for="author" class="col-md-4 control-label">No ECAP</label>
+								<div class="col-md-8" >
+									<input id="author" name="author" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_3.VALEUR"
+										   ng-readonly="!canEdit"
+										   required>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapBuildingNb)">
+								<label for="ecapBuildingNb" class="col-md-4 control-label">Bâtiment assuré no</label>
+								<div class="col-md-8" >
+									<input id="ecapBuildingNb" name="ecapBuildingNb" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_14.VALEUR"
+										   ng-readonly="!canEdit"
+									>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapObject)">
+								<label for="ecapObject" class="col-md-4 control-label">Objet assuré</label>
+								<div class="col-md-8" >
+									<input id="ecapObject" name="ecapObject" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_15.VALEUR"
+										   ng-readonly="!canEdit"
+									>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapConstructionRisk)">
+								<label for="ecapConstructionRisk" class="col-md-4 control-label">Classe risque construction</label>
+								<div class="col-md-8" >
+									<input id="ecapConstructionRisk" name="ecapConstructionRisk" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_16.VALEUR"
+										   ng-readonly="!canEdit"
+									>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapUsageRisk)">
+								<label for="ecapUsageRisk" class="col-md-4 control-label">Classe risque usage</label>
+								<div class="col-md-8" >
+									<input id="ecapUsageRisk" name="ecapUsageRisk" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_17.VALEUR"
+										   ng-readonly="!canEdit"
+									>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapLightningRod)">
+								<label for="ecapLightningRod" class="col-md-4 control-label">Paratonnerre</label>
+								<div class="col-md-8" >
+									<input id="ecapLightningRod" name="ecapLightningRod" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_18.VALEUR"
+										   ng-readonly="!canEdit"
+									>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapFireDetection)">
+								<label for="ecapFireDetection" class="col-md-4 control-label">Détection incendie</label>
+								<div class="col-md-8" >
+									<input id="ecapFireDetection" name="ecapFireDetection" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_19.VALEUR"
+										   ng-readonly="!canEdit"
+									>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group has-feedback"
+								 ng-class="getCssHasFeedback(elfinForm.ecapPeculiarities)">
+								<label for="ecapPeculiarities" class="col-md-4 control-label">Particularités</label>
+								<div class="col-md-8" >
+									<input id="ecapPeculiarities" name="ecapPeculiarities" type="text"
+										   class="form-control"
+										   ng-model="CARSET_CAR_POS_20.VALEUR"
+										   ng-readonly="!canEdit"
+									>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</tab>
+
+			<!-- INSTALLATION_SPORTIVE tab -->
 		<tab active="tabState.installations_sportives.active"> 
 			<tab-heading>Installation{{installationsSportives.length | plural}} sportive{{installationsSportives.length | plural}} ({{installationsSportives.length}})</tab-heading>
 			<div class="hb-tab">
