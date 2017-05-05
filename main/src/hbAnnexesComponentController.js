@@ -10,8 +10,7 @@
 							'$log',
 							'$modal',
 							'hbUtil',
-							'hbAlertMessages', 
-							function($attrs, $scope, $log, $modal, hbUtil, hbAlertMessages) {
+							function($attrs, $scope, $log, $modal, hbUtil) {
     
 									//$log.debug("    >>>> Using HbAnnexesComponentController");
 							        
@@ -20,7 +19,7 @@
 						        	
 									$scope.annexes = [];
 
-									$scope.isMergeFeatureOn = ($attrs.hbAnnexesMerge === 'true');									
+									$scope.isMergeFeatureOn = ($attrs['hbAnnexesMerge'] === 'true');
 									
 									// By default validate. Special case where successful validation
 									// requires upload to be performed need to prevent this default
@@ -37,7 +36,7 @@
 									
 									$scope.hbUtil = hbUtil;
 									
-							    	$scope.$watchCollection('elfin.ANNEXE.RENVOI', function(newRenvois, oldRenvois) {
+							    	$scope.$watchCollection('elfin.ANNEXE.RENVOI', function() {
 							    		//$log.debug(">>>> elfin.ANNEXE.RENVOI: newRenvois = " + newRenvois + ", oldRenvois = " + oldRenvois);
 										// We want at least one annex mandatory, except photo, although it should not apply to CONSTAT.
 							    		$scope.annexesWithoutPhoto = hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo');
@@ -53,12 +52,12 @@
 							    	 */
 							    	var cleanUpCommas = function(stringToCleanUp) {
 							    		// Trim
-							    		var cleanedUpString = stringToCleanUp.trim()
+							    		var cleanedUpString = stringToCleanUp.trim();
 							    		// Check for leading ','
 							    		var STR_TO_CLEAN = ",";
 							    		// Found leading clean up to perform
 							    		if (cleanedUpString.indexOf(STR_TO_CLEAN) === 0) {
-							    			cleanedUpString = cleanedUpString.substring( 0 + STR_TO_CLEAN.length)
+							    			cleanedUpString = cleanedUpString.substring( STR_TO_CLEAN.length)
 							    		}
 							    		if ( cleanedUpString.endsWith(STR_TO_CLEAN) ) {
 							    			cleanedUpString = cleanedUpString.substring(0, cleanedUpString.length - STR_TO_CLEAN.length)
@@ -77,7 +76,7 @@
 						    			if (stringParam.length < searchedString.length) {
 						    				return false;
 						    			} else {
-						    				return (stringParam.indexOf(searchedString) != -1)
+						    				return (stringParam.indexOf(searchedString) !== -1)
 						    			}						    				
 						    		};
 						    		
@@ -149,12 +148,12 @@
 						    		$scope.mergeBeforeAfter = function(renvoi) {
 						    			if (angular.isDefined(renvoi)) {
 							    			if ( contains(renvoi.VALUE, MERGE_BEFORE_TAG) ) {
-							    				renvoi.VALUE = remove(renvoi.VALUE, MERGE_BEFORE_TAG)
+							    				renvoi.VALUE = remove(renvoi.VALUE, MERGE_BEFORE_TAG);
 							    				renvoi.VALUE = renvoi.VALUE + "," + MERGE_AFTER_TAG;
 									    		// Auto-save
 									    		$scope.saveElfin($scope.elfin);
 							    			} else if ( contains(renvoi.VALUE, MERGE_AFTER_TAG) ) {
-							    				renvoi.VALUE = remove(renvoi.VALUE, MERGE_AFTER_TAG)
+							    				renvoi.VALUE = remove(renvoi.VALUE, MERGE_AFTER_TAG);
 							    				renvoi.VALUE = renvoi.VALUE + "," + MERGE_BEFORE_TAG;
 									    		// Auto-save
 									    		$scope.saveElfin($scope.elfin);
@@ -189,7 +188,7 @@
 									    		// Auto-save
 									    		$scope.saveElfin($scope.elfin);
 							    			}
-						    			};
+						    			}
 						    		};
 						    		
 						    		/**
