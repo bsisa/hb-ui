@@ -60,20 +60,20 @@
                  */
                 function init() {
                     // Check for optional annex-type attribute
-                    if ($attrs.hbAnnexesUploadAnnexType) {
-                        if ($attrs.hbAnnexesUploadAnnexType == FILE_ANNEX_TYPE.value) {
+                    if ($attrs['hbAnnexesUploadAnnexType']) {
+                        if ($attrs.hbAnnexesUploadAnnexType === FILE_ANNEX_TYPE.value) {
                             // Configure parametrised annex type
                             $scope.selectUploadFileType(FILE_ANNEX_TYPE);
                             // Do not let end-user choose annex type
                             canSelectAnnexTypeBool = false;
-                        } else if ($attrs.hbAnnexesUploadAnnexType == PHOTO_ANNEX_TYPE.value) {
+                        } else if ($attrs['hbAnnexesUploadAnnexType'] === PHOTO_ANNEX_TYPE.value) {
                             // Configure parametrised annex type
                             $scope.selectUploadFileType(PHOTO_ANNEX_TYPE);
                             // Do not let end-user choose annex type
                             canSelectAnnexTypeBool = false;
                         } else {
                             // unknown annex type, let user select it
-                            $log.warn("Unknown annex type configured for hb-annexes-upload: " + $attrs.hbAnnexesUploadAnnexType + ". Falling back to end user manual selection.");
+                            $log.warn("Unknown annex type configured for hb-annexes-upload: " + $attrs['hbAnnexesUploadAnnexType'] + ". Falling back to end user manual selection.");
                             canSelectAnnexTypeBool = true;
                         }
                     } else {
@@ -134,11 +134,7 @@
                             return true;
                         }
                     } else { // Proceed with regular situation
-                        if ($scope.canSave() || ($scope.elfinForm.$pristine && $scope.elfinForm.$valid )) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        return $scope.canSave() || ($scope.elfinForm.$pristine && $scope.elfinForm.$valid );
                     }
                 };
 
@@ -146,14 +142,23 @@
                     event.preventDefault(); //prevent file from uploading !?
 
                     if (event.type === "drop") {
+                        if (!fileValidationRule.test(file.name)) {
+                            hbAlertMessages.addAlert("warning", "Le nom de votre fichier contient des caractères non permis (accents, espaces, caractères spéciaux autre que point) : " + file.name);
+                            // Reset file name to upload label CSS.
+                            $scope.hbUploadStatusLabelCss = "label-info";
+                            return false;
+                        }
                         $scope.flowFileDropped(file, event, flow);
                     } else {
                         $scope.flowFileAddedAndTypeSelected(file, event);
                     }
-
+                    return true;
                 };
 
+                var fileValidationRule = new RegExp(/^[a-zA-Z0-9_\-\.]+$/g);
+
                 $scope.flowFileDropped = function(file, event, flow) {
+
                     var modalInstance = $modal.open({
                         templateUrl: 'hbUploadFileTypeModal.html',
                         controller: 'AnnexeFileTypeSelectionController',
@@ -165,6 +170,7 @@
                             }
                         }
                     });
+
 
                     modalInstance.result.then(function (selectedItem) {
                         $scope.selectedUploadFileType = selectedItem;
@@ -178,7 +184,7 @@
                                 // every time a file to upload does not yet exist on the upload target: Ok.
                                 function (response) {
                                     // Do nothing
-                                    $log.debug("Ok, checked annex " + file.name + " does not exist yet, custome HTTP status code = " + response.status);
+                                    $log.debug("Ok, checked annex " + file.name + " does not exist yet, custom HTTP status code = " + response.status);
                                     $scope.flowUpload(flow);
                                     // Reset file name to upload label CSS.
                                     $scope.hbUploadStatusLabelCss = "label-info";
@@ -191,7 +197,7 @@
                 };
 
 
-                $scope.flowFileAddedAndTypeSelected = function (file, event) {
+                $scope.flowFileAddedAndTypeSelected = function (file) {
 
                     if ($scope.canUpload()) {
                         if ($scope.canSave()) {
@@ -206,9 +212,9 @@
 
                     // Perform name substitution
                     var oldFileName = file.name;
-                    var newFileName = file.name.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+                    var newFileName = file.name.replace(/[^a-zA-Z0-9_\-.]/g, '_');
 
-                    if (!(oldFileName == newFileName)) {
+                    if (!(oldFileName === newFileName)) {
                         file.name = newFileName;
                         hbAlertMessages.addAlert("warning", "Le nom de votre fichier a été modifié de: " + oldFileName + " à " + newFileName);
                     }
@@ -232,14 +238,14 @@
                     $scope.hbUploadStatusLabelCss = "label-info";
                 };
 
-                $scope.flowUploadStarted = function (flow) {
+                $scope.flowUploadStarted = function () {
                     $scope.hbUploadStatusLabelCss = "label-success";
                 };
 
                 $scope.flowCancel = function (flow) {
                     // We are in single file mode
                     // check we have a single file
-                    if (flow.files.length == 1) {
+                    if (flow.files.length === 1) {
                         var file = flow.files[0];
                         flow.cancel();
                         // TODO: send API clean up instruction ?
@@ -249,7 +255,7 @@
                         hbAlertMessages.addAlert("warning", "Plusieurs fichiers sont sélectionnés pour le téléversement, c'est inattendu! Tous les téléversements ont été annulés.");
                     } else {
                         flow.cancel();
-                        hbAlertMessages.addAlert("warning", "Aucun fichier sélectionnés pour le téléversement!");
+                        hbAlertMessages.addAlert("warning", "Aucun fichier sélectionné pour le téléversement!");
                     }
                     $scope.hbUploadStatusLabelCss = "label-info";
                 };
@@ -275,7 +281,7 @@
                                 var currRENVOI = $scope.elfin.ANNEXE.RENVOI[i];
                                 $log.debug("RENVOI (POS, LIEN, VALUE): (" + currRENVOI.POS + ", " + currRENVOI.LIEN + ", " + currRENVOI.VALUE + ")");
                             }
-                            ;
+
                         } else {
                             //TODO: test this scenario
                             var newAnnexeRenvoiArrayWithSingleRENVOI = [{
