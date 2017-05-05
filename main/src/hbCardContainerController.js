@@ -77,7 +77,7 @@
                   userDetails) {
 
 
-            $("#elfinForm").bind('keydown', function (e) {
+            $("body").bind('keydown', function (e) {
                 if (e.keyCode === 13 || e.keyCode === 10) {
                     e.preventDefault();
                 }
