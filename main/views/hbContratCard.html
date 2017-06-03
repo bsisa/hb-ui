@@ -84,8 +84,10 @@
 							ng-class="getCssHasFeedback(elfinForm.valeur)">
 							<label for="valeur" class="col-sm-4 control-label">Montant</label>
 							<div class="col-sm-8">
-								<input id="valeur" name="valeur" type="number" class="form-control"
-									ng-model="elfin.IDENTIFIANT.VALEUR" >
+
+								<input id="valeur" name="valeur" type="text" class="form-control"
+									   ng-model="elfin.IDENTIFIANT.VALEUR" format-currency>
+
 							</div>
 						</div>								
 						
