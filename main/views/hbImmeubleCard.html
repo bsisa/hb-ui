@@ -82,29 +82,29 @@
 	</div>
 	<div class="form-group has-feedback"
 		ng-class="getCssHasFeedback(elfinForm.nom)">
-		<label for="nom" class="control-label">No de
+		<label for="nom_immeuble" class="control-label">No de
 			constr.</label>
 		<div >
-			<input id="nom" name="nom" type="text" class="form-control"
+			<input id="nom_immeuble" name="nom" type="text" class="form-control"
 				ng-model="elfin.IDENTIFIANT.NOM" ng-readonly="!canEdit"
 				required>
 		</div>
 	</div>
 	<div class="form-group has-feedback"
 		ng-class="getCssHasFeedback(elfinForm.address)">
-		<label for="address" class="control-label">Adresse</label>
+		<label for="address_immeuble" class="control-label">Adresse</label>
 		<div >
-			<input id="address" name="address" type="text"
+			<input id="address_immeuble" name="address" type="text"
 				class="form-control" ng-model="elfin.IDENTIFIANT.ALIAS" ng-readonly="!canEdit"
 				required>
 		</div>
 	</div>
 	<div class="form-group has-feedback"
 		ng-class="getCssHasFeedback(elfinForm.cadastralNb)">
-		<label for="cadastralNb" class="control-label">No
+		<label for="cadastralNb_immeuble" class="control-label">No
 			cadastral</label>
 		<div >
-			<input id="cadastralNb" name="cadastralNb" type="text"
+			<input id="cadastralNb_immeuble" name="cadastralNb" type="text"
 				class="form-control"
 				ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR" ng-readonly="!canEdit"
 				required>
@@ -155,9 +155,9 @@
 	</div>
 	<div class="form-group has-feedback"
 		ng-class="getCssHasFeedback(elfinForm.locality)">
-		<label for="locality" class="control-label">Lieu-dit</label>
+		<label for="locality_immeuble" class="control-label">Lieu-dit</label>
 		<div>
-			<input id="locality" name="locality" type="text"
+			<input id="locality_immeuble" name="locality" type="text"
 				class="form-control"
 				ng-model="CARSET_CAR_POS_1.VALEUR"
 				ng-readonly="!canEdit"
@@ -166,12 +166,12 @@
 	</div>
 	<div class="form-group has-feedback"
 		ng-class="getCssHasFeedback(elfinForm.remark)">
-		<label for="remark" class="control-label">Remarque</label>
+		<label for="remark_immeuble" class="control-label">Remarque</label>
 		<div>
-			<input id="remark" name="remark" type="text" class="form-control"
+			<textarea id="remark_immeuble" name="remark" type="text" class="form-control"
 				ng-model="elfin.DIVERS.REMARQUE" 
-				ng-readonly="!canEdit"
-				>
+				ng-readonly="!canEdit" rows="4"
+			></textarea>
 		</div>
 	</div>
 </div>
@@ -358,10 +358,10 @@
 						ng-class="getCssHasFeedback(elfinForm.remark)">
 						<label for="remark" class="col-md-1 control-label">Remarque</label>
 						<div class="col-md-11">
-							<input id="remark" name="remark" type="text" class="form-control"
+							<textarea id="remark" name="remark" type="text" class="form-control"
 								ng-model="elfin.DIVERS.REMARQUE" 
-								ng-readonly="!canEdit"
-								>
+								ng-readonly="!canEdit" rows="4"
+							></textarea>
 						</div>
 					</div>
 				</div>
