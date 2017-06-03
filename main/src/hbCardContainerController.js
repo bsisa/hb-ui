@@ -78,17 +78,21 @@
 
 
             $("body").bind('keydown', function (e) {
-                if (e.keyCode === 13 || e.keyCode === 10) {
-                    e.preventDefault();
-                }
-
                 if (e.keyCode === 83 && e.ctrlKey && !!$scope.elfin && $scope.canSave() ) {
                     e.preventDefault();
                     $scope.saveElfin($scope.elfin);
                 }
 
-            });
+                if (e.target.nodeName === "TEXTAREA") {
+                    return true;
+                }
+                if (e.keyCode === 13 || e.keyCode === 10) {
+                    e.preventDefault();
+                }
 
+
+
+            });
 
 
             // Provide dev access rights information to scope
