@@ -45,10 +45,11 @@
     "leaflet.draw": "0.2.3",
     "angular-leaflet-directive": "0.7.7",
     "angular-ui-utils": "0.1.1",
-    "underscore" : "1.6.0",
-    "ng-flow" : "2.4.0",
-    "moment" : "2.13.0",
-    "angular-filter" : "0.5.1"
+    "underscore": "1.6.0",
+    "ng-flow": "2.4.0",
+    "moment": "2.13.0",
+    "angular-filter": "0.5.1",
+    "lightbox2": "^2.9.0"
   },
   "resolutions": {
     "angular": "1.2.16"

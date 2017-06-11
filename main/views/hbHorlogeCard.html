@@ -65,7 +65,9 @@
 						<!-- If a photo is available show it forcing width ratio. -->
 	<!-- 					<div ng-if="photoSrc" style="height:198px; border:solid red 1px;">					 -->
 						<div ng-if="photoSrc" >
-							<img ng-src="{{photoSrc}}" width="180px" class="img-thumbnail" />
+							<a href="{{photoSrc}}" data-lightbox="image-1">
+								<img ng-src="{{photoSrc}}" width="180px" class="img-thumbnail" />
+							</a>
 						</div>
 						
 						<p>
