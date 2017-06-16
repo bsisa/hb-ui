@@ -241,7 +241,7 @@ module.exports = function(grunt) {
 					{
 						cwd: "templates",
 						src: "**/*.pug",
-						dest: "views",
+						dest: "views-compiled",
 						expand: true,
 						ext: ".html"
 					}

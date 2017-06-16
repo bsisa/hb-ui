@@ -4,6 +4,8 @@
 /main/dist/
 /main/node_modules/
 /main/bower_components/
+/main/views-compiled/
+
 /main/.sass-cache
 rsync_ui_to_api_to_789.sh
 

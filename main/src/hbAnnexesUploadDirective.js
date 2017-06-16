@@ -10,7 +10,7 @@
     	return {
 		    require: '^hbCardContainer',
 			restrict: 'A',
-		    templateUrl : "/assets/views/hbAnnexesUpload.html",
+		    templateUrl : "/assets/views-compiled/hbAnnexesUpload.html",
 			controller: 'HbAnnexesUploadController',
 			scope: true
 		};

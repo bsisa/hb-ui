@@ -10,7 +10,7 @@
     	return {
 		    require: '^hbCardContainer',
 			restrict: 'A',
-		    templateUrl : "/assets/views/hbConstatCard.html",
+		    templateUrl : "/assets/views-compiled/hbConstatCard.html",
 			controller: 'HbConstatCardController'
 		};
 	

@@ -10,7 +10,7 @@
 		return {
 		    restrict: 'A',
 		    transclude: true,
-			templateUrl : "/assets/views/hbCardContainer.html",
+			templateUrl : "/assets/views-compiled/hbCardContainer.html",
 			controller: 'HbCardContainerController'
 		};
 	
