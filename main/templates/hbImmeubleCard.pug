@@ -29,16 +29,16 @@ div(hb-card-header)
     span(ng-show="elfinForm.ecapVolume.$error.maxlength")
         != 'Le volume ECAP doit être <strong>un nombre</strong>! (Max 12 positions)'
 
-    <!-- ecapVolumePrice Prix au m³ -->
-    <!-- ecapFee Prime ECAP TTC -->
-    <!-- ecapSelfInsuranceFnd   Fond auto assurance -->
-    <!-- ecapBuildingNb  Bâtiment assuré no -->
-    <!-- ecapObject Objet assuré -->
-    <!-- ecapConstructionRisk Classe risque construction -->
-    <!-- ecapUsageRisk Classe risque usage -->
-    <!-- ecapLightningRod  Paratonnerre -->
-    <!-- ecapFireDetection Détection incendie -->
-    <!-- ecapPeculiarities Particularités -->
+    // ecapVolumePrice Prix au m³ 
+    // ecapFee Prime ECAP TTC 
+    // ecapSelfInsuranceFnd   Fond auto assurance
+    // ecapBuildingNb  Bâtiment assuré no 
+    // ecapObject Objet assuré
+    // ecapConstructionRisk Classe risque construction 
+    // ecapUsageRisk Classe risque usage 
+    // ecapLightningRod  Paratonnerre
+    // ecapFireDetection Détection incendie
+    // ecapPeculiarities Particularités
 
     span(ng-show="elfinForm.goal.$error.required")
         != 'Le champ <strong>No de gérance</strong> est obligatoire!'
@@ -58,8 +58,8 @@ div(hb-card-header)
         != 'Le champ <strong>Architecte</strong> est obligatoire!'
 
 
-<!-- Short IMMEUBLE summary intended for display side by side with a map -->
-<!-- Note: Using ng-show instead of ng-if leads to validation problems -->
+// Short IMMEUBLE summary intended for display side by side with a map
+// Note: Using ng-show instead of ng-if leads to validation problems
 
 div.row.summary(ng-if="isMapToggled() && mapDisplayType === 'SPLIT'")
     div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.goal)")
@@ -110,7 +110,7 @@ div.row.summary(ng-if="isMapToggled() && mapDisplayType === 'SPLIT'")
             input#alias.form-control(name="alias", type="text", ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE", ng-readonly="!canEdit", required)
 
     div.form-group(ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L")
-        <!-- Provides converted.actor -->
+        // Provides converted.actor 
         div(hb-actor-line-converter, hb-actor-line-converter-line-model="otherPartnerLine", hb-actor-line-converter-actor-model="convertedActor", hb-actor-line-converter-actor-role="actorRole")
             label.control-label(for="otherPartner-{{$index}}") {{convertedActorElfin.IDENTIFIANT.QUALITE}}
             div
@@ -143,9 +143,9 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
         tabset
             tab(active="tabState.immeuble.active")
                 tab-heading Immeuble
-                <!-- 1st tab 1st row -->
+                // 1st tab 1st row 
                 div.hb-tab
-                    <!-- 1st col first tab first row start -->
+                    // 1st col first tab first row start
                     div.row
                         div.col-lg-4.col-xs-12
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.goal)")
@@ -178,31 +178,31 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                 div.col-lg-9.col-md-10
                                     input#cadastralNb.form-control(name="cadastralNb", type="text", ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR", ng-readonly="!canEdit", required)
 
-                        <!-- 2nd col first tab first row start -->
+                        // 2nd col first tab first row start 
                         div.col-lg-4.col-xs-12(style="text-align: center; height: 100%;")
                             div.form-group
-                            <!-- Display current year PRESTATION `Groupe comptable` information -->
+                            // Display current year PRESTATION `Groupe comptable` information 
                                 div.col-sm-12.form-control-static
                                     div.btn.btn-default.btn-xs
                                         a(target="_self", ng-href="file:///{{annexeFileSystemUri}}")
                                             i.glyphicon.glyphicon-hdd
                                     | {{(prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate:prestaReverse | first).IDENTIFIANT.ORIGINE}}
 
-                            <!-- If no photo is available show upload function while using room left empty with fixed size table. -->
+                            // If no photo is available show upload function while using room left empty with fixed size table.
                                 table(ng-if="!photoSrc", style="border: solid 4px #F0F0F0; width: 180px; height: 198px; margin: 0 auto;")
                                     tr
                                         td(style="vertical-align: middle; text-align: center")
                                             i.glyphicon.glyphicon-upload(style="font-size: 4em;")
 
-                            <!-- If a photo is available show it forcing width ratio. -->
+                            // If a photo is available show it forcing width ratio. 
                                 div(ng-if="photoSrc")
                                     a(href="{{photoSrc}}", data-lightbox="image-1")
                                         img.img-thumbnail(ng-src="{{photoSrc}}", width="180px")
 
                                 p
                                     div(ng-if="canEdit", hb-annexes-upload, hb-annexes-upload-annex-type="photo")
-                        <!-- 2nd col first tab first row end -->
-                        <!-- 3rd col first tab first row start -->
+                        // 2nd col first tab first row end 
+                        // 3rd col first tab first row start
                         div.col-lg-4.col-xs-12
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.manager)")
                                 label.col-lg-3.col-md-2.control-label(for="manager") Propriétaire
@@ -223,7 +223,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                     input#alias_2.form-control(name="alias", type="text", ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE", ng-readonly="!canEdit", required)
 
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.otherPartner-{{$index}})", ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L")
-                                <!-- Provides converted.actor -->
+                                // Provides converted.actor 
                                 div(hb-actor-line-converter, hb-actor-line-converter-line-model="otherPartnerLine", hb-actor-line-converter-actor-model="convertedActor", hb-actor-line-converter-actor-role="actorRole")
                                     label.col-lg-3.col-md-2.control-label(for="otherPartner_2-{{$index}}") {{convertedActorElfin.IDENTIFIANT.QUALITE}}
                                     div.col-lg-1.visible-lg-block(ng-if="!canEditParteners")
@@ -251,12 +251,12 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                             i.glyphicon.glyphicon-plus-sign
                                             | &nbsp;Ajouter un partenaire
 
-                        <!-- 3rd col first tab first row end -->
-                    <!-- row end -->
-                    <!-- Provide some spacing -->
+                        // 3rd col first tab first row end 
+                    // row end 
+                    // Provide some spacing 
                     div(style="margin: 0px; line-height: 0.5em")
                         br
-                    <!-- 2e bloc -->
+                    // 2e bloc
                     div.row
                         div.col-xs-12
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.locality)")
@@ -270,10 +270,10 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                 div.col-md-11
                                     textarea#remark_2.form-control(name="remark_2", type="text", ng-model="elfin.DIVERS.REMARQUE", ng-readonly="!canEdit", rows="4")
 
-                    <!-- 3e bloc -->
-                    <!-- Keywords are currently unused. -->
-                    <!-- 4e bloc -->
-                    <!-- Constats en cours tab -->
+                    // 3e bloc
+                    // Keywords are currently unused.
+                    // 4e bloc 
+                    // Constats en cours tab 
                     tabset
                         tab
                             tab-heading Constats en cours
@@ -345,20 +345,20 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                 i.glyphicon.glyphicon-plus-sign
                             div.hb-tab
 
-            <!-- SURFACE tab -->
+            // SURFACE tab 
             tab(active="tabState.unite_locative.active")
                 tab-heading Unités locatives ({{locationUnits.length}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
                             tabset
-                                <!-- UNITE_LOCATIVE 1st sub tab -->
+                                // UNITE_LOCATIVE 1st sub tab 
                                 tab(active="tabState.unite_locative_subtab_current.active")
                                     tab-heading Unités locatives courantes
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
-                                                <!-- Table des unités locatives actives -->
+                                                // Table des unités locatives actives
                                                 table.table.table-condensed.table-bordered.table-striped
                                                     thead
                                                         tr
@@ -389,13 +389,13 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td
                                                                 span {{locationUnit.DIVERS.REMARQUE}}
 
-                                <!-- UNITE_LOCATIVE 2nd sub tab -->
+                                // UNITE_LOCATIVE 2nd sub tab
                                 tab(active="tabState.unite_locative_subtab_archived.active")
                                     tab-heading Unités locatives archivées
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
-                                                <!-- Table des unités locatives archived -->
+                                                // Table des unités locatives archived
                                                 table.table.table-condensed.table-bordered.table-striped
                                                     thead
                                                         tr
@@ -431,14 +431,14 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                         | Créer une nouvelle unité locative&nbsp;
                                         i.glyphicon.glyphicon-plus-sign
                                     div.hb-tab
-            <!-- PRESTATION tab -->
+            // PRESTATION tab
             tab(active="tabState.prestation.active")
                 tab-heading Prestations({{prestations.length}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
                             tabset
-                                <!-- PRESTATION 1st tab -->
+                                // PRESTATION 1st tab
                                 tab(active="tabState.prestation_subtab_annee_moins1.active")
                                     tab-heading Prestations en cours, année-1
                                     div.hb-tab
@@ -471,7 +471,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td.number
                                                                 span {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
 
-                                <!-- PRESTATION 1st tab -->
+                                // PRESTATION 1st tab
                                 tab(active="tabState.prestation_subtab_annee_plus1.active")
                                     tab-heading Prestations année+1
                                     div.hb-tab
@@ -501,7 +501,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 span {{prestation.IDENTIFIANT.ORIGINE}}
                                                             td.number
                                                                 span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
-                                <!-- PRESTATION 1st tab -->
+                                // PRESTATION 1st tab
                                 tab(active="tabState.prestation_subtab_annee_toutes.active")
                                     tab-heading Prestations toutes
                                     div.hb-tab
@@ -536,24 +536,24 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                         | Créer une nouvelle prestation&nbsp;
                                         i.glyphicon.glyphicon-plus-sign
                                     div.hb-tab
-                        <!-- Prestation 12 col div END -->
-                    <!-- Prestation 1st level row div END -->
-                <!-- Prestation 1st level hb-tab container END -->
+                        // Prestation 12 col div END
+                    // Prestation 1st level row div END
+                // Prestation 1st level hb-tab container END
 
-            <!-- COMMANDE tab -->
+            // COMMANDE tab
             tab(ng-if="canManageOrders" active="tabState.commande.active")
                 tab-heading Commandes ({{commandes.length}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
                             tabset
-                                <!-- COMMANDES 1st sub tab -->
+                                // COMMANDES 1st sub tab
                                 tab(active="tabState.commande_subtab_ouvertes.active")
                                     tab-heading Commandes
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
-                                                <!-- Table des commandes ouvertes -->
+                                                // Table des commandes ouvertes
                                                 table.table.table-condensed.table-bordered.table-striped
                                                     thead
                                                         tr
@@ -582,8 +582,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 | -
                                                             td
                                                                 | {{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}
-                                <!-- COMMANDES 2nd sub tab -->
-                                <!-- COMMANDES 3rd sub tab -->
+                                // COMMANDES 2nd sub tab
+                                // COMMANDES 3rd sub tab
 
                                 tab(select="createNewCommande()" ng-show="!createMode")
                                     tab-heading(tooltip="Créer une nouvelle commande relative à l'objet courant", tooltip-popup-delay="1000")
@@ -591,14 +591,14 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                         i.glyphicon.glyphicon-plus-sign
                                     div.hb-tab
 
-            <!-- CONTRAT tab -->
+            // CONTRAT tab
             tab(active="tabState.contrat.active")
                 tab-heading Contrats ({{contrats.length}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
                             tabset
-                                <!-- CONTRAT 1st sub tab -->
+                                // CONTRAT 1st sub tab
                                 tab(active="tabState.contrat_subtab_actifs.active")
                                     tab-heading Contrats actifs
                                     div.hb-tab
@@ -636,13 +636,13 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td
                                                                 span {{contrat.GROUPE}}
 
-                                <!-- CONTRAT 2nd sub tab -->
+                                // CONTRAT 2nd sub tab
                                 tab(active="tabState.contrat_subtab_denonces.active")
                                     tab-heading Contrats dénoncés
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
-                                                <!-- Table des contrats dénoncés -->
+                                                // Table des contrats dénoncés
                                                 table.table.table-condensed.table-bordered.table-striped
                                                     thead
                                                         tr
@@ -675,13 +675,13 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td
                                                                 span {{contrat.GROUPE}}
 
-                                <!-- CONTRAT 3rd sub tab -->
+                                // CONTRAT 3rd sub tab
                                 tab(active="tabState.contrat_subtab_tous.active")
                                     tab-heading Contrats tous
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
-                                                <!-- Table des contrats dénoncés -->
+                                                // Table des contrats dénoncés
                                                 table.table.table-condensed.table-bordered.table-striped
                                                     thead
                                                         tr
@@ -720,7 +720,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                         i.glyphicon.glyphicon-plus-sign
                                     div.hb-tab
 
-            <!-- CARACTERISTIQUE tab -->
+            // CARACTERISTIQUE tab
             tab(active="tabState.caracteristique.active")
                 tab-heading Caractéristiques
                 div.hb-tab
@@ -773,13 +773,13 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                 div.col-md-8
                                     input#workplaceNb.form-control(name="workplaceNb", type="text", ng-model="CARSET_CAR_POS_10.VALEUR", ng-readonly="!canEdit")
 
-            <!-- VALEUR tab -->
+            // VALEUR tab
             tab(active="tabState.valeur.active")
                 tab-heading Valeur ECAP
                 div.hb-tab
                     div.row
                         div.col-sm-12
-                            <!-- Table des contrats ECAP actifs -->
+                            // Table des contrats ECAP actifs
                             table.table.table-condensed.table-bordered.table-striped
                                 thead
                                     tr
@@ -913,13 +913,13 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                 div.col-md-8
                                     input#ecapPeculiarities.form-control(name="ecapPeculiarities", type="text", ng-model="CARSET_CAR_POS_20.VALEUR", ng-readonly="!canEdit")
 
-            <!-- EQUIPEMENT technique tab -->
+            // EQUIPEMENT technique tab
             tab(active="tabState.equipements_tech.active")
                 tab-heading Equipement{{equipementsCount | plural}} technique{{equipementsCount | plural}} ({{equipementsCount}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
-                            <!-- Table des PRODUCTION_CHALEUR -->
+                            // Table des PRODUCTION_CHALEUR
                             table.table.table-condensed.table-bordered.table-striped
                                 thead
                                     tr
@@ -957,7 +957,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
 
                     div.row
                         div.col-sm-12
-                            <!-- Table des PRODUCTION_FROID -->
+                            // Table des PRODUCTION_FROID
                             table.table.table-condensed.table-bordered.table-striped
                                 thead
                                     tr
@@ -996,7 +996,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
 
                     div.row
                         div.col-sm-12
-                            <!-- Table des VENTILATION -->
+                            // Table des VENTILATION
                             table.table.table-condensed.table-bordered.table-striped
                                 thead
                                     tr
@@ -1035,7 +1035,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
 
                     div.row
                         div.col-sm-12
-                            <!-- Table des CITERNE -->
+                            // Table des CITERNE
                             table.table.table-condensed.table-bordered.table-striped
                                 thead
                                     tr
@@ -1071,13 +1071,13 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                         td
                                             span {{citerne.PARTENAIRE.FOURNISSEUR.VALUE}}
 
-            <!-- FORME tab -->
+            // FORME tab
             tab(active="tabState.forme.active", select="eagerDomCreation.FORM = true")
                 tab-heading Forme
                 div.hb-tab
                     div(hb-forme-component)
 
-            <!-- Annexes tab -->
+            // Annexes tab
             tab(active="tabState.annexe.active")
                 tab-heading
                     div(hb-annexes-number)
