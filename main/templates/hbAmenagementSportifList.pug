@@ -1,0 +1,70 @@
+table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
+    thead
+        tr
+            th(colspan="6")
+                span.badge {{filteredElfins.length}} / {{elfinsCount}}</span> Aménagement{{ elfinsCount | plural }} sportif{{ elfinsCount | plural }} trouvé{{ elfinsCount | plural}}
+
+        tr
+            th.col-sm-1(rowspan="3")
+            th(colspan="10")
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input#globalSearchField.form-control(name="globalSearchField", type="text", ng-model="search.text", hb-no-dirty-check, placeholder="")
+
+        tr
+            th.col-sm-1
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.group", hb-no-dirty-check, placeholder="")
+
+            th.col-sm-1
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.registerNb", hb-no-dirty-check, placeholder="")
+
+            th.col-sm-4
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.address", hb-no-dirty-check, placeholder="")
+
+            th.col-sm-2
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.buildingNb", hb-no-dirty-check, placeholder="")
+
+            th.col-sm-3
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.place", hb-no-dirty-check, placeholder="")
+
+        tr
+            th.col-sm-1
+                a(href="" ng-click="predicate = 'GROUPE'; reverse=!reverse") Groupe
+            th.col-sm-1
+                a(href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse") No SAI
+            th.col-sm-1
+                a(href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse") Adresse
+            th.col-sm-1
+                a(href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse") No construction
+            th.col-sm-1
+                a(href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse") Lieu-dit
+
+    tbody
+        tr(ng-repeat="elfin in filteredElfins")
+            td
+                // Ugly 90s table style layout that works.
+                table(width="100%", height="100%")
+                    tr
+                        td(style="text-align: center; vertical-align: middle;")
+                            div(hb-card-view-link, hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}")
+                        td(ng-if="source", style="text-align: center; vertical-align: middle;")
+                            div(tooltip="Sélectionner", tooltip-popup-delay="1500")
+                                div(style="width: 38px;")
+                                    a.btn.btn-default.btn-xs.btn-block(href="/elfin/{{source}}?selectionImmeuble={{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}", role="button")
+                                        i.glyphicon.glyphicon-plus-sign
+            td {{elfin.GROUPE}}
+            td {{elfin.IDENTIFIANT.OBJECTIF}}
+            td {{elfin.IDENTIFIANT.ALIAS}}
+            td {{elfin.IDENTIFIANT.NOM}}
+            td {{getPlace(elfin).VALEUR}}
+

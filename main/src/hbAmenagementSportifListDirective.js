@@ -9,7 +9,7 @@
 		return {
 			require: '^hbListContainer',
 		    restrict: 'A',
-			templateUrl : "/assets/views/hbAmenagementSportifList.html",
+			templateUrl : "/assets/views-compiled/hbAmenagementSportifList.html",
 			controller: 'HbAmenagementSportifListController'
 		};
 	
