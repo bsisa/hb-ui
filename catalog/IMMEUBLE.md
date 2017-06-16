@@ -2,16 +2,13 @@
 
 ## IDENTIFIANT
 
-*OBJECTIF*: No de gérance
-*NOM*: No de constr. 
+*A*: Année de sortie
 *ALIAS*: Adresse
 *DE*: Année de construction
-*A*: Année de sortie
+*NOM*: No de constr. 
+*OBJECTIF*: No de gérance
 *QUALITE*: Cause de sortie
 
-
-
- 
 ## CARACTERISTIQUE
 
 *CAR2 VALEUR*: Fonction actuelle
@@ -41,7 +38,6 @@
 *POS 18.VALEUR*: Paratonerre
 *POS 19.VALEUR*: Détection incendie
 *POS 20.VALEUR*: Particularités
-
 
 ### FRACTION
 
