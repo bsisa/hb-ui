@@ -1,0 +1,1085 @@
+div(hb-card-header)
+    span(ng-show="elfinForm.constructionYear.$error.pattern")
+        != 'L\'année de construction doit être <strong>un nombre</strong> à quatre positions!'
+    span(ng-show="elfinForm.constructionYear.$error.maxlength")
+        != 'L\'année de construction doit être un nombre <strong>à quatre positions!</strong>'
+
+    span(ng-show="elfinForm.exitYear.$error.pattern")
+        != 'L\'année de sortie doit être <strong>un nombre</strong> à quatre positions!'
+    span(ng-show="elfinForm.exitYear.$error.maxlength")
+        != 'L\'année de sortie doit être un nombre <strong>à quatre positions!</strong>'
+
+    span(ng-show="elfinForm.ecapEstimYear.$error.pattern")
+        != 'L\'année d\'estimation ECAP doit être <strong>un nombre</strong> à quatre positions!'
+    span(ng-show="elfinForm.ecapEstimYear.$error.maxlength")
+        != 'L\'année d\'estimation ECAP doit être un nombre <strong>à quatre positions!</strong>'
+
+    span(ng-show="elfinForm.ecapEstimYear.$error.pattern")
+        != 'L\'année d\'estimation ECAP doit être <strong>un nombre</strong> à quatre positions!'
+    span(ng-show="elfinForm.ecapEstimYear.$error.maxlength")
+        != 'L\'année d\'estimation ECAP doit être un nombre <strong>à quatre positions!</strong>'
+
+    span(ng-show="elfinForm.cadastralEvaluationYear.$error.pattern")
+        != 'L\'année d\'estimation cadastrale doit être <strong>un nombre</strong> à quatre positions!'
+    span(ng-show="elfinForm.cadastralEvaluationYear.$error.maxlength")
+        != 'L\'année d\'estimation cadastrale doit être un nombre <strong>à quatre positions!</strong>'
+
+    span(ng-show="elfinForm.ecapVolume.$error.pattern")
+        != 'Le volume ECAP doit être <strong>un nombre</strong>!'
+    span(ng-show="elfinForm.ecapVolume.$error.maxlength")
+        != 'Le volume ECAP doit être <strong>un nombre</strong>! (Max 12 positions)'
+
+    <!-- ecapVolumePrice Prix au m³ -->
+    <!-- ecapFee Prime ECAP TTC -->
+    <!-- ecapSelfInsuranceFnd   Fond auto assurance -->
+    <!-- ecapBuildingNb  Bâtiment assuré no -->
+    <!-- ecapObject Objet assuré -->
+    <!-- ecapConstructionRisk Classe risque construction -->
+    <!-- ecapUsageRisk Classe risque usage -->
+    <!-- ecapLightningRod  Paratonnerre -->
+    <!-- ecapFireDetection Détection incendie -->
+    <!-- ecapPeculiarities Particularités -->
+
+    span(ng-show="elfinForm.goal.$error.required")
+        != 'Le champ <strong>No de gérance</strong> est obligatoire!'
+    span(ng-show="elfinForm.author.$error.required")
+        != 'Le champ <strong>No ECAP</strong> est obligatoire!'
+    span(ng-show="elfinForm.nom.$error.required")
+        != 'Le champ <strong>No de construction</strong> est obligatoire!'
+    span(ng-show="elfinForm.address.$error.required")
+        != 'Le champ <strong>Adresse</strong> est obligatoire!'
+    span(ng-show="elfinForm.cadastralNb.$error.required")
+        != 'Le champ <strong>No cadastral</strong> est obligatoire!'
+    span(ng-show="elfinForm.manager.$error.required")
+        != 'Le champ <strong>Propriétaire</strong> est obligatoire!'
+    span(ng-show="elfinForm.managerName.$error.required")
+        != 'Le champ <strong>Nom du propriétaire</strong> est obligatoire!'
+    span(ng-show="elfinForm.alias.$error.required")
+        != 'Le champ <strong>Architecte</strong> est obligatoire!'
+
+
+<!-- Short IMMEUBLE summary intended for display side by side with a map -->
+<!-- Note: Using ng-show instead of ng-if leads to validation problems -->
+
+div.row.summary(ng-if="isMapToggled() && mapDisplayType === 'SPLIT'")
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.goal)")
+        label.control-label(for="goal", style="text-align:left;") No de gérance
+        div
+            input#goal.form-control(name="goal", type="text", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-readonly="!canEdit", required)
+
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.noAbaImmo)")
+        label.control-label(for="noAbaImmo") No AbaImmo
+        div
+            input#noAbaImmo.form-control(name="noAbaImmo", type="text", ng-model="CARSET_CAR_POS_2.VALEUR", ng-readonly="!canEdit")
+
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.author)")
+        label.control-label(for="author") No ECAP
+        div
+            input#author.form-control(name="author", type="text", ng-model="CARSET_CAR_POS_3.VALEUR", ng-readonly="!canEdit", required)
+
+
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.nom)")
+        label.control-label(for="nom_immeuble") No de constr.
+        div
+            input#nom_immeuble.form-control(name="nom_immeuble", type="text", ng-model="elfin.IDENTIFIANT.NOM", ng-readonly="!canEdit", required)
+
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.address)")
+        label.control-label(for="address_immeuble") Adresse
+        div
+            input#address_immeuble.form-control(name="address_immeuble", type="text", ng-model="elfin.IDENTIFIANT.ALIAS", ng-readonly="!canEdit", required)
+
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.cadastralNb)")
+        label.control-label(for="cadastralNb_immeuble") No cadastral
+        div
+            input#cadastralNb_immeuble.form-control(name="cadastralNb_immeuble", type="text", ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR", ng-readonly="!canEdit", required)
+
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.manager)")
+        label.control-label(for="manager") Propriétaire
+        div
+            div#manager(hb-choose-actor,
+                hb-choose-actor-id-name="manager",
+                hb-choose-actor-elfin-form="elfinForm",
+                hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE",
+                hb-choose-actor-tooltip="Recherche de propriétaire",
+                hb-choose-actor-role="Propriétaire",
+                hb-choose-actor-editable="{{canEdit}}")
+
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.alias)")
+        label.control-label(for="alias") Architecte
+        div
+            input#alias.form-control(name="alias", type="text", ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE", ng-readonly="!canEdit", required)
+
+    div.form-group(ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L")
+        <!-- Provides converted.actor -->
+        div(hb-actor-line-converter, hb-actor-line-converter-line-model="otherPartnerLine", hb-actor-line-converter-actor-model="convertedActor", hb-actor-line-converter-actor-role="actorRole")
+            label.control-label(for="otherPartner-{{$index}}") {{convertedActorElfin.IDENTIFIANT.QUALITE}}
+            div
+                div(id="otherPartner-{{$index}}", hb-choose-actor,
+                    hb-choose-actor-id-name="otherPartner-{{$index}}",
+                    hb-choose-actor-elfin-form="elfinForm",
+                    hb-choose-actor-model="convertedActor",
+                    hb-choose-actor-elfin-model="convertedActorElfin",
+                    hb-choose-actor-tooltip="Recherche de partenaire",
+                    hb-choose-actor-role="!Entreprise,!Collaborateur,!Propriétaire",
+                    hb-choose-actor-editable="{{canEditParteners}}")
+            div
+                p.form-control-static(id="telCellphone-{{$index}}")
+                    | {{convertedActorElfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}
+                    span(ng-if="convertedActorElfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR.length > 0 && convertedActorElfin.CARACTERISTIQUE.CAR4.VALEUR.length > 0") &nbsp;/&nbsp;
+                    | {{convertedActorElfin.CARACTERISTIQUE.CAR4.VALEUR}}
+
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.locality)")
+        label.control-label(for="locality_immeuble") Lieu-dit
+        div
+            input#locality_immeuble.form-control(name="locality_immeuble", type="text", ng-model="CARSET_CAR_POS_1.VALEUR", ng-readonly="!canEdit")
+
+    div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.remark)")
+        label.control-label(for="remark_immeuble") Remarques
+        div
+            textarea#remark_immeuble.form-control(name="remark_immeuble", type="text", ng-model="elfin.DIVERS.REMARQUE", ng-readonly="!canEdit", rows="4")
+
+div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
+    div.col-xs-12
+        tabset
+            tab(active="tabState.immeuble.active")
+                tab-heading Immeuble
+                <!-- 1st tab 1st row -->
+                div.hb-tab
+                    <!-- 1st col first tab first row start -->
+                    div.row
+                        div.col-lg-4.col-xs-12
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.goal)")
+                                label.col-lg-3.col-md-2.control-label(for="goal_2") No de gérance
+                                div.col-lg-9.col-md-10
+                                    input#goal_2.form-control(name="goal_2", type="text", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-readonly="!canEdit", required)
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.noAbaImmo_2)")
+                                label.col-lg-3.col-md-2.control-label(for="noAbaImmo_2") No AbaImmo
+                                div.col-lg-9.col-md-10
+                                    input#noAbaImmo_2.form-control(name="noAbaImmo_2", type="text", ng-model="CARSET_CAR_POS_2.VALEUR", ng-readonly="!canEdit")
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.author)")
+                                label.col-lg-3.col-md-2.control-label(for="author_2") No ECAP
+                                div.col-lg-9.col-md-10
+                                    input#author_2.form-control(name="author_2", type="text", ng-model="CARSET_CAR_POS_3.VALEUR", ng-readonly="!canEdit", required)
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.nom)")
+                                label.col-lg-3.col-md-2.control-label(for="nom") No de constr.
+                                div.col-lg-9.col-md-10
+                                    input#nom.form-control(name="nom", type="text", ng-model="elfin.IDENTIFIANT.NOM", ng-readonly="!canEdit", required)
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.address)")
+                                label.col-lg-3.col-md-2.control-label(for="address") Adresse
+                                div.col-lg-9.col-md-10
+                                    input#address.form-control(name="address", type="text", ng-model="elfin.IDENTIFIANT.ALIAS", ng-readonly="!canEdit", required)
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.cadastralNb)")
+                                label.col-lg-3.col-md-2.control-label(for="cadastralNb") No cadastral
+                                div.col-lg-9.col-md-10
+                                    input#cadastralNb.form-control(name="cadastralNb", type="text", ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR", ng-readonly="!canEdit", required)
+
+                        <!-- 2nd col first tab first row start -->
+                        div.col-lg-4.col-xs-12(style="text-align: center; height: 100%;")
+                            div.form-group
+                            <!-- Display current year PRESTATION `Groupe comptable` information -->
+                                div.col-sm-12.form-control-static
+                                    div.btn.btn-default.btn-xs
+                                        a(target="_self", ng-href="file:///{{annexeFileSystemUri}}")
+                                            i.glyphicon.glyphicon-hdd
+                                    | {{(prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate:prestaReverse | first).IDENTIFIANT.ORIGINE}}
+
+                            <!-- If no photo is available show upload function while using room left empty with fixed size table. -->
+                                table(ng-if="!photoSrc", style="border: solid 4px #F0F0F0; width: 180px; height: 198px; margin: 0 auto;")
+                                    tr
+                                        td(style="vertical-align: middle; text-align: center")
+                                            i.glyphicon.glyphicon-upload(style="font-size: 4em;")
+
+                            <!-- If a photo is available show it forcing width ratio. -->
+                                div(ng-if="photoSrc")
+                                    a(href="{{photoSrc}}", data-lightbox="image-1")
+                                        img.img-thumbnail(ng-src="{{photoSrc}}", width="180px")
+
+                                p
+                                    div(ng-if="canEdit", hb-annexes-upload, hb-annexes-upload-annex-type="photo")
+                        <!-- 2nd col first tab first row end -->
+                        <!-- 3rd col first tab first row start -->
+                        div.col-lg-4.col-xs-12
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.manager)")
+                                label.col-lg-3.col-md-2.control-label(for="manager") Propriétaire
+                                div.col-lg-1.visible-lg-block
+                                div.col-lg-8.col-md-10
+                                    div(hb-choose-actor,
+                                        hb-choose-actor-id-name="manager",
+                                        hb-choose-actor-elfin-form="elfinForm",
+                                        hb-choose-actor-model="elfin.PARTENAIRE.PROPRIETAIRE",
+                                        hb-choose-actor-tooltip="Recherche de propriétaire",
+                                        hb-choose-actor-role="Propriétaire",
+                                        hb-choose-actor-editable="{{canEdit}}")
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.alias)")
+                                label.col-lg-3.col-md-2.control-label(for="alias_2") Architecte
+                                div.col-lg-1.visible-lg-block
+                                div.col-lg-8.col-md-10
+                                    input#alias_2.form-control(name="alias", type="text", ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE", ng-readonly="!canEdit", required)
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.otherPartner-{{$index}})", ng-repeat="otherPartnerLine in elfin.CARACTERISTIQUE.FRACTION.L")
+                                <!-- Provides converted.actor -->
+                                div(hb-actor-line-converter, hb-actor-line-converter-line-model="otherPartnerLine", hb-actor-line-converter-actor-model="convertedActor", hb-actor-line-converter-actor-role="actorRole")
+                                    label.col-lg-3.col-md-2.control-label(for="otherPartner_2-{{$index}}") {{convertedActorElfin.IDENTIFIANT.QUALITE}}
+                                    div.col-lg-1.visible-lg-block(ng-if="!canEditParteners")
+                                    div.col-md-1.btn.btn-default(ng-if="canEditParteners", ng-click="removeOtherPartner($index)", tooltip="Supprimer le partenaire")
+                                        i.glyphicon.glyphicon-remove-circle
+                                    div.col-lg-8.col-md-9
+                                        div(id="otherPartner_2-{{$index}}", hb-choose-actor,
+                                            hb-choose-actor-id-name="otherPartner-{{$index}}",
+                                            hb-choose-actor-elfin-form="elfinForm",
+                                            hb-choose-actor-model="convertedActor",
+                                            hb-choose-actor-elfin-model="convertedActorElfin",
+                                            hb-choose-actor-tooltip="Recherche de partenaire",
+                                            hb-choose-actor-role="!Entreprise,!Collaborateur,!Propriétaire",
+                                            hb-choose-actor-editable="{{canEditParteners}}")
+                                    div.col-lg-offset-4.col-lg-8.col-md-offset-3.col-md-9
+                                        p.form-control-static(id="telCellphone_2-{{$index}}")
+                                            | {{convertedActorElfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR}}
+                                            span(ng-if="convertedActorElfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR.length > 0 && convertedActorElfin.CARACTERISTIQUE.CAR4.VALEUR.length > 0") &nbsp;/&nbsp;
+                                            | {{convertedActorElfin.CARACTERISTIQUE.CAR4.VALEUR}}
+
+                            div.col-lg-offset-4.col-lg-8.col-md-offset-3.col-md-9(ng-if="canEditParteners")
+                                div.input-group
+                                    span.input-group-btn(tooltip="Ajouter un nouveau partenaire, responsable chauffage, concierge...")
+                                        a.btn.btn-default(type="button", ng-click="addOtherPartner()")
+                                            i.glyphicon.glyphicon-plus-sign
+                                            | &nbsp;Ajouter un partenaire
+
+                        <!-- 3rd col first tab first row end -->
+                    <!-- row end -->
+                    <!-- Provide some spacing -->
+                    div(style="margin: 0px; line-height: 0.5em")
+                        br
+                    <!-- 2e bloc -->
+                    div.row
+                        div.col-xs-12
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.locality)")
+                                label.col-md-1.control-label(for="locality_2") Lieu-dit
+                                div.col-md-11
+                                    input#locality_2.form-control(name="locality_2", type="text", ng-model="CARSET_CAR_POS_1.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-xs-12
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.remark)")
+                                label.col-md-1.control-label(for="remark_2") Remarque
+                                div.col-md-11
+                                    textarea#remark_2.form-control(name="remark_2", type="text", ng-model="elfin.DIVERS.REMARQUE", ng-readonly="!canEdit", rows="4")
+
+                    <!-- 3e bloc -->
+                    <!-- Keywords are currently unused. -->
+                    <!-- 4e bloc -->
+                    <!-- Constats en cours tab -->
+                    tabset
+                        tab
+                            tab-heading Constats en cours
+                            div.hb-tab
+                                div.row
+                                    div.col-sm-12(ng-show="constatsEncours")
+                                        table.table.table-condensed.table-bordered.table-striped
+                                            thead
+                                                tr
+                                                    th Constat
+                                                    th Etage-Locataire
+                                                    th Libellé
+                                                    th Montant
+                                                    th Delai
+                                                    th Resp
+                                                    th Filiation
+                                            tbody
+                                                tr(ng-repeat="constat in constatsEncours | orderBy:'IDENTIFIANT.DE':true")
+                                                    td
+                                                        div(hb-card-view-link, hb-href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}")
+                                                    td
+                                                        span {{constat.PARTENAIRE.USAGER.VALUE}}
+                                                    td
+                                                        span {{constat.IDENTIFIANT.NOM}}
+                                                    td.number
+                                                        span {{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI | currency:'CHF' }}
+                                                    td.date
+                                                        span {{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_DATE | date }}
+                                                    td
+                                                        span {{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI}}
+                                                    td
+                                                        span {{constat.FILIATION.PARENT[constat.FILIATION.PARENT.length-1].Id}}
+
+                        tab
+                            tab-heading Constats traités
+                            div.hb-tab
+                                div.row
+                                    div.col-sm-12(ng-show="constatsClos")
+                                        table.table.table-condensed.table-bordered.table-striped
+                                            thead
+                                                tr
+                                                    th Constat
+                                                    th Etage-Locataire
+                                                    th Libellé
+                                                    th Montant
+                                                    th Annoncé le
+                                                    th Traité le
+                                                    th Filiation
+                                            tbody
+                                                tr(ng-repeat="constat in constatsClos | orderBy:'IDENTIFIANT.DE':true")
+                                                    td
+                                                        div(hb-card-view-link, hb-href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}")
+                                                    td
+                                                        span {{constat.PARTENAIRE.USAGER.VALUE}}
+                                                    td
+                                                        span {{constat.IDENTIFIANT.NOM}}
+                                                    td.number
+                                                        span {{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI | currency:'CHF' }}
+                                                    td.date
+                                                        span {{constat.IDENTIFIANT.DE | date}}
+                                                    td.date
+                                                        span {{constat.IDENTIFIANT.A | date}}
+                                                    td
+                                                        span {{constat.FILIATION.PARENT[constat.FILIATION.PARENT.length-1].Id}}
+
+                        tab(select="createNewConstat()", ng-show="!createMode")
+                            tab-heading(tooltip="Créer un nouveau constat relatif à l'objet courant", tooltip-popup-delay="1000")
+                                | Créer un nouveau constat&nbsp;
+                                i.glyphicon.glyphicon-plus-sign
+                            div.hb-tab
+
+            <!-- SURFACE tab -->
+            tab(active="tabState.unite_locative.active")
+                tab-heading Unités locatives ({{locationUnits.length}})
+                div.hb-tab
+                    div.row
+                        div.col-sm-12
+                            tabset
+                                <!-- UNITE_LOCATIVE 1st sub tab -->
+                                tab(active="tabState.unite_locative_subtab_current.active")
+                                    tab-heading Unités locatives courantes
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                <!-- Table des unités locatives actives -->
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th Unité locative
+                                                            th
+                                                                a(href="", ng-click="locUnitPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitReverse=!locUnitReverse") No SAI
+                                                            th
+                                                                a(href="", ng-click="locUnitPredicate = 'GROUPE'; locUnitReverse=!locUnitReverse") Groupe
+                                                            th
+                                                                a(href="", ng-click="locUnitPredicate = 'PARTENAIRE.USAGER.VALUE'; locUnitReverse=!locUnitReverse") Locataire
+                                                            th
+                                                                a(href="", ng-click="locUnitPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; locUnitReverse=!locUnitReverse") Surface (m2)
+                                                            th
+                                                                a(href="", ng-click="locUnitPredicate = 'DIVERS.REMARQUE'; locUnitReverse=!locUnitReverse") Remarque
+
+                                                    tbody(ng-show="locationUnits")
+                                                        tr(ng-repeat="locationUnit in locationUnits | orderBy:locUnitPredicate:locUnitReverse")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{locationUnit.ID_G}}/SURFACE/{{locationUnit.Id}}")
+                                                            td
+                                                                span {{locationUnit.IDENTIFIANT.OBJECTIF}}
+                                                            td
+                                                                span {{locationUnit.GROUPE}}
+                                                            td
+                                                                span {{locationUnit.PARTENAIRE.USAGER.VALUE}}
+                                                            td.number
+                                                                span {{locationUnit.CARACTERISTIQUE.CAR1.VALEUR}}
+                                                            td
+                                                                span {{locationUnit.DIVERS.REMARQUE}}
+
+                                <!-- UNITE_LOCATIVE 2nd sub tab -->
+                                tab(active="tabState.unite_locative_subtab_archived.active")
+                                    tab-heading Unités locatives archivées
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                <!-- Table des unités locatives archived -->
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th Unité locative
+                                                            th
+                                                                a(href="", ng-click="locUnitArchivedPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitArchivedReverse=!locUnitArchivedReverse") No SAI
+                                                            th
+                                                                a(href="", ng-click="locUnitArchivedPredicate = 'GROUPE'; locUnitArchivedReverse=!locUnitArchivedReverse") Groupe
+                                                            th
+                                                                a(href="", ng-click="locUnitArchivedPredicate = 'PARTENAIRE.USAGER.VALUE'; locUnitArchivedReverse=!locUnitArchivedReverse") Locataire
+                                                            th
+                                                                a(href="", ng-click="locUnitArchivedPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; locUnitArchivedReverse=!locUnitArchivedReverse") Surface (m2)
+                                                            th
+                                                                a(href="", ng-click="locUnitArchivedPredicate = 'DIVERS.REMARQUE'; locUnitArchivedReverse=!locUnitArchivedReverse") Remarque
+
+                                                    tbody(ng-show="locationUnits")
+                                                        tr(ng-repeat="locationUnit in locationUnitsArchived | orderBy:locUnitArchivedPredicate:locUnitArchivedReverse")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{locationUnit.ID_G}}/SURFACE/{{locationUnit.Id}}")
+                                                            td
+                                                                span {{locationUnit.IDENTIFIANT.OBJECTIF}}
+                                                            td
+                                                                span {{locationUnit.GROUPE}}
+                                                            td
+                                                                span {{locationUnit.PARTENAIRE.USAGER.VALUE}}
+                                                            td.number
+                                                                span {{locationUnit.CARACTERISTIQUE.CAR1.VALEUR}}
+                                                            td
+                                                                span {{locationUnit.DIVERS.REMARQUE}}
+
+                                tab(select="createNewUniteLocative()", ng-show="!createMode")
+                                    tab-heading(tooltip="Créer une nouvelle unité locative relative à l'objet courant", tooltip-popup-delay="1000")
+                                        | Créer une nouvelle unité locative&nbsp;
+                                        i.glyphicon.glyphicon-plus-sign
+                                    div.hb-tab
+            <!-- PRESTATION tab -->
+            tab(active="tabState.prestation.active")
+                tab-heading Prestations({{prestations.length}})
+                div.hb-tab
+                    div.row
+                        div.col-sm-12
+                            tabset
+                                <!-- PRESTATION 1st tab -->
+                                tab(active="tabState.prestation_subtab_annee_moins1.active")
+                                    tab-heading Prestations en cours, année-1
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th Prestation
+                                                            th No SAI
+                                                            th Année
+                                                            th Groupe / Remarque
+                                                            th Groupe comptable
+                                                            th Budget
+                                                            th Dépenses
+                                                    tbody(ng-show="prestations")
+                                                        tr(ng-repeat="prestation in prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}")
+                                                            td
+                                                                span {{prestation.IDENTIFIANT.OBJECTIF}}
+                                                            td.date
+                                                                span {{prestation.IDENTIFIANT.DE}}
+                                                            td(ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}")
+                                                                span {{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}
+                                                            td
+                                                                span {{prestation.IDENTIFIANT.ORIGINE}}
+                                                            td.number
+                                                                span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
+                                                            td.number
+                                                                span {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
+
+                                <!-- PRESTATION 1st tab -->
+                                tab(active="tabState.prestation_subtab_annee_plus1.active")
+                                    tab-heading Prestations année+1
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th Prestation
+                                                            th No SAI
+                                                            th Année
+                                                            th Groupe / Remarque
+                                                            th Groupe comptable
+                                                            th Budget
+                                                            th
+                                                    tbody
+                                                        tr(ng-repeat="prestation in prestations | prestationListFilter:nextYearPrestationSearch | orderBy:prestaPredicate")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}")
+                                                            td
+                                                                span {{prestation.IDENTIFIANT.OBJECTIF}}
+                                                            td.date
+                                                                span {{prestation.IDENTIFIANT.DE}}
+                                                            td(ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}")
+                                                                span {{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}
+                                                            td
+                                                                span {{prestation.IDENTIFIANT.ORIGINE}}
+                                                            td.number
+                                                                span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
+                                <!-- PRESTATION 1st tab -->
+                                tab(active="tabState.prestation_subtab_annee_toutes.active")
+                                    tab-heading Prestations toutes
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th Prestation
+                                                            th No SAI
+                                                            th Année
+                                                            th Groupe / Remarque
+                                                            th Groupe comptable
+                                                            th Budget
+                                                    tbody(ng-show="prestations")
+                                                        tr(ng-repeat="prestation in prestations | orderBy:prestaPredicate")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}")
+                                                            td
+                                                                span {{prestation.IDENTIFIANT.OBJECTIF}}
+                                                            td.date
+                                                                span {{prestation.IDENTIFIANT.DE}}
+                                                            td(ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}")
+                                                                span {{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}
+                                                            td
+                                                                span {{prestation.IDENTIFIANT.ORIGINE}}
+                                                            td.number
+                                                                span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
+
+                                tab(select="createNewPrestation()", ng-show="!createMode")
+                                    tab-heading(tooltip="Créer une nouvelle prestation relative à l'objet courant", tooltip-popup-delay="1000")
+                                        | Créer une nouvelle prestation&nbsp;
+                                        i.glyphicon.glyphicon-plus-sign
+                                    div.hb-tab
+                        <!-- Prestation 12 col div END -->
+                    <!-- Prestation 1st level row div END -->
+                <!-- Prestation 1st level hb-tab container END -->
+
+            <!-- COMMANDE tab -->
+            tab(ng-if="canManageOrders" active="tabState.commande.active")
+                tab-heading Commandes ({{commandes.length}})
+                div.hb-tab
+                    div.row
+                        div.col-sm-12
+                            tabset
+                                <!-- COMMANDES 1st sub tab -->
+                                tab(active="tabState.commande_subtab_ouvertes.active")
+                                    tab-heading Commandes
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                <!-- Table des commandes ouvertes -->
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th(colspan="2") Commande
+                                                            th.col-sm-2 N° commande
+                                                            th.col-sm-1 Code CFC
+                                                            th.col-sm-1 Date
+                                                            th.col-sm-2 Montant
+                                                            th.col-sm-4 Fournisseur
+
+                                                    tbody(ng-show="commandes")
+                                                        tr(ng-repeat="commande in commandes", ng-init="totalRes = hbUtil.getOrderTotalNetInclTaxes(commande)")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}")
+                                                            td
+                                                                div(hb-annexes-link, hb-annexes-link-elfin="commande")
+                                                            td.number
+                                                                | {{commande.IDENTIFIANT.NOM}}
+                                                            td
+                                                                | {{commande.GROUPE}}
+                                                            td.date
+                                                                | {{commande.IDENTIFIANT.DE}}
+                                                            td.number(ng-show="totalRes.exists")
+                                                                | {{totalRes.value | currency:'CHF'}}
+                                                            td.number(ng-show="!totalRes.exists")
+                                                                | -
+                                                            td
+                                                                | {{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}
+                                <!-- COMMANDES 2nd sub tab -->
+                                <!-- COMMANDES 3rd sub tab -->
+
+                                tab(select="createNewCommande()" ng-show="!createMode")
+                                    tab-heading(tooltip="Créer une nouvelle commande relative à l'objet courant", tooltip-popup-delay="1000")
+                                        | Créer une nouvelle commande&nbsp;
+                                        i.glyphicon.glyphicon-plus-sign
+                                    div.hb-tab
+
+            <!-- CONTRAT tab -->
+            tab(active="tabState.contrat.active")
+                tab-heading Contrats ({{contrats.length}})
+                div.hb-tab
+                    div.row
+                        div.col-sm-12
+                            tabset
+                                <!-- CONTRAT 1st sub tab -->
+                                tab(active="tabState.contrat_subtab_actifs.active")
+                                    tab-heading Contrats actifs
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th(colspan="2") Contrat
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse") Prestation I
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse") Prestation II
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse") Entreprise
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse") Montant
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse") Groupe
+
+                                                    tbody(ng-show="contrats")
+                                                        tr(ng-repeat="contrat in contrats | contractTerminatedListFilter:false | orderBy:contractPredicate:contractReverse")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}")
+                                                            td
+                                                                div(hb-annexes-link, hb-annexes-link-elfin="contrat")
+                                                            td
+                                                                span {{contrat.CARACTERISTIQUE.CAR1.UNITE}}
+                                                            td
+                                                                span {{contrat.CARACTERISTIQUE.CAR1.VALEUR}}
+                                                            td
+                                                                span {{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}
+                                                            td.number
+                                                                span {{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}
+                                                            td
+                                                                span {{contrat.GROUPE}}
+
+                                <!-- CONTRAT 2nd sub tab -->
+                                tab(active="tabState.contrat_subtab_denonces.active")
+                                    tab-heading Contrats dénoncés
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                <!-- Table des contrats dénoncés -->
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th(colspan="2") Contrat
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse") Prestation I
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse") Prestation II
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse") Entreprise
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse") Montant
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse") Groupe
+
+                                                    tbody(ng-show="contrats")
+                                                        tr(ng-repeat="contrat in contrats | contractTerminatedListFilter:true | orderBy:contractPredicate:contractReverse")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}")
+                                                            td
+                                                                div(hb-annexes-link, hb-annexes-link-elfin="contrat")
+                                                            td
+                                                                span {{contrat.CARACTERISTIQUE.CAR1.UNITE}}
+                                                            td
+                                                                span {{contrat.CARACTERISTIQUE.CAR1.VALEUR}}
+                                                            td
+                                                                span {{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}
+                                                            td.number
+                                                                span {{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}
+                                                            td
+                                                                span {{contrat.GROUPE}}
+
+                                <!-- CONTRAT 3rd sub tab -->
+                                tab(active="tabState.contrat_subtab_tous.active")
+                                    tab-heading Contrats tous
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                <!-- Table des contrats dénoncés -->
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th(colspan="2") Contrat
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse") Prestation I
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse") Prestation II
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse") Entreprise
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse") Montant
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse") Groupe
+
+                                                    tbody(ng-show="contrats")
+                                                        tr(ng-repeat="contrat in contrats | orderBy:contractPredicate:contractReverse")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}")
+                                                            td
+                                                                div(hb-annexes-link, hb-annexes-link-elfin="contrat")
+                                                            td
+                                                                span {{contrat.CARACTERISTIQUE.CAR1.UNITE}}
+                                                            td
+                                                                span {{contrat.CARACTERISTIQUE.CAR1.VALEUR}}
+                                                            td
+                                                                span {{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}
+                                                            td.number
+                                                                span {{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}
+                                                            td
+                                                                span {{contrat.GROUPE}}
+
+                                tab(select="createNewContract()", ng-show="!createMode")
+                                    tab-heading(tooltip="Créer un nouveau contrat relatif à l'objet courant", tooltip-popup-delay="1000")
+                                        | Créer un nouveau contrat&nbsp;
+                                        i.glyphicon.glyphicon-plus-sign
+                                    div.hb-tab
+
+            <!-- CARACTERISTIQUE tab -->
+            tab(active="tabState.caracteristique.active")
+                tab-heading Caractéristiques
+                div.hb-tab
+                    div.row
+                        div.col-xs-12
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.currentFunction)")
+                                label.col-md-2.control-label(for="currentFunction") Fonction actuelle
+                                div.col-md-10
+                                    input#currentFunction.form-control(name="currentFunction", type="text", ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.constructionYear)")
+                                label.col-md-4.control-label(for="constructionYear") Année de construction
+                                div.col-md-8
+                                    input#constructionYear.form-control(name="constructionYear", type="text", ng-model="elfin.IDENTIFIANT.DE", ng-readonly="!canEdit", ng-pattern="numericOnlyRegexp", ng-trim='false', ng-maxlength="4")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.exitYear)")
+                                label.col-md-4.control-label(for="exitYear") Année de sortie
+                                div.col-md-8
+                                    input#exitYear.form-control(name="exitYear", type="text", ng-model="elfin.IDENTIFIANT.A", ng-readonly="!canEdit", ng-pattern="numericOnlyRegexp", ng-trim='false', ng-maxlength="4")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.censusNote)")
+                                label.col-md-4.control-label(for="censusNote") Note de recensement
+                                div.col-md-8
+                                    input#censusNote.form-control(name="censusNote", type="text", ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.exitReason)")
+                                label.col-md-4.control-label(for="exitReason") Cause de sortie
+                                div.col-md-8
+                                    input#exitReason.form-control(name="exitReason", type="text", ng-model="elfin.IDENTIFIANT.QUALITE", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.housingNb)")
+                                label.col-md-4.control-label(for="housingNb") Nombre de logements
+                                div.col-md-8
+                                    input#housingNb.form-control(name="housingNb", type="text", ng-model="elfin.CARACTERISTIQUE.CAR6.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.classroomNb)")
+                                label.col-md-4.control-label(for="classroomNb") Nombre de classes
+                                div.col-md-8
+                                    input#classroomNb.form-control(name="classroomNb", type="text", ng-model="CARSET_CAR_POS_9.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.workplaceNb)")
+                                label.col-md-4.control-label(for="workplaceNb") Nombre de places de travail
+                                div.col-md-8
+                                    input#workplaceNb.form-control(name="workplaceNb", type="text", ng-model="CARSET_CAR_POS_10.VALEUR", ng-readonly="!canEdit")
+
+            <!-- VALEUR tab -->
+            tab(active="tabState.valeur.active")
+                tab-heading Valeur ECAP
+                div.hb-tab
+                    div.row
+                        div.col-sm-12
+                            <!-- Table des contrats ECAP actifs -->
+                            table.table.table-condensed.table-bordered.table-striped
+                                thead
+                                    tr
+                                        th(colspan="2") Contrat
+                                        th
+                                            a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse") Prestation I
+                                        th
+                                            a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse") Prestation II
+                                        th
+                                            a(href="", ng-click="contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; contractReverse=!contractReverse") Entreprise
+                                        th
+                                            a(href="", ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse") Montant
+                                        th
+                                            a(href="", ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse") Groupe
+
+                                tbody(ng-show="contrats")
+                                    tr(ng-repeat="contrat in contrats | contractPerCompanyGroupListFilter:'ECAP' | contractTerminatedListFilter:false | orderBy:contractPredicate:contractReverse")
+                                        td
+                                            div(hb-card-view-link, hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}")
+                                        td
+                                            div(hb-annexes-link, hb-annexes-link-elfin="contrat")
+                                        td
+                                            span {{contrat.CARACTERISTIQUE.CAR1.UNITE}}
+                                        td
+                                            span {{contrat.CARACTERISTIQUE.CAR1.VALEUR}}
+                                        td
+                                            span {{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}
+                                        td.number
+                                            span {{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}
+                                        td
+                                            span {{contrat.GROUPE}}
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapValue)")
+                                label.col-md-4.control-label(for="ecapValue") Valeur ECAP
+                                div.col-md-8
+                                    input#ecapValue.form-control(name="ecapValue", type="text", ng-model="CARSET_CAR_POS_5.VALEUR", ng-if="canEdit", format-currency)
+                                    input#ecapValueView.form-control(name="ecapValueView", type="text", value="{{ CARSET_CAR_POS_5.VALEUR | currency:'CHF' }}", ng-if="!canEdit", readonly)
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapEstimYear)")
+                                label.col-md-4.control-label(for="ecapEstimYear") Année estimation ECAP
+                                div.col-md-8
+                                    input#ecapEstimYear.form-control(name="ecapEstimYear", type="text", ng-model="CARSET_CAR_POS_6.VALEUR", ng-readonly="!canEdit", ng-pattern="numericOnlyRegexp", ng-trim='false', ng-maxlength="4")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.cadastralValue)")
+                                label.col-md-4.control-label(for="cadastralValue") Valeur cadastrale
+                                div.col-md-8
+                                    input#cadastralValue.form-control(name="cadastralValue", type="text", ng-model="CARSET_CAR_POS_7.VALEUR", ng-if="canEdit", format-currency)
+                                    input#cadastralValueView.form-control(name="cadastralValueView", type="text", value="{{ CARSET_CAR_POS_7.VALEUR | currency:'CHF' }}", ng-if="!canEdit", readonly)
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.cadastralEvaluationYear)")
+                                label.col-md-4.control-label(for="cadastralEvaluationYear") Année estimation cadastrale
+                                div.col-md-8
+                                    input#cadastralEvaluationYear.form-control(name="cadastralEvaluationYear", type="text", ng-model="CARSET_CAR_POS_8.VALEUR", ng-readonly="!canEdit", ng-pattern="numericOnlyRegexp", ng-trim='false', ng-maxlength="4")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapVolume)")
+                                label.col-md-4.control-label(for="ecapVolume") Volume ECAP
+                                div.col-md-8
+                                    input#ecapVolume.form-control(name="ecapVolume", type="text", ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR", ng-readonly="!canEdit", ng-pattern="numericOnlyRegexp", ng-trim='false', ng-maxlength="12")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapFee)")
+                                label.col-md-4.control-label(for="ecapFee") Prime ECAP TTC
+                                div.col-md-8
+                                    input#ecapFee.form-control(name="ecapFee", type="text", ng-model="CARSET_CAR_POS_11.VALEUR", ng-if="canEdit", format-currency, ng-pattern="numericOnlyRegexp", ng-trim='false', ng-maxlength="12")
+                                    input#ecapFeeView.form-control(name="ecapFeeView", type="text", value="{{ CARSET_CAR_POS_11.VALEUR | currency:'CHF' }}", ng-if="!canEdit", readonly)
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapVolumePrice)")
+                                label.col-md-4.control-label(for="ecapVolumePrice") Prix au m³
+                                div.col-md-8
+                                    input#ecapVolumePrice.form-control(name="ecapVolumePrice", type="text", ng-model="CARSET_CAR_POS_12.VALEUR", ng-if="canEdit", format-currency, ng-pattern="numericOnlyRegexp", ng-trim='false', ng-maxlength="12")
+                                    input#ecapVolumePriceView.form-control(name="ecapVolumePriceView", type="text", value="{{ CARSET_CAR_POS_12.VALEUR | currency:'CHF' }}", ng-if="!canEdit", readonly)
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapSelfInsuranceFnd)")
+                                label.col-md-4.control-label(for="ecapSelfInsuranceFnd") Fond auto-assurance
+                                div.col-md-8
+                                    input#ecapSelfInsuranceFnd.form-control(name="ecapSelfInsuranceFnd", type="text", ng-model="CARSET_CAR_POS_13.VALEUR", ng-if="canEdit", format-currency, ng-pattern="numericOnlyRegexp", ng-trim='false', ng-maxlength="12")
+                                    input#ecapSelfInsuranceFndView.form-control(name="ecapSelfInsuranceFndView", type="text", value="{{ CARSET_CAR_POS_13.VALEUR | currency:'CHF' }}", ng-if="!canEdit", readonly)
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.author)")
+                                label.col-md-4.control-label(for="author_3") No ECAP
+                                div.col-md-8
+                                    input#author_3.form-control(name="author_3", type="text", ng-model="CARSET_CAR_POS_3.VALEUR", ng-readonly="!canEdit", required)
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapBuildingNb)")
+                                label.col-md-4.control-label(for="ecapBuildingNb") Bâtiment assuré no
+                                div.col-md-8
+                                    input#ecapBuildingNb.form-control(name="ecapBuildingNb", type="text", ng-model="CARSET_CAR_POS_14.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapObject)")
+                                label.col-md-4.control-label(for="ecapObject") Objet assuré
+                                div.col-md-8
+                                    input#ecapObject.form-control(name="ecapObject", type="text", ng-model="CARSET_CAR_POS_15.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapConstructionRisk)")
+                                label.col-md-4.control-label(for="ecapConstructionRisk") Classe risque construction
+                                div.col-md-8
+                                    input#ecapConstructionRisk.form-control(name="ecapConstructionRisk", type="text", ng-model="CARSET_CAR_POS_16.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapUsageRisk)")
+                                label.col-md-4.control-label(for="ecapUsageRisk") Classe risque usage
+                                div.col-md-8
+                                    input#ecapUsageRisk.form-control(name="ecapUsageRisk", type="text", ng-model="CARSET_CAR_POS_17.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapLightningRod)")
+                                label.col-md-4.control-label(for="ecapLightningRod") Paratonnerre
+                                div.col-md-8
+                                    input#ecapLightningRod.form-control(name="ecapLightningRod", type="text", ng-model="CARSET_CAR_POS_18.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapFireDetection)")
+                                label.col-md-4.control-label(for="ecapFireDetection") Détection incendie
+                                div.col-md-8
+                                    input#ecapFireDetection.form-control(name="ecapFireDetection", type="text", ng-model="CARSET_CAR_POS_19.VALEUR", ng-readonly="!canEdit")
+
+                        div.col-md-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapPeculiarities)")
+                                label.col-md-4.control-label(for="ecapPeculiarities") Particularités
+                                div.col-md-8
+                                    input#ecapPeculiarities.form-control(name="ecapPeculiarities", type="text", ng-model="CARSET_CAR_POS_20.VALEUR", ng-readonly="!canEdit")
+
+            <!-- EQUIPEMENT technique tab -->
+            tab(active="tabState.equipements_tech.active")
+                tab-heading Equipement{{equipementsCount | plural}} technique{{equipementsCount | plural}} ({{equipementsCount}})
+                div.hb-tab
+                    div.row
+                        div.col-sm-12
+                            <!-- Table des PRODUCTION_CHALEUR -->
+                            table.table.table-condensed.table-bordered.table-striped
+                                thead
+                                    tr
+                                        th(colspan="8")
+                                            a.btn.btn-default(type="button", tooltip="Créer une nouvelle PRODUCTION_CHALEUR relative à l'objet courant", tooltip-popup-delay="1000", ng-click="createNewProductionChaleur()")
+                                                i.glyphicon.glyphicon-plus-sign
+                                            | &nbsp;Production Chaleur
+                                    tr
+                                        th(width="10%", colspan="2") Détail
+                                        th(width="15%") Groupe
+                                        th(width="15%") Modèle
+                                        th(width="10%") Date de fabrication
+                                        th(width="10%") Puissance (kW)
+                                        th(width="10%") Energie
+                                        th Fournisseur
+
+                                tbody(ng-show="productionChaleurList")
+                                    tr(ng-repeat="productionChaleur in productionChaleurList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']")
+                                        td
+                                            div(hb-card-view-link, hb-href="/elfin/{{productionChaleur.ID_G}}/PRODUCTION_CHALEUR/{{productionChaleur.Id}}")
+                                        td
+                                            div(hb-annexes-link, hb-annexes-link-elfin="productionChaleur")
+                                        td
+                                            span {{productionChaleur.GROUPE}}
+                                        td
+                                            span {{productionChaleur.CARACTERISTIQUE.CAR2.VALEUR}}
+                                        td
+                                            span {{productionChaleur.IDENTIFIANT.DE}}
+                                        td
+                                            span {{productionChaleur.CARACTERISTIQUE.CAR1.VALEUR}}
+                                        td
+                                            span {{productionChaleur.CARACTERISTIQUE.CAR3.VALEUR}}
+                                        td
+                                            span {{productionChaleur.PARTENAIRE.FOURNISSEUR.VALUE}}
+
+                    div.row
+                        div.col-sm-12
+                            <!-- Table des PRODUCTION_FROID -->
+                            table.table.table-condensed.table-bordered.table-striped
+                                thead
+                                    tr
+                                        th(colspan="8")
+                                            a.btn.btn-default(type="button", tooltip="Créer une nouvelle PRODUCTION_FROID relative à l'objet courant", tooltip-popup-delay="1000", ng-click="createNewProductionFroid()")
+                                                i.glyphicon.glyphicon-plus-sign
+                                            | &nbsp;Production Froid
+                                    tr
+                                        th(width="10%", colspan="2") Détail
+                                        th(width="15%") Groupe
+                                        th(width="15%") Modèle
+                                        th(width="10%") Année
+                                        th(width="10%") Puissance (kW)
+                                        th(width="10%") Energie
+                                        th Fournisseur
+
+                                tbody(ng-show="productionFroidList")
+                                    tr(ng-repeat="productionFroid in productionFroidList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']")
+                                        td
+                                            div(hb-card-view-link, hb-href="/elfin/{{productionFroid.ID_G}}/PRODUCTION_FROID/{{productionFroid.Id}}")
+                                        td
+                                            div(hb-annexes-link, hb-annexes-link-elfin="productionFroid")
+                                        td
+                                            span {{productionFroid.GROUPE}}
+                                        td
+                                            span {{productionFroid.CARACTERISTIQUE.CAR2.VALEUR}}
+                                        td
+                                            span {{productionFroid.IDENTIFIANT.DE}}
+                                        td
+                                            span {{productionFroid.CARACTERISTIQUE.CAR1.VALEUR}}
+                                        td
+                                            span {{productionFroid.CARACTERISTIQUE.CAR3.VALEUR}}
+                                        td
+                                            span {{productionFroid.PARTENAIRE.FOURNISSEUR.VALUE}}
+
+
+                    div.row
+                        div.col-sm-12
+                            <!-- Table des VENTILATION -->
+                            table.table.table-condensed.table-bordered.table-striped
+                                thead
+                                    tr
+                                        th(colspan="8")
+                                            a.btn.btn-default(type="button", tooltip="Créer une nouvelle VEMTILATION relative à l'objet courant", tooltip-popup-delay="1000", ng-click="createNewVentilation()")
+                                                i.glyphicon.glyphicon-plus-sign
+                                            | &nbsp;Ventilation
+                                    tr
+                                        th(width="10%", colspan="2") Détail
+                                        th(width="15%") Groupe
+                                        th(width="15%") Modèle
+                                        th(width="10%") Année
+                                        th(width="10%") Débit (m3/h)
+                                        th(width="10%") Mode
+                                        th Fournisseur
+
+                                tbody(ng-show="ventilationList")
+                                    tr(ng-repeat="ventilation in ventilationList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']")
+                                        td
+                                            div(hb-card-view-link, hb-href="/elfin/{{ventilation.ID_G}}/VENTILATION/{{ventilation.Id}}")
+                                        td
+                                            div(hb-annexes-link, hb-annexes-link-elfin="ventilation")
+                                        td
+                                            span {{ventilation.GROUPE}}
+                                        td
+                                            span {{ventilation.CARACTERISTIQUE.CAR2.VALEUR}}
+                                        td
+                                            span {{ventilation.IDENTIFIANT.DE}}
+                                        td
+                                            span {{ventilation.CARACTERISTIQUE.CAR1.VALEUR}}
+                                        td
+                                            span {{ventilation.CARACTERISTIQUE.CAR3.VALEUR}}
+                                        td
+                                            span {{ventilation.PARTENAIRE.FOURNISSEUR.VALUE}}
+
+
+                    div.row
+                        div.col-sm-12
+                            <!-- Table des CITERNE -->
+                            table.table.table-condensed.table-bordered.table-striped
+                                thead
+                                    tr
+                                        th(colspan="8")
+                                            a.btn.btn-default(type="button", tooltip="Créer une nouvelle CITERNE relative à l'objet courant", tooltip-popup-delay="1000", ng-click="createNewCiterne()")
+                                                i.glyphicon.glyphicon-plus-sign
+                                            | &nbsp;Citerne
+                                    tr
+                                        th(width="10%", colspan="2") Détail
+                                        th(width="15%") Groupe
+                                        th(width="15%") Modèle
+                                        th(width="10%") Année
+                                        th(width="10%") Volume (l)
+                                        th(width="10%") Produit
+                                        th Fournisseur
+
+                                tbody(ng-show="citerneList")
+                                    tr(ng-repeat="citerne in citerneList | orderBy:['IDENTIFIANT.ORIGINE.VALUE','GROUPE']")
+                                        td
+                                            div(hb-card-view-link, hb-href="/elfin/{{citerne.ID_G}}/CITERNE/{{citerne.Id}}")
+                                        td
+                                            div(hb-annexes-link, hb-annexes-link-elfin="citerne")
+                                        td
+                                            span {{citerne.GROUPE}}
+                                        td
+                                            span {{citerne.CARACTERISTIQUE.CAR2.VALEUR}}
+                                        td
+                                            span {{citerne.IDENTIFIANT.DE}}
+                                        td
+                                            span {{citerne.CARACTERISTIQUE.CAR1.VALEUR}}
+                                        td
+                                            span {{citerne.CARACTERISTIQUE.CAR3.VALEUR}}
+                                        td
+                                            span {{citerne.PARTENAIRE.FOURNISSEUR.VALUE}}
+
+            <!-- FORME tab -->
+            tab(active="tabState.forme.active", select="eagerDomCreation.FORM = true")
+                tab-heading Forme
+                div.hb-tab
+                    div(hb-forme-component)
+
+            <!-- Annexes tab -->
+            tab(active="tabState.annexe.active")
+                tab-heading
+                    div(hb-annexes-number)
+                div.hb-tab
+                    div(hb-annexes-component)

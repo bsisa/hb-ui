@@ -1,0 +1,110 @@
+<table class="table table-condensed table-bordered table-striped"
+	ng-show="elfins">
+	<thead>
+		<tr>
+			<th colspan="7"><span class="badge">{{filteredElfins.length}} / {{elfinsCount}}</span> immeuble{{ elfinsCount | plural }} trouvé{{ elfinsCount | plural
+				}}</th>
+		</tr>
+		<tr>
+			<th rowspan="3" class="col-sm-1" />
+			<th colspan="10">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input id="globalSearchField" name="globalSearchField" type="text" class="form-control" ng-model="search.text" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.owner" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-1">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.registerNb" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-3">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.address" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>		
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.buildingNb" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>	
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<input type="text" class="form-control" ng-model="search.place" hb-no-dirty-check placeholder="">
+					</div>
+				</div>
+			</th>
+			<th class="col-sm-2">
+				<div class="form-group">
+					<div class="col-sm-12" style="padding-left: 0; padding-right: 0;padding-top: 0;">
+						<div hb-single-select hb-single-select-options="accountingGroups" hb-single-select-empty-option="emptyAccountingGroup" ng-model="search.GROUPE_COMPTABLE" ></div>
+					</div>
+				</div>
+			</th>		
+		</tr>
+		<tr>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'PARTENAIRE.PROPRIETAIRE.NOM'; reverse=!reverse">Propriétaire</a>
+			</th>
+			<th class="col-sm-1">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">No SAI</a>			
+			</th>
+			<th class="col-sm-3">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse">Adresse</a></th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">No construction</a></th>
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse">Lieu-dit</a></th>				
+			<th class="col-sm-2">
+				<a href="" ng-click="predicate = 'GROUPE_COMPTABLE'; reverse=!reverse">Groupe comptable</a></th>
+		</tr>
+	</thead>
+	<tbody>
+<!-- 		<tr ng-repeat="elfin in elfins | immeubleListFilter:search | immeubleListAnyFilter:search.text | orderBy:predicate:reverse"> -->
+		<tr ng-repeat="elfin in filteredElfins" >
+			<td class="col-sm-1" >
+				<!-- Ugly 90s table style layout that works. -->			
+				<table width="100%" height="100%">
+					<tr>
+						<td style="text-align: center; vertical-align: middle;">
+							<div hb-card-view-link hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" ></div>
+						</td>
+						<td ng-if="source" style="text-align: center; vertical-align: middle;">
+							<div tooltip="Sélectionner" tooltip-popup-delay="1500">
+								<div style="width: 38px;">
+									<a class="btn btn-default btn-xs btn-block" href="/elfin/{{source}}?selectionImmeuble={{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}" role="button">
+										<i class="glyphicon glyphicon-plus-sign"></i>
+									</a>
+								</div>
+							</div>						
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td class="col-sm-1">{{elfin.PARTENAIRE.PROPRIETAIRE.NOM}}</td>
+			<td class="col-sm-1">{{elfin.IDENTIFIANT.OBJECTIF}}</td>
+			<td class="col-sm-3">{{elfin.IDENTIFIANT.ALIAS}}</td>			
+			<td class="col-sm-2">{{elfin.IDENTIFIANT.NOM}}</td>
+			<td class="col-sm-2">{{getPlace(elfin).VALEUR}}</td>
+			<td class="col-sm-2">{{elfin.GROUPE_COMPTABLE}}</td>
+		</tr>
+	</tbody>
+</table>
+

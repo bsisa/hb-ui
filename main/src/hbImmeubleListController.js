@@ -15,8 +15,9 @@
     			"active" : "any",
     			"owner" : "",
     			"registerNb" : "",
+    			"abaimmoNb" : "",
     			"place" : "",
-    			"buildingNb" : "",
+				"buildingNb" : "",
     			"address" : "",
     			"text" : "",
     			"GER" :"",
@@ -65,14 +66,15 @@
     	
 
     	/**
-    	 * Helper to access to place information by POS instead of array index.
-    	 */
-    	$scope.getPlace = function(elfin) {
-    		var place = hbUtil.getCARByPos(elfin, 1);
-    		return (place === undefined) ? "" : place;
-    	};
-    	
-		/**
+         * Helper to access to place information by POS instead of array index.
+         */
+        $scope.getCarValueAtPos = function(elfin, pos) {
+            var carValue = hbUtil.getCARByPos(elfin, pos);
+            return (carValue === undefined) ? "" : carValue;
+        };
+
+
+        /**
 		 * Proceed to elfin_p collection `immeubleListFilter` filtering and sorting
 		 * Moved from page defined filtering: 
 		 * immeubleListFilter:search | immeubleListAnyFilter:search.text | orderBy:predicate:reverse
@@ -112,7 +114,8 @@
 			    			"active" : "any",
 			    			"owner" : "",
 			    			"registerNb" : "",
-			    			"place" : "",
+                        	"abaimmoNb" : "",
+                        	"place" : "",
 			    			"buildingNb" : "",
 			    			"address" : "",
 			    			"text" : "",

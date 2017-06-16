@@ -804,12 +804,15 @@
 	            var tempImmeubles = [ ];
 	            angular.forEach(immeubles, function (immeuble) {
 	            	var immeublePlace = hbUtil.getCARByPos(immeuble, 1);
+	            	var immeubleNoAbaImmo = hbUtil.getCARByPos(immeuble, 2);
+
 	            	immeublePlace = (immeublePlace === undefined) ? {"VALEUR" : ""} : immeublePlace;
                     if ( 
                     	 icontains(immeuble.PARTENAIRE.PROPRIETAIRE.NOM, predicate.owner) &&
                     	 icontains(immeuble.IDENTIFIANT.OBJECTIF, predicate.registerNb) &&
                     	 //icontains(immeuble.CARACTERISTIQUE.CARSET.CAR[0].VALEUR, predicate.place) &&
                     	 icontains(immeublePlace.VALEUR, predicate.place) &&
+                    	 icontains(immeubleNoAbaImmo.VALEUR, predicate.abaimmoNb) &&
                     	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
                     	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address) &&
                     	 icontains(immeuble.IDENTIFIANT.GER, predicate.GER) &&
