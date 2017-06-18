@@ -30,12 +30,12 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                     div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
                         input.form-control(type="text", ng-model="search.address", hb-no-dirty-check, placeholder="")
 
-            th.col-sm-2
+            th.col-sm-1
                 div.form-group
                     div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
                         input.form-control(type="text", ng-model="search.buildingNb", hb-no-dirty-check, placeholder="")
 
-            th.col-sm-2
+            th.col-sm-1
                 div.form-group
                     div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
                         input.form-control(type="text", ng-model="search.place", hb-no-dirty-check, placeholder="")
@@ -44,6 +44,16 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                 div.form-group
                     div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
                         div(hb-single-select, hb-single-select-options="accountingGroups", hb-single-select-empty-option="emptyAccountingGroup", ng-model="search.GROUPE_COMPTABLE")
+
+            th.col-sm-1
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.exitYear", hb-no-dirty-check, placeholder="")
+
+            th.col-sm-1
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.exitReason", hb-no-dirty-check, placeholder="")
 
         tr
             th.col-sm-1
@@ -54,12 +64,17 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                 a(href="", ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[1].VALEUR'; reverse=!reverse") No AbaImmo
             th.col-sm-2
                 a(href="", ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse") Adresse
-            th.col-sm-2
+            th.col-sm-1
                 a(href="", ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse") No construction
-            th.col-sm-2
+            th.col-sm-1
                 a(href="", ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse") Lieu-dit
             th.col-sm-2
                 a(href="", ng-click="predicate = 'GROUPE_COMPTABLE'; reverse=!reverse") Groupe comptable
+            th.col-sm-1
+                a(href="", ng-click="predicate = 'IDENTIFIANT.A'; reverse=!reverse") Année de sortie
+            th.col-sm-1
+                a(href="", ng-click="predicate = 'IDENTIFIANT.QUALITE'; reverse=!reverse") Cause de sortie
+
 
     tbody
         tr(ng-repeat="elfin in filteredElfins")
@@ -79,6 +94,8 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
             td.col-sm-1 {{elfin.IDENTIFIANT.OBJECTIF}}
             td.col-sm-1 {{getCarValueAtPos(elfin, 2).VALEUR}}
             td.col-sm-2 {{elfin.IDENTIFIANT.ALIAS}}
-            td.col-sm-2 {{elfin.IDENTIFIANT.NOM}}
-            td.col-sm-2 {{getCarValueAtPos(elfin, 1).VALEUR}}
+            td.col-sm-1 {{elfin.IDENTIFIANT.NOM}}
+            td.col-sm-1 {{getCarValueAtPos(elfin, 1).VALEUR}}
             td.col-sm-2 {{elfin.GROUPE_COMPTABLE}}
+            td.col-sm-1 {{elfin.IDENTIFIANT.A}}
+            td.col-sm-1 {{elfin.IDENTIFIANT.QUALITE}}

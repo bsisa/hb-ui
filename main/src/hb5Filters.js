@@ -816,7 +816,9 @@
                     	 icontains(immeuble.IDENTIFIANT.NOM, predicate.buildingNb) &&
                     	 icontains(immeuble.IDENTIFIANT.ALIAS, predicate.address) &&
                     	 icontains(immeuble.IDENTIFIANT.GER, predicate.GER) &&
-                    	 icontains(immeuble.GROUPE_COMPTABLE, predicate.GROUPE_COMPTABLE) && 
+						 icontains(immeuble.IDENTIFIANT.A, predicate.exitYear) &&
+						 icontains(immeuble.IDENTIFIANT.QUALITE, predicate.exitReason) &&
+                    	 icontains(immeuble.GROUPE_COMPTABLE, predicate.GROUPE_COMPTABLE) &&
                     	 ( 
                     			 predicate.active === "yes" && immeubleIsActive(immeuble) || 
                     			 predicate.active === "no" && !immeubleIsActive(immeuble) || 
