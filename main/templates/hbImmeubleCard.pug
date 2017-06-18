@@ -181,20 +181,20 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                         // 2nd col first tab first row start 
                         div.col-lg-4.col-xs-12(style="text-align: center; height: 100%;")
                             div.form-group
-                            // Display current year PRESTATION `Groupe comptable` information 
+                                // Display current year PRESTATION `Groupe comptable` information
                                 div.col-sm-12.form-control-static
                                     div.btn.btn-default.btn-xs
                                         a(target="_self", ng-href="file:///{{annexeFileSystemUri}}")
                                             i.glyphicon.glyphicon-hdd
                                     | {{(prestations | prestationListFilter:currentYearAndFormerPrestationSearch | orderBy:prestaPredicate:prestaReverse | first).IDENTIFIANT.ORIGINE}}
 
-                            // If no photo is available show upload function while using room left empty with fixed size table.
+                                // If no photo is available show upload function while using room left empty with fixed size table.
                                 table(ng-if="!photoSrc", style="border: solid 4px #F0F0F0; width: 180px; height: 198px; margin: 0 auto;")
                                     tr
                                         td(style="vertical-align: middle; text-align: center")
                                             i.glyphicon.glyphicon-upload(style="font-size: 4em;")
 
-                            // If a photo is available show it forcing width ratio. 
+                                // If a photo is available show it forcing width ratio.
                                 div(ng-if="photoSrc")
                                     a(href="{{photoSrc}}", data-lightbox="image-1")
                                         img.img-thumbnail(ng-src="{{photoSrc}}", width="180px")
