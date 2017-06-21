@@ -2,11 +2,11 @@
 	<!-- Custom validation message to be defined here -->
 	
 	
-	<span ng-show="elfinForm.nom.$error.required">Le champs <strong>No de contrat</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.objectif.$error.required">Le champs <strong>Immeuble</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.fournisseur_valeur.$error.required">Le champs <strong>Entreprise</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.fournisseur_valeur.$error.required">Le champs <strong>Entreprise</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.valeur.$error.number">Le champs <strong>Montant</strong> doit être un numbre valide!</span>
+	<span ng-show="elfinForm.nom.$error.required">Le champ <strong>No de contrat</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.objectif.$error.required">Le champ <strong>Immeuble</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.fournisseur_valeur.$error.required">Le champ <strong>Entreprise</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.fournisseur_valeur.$error.required">Le champ <strong>Entreprise</strong> est obligatoire!</span>
+	<span ng-show="elfinForm.valeur.$error.number">Le champ <strong>Montant</strong> doit être un nombre valide!</span>
 
 </div>
 <div class="row" style="padding-top: 8px;">
@@ -84,9 +84,7 @@
 							ng-class="getCssHasFeedback(elfinForm.valeur)">
 							<label for="valeur" class="col-sm-4 control-label">Montant</label>
 							<div class="col-sm-8">
-
-								<input id="valeur" name="valeur" type="text" class="form-control"
-									   ng-model="elfin.IDENTIFIANT.VALEUR" format-currency>
+								<input id="valeur" name="valeur" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.VALEUR" format-currency-number>
 
 							</div>
 						</div>								
