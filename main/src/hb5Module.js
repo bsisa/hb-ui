@@ -46,6 +46,42 @@
 
                 }
             };
+        }])
+        .directive('formatCurrencyNumber', ['$filter', function ($filter) {
+            return {
+                require: '?ngModel',
+                link: function (scope, elem, attrs, ctrl) {
+                    if (!ctrl) return;
+                    var focus = false;
+
+
+                    ctrl.$formatters.unshift(function () {
+                        return $filter("currency")(ctrl.$modelValue, "CHF");
+                    });
+
+                    ctrl.$parsers.unshift(function (viewValue) {
+                        if (focus) {
+                            return parseFloat(viewValue);
+                        } else {
+                            return parseFloat(viewValue.replace(/[^\d|\-+|\.+]/g, '').replace(/[\sCHF]/g, ''));
+                        }
+                    });
+
+                    elem.bind("blur", function () {
+                        focus = false;
+                        elem.val($filter("currency")(ctrl.$modelValue, "CHF"));
+                    });
+
+                    elem.bind("focus", function () {
+                        focus = true;
+                        var plainNumber = parseFloat(elem.val().replace(/[^\d|\-+|\.+]/g, '').replace(/[\sCHF]/g, ''));
+                        if (isNaN(plainNumber)) {
+                            plainNumber = '';
+                        }
+                        elem.val(plainNumber);
+                    });
+                }
+            };
         }]);
 
     // ================================================================
