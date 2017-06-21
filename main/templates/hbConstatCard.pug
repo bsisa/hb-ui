@@ -172,10 +172,10 @@ div.row(style="padding-top: 8px;")
                                             th.col-md-2(style="min-width: 110px") Date
                                             th.col-md-2(style="min-width: 250px") Etape en cours
                                             th.col-md-1(style="min-width: 110px") Resp
-                                            th.col-md-2(style="min-width: 110px") Délai
+                                            th.col-md-1(style="min-width: 110px") Délai
                                             th.col-md-2(style="min-width: 220px") Groupe presta
                                             th.col-md-1(style="min-width: 70px") Année presta
-                                            th.col-md-1 Montant estimé
+                                            th.col-md-2 Montant estimé
                                     tbody(ng-show="currentEvent")
                                         tr
                                             // Statut
@@ -213,7 +213,7 @@ div.row(style="padding-top: 8px;")
                                             // Montant estimé
                                             td
                                                 input#currentEventEParQui.form-control( name="currentEventEParQui", type="text",
-                                                ng-model="currentEvent.E_PAR_QUI", format-currency, ng-pattern="numericOnlyRegexp", ng-trim='false', ng-maxlength="4")
+                                                ng-model="currentEvent.E_PAR_QUI", format-currency, ng-pattern="numericOnlyRegexp", ng-maxlength="12", ng-trim='false')
                                         tr
                                             td(colspan="7")
                                                 input#currentEventRemarque.form-control(type="text", ng-model="currentEvent.REMARQUE")
@@ -231,10 +231,10 @@ div.row(style="padding-top: 8px;")
                                             th.col-md-2(style="min-width: 110px") Date
                                             th.col-md-2(style="min-width: 250px") Etape en cours
                                             th.col-md-1(style="min-width: 110px") Resp
-                                            th.col-md-2(style="min-width: 110px") Délai
+                                            th.col-md-1(style="min-width: 110px") Délai
                                             th.col-md-2(style="min-width: 220px") Groupe presta
                                             th.col-md-1(style="min-width: 70px") Année presta
-                                            th.col-md-1 Montant estimé
+                                            th.col-md-2 Montant estimé
                                     tbody
                                         tr(ng-repeat-start="formerEvent in elfin.ACTIVITE.EVENEMENT.ECHEANCE | notLast | orderBy:'-DATE'")
                                             td(rowspan="2")
