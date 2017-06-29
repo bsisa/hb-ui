@@ -548,14 +548,15 @@
 												$scope.elfin.IDENTIFIANT.OBJECTIF = "";
 												
 												// Order type
-												$scope.elfin.IDENTIFIANT.QUALITE = "Bon de commande";
+												$scope.elfin.IDENTIFIANT.QUALITE = "";
 												
 												// No construction of source IMMEUBLE
 												$scope.elfin.IDENTIFIANT.ORIGINE = "";
 
 												// CFC code
 												$scope.elfin.GROUPE = "";
-												
+												$scope.elfin.GROUPE = "";
+
 												// Default value from catalogue contains repartition list: Reset it.
 												$scope.elfin.IDENTIFIANT.VALEUR = "";
 
