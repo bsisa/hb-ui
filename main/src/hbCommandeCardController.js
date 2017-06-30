@@ -79,19 +79,19 @@
 										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderPurchaseLines();
 										// Reset field information meaningless to purchase order context.
 										$scope.elfin.IDENTIFIANT.RES = "";
-										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR = hbUtil.getOrderPurchaseIntroduction();
+										$scope.elfin.CARACTERISTIQUE["CARSET"]["CAR"][0]["VALEUR"] = hbUtil.getOrderPurchaseIntroduction();
 										// Object / building type and location - Unused 
-										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR = "";
+										$scope.elfin.CARACTERISTIQUE["CARSET"]["CAR"][1]["VALEUR"] = "";
 									} else if (selectedType === HB_ORDER_TYPE.CONFIRMATION) {
 										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderConfirmationLines();
-										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR = hbUtil.getOrderConfirmationIntroduction();
+										$scope.elfin.CARACTERISTIQUE["CARSET"]["CAR"][0]["VALEUR"] = hbUtil.getOrderConfirmationIntroduction();
 										// Object / building type and location - Unused 
-										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR = "";
+										$scope.elfin.CARACTERISTIQUE["CARSET"]["CAR"][1]["VALEUR"] = "";
 									} else if (selectedType === HB_ORDER_TYPE.CONTRACT) {
 										$scope.elfin.CARACTERISTIQUE.FRACTION.L = hbUtil.getOrderContractLines();
-										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR = hbUtil.getOrderContractIntroduction();
+										$scope.elfin.CARACTERISTIQUE["CARSET"]["CAR"][0]["VALEUR"] = hbUtil.getOrderContractIntroduction();
 										// Object / building type and location - Used: free text. 
-										$scope.elfin.CARACTERISTIQUE.CARSET.CAR[1].VALEUR = "";
+										$scope.elfin.CARACTERISTIQUE["CARSET"]["CAR"][1]["VALEUR"] = "";
 									} else {
 										var message = "Le type de COMMANDE "+ selectedType +" n'est pas encore pris en compte veuillez s.v.p. contacter l'administrateur du système.";
 										hbAlertMessages.addAlert("danger",message);
@@ -126,7 +126,9 @@
 							        	// TODO: Evaluate how to guarantee this in the produced JSON on the server in a single place.
 							        	// DONE: Safe array ordering is mandatory to prevent null accessor related exception
 							        	//       Need review of other similar operations
-							        	if ( surfaceElfin['CARACTERISTIQUE'] != null && surfaceElfin['CARACTERISTIQUE']['CARSET'] != null && surfaceElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+							        	if (!!surfaceElfin['CARACTERISTIQUE'] &&
+                                            !!surfaceElfin['CARACTERISTIQUE']['CARSET'] &&
+                                            !!surfaceElfin['CARACTERISTIQUE']['CARSET']['CAR']) {
 							        		hbUtil.reorderArrayByPOS(surfaceElfin['CARACTERISTIQUE']['CARSET']['CAR']);
 							        	}
 						    			$scope.selected.surface = surfaceElfin;
@@ -134,7 +136,7 @@
 						    			// Also manages $scope.selected.initialised state
 						    			setSelectedBuilding(selectedParentIds.ID_G,selectedParentIds.Id);
 							        }, function(response) {
-							        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + selectedBuildingIds.ID_G + " et l'identifiant: " + selectedBuildingIds.Id + ".";
+							        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + ID_G + " et l'identifiant: " + Id + ".";
 							        	$log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
 							        });	
 								};
@@ -147,14 +149,16 @@
 				    				GeoxmlService.getElfin(ID_G, Id).get()
 							        .then(function(buildingElfin) {
 							        	// Force array sorting by POS attribute.
-							        	if ( buildingElfin['CARACTERISTIQUE'] != null && buildingElfin['CARACTERISTIQUE']['CARSET'] != null && buildingElfin['CARACTERISTIQUE']['CARSET']['CAR'] != null) {
+							        	if (!!buildingElfin['CARACTERISTIQUE'] &&
+                                            !!buildingElfin['CARACTERISTIQUE']['CARSET'] &&
+                                            !!buildingElfin['CARACTERISTIQUE']['CARSET']['CAR']) {
 							        		hbUtil.reorderArrayByPOS(buildingElfin['CARACTERISTIQUE']['CARSET']['CAR']);
 							        	}
 						    			$scope.selected.building = buildingElfin;
 						    			// Stop waiting for building initialisation once obtained.
 						    			$scope.selected.initialised = true;
 							        }, function(response) {
-							        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + selectedBuildingIds.ID_G + " et l'identifiant: " + selectedBuildingIds.Id + ".";
+							        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + ID_G + " et l'identifiant: " + Id + ".";
 							        	$log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
 							        });	
 								};								
@@ -167,7 +171,7 @@
 											return elfin.CARACTERISTIQUE[carX].VALEUR; 
 										} else {
 											return "Non spécifié";
-										};
+										}
 									} else {
 										return "Non spécifié";
 									}									
@@ -185,21 +189,18 @@
 									return getCARX(elfin,"6");
 								};																
 								
-								$scope.isReadOnly = false; 
+								$scope.isReadOnly = false;
+
+								var hasReadOnlyStatus = function() {
+                                    if (!!$scope.elfin.IDENTIFIANT["MOTCLE"] && $scope.elfin.IDENTIFIANT["MOTCLE"].length > 0) {
+                                        var keywordIdx = hbUtil.getKeywordIndex($scope.elfin.IDENTIFIANT["MOTCLE"], $scope.READ_ONLY_STATUS_KEYWORD);
+                                        return keywordIdx > -1;
+                                    }
+                                    return false;
+                                };
 								
-								
-								var updateIsReadOnlyStatus = function() { 
-									if ($scope.elfin.IDENTIFIANT.MOTCLE && $scope.elfin.IDENTIFIANT.MOTCLE.length > 0) {
-										
-										var keywordIdx = hbUtil.getKeywordIndex($scope.elfin.IDENTIFIANT.MOTCLE, $scope.READ_ONLY_STATUS_KEYWORD);
-										if (keywordIdx > -1) {
-											$scope.isReadOnly = true;
-										} else {
-											$scope.isReadOnly = false;
-										}
-									} else {
-										$scope.isReadOnly = false;
-									}
+								var updateIsReadOnlyStatus = function() {
+								    $scope.isReadOnly= hasReadOnlyStatus();
 								};
 								
 								$scope.validateEntry = function() {
@@ -219,9 +220,9 @@
 									// Make sure the keyword does not already exist
 									updateIsReadOnlyStatus();
 									if (!$scope.isReadOnly && $scope.elfinForm.$valid) {
-										$scope.elfin.IDENTIFIANT.MOTCLE.push({"VALUE" : $scope.READ_ONLY_STATUS_KEYWORD})
+										$scope.elfin.IDENTIFIANT["MOTCLE"].push({"VALUE" : $scope.READ_ONLY_STATUS_KEYWORD});
 										$scope.elfinForm.$setDirty();
-									};
+									}
 									updateIsReadOnlyStatus();
 								};
 								
@@ -231,17 +232,17 @@
 									updateIsReadOnlyStatus();
 									// If set to read only status remove the keyword and update status otherwise do nothing
 									if ($scope.isReadOnly) {
-										var keywordIdx = hbUtil.getKeywordIndex($scope.elfin.IDENTIFIANT.MOTCLE, $scope.READ_ONLY_STATUS_KEYWORD);
+										var keywordIdx = hbUtil.getKeywordIndex($scope.elfin.IDENTIFIANT["MOTCLE"], $scope.READ_ONLY_STATUS_KEYWORD);
 										if (keywordIdx > -1) {
-											$scope.elfin.IDENTIFIANT.MOTCLE.splice(keywordIdx, 1);
+											$scope.elfin.IDENTIFIANT["MOTCLE"].splice(keywordIdx, 1);
 											$scope.elfinForm.$setDirty();
 										}
-									};
+									}
 									updateIsReadOnlyStatus();
 								};								
 								
 								// Manage contract / confirmation manager
-								$scope.$watch('respActorModel', function(newResp, oldResp) {
+								$scope.$watch('respActorModel', function(newResp) {
 									if (newResp.Id !== undefined) {
 										$scope.elfin.IDENTIFIANT.RES = newResp.ID_G + "/ACTEUR/" + newResp.Id;
 									}
@@ -271,7 +272,7 @@
 								/**
 								 * Listen to selected.building change and perform corresponding $scope.elfin updates
 								 */
-								$scope.$watch('selected.building', function(newBuilding, oldBuilding) { 
+								$scope.$watch('selected.building', function(newBuilding) {
 									//$log.debug(">>>> selected.building listener: newBuilding = " + angular.toJson(newBuilding) + ", oldBuilding = " + angular.toJson(oldBuilding));
 									if ($scope.selected.initialised === true ) {
 										if ($scope.selected.building) {
@@ -285,29 +286,27 @@
 
 											// Set order ORIGINE to building (IMMEUBLE) NOM (No construction)
 											$scope.elfin.IDENTIFIANT.ORIGINE = $scope.selected.building.IDENTIFIANT.NOM;
-											
-											var buildingOwner = {
+
+                                            $scope.elfin.PARTENAIRE.PROPRIETAIRE = {
 													 "Id" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.Id,
 												      "ID_G" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.ID_G,
 												      "NOM" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM,
 												      "GROUPE" : $scope.selected.building.PARTENAIRE.PROPRIETAIRE.GROUPE,
 												      "VALUE" : ""
 												};
-											$scope.elfin.PARTENAIRE.PROPRIETAIRE = buildingOwner; 
 										} else {
 											$log.debug("building has been reset... ");											
 											$scope.elfin.SOURCE = "";
 											$scope.elfin.IDENTIFIANT.OBJECTIF = "";
 											$scope.elfin.IDENTIFIANT.ALIAS = "";
 											$scope.elfin.IDENTIFIANT.ORIGINE = "";
-											var buildingOwner = {
+                                            $scope.elfin.PARTENAIRE.PROPRIETAIRE = {
 													 "Id" : "",
 												      "ID_G" : "",
 												      "NOM" : "",
 												      "GROUPE" : "",
 												      "VALUE" : ""
 												};
-											$scope.elfin.PARTENAIRE.PROPRIETAIRE = buildingOwner;
 										}
 										
 										// Update contract number on building change.
@@ -322,10 +321,10 @@
 								}, true);								
 								
 								
-								$scope.$watch('selected.surface', function(newSurface, oldSurface) { 
+								$scope.$watch('selected.surface', function() {
 									if ($scope.selected.initialised === true && $scope.selected.surface && $scope.selected.surface.Id) {
 										$log.debug("selected.surface : \n" + angular.toJson($scope.selected.surface.IDENTIFIANT.OBJECTIF));
-										// will deadloop, should be renamed init selected surface.
+										// will dead loop, should be renamed init selected surface.
 										//setSelectedSurface($scope.selected.surface.ID_G,$scope.selected.surface.Id)
 										if ($scope.selected.surface) {
 											var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.selected.surface.SOURCE);
@@ -341,7 +340,7 @@
 									}
 								}, true);								
 								
-								$scope.$watch('selected.code', function(newCode, oldCode) { 
+								$scope.$watch('selected.code', function() {
 									if ($scope.selected.initialised === true ) {
 										// TODO: Review hb-typeahead-code implementation to expose only valid code object
 										// the kind of verifications performed hereafter should be encapsulated within the
@@ -358,18 +357,18 @@
 									}
 								}, true);								
 								
-								$scope.$watch('selected.provider', function(newProvider, oldProvider) { 
+								$scope.$watch('selected.provider', function() {
 									if ($scope.selected.initialised === true ) {
 										if ($scope.selected.provider) {
 											//$log.debug("provider : " + angular.toJson($scope.selected.provider));											
-											var provider = {
+                                            $scope.elfin.PARTENAIRE.FOURNISSEUR = {
 											      "Id" : $scope.selected.provider.Id,
 											      "ID_G" : $scope.selected.provider.ID_G,
 											      "NOM" : "",
 											      "GROUPE" : $scope.selected.provider.GROUPE,
 											      "VALUE" : ""
 											};
-											$scope.elfin.PARTENAIRE.FOURNISSEUR = provider;
+
 											// Updating $scope.selected.provider model from hbChooseOne controller is not 
 											// visible to the view model thus requires manual update.
 											// This is necessary when the validity state has been set to invalid using 
@@ -389,15 +388,15 @@
 												}
 											}
 										} else {
-											$log.debug("provider has been reset... ");											
-											var provider = {
+											$log.debug("provider has been reset... ");
+                                            $scope.elfin.PARTENAIRE.FOURNISSEUR = {
 												      "Id" : "",
 												      "ID_G" : "",
 												      "NOM" : "",
 												      "GROUPE" : "",
 												      "VALUE" : ""
 												};
-											$scope.elfin.PARTENAIRE.FOURNISSEUR = provider;				
+
 											if ($scope.validate) {
 												$scope.elfinForm.fournisseur.$setValidity('required', false);
 											}
@@ -433,7 +432,7 @@
 								hbQueryService.getCodes(xpathForCfcCodes)
 									.then(
 											function(cfcCodes) {
-												$scope.cfcCodes = _.sortBy(cfcCodes, function(cfcCode){ return cfcCode.CARACTERISTIQUE.CAR1.VALEUR });
+												$scope.cfcCodes = _.sortBy(cfcCodes, function(cfcCode){ return cfcCode.CARACTERISTIQUE["CAR1"]["VALEUR"] });
 												$log.debug(">>> CODES.CFC: " + cfcCodes.length);
 											},
 											function(response) {
@@ -450,6 +449,11 @@
 								 * It requires elfin.IDENTIFIANT.OBJECTIF, elfin.IDENTIFIANT.DE.slice(4), elfin.Id to be set.
 								 */
 								var setContractNumber = function(elfin) {
+								    // Avoid to set a new contract number when the contract is in read-only mode
+								    if (hasReadOnlyStatus()) {
+								        return;
+                                    }
+
 									var saiNb = elfin.IDENTIFIANT.OBJECTIF;
 									var year = elfin.IDENTIFIANT.DE.slice(0,4);
 									var orderId = elfin.Id;
@@ -457,24 +461,23 @@
 							        	// Increment current nb of contracts
 							        	var nextContractNb = parseInt(currentContractNb)+1;
 							        	// Pad next contract number on two digits with leading zero.
-							        	var nextContractNbPaddedString = ("00"+nextContractNb).slice(-2);
+							        	var nextContractNbPaddedString = ("00" + nextContractNb).slice(-2);
 							        	// Build full contract number
-										var fullContractNumberAsString = saiNb + "_" + year + "_" + nextContractNbPaddedString ;
-							        	elfin.CARACTERISTIQUE.CAR5.VALEUR = fullContractNumberAsString;
+							        	elfin.CARACTERISTIQUE["CAR5"]["VALEUR"] = saiNb + "_" + year + "_" + nextContractNbPaddedString;
 						    		}, function(response) {
 						            	var errorMessage = "Error with status code " + response.status + " while getting JSON NbOfContracts.";
 						            	$log.error(errorMessage);
 						            	hbAlertMessages.addAlert("danger","Le nombre de contrats existant n'a pas pu être déterminé.");
 						            });								
 								};
-								
+
 								var resetContractNumber = function(elfin) {
 									// Reset contract number to ""
-									elfin.CARACTERISTIQUE.CAR5.VALEUR = "";									
+									elfin.CARACTERISTIQUE["CAR5"]["VALEUR"] = "";
 								};
 								
 								
-								$scope.$watch('elfin.IDENTIFIANT.QUALITE', function(newQualite, oldQualite) { 
+								$scope.$watch('elfin.IDENTIFIANT.QUALITE', function(newQualite) {
 									if (newQualite !== null && newQualite !== undefined && newQualite.length > 0) {
 										$log.debug("newQualite : change to: " + newQualite);
 										if (newQualite === HB_ORDER_TYPE.CONTRACT) {
@@ -536,7 +539,7 @@
 						    			// ====================================================================						    			
 						    			
 										// Update elfin properties from catalog while in create mode
-										if ($attrs.hbMode === "create") {
+										if ($attrs["hbMode"] === "create") {
 											
 											if ($scope.elfin) {
 												
@@ -583,7 +586,7 @@
 												$scope.elfin.PARTENAIRE.PROPRIETAIRE.GROUPE = "";
 												$scope.elfin.PARTENAIRE.PROPRIETAIRE.VALUE = "";
 												
-												$scope.elfin.DIVERS.REMARQUE = "";
+												$scope.elfin["DIVERS"]["REMARQUE"] = "";
 
 												// ===================================================
 												//   Initialises default values using parameters 
@@ -730,7 +733,11 @@
 						         * Prints entreprise contract.
 						         */
 						        $scope.printEntrepriseContractReport = function (elfin) {
-						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.CONTRACT,elfin.PARTENAIRE.PROPRIETAIRE.NOM, elfin.CARACTERISTIQUE.CAR5.VALEUR , undefined);							        	
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(
+						        	    elfin,HB_ORDER_REPORT_TYPE.CONTRACT,
+                                        elfin.PARTENAIRE.PROPRIETAIRE.NOM,
+                                        elfin.CARACTERISTIQUE["CAR5"]["VALEUR"],
+                                        undefined);
 						        };
 						        
 						        /**
@@ -756,7 +763,7 @@
 									$('#building').focus();
 								};						      
 								
-								// Call set focus to orderNb with a 500 millisec delay.
+								// Call set focus to orderNb with a 500 ms delay.
 								$timeout(focusOnField, 500, false);    									
 								
 					            
