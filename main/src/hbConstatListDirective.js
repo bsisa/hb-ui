@@ -8,7 +8,7 @@
 		return {
 			require: '^hbListContainer',
 		    restrict: 'A',
-			templateUrl : "/assets/views/hbConstatList.html",
+			templateUrl : "/assets/views-compiled/hbConstatList.html",
 			controller: 'HbConstatListController'
 		};
 	

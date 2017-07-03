@@ -1,0 +1,186 @@
+table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
+    thead
+        colgroup
+            col(span="7")
+            col.phase(span="5")
+            col(span="1")
+        tr
+            th(colspan="7")
+                span.badge {{elfinsCount}}
+                span constat{{elfinsCount | plural }} trouvé{{elfinsCount | plural }}
+            th(colspan="5") Phasage
+            th(colspan="1") Planning
+
+        tr
+            th Filtre
+            th
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.last_resp", hb-no-dirty-check, placeholder="")
+            th
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.constat_date", hb-no-dirty-check, placeholder="")
+
+            th
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.partenaire_usager", hb-no-dirty-check, placeholder="")
+
+            th
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.constat_group", hb-no-dirty-check, placeholder="")
+
+            th
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.constat_noSAI", hb-no-dirty-check, placeholder="")
+
+            th
+            th
+            th
+            th
+            th
+            th
+
+        tr
+            th Tri
+            th
+                a(href="", ng-click="predicate = 'ACTIVITE.EVENEMENT.ECHEANCE[ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI'; reverse=!reverse") Resp
+            th
+                a(href="", ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse") Constaté le
+            th
+                a(href="", ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse") Descriptif
+            th
+                a(href="", ng-click="predicate = 'PARTENAIRE.USAGER.VALUE'; reverse=!reverse") Etage-Locataire
+            th
+                a(href="", ng-click="predicate = 'GROUPE'; reverse=!reverse") Type
+            th
+                a(href="", ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse") No SAI
+            th Analyse
+            th Avant-Projet
+            th Adjudication
+            th Exécution
+            th Réception
+            th Planning
+
+    tbody
+        tr(ng-repeat="elfin in elfins | constatListFilter:search |orderBy:predicate:reverse")
+            td
+                div(hb-card-view-link, hb-href="/elfin/{{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}")
+            td {{ elfin.ACTIVITE.EVENEMENT.ECHEANCE[elfin.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI }}
+            td {{ elfin.IDENTIFIANT.DE }}
+            td {{ elfin.IDENTIFIANT.NOM }}
+            td {{ elfin.PARTENAIRE.USAGER.VALUE }}
+            td {{ elfin.GROUPE }}
+            td {{ elfin.IDENTIFIANT.OBJECTIF }}
+
+            td
+                span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Analyse'} ")
+                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                        span.badge
+                            != "{{echeance.POUR_QUI}}<br/>{{echeance.E_DATE}}"
+                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                        span.badge
+                            != "{{echeance.POUR_QUI}}<br/>{{echeance.E_DATE}}"
+                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge
+                            != "{{echeance.POUR_QUI}}<br/>{{echeance.E_DATE}}"
+
+                    span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
+                        span.badge
+                            != "{{echeance.PAR_QUI}} - {{echeance.POUR_QUI}}<br/>{{echeance.E_DATE}}"
+                    span(ng-if="!$last")
+                        br
+
+            td
+                span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ")
+                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span(ng-if="!$last")
+                        br
+
+            td
+                span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Appel d offre et Adjudication'} ")
+                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span(ng-if="!$last")
+                        br
+
+            td
+                span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Exécution'} ")
+                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span(ng-if="!$last")
+                        br
+
+            td
+                span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Réception'} ")
+                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}}
+                            br
+                            | {{echeance.E_DATE}}
+                    span(ng-if="!$last")
+                        br
+
+            td
+                span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE")
+                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge {{getPhaseAbbreviation(echeance.ACTION)}}
+                            br
+                            | {{getEcheanceStatus(echeance.E_DATE)}}
