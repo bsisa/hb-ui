@@ -87,7 +87,7 @@
 				var getLine = function(orderLineType, orderLineLabel, orderLineParameter, orderLineParameterLabel, orderLineValue, orderLineIsWithParameter ) {
 					
 					// Return L as object on text type.
-					var L = {
+					return {
 					    "C" : [ {
 					      "POS" : 1,
 					      "VALUE" : orderLineType
@@ -109,8 +109,6 @@
 					    } ],
 					    "POS" : 1
 					  };
-					
-					return L;
 				};
 				
 
@@ -174,7 +172,7 @@
 							);
 					} else { 
 						// Nada
-					};
+					}
 				}, true);				
 
 
@@ -192,7 +190,7 @@
 						},
 						function (newWatchedData, oldWatchedData) {
 							//$log.debug("orderWatchedData watch event \noldWatchedData >> " + angular.toJson(oldWatchedData) + "\nnewWatchedData >> " + angular.toJson(newWatchedData));
-							$scope.updateOrderLines($scope.elfinForm.$valid);
+							// $scope.updateOrderLines($scope.elfinForm.$valid);
 						},
 						true);
 				
@@ -201,7 +199,12 @@
 				 * Boolean expression to make order line value conditionally editable
 				 */
 				$scope.lineValueEditable = function(line) {
-					var isLineValueEditable = (line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) || (line.C[0].VALUE === HB_ORDER_LINE_TYPE.APPLIED_AMOUNT) || ((line.C[0].VALUE === HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine );
+					var isLineValueEditable =
+						(line.C[0].VALUE === HB_ORDER_LINE_TYPE.MANUAL_AMOUNT) ||
+                        (line.C[0].VALUE === HB_ORDER_LINE_TYPE.NET_AMOUNT_TOTAL_INCL_TAX) ||
+						(line.C[0].VALUE === HB_ORDER_LINE_TYPE.APPLIED_AMOUNT) ||
+						((line.C[0].VALUE === HB_ORDER_LINE_TYPE.GROSS_AMOUNT_TOTAL) && !$scope.hasManualOrderLine );
+
 					return isLineValueEditable;
 				};
 				
@@ -265,7 +268,7 @@
 		    	       			}, 
 		    	       			function(response) { 
 		    	       				// Reset pending requests stack to avoid keeping track of failing request
-		    	       				$scope.orderLinesComputationsStack.splice(0,$scope.orderLinesComputationsStack.length);
+		    	       				$scope.orderLinesComputationsStack.splice(0, $scope.orderLinesComputationsStack.length);
 		    	       				
 		    	       				$log.debug("Error in computeOrderLines POST operation with status code", response.status);
 		    	       				var message = "Le calcul du montant de commande a échoué. Corrigez s.v.p. votre saisie. Si le problème persiste, veuillez contacter l'administrateur système.";
@@ -311,7 +314,7 @@
 					}
 					
 					return hasPerformedUpdate;
-				}
+				};
 				
 				
 				/**
@@ -394,7 +397,7 @@
 					// Add new line
 					hbUtil.addFractionLByIndex($scope.ngModelCtrl.$modelValue,index,L);
 					// Perform computation and update
-					$scope.updateOrderLines(formValid);
+					// $scope.updateOrderLines(formValid);
 					// Notify Form of model model change
        				$scope.elfinForm.$setDirty();
 				};
@@ -448,7 +451,7 @@
 					// Replace by new line
 					hbUtil.replaceFractionLByIndex($scope.ngModelCtrl.$modelValue, index, newLine);
 					// Perform computation and amounts update
-					$scope.updateOrderLines(formValid);
+					// $scope.updateOrderLines(formValid);
 					// Avoid preserving selected.lineType state
 					$scope.selected.lineType = "";
 				};				
@@ -461,7 +464,7 @@
 					// Remove order line at `index`
 					hbUtil.removeFractionLByIndex($scope.ngModelCtrl.$modelValue,index);
 					// Perform computation and amounts update
-					$scope.updateOrderLines(formValid);
+					// $scope.updateOrderLines(formValid);
 				};
 
 			} ]); // End of HbOrderSpreadsheetController definition
