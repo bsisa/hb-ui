@@ -719,27 +719,46 @@
 						         * Prints provider purchase order.
 						         */
 						        $scope.printProviderPurchaseOrderReport = function (elfin) {
-						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.PURCHASE_ORDER_PROVIDER,elfin.PARTENAIRE.PROPRIETAIRE.NOM);
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(
+						        		elfin,
+										HB_ORDER_REPORT_TYPE.PURCHASE_ORDER_PROVIDER,
+										elfin.PARTENAIRE.PROPRIETAIRE.NOM);
 						        };					        
 						        
 						        /**
 						         * Prints tenant purchase order.
 						         */
 						        $scope.printTenantPurchaseOrderReport = function (elfin) {
-						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.PURCHASE_ORDER_TENANT,elfin.PARTENAIRE.PROPRIETAIRE.NOM);						        	
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(
+						        		elfin,
+										HB_ORDER_REPORT_TYPE.PURCHASE_ORDER_TENANT,
+										elfin.PARTENAIRE.PROPRIETAIRE.NOM);
 						        };							        
 					            
 						        /**
-						         * Prints entreprise contract.
+						         * Prints entreprise contract with General Conditions.
 						         */
-						        $scope.printEntrepriseContractReport = function (elfin) {
+						        $scope.printEntrepriseContractWithGCReport = function (elfin) {
 						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(
-						        	    elfin,HB_ORDER_REPORT_TYPE.CONTRACT,
+						        	    elfin,
+										HB_ORDER_REPORT_TYPE.CONTRACT,
                                         elfin.PARTENAIRE.PROPRIETAIRE.NOM,
                                         elfin.CARACTERISTIQUE["CAR5"]["VALEUR"],
                                         undefined);
 						        };
-						        
+
+                                /**
+                                 * Prints entreprise contract without General Conditions.
+                                 */
+                                $scope.printEntrepriseContractWoGCReport = function (elfin) {
+                                    hbPrintService.getReportOrProvideFeedbackForMissingConfig(
+                                        elfin,
+                                        HB_ORDER_REPORT_TYPE.CONTRACT_WO_GC,
+                                        elfin.PARTENAIRE.PROPRIETAIRE.NOM,
+                                        elfin.CARACTERISTIQUE["CAR5"]["VALEUR"],
+                                        undefined);
+                                };
+
 						        /**
 						         * TEst PYS impression vers Excel.
 						         */
