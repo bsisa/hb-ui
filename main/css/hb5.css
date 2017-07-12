@@ -666,3 +666,37 @@ div.col-xs-10.card-view.splitViewMargin {
 div.map-view-wrapper {
     padding-top: 48px;
 }
+
+/***********************
+Some background colors
+ ***********************/
+
+.bg-light-blue, .bg-light-blue:hover {
+    background-color: #5bc0de;
+    border-color: #5bc0de;
+}
+
+.bg-mid-blue, .bg-mid-blue:hover {
+    background-color: #4D99E0;
+    border-color: #4D99E0;
+}
+
+.bg-dark-blue, .bg-dark-blue:hover {
+    background-color: #2a62bc;
+    border-color: #2a62bc;
+}
+
+.bg-light-blue .badge {
+    color: #2a62bc;
+    background-color: #fff;
+}
+
+.bg-mid-blue .badge {
+    color: #2a62bc;
+    background-color: #fff;
+}
+
+.bg-dark-blue .badge {
+    color: #2a62bc;
+    background-color: #fff;
+}

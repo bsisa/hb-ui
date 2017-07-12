@@ -7,8 +7,11 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
         tr
             th(colspan="7")
                 span.badge {{elfinsCount}}
-                span constat{{elfinsCount | plural }} trouvé{{elfinsCount | plural }}
-            th(colspan="5") Phasage
+                span &nbsp;constat{{elfinsCount | plural }} trouvé{{elfinsCount | plural }}
+            th(colspan="5", style="text-align:center;")
+                | Phasage
+                br
+                | (V: Validé, AV: A valider, EC: En cours, ?: Statut inconnu)
             th(colspan="1") Planning
 
         tr
@@ -78,38 +81,38 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
 
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Analyse'} ")
-                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                    span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
                         span.badge
-                            != "{{echeance.POUR_QUI}}<br/>{{echeance.E_DATE}}"
-                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                            != "{{echeance.POUR_QUI}} (V)<br/>{{echeance.E_DATE}}"
+                    span.btn.btn-warning.btn-block.bg-mid-blue(ng-if="echeance.PAR_QUI == 'A VALIDER'")
                         span.badge
-                            != "{{echeance.POUR_QUI}}<br/>{{echeance.E_DATE}}"
-                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                            != "AV: {{echeance.POUR_QUI}} (AV)<br/>{{echeance.E_DATE}}"
+                    span.btn.btn-danger.btn-block.bg-dark-blue(ng-if="echeance.PAR_QUI == 'EN COURS'")
                         span.badge
-                            != "{{echeance.POUR_QUI}}<br/>{{echeance.E_DATE}}"
+                            != "EC: {{echeance.POUR_QUI}} (EC)<br/>{{echeance.E_DATE}}"
 
                     span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
                         span.badge
-                            != "{{echeance.PAR_QUI}} - {{echeance.POUR_QUI}}<br/>{{echeance.E_DATE}}"
+                            != "{{echeance.PAR_QUI}} - {{echeance.POUR_QUI}} (?)<br/>{{echeance.E_DATE}}"
                     span(ng-if="!$last")
                         br
 
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ")
-                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}} (V)
                             br
                             | {{echeance.E_DATE}}
-                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-warning.btn-block.bg-mid-blue(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                        span.badge {{echeance.POUR_QUI}} (AV)
                             br
                             | {{echeance.E_DATE}}
-                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-danger.btn-block.bg-dark-blue(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge {{echeance.POUR_QUI}} (EC)
                             br
                             | {{echeance.E_DATE}}
                     span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
-                        span.badge {{echeance.POUR_QUI}}
+                        span.badge {{echeance.POUR_QUI}} (?)
                             br
                             | {{echeance.E_DATE}}
                     span(ng-if="!$last")
@@ -117,20 +120,20 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
 
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Appel d offre et Adjudication'} ")
-                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}} (V)
                             br
                             | {{echeance.E_DATE}}
-                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-warning.btn-block.bg-mid-blue(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                        span.badge {{echeance.POUR_QUI}} (AV)
                             br
                             | {{echeance.E_DATE}}
-                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-danger.btn-block.bg-dark-blue(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge {{echeance.POUR_QUI}} (EC)
                             br
                             | {{echeance.E_DATE}}
                     span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
-                        span.badge {{echeance.POUR_QUI}}
+                        span.badge {{echeance.POUR_QUI}} (?)
                             br
                             | {{echeance.E_DATE}}
                     span(ng-if="!$last")
@@ -138,20 +141,20 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
 
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Exécution'} ")
-                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}} (V)
                             br
                             | {{echeance.E_DATE}}
-                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-warning.btn-block.bg-mid-blue(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                        span.badge {{echeance.POUR_QUI}} (AV)
                             br
                             | {{echeance.E_DATE}}
-                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-danger.btn-block.bg-dark-blue(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge {{echeance.POUR_QUI}} (EC)
                             br
                             | {{echeance.E_DATE}}
                     span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
-                        span.badge {{echeance.POUR_QUI}}
+                        span.badge {{echeance.POUR_QUI}} (?)
                             br
                             | {{echeance.E_DATE}}
                     span(ng-if="!$last")
@@ -159,20 +162,20 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
 
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Réception'} ")
-                    span.btn.btn-success.btn-block(ng-if="echeance.PAR_QUI == 'VALIDE'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
+                        span.badge {{echeance.POUR_QUI}} (V)
                             br
                             | {{echeance.E_DATE}}
-                    span.btn.btn-warning.btn-block(ng-if="echeance.PAR_QUI == 'A VALIDER'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-warning.btn-block.bg-mid-blue(ng-if="echeance.PAR_QUI == 'A VALIDER'")
+                        span.badge {{echeance.POUR_QUI}} (AV)
                             br
                             | {{echeance.E_DATE}}
-                    span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
-                        span.badge {{echeance.POUR_QUI}}
+                    span.btn.btn-danger.btn-block.bg-dark-blue(ng-if="echeance.PAR_QUI == 'EN COURS'")
+                        span.badge {{echeance.POUR_QUI}} (EC)
                             br
                             | {{echeance.E_DATE}}
                     span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
-                        span.badge {{echeance.POUR_QUI}}
+                        span.badge {{echeance.POUR_QUI}} (?)
                             br
                             | {{echeance.E_DATE}}
                     span(ng-if="!$last")
