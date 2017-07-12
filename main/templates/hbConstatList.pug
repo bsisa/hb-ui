@@ -86,10 +86,10 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                             != "{{echeance.POUR_QUI}} (V)<br/>{{echeance.E_DATE}}"
                     span.btn.btn-warning.btn-block.bg-mid-blue(ng-if="echeance.PAR_QUI == 'A VALIDER'")
                         span.badge
-                            != "AV: {{echeance.POUR_QUI}} (AV)<br/>{{echeance.E_DATE}}"
+                            != "{{echeance.POUR_QUI}} (AV)<br/>{{echeance.E_DATE}}"
                     span.btn.btn-danger.btn-block.bg-dark-blue(ng-if="echeance.PAR_QUI == 'EN COURS'")
                         span.badge
-                            != "EC: {{echeance.POUR_QUI}} (EC)<br/>{{echeance.E_DATE}}"
+                            != "{{echeance.POUR_QUI}} (EC)<br/>{{echeance.E_DATE}}"
 
                     span.btn.btn-default.btn-block(ng-if="echeance.PAR_QUI != 'EN COURS' && echeance.PAR_QUI != 'A VALIDER' && echeance.PAR_QUI != 'VALIDE'")
                         span.badge
