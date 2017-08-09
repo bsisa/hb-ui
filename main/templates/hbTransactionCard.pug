@@ -1,0 +1,202 @@
+div(hb-card-header)
+    // Custom validation message to be defined here
+    // <span ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire!</span>
+    // <span ng-show="elfinForm.destinataire.$error.required">Le champs <strong>Destinataire</strong> est obligatoire!</span>
+    // <span ng-show="elfinForm.resp.$error.required">Le champs <strong>Responsable visa de facture</strong> est obligatoire!</span>
+    // <span ng-show="elfinForm.groupeTrans.$error.required">Le <strong>Groupe Transaction</strong> est obligatoire!</span>
+    // <span ng-show="elfinForm.objectif.$error.required">Le <strong>numéro de prestation {SAI}.{index}</strong> est obligatoire!</span>
+    // <span ng-show="elfinForm.objectif.$error.minlength">Le <strong>numéro de prestation {SAI}.{index}</strong> est obligatoire!</span>
+    // <span ng-show="elfinForm.year.$error.required"><strong>L'année</strong> est obligatoire!</span>
+    // <span ng-show="elfinForm.year.$error.minlength"><strong>L'année</strong> doit être composée de quatre positions.</span>
+    // <span ng-show="elfinForm.year.$error.maxlength"><strong>L'année</strong> doit être composée de quatre positions.</span>
+    ul
+        // <li ng-show="elfinForm.manager.$error.required">Le champs <strong>Propriétaire</strong> est obligatoire!</li>
+        // <li ng-show="elfinForm.groupeTrans.$error.required">Le <strong>Groupe Transaction</strong> est obligatoire!</li>
+        // <li ng-show="elfinForm.year.$error.required"><strong>L'année</strong> est obligatoire!</li>
+        li(ng-show="elfinForm.year.$error.minlength")
+            != "<strong>L'année</strong> doit être composée de quatre positions."
+        li(ng-show="elfinForm.year.$error.maxlength")
+            != "<strong>L'année</strong> doit être composée de quatre positions."
+        li(ng-show="elfinForm.objectif.$error.required")
+            != "Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Transaction', 'Année'} est obligatoire!"
+        li(ng-show="elfinForm.objectif.$error.minlength")
+            != "Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Transaction', 'Année'} est obligatoire!"
+        // <li ng-show="elfinForm.destinataire.$error.required">Le champs <strong>Destinataire</strong> est obligatoire!</li>
+        // <li ng-show="elfinForm.resp.$error.required">Le champs <strong>Responsable visa de facture</strong> est obligatoire!</li>
+        li(ng-show="elfinForm.annexlength.$error.min")
+            != "<strong>L'annexe</strong> est obligatoire!"
+
+div.row(style="padding-top: 8px;")
+    div.col-xs-12
+        tabset
+            tab
+                tab-heading Transaction
+                div.hb-tab
+                    div.form-group
+                        // 1er bloc 2 colonnes de 5 lignes
+                        // 1ere colonne
+                        div.col-sm-6
+                            div.form-group.has-feedback(ng-if="reallocate", ng-class="getCssHasFeedback(elfinForm.manager)")
+                                label.col-sm-4.control-label(for="manager")
+                                    em Propriétaire
+                                div.col-sm-8
+                                    div(hb-choose-actor,
+                                    hb-choose-actor-id-name="manager",
+                                    hb-choose-actor-elfin-form="elfinForm",
+                                    hb-choose-actor-model="searchOwner",
+                                    hb-choose-actor-tooltip="Recherche de propriétaire",
+                                    hb-choose-actor-role="Propriétaire",
+                                    hb-choose-actor-default-by-name="NE")
+                            div.form-group(ng-show="!reallocate")
+                                label.col-sm-4.control-label(for="objectif") No SAI prestation
+                                p.col-sm-8.form-control-static {{elfin.IDENTIFIANT.OBJECTIF}}
+
+                            div.form-group(ng-show="reallocate")
+                                label.col-sm-4.control-label(for="objectifSearchHelper")
+                                    em No SAI
+                                div.col-sm-3
+                                    input.form-control#objectifSearchHelper(name="objectifSearchHelper", type="text", ng-model="helper.constatSelectionSai", hb-no-dirty-check)
+
+                                label.col-sm-2.control-label(for="objectif") Prest.
+                                span.col-sm-2.form-control-static#objectif(ng-show="elfin.IDENTIFIANT.OBJECTIF")
+                                    span.label.label-success(style="font-size: 1em;",tooltip="{{prestationStatusTooltips}}") {{elfin.IDENTIFIANT.OBJECTIF}}
+                                div(ng-show="false")
+                                    input(name="objectif", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-required="true", ng-minlength="1")
+                                span.col-sm-2.form-control-static#objectifStatus(ng-show="!elfin.IDENTIFIANT.OBJECTIF")
+                                    span.label.label-danger(style="font-size: 1em;", tooltip="{{prestationStatusTooltips}}") {{prestationStatus}}
+
+                                div.col-sm-1#prestationSelection(style="border: none;text-align: left;", ng-show="prestationSelection")
+                                    button.btn.btn-default(style="float:right;", type="button", tooltip="Sélection de prestation",
+                                        ng-click="selectOnePrestation(elfin, 'IDENTIFIANT.OBJECTIF', prestations, 'IDENTIFIANT.OBJECTIF', selectOnePrestationColumnsDefinition, selectOnePrestationTemplate);")
+                                        i.glyphicon.glyphicon-list-alt
+                            div.form-group(ng-show="reallocate")
+                                label.col-sm-4.control-label
+                                    em Adresse
+                                div.col-sm-8(ng-show="selectedImmeuble && selectedImmeuble.Id")
+                                    p.form-control-static
+                                        span(ng-bind="selectedImmeuble.IDENTIFIANT.ALIAS")
+                                div.col-sm-8(ng-show="!selectedImmeuble || !selectedImmeuble.Id")
+                                    p.form-control-static
+                                        span Pas d'immeuble pour Propriétaire/No SAI
+
+                            div.form-group.has-feedback(ng-show="reallocate", ng-class="getCssHasFeedback(elfinForm.groupeTrans)")
+                                label.col-sm-4 control-label(for="groupeTrans") Groupe Transaction
+                                div.col-sm-8
+                                    select.form-control#groupeTrans(name="groupeTrans", chosen,
+                                            data-placeholder=" ", disable-search="false",
+                                            allow-single-deselect="true",
+                                            ng-model="elfin.GROUPE",
+                                            ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes",
+                                            ng-required="true")
+                                        option(value='')
+
+                            div.form-group(ng-show="!reallocate")
+                                label.col-sm-4.control-label(for="groupe") Groupe Transaction
+                                div.col-sm-8.form-control-static {{elfin.GROUPE}}
+
+                            div.form-group
+                                label.col-sm-4.control-label(for="groupe") Groupe Prestation
+                                p.col-sm-8.form-control-static {{elfin.CARACTERISTIQUE.CAR1.UNITE}}
+
+                            div.form-group(ng-show="!reallocate")
+                                label.col-sm-4.control-label(for="annee") Année
+                                p.col-sm-8.form-control-static {{elfin.IDENTIFIANT.PAR}}
+
+                            div.form-group(ng-show="!reallocate")
+                                label.col-sm-4.control-label(for="source") Compte
+                                p.col-sm-8.form-control-static {{elfin.IDENTIFIANT.COMPTE}}
+
+                            div.form-group.has-feedback(ng-show="reallocate", ng-class="getCssHasFeedback(elfinForm.year)")
+                                label.col-sm-4.control-label(for="year") Année
+                                div.col-sm-3
+                                    input.form-control#year(name="year", type="text",
+                                        ng-model="elfin.IDENTIFIANT.PAR",
+                                        ng-maxlength="4" ng-minlength="4" ng-required="true")
+                                label.col-sm-2.control-label(for="compte", style="color: black;") Compte
+                                div.col-sm-3
+                                    p.form-control-static#compte {{elfin.IDENTIFIANT.COMPTE}}
+
+                        // 2eme colonne
+                        div.col-sm-6
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.date)")
+                                label.col-sm-4.control-label(for="date") Date
+                                div.col-sm-4
+                                    div#date(hb-date, name="date",
+                                        ng-model="elfin.IDENTIFIANT.DE")
+                                label.col-sm-2.control-label(for="auteur") Auteur
+                                div.col-sm-2
+                                    p.form-control-static {{elfin.IDENTIFIANT.AUT}}
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.resp)")
+                                label.col-sm-4.control-label(for="resp") Responsable visa de facture
+                                div.col-sm-8
+                                    div.input-group
+                                    input.form-control#resp(name="resp", type="text",
+                                        autocomplete="off",
+                                        typeahead="resp.GROUPE for resp in collaboratorActors | filter:$viewValue | limitTo:8",
+                                        ng-model="elfin.IDENTIFIANT.RES",
+                                        required)
+                                    span.input-group-btn(tooltip="Recherche de collaborateur", tooltip-popup-delay="1500")
+                                        button.btn.btn-default(type="button", hb-choose-one,
+                                            ng-click="hbChooseOne(elfin, 'IDENTIFIANT.RES', collaboratorActors, 'GROUPE', collaboratorActorChooseOneColumnsDefinition, actorChooseOneTemplate )")
+                                            i.glyphicon.glyphicon-list-alt
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.repartition)")
+                                label.col-sm-4.control-label(for="repartition") Répartition
+                                div.col-sm-8
+                                    input.form-control#repartition(name="repartition", type="text",
+                                        autocomplete="off",
+                                        typeahead="repartition.name as repartition.value for repartition in repartitions | filter:$viewValue | limitTo:8",
+                                        ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR")
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.destinataire)")
+                                label.col-sm-4.control-label(for="destinataire") Destinataire
+                                div.col-sm-8
+                                    div.input-group
+                                        input.form-control#destinataire(name="destinataire", type="text",
+                                            autocomplete="off",
+                                            typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue | limitTo:8",
+                                            ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE",
+                                            required)
+                                        span.input-group-btn(tooltip="Recherche d'entreprise", tooltip-popup-delay="1500")
+                                            button.btn.btn-default(type="button", hb-choose-one,
+                                                ng-click="hbChooseOne(elfin, 'PARTENAIRE.PROPRIETAIRE.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )")
+                                                i.glyphicon.glyphicon-list-alt
+
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="valeur_a_neuf") Facturé
+                                div.col-sm-3
+                                    input.form-control#valeur_a_neuf(name="valeur_a_neuf", type="text",
+                                        ng-blur="copyValeur_a_Neuf2Valeur(elfin.IDENTIFIANT.VALEUR_A_NEUF)",
+                                        ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF", format-currency)
+                                label.col-sm-2.control-label(for="valeur") Payé
+                                div.col-sm-3
+                                    input.form-control#valeur(name="valeur", type="text",
+                                    ng-model="elfin.IDENTIFIANT.VALEUR", format-currency)
+
+                        // Last line spanning two columns (col-sm-6)
+                        div.col-sm-12
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.remark)")
+                                label.col-sm-2.control-label(for="remark") Remarque
+                                div.col-sm-10
+                                    input.form-control#remark(name="remark",
+                                        autocomplete="off",
+                                        ng-model="elfin.DIVERS.REMARQUE")
+
+                        div.col-sm-12
+                            button.btn.btn-primary(ng-click="createNewTransaction()", ng-disabled="false")
+                                span.glyphicon.glyphicon-plus-sign
+                                | &nbsp;Créer une nouvelle transaction
+                            button.btn.btn-primary(ng-click="reallocateTransaction()", ng-show="!reallocate")
+                                span.glyphicon.glyphicon-plus-sign
+                                | &nbsp;Réaffecter la transaction</button>
+                            button.btn.btn-primary(ng-click="editTransaction()", ng-show="reallocate")
+                                span.glyphicon.glyphicon-plus-sign
+                                | &nbsp;Quitter le mode réaffectation</button>
+
+            // Annexes tab
+            tab
+                tab-heading
+                    div(hb-annexes-number)
+                div.hb-tab
+                    div(hb-annexes-component)
