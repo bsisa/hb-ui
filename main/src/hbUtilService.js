@@ -70,7 +70,7 @@
 		 * positions do not match XML POS values reliably.
 		 */
 		var getCARByPos = function(elfin, pos) {
-			if (elfin) {
+			if (!!elfin && !!elfin.CARACTERISTIQUE && !!elfin.CARACTERISTIQUE.CARSET && !!elfin.CARACTERISTIQUE.CARSET.CAR) {
 	    		var currentCAR = _.find(elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR){ return CAR.POS === pos; });
 	    		return currentCAR;
 			} else {
