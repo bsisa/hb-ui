@@ -12,6 +12,11 @@ div.row(style="padding-top: 8px;")
                     div.row
                         div.col-sm-6
                             div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="abaimmo_source") No AbaIMMO Immeuble
+                                div.col-sm-8
+                                    input.form-control#abaimmo_source(name="abaimmo_source", ng-model="sourceAbaImmo", disabled)
+
+                            div.form-group.has-feedback
                                 label.col-sm-4.control-label(for="group") Groupe
                                 div.col-sm-8
                                     div(hb-single-select, hb-single-select-options="groupeChoices", ng-model="elfin.GROUPE")
@@ -19,8 +24,7 @@ div.row(style="padding-top: 8px;")
                             div.form-group.has-feedback
                                 label.col-sm-4.control-label(for="objectif") No SAI
                                 div.col-sm-8
-                                    input.form-control#objectif(name="objectif", type="text",
-                                    ng-model="elfin.IDENTIFIANT.OBJECTIF")
+                                    input.form-control#objectif(name="objectif", ng-model="elfin.IDENTIFIANT.OBJECTIF")
 
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.dateFrom)")
                                 label.col-sm-4.control-label(for="dateFrom") Date de début
@@ -48,6 +52,11 @@ div.row(style="padding-top: 8px;")
                                     input.form-control#car5_valeur(name="car5_valeur", ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR")
 
                         div.col-sm-6
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="abaimmo") No AbaIMMO
+                                div.col-sm-8
+                                    input.form-control#abaimmo(name="abaimmo", ng-model="CARSET_CAR_POS_2.VALEUR", format-with-prefix="sourceAbaImmo")
+
                             div.form-group.has-feedback
                                 label.col-sm-4.control-label(for="locataire") Locataire
                                 div.col-sm-8
