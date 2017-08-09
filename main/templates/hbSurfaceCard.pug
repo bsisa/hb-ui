@@ -14,13 +14,13 @@ div.row(style="padding-top: 8px;")
                             div.form-group.has-feedback
                                 label.col-sm-4.control-label(for="group") Groupe
                                 div.col-sm-8
-                                div(hb-single-select, hb-single-select-options="groupeChoices", ng-model="elfin.GROUPE")
+                                    div(hb-single-select, hb-single-select-options="groupeChoices", ng-model="elfin.GROUPE")
 
                             div.form-group.has-feedback
-                            label.col-sm-4.control-label(for="objectif") No SAI
-                            div.col-sm-8
-                                input.form-control#objectif(name="objectif", type="text",
-                                ng-model="elfin.IDENTIFIANT.OBJECTIF")
+                                label.col-sm-4.control-label(for="objectif") No SAI
+                                div.col-sm-8
+                                    input.form-control#objectif(name="objectif", type="text",
+                                    ng-model="elfin.IDENTIFIANT.OBJECTIF")
 
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.dateFrom)")
                                 label.col-sm-4.control-label(for="dateFrom") Date de début
@@ -53,30 +53,30 @@ div.row(style="padding-top: 8px;")
                                 div.col-sm-8
                                     input.form-control#locataire(name="locataire", ng-model="elfin.PARTENAIRE.USAGER.VALUE")
 
-                        div.form-group.has-feedback
-                            label.col-sm-4.control-label(for="cellphone") Tél. portable
-                            div.col-sm-8
-                                input.form-control#cellphone(name="cellphone", ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR")
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="cellphone") Tél. portable
+                                div.col-sm-8
+                                    input.form-control#cellphone(name="cellphone", ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR")
 
-                        div.form-group.has-feedback
-                            label.col-sm-4.control-label(for="phone") Tél. fixe
-                            div.col-sm-8
-                                input.form-control#phone(name="phone", ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR")
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="phone") Tél. fixe
+                                div.col-sm-8
+                                    input.form-control#phone(name="phone", ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR")
 
-                        div.form-group.has-feedback
-                            label.col-sm-4.control-label(for="fax") Fax
-                            div.col-sm-8
-                                input.form-control#fax(name="fax", ng-model="elfin.CARACTERISTIQUE.CAR6.VALEUR")
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="fax") Fax
+                                div.col-sm-8
+                                    input.form-control#fax(name="fax", ng-model="elfin.CARACTERISTIQUE.CAR6.VALEUR")
 
-                        div.form-group.has-feedback
-                            label.col-sm-4.control-label(for="email") Email
-                            div.col-sm-8
-                                input.form-control#email(name="email", type="email", ng-model="elfin.IDENTIFIANT.ALIAS")
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="email") Email
+                                div.col-sm-8
+                                    input.form-control#email(name="email", type="email", ng-model="elfin.IDENTIFIANT.ALIAS")
 
-                    div.col-sm-12
-                        button.btn.btn-primary.col-sm-6(ng-click="archiveLocationUnit()", ng-disabled="!canArchive()")
-                            span.glyphicon.glyphicon-plus-sign
-                            | &nbsp;Résilier
+                        div.col-sm-12
+                            button.btn.btn-primary.col-sm-6(ng-click="archiveLocationUnit()", ng-disabled="!canArchive()")
+                                span.glyphicon.glyphicon-plus-sign
+                                | &nbsp;Résilier
 
             // COMMANDE tab
             tab(ng-if="canManageOrders", active="tabState.commande.active")
