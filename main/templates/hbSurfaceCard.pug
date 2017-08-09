@@ -1,0 +1,133 @@
+div(hb-card-header)
+    // Custom validation message to be defined here
+    span(ng-show="elfinForm.email.$error.email")
+        != "Le champ <strong>Email</strong> n'est pas valide"
+
+div.row(style="padding-top: 8px;")
+    div.col-xs-12
+        tabset
+            tab(active="tabState.surface.active")
+                tab-heading Unité locative
+                div.hb-tab
+                    div.row
+                        div.col-sm-6
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="group") Groupe
+                                div.col-sm-8
+                                div(hb-single-select, hb-single-select-options="groupeChoices", ng-model="elfin.GROUPE")
+
+                            div.form-group.has-feedback
+                            label.col-sm-4.control-label(for="objectif") No SAI
+                            div.col-sm-8
+                                input.form-control#objectif(name="objectif", type="text",
+                                ng-model="elfin.IDENTIFIANT.OBJECTIF")
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.dateFrom)")
+                                label.col-sm-4.control-label(for="dateFrom") Date de début
+                                div.col-sm-8
+                                    div#dateFrom(hb-date, name="dateFrom", ng-model="elfin.IDENTIFIANT.DE")
+
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.dateTo)")
+                                label.col-sm-4.control-label(for="dateTo") Date de résiliation
+                                div.col-sm-8
+                                    div#dateTo(hb-date, name="dateTo", ng-model="elfin.IDENTIFIANT.A")
+
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="car1_valeur") Surface (m2)
+                                div.col-sm-8
+                                    input.form-control#car1_valeur(name="car1_valeur", ng-model="elfin.CARACTERISTIQUE.CAR1.VALEUR")
+
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="car3_valeur") Etage
+                                div.col-sm-8
+                                    input.form-control#car3_valeur(name="car3_valeur", ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR")
+
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="car5_valeur") Orientation
+                                div.col-sm-8
+                                    input.form-control#car5_valeur(name="car5_valeur", ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR")
+
+                        div.col-sm-6
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="locataire") Locataire
+                                div.col-sm-8
+                                    input.form-control#locataire(name="locataire", ng-model="elfin.PARTENAIRE.USAGER.VALUE")
+
+                        div.form-group.has-feedback
+                            label.col-sm-4.control-label(for="cellphone") Tél. portable
+                            div.col-sm-8
+                                input.form-control#cellphone(name="cellphone", ng-model="elfin.CARACTERISTIQUE.CAR2.VALEUR")
+
+                        div.form-group.has-feedback
+                            label.col-sm-4.control-label(for="phone") Tél. fixe
+                            div.col-sm-8
+                                input.form-control#phone(name="phone", ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR")
+
+                        div.form-group.has-feedback
+                            label.col-sm-4.control-label(for="fax") Fax
+                            div.col-sm-8
+                                input.form-control#fax(name="fax", ng-model="elfin.CARACTERISTIQUE.CAR6.VALEUR")
+
+                        div.form-group.has-feedback
+                            label.col-sm-4.control-label(for="email") Email
+                            div.col-sm-8
+                                input.form-control#email(name="email", type="email", ng-model="elfin.IDENTIFIANT.ALIAS")
+
+                    div.col-sm-12
+                        button.btn.btn-primary.col-sm-6(ng-click="archiveLocationUnit()", ng-disabled="!canArchive()")
+                            span.glyphicon.glyphicon-plus-sign
+                            | &nbsp;Résilier
+
+            // COMMANDE tab
+            tab(ng-if="canManageOrders", active="tabState.commande.active")
+                tab-heading Commandes ({{commandes.length}})
+                div.hb-tab
+                    div.row
+                        div.col-sm-12
+                            tabset
+                                // COMMANDES 1st sub tab
+                                tab(active="tabState.commande_subtab_ouvertes.active")
+                                    tab-heading Commandes
+                                        div.hb-tab
+                                            div.row
+                                                div.col-sm-12
+                                                    // Table des commandes ouvertes
+                                                    table.table.table-condensed.table-bordered.table-striped
+                                                        thead
+                                                            tr
+                                                                th(colspan="2") Commande
+                                                                th.col-sm-2 N° commande
+                                                                th.col-sm-1 Code CFC
+                                                                th.col-sm-1 Date
+                                                                th.col-sm-2 Montant
+                                                                th.col-sm-4 Fournisseur
+                                                                // th.col-sm-2 Description
+                                                        tbody(ng-show="commandes")
+                                                            tr(ng-repeat="commande in commandes")
+                                                                td
+                                                                    div(hb-card-view-link, hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}")
+                                                                td
+                                                                    div(hb-annexes-link, hb-annexes-link-elfin="commande")
+                                                                // Order nb
+                                                                td.number {{commande.IDENTIFIANT.NOM}}
+                                                                // CFC code
+                                                                td {{commande.GROUPE}}
+                                                                // Estimation/Quote date
+                                                                td.date {{commande.IDENTIFIANT.DE}}
+                                                                // Amount
+                                                                td.number {{commande.IDENTIFIANT.VALEUR | currency:'CHF'}}
+                                                                // Enterprise name
+                                                                td {{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}
+                                                                // Order description...
+                                                                // td {{commande.DIVERS.REMARQUE}}
+
+                                tab(select="createNewCommande()", ng-show="!createMode")
+                                    tab-heading(tooltip="Créer une nouvelle commande relative à l'objet courant", tooltip-popup-delay="1000")
+                                        | Créer une nouvelle commande&nbsp;
+                                        i.glyphicon.glyphicon-plus-sign
+                                    div.hb-tab
+            tab(active="tabState.annexe.active")
+                tab-heading
+                    div(hb-annexes-number)
+                div.hb-tab
+                    div(hb-annexes-component)
