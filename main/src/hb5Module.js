@@ -82,7 +82,40 @@
                     });
                 }
             };
-        }]);
+        }])
+        .directive("formatWithPrefix", ["$filter", function($filter) {
+            return {
+                require: '?ngModel',
+                link: function (scope, elem, attrs, ctrl) {
+                    if (!ctrl) return;
+                    var focus = false;
+
+                    ctrl.$formatters.unshift(function () {
+                        return scope.$parent[attrs.formatWithPrefix] + ctrl.$modelValue;
+                    });
+
+                    ctrl.$parsers.unshift(function (viewValue) {
+                        return viewValue;
+                    });
+
+                    scope.$parent.$watch(attrs.formatWithPrefix, function() {
+                        elem.val(scope.$parent[attrs.formatWithPrefix] + ctrl.$modelValue);
+                    });
+
+                    elem.bind("blur", function () {
+                        focus = false;
+                        elem.val(scope.$parent[attrs.formatWithPrefix] + ctrl.$modelValue);
+                    });
+
+                    elem.bind("focus", function () {
+                        focus = true;
+                        var withoutPrefix = elem.val().substring(scope.$parent[attrs.formatWithPrefix].length, elem.val().length);
+                        elem.val(withoutPrefix);
+                    });
+                }
+            }
+        }])
+    ;
 
     // ================================================================
     // ====                      Config                            ====
