@@ -334,14 +334,54 @@
 									//}
 								}, true);
 
+                                $scope.sourceAbaImmo = "";
+
+
+                                $scope.loadSourceElfin = function(sourceAttr) {
+                                    if (angular.isString(sourceAttr)) {
+                                        var prestationAttrComponents = sourceAttr.split("/");
+                                        var prestationSourceIDG = prestationAttrComponents[0];
+                                        var prestationSourceId = prestationAttrComponents[2];
+                                        if (prestationSourceIDG && prestationSourceId) {
+                                            var that = this;
+                                            GeoxmlService.getElfin(prestationSourceIDG, prestationSourceId).get()
+                                                .then(
+                                                    function (prestationElfin) {
+                                                        var immeubleAttrComponents = prestationElfin.SOURCE.split("/");
+                                                        var immeubleSourceIDG = immeubleAttrComponents[0];
+                                                        var immeubleSourceId = immeubleAttrComponents[2];
+                                                        if (immeubleSourceIDG && immeubleSourceId) {
+                                                            GeoxmlService.getElfin(immeubleSourceIDG, immeubleSourceId).get()
+                                                                .then(
+                                                                    function (immeubleElfin) {
+                                                                        that.sourceAbaImmo = hbUtil.getCARByPos(immeubleElfin, 2).VALEUR;
+                                                                    },
+                                                                    function (response) {
+                                                                        that.sourceAbaImmo = "";
+                                                                        var message = "Le chargement de l'Immeuble source a échoué (statut de retour: " + response.status + ")";
+                                                                        hbAlertMessages.addAlert("danger", message);
+                                                                    });
+                                                        }
+                                                    },
+                                                    function (response) {
+                                                        that.sourceAbaImmo = "";
+                                                        var message = "Le chargement de la Prestation source a échoué (statut de retour: " + response.status + ")";
+                                                        hbAlertMessages.addAlert("danger", message);
+                                                    });
+                                        }
+                                    }
+                                };
+
+
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
 						    	$scope.$watch('elfin.Id', function() { 
 
-						    		if ($scope.elfin!==null) {
+						    		if (!!$scope.elfin) {
 
-						    			
+                                        $scope.loadSourceElfin($scope.elfin.SOURCE);
+
 										// Update elfin properties from catalogue while in create mode
 										if ($attrs.hbMode === "create") {
 											
@@ -480,7 +520,7 @@
 											// Manage editing initialisation. Warning: $scope.elfin.PARTENAIRE.PROPRIETAIRE is not equal to the owner for TRANSACTION entities.
 											$scope.searchOwner = undefined;
 										}
-						    		};
+						    		}
 						    	}, true);								
 
 								// Asychronous TRANSACTION template preloading

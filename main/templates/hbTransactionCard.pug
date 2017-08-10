@@ -36,6 +36,10 @@ div.row(style="padding-top: 8px;")
                         // 1er bloc 2 colonnes de 5 lignes
                         // 1ere colonne
                         div.col-sm-6
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="abaimmo_source") No AbaIMMO Immeuble
+                                p#abaimmo_source.col-sm-8.form-control-static {{sourceAbaImmo}}
+
                             div.form-group.has-feedback(ng-if="reallocate", ng-class="getCssHasFeedback(elfinForm.manager)")
                                 label.col-sm-4.control-label(for="manager")
                                     em Propriétaire
@@ -121,8 +125,7 @@ div.row(style="padding-top: 8px;")
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.date)")
                                 label.col-sm-4.control-label(for="date") Date
                                 div.col-sm-4
-                                    div#date(hb-date, name="date",
-                                        ng-model="elfin.IDENTIFIANT.DE")
+                                    div#date(hb-date, name="date", ng-model="elfin.IDENTIFIANT.DE")
                                 label.col-sm-2.control-label(for="auteur") Auteur
                                 div.col-sm-2
                                     p.form-control-static {{elfin.IDENTIFIANT.AUT}}
@@ -131,21 +134,19 @@ div.row(style="padding-top: 8px;")
                                 label.col-sm-4.control-label(for="resp") Responsable visa de facture
                                 div.col-sm-8
                                     div.input-group
-                                    input.form-control#resp(name="resp", type="text",
-                                        autocomplete="off",
-                                        typeahead="resp.GROUPE for resp in collaboratorActors | filter:$viewValue | limitTo:8",
-                                        ng-model="elfin.IDENTIFIANT.RES",
-                                        required)
-                                    span.input-group-btn(tooltip="Recherche de collaborateur", tooltip-popup-delay="1500")
-                                        button.btn.btn-default(type="button", hb-choose-one,
-                                            ng-click="hbChooseOne(elfin, 'IDENTIFIANT.RES', collaboratorActors, 'GROUPE', collaboratorActorChooseOneColumnsDefinition, actorChooseOneTemplate )")
-                                            i.glyphicon.glyphicon-list-alt
+                                        input.form-control#resp(name="resp", autocomplete="off",
+                                            typeahead="resp.GROUPE for resp in collaboratorActors | filter:$viewValue | limitTo:8",
+                                            ng-model="elfin.IDENTIFIANT.RES",
+                                            required)
+                                        span.input-group-btn(tooltip="Recherche de collaborateur", tooltip-popup-delay="1500")
+                                            button.btn.btn-default(type="button", hb-choose-one,
+                                                ng-click="hbChooseOne(elfin, 'IDENTIFIANT.RES', collaboratorActors, 'GROUPE', collaboratorActorChooseOneColumnsDefinition, actorChooseOneTemplate )")
+                                                i.glyphicon.glyphicon-list-alt
 
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.repartition)")
                                 label.col-sm-4.control-label(for="repartition") Répartition
                                 div.col-sm-8
-                                    input.form-control#repartition(name="repartition", type="text",
-                                        autocomplete="off",
+                                    input.form-control#repartition(name="repartition", autocomplete="off",
                                         typeahead="repartition.name as repartition.value for repartition in repartitions | filter:$viewValue | limitTo:8",
                                         ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR")
 
@@ -171,17 +172,14 @@ div.row(style="padding-top: 8px;")
                                         ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF", format-currency)
                                 label.col-sm-2.control-label(for="valeur") Payé
                                 div.col-sm-3
-                                    input.form-control#valeur(name="valeur", type="text",
-                                    ng-model="elfin.IDENTIFIANT.VALEUR", format-currency)
+                                    input.form-control#valeur(name="valeur", ng-model="elfin.IDENTIFIANT.VALEUR", format-currency)
 
                         // Last line spanning two columns (col-sm-6)
                         div.col-sm-12
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.remark)")
                                 label.col-sm-2.control-label(for="remark") Remarque
                                 div.col-sm-10
-                                    input.form-control#remark(name="remark",
-                                        autocomplete="off",
-                                        ng-model="elfin.DIVERS.REMARQUE")
+                                    input.form-control#remark(name="remark", autocomplete="off", ng-model="elfin.DIVERS.REMARQUE")
 
                         div.col-sm-12
                             button.btn.btn-primary(ng-click="createNewTransaction()", ng-disabled="false")
