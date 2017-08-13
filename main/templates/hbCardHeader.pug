@@ -25,11 +25,19 @@ div.row(style="padding-top: 8px;")
 
 // PYS temporaire  saisie manuelle de la source
 div.row(style="padding-top: 8px;", ng-if="canEditSource")
-    div.col-xs-7
-    div.col-xs-1
-        span source :&nbsp;
-    div.col-xs-4
-        input.form-control#pareidgnt(ng-model="elfin.SOURCE")
+    div.col-xs-12
+        div.col-xs-6
+        div.col-xs-2
+            span source :&nbsp;
+        div.col-xs-4
+            input.form-control#pareidgnt(ng-model="elfin.SOURCE")
+
+    div.col-xs-12
+        div.col-xs-6
+        div.col-xs-2
+            span Utiliser SOURCE pour les données dépendantes
+        div.col-xs-4
+            input.form-control#use_source_for_deps(type="checkbox", ng-model="use_source_for_deps")
 
 div.col-xs-1
     span.text-danger(ng-show="elfinForm.$invalid && elfinForm.$dirty")
