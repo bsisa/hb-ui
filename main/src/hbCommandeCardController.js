@@ -739,7 +739,7 @@
 						         * Prints entreprise contract with General Conditions.
 						         */
 						        $scope.printEntrepriseContractWithGCReport = function (elfin) {
-						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(
+						        	hbPrintService.getReportAnnexesOnlyOrProvideFeedbackForMissingConfig(
 						        	    elfin,
 										HB_ORDER_REPORT_TYPE.CONTRACT,
                                         elfin.PARTENAIRE.PROPRIETAIRE.NOM,
@@ -751,7 +751,7 @@
                                  * Prints entreprise contract without General Conditions.
                                  */
                                 $scope.printEntrepriseContractWoGCReport = function (elfin) {
-                                    hbPrintService.getReportOrProvideFeedbackForMissingConfig(
+                                    hbPrintService.getReportAnnexesOnlyOrProvideFeedbackForMissingConfig(
                                         elfin,
                                         HB_ORDER_REPORT_TYPE.CONTRACT_WO_GC,
                                         elfin.PARTENAIRE.PROPRIETAIRE.NOM,
