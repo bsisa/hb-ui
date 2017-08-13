@@ -162,7 +162,7 @@
                                 id: $scope.elfin.Id,
                                 classe: $scope.elfin.CLASSE,
                                 idg: $scope.elfin.ID_G
-                            }
+                            };
                             $location.search(searchObj).path("/elfin/create/COMMANDE");
                         }
                     };
@@ -316,6 +316,62 @@
                             scope.$parent.elfinForm['ecapVolumePrice'].$dirty = true;
                         }
                     });
+
+                    $scope.loadPrestations = function(xpathForPrestations) {
+                        hbQueryService.getPrestations(xpathForPrestations)
+                            .then(function (elfins) {
+                                    $scope.prestations = elfins;
+
+                                    var filteredPrestations = $filter('prestationListFilter')($scope.prestations, $scope.currentYearAndFormerPrestationSearch, true);
+                                    // Store transactions for current year and previous year prestations.
+                                    $scope.transactions = [];
+                                    for (var i = 0; i < filteredPrestations.length; i++) {
+                                        var currPrestation = filteredPrestations[i]
+                                        var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='" + currPrestation.IDENTIFIANT.OBJECTIF + "']";
+                                        hbQueryService.getTransactions(xpathForTransactions)
+                                            .then(function (transactionElfins) {
+                                                    // Kept following filter use as reminder for controller side usage.
+                                                    // var transactionElfinsMap = $filter('map')(transactionElfins,'IDENTIFIANT.VALEUR');
+                                                    // var transactionElfinsSum = $filter('sum')(transactionElfinsMap);
+                                                    // Currently the exact same computation is performed in hbImmeubleCard.html view as:
+                                                    // {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
+
+                                                    // Manualy flatten $scope.transactions
+                                                    for (var j = 0; j < transactionElfins.length; j++) {
+                                                        var currTrans = transactionElfins[j];
+                                                        // Add single depth property copy of OBJECTIF to allow $filter usage (see: hbImmeubleCard.html)
+                                                        currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF
+                                                        $scope.transactions.push(currTrans);
+                                                    }
+                                                },
+                                                function (response) {
+                                                    var message = "Le chargement des TRANSACTIONs a échoué (statut de retour: " + response.status + ")";
+                                                    hbAlertMessages.addAlert("danger", message);
+                                                });
+                                    }
+                                },
+                                function (response) {
+                                    var message = "Le chargement des PRESTATIONs a échoué (statut de retour: " + response.status + ")";
+                                    hbAlertMessages.addAlert("danger", message);
+                                });
+                    };
+
+                    var getXpathForPrestations = function(elfin) {
+                        return "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='" + elfin.IDENTIFIANT.OBJECTIF + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" + elfin.PARTENAIRE.PROPRIETAIRE.NOM + "' and @CLASSE='PRESTATION']";
+                    };
+
+                    $scope.$watch("useSource.value", function(newValue) {
+                        if ($scope.elfin) {
+                            var xpath = getXpathForPrestations($scope.elfin);
+                            if (newValue) {
+                                var source = $scope.elfin.ID_G + "/" + $scope.elfin.CLASSE + "/" + $scope.elfin.Id;
+                                xpath = "//ELFIN[@CLASSE='PRESTATION'][@SOURCE='" + source + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM + "']";
+                            }
+
+                            $scope.loadPrestations(xpath);
+                        }
+                    });
+
                     /**
                      * Listener used to load PRESTATION, CONTRAT lists related to this IMMEUBLE
                      * Only relevant while not in create mode.
@@ -324,47 +380,11 @@
 
                         //$log.debug("$watchCollection for OBJECTIF, PROPRIETAIRE.NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 
-                        if ($scope.elfin != null && $attrs.hbMode != "create") {
+                        if ($scope.elfin && $attrs.hbMode != "create") {
                             // Restriction on PROPRIETAIRE, CLASSE is mandatory. Restriction on OBJECTIF starts-with only is not sufficient in all cases.
-                            var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='" + $scope.elfin.IDENTIFIANT.OBJECTIF + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM + "' and @CLASSE='PRESTATION']";
                             // TODO: evaluate replacing the above by the following.
                             //var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@Id='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id+"' and PARTENAIRE/PROPRIETAIRE/@ID_G='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G+"' and @CLASSE='PRESTATION']";
-                            hbQueryService.getPrestations(xpathForPrestations)
-                                .then(function (elfins) {
-                                        $scope.prestations = elfins;
-
-                                        var filteredPrestations = $filter('prestationListFilter')($scope.prestations, $scope.currentYearAndFormerPrestationSearch, true);
-                                        // Store transactions for current year and previous year prestations.
-                                        $scope.transactions = [];
-                                        for (var i = 0; i < filteredPrestations.length; i++) {
-                                            var currPrestation = filteredPrestations[i]
-                                            var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='" + currPrestation.IDENTIFIANT.OBJECTIF + "']";
-                                            hbQueryService.getTransactions(xpathForTransactions)
-                                                .then(function (transactionElfins) {
-                                                        // Kept following filter use as reminder for controller side usage.
-                                                        // var transactionElfinsMap = $filter('map')(transactionElfins,'IDENTIFIANT.VALEUR');
-                                                        // var transactionElfinsSum = $filter('sum')(transactionElfinsMap);
-                                                        // Currently the exact same computation is performed in hbImmeubleCard.html view as:
-                                                        // {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
-
-                                                        // Manualy flatten $scope.transactions
-                                                        for (var j = 0; j < transactionElfins.length; j++) {
-                                                            var currTrans = transactionElfins[j];
-                                                            // Add single depth property copy of OBJECTIF to allow $filter usage (see: hbImmeubleCard.html)
-                                                            currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF
-                                                            $scope.transactions.push(currTrans);
-                                                        }
-                                                    },
-                                                    function (response) {
-                                                        var message = "Le chargement des TRANSACTIONs a échoué (statut de retour: " + response.status + ")";
-                                                        hbAlertMessages.addAlert("danger", message);
-                                                    });
-                                        }
-                                    },
-                                    function (response) {
-                                        var message = "Le chargement des PRESTATIONs a échoué (statut de retour: " + response.status + ")";
-                                        hbAlertMessages.addAlert("danger", message);
-                                    });
+                            $scope.loadPrestations(getXpathForPrestations($scope.elfin));
 
                             var xpathForContrats = "//ELFIN[IDENTIFIANT/OBJECTIF='" + $scope.elfin.IDENTIFIANT.OBJECTIF + "']";
                             hbQueryService.getContrats(xpathForContrats)
