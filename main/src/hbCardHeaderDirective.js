@@ -11,7 +11,7 @@
 			require: '^hbCardContainer',
 		    restrict: 'A',
 		    transclude: true,
-			templateUrl : "/assets/views/hbCardHeader.html"
+			templateUrl : "/assets/views-compiled/hbCardHeader.html"
 		};
 
     });    

@@ -1,0 +1,41 @@
+div.row(style="padding-top: 8px;")
+    div.col-xs-12
+        div.col-xs-1(ng-if="containsStandardSourceURI(elfin.SOURCE)", style="padding-left: 4px;")
+            div(hb-card-view-link, hb-href="/elfin/{{elfin.SOURCE}}", hb-tooltip="Consulter l'objet parent (source)")
+        div.col-xs-1(ng-if="!containsStandardSourceURI(elfin.SOURCE)", style="padding-left: 4px;")
+            div(style="width: 38px;", tooltip="Pas d'objet parent", tooltip-popup-delay="1500")
+                a.btn.btn-default.btn-xs.btn-block.disabled(href="#")
+                    i.glyphicon.glyphicon-eye-close
+
+        div.col-xs-5(style="padding-left: 0px;", tooltip="{{elfin.ID_G}}/{{elfin.Id}} - ({{elfin.MUTATIONS.MUTATION[0].UTILISATEUR}})")
+            span.h4
+                span.label.label-primary(ng-class="getCssLabelFeedback(elfinForm)")
+                    i.icon-tag
+                    | &nbsp;
+                    span(ng-bind="elfin.CLASSE")
+                    | &nbsp;-&nbsp;
+                    span(ng-bind="elfin.IDENTIFIANT.OBJECTIF")
+                    button.btn.btn-primary.btn-xs(ng-if="devRights", ng-click="displayJson(elfin)") JS
+                    button.btn.btn-primary.btn-xs(ng-if="devRights", ng-click="displayXml(elfin)") XML
+            span(ng-if="elfin.CLASSE==='IMMEUBLE' || elfin.CLASSE==='WC'") &nbsp;{{elfin.IDENTIFIANT.ALIAS}}
+            span(ng-if="elfin.CLASSE==='FONTAINE' || elfin.CLASSE==='ABRIBUS'") &nbsp;{{elfin.IDENTIFIANT.NOM}}
+
+        div.col-xs-5(style="padding-left: 0px;")
+            span(ng-if="canEditSource") Objet courant : {{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}
+
+// PYS temporaire  saisie manuelle de la source
+div.row(style="padding-top: 8px;", ng-if="canEditSource")
+    div.col-xs-7
+    div.col-xs-1
+        span source :&nbsp;
+    div.col-xs-4
+        input.form-control#pareidgnt(ng-model="elfin.SOURCE")
+
+div.col-xs-1
+    span.text-danger(ng-show="elfinForm.$invalid && elfinForm.$dirty")
+        i.glyphicon.glyphicon-warning-sign(style="font-size: 1.2em;")
+    span.text-warning(ng-show="elfinForm.$invalid && elfinForm.$pristine")
+        i.glyphicon.glyphicon-warning-sign(style="font-size: 1.2em;")
+
+div.col-xs-7
+    span(ng-transclude)
