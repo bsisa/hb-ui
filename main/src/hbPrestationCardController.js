@@ -43,9 +43,9 @@
 					             */
 						    	$scope.$watch('elfin.Id', function() { 
 						    		//$log.debug("    >>>> Using HbPrestationCardController: elfin.Id watch triggered...");
-						    		if ($scope.elfin!=null) {
+						    		if (!!$scope.elfin) {
 						    			//$log.debug("    >>>> Using HbPrestationCardController: elfin.Id NOT NULL");
-							    		if ($attrs.hbMode === "create") {
+							    		if ($attrs["hbMode"] === "create") {
 							    			//$log.debug("    >>>> Using HbPrestationCardController: CREATE MODE");
 											if ($scope.elfin) {
 												//$log.debug("    >>>> Using HbPrestationCardController: elfin defined");
@@ -56,7 +56,7 @@
 										        // Prototype generic link to creation source/parent - done for SDS.
 										        $scope.elfin.SOURCE = $routeParams.ID_G +"/"+$routeParams.classe+"/"+$routeParams.Id;
 							
-												$scope.elfin.CARACTERISTIQUE.CAR2.VALEUR = '';
+												$scope.elfin.CARACTERISTIQUE["CAR2"]["VALEUR"] = '';
 												/* Check URL parameters calling IMMEUBLE instance Id, ID_G are valid. 
 												 * (Prevents against wrong manual URL typing). 
 												 */
@@ -119,7 +119,7 @@
 										} else {
 											// Do nothing
 										}										
-						    		};
+						    		}
 						    		
 						    	}, true);
 						        
@@ -140,7 +140,7 @@
 								 */
 								$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() { 
 
-						    		if ($scope.elfin!=null) {
+						    		if (!!$scope.elfin) {
 							            
 							            var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"']";
 							            hbQueryService.getTransactions(xpathForTransactions)
