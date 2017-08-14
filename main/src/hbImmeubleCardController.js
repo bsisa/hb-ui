@@ -364,22 +364,42 @@
                         return  "//ELFIN[IDENTIFIANT/OBJECTIF='" + elfin.IDENTIFIANT.OBJECTIF + "']";
                     };
 
-                    $scope.$watch("useSource.value", function(newValue) {
+                    $scope.$watch("useSource.value", function(newUseSourceValue) {
                         if ($scope.elfin) {
                             var xpathForPrestations = getXpathForPrestations($scope.elfin);
                             var xpathForTransactionFn = getXpathForTransactions;
-                            if (newValue) {
+                            var xpathForContrats = getXpathForContrats($scope.elfin);
+
+                            if (newUseSourceValue) {
                                 var source = $scope.elfin.ID_G + "/" + $scope.elfin.CLASSE + "/" + $scope.elfin.Id;
                                 xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION'][@SOURCE='" + source + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM + "']";
                                 xpathForTransactionFn = function(elfin) {
                                     var source = elfin.ID_G + "/" + elfin.CLASSE + "/" + elfin.Id;
                                     return "//ELFIN[@CLASSE='TRANSACTION'][@SOURCE='" + source + "']";
-                                }
+                                };
+
+                                xpathForContrats = "//ELFIN[@CLASSE='CONTRAT'][@SOURCE='" + source + "']";
                             }
 
                             $scope.loadPrestations(xpathForPrestations, xpathForTransactionFn);
+                            $scope.loadContrats(xpathForContrats);
                         }
                     });
+
+                    var getXpathForContrats = function(elfin) {
+                        return "//ELFIN[IDENTIFIANT/OBJECTIF='" + $scope.elfin.IDENTIFIANT.OBJECTIF + "']";
+                    };
+
+                    $scope.loadContrats = function(xpathForContrats) {
+                        hbQueryService.getContrats(xpathForContrats)
+                            .then(function (elfins) {
+                                    $scope.contrats = elfins;
+                                },
+                                function (response) {
+                                    var message = "Le chargement des CONTRATs a échoué (statut de retour: " + response.status + ")";
+                                    hbAlertMessages.addAlert("danger", message);
+                                });
+                    };
 
                     /**
                      * Listener used to load PRESTATION, CONTRAT lists related to this IMMEUBLE
@@ -394,16 +414,7 @@
                             // TODO: evaluate replacing the above by the following.
                             //var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@Id='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id+"' and PARTENAIRE/PROPRIETAIRE/@ID_G='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G+"' and @CLASSE='PRESTATION']";
                             $scope.loadPrestations(getXpathForPrestations($scope.elfin), getXpathForTransactions);
-
-                            var xpathForContrats = "//ELFIN[IDENTIFIANT/OBJECTIF='" + $scope.elfin.IDENTIFIANT.OBJECTIF + "']";
-                            hbQueryService.getContrats(xpathForContrats)
-                                .then(function (elfins) {
-                                        $scope.contrats = elfins;
-                                    },
-                                    function (response) {
-                                        var message = "Le chargement des CONTRATs a échoué (statut de retour: " + response.status + ")";
-                                        hbAlertMessages.addAlert("danger", message);
-                                    });
+                            $scope.loadContrats(getXpathForContrats($scope.elfin));
 
                         }
 
