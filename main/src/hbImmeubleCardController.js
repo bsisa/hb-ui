@@ -317,7 +317,7 @@
                         }
                     });
 
-                    $scope.loadPrestations = function(xpathForPrestations) {
+                    $scope.loadPrestations = function(xpathForPrestations, xpathForTransactionFn) {
                         hbQueryService.getPrestations(xpathForPrestations)
                             .then(function (elfins) {
                                     $scope.prestations = elfins;
@@ -326,8 +326,8 @@
                                     // Store transactions for current year and previous year prestations.
                                     $scope.transactions = [];
                                     for (var i = 0; i < filteredPrestations.length; i++) {
-                                        var currPrestation = filteredPrestations[i]
-                                        var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='" + currPrestation.IDENTIFIANT.OBJECTIF + "']";
+                                        var currPrestation = filteredPrestations[i];
+                                        var xpathForTransactions = xpathForTransactionFn(currPrestation);
                                         hbQueryService.getTransactions(xpathForTransactions)
                                             .then(function (transactionElfins) {
                                                     // Kept following filter use as reminder for controller side usage.
@@ -360,15 +360,24 @@
                         return "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='" + elfin.IDENTIFIANT.OBJECTIF + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" + elfin.PARTENAIRE.PROPRIETAIRE.NOM + "' and @CLASSE='PRESTATION']";
                     };
 
+                    var getXpathForTransactions = function(elfin) {
+                        return  "//ELFIN[IDENTIFIANT/OBJECTIF='" + elfin.IDENTIFIANT.OBJECTIF + "']";
+                    };
+
                     $scope.$watch("useSource.value", function(newValue) {
                         if ($scope.elfin) {
-                            var xpath = getXpathForPrestations($scope.elfin);
+                            var xpathForPrestations = getXpathForPrestations($scope.elfin);
+                            var xpathForTransactionFn = getXpathForTransactions;
                             if (newValue) {
                                 var source = $scope.elfin.ID_G + "/" + $scope.elfin.CLASSE + "/" + $scope.elfin.Id;
-                                xpath = "//ELFIN[@CLASSE='PRESTATION'][@SOURCE='" + source + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM + "']";
+                                xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION'][@SOURCE='" + source + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM + "']";
+                                xpathForTransactionFn = function(elfin) {
+                                    var source = elfin.ID_G + "/" + elfin.CLASSE + "/" + elfin.Id;
+                                    return "//ELFIN[@CLASSE='TRANSACTION'][@SOURCE='" + source + "']";
+                                }
                             }
 
-                            $scope.loadPrestations(xpath);
+                            $scope.loadPrestations(xpathForPrestations, xpathForTransactionFn);
                         }
                     });
 
@@ -384,7 +393,7 @@
                             // Restriction on PROPRIETAIRE, CLASSE is mandatory. Restriction on OBJECTIF starts-with only is not sufficient in all cases.
                             // TODO: evaluate replacing the above by the following.
                             //var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@Id='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id+"' and PARTENAIRE/PROPRIETAIRE/@ID_G='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G+"' and @CLASSE='PRESTATION']";
-                            $scope.loadPrestations(getXpathForPrestations($scope.elfin));
+                            $scope.loadPrestations(getXpathForPrestations($scope.elfin), getXpathForTransactions);
 
                             var xpathForContrats = "//ELFIN[IDENTIFIANT/OBJECTIF='" + $scope.elfin.IDENTIFIANT.OBJECTIF + "']";
                             hbQueryService.getContrats(xpathForContrats)
