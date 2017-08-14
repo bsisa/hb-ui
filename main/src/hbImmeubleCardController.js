@@ -84,7 +84,7 @@
                     $scope.annexeFileSystemUri = "";
 
                     // Expose current hbMode in scope for use by ng-show in HTML view.
-                    $scope.createMode = ($attrs.hbMode === "create");
+                    $scope.createMode = ($attrs["hbMode"] === "create");
                     // Manage FONCTION level access rights
                     $scope.canEdit = ($scope.createMode || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT));
                     $scope.canEditParteners = ($scope.createMode || $scope.canEdit || _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.BUILDING_EDIT_OTHER_PARTNERS));
@@ -106,6 +106,10 @@
                     var computeEquipementsCount = function () {
                         $scope.equipementsCount = ($scope.productionChaleurList.length + $scope.productionFroidList.length + $scope.ventilationList.length + $scope.citerneList.length);
                     };
+
+                    // Current time in text format
+                    var currentHbTextDate = function() { return hbUtil.getDateInHbTextFormat(new Date())};
+
                     computeEquipementsCount();
 
                     var currentYear = moment().year();
@@ -154,7 +158,7 @@
 
 
                     $scope.createNewCommande = function () {
-                        if ($attrs.hbMode != "create") {
+                        if ($attrs["hbMode"] !== "create") {
                             // Added id,classe,idg for generic link to creation source/parent prototype.
                             var searchObj = {
                                 nocons: $scope.elfin.IDENTIFIANT.NOM,
@@ -174,7 +178,7 @@
                      * relevant while the IMMEUBLE creation is ongoing/pending.)
                      */
                     $scope.createNewConstat = function () {
-                        if ($attrs.hbMode != "create") {
+                        if ($attrs["hbMode"] !== "create") {
                             // Added id,classe,idg for generic link to creation source/parent prototype - done for SDS.
                             var searchObj = {
                                 nocons: $scope.elfin.IDENTIFIANT.NOM,
@@ -182,7 +186,7 @@
                                 id: $scope.elfin.Id,
                                 classe: $scope.elfin.CLASSE,
                                 idg: $scope.elfin.ID_G
-                            }
+                            };
                             $location.search(searchObj).path("/elfin/create/CONSTAT");
                         }
                     };
@@ -194,29 +198,29 @@
                      * relevant while the IMMEUBLE creation is ongoing/pending.)
                      */
                     $scope.createNewProductionChaleur = function () {
-                        if ($attrs.hbMode != "create") {
-                            var searchObj = {idg: $scope.elfin.ID_G, id: $scope.elfin.Id}
+                        if ($attrs["hbMode"] !== "create") {
+                            var searchObj = {idg: $scope.elfin.ID_G, id: $scope.elfin.Id};
                             $location.search(searchObj).path("/elfin/create/PRODUCTION_CHALEUR");
                         }
                     };
 
                     $scope.createNewProductionFroid = function () {
-                        if ($attrs.hbMode != "create") {
-                            var searchObj = {idg: $scope.elfin.ID_G, id: $scope.elfin.Id}
+                        if ($attrs["hbMode"] !== "create") {
+                            var searchObj = {idg: $scope.elfin.ID_G, id: $scope.elfin.Id};
                             $location.search(searchObj).path("/elfin/create/PRODUCTION_FROID");
                         }
                     };
 
                     $scope.createNewVentilation = function () {
-                        if ($attrs.hbMode != "create") {
-                            var searchObj = {idg: $scope.elfin.ID_G, id: $scope.elfin.Id}
+                        if ($attrs["hbMode"] !== "create") {
+                            var searchObj = {idg: $scope.elfin.ID_G, id: $scope.elfin.Id};
                             $location.search(searchObj).path("/elfin/create/VENTILATION");
                         }
                     };
 
                     $scope.createNewCiterne = function () {
-                        if ($attrs.hbMode != "create") {
-                            var searchObj = {idg: $scope.elfin.ID_G, id: $scope.elfin.Id}
+                        if ($attrs["hbMode"] !== "create") {
+                            var searchObj = {idg: $scope.elfin.ID_G, id: $scope.elfin.Id};
                             $location.search(searchObj).path("/elfin/create/CITERNE");
                         }
                     };
@@ -228,8 +232,8 @@
                      * relevant while the IMMEUBLE creation is ongoing/pending.)
                      */
                     $scope.createNewPrestation = function () {
-                        if ($attrs.hbMode != "create") {
-                            var searchObj = {Id: $scope.elfin.Id, classe: $scope.elfin.CLASSE, ID_G: $scope.elfin.ID_G}
+                        if ($attrs["hbMode"] !== "create") {
+                            var searchObj = {Id: $scope.elfin.Id, classe: $scope.elfin.CLASSE, ID_G: $scope.elfin.ID_G};
                             $location.search(searchObj).path("/elfin/create/PRESTATION");
                         }
                     };
@@ -242,7 +246,7 @@
                      * relevant while the IMMEUBLE creation is ongoing/pending.)
                      */
                     $scope.createNewContract = function () {
-                        if ($attrs.hbMode != "create") {
+                        if ($attrs["hbMode"] !== "create") {
                             //var searchObj = {sai: $scope.elfin.IDENTIFIANT.OBJECTIF}
                             var searchObj = {
                                 nocons: $scope.elfin.IDENTIFIANT.NOM,
@@ -250,7 +254,7 @@
                                 id: $scope.elfin.Id,
                                 classe: $scope.elfin.CLASSE,
                                 idg: $scope.elfin.ID_G
-                            }
+                            };
                             $location.search(searchObj).path("/elfin/create/CONTRAT");
                         }
                     };
@@ -265,7 +269,7 @@
                      * /elfin/create/SURFACE?nocons={{elfin.IDENTIFIANT.NOM}}&sai={{elfin.IDENTIFIANT.OBJECTIF}}
                      */
                     $scope.createNewUniteLocative = function () {
-                        if ($attrs.hbMode != "create") {
+                        if ($attrs["hbMode"] !== "create") {
                             var searchObj = {ORIGINE: $scope.elfin.Id};
                             $location.search(searchObj).path("/elfin/create/SURFACE");
                         }
@@ -278,7 +282,7 @@
                      */
                     $scope.$watch('elfin.IDENTIFIANT.NOM', function () {
 
-                        if ($scope.elfin != null && $attrs.hbMode != "create") {
+                        if (!!$scope.elfin && $attrs["hbMode"] !== "create") {
                             var xpathForConstatsEncours = "//ELFIN[IDENTIFIANT/COMPTE='" + $scope.elfin.IDENTIFIANT.NOM + "'][not(IDENTIFIANT/A) or IDENTIFIANT/A='']";
                             hbQueryService.getConstats(xpathForConstatsEncours)
                                 .then(function (elfins) {
@@ -340,7 +344,7 @@
                                                     for (var j = 0; j < transactionElfins.length; j++) {
                                                         var currTrans = transactionElfins[j];
                                                         // Add single depth property copy of OBJECTIF to allow $filter usage (see: hbImmeubleCard.html)
-                                                        currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF
+                                                        currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF;
                                                         $scope.transactions.push(currTrans);
                                                     }
                                                 },
@@ -387,7 +391,7 @@
                     });
 
                     var getXpathForContrats = function(elfin) {
-                        return "//ELFIN[IDENTIFIANT/OBJECTIF='" + $scope.elfin.IDENTIFIANT.OBJECTIF + "']";
+                        return "//ELFIN[IDENTIFIANT/OBJECTIF='" + elfin.IDENTIFIANT.OBJECTIF + "']";
                     };
 
                     $scope.loadContrats = function(xpathForContrats) {
@@ -409,7 +413,7 @@
 
                         //$log.debug("$watchCollection for OBJECTIF, PROPRIETAIRE.NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 
-                        if ($scope.elfin && $attrs.hbMode != "create") {
+                        if ($scope.elfin && $attrs["hbMode"] !== "create") {
                             // Restriction on PROPRIETAIRE, CLASSE is mandatory. Restriction on OBJECTIF starts-with only is not sufficient in all cases.
                             // TODO: evaluate replacing the above by the following.
                             //var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@Id='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id+"' and PARTENAIRE/PROPRIETAIRE/@ID_G='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G+"' and @CLASSE='PRESTATION']";
@@ -433,7 +437,7 @@
                         //$log.debug("$watchCollection for OBJECTIF, NOM : " + oldValues[0] + ", " + oldValues[1] + " => " + newValues[0] + ", " + newValues[1]);
 
 
-                        if ($scope.elfin != null && $attrs.hbMode != "create") {
+                        if (!!$scope.elfin && $attrs["hbMode"] !== "create") {
                             var xpathForProductionChaleurTODO = "//ELFIN[@SOURCE='" + hbUtil.getStandardSourceURI($scope.elfin) + "' and @CLASSE='PRODUCTION_CHALEUR']";
                             $log.debug(">>>> xpathForProductionChaleurTODO = " + xpathForProductionChaleurTODO + "<<<<");
                             var xpathForProductionChaleur = "//ELFIN[IDENTIFIANT/OBJECTIF='" + $scope.elfin.IDENTIFIANT.OBJECTIF + "' and IDENTIFIANT/ORIGINE='" + $scope.elfin.IDENTIFIANT.NOM + "' and @CLASSE='PRODUCTION_CHALEUR']";
@@ -527,7 +531,7 @@
                     // Check when elfin instance becomes available
                     $scope.$watch('elfin.Id', function () {
 
-                        if ($scope.elfin != null) {
+                        if (!!$scope.elfin) {
 
                             // ===========================================================
                             // Safe access to elfin.CARACTERISTIQUE.CARSET.CAR by POS
@@ -608,7 +612,7 @@
 
                                 // Get UNITE_LOCATIVE corresponding to current ELFIN.Id
                                 //var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='"+$scope.elfin.Id+"']";
-                                var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='" + $scope.elfin.Id + "' and not(string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() " + hbUtil.encodeUriParameter(" <= ") + "'" + currentHbTextDate + "')]";
+                                var xpathForSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='" + $scope.elfin.Id + "' and not(string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() " + hbUtil.encodeUriParameter(" <= ") + "'" + currentHbTextDate() + "')]";
 
                                 hbQueryService.getLocationUnits(xpathForSurfaces)
                                     .then(function (elfins) {
@@ -624,7 +628,7 @@
 
                                 // Note we exclude date string not equal to 10 characters to avoid having '' empty string
                                 // considered as a date smaller than any other regular 10 char dates.
-                                var xpathForArchivedSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='" + $scope.elfin.Id + "' and string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() " + hbUtil.encodeUriParameter(" <= ") + "'" + currentHbTextDate + "']";
+                                var xpathForArchivedSurfaces = "//ELFIN[IDENTIFIANT/ORIGINE='" + $scope.elfin.Id + "' and string-length(IDENTIFIANT/A/string()) = 10 and IDENTIFIANT/A/string() " + hbUtil.encodeUriParameter(" <= ") + "'" + currentHbTextDate() + "']";
                                 hbQueryService.getLocationUnits(xpathForArchivedSurfaces)
                                     .then(function (elfins) {
                                             $scope.locationUnitsArchived = elfins;
@@ -649,16 +653,14 @@
                                 $scope.elfinForm.$setDirty();
                             }
 
-                            // Current time in text format
-                            var currentHbTextDate = hbUtil.getDateInHbTextFormat(new Date());
+
 
                             // Make IMMEUBLE photo available
                             $scope.updatePhotoSrc();
 
                             // Update path to local file system
-                            var fsURI = hbUtil.buildAnnexeFileSystemUri($scope.elfin);
                             //$log.debug(">>>> fsURI = " + fsURI);
-                            $scope.annexeFileSystemUri = fsURI;
+                            $scope.annexeFileSystemUri = hbUtil.buildAnnexeFileSystemUri($scope.elfin);
 
                         }
 
