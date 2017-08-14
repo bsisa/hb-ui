@@ -661,7 +661,6 @@
                             $scope.annexeFileSystemUri = fsURI;
 
                         }
-                        ;
 
                     }, true);
 
