@@ -122,7 +122,35 @@
 						    		}
 						    		
 						    	}, true);
-						        
+
+						    	var getXpathForTransactions = function(elfin) {
+						    		return "//ELFIN[IDENTIFIANT/OBJECTIF='" + elfin.IDENTIFIANT.OBJECTIF+"']";
+								};
+
+						    	$scope.loadTransactions = function(xpath) {
+                                    hbQueryService.getTransactions(xpath)
+                                        .then(function(elfins) {
+                                                $scope.transactions = elfins;
+                                            },
+                                            function(response) {
+                                                var message = "Le chargement des TRANSACTIONs a échoué (statut de retour: "+ response.status+ ")";
+                                                hbAlertMessages.addAlert("danger",message);
+                                            });
+								};
+
+                                $scope.$watch("useSource.value", function(newUseSourceValue) {
+                                    if ($scope.elfin && $attrs["hbMode"] !== "create") {
+
+                                        var xpathForTransactions = getXpathForTransactions($scope.elfin);
+
+                                        if (newUseSourceValue) {
+                                            var source = $scope.elfin.ID_G + "/" + $scope.elfin.CLASSE + "/" + $scope.elfin.Id;
+                                            xpathForTransactions = "//ELFIN[@CLASSE='TRANSACTION'][@SOURCE='" + source + "']";
+                                        }
+
+                                        $scope.loadTransactions(xpathForTransactions);
+                                    }
+                                });
 								
 								/**
 								 * Maintains the list of TRANSACTION linked to this PRESTATION
@@ -141,17 +169,7 @@
 								$scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function() { 
 
 						    		if (!!$scope.elfin) {
-							            
-							            var xpathForTransactions = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"']";
-							            hbQueryService.getTransactions(xpathForTransactions)
-											.then(function(elfins) {
-													$scope.transactions = elfins;
-												},
-												function(response) {
-													var message = "Le chargement des TRANSACTIONs a échoué (statut de retour: "+ response.status+ ")";
-										            hbAlertMessages.addAlert("danger",message);
-												});
-							            
+						    			$scope.loadTransactions(getXpathForTransactions($scope.elfin));
 						    		}
 						    		
 						    	}, true);
