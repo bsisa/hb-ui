@@ -276,6 +276,25 @@
                     };
 
 
+                    $scope.loadConstats = function(xpath, scopeTarget) {
+                        hbQueryService.getConstats(xpath)
+                            .then(function (elfins) {
+                                    $scope[scopeTarget] = elfins;
+                                },
+                                function (response) {
+                                    var message = "Le chargement des CONSTATs '" + scopeTarget + "' a échoué (statut de retour: " + response.status + ")";
+                                    hbAlertMessages.addAlert("danger", message);
+                                });
+                    };
+
+                    var getXpathForConstatsEnCours = function(elfin) {
+                        return "//ELFIN[IDENTIFIANT/COMPTE='" + elfin.IDENTIFIANT.NOM + "'][not(IDENTIFIANT/A) or IDENTIFIANT/A='']";
+                    };
+
+                    var getXpathForConstatsClos = function(elfin) {
+                        return "//ELFIN[IDENTIFIANT/COMPTE='" + elfin.IDENTIFIANT.NOM + "'][(IDENTIFIANT/A) and not(IDENTIFIANT/A='')]";
+                    };
+
                     /**
                      * Listener used to load CONSTAT list related to this IMMEUBLE
                      * Only relevant while not in create mode.
@@ -283,24 +302,11 @@
                     $scope.$watch('elfin.IDENTIFIANT.NOM', function () {
 
                         if (!!$scope.elfin && $attrs["hbMode"] !== "create") {
-                            var xpathForConstatsEncours = "//ELFIN[IDENTIFIANT/COMPTE='" + $scope.elfin.IDENTIFIANT.NOM + "'][not(IDENTIFIANT/A) or IDENTIFIANT/A='']";
-                            hbQueryService.getConstats(xpathForConstatsEncours)
-                                .then(function (elfins) {
-                                        $scope.constatsEncours = elfins;
-                                    },
-                                    function (response) {
-                                        var message = "Le chargement des CONSTATs en cours a échoué (statut de retour: " + response.status + ")";
-                                        hbAlertMessages.addAlert("danger", message);
-                                    });
-                            var xpathForConstatsClos = "//ELFIN[IDENTIFIANT/COMPTE='" + $scope.elfin.IDENTIFIANT.NOM + "'][(IDENTIFIANT/A) and not(IDENTIFIANT/A='')]";
-                            hbQueryService.getConstats(xpathForConstatsClos)
-                                .then(function (elfins) {
-                                        $scope.constatsClos = elfins;
-                                    },
-                                    function (response) {
-                                        var message = "Le chargement des CONSTATs clos a échoué (statut de retour: " + response.status + ")";
-                                        hbAlertMessages.addAlert("danger", message);
-                                    });
+                            var xpathForConstatsEncours = getXpathForConstatsEnCours($scope.elfin);
+                            $scope.loadConstats(xpathForConstatsEncours, "constatsEncours");
+
+                            var xpathForConstatsClos = getXpathForConstatsClos($scope.elfin);
+                            $scope.loadConstats(xpathForConstatsClos, "constatsClos");
                         }
                     }, true);
 
@@ -369,10 +375,13 @@
                     };
 
                     $scope.$watch("useSource.value", function(newUseSourceValue) {
-                        if ($scope.elfin) {
+                        if ($scope.elfin && $attrs["hbMode"] !== "create") {
                             var xpathForPrestations = getXpathForPrestations($scope.elfin);
                             var xpathForTransactionFn = getXpathForTransactions;
                             var xpathForContrats = getXpathForContrats($scope.elfin);
+
+                            var xpathForConstatsEnCours = getXpathForConstatsEnCours($scope.elfin);
+                            var xpathForConstatsClos = getXpathForConstatsClos($scope.elfin);
 
                             if (newUseSourceValue) {
                                 var source = $scope.elfin.ID_G + "/" + $scope.elfin.CLASSE + "/" + $scope.elfin.Id;
@@ -383,10 +392,15 @@
                                 };
 
                                 xpathForContrats = "//ELFIN[@CLASSE='CONTRAT'][@SOURCE='" + source + "']";
+
+                                xpathForConstatsEnCours = "//ELFIN[@CLASSE='CONSTAT'][@SOURCE='" + source + "' ][not(IDENTIFIANT/A) or IDENTIFIANT/A='']";
+                                xpathForConstatsClos = "//ELFIN[@CLASSE='CONSTAT'][@SOURCE='" + source + "' ][(IDENTIFIANT/A) and not(IDENTIFIANT/A='')]";
                             }
 
                             $scope.loadPrestations(xpathForPrestations, xpathForTransactionFn);
                             $scope.loadContrats(xpathForContrats);
+                            $scope.loadConstats(xpathForConstatsEnCours, "constatsEncours");
+                            $scope.loadConstats(xpathForConstatsClos, "constatsClos");
                         }
                     });
 
