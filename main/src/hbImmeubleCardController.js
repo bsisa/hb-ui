@@ -385,7 +385,7 @@
 
                             if (newUseSourceValue) {
                                 var source = $scope.elfin.ID_G + "/" + $scope.elfin.CLASSE + "/" + $scope.elfin.Id;
-                                xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION'][@SOURCE='" + source + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" + $scope.elfin.PARTENAIRE.PROPRIETAIRE.NOM + "']";
+                                xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION'][@SOURCE='" + source + "']";
                                 xpathForTransactionFn = function(elfin) {
                                     var source = elfin.ID_G + "/" + elfin.CLASSE + "/" + elfin.Id;
                                     return "//ELFIN[@CLASSE='TRANSACTION'][@SOURCE='" + source + "']";
