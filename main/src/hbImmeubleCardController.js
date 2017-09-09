@@ -22,12 +22,13 @@
                 'hbQueryService',
                 'userDetails',
                 'HB_EVENTS',
+                'HB_ORDER_TYPE',
                 'HB_API',
                 'HB_ROLE_FONCTION',
                 'hbTabCacheService',
                 function ($attrs, $scope, $rootScope, GeoxmlService, $modal,
                           $routeParams, $location, $log, $timeout, $filter, $locale, hbAlertMessages,
-                          hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_API, HB_ROLE_FONCTION, hbTabCacheService) {
+                          hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_ORDER_TYPE, HB_API, HB_ROLE_FONCTION, hbTabCacheService) {
 
                     //$log.debug("    >>>> Using HbImmeubleCardController with $locale.id = " + $locale.id);
 
@@ -36,6 +37,9 @@
                      * Check parent controller and hbTabStateService for complete overview.
                      */
                     var cachedTab = hbTabCacheService.getTabState($location.absUrl());
+
+                    // Expose order type constants to scope
+                    $scope.HB_ORDER_TYPE = HB_ORDER_TYPE;
 
                     /** Create tabState object if not already available in cache,
                      */

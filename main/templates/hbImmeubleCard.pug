@@ -571,6 +571,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td
                                                                 div(hb-annexes-link, hb-annexes-link-elfin="commande")
                                                             td.number
+                                                                span(ng-if="commande.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT") {{commande.CARACTERISTIQUE.CAR5.VALEUR}} /&nbsp;
                                                                 | {{commande.IDENTIFIANT.NOM}}
                                                             td
                                                                 | {{commande.GROUPE}}

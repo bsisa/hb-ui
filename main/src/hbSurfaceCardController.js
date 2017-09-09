@@ -18,9 +18,10 @@
             'userDetails',
             'HB_COLLECTIONS',
             'HB_ROLE_FONCTION',
+            'HB_ORDER_TYPE',
             function($scope, $attrs, GeoxmlService, $modal,
                      $routeParams, $location, $log, $timeout,
-                     hbAlertMessages, hbUtil, hbQueryService, hbTabCacheService, userDetails, HB_COLLECTIONS, HB_ROLE_FONCTION) {
+                     hbAlertMessages, hbUtil, hbQueryService, hbTabCacheService, userDetails, HB_COLLECTIONS, HB_ROLE_FONCTION, HB_ORDER_TYPE) {
 
                 //$log.debug("    >>>> Using HbSurfaceCardController");
 
@@ -29,6 +30,9 @@
                  * Check parent controller and hbTabStateService for complete overview.
                  */
                 var cachedTab = hbTabCacheService.getTabState($location.absUrl());
+
+                // Expose order type constants to scope
+                $scope.HB_ORDER_TYPE = HB_ORDER_TYPE;
 
                 /** Create tabState object if not already available in cache,
                  */

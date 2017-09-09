@@ -118,7 +118,9 @@ div.row(style="padding-top: 8px;")
                                                                 td
                                                                     div(hb-annexes-link, hb-annexes-link-elfin="commande")
                                                                 // Order nb
-                                                                td.number {{commande.IDENTIFIANT.NOM}}
+                                                                td.number
+                                                                    span(ng-if="commande.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT") {{commande.CARACTERISTIQUE.CAR5.VALEUR}} /&nbsp;
+                                                                    | {{commande.IDENTIFIANT.NOM}}
                                                                 // CFC code
                                                                 td {{commande.GROUPE}}
                                                                 // Estimation/Quote date
