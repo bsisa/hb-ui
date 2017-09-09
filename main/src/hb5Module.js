@@ -83,6 +83,48 @@
                 }
             };
         }])
+        .directive("formatNoAbaImmo", ["$filter", function($filter) {
+            return {
+                require: '?ngModel',
+                link: function (scope, elem, attrs, ctrl) {
+                    if (!ctrl) return;
+                    var focus = false;
+                    var separatorSequence = [6, 5];
+
+                    var formatValue = function(value) {
+                        var start = 0;
+                        var result = "";
+                        _.forEach(separatorSequence, function (length) {
+                            result += value.substr(start, length) + " ";
+                            start += length;
+                        });
+
+                        result += value.substring(start, value.length);
+
+                        return result;
+                    };
+
+                    ctrl.$formatters.unshift(function () {
+                        return formatValue(ctrl.$modelValue);
+                    });
+
+                    ctrl.$parsers.unshift(function (viewValue) {
+                        return viewValue;
+                    });
+
+                    elem.bind("blur", function () {
+                        focus = false;
+                        elem.val(formatValue(ctrl.$modelValue));
+                    });
+
+                    elem.bind("focus", function () {
+                        focus = true;
+                        var withoutPrefix = elem.val().replace(" ", "");
+                        elem.val(withoutPrefix);
+                    });
+                }
+            }
+        }])
         .directive("formatWithPrefix", ["$filter", function($filter) {
             return {
                 require: '?ngModel',
