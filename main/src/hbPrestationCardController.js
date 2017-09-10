@@ -27,6 +27,8 @@
                 $scope.prestationGroups = null;
                 $scope.collaboratorActors = null;
 
+                $scope.source = null;
+
                 /**
                  * Validation support
                  */
@@ -119,7 +121,14 @@
                                 $log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
                             }
                         } else {
-                            // Do nothing
+                            if (angular.isString($scope.elfin.SOURCE)) {
+                                hbQueryService.loadSourceElfin($scope.elfin.SOURCE,
+                                    function(source) {$scope.source = source;},
+                                    function(response) {
+                                    var message = "Le chargement de l'Immeuble source a échoué (statut de retour: " + response.status + ")";
+                                        hbAlertMessages.addAlert("danger", message);}
+                                    )
+                            }
                         }
                     }
 

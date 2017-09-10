@@ -18,6 +18,7 @@ div.row(style="padding-top: 8px;")
                     button.btn.btn-primary.btn-xs(ng-if="devRights", ng-click="displayJson(elfin)") JS
                     button.btn.btn-primary.btn-xs(ng-if="devRights", ng-click="displayXml(elfin)") XML
             span(ng-if="elfin.CLASSE==='IMMEUBLE' || elfin.CLASSE==='WC'") &nbsp;{{elfin.IDENTIFIANT.ALIAS}}
+            span(ng-if="elfin.CLASSE==='PRESTATION' && source !== null") &nbsp;{{source.IDENTIFIANT.ALIAS}}
             span(ng-if="elfin.CLASSE==='FONTAINE' || elfin.CLASSE==='ABRIBUS'") &nbsp;{{elfin.IDENTIFIANT.NOM}}
 
         div.col-xs-5(style="padding-left: 0px;")
