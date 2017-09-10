@@ -848,6 +848,8 @@
 			var checkAnyField = function(immeuble,searchtext) {
 				var immeublePlace = hbUtil.getCARByPos(immeuble, 1);
 				immeublePlace = (immeublePlace === undefined) ? {"VALEUR" : ""} : immeublePlace;
+				var immeubleNoAbaImmo = hbUtil.getCARByPos(immeuble, 2);
+                immeubleNoAbaImmo = (immeubleNoAbaImmo === undefined) ? {"VALEUR" : ""} : immeubleNoAbaImmo;
 				return (
 					icontains(immeuble.PARTENAIRE.PROPRIETAIRE.NOM, searchtext) ||
 					icontains(immeuble.IDENTIFIANT.OBJECTIF, searchtext) ||
@@ -855,7 +857,8 @@
 					icontains(immeublePlace.VALEUR, searchtext) ||
 //					icontains(immeuble.IDENTIFIANT.NOM, searchtext) ||
 					icontains(immeuble.IDENTIFIANT.ALIAS, searchtext) ||
-					icontains(immeuble.GROUPE_COMPTABLE, searchtext)
+					icontains(immeuble.GROUPE_COMPTABLE, searchtext) ||
+					icontains(immeubleNoAbaImmo.VALEUR, searchtext)
 				);		
 			};			
 
