@@ -59,6 +59,11 @@ body{
 	text-shadow: 0 0 1px transparent; google font pixelation fix
 }
 
+body.test {
+	background:#efefef url(gray_jean_test.png);
+	background-size: 80px;
+}
+
 /* #wrap{ */
 /* width:100%; */
 /* background:#fff; */

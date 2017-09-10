@@ -475,6 +475,11 @@
 
         $log.debug("Setting locale to : " + $locale.id);
 
+        if (window.location.hostname.indexOf("vdn132"   ) !== 0) {
+            $("body").addClass("test");
+        }
+
+
         Restangular.setErrorInterceptor(
             function (response) {
                 if (response.status == 401) {
