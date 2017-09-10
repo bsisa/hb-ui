@@ -384,7 +384,18 @@
 		var getJsonNbOfContracts = function(saiNb, year, orderId) {
 			return GeoxmlService.getXqueryResult("jsonNextContractNbForSaiNb.xq").get({"saiNb" : saiNb, "year" : year , "orderId" : orderId});
 		};			
-		
+
+		var loadSourceElfin = function(sourceAttr, success, error) {
+            if (angular.isString(sourceAttr)) {
+                var sourceAttrComponents = sourceAttr.split("/");
+                var sourceIDG = sourceAttrComponents[0];
+                var sourceId = sourceAttrComponents[2];
+                if (sourceId && sourceIDG) {
+                    GeoxmlService.getElfin(sourceIDG, sourceId).get()
+                        .then(success, error);
+                }
+            }
+        };
 		
 		
         return {
@@ -415,7 +426,8 @@
         	getVentilationList:getVentilationList,
         	getWcList:getWcList,
         	getJsonAccountingGroups:getJsonAccountingGroups,
-        	getJsonNbOfContracts:getJsonNbOfContracts
+        	getJsonNbOfContracts:getJsonNbOfContracts,
+            loadSourceElfin:loadSourceElfin
         };
 
     }]);
