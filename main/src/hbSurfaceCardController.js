@@ -114,24 +114,17 @@
                 $scope.sourceAbaImmo = "";
 
                 $scope.loadSourceElfin = function(sourceAttr) {
-                    if (angular.isString(sourceAttr)) {
-                        var sourceAttrComponents = sourceAttr.split("/");
-                        var sourceIDG = sourceAttrComponents[0];
-                        var sourceId = sourceAttrComponents[2];
-                        if (sourceId && sourceIDG) {
-                            var that = this;
-                            GeoxmlService.getElfin(sourceIDG, sourceId).get()
-                                .then(
-                                    function (sourceElfin) {
-                                        that.sourceAbaImmo = hbUtil.getCARByPos(sourceElfin, 2).VALEUR;
-                                    },
-                                    function (response) {
-                                        that.sourceAbaImmo = "";
-                                        var message = "Le chargement de l'Immeuble source a échoué (statut de retour: " + response.status + ")";
-                                        hbAlertMessages.addAlert("danger", message);
-                                    });
+                    var that = this;
+                    hbQueryService.loadSourceElfin(sourceAttr,
+                        function (sourceElfin) {
+                            that.sourceAbaImmo = hbUtil.getCARByPos(sourceElfin, 2).VALEUR;
+                        },
+                        function (response) {
+                            that.sourceAbaImmo = "";
+                            var message = "Le chargement de l'Immeuble source a échoué (statut de retour: " + response.status + ")";
+                            hbAlertMessages.addAlert("danger", message);
                         }
-                    }
+                    );
                 };
 
 
