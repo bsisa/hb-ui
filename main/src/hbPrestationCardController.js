@@ -79,7 +79,7 @@
                                                 hbQueryService.getPrestations(xpathForPrestations)
                                                     .then(function (prestations) {
                                                             // Some PRESTATION already exist
-                                                            if (prestations.length > 0) {
+                                                            if (prestations.length > 0 && immeuble.CLASSE === "IMMEUBLE") {
                                                                 var objectifArray = new Array(0);
                                                                 for (var i = 0; i < prestations.length; i++) {
                                                                     var prestation = prestations[i];
