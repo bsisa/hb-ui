@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     // Project configuration.
     grunt.initConfig({
@@ -20,186 +20,183 @@ module.exports = function(grunt) {
                 separator: ''
             },
             dist: {
-            	src : [         'src/geoxmlModule.js',
+                src: [
+                    'src/hb5Module.js',
 
-            	                'src/hbMapServiceModule.js',
+                    'src/_commons/geoxmlModule.js',
+                    'src/_commons/hb5Constants.js',
+                    'src/_commons/hb5Filters.js',
+                    'src/_commons/menu.js',
+                    'src/_commons/wcAngularOverlay.js',
 
-                                'src/hb5Module.js',
-                                'src/hb5Constants.js',
-                                'src/hb5Filters.js',
-                                'src/menu.js',
-								'src/hbActeurCardDirective.js',
-								'src/hbActeurCardController.js',
-								'src/hbActorListController.js',
-								'src/hbActorListDirective.js',
-								'src/hbActorLineConverterController.js',
-								'src/hbActorLineConverterDirective.js',
-								'src/hbAlertMessagesService.js',
-								
-								'src/hbAmenagementSportifCardDirective.js', 
-								'src/hbAmenagementSportifCardController.js',
-								'src/hbAmenagementSportifListController.js',
-								'src/hbAmenagementSportifListDirective.js',								
 
-								'src/hbAnnexesLinkController.js',
-								'src/hbAnnexesLinkDirective.js',
-								'src/hbAnnexesComponentController.js',
-								'src/hbAnnexesComponentDirective.js',
-								'src/hbAnnexesNumberController.js',
-								'src/hbAnnexesNumberDirective.js',
-								'src/hbAnnexesUploadController.js',
-								'src/hbAnnexesUploadDirective.js',
+                    'src/_directives/hbChooseOneController.js',
+                    'src/_directives/hbChooseOneDirective.js',
+                    'src/_directives/hbCollapseController.js',
+                    'src/_directives/hbCollapseDirective.js',
+                    'src/_directives/hbDateDirective.js',
+                    'src/_directives/hbDateController.js',
+                    'src/_directives/hbDateParserDirective.js',
+                    'src/_directives/hbDropdownMenuDirective.js',
+                    'src/_directives/hbDynamicNameDirective.js',
+                    'src/_directives/hbEnterDirective.js',
+                    'src/_directives/hbEqualsDirective.js',
+                    'src/_directives/hbFormeComponentController.js',
+                    'src/_directives/hbFormeComponentDirective.js',
+                    'src/_directives/hbListContainerController.js',
+                    'src/_directives/hbListContainerDirective.js',
+                    'src/_directives/hbNoDirtyCheckDirective.js',
+                    'src/_directives/hbSingleSelectController.js',
+                    'src/_directives/hbSingleSelectDirective.js',
+                    'src/_directives/hbTypeaheadCodeController.js',
+                    'src/_directives/hbTypeaheadCodeDirective.js',
+                    'src/_directives/hbValidCodeDirective.js',
 
-								'src/hbChooseBuildingController.js',
-								'src/hbChooseBuildingDirective.js',
 
-								'src/hbBuildingSelectLinkDirective.js',
+                    'src/_directives/hbSearchController.js',
+                    'src/_directives/hbSearchDirective.js',
+                    'src/_directives/hbSearchDomController.js',
+                    'src/_directives/hbSearchDomDirective.js',
+                    'src/_directives/hbSearchSdsController.js',
+                    'src/_directives/hbSearchSdsDirective.js',
 
-								'src/hbBuildingLineConverterController.js',
-								'src/hbBuildingLineConverterDirective.js',
+                    'src/_services/hbPrintService.js',
+                    'src/_services/hbQueryService.js',
+                    'src/_services/hbMapServiceModule.js',
+                    'src/_services/hbMapController.js',
+                    'src/_services/hbTabCacheService.js',
+                    'src/_services/hbUtilService.js',
+                    'src/_services/userDetailsService.js',
 
-								'src/hbCardContainerDirective.js',
-								'src/hbCardContainerController.js',
-								'src/hbCardHeaderDirective.js',
-								'src/hbCardViewLinkDirective.js',
-								'src/hbChooseActorController.js',
-								'src/hbChooseActorDirective.js',
-								
-								'src/hbChooseCodeController.js',
-								'src/hbChooseCodeDirective.js',
-								
-								'src/hbChooseOneController.js',
-								'src/hbChooseOneDirective.js',
-								
-								'src/hbChooseSurfaceController.js',
-								'src/hbChooseSurfaceDirective.js',
-								
-								'src/hbCiterneCardController.js',
-								'src/hbCiterneCardDirective.js',
-								
-								'src/hbCodeCardController.js',
-								'src/hbCodeCardDirective.js',
-								'src/hbCodeListController.js',
-								'src/hbCodeListDirective.js',
-								
-								'src/hbCollapseController.js',
-								'src/hbCollapseDirective.js',
 
-								'src/hbCommandeCardController.js',
-								'src/hbCommandeCardDirective.js',
+                    'src/acteur/hbActeurCardDirective.js',
+                    'src/acteur/hbActeurCardController.js',
+                    'src/acteur/hbActorListController.js',
+                    'src/acteur/hbActorListDirective.js',
+                    'src/acteur/hbActorLineConverterController.js',
+                    'src/acteur/hbActorLineConverterDirective.js',
+                    'src/acteur/hbAlertMessagesService.js',
+                    'src/acteur/hbChooseActorController.js',
+                    'src/acteur/hbChooseActorDirective.js',
 
-								'src/hbCommandeListController.js',
-								'src/hbCommandeListDirective.js',
-								
-								'src/hbConstatCardDirective.js',
-								'src/hbConstatCardController.js',
-								'src/hbConstatListController.js',
-								'src/hbConstatListDirective.js',
-								'src/hbContratCardController.js',
-								'src/hbContratCardDirective.js',
-								
-								'src/hbContratListController.js',
-								'src/hbContratListDirective.js',
-								
-                                'src/hbDashboardDirective.js',
-                                'src/hbDashboardController.js',
-                                
-                                'src/hbDashboardDomDirective.js',
-                                'src/hbDashboardDomController.js',                                
-                                
-                                'src/hbDashboardSdsDirective.js',
-                                'src/hbDashboardSdsController.js',
+                    'src/amenagement_sportif/hbAmenagementSportifCardDirective.js',
+                    'src/amenagement_sportif/hbAmenagementSportifCardController.js',
+                    'src/amenagement_sportif/hbAmenagementSportifListController.js',
+                    'src/amenagement_sportif/hbAmenagementSportifListDirective.js',
 
-								'src/hbDateDirective.js',
-								'src/hbDateController.js',
-								'src/hbDateParserDirective.js',
-								'src/hbDefaultCardDirective.js',
-								'src/hbDefaultCardController.js',
-								'src/hbDropdownMenuDirective.js',
-								
-								'src/hbDynamicNameDirective.js',
-								'src/hbEnterDirective.js',
-								'src/hbEqualsDirective.js',
-								'src/hbFontaineCardController.js',
-								'src/hbFontaineCardDirective.js',
-								'src/hbFontaineListController.js',
-								'src/hbFontaineListDirective.js',
-								'src/hbFormeComponentController.js',
-								'src/hbFormeComponentDirective.js',
-								
-								'src/hbHorlogeCardController.js',
-								'src/hbHorlogeCardDirective.js',
-								'src/hbHorlogeListController.js',
-								'src/hbHorlogeListDirective.js',
-								'src/hbImmeubleCardDirective.js', 
-								'src/hbImmeubleCardController.js',
-								'src/hbImmeubleListController.js',
-								'src/hbImmeubleListDirective.js',
+                    'src/annexes/hbAnnexesLinkController.js',
+                    'src/annexes/hbAnnexesLinkDirective.js',
+                    'src/annexes/hbAnnexesComponentController.js',
+                    'src/annexes/hbAnnexesComponentDirective.js',
+                    'src/annexes/hbAnnexesNumberController.js',
+                    'src/annexes/hbAnnexesNumberDirective.js',
+                    'src/annexes/hbAnnexesUploadController.js',
+                    'src/annexes/hbAnnexesUploadDirective.js',
 
-								'src/hbInstallationSportiveCardController.js',
-								'src/hbInstallationSportiveCardDirective.js',
+                    'src/building/hbChooseBuildingController.js',
+                    'src/building/hbChooseBuildingDirective.js',
+                    'src/building/hbBuildingSelectLinkDirective.js',
+                    'src/building/hbBuildingLineConverterController.js',
+                    'src/building/hbBuildingLineConverterDirective.js',
 
-								'src/hbListContainerController.js',
-								'src/hbListContainerDirective.js',
-								'src/hbMapController.js',
+                    'src/card/hbCardContainerDirective.js',
+                    'src/card/hbCardContainerController.js',
+                    'src/card/hbCardHeaderDirective.js',
+                    'src/card/hbCardViewLinkDirective.js',
+                    'src/card/hbDefaultCardDirective.js',
+                    'src/card/hbDefaultCardController.js',
 
-								'src/hbNoDirtyCheckDirective.js', 
-								
-								'src/hbOrderSpreadsheetController.js',
-								'src/hbOrderSpreadsheetDirective.js',
-								
-								'src/hbPrestationCardController.js',
-								'src/hbPrestationCardDirective.js',
-								'src/hbPrestationListController.js',
-								'src/hbPrestationListDirective.js',
-								'src/hbPrintService.js',
-								'src/hbProductionChaleurCardController.js',
-								'src/hbProductionChaleurCardDirective.js',
-								'src/hbProductionFroidCardController.js',
-								'src/hbProductionFroidCardDirective.js',
-								'src/hbQueryService.js',
-								'src/hbRoleCardController.js',
-								'src/hbRoleCardDirective.js',
-								'src/hbSearchController.js',
-								'src/hbSearchDirective.js',
+                    'src/citerne/hbCiterneCardController.js',
+                    'src/citerne/hbCiterneCardDirective.js',
 
-								'src/hbSearchDomController.js',
-								'src/hbSearchDomDirective.js',
-								
-								'src/hbSearchSdsController.js',
-								'src/hbSearchSdsDirective.js',
+                    'src/code/hbChooseCodeController.js',
+                    'src/code/hbChooseCodeDirective.js',
+                    'src/code/hbCodeCardController.js',
+                    'src/code/hbCodeCardDirective.js',
+                    'src/code/hbCodeListController.js',
+                    'src/code/hbCodeListDirective.js',
 
-								'src/hbSurfaceCardController.js',
-								'src/hbSurfaceCardDirective.js',
-								'src/hbSingleSelectController.js',
-								'src/hbSingleSelectDirective.js',
-								'src/hbTabCacheService.js',
-								'src/hbTransactionCardController.js',
-								'src/hbTransactionCardDirective.js',
-								'src/hbTransactionCreateCardDirective.js',
-								
-								'src/hbTypeaheadCodeController.js',
-								'src/hbTypeaheadCodeDirective.js',
-								
-								'src/hbUniqueRoleDirective.js',
-								'src/hbUniqueUserDirective.js',
+                    'src/commande/hbCommandeCardController.js',
+                    'src/commande/hbCommandeCardDirective.js',
+                    'src/commande/hbCommandeListController.js',
+                    'src/commande/hbCommandeListDirective.js',
+                    'src/commande/hbOrderSpreadsheetController.js',
+                    'src/commande/hbOrderSpreadsheetDirective.js',
 
-								'src/hbUniteLocativeListController.js',
-								'src/hbUniteLocativeListDirective.js',								
-								'src/hbUtilService.js',
-								'src/hbUserCardController.js',
-								'src/hbUserCardDirective.js',
-								
-								'src/hbValidCodeDirective.js',
-								
-								'src/hbVentilationCardController.js',
-								'src/hbVentilationCardDirective.js',
-								'src/hbWcListDirective.js',
-								'src/hbWcListController.js',
-								'src/spreadsheetSelect.js',
-								'src/userDetailsService.js',
-							    'src/wcAngularOverlay.js'
-				],
+
+                    'src/constat/hbConstatCardDirective.js',
+                    'src/constat/hbConstatCardController.js',
+                    'src/constat/hbConstatListController.js',
+                    'src/constat/hbConstatListDirective.js',
+
+                    'src/contrat/hbContratCardController.js',
+                    'src/contrat/hbContratCardDirective.js',
+                    'src/contrat/hbContratListController.js',
+                    'src/contrat/hbContratListDirective.js',
+
+                    'src/dashboard/hbDashboardDirective.js',
+                    'src/dashboard/hbDashboardController.js',
+                    'src/dashboard/hbDashboardDomDirective.js',
+                    'src/dashboard/hbDashboardDomController.js',
+                    'src/dashboard/hbDashboardSdsDirective.js',
+                    'src/dashboard/hbDashboardSdsController.js',
+
+                    'src/fontaine/hbFontaineCardController.js',
+                    'src/fontaine/hbFontaineCardDirective.js',
+                    'src/fontaine/hbFontaineListController.js',
+                    'src/fontaine/hbFontaineListDirective.js',
+
+
+                    'src/horloge/hbHorlogeCardController.js',
+                    'src/horloge/hbHorlogeCardDirective.js',
+                    'src/horloge/hbHorlogeListController.js',
+                    'src/horloge/hbHorlogeListDirective.js',
+
+                    'src/immeuble/hbImmeubleCardDirective.js',
+                    'src/immeuble/hbImmeubleCardController.js',
+                    'src/immeuble/hbImmeubleListController.js',
+                    'src/immeuble/hbImmeubleListDirective.js',
+
+                    'src/installation_sportive/hbInstallationSportiveCardController.js',
+                    'src/installation_sportive/hbInstallationSportiveCardDirective.js',
+
+                    'src/prestation/hbPrestationCardController.js',
+                    'src/prestation/hbPrestationCardDirective.js',
+                    'src/prestation/hbPrestationListController.js',
+                    'src/prestation/hbPrestationListDirective.js',
+
+                    'src/production_chaud_froid/hbProductionChaleurCardController.js',
+                    'src/production_chaud_froid/hbProductionChaleurCardDirective.js',
+                    'src/production_chaud_froid/hbProductionFroidCardController.js',
+                    'src/production_chaud_froid/hbProductionFroidCardDirective.js',
+
+
+                    'src/user_role/hbRoleCardController.js',
+                    'src/user_role/hbRoleCardDirective.js',
+                    'src/user_role/hbUniqueRoleDirective.js',
+                    'src/user_role/hbUniqueUserDirective.js',
+                    'src/user_role/hbUserCardController.js',
+                    'src/user_role/hbUserCardDirective.js',
+
+
+                    'src/surface/hbSurfaceCardController.js',
+                    'src/surface/hbSurfaceCardDirective.js',
+                    'src/surface/hbChooseSurfaceController.js',
+                    'src/surface/hbChooseSurfaceDirective.js',
+                    'src/surface/hbUniteLocativeListController.js',
+                    'src/surface/hbUniteLocativeListDirective.js',
+
+                    'src/transaction/hbTransactionCardController.js',
+                    'src/transaction/hbTransactionCardDirective.js',
+                    'src/transaction/hbTransactionCreateCardDirective.js',
+
+                    'src/ventilation/hbVentilationCardController.js',
+                    'src/ventilation/hbVentilationCardDirective.js',
+
+                    'src/wc/hbWcListDirective.js',
+                    'src/wc/hbWcListController.js'
+
+                ],
                 dest: 'dist/<%= pkg.name %>-<%= pkg.version %>.js'
             }
         },
@@ -230,7 +227,7 @@ module.exports = function(grunt) {
                 ext: '.min.css'
             }
         },
-		pug: {
+        pug: {
             compile: {
                 options: {
                     data: {
@@ -238,14 +235,14 @@ module.exports = function(grunt) {
                     }
                 },
                 files: [
-					{
-						cwd: "templates",
-						src: "**/*.pug",
-						dest: "views-compiled",
-						expand: true,
-						ext: ".html"
-					}
-				]
+                    {
+                        cwd: "templates",
+                        src: "**/*.pug",
+                        dest: "views-compiled",
+                        expand: true,
+                        ext: ".html"
+                    }
+                ]
             }
         },
 
@@ -263,7 +260,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-html2js');
 
     // Default task(s).
-    grunt.registerTask('default', ['concat:dist', "pug", 'uglify', 'cssmin' ]);
+    grunt.registerTask('default', ['concat:dist', "pug", 'uglify', 'cssmin']);
     grunt.registerTask('watch', ['watch']);
 
 };
