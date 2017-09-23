@@ -62,7 +62,7 @@
         			// ELFIN of 'IMMEUBLE' collection specific call
         	    	hbQueryService.getAugmentedImmeubles($routeParams.xpath)
         			.then(function(augmentedImmeubles) {
-	                	if (augmentedImmeubles == null) {
+	                	if (augmentedImmeubles === null) {
 	                		$scope.elfins = augmentedImmeubles;
 	                		$scope.elfinsCount = 0;
 	                	} else {
@@ -76,7 +76,7 @@
         			// Generic ELFIN collection call
 	                GeoxmlService.getCollection($scope.collectionId).getList({"xpath" : $routeParams.xpath})
 	                .then(function(elfins) {
-	                	if (elfins == null) {
+	                	if (!elfins) {
 	                		$scope.elfins = elfins;
 	                		$scope.elfinsCount = 0;
 	                	} else {
@@ -96,7 +96,7 @@
         			// ELFIN of 'IMMEUBLE' collection specific call
         	    	hbQueryService.getAugmentedImmeubles(elfinClasseXpathRestriction)
         			.then(function(augmentedImmeubles) {
-	                	if (augmentedImmeubles == null) {
+	                	if (!augmentedImmeubles) {
 	                		$scope.elfins = augmentedImmeubles;
 	                		$scope.elfinsCount = 0;
 	                	} else {
@@ -110,7 +110,7 @@
         			// Generic ELFIN collection call        		
 	                GeoxmlService.getCollection($scope.collectionId).getList({"xpath" : elfinClasseXpathRestriction})
 	                .then(function(elfins) {
-	                	if (elfins == null) {
+	                	if (!elfins) {
 	                		$scope.elfins = elfins;
 	                		$scope.elfinsCount = 0;
 	                	} else {
@@ -128,7 +128,7 @@
         			// ELFIN of 'IMMEUBLE' collection specific call
         	    	hbQueryService.getAugmentedImmeubles()
         			.then(function(augmentedImmeubles) {
-	                	if (augmentedImmeubles == null) {
+	                	if (!augmentedImmeubles) {
 	                		$scope.elfins = augmentedImmeubles;
 	                		$scope.elfinsCount = 0;
 	                	} else {
@@ -142,7 +142,7 @@
         			// Generic ELFIN collection call
 	                GeoxmlService.getCollection($scope.collectionId).getList()
 	                .then(function(elfins) {
-	                	if (elfins == null) {
+	                	if (!elfins) {
 	                		$scope.elfins = elfins;
 	                		$scope.elfinsCount = 0;
 	                	} else {
