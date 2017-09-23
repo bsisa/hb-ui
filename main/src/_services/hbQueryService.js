@@ -173,16 +173,6 @@
 	        return getList(HB_COLLECTIONS.IMMEUBLE_ID,xpath);
 		};
 		
-		
-		/**
-		 * `xpath`: Optional XPath restriction parameter, can be an empty string "".
-		 *   
-		 * `HB_COLLECTIONS.IMMEUBLE_ID` identifies collection containing ELFIN objects of CLASSE IMMEUBLE.  
-		 *  @see getList  
-		 */
-		var getImmeubles = function(xpath) {
-	        return getList(HB_COLLECTIONS.IMMEUBLE_ID,xpath);
-		};			
 
 		
 		/**
