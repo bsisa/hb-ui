@@ -725,15 +725,15 @@
 
         /* Change the job */
         $scope.activateJob = function(job) {
-            
+
         	//$log.debug(">>>>>>>>>>>>>>>>> activateJob called " + job.IDENTIFIANT.NOM +" <<<<<<<<<<<<<<<<<<<<");
         	
         	$scope.activeJob = job;
             hbPrintService.setActiveJob($scope.activeJob);
 
         	// Expose hbUtil in scope for access by expressions in menu.html view.
-//        	$scope.hbUtil = hbUtil;
-//        	
+			// $scope.hbUtil = hbUtil;
+			//
         	$scope.activeJobCreateUpdateACL = "";
             
             // Check if data manager rights are defined for this job/business  
@@ -822,11 +822,9 @@
    			// Note former solution $location.url($location.path(dashboardUri)); 
    			// to this problem triggers an unwanted reload of welcome page
     		var searchObj = {};
-			$location.search(searchObj)/*.path( dashboardUri )*/;
+			$location.search(searchObj).path( dashboardUri );
         };
-        
 
-        
     }]);
 
 })();
