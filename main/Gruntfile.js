@@ -67,6 +67,7 @@ module.exports = function (grunt) {
                     'src/_services/hbTabCacheService.js',
                     'src/_services/hbUtilService.js',
                     'src/_services/userDetailsService.js',
+                    'src/_services/hbAlertMessagesService.js',
 
 
                     'src/acteur/hbActeurCardDirective.js',
@@ -75,7 +76,6 @@ module.exports = function (grunt) {
                     'src/acteur/hbActorListDirective.js',
                     'src/acteur/hbActorLineConverterController.js',
                     'src/acteur/hbActorLineConverterDirective.js',
-                    'src/acteur/hbAlertMessagesService.js',
                     'src/acteur/hbChooseActorController.js',
                     'src/acteur/hbChooseActorDirective.js',
 
