@@ -20,19 +20,19 @@
         $scope.getPhaseAbbreviation = function (phase) {
             // $log.debug(">>> getPhaseAbbreviation for phase = " + phase);
             var abbrev = null;
-            if (phase == 'Analyse') {
+            if (phase === 'Analyse') {
                 abbrev = 'A';
             }
-            else if (phase == 'Avant-Projet') {
+            else if (phase === 'Avant-Projet') {
                 abbrev = 'AP';
             }
-            else if (phase == 'Appel d offre et Adjudication') {
+            else if (phase === 'Appel d offre et Adjudication') {
                 abbrev = 'ADJ';
             }
-            else if (phase == 'Exécution') {
+            else if (phase === 'Exécution') {
                 abbrev = 'EXE';
             }
-            else if (phase == 'Réception') {
+            else if (phase === 'Réception') {
                 abbrev = 'REC';
             }
             else {
