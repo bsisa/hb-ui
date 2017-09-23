@@ -53,16 +53,16 @@
     }]);    
 
     angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', '$timeout', '$log', 'itemDefinition', function($scope, $modalInstance, $timeout, $log, itemDefinition) {
-    	
+    	var i;
     	$scope.modalModel = [];
     	// /!\ _.clone performs shallow copy, see: http://underscorejs.org/#clone
-    	for (var i = 0; i < itemDefinition.parameters.length; i++) {
+    	for (i = 0; i < itemDefinition.parameters.length; i++) {
 			var parameter = itemDefinition.parameters[i];
 			$scope.modalModel.push( _.clone(parameter));	
 		}
     	
     	// Reset modalModel values to itemDefinition.parameters default value (upon modal opening)
-    	for (var i = 0; i < itemDefinition.parameters.length; i++) {
+    	for (i = 0; i < itemDefinition.parameters.length; i++) {
     		$scope.modalModel[i].value = itemDefinition.parameters[i].value;
 		}    	
     	
@@ -242,7 +242,7 @@
 	        		$log.debug("    >>>> actionLink - with parameters. URL: " + urlWithQuery);
 	        		if (itemDefinition.newWindowName) {
 	        			$log.debug("    >>>> actionLink - with new window name: " + itemDefinition.newWindowName);
-	        			$window.open(urlWithQuery, itemDefinition.newWindowName);
+	        			$window.open(urlWithQuery, itemDefinition["newWindowName"]);
 	        		} else {
 	        			$log.debug("    >>>> actionLink - with NO new window name");
 	        			$window.open(urlWithQuery);	
@@ -434,12 +434,10 @@
         /* Activate current configuration */
         $scope.$watch('$$activeConfiguration', function(newVal /*, oldVal, scope */) {
       	
-            if (!newVal) {
-            	// No change detected
-                return;
-            } else {
+            if (!!newVal) {
+
             	// Reset jobs list
-            	$scope.jobs = new Array();
+            	$scope.jobs = [];
 
 	            /**
 	             * Jobs (METIER) records structure are defined as a table. 
@@ -478,9 +476,7 @@
 	            	// Perform filtering
 		            angular.forEach(jobReferences, function(job) {
 		            	// Skip label (titles) line located at first position
-		            	if (job.POS === 1) {
-		                    return;
-		                } else {
+		            	if (job.POS !== 1) {
 		                	// Get menu access rights
 			            	var jobAccessRights = job.C[5].VALUE.split(",");
 			            	// Check whether user is granted necessary role
@@ -495,7 +491,7 @@
 				            			defaultJobPosAllowed = true;
 				            		}
 				            		break;
-				            	};			            		
+				            	}
 			            	}
 		                }
 		            });
@@ -621,7 +617,7 @@
 				        }
 				    ]
 				}
-                 * */
+                 **/
 
 				try {
 					actionValue = angular.fromJson(L.C[2].VALUE);
@@ -653,7 +649,7 @@
                     // No group already exist for this groupName in the current menuStructure.elements.
                     // Create a new group with a first sub-item corresponding to entryName, actionValue.
                     // Groups shall not have action.
-                    if (existingGroups.length == 0) {
+                    if (existingGroups.length === 0) {
                     	
                     	// Make sure the subItem is authorised
                     	//if (hbUtil.isActionAuthorised(actionValue)) { 
@@ -703,12 +699,12 @@
             // single menu item.
             menuStructure.elements.forEach(function(group) {
             	
-            	if (group.subItems != null) {
-            		if (group.subItems.length == 0) {
+            	if (group.subItems !== null) {
+            		if (group.subItems.length === 0) {
             			// This is unlikely but nullify subItems array for consistent 
             			// view rendering in case subItems appears in tests.
             			group.subItems = null;
-            		} else if (group.subItems.length == 1) {
+            		} else if (group.subItems.length === 1) {
             			// Single sub-item group: Transform back to regular menu item.
             			// Make sub-item label regular menu item
             			group.label = group.subItems[0].label;
@@ -757,7 +753,7 @@
                     var dataManagerAccessRightsRead = "";
                     // We start at 1 as position 0 is reserved for above dataManagerAccessRightsCreateUpdate
                     for (var i = 1; $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'].length > i ; i++ ) {
-                		dataManagerAccessRightsRead = dataManagerAccessRightsRead + $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'][i].VALEUR
+                		dataManagerAccessRightsRead = dataManagerAccessRightsRead + $scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'][i].VALEUR;
                     	if (i !== ($scope.activeJob['CARACTERISTIQUE']['CARSET']['CAR'].length - 1) ) {
                     		dataManagerAccessRightsRead = dataManagerAccessRightsRead + ";"
                     	}
@@ -805,7 +801,7 @@
                         
                         // Only call updateMenu once and enclosed in $timeout service to 
                         // fix function applied before DOM update completion.
-                        if (actualMenuRefProcessedCount == actualMenuRef.length) {
+                        if (actualMenuRefProcessedCount === actualMenuRef.length) {
                         	$timeout(updateMenu, 0, false);
                         	//updateMenu(); Reproduces former bug (function applied before DOM update completion)
                         } else {
