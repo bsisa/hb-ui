@@ -699,7 +699,7 @@
             // single menu item.
             menuStructure.elements.forEach(function(group) {
             	
-            	if (group.subItems !== null) {
+            	if (!!group.subItems) {
             		if (group.subItems.length === 0) {
             			// This is unlikely but nullify subItems array for consistent 
             			// view rendering in case subItems appears in tests.
