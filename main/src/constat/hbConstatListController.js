@@ -12,6 +12,7 @@
             "last_resp": "",
             "description": "",
             "constat_date": "",
+            "immeuble_adresse": "",
             "partenaire_usager": "",
             "constat_group": "",
             "constat_noSAI": ""

@@ -59,19 +59,32 @@
         	if ($routeParams.xpath) {
         		
         		if ($scope.collectionId === HB_COLLECTIONS.IMMEUBLE_ID) {
-        			// ELFIN of 'IMMEUBLE' collection specific call
-        	    	hbQueryService.getAugmentedImmeubles($routeParams.xpath)
-        			.then(function(augmentedImmeubles) {
-	                	if (augmentedImmeubles === null) {
-	                		$scope.elfins = augmentedImmeubles;
-	                		$scope.elfinsCount = 0;
-	                	} else {
-	                		$scope.elfins = augmentedImmeubles;
-	                		$scope.elfinsCount = augmentedImmeubles.length;
-	                	}        				
-        			}, function(message) {
-        	            hbAlertMessages.addAlert("danger",message);
-        	        });	
+                    // ELFIN of 'IMMEUBLE' collection specific call
+                    hbQueryService.getAugmentedImmeubles($routeParams.xpath)
+                        .then(function (augmentedImmeubles) {
+                            if (augmentedImmeubles === null) {
+                                $scope.elfins = augmentedImmeubles;
+                                $scope.elfinsCount = 0;
+                            } else {
+                                $scope.elfins = augmentedImmeubles;
+                                $scope.elfinsCount = augmentedImmeubles.length;
+                            }
+                        }, function (message) {
+                            hbAlertMessages.addAlert("danger", message);
+                        });
+                } else if ($scope.collectionId === HB_COLLECTIONS.CONSTAT_ID) {
+					hbQueryService.getAugmentedConstats($routeParams.xpath)
+						.then(function(augmentedConstats) {
+                            if (augmentedConstats === null) {
+                                $scope.elfins = augmentedConstats;
+                                $scope.elfinsCount = 0;
+                            } else {
+                                $scope.elfins = augmentedConstats;
+                                $scope.elfinsCount = augmentedConstats.length;
+                            }
+						}, function(message) {
+                            hbAlertMessages.addAlert("danger", message);
+                        });
         		} else {
         			// Generic ELFIN collection call
 	                GeoxmlService.getCollection($scope.collectionId).getList({"xpath" : $routeParams.xpath})

@@ -500,16 +500,22 @@
 	            	if (!angular.isUndefined(constat.PARTENAIRE) && !angular.isUndefined(constat.PARTENAIRE.USAGER) && !angular.isUndefined(constat.PARTENAIRE.USAGER.VALUE)) {
 	            		currentPartnerUser = constat.PARTENAIRE.USAGER.VALUE;
 	            	}
+
+	            	var immeubleAdresse = undefined;
+	            	if (!!constat.immeuble) {
+                        immeubleAdresse = constat.immeuble.IDENTIFIANT.ALIAS;
+                    }
+
                     if ( 
                     	 icontains(currentlastResp, predicate.last_resp) &&
                     	 icontains(constat.IDENTIFIANT.DE, predicate.constat_date) &&
+						 icontains(immeubleAdresse, predicate.immeuble_adresse) &&
                     	 icontains(constat.IDENTIFIANT.NOM, predicate.description) &&                    	 
                     	 icontains(currentPartnerUser, predicate.partenaire_usager) && 
                     	 icontains(constat.GROUPE, predicate.constat_group) &&
                     	 icontains(constat.IDENTIFIANT.OBJECTIF, predicate.constat_noSAI)
                     ) {
                     	tempConstats.push(constat);
-                    	
                     }
                 });
 	            return tempConstats;

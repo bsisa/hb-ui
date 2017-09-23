@@ -105,7 +105,40 @@
 		 */		
 		var getConstats = function(xpath) {		
 	        return getList(HB_COLLECTIONS.CONSTAT_ID,xpath);
-		};	
+		};
+
+		var getAugmentedConstats = function(xpath){
+            var deferred = $q.defer();
+
+            getConstats(xpath)
+                .then(function(constatsElfins) {
+                    $log.debug(">>>> getAugmentedConstats - constatsElfins.length = " + constatsElfins.length);
+                    var augmentedConstats = [];
+
+                    // Augment with source immeuble
+                    constatsElfins.forEach(function(constat) {
+                        if (!!constat.SOURCE) {
+                            loadSourceElfin(constat.SOURCE,
+                                function (immeuble) {
+                                    constat.immeuble = immeuble;
+                                },
+                                function () {
+                                    constat.immeuble = null;
+                                });
+                        } else {
+                            constat.immeuble = null;
+                        }
+                        augmentedConstats.push(constat);
+                        deferred.resolve(augmentedConstats);
+                    });
+                }, function(response) {
+                    var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
+                    // Return error message as a promise
+                    deferred.reject(message);
+                });
+
+            return deferred.promise;
+		};
 		
 		
 		/**
@@ -397,6 +430,7 @@
         	getCommandes:getCommandes,
         	getCommandesForSource:getCommandesForSource,
         	getConstats:getConstats,
+            getAugmentedConstats: getAugmentedConstats,
         	getContrats:getContrats,
         	getEquipementList:getEquipementList,
         	getEquipementsSportifs:getEquipementsSportifs,
