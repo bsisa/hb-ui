@@ -563,6 +563,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             th.col-sm-1 Date
                                                             th.col-sm-2 Montant
                                                             th.col-sm-4 Fournisseur
+                                                            th
 
                                                     tbody(ng-show="commandes")
                                                         tr(ng-repeat="commande in commandes", ng-init="totalRes = hbUtil.getOrderTotalNetInclTaxes(commande)")
@@ -583,6 +584,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 | -
                                                             td
                                                                 | {{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}
+                                                            td.center
+                                                                i.icon.icon-info-sign(tooltip="{{commande.CARACTERISTIQUE.CAR1.VALEUR}}", tooltip-placement="left")
                                 // COMMANDES 2nd sub tab
                                 // COMMANDES 3rd sub tab
 
@@ -619,6 +622,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 a(href="", ng-click="contractPredicate = 'IDENTIFIANT.VALEUR'; contractReverse=!contractReverse") Montant
                                                             th
                                                                 a(href="", ng-click="contractPredicate = 'GROUPE'; contractReverse=!contractReverse") Groupe
+                                                            th
 
                                                     tbody(ng-show="contrats")
                                                         tr(ng-repeat="contrat in contrats | contractTerminatedListFilter:false | orderBy:contractPredicate:contractReverse")
@@ -636,6 +640,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 span {{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}
                                                             td
                                                                 span {{contrat.GROUPE}}
+                                                            th
+                                                                i.icon.icon-info-sign(tooltip="{{contrat.DIVERS.REMARQUE}}", tooltip-placement="left")
 
                                 // CONTRAT 2nd sub tab
                                 tab(active="tabState.contrat_subtab_denonces.active")
