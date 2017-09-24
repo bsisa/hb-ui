@@ -727,7 +727,9 @@
         $scope.activateJob = function(job) {
 
         	//$log.debug(">>>>>>>>>>>>>>>>> activateJob called " + job.IDENTIFIANT.NOM +" <<<<<<<<<<<<<<<<<<<<");
-        	
+
+            var previousJob = $scope.activeJob;
+
         	$scope.activeJob = job;
             hbPrintService.setActiveJob($scope.activeJob);
 
@@ -817,12 +819,18 @@
             
             // Get path from selected job configuration
             var dashboardUri = hbUtil.getDashboarUri(job);
+            var previousDashboardUri = !!previousJob ? hbUtil.getDashboarUri(previousJob) : dashboardUri;
 
    			// Redefine searchObj as empty to get rid of sticky URL parameters 
    			// Note former solution $location.url($location.path(dashboardUri)); 
    			// to this problem triggers an unwanted reload of welcome page
     		var searchObj = {};
-			$location.search(searchObj).path( dashboardUri );
+
+    		if (dashboardUri !== previousDashboardUri) {
+                $location.search(searchObj).path(dashboardUri);
+            } else {
+                $location.search(searchObj);
+            }
         };
 
     }]);
