@@ -634,6 +634,9 @@
 
                                 hbQueryService.getLocationUnits(xpathForSurfaces)
                                     .then(function (elfins) {
+                                            elfins.forEach(function(elfin) {
+                                                 elfin.CARSET_CAR_POS_2 = hbUtil.getCARByPos(elfin, 2);
+                                            });
                                             $scope.locationUnits = elfins;
                                         },
                                         function (response) {

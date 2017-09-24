@@ -366,6 +366,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             th
                                                                 a(href="", ng-click="locUnitPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitReverse=!locUnitReverse") No SAI
                                                             th
+                                                                a(href="", ng-click="locUnitPredicate = 'CARSET_CAR_POS_2.VALEUR'; locUnitReverse=!locUnitReverse") No AbaImmo
+                                                            th
                                                                 a(href="", ng-click="locUnitPredicate = 'GROUPE'; locUnitReverse=!locUnitReverse") Groupe
                                                             th
                                                                 a(href="", ng-click="locUnitPredicate = 'PARTENAIRE.USAGER.VALUE'; locUnitReverse=!locUnitReverse") Locataire
@@ -380,6 +382,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 div(hb-card-view-link, hb-href="/elfin/{{locationUnit.ID_G}}/SURFACE/{{locationUnit.Id}}")
                                                             td
                                                                 span {{locationUnit.IDENTIFIANT.OBJECTIF}}
+                                                            td
+                                                                span {{ locationUnit.CARSET_CAR_POS_2.VALEUR }}
                                                             td
                                                                 span {{locationUnit.GROUPE}}
                                                             td
