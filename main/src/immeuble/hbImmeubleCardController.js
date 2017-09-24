@@ -350,11 +350,15 @@
                                                     // Currently the exact same computation is performed in hbImmeubleCard.html view as:
                                                     // {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
 
-                                                    // Manualy flatten $scope.transactions
+                                                    // Manually flatten $scope.transactions
                                                     for (var j = 0; j < transactionElfins.length; j++) {
                                                         var currTrans = transactionElfins[j];
                                                         // Add single depth property copy of OBJECTIF to allow $filter usage (see: hbImmeubleCard.html)
-                                                        currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF;
+                                                        if (!$scope.useSource.value) {
+                                                            currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF;
+                                                        } else {
+                                                            currTrans.PRESTATION_ID = currPrestation.Id;
+                                                        }
                                                         $scope.transactions.push(currTrans);
                                                     }
                                                 },

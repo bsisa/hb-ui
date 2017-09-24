@@ -473,7 +473,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td.number
                                                                 span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
                                                             td.number
-                                                                span {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
+                                                                span(ng-if="useSource.value") {{transactions | filter:{ PRESTATION_ID : prestation.Id }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
+                                                                span(ng-if="!useSource.value") {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
 
                                 // PRESTATION 1st tab
                                 tab(active="tabState.prestation_subtab_annee_plus1.active")
