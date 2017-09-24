@@ -1,0 +1,116 @@
+div(hb-card-header)
+    // Custom validation message to be defined here
+    span(ng-show="elfinForm.nom.$error.required")
+        != "Le champ <strong>No de contrat</strong> est obligatoire !"
+    span(ng-show="elfinForm.objectif.$error.required")
+        != "Le champ <strong>Immeuble</strong> est obligatoire !"
+    span(ng-show="elfinForm.fournisseur_valeur.$error.required")
+        != "Le champ <strong>Entreprise</strong> est obligatoire !"
+    span(ng-show="elfinForm.fournisseur_valeur.$error.required")
+        != "Le champ <strong>Entreprise</strong> est obligatoire !"
+    span(ng-show="elfinForm.valeur.$error.number")
+        != "Le champ <strong>Montant</strong> doit être un nombre valide !"
+
+div.row(style="padding-top: 8px;")
+    div.col-xs-12
+        tabset
+            // ui.bootstrap AngularJS UI tabset
+            // ATTRIBUTS tab
+            tab
+                tab-heading Contrat
+                div.hb-tab
+                    div.row
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.nom)")
+                            label.col-sm-4.control-label(for="nom") No de contrat
+                            div.col-sm-8
+                                input.form-control#nom(name="nom", type="text", ng-model="elfin.IDENTIFIANT.NOM", required)
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.objectif)")
+                            label.col-sm-4.control-label(for="objectif")
+                                div(style="display: inline-block !important;", hb-building-select-link, hb-building-select-source="elfin", hb-building-select-target="parentElfin") affecter
+                                | &nbsp;{{ parentElfin.CLASSE | capitalise }}
+                            div.col-sm-8(ng-if="(parentElfin.IDENTIFIANT.OBJECTIF.trim().length > 0 ? true : false)")
+                                p#objectif.form-control-static {{ parentElfin.IDENTIFIANT.OBJECTIF }}, {{ parentElfin.IDENTIFIANT.ALIAS }}
+
+                        div.form-group.has-feedback.col-sm-12(ng-class="getCssHasFeedback(elfinForm.fournisseur_valeur)")
+                            label.col-sm-2.control-label(for="fournisseur_valeur") Entreprise
+                            div.col-sm-9
+                                div.input-group
+                                    input.form-control#fournisseur_valeur(name="fournisseur_valeur", type="text",
+                                        hb-no-dirty-check, autocomplete="off", typeahead="actor.GROUPE for actor in entrepriseActors | filter:$viewValue ",
+                                        ng-model="elfin.PARTENAIRE.FOURNISSEUR.VALUE", required)
+                                    span.input-group-btn(tooltip="Recherche d'entreprise")
+                                        button.btn.btn-default(type="button", hb-choose-one,
+                                            ng-click="hbChooseOne(elfin, 'PARTENAIRE.FOURNISSEUR.VALUE', entrepriseActors, 'GROUPE', actorChooseOneColumnsDefinition, actorChooseOneTemplate )")
+                                            i.glyphicon.glyphicon-list-alt
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.dateFrom)")
+                            label.col-sm-4.control-label(for="dateFrom") Date de début
+                            div.col-sm-8
+                                div#dateFrom(hb-date, name="dateFrom", ng-model="elfin.IDENTIFIANT.DE")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.datePar)")
+                            label.col-sm-4.control-label(for="datePar") Date de fin
+                            div.col-sm-8
+                                div#datePar(hb-date, name="datePar", ng-model="elfin.IDENTIFIANT.PAR")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.dateTo)")
+                            label.col-sm-4.control-label(for="dateTo") Dénoncé au
+                            div.col-sm-8
+                                div#dateTo(hb-date, name="dateTo", ng-model="elfin.IDENTIFIANT.A")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.valeur)")
+                            label.col-sm-4.control-label(for="valeur") Montant
+                            div.col-sm-8
+                                input.form-control#valeur(name="valeur", type="text", ng-model="elfin.IDENTIFIANT.VALEUR", format-currency-number)
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.car3_valeur)")
+                            label.col-sm-6.control-label(for="car3_valeur") Durée de la reconduction (ans)
+                            div.col-sm-6
+                                input.form-control#car3_valeur(name="car3_valeur", type="text", ng-model="elfin.CARACTERISTIQUE.CAR3.VALEUR", ng-pattern="/^[0-9]*$/")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.car4_valeur)")
+                            label.col-sm-6.control-label(for="car4_valeur") Délais de préavis (mois)
+                            div.col-sm-6
+                                input.form-control#car4_valeur(name="car4_valeur", type="text",ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR", ng-pattern="/^[0-9]*$/")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.car5_valeur)")
+                            label.col-sm-6.control-label(for="car5_valeur") Nombre d'intervention (par année)
+                            div.col-sm-6
+                                input.form-control#car5_valeur(name="car5_valeur", type="text", ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.usager_value)")
+                            label.col-sm-4.control-label(for="usager_value") Qui commande ?
+                            div.col-sm-8
+                                input.form-control#usager_value(name="usager_value", type="text", ng-model="elfin.PARTENAIRE.USAGER.VALUE")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.groupe)")
+                            label.col-sm-4.control-label(for="groupe") Groupe
+                            div.col-sm-8
+                                div#groupe(hb-single-select, hb-single-select-options="groupeChoices", ng-model="elfin.GROUPE")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.proprietaire_value)")
+                            label.col-sm-4.control-label(for="proprietaire_value") A la charge de qui ?
+                            div.col-sm-8
+                                input.form-control#proprietaire_value(name="proprietaire_value", type="text", ng-model="elfin.PARTENAIRE.PROPRIETAIRE.VALUE")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.prestation_I)")
+                            label.col-sm-4.control-label(for="prestation_I") Prestation I
+                            div.col-sm-8
+                                div#prestation_I(hb-single-select, hb-single-select-options="prestation_IChoices", ng-model="elfin.CARACTERISTIQUE.CAR1.UNITE")
+
+                        div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.prestation_II)")
+                            label.col-sm-4.control-label(for="prestation_II") Prestation II
+                            div.col-sm-8
+                                div#prestation_II(hb-single-select, hb-single-select-options="prestation_IIChoices", ng-model="elfin.CARACTERISTIQUE.CAR1.VALEUR")
+
+                        div.form-group.has-feedback.col-sm-12(ng-class="getCssHasFeedback(elfinForm.remarque)")
+                            label.col-sm-2.control-label(for="remarque") Remarque
+                            div.col-sm-9
+                                input.form-control#remarque(name="remarque", type="text", ng-model="elfin.DIVERS.REMARQUE")
+
+            tab
+                tab-heading
+                    div(hb-annexes-number)
+                div(hb-tab)
+                    div(hb-annexes-component)
