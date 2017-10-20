@@ -97,40 +97,40 @@ div.row(style="padding-top: 8px;")
                                 // COMMANDES 1st sub tab
                                 tab(active="tabState.commande_subtab_ouvertes.active")
                                     tab-heading Commandes
-                                        div.hb-tab
-                                            div.row
-                                                div.col-sm-12
-                                                    // Table des commandes ouvertes
-                                                    table.table.table-condensed.table-bordered.table-striped
-                                                        thead
-                                                            tr
-                                                                th(colspan="2") Commande
-                                                                th.col-sm-2 N° commande
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                // Table des commandes ouvertes
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th(colspan="2") Commande
+                                                            th.col-sm-2 N° commande
                                                                 th.col-sm-1 Code CFC
-                                                                th.col-sm-1 Date
-                                                                th.col-sm-2 Montant
-                                                                th.col-sm-4 Fournisseur
-                                                                // th.col-sm-2 Description
-                                                        tbody(ng-show="commandes")
-                                                            tr(ng-repeat="commande in commandes")
-                                                                td
-                                                                    div(hb-card-view-link, hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}")
-                                                                td
-                                                                    div(hb-annexes-link, hb-annexes-link-elfin="commande")
-                                                                // Order nb
-                                                                td.number
-                                                                    span(ng-if="commande.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT") {{commande.CARACTERISTIQUE.CAR5.VALEUR}} /&nbsp;
-                                                                    | {{commande.IDENTIFIANT.NOM}}
-                                                                // CFC code
-                                                                td {{commande.GROUPE}}
-                                                                // Estimation/Quote date
-                                                                td.date {{commande.IDENTIFIANT.DE}}
-                                                                // Amount
-                                                                td.number {{commande.IDENTIFIANT.VALEUR | currency:'CHF'}}
-                                                                // Enterprise name
-                                                                td {{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}
-                                                                // Order description...
-                                                                // td {{commande.DIVERS.REMARQUE}}
+                                                            th.col-sm-1 Date
+                                                            th.col-sm-2 Montant
+                                                            th.col-sm-4 Fournisseur
+                                                            // th.col-sm-2 Description
+                                                    tbody(ng-show="commandes")
+                                                        tr(ng-repeat="commande in commandes")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}")
+                                                            td
+                                                                div(hb-annexes-link, hb-annexes-link-elfin="commande")
+                                                            // Order nb
+                                                            td.number
+                                                                span(ng-if="commande.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT") {{commande.CARACTERISTIQUE.CAR5.VALEUR}} /&nbsp;
+                                                                | {{commande.IDENTIFIANT.NOM}}
+                                                            // CFC code
+                                                            td {{commande.GROUPE}}
+                                                            // Estimation/Quote date
+                                                            td.date {{commande.IDENTIFIANT.DE}}
+                                                            // Amount
+                                                            td.number {{commande.IDENTIFIANT.VALEUR | currency:'CHF'}}
+                                                            // Enterprise name
+                                                            td {{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}
+                                                            // Order description...
+                                                            // td {{commande.DIVERS.REMARQUE}}
 
                                 tab(select="createNewCommande()", ng-show="!createMode")
                                     tab-heading(tooltip="Créer une nouvelle commande relative à l'objet courant", tooltip-popup-delay="1000")
