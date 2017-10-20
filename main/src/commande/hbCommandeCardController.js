@@ -69,6 +69,8 @@
 								 * Set respActorModel.Id to undefined to prevent validation activation if unused.
 								 */
 								$scope.respActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""}; //
+								$scope.signataireActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""}; //
+
 								
 								/**
 								 * Proceed with CARACTERISTIQUE.FRACTION.L update depending on order type selection.
@@ -246,7 +248,14 @@
 									if (newResp.Id !== undefined) {
 										$scope.elfin.IDENTIFIANT.RES = newResp.ID_G + "/ACTEUR/" + newResp.Id;
 									}
-								}, true);								
+								}, true);
+
+								$scope.$watch("signataireActorModel", function(newSignataire) {
+                                    if (newSignataire.Id !== undefined) {
+                                        $scope.CARSET_CAR_POS_5.VALEUR = newSignataire.ID_G + "/ACTEUR/" + newSignataire.Id;
+                                    }
+                                }, true);
+
 								
 								$scope.$watch('selected.objectsSelectionType', function(toType,fromType) {
 									
@@ -488,15 +497,35 @@
 									} else {
 										$log.debug("newQualite : NULL or length === 0");
 									}
-								}, true);																
-								
-								
+								}, true);
+
+
+                                /**
+                                 * Helper function to link and if necessary create CAR elements by position.
+                                 */
+                                var linkCARByPos = function (pos) {
+                                    // Link CAR by pos to currentCAR variable. If not found currentCAR === undefined
+                                    var currentCAR = hbUtil.getCARByPos($scope.elfin, pos);
+                                    // If currentCAR undefined
+                                    if (!currentCAR) {
+                                        // Create missing CAR for position pos
+                                        //$log.debug(">>>> Create missing CAR for position pos = " + pos);
+                                        $scope.elfin.CARACTERISTIQUE.CARSET.CAR.splice(pos - 1, 0, {"VALEUR": "", "POS": pos});
+                                        // Link newly created CAR by pos to currentCAR variable
+                                        currentCAR = hbUtil.getCARByPos($scope.elfin, pos);
+                                    }
+                                    return currentCAR;
+                                };
+
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
 					             */
 						    	$scope.$watch('elfin.Id', function() { 
 
 						    		if ($scope.elfin!==null) {
+
+                                        // Valeur ECAP
+                                        $scope.CARSET_CAR_POS_5 = linkCARByPos(5);
 
 						    			updateIsReadOnlyStatus();
 						    			
@@ -523,6 +552,16 @@
 						    				$log.debug(">>>> respActorModelRef defined !   = " + angular.toJson(respActorModelRef));
 						    				$scope.respActorModel = {Id : respActorModelRef.Id, ID_G : respActorModelRef.ID_G, GROUPE : "", NOM : ""};
 						    			}
+
+						    			var signataireActorModelRef = hbUtil.getIdentifiersFromStandardSourceURI($scope.CARSET_CAR_POS_5.VALEUR);
+						    			if (signataireActorModelRef === undefined) {
+                                            $log.debug(">>>> signataireActorModelRef undefined ! = " + angular.toJson(signataireActorModelRef));
+                                            $scope.signataireActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""};
+										} else {
+                                            $log.debug(">>>> signataireActorModelRef defined !   = " + angular.toJson(signataireActorModelRef));
+                                            $scope.signataireActorModel = {Id : signataireActorModelRef.Id, ID_G : signataireActorModelRef.ID_G, GROUPE : "", NOM : ""};
+                                        }
+
 						    			
 						    			// Supports create mode and avoids repeating selected.initialised setting 
 						    			var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.SOURCE);
