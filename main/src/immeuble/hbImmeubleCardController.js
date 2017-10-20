@@ -336,6 +336,13 @@
                             .then(function (elfins) {
                                     $scope.prestations = elfins;
 
+                                    var prestationsBySource = {};
+                                    _.each(elfins, function(elfin) {
+                                        var source =  elfin.ID_G + "/" + elfin.CLASSE + "/" + elfin.Id;
+                                        prestationsBySource[source] = elfin;
+                                    });
+
+
                                     var filteredPrestations = $filter('prestationListFilter')($scope.prestations, $scope.currentYearAndFormerPrestationSearch, true);
                                     // Store transactions for current year and previous year prestations.
                                     $scope.transactions = [];
@@ -357,7 +364,7 @@
                                                         if (!$scope.useSource.value) {
                                                             currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF;
                                                         } else {
-                                                            currTrans.PRESTATION_ID = currPrestation.Id;
+                                                            currTrans.PRESTATION_ID = prestationsBySource[currTrans.SOURCE].Id;
                                                         }
                                                         $scope.transactions.push(currTrans);
                                                     }
