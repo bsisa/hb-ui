@@ -119,7 +119,20 @@
         			}, function(message) {
         	            hbAlertMessages.addAlert("danger",message);
         	        });	
-        		} else {
+        		} else if ($scope.collectionId === HB_COLLECTIONS.CONSTAT_ID) {
+                    hbQueryService.getAugmentedConstats($routeParams.xpath)
+                        .then(function(augmentedConstats) {
+                            if (augmentedConstats === null) {
+                                $scope.elfins = augmentedConstats;
+                                $scope.elfinsCount = 0;
+                            } else {
+                                $scope.elfins = augmentedConstats;
+                                $scope.elfinsCount = augmentedConstats.length;
+                            }
+                        }, function(message) {
+                            hbAlertMessages.addAlert("danger", message);
+                        });
+                } else {
         			// Generic ELFIN collection call        		
 	                GeoxmlService.getCollection($scope.collectionId).getList({"xpath" : elfinClasseXpathRestriction})
 	                .then(function(elfins) {

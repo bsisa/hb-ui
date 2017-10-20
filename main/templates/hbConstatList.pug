@@ -29,6 +29,12 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                 div.form-group
                     div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
                         input.form-control(type="text", ng-model="search.immeuble_adresse", hb-no-dirty-check, placeholder="")
+
+            th
+                div.form-group
+                    div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                        input.form-control(type="text", ng-model="search.description", hb-no-dirty-check, placeholder="")
+
             th
                 div.form-group
                     div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
@@ -44,12 +50,8 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                     div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
                         input.form-control(type="text", ng-model="search.constat_noSAI", hb-no-dirty-check, placeholder="")
 
-            th
-            th
-            th
-            th
-            th
-            th
+            th(colspan="6")
+
 
         tr
             th Tri
@@ -67,6 +69,7 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                 a(href="", ng-click="predicate = 'GROUPE'; reverse=!reverse") Type
             th
                 a(href="", ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse") No SAI
+
             th Analyse
             th Avant-Projet
             th Adjudication
@@ -86,6 +89,7 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
             td {{ elfin.GROUPE }}
             td {{ elfin.IDENTIFIANT.OBJECTIF }}
 
+            // Analyse
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Analyse'} ")
                     span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
@@ -104,6 +108,7 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                     span(ng-if="!$last")
                         br
 
+            // Avant-Projet
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Avant-Projet'} ")
                     span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
@@ -125,6 +130,7 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                     span(ng-if="!$last")
                         br
 
+            // Adjudication
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Appel d offre et Adjudication'} ")
                     span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
@@ -146,6 +152,7 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                     span(ng-if="!$last")
                         br
 
+            // Exécution
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Exécution'} ")
                     span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
@@ -167,6 +174,7 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                     span(ng-if="!$last")
                         br
 
+            // Réception
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE | filter:{ACTION:'Réception'} ")
                     span.btn.btn-success.btn-block.bg-light-blue(ng-if="echeance.PAR_QUI == 'VALIDE'")
@@ -188,6 +196,7 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                     span(ng-if="!$last")
                         br
 
+            // Planning
             td
                 span(ng-repeat="echeance in elfin.ACTIVITE.EVENEMENT.ECHEANCE")
                     span.btn.btn-danger.btn-block(ng-if="echeance.PAR_QUI == 'EN COURS'")
