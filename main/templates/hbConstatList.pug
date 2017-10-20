@@ -57,9 +57,8 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                 a(href="", ng-click="predicate = 'ACTIVITE.EVENEMENT.ECHEANCE[ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI'; reverse=!reverse") Resp
             th
                 a(href="", ng-click="predicate = 'IDENTIFIANT.DE'; reverse=!reverse") Constaté le
-
-            th Adresse
-
+            th
+                a(href="", ng-click="predicate = 'immeuble.IDENTIFIANT.ALIAS'; reverse=!reverse") Adresse
             th
                 a(href="", ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse") Descriptif
             th
