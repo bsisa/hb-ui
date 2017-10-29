@@ -801,11 +801,12 @@
 						        /**
 						         * TEst PYS impression vers Excel.
 						         */
-						        $scope.printEntrepriseContractReportExcel = function (elfin) {
-						        	var reportUrl = "/api/melfin/spreadsheet/Commande-Modele.xls?Id=" + elfin.Id;
-					        		$window.open(reportUrl);	
+						        $scope.printContractReportExcel = function (elfin) {
+						        	var reportModel = elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONTRACT ?
+										"Commande-Modele-contrat.xls" : "Commande-Modele-confirmation.xls";
 
-						        	
+						        	var reportUrl = "/api/melfin/spreadsheet/"+ reportModel + "?Id=" + elfin.Id;
+					        		$window.open(reportUrl);
 						        };
 						        /**
 						         * Prints order confirmation.
