@@ -100,7 +100,6 @@
 									}
 								};								
 
-								
 								/**
 								 * Update current COMMANDE SOURCE information detecting whether 
 								 * creation context is linked to IMMEUBLE or SURFACE. 
@@ -110,10 +109,13 @@
 										$scope.elfin.SOURCE = $scope.selected.surface.ID_G + "/" + $scope.selected.surface.CLASSE + "/" + $scope.selected.surface.Id;
 										// Set order (COMMANDE) ALIAS to SURFACE OBJECTIF (no SAI - no object)
 										$scope.elfin.IDENTIFIANT.ALIAS = $scope.selected.surface.IDENTIFIANT.OBJECTIF;
+										$scope.elfin.IDENTIFIANT.OBJECTIF = hbUtil.getCARByPos($scope.selected.surface, 2).VALEUR;
 									} else if ($scope.selected.building !== null && $scope.selected.building.Id) {
 										$log.debug("/!\ updateSource NO selected.surface.Id /!\ ");
-										$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;		
-										// TODO: review if it is the best place to reset ALIAS ? 
+										$scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;
+                                        $scope.elfin.IDENTIFIANT.OBJECTIF = hbUtil.getCARByPos($scope.selected.building, 2).VALEUR;
+
+                                        // TODO: review if it is the best place to reset ALIAS ?
 									} else {
 										$log.debug("No relevant information to perform SOURCE update. Reset it to blank.");
 										$scope.elfin.SOURCE = "";
@@ -291,7 +293,9 @@
 											updateSource();
 											
 											// Set order (COMMANDE) OBJECTIF to building (IMMEUBLE) OBJECTIF (no SAI)
-											$scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.IDENTIFIANT.OBJECTIF;
+											// $scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.IDENTIFIANT.OBJECTIF;
+                                            // $scope.elfin.IDENTIFIANT.OBJECTIF = hbUtil.getCARByPos($scope.selected.building, "2");
+
 
 											// Set order ORIGINE to building (IMMEUBLE) NOM (No construction)
 											$scope.elfin.IDENTIFIANT.ORIGINE = $scope.selected.building.IDENTIFIANT.NOM;
@@ -596,7 +600,6 @@
 												$scope.elfin.IDENTIFIANT.ORIGINE = "";
 
 												// CFC code
-												$scope.elfin.GROUPE = "";
 												$scope.elfin.GROUPE = "";
 
 												// Default value from catalogue contains repartition list: Reset it.
