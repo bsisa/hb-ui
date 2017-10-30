@@ -123,6 +123,9 @@
 															a.PARTENAIRE.PROPRIETAIRE.NOM < b.PARTENAIRE.PROPRIETAIRE.NOM ? -1 : 
 																a.PARTENAIRE.PROPRIETAIRE.NOM > b.PARTENAIRE.PROPRIETAIRE.NOM ? 1 :	0;
 					            });
+								buildings.forEach(function(building) {
+									building.CARSET_CAR_POS_2 = hbUtil.getCARByPos(building, 2);
+								});
 								$scope.buildings =  buildings;
 								$scope.buildingsLoaded = true;
 							},
@@ -146,7 +149,11 @@
 				                    	return $scope.buildings;
 				                    },
 				                    columnsDefinition: function() {
-				                    	return [ { field:"IDENTIFIANT.OBJECTIF", displayName: "No SAI"}, { field:"IDENTIFIANT.ALIAS", displayName: "Adresse"}, { field: "IDENTIFIANT.NOM", displayName: "No de constr."}, { field:"PARTENAIRE.PROPRIETAIRE.NOM", displayName: "Propriétaire"} ];
+				                    	return [
+				                    		{ field:"CARSET_CAR_POS_2.VALEUR", displayName: "No AbaImmo"},
+											{ field:"IDENTIFIANT.ALIAS", displayName: "Adresse"},
+											{ field: "IDENTIFIANT.NOM", displayName: "No de constr."},
+											{ field:"PARTENAIRE.PROPRIETAIRE.NOM", displayName: "Propriétaire"} ];
 				                    }
 				                },                
 				                backdrop: 'static'
