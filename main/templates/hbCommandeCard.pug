@@ -9,7 +9,7 @@ div(hb-card-header)
         li(ng-show="elfinForm.fournisseur.$error.editable")
             != 'Le <strong>fournisseur</strong> doit être saisi à partir de la liste de sélection'
         li(ng-show="elfinForm.objectif.$error.required")
-            != 'Le <strong>No SAI</strong> est obligatoire!'
+            != 'Le <strong>No AbaImmo</strong> est obligatoire!'
 
 div.row(style="padding-top: 8px;")
     div.col-xs-12
@@ -55,7 +55,7 @@ div.row(style="padding-top: 8px;")
 
                             div.form-group.has-feedback(ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE)", ng-class="getCssHasFeedback(elfinForm.resp)")
                                 div.row
-                                    label.col-sm-4.control-label(for="resp") &nbsp;
+                                    label.col-sm-4.control-label(for="resp") Responsable
                                     div.col-sm-8
                                         div(ng-show="!isReadOnly",
                                             hb-choose-actor,
@@ -69,20 +69,22 @@ div.row(style="padding-top: 8px;")
                                         div(ng-show="isReadOnly", style="border: solid 1px white;")
                                             p.form-control-static {{respActorElfinModel.IDENTIFIANT.NOM}} - {{respActorElfinModel.GROUPE}}
 
+                            div.form-group
                                 div.row
-                                    label.col-sm-4.control-label(for="respRole") {{respActorElfinModel.CARACTERISTIQUE.CAR6.NOM}}
+                                    label.col-sm-4.control-label(for="executive") Affaire traitée par
                                     div.col-sm-8
-                                        div.form-control-static#respRole {{getRole(respActorElfinModel)}}
+                                        div(ng-show="!isReadOnly",
+                                        hb-choose-actor,
+                                        hb-choose-actor-id-name="executiveAct",
+                                        hb-choose-actor-elfin-form="elfinForm",
+                                        hb-choose-actor-model="executiveActorModel",
+                                        hb-choose-actor-elfin-model="executiveActorElfinModel",
+                                        hb-choose-actor-tooltip="Recherche de collaborateur",
+                                        hb-choose-actor-role="Collaborateur",
+                                        hb-choose-actor-editable="true")
+                                        div(ng-show="isReadOnly", style="border: solid 1px white;")
+                                            p.form-control-static {{executiveActorElfinModel.IDENTIFIANT.NOM}} - {{executiveActorElfinModel.GROUPE}}
 
-                                div.row
-                                    label.col-sm-4.control-label(for="respPhone") {{respActorElfinModel.CARACTERISTIQUE.CAR4.NOM}}
-                                    div.col-sm-8
-                                        div.form-control-static#respPhone {{getPhone(respActorElfinModel)}}
-
-                                div.row
-                                    label.col-sm-4.control-label(for="respEmail") {{respActorElfinModel.CARACTERISTIQUE.CAR5.NOM}}
-                                    div.col-sm-8
-                                        div.form-control-static#respEmail {{getEmail(respActorElfinModel)}}
 
                         <!-- 2nd column -->
                         div.col-sm-6
@@ -93,7 +95,7 @@ div.row(style="padding-top: 8px;")
                                     p.form-control-static(ng-if="isReadOnly") {{selected.objectsSelectionType}}
 
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.objectif)")
-                                label.col-sm-4.control-label(for="building") No SAI
+                                label.col-sm-4.control-label(for="building") No AbaImmo
                                 div.col-sm-8(ng-show="!isReadOnly && (selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_IMMEUBLE)")
                                     div(hb-choose-building,
                                         hb-choose-building-id-name="building",
@@ -102,7 +104,7 @@ div.row(style="padding-top: 8px;")
                                         hb-choose-building-tooltip="Recherche d'immeuble",
                                         hb-choose-building-editable="{{!isReadOnly}}")
                                 div.col-sm-8(ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_IMMEUBLE)")
-                                    p.form-control-static {{selected.building.IDENTIFIANT.OBJECTIF}} - {{selected.building.IDENTIFIANT.ALIAS}} - {{selected.building.PARTENAIRE.PROPRIETAIRE.NOM}}
+                                    p.form-control-static {{selected.building.CARSET_CAR_POS_2.VALEUR}} - {{selected.building.IDENTIFIANT.ALIAS}} - {{selected.building.PARTENAIRE.PROPRIETAIRE.NOM}}
                                 input.form-control#objectif(ng-show="false", name="objectif", autocomplete="off", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-required="validate")
 
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.surface)")
@@ -115,7 +117,7 @@ div.row(style="padding-top: 8px;")
                                         hb-choose-surface-tooltip="Recherche d'unité locative",
                                         hb-choose-surface-editable="{{!isReadOnly}}")
                                 div.col-sm-8(ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_SURFACE)")
-                                    p.form-control-static {{selected.surface.IDENTIFIANT.OBJECTIF}} - {{selected.surface.PARTENAIRE.USAGER.VALUE}}
+                                    p.form-control-static {{selected.surface.CARSET_CAR_POS_2.VALEUR}} - {{selected.surface.PARTENAIRE.USAGER.VALUE}}
 
                             div.form-group.has-feedback(ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.PURCHASE", ng-class="getCssHasFeedback(elfinForm.groupe)")
                                 label.col-sm-4.control-label(for="code") Code CFC

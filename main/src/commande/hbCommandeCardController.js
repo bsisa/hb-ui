@@ -70,6 +70,7 @@
 								 */
 								$scope.respActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""}; //
 								$scope.signataireActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""}; //
+                                $scope.executiveActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""}; //
 
 								
 								/**
@@ -136,7 +137,8 @@
 							        		hbUtil.reorderArrayByPOS(surfaceElfin['CARACTERISTIQUE']['CARSET']['CAR']);
 							        	}
 						    			$scope.selected.surface = surfaceElfin;
-						    			var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI(surfaceElfin.SOURCE);
+                                        $scope.selected.surface.CARSET_CAR_POS_2 = hbUtil.getCARByPos($scope.selected.surface, 2);
+                                        var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI(surfaceElfin.SOURCE);
 						    			// Also manages $scope.selected.initialised state
 						    			setSelectedBuilding(selectedParentIds.ID_G,selectedParentIds.Id);
 							        }, function(response) {
@@ -159,7 +161,8 @@
 							        		hbUtil.reorderArrayByPOS(buildingElfin['CARACTERISTIQUE']['CARSET']['CAR']);
 							        	}
 						    			$scope.selected.building = buildingElfin;
-						    			// Stop waiting for building initialisation once obtained.
+                                        $scope.selected.building.CARSET_CAR_POS_2 = hbUtil.getCARByPos($scope.selected.building, 2);
+                                        // Stop waiting for building initialisation once obtained.
 						    			$scope.selected.initialised = true;
 							        }, function(response) {
 							        	var message = "Aucun object IMMEUBLE disponible pour la collection: " + ID_G + " et l'identifiant: " + Id + ".";
@@ -255,6 +258,12 @@
 								$scope.$watch("signataireActorModel", function(newSignataire) {
                                     if (newSignataire.Id !== undefined) {
                                         $scope.CARSET_CAR_POS_5.VALEUR = newSignataire.ID_G + "/ACTEUR/" + newSignataire.Id;
+                                    }
+                                }, true);
+
+                                $scope.$watch("executiveActorModel", function(newExecutive) {
+                                    if (newExecutive.Id !== undefined) {
+                                        $scope.CARSET_CAR_POS_4.VALEUR = newExecutive.ID_G + "/ACTEUR/" + newExecutive.Id;
                                     }
                                 }, true);
 
@@ -528,7 +537,9 @@
 
 						    		if ($scope.elfin!==null) {
 
-                                        // Valeur ECAP
+						    		    // VAleur Executive
+                                        $scope.CARSET_CAR_POS_4 = linkCARByPos(4);
+                                        // Valeur Signataire
                                         $scope.CARSET_CAR_POS_5 = linkCARByPos(5);
 
 						    			updateIsReadOnlyStatus();
@@ -566,6 +577,14 @@
                                             $scope.signataireActorModel = {Id : signataireActorModelRef.Id, ID_G : signataireActorModelRef.ID_G, GROUPE : "", NOM : ""};
                                         }
 
+                                        var executiveActorModelRef = hbUtil.getIdentifiersFromStandardSourceURI($scope.CARSET_CAR_POS_4.VALEUR);
+                                        if (executiveActorModelRef === undefined) {
+                                            $log.debug(">>>> executiveActorModelRef undefined ! = " + angular.toJson(executiveActorModelRef));
+                                            $scope.executiveActorModel = {Id : undefined, ID_G : "", GROUPE : "", NOM : ""};
+                                        } else {
+                                            $log.debug(">>>> executiveActorModelRef defined !   = " + angular.toJson(executiveActorModelRef));
+                                            $scope.executiveActorModel = {Id : executiveActorModelRef.Id, ID_G : executiveActorModelRef.ID_G, GROUPE : "", NOM : ""};
+                                        }
 						    			
 						    			// Supports create mode and avoids repeating selected.initialised setting 
 						    			var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI($scope.elfin.SOURCE);
