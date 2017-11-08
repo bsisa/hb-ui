@@ -23,7 +23,7 @@
 						// Get available roles dynamically from HB5 catalogue
 				    	$scope.$watch('elfin.Id', function() { 
 
-				    		if ($scope.elfin!=null) {
+				    		if (!!$scope.elfin) {
 
 					            // Asychronous ACTEUR template preloading
 					            GeoxmlService.getNewElfin("ACTEUR").get()
@@ -42,7 +42,7 @@
 								} else {
 									// Do nothing
 								}					            
-				    		};
+				    		}
 				    		
 				    	}, true);						
 						
