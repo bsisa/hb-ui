@@ -309,7 +309,7 @@
 		
 		
 		var getOrderConfirmationIntroduction = function() {
-			return "Monsieur,\n\nVeuillez s'il vous plaît, exécuter les travaux selon votre OFFRE DU 01.01.1901 pour le montant suivant:";
+			return "Veuillez s'il vous plaît, exécuter les travaux selon votre OFFRE DU 01.01.1901 pour le montant suivant:";
 		};
 		
 		var getOrderContractIntroduction = function() {
