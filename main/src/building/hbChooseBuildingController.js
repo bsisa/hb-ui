@@ -112,10 +112,13 @@
 			            hbQueryService.getImmeubles("//ELFIN[@CLASSE='IMMEUBLE']")		
 						.then(function(buildings) {
 
+                                buildings.forEach(function(building) {
+                                    building.CARSET_CAR_POS_2 = hbUtil.getCARByPos(building, 2);
+                                });
 								// order buildings by IDENTIFIANT.OBJECTIF, IDENTIFIANT.ALIAS, IDENTIFIANT.NOM, PARTENAIRE.PROPRIETAIRE.NOM
 								buildings.sort(function(a, b) {
-									return a.IDENTIFIANT.OBJECTIF < b.IDENTIFIANT.OBJECTIF ? -1 :
-										a.IDENTIFIANT.OBJECTIF > b.IDENTIFIANT.OBJECTIF ? 1 :
+									return a.CARSET_CAR_POS_2.VALEUR < b.CARSET_CAR_POS_2.VALEUR ? -1 :
+										a.CARSET_CAR_POS_2.VALEUR > b.CARSET_CAR_POS_2.VALEUR ? 1 :
 											a.IDENTIFIANT.ALIAS < b.IDENTIFIANT.ALIAS ? -1 : 
 												a.IDENTIFIANT.ALIAS > b.IDENTIFIANT.ALIAS ? 1 : 
 													a.IDENTIFIANT.NOM < b.IDENTIFIANT.NOM ? -1 : 
@@ -123,9 +126,7 @@
 															a.PARTENAIRE.PROPRIETAIRE.NOM < b.PARTENAIRE.PROPRIETAIRE.NOM ? -1 : 
 																a.PARTENAIRE.PROPRIETAIRE.NOM > b.PARTENAIRE.PROPRIETAIRE.NOM ? 1 :	0;
 					            });
-								buildings.forEach(function(building) {
-									building.CARSET_CAR_POS_2 = hbUtil.getCARByPos(building, 2);
-								});
+
 								$scope.buildings =  buildings;
 								$scope.buildingsLoaded = true;
 							},
@@ -200,7 +201,7 @@
 				        	$scope.selected.building = selectedBuilding;
 				        	// Update selected building display string
 				        	if (selectedBuilding !== null && angular.isDefined($scope.selected.building) ) {
-				        		$scope.selected.buildingDisplay = $scope.selected.building.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.building.IDENTIFIANT.ALIAS + " - " + $scope.selected.building.IDENTIFIANT.NOM + " - " + $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM;
+				        		$scope.selected.buildingDisplay = $scope.selected.building.CARSET_CAR_POS_2.VALEUR + " - " + $scope.selected.building.IDENTIFIANT.ALIAS + " - " + $scope.selected.building.IDENTIFIANT.NOM + " - " + $scope.selected.building.PARTENAIRE.PROPRIETAIRE.NOM;
 				        	} else {
 				        		$scope.selected.buildingDisplay = " - ";
 				        	}
