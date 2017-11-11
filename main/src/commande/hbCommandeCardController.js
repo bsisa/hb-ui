@@ -783,7 +783,10 @@
 						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(
 						        		elfin,
 										HB_ORDER_REPORT_TYPE.PURCHASE_ORDER_PROVIDER,
-										elfin.PARTENAIRE.PROPRIETAIRE.NOM);
+										elfin.PARTENAIRE.PROPRIETAIRE.NOM,
+										undefined,
+										undefined,
+                                        $scope.isReadOnly ? undefined : "a_valider");
 						        };					        
 						        
 						        /**
@@ -793,7 +796,10 @@
 						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(
 						        		elfin,
 										HB_ORDER_REPORT_TYPE.PURCHASE_ORDER_TENANT,
-										elfin.PARTENAIRE.PROPRIETAIRE.NOM);
+										elfin.PARTENAIRE.PROPRIETAIRE.NOM,
+                                        undefined,
+                                        undefined,
+                                        $scope.isReadOnly ? undefined : "a_valider");
 						        };							        
 					            
 						        /**
@@ -805,7 +811,8 @@
 										HB_ORDER_REPORT_TYPE.CONTRACT,
                                         elfin.PARTENAIRE.PROPRIETAIRE.NOM,
                                         elfin.CARACTERISTIQUE["CAR5"]["VALEUR"],
-                                        undefined);
+                                        undefined,
+                                        $scope.isReadOnly ? undefined : "a_valider");
 						        };
 
                                 /**
@@ -817,7 +824,8 @@
                                         HB_ORDER_REPORT_TYPE.CONTRACT_WO_GC,
                                         elfin.PARTENAIRE.PROPRIETAIRE.NOM,
                                         elfin.CARACTERISTIQUE["CAR5"]["VALEUR"],
-                                        undefined);
+                                        undefined,
+                                        $scope.isReadOnly ? undefined : "a_valider");
                                 };
 
 						        /**
@@ -834,7 +842,13 @@
 						         * Prints order confirmation.
 						         */
 						        $scope.printOrderConfirmationReport = function (elfin) {
-						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin,HB_ORDER_REPORT_TYPE.ORDER_CONFIRMATION,elfin.PARTENAIRE.PROPRIETAIRE.NOM);						        	
+						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(
+						        		elfin,
+										HB_ORDER_REPORT_TYPE.ORDER_CONFIRMATION,
+										elfin.PARTENAIRE.PROPRIETAIRE.NOM,
+                                        undefined,
+                                        undefined,
+                                        $scope.isReadOnly ? undefined : "a_valider");
 						        };
 						        
 						        
