@@ -77,9 +77,25 @@
 				return undefined;
 			}
 		};
-		
-		
-		/**
+
+        var getOrCreateCARByPos = function(elfin, pos) {
+            if (!!elfin && !!elfin.CARACTERISTIQUE && !!elfin.CARACTERISTIQUE.CARSET && !!elfin.CARACTERISTIQUE.CARSET.CAR) {
+                var currentCAR = _.find(elfin.CARACTERISTIQUE.CARSET.CAR, function(CAR) { return CAR.POS === pos; });
+                if (!currentCAR) {
+                    elfin.CARACTERISTIQUE.CARSET.CAR.push({
+                        POS: pos,
+                        NOM: "",
+                        VALEUR: ""
+                    });
+                }
+                return getCARByPos(elfin, pos);
+            } else {
+                return undefined;
+			}
+        };
+
+
+        /**
 		 * Get C element given its position C.POS in the context of ELFIN/CARACTERISTIQUE/FRACTION/L/C 
 		 * where Cs is an array of C elements/objects. 
 		 */
@@ -1216,6 +1232,7 @@
         	encodeUriParameter:encodeUriParameter,
         	getAnnexesExcludingTag:getAnnexesExcludingTag,
         	getCARByPos:getCARByPos,
+            getOrCreateCARByPos: getOrCreateCARByPos,
         	getCByPos:getCByPos,
         	getDateFormat:getDateFormat,
         	getDateInHbTextFormat:getDateInHbTextFormat,
