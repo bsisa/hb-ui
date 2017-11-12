@@ -118,12 +118,17 @@
                  * Obtains report annexes only definition, builds corresponding URL to obtain report and returns it.
                  * If no report definition is found returns an empty string.
                  */
-                var buildReportAnnexesOnlyUrlForClassifiers = function(elfin, level1, level2, headerParam1, headerParam2) {
+                var buildReportAnnexesOnlyUrlForClassifiers = function(elfin, level1, level2, headerParam1, headerParam2, watermarkName) {
                     var mrd = getReportMatchingReportDefinitionForClassifiers(level1,level2);
                     if (mrd === undefined) {
                         return "";
                     } else {
-                        return "/api/melfin/report_annexes/"+mrd.ID_G+"/"+mrd.Id+"?col="+elfin.ID_G+"&id="+elfin.Id + (headerParam1 ? "&reportHeaderParam1="+headerParam1:"") + (headerParam2 ? "&reportHeaderParam2="+headerParam2:"") ;
+                        return "/api/melfin/report_annexes/" + mrd.ID_G + "/" + mrd.Id +
+                            "?col=" + elfin.ID_G +
+                            "&id=" + elfin.Id +
+                            (!!headerParam1 ? "&reportHeaderParam1=" + headerParam1 : "") +
+                            (!!headerParam2 ? "&reportHeaderParam2=" + headerParam2 : "") +
+                            (!!watermarkName ? "&watermark=" + watermarkName : "") ;
                     }
                 };
 
@@ -145,8 +150,8 @@
                  * Provides feedback to end-user if no report definition is available for provided parameters.
                  * Passes header parameters on to report building system.
                  */
-                var getReportAnnexesOnlyOrProvideFeedbackForMissingConfig = function (elfin, classifierLevel1, classifierLevel2, headerParam1, headerParam2) {
-                    var reportUrl = buildReportAnnexesOnlyUrlForClassifiers(elfin, classifierLevel1 , classifierLevel2, headerParam1, headerParam2);
+                var getReportAnnexesOnlyOrProvideFeedbackForMissingConfig = function (elfin, classifierLevel1, classifierLevel2, headerParam1, headerParam2, watermarkName) {
+                    var reportUrl = buildReportAnnexesOnlyUrlForClassifiers(elfin, classifierLevel1 , classifierLevel2, headerParam1, headerParam2, watermarkName);
                     if (reportUrl.length > 0) {
                         $window.open(reportUrl);
                     } else {
