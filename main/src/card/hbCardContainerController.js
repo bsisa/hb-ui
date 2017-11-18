@@ -102,7 +102,7 @@
             // See https://stackoverflow.com/questions/18642371/checkbox-not-binding-to-scope-in-angularjs#23943930
             // To understand why we cannot use a simple primitive here
             $scope.useSource = {
-                value: false
+                value: true
             };
 
             // Expose hbUtil.containsStandardSourceURI function to scope
