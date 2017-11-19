@@ -618,6 +618,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                         tr
                                                             th(colspan="2") Contrat
                                                             th
+                                                                a(href="", ng-click="contractPredicate = 'IDENTIFIANT.NON'; contractReverse=!contractReverse") No de Contrat
+                                                            th
                                                                 a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse") Prestation I
                                                             th
                                                                 a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse") Prestation II
@@ -636,15 +638,17 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td
                                                                 div(hb-annexes-link, hb-annexes-link-elfin="contrat")
                                                             td
-                                                                span {{contrat.CARACTERISTIQUE.CAR1.UNITE}}
+                                                                span {{ contrat.IDENTIFIANT.NOM }}
                                                             td
-                                                                span {{contrat.CARACTERISTIQUE.CAR1.VALEUR}}
+                                                                span {{ contrat.CARACTERISTIQUE.CAR1.UNITE }}
                                                             td
-                                                                span {{contrat.PARTENAIRE.FOURNISSEUR.VALUE}}
+                                                                span {{ contrat.CARACTERISTIQUE.CAR1.VALEUR }}
+                                                            td
+                                                                span {{ contrat.PARTENAIRE.FOURNISSEUR.VALUE }}
                                                             td.number
-                                                                span {{contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}
+                                                                span {{ contrat.IDENTIFIANT.VALEUR | currency:'CHF' }}
                                                             td
-                                                                span {{contrat.GROUPE}}
+                                                                span {{ contrat.GROUPE }}
                                                             th
                                                                 i.icon.icon-info-sign(tooltip="{{contrat.DIVERS.REMARQUE}}", tooltip-placement="left")
 
@@ -659,6 +663,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                     thead
                                                         tr
                                                             th(colspan="2") Contrat
+                                                            th
+                                                                a(href="", ng-click="contractPredicate = 'IDENTIFIANT.NON'; contractReverse=!contractReverse") No de Contrat
                                                             th
                                                                 a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse") Prestation I
                                                             th
@@ -676,6 +682,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 div(hb-card-view-link, hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}")
                                                             td
                                                                 div(hb-annexes-link, hb-annexes-link-elfin="contrat")
+                                                            td
+                                                                span {{ contrat.IDENTIFIANT.NOM }}
                                                             td
                                                                 span {{contrat.CARACTERISTIQUE.CAR1.UNITE}}
                                                             td
@@ -699,6 +707,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                         tr
                                                             th(colspan="2") Contrat
                                                             th
+                                                                a(href="", ng-click="contractPredicate = 'IDENTIFIANT.NON'; contractReverse=!contractReverse") No de Contrat
+                                                            th
                                                                 a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; contractReverse=!contractReverse") Prestation I
                                                             th
                                                                 a(href="", ng-click="contractPredicate = 'CARACTERISTIQUE.CAR1.VALEUR'; contractReverse=!contractReverse") Prestation II
@@ -715,6 +725,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 div(hb-card-view-link, hb-href="/elfin/{{contrat.ID_G}}/CONTRAT/{{contrat.Id}}")
                                                             td
                                                                 div(hb-annexes-link, hb-annexes-link-elfin="contrat")
+                                                            td
+                                                                span {{ contrat.IDENTIFIANT.NOM }}
                                                             td
                                                                 span {{contrat.CARACTERISTIQUE.CAR1.UNITE}}
                                                             td
