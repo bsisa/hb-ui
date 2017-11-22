@@ -389,7 +389,7 @@
                         return  "//ELFIN[IDENTIFIANT/OBJECTIF='" + elfin.IDENTIFIANT.OBJECTIF + "']";
                     };
 
-                    $scope.$watch("useSource.value", function(newUseSourceValue) {
+                    $scope.loadLinkedData = function(newUseSourceValue) {
                         if ($scope.elfin && $attrs["hbMode"] !== "create") {
                             var xpathForPrestations = getXpathForPrestations($scope.elfin);
                             var xpathForTransactionFn = getXpathForTransactions;
@@ -417,6 +417,10 @@
                             $scope.loadConstats(xpathForConstatsEnCours, "constatsEncours");
                             $scope.loadConstats(xpathForConstatsClos, "constatsClos");
                         }
+                    };
+
+                    $scope.$watch("useSource.value", function(newValue) {
+                        $scope.loadLinkedData(newValue);
                     });
 
                     var getXpathForContrats = function(elfin) {
@@ -446,8 +450,9 @@
                             // Restriction on PROPRIETAIRE, CLASSE is mandatory. Restriction on OBJECTIF starts-with only is not sufficient in all cases.
                             // TODO: evaluate replacing the above by the following.
                             //var xpathForPrestations = "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='"+$scope.elfin.IDENTIFIANT.OBJECTIF+"' and PARTENAIRE/PROPRIETAIRE/@Id='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.Id+"' and PARTENAIRE/PROPRIETAIRE/@ID_G='"+$scope.elfin.PARTENAIRE.PROPRIETAIRE.ID_G+"' and @CLASSE='PRESTATION']";
-                            $scope.loadPrestations(getXpathForPrestations($scope.elfin), getXpathForTransactions);
-                            $scope.loadContrats(getXpathForContrats($scope.elfin));
+                            $scope.loadLinkedData($scope.useSource.value);
+                            // $scope.loadPrestations(getXpathForPrestations($scope.elfin), getXpathForTransactions);
+                            // $scope.loadContrats(getXpathForContrats($scope.elfin));
 
                         }
 

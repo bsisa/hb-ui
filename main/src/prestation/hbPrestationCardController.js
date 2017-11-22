@@ -149,19 +149,21 @@
                             });
                 };
 
-                $scope.$watch("useSource.value", function (newUseSourceValue) {
+                $scope.loadLinkedTransactions = function (useSourceValue) {
                     if ($scope.elfin && $attrs["hbMode"] !== "create") {
 
                         var xpathForTransactions = getXpathForTransactions($scope.elfin);
 
-                        if (newUseSourceValue) {
+                        if (useSourceValue) {
                             var source = $scope.elfin.ID_G + "/" + $scope.elfin.CLASSE + "/" + $scope.elfin.Id;
                             xpathForTransactions = "//ELFIN[@CLASSE='TRANSACTION'][@SOURCE='" + source + "']";
                         }
 
                         $scope.loadTransactions(xpathForTransactions);
                     }
-                });
+                };
+
+                $scope.$watch("useSource.value", $scope.loadLinkedTransactions );
 
                 /**
                  * Maintains the list of TRANSACTION linked to this PRESTATION
@@ -178,11 +180,9 @@
                  * It could be simpler to link TRANSACTION to PRESTATION with Id (ID_G,Id or CLASSE,Id)
                  */
                 $scope.$watch('elfin.IDENTIFIANT.OBJECTIF', function () {
-
                     if (!!$scope.elfin) {
-                        $scope.loadTransactions(getXpathForTransactions($scope.elfin));
+                        $scope.loadLinkedTransactions($scope.useSource.value);
                     }
-
                 }, true);
 
 
