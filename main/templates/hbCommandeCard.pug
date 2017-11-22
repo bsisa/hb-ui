@@ -212,19 +212,23 @@ div.row(style="padding-top: 8px;")
 
                             button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONFIRMATION", ng-click="printOrderConfirmationReport(elfin)", tooltip="Format d'impression de la confirmation de commande", tooltip-popup-delay="1000", tooltip-placement="right")
                                 i.glyphicon.glyphicon-print(style="padding-right:8px")
-                                span Confirmation de commande
+                                span Confirmation de commande (PDF)
 
                             button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONTRACT", ng-click="printEntrepriseContractWithGCReport(elfin)", tooltip="Format d'impression du contrat d'entreprise avec CG", tooltip-popup-delay="1000", tooltip-placement="right")
                                 i.glyphicon.glyphicon-print(style="padding-right:8px")
-                                span Contrat d'entreprise avec CG
+                                span Contrat d'entreprise avec CG (PDF)
 
                             button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONTRACT", ng-click="printEntrepriseContractWoGCReport(elfin)", tooltip="Format d'impression du contrat d'entreprise sans CG", tooltip-popup-delay="1000", tooltip-placement="right")
                                 i.glyphicon.glyphicon-print(style="padding-right:8px")
-                                span Contrat d'entreprise sans CG
+                                span Contrat d'entreprise sans CG (PDF)
 
-                            button.btn.btn-default(ng-click="printContractReportExcel(elfin)", tooltip="Modèle de la confirmation de commande/contrat d'entreprise", tooltip-popup-delay="1000", tooltip-placement="right")
+                            button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONTRACT", ng-click="printContractReportExcel(elfin)", tooltip="Modèle de la confirmation de commande/contrat d'entreprise", tooltip-popup-delay="1000", tooltip-placement="right")
                                 i.glyphicon.glyphicon-print(style="padding-right:8px")
-                                span Contrat (excel)
+                                span Contrat d'entreprise (Excel)
+
+                            button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONFIRMATION", ng-click="printContractReportExcel(elfin)", tooltip="Modèle de la confirmation de commande/contrat d'entreprise", tooltip-popup-delay="1000", tooltip-placement="right")
+                                i.glyphicon.glyphicon-print(style="padding-right:8px")
+                                span Confirmation de commande (Excel)
 
 
 
