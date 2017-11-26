@@ -96,6 +96,7 @@
 
                     $scope.commandes = null;
                     $scope.constatsEncours = null;
+                    $scope.constatsEncours_2ans = null;
                     $scope.constatsClos = null;
                     $scope.prestations = null;
 
@@ -292,6 +293,20 @@
                                     var message = "Le chargement des CONSTATs '" + scopeTarget + "' a échoué (statut de retour: " + response.status + ")";
                                     hbAlertMessages.addAlert("danger", message);
                                 });
+                    };
+
+                    var constats2YearsLimit = function(constat, after) {
+                        var date = moment(constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_DATE);
+                        var in2Years = moment();
+                        return after === date.isAfter(in2Years);
+                    };
+
+                    $scope.constatsWithin2Years = function(constat) {
+                        return constats2YearsLimit(constat, false);
+                    };
+
+                    $scope.constatsAfter2Years = function(constat) {
+                        return constats2YearsLimit(constat, true);
                     };
 
                     var getXpathForConstatsEnCours = function(elfin) {

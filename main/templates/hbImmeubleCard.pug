@@ -276,7 +276,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                     // Constats en cours tab 
                     tabset
                         tab
-                            tab-heading Constats en cours
+                            tab-heading Constats en cours (<= 2 ans)
                             div.hb-tab
                                 div.row
                                     div.col-sm-12(ng-show="constatsEncours")
@@ -291,7 +291,39 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                     th Resp
                                                     th Filiation
                                             tbody
-                                                tr(ng-repeat="constat in constatsEncours | orderBy:'IDENTIFIANT.DE':true")
+                                                tr(ng-repeat="constat in constatsEncours | filter:constatsWithin2Years | orderBy:'IDENTIFIANT.DE':true")
+                                                    td
+                                                        div(hb-card-view-link, hb-href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}")
+                                                    td
+                                                        span {{constat.PARTENAIRE.USAGER.VALUE}}
+                                                    td
+                                                        span {{constat.IDENTIFIANT.NOM}}
+                                                    td.number
+                                                        span {{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_PAR_QUI | currency:'CHF' }}
+                                                    td.date
+                                                        span {{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_DATE | date }}
+                                                    td
+                                                        span {{constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].POUR_QUI}}
+                                                    td
+                                                        span {{constat.FILIATION.PARENT[constat.FILIATION.PARENT.length-1].Id}}
+
+                        tab
+                            tab-heading Constats en cours (> 2 ans)
+                            div.hb-tab
+                                div.row
+                                    div.col-sm-12(ng-show="constatsEncours")
+                                        table.table.table-condensed.table-bordered.table-striped
+                                            thead
+                                                tr
+                                                    th Constat
+                                                    th Etage-Locataire
+                                                    th Libellé
+                                                    th Montant
+                                                    th Delai
+                                                    th Resp
+                                                    th Filiation
+                                            tbody
+                                                tr(ng-repeat="constat in constatsEncours | filter:constatsAfter2Years | orderBy:'IDENTIFIANT.DE':true")
                                                     td
                                                         div(hb-card-view-link, hb-href="/elfin/{{constat.ID_G}}/CONSTAT/{{constat.Id}}")
                                                     td
