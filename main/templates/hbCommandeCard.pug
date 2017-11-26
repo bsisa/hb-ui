@@ -45,19 +45,25 @@ div.row(style="padding-top: 8px;")
                                     p.form-control-static(ng-if="isReadOnly") {{elfin.IDENTIFIANT.DE | date}}
                                 label.col-sm-2.control-label(for="auteur") Auteur
                                 div.col-sm-2
-                                    p.form-control-static {{elfin.IDENTIFIANT.AUT}}
+                                    p#auteur.form-control-static {{elfin.IDENTIFIANT.AUT}}
 
                             div.form-group
                                 label.col-sm-4.control-label(for="deadline") Délai d'exécution
                                 div.col-sm-4
                                     div#deadline(ng-if="!isReadOnly", hb-date, name="deadline", ng-model="elfin.IDENTIFIANT.A", ng-required="true")
-                                    p(ng-if="isReadOnly", class="form-control-static") {{elfin.IDENTIFIANT.A | date}}
+                                    p(ng-if="isReadOnly", class="form-control-static") {{ elfin.IDENTIFIANT.A | date }}
+
+                            div.form-group
+                                label.col-sm-4.control-label(for="closeDate") Date de clôture
+                                div.col-sm-4
+                                    div#closeDate(ng-if="!isReadOnly", hb-date, name="closeDate", ng-model="elfin.IDENTIFIANT.PAR")
+                                    p(ng-if="isReadOnly", class="form-control-static") {{ elfin.IDENTIFIANT.PAR | date }}
 
                             div.form-group.has-feedback(ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE)", ng-class="getCssHasFeedback(elfinForm.resp)")
                                 div.row
                                     label.col-sm-4.control-label(for="resp") Responsable
                                     div.col-sm-8
-                                        div(ng-show="!isReadOnly",
+                                        div#resp(ng-show="!isReadOnly",
                                             hb-choose-actor,
                                             hb-choose-actor-id-name="respAct",
                                             hb-choose-actor-elfin-form="elfinForm",
@@ -73,15 +79,15 @@ div.row(style="padding-top: 8px;")
                                 div.row
                                     label.col-sm-4.control-label(for="executive") Affaire traitée par
                                     div.col-sm-8
-                                        div(ng-show="!isReadOnly",
-                                        hb-choose-actor,
-                                        hb-choose-actor-id-name="executiveAct",
-                                        hb-choose-actor-elfin-form="elfinForm",
-                                        hb-choose-actor-model="executiveActorModel",
-                                        hb-choose-actor-elfin-model="executiveActorElfinModel",
-                                        hb-choose-actor-tooltip="Recherche de collaborateur",
-                                        hb-choose-actor-role="Collaborateur",
-                                        hb-choose-actor-editable="true")
+                                        div#executive(ng-show="!isReadOnly",
+                                            hb-choose-actor,
+                                            hb-choose-actor-id-name="executiveAct",
+                                            hb-choose-actor-elfin-form="elfinForm",
+                                            hb-choose-actor-model="executiveActorModel",
+                                            hb-choose-actor-elfin-model="executiveActorElfinModel",
+                                            hb-choose-actor-tooltip="Recherche de collaborateur",
+                                            hb-choose-actor-role="Collaborateur",
+                                            hb-choose-actor-editable="true")
                                         div(ng-show="isReadOnly", style="border: solid 1px white;")
                                             p.form-control-static {{executiveActorElfinModel.IDENTIFIANT.NOM}} - {{executiveActorElfinModel.GROUPE}}
 
@@ -97,7 +103,7 @@ div.row(style="padding-top: 8px;")
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.objectif)")
                                 label.col-sm-4.control-label(for="building") No AbaImmo
                                 div.col-sm-8(ng-show="!isReadOnly && (selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_IMMEUBLE)")
-                                    div(hb-choose-building,
+                                    div#building(hb-choose-building,
                                         hb-choose-building-id-name="building",
                                         hb-choose-building-elfin-form="elfinForm",
                                         hb-choose-building-elfin-model="selected.building",
@@ -110,7 +116,7 @@ div.row(style="padding-top: 8px;")
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.surface)")
                                 label.col-sm-4.control-label(for="surface")
                                 div.col-sm-8(ng-show="!isReadOnly && (selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_SURFACE)")
-                                    div(hb-choose-surface,
+                                    div#surface(hb-choose-surface,
                                         hb-choose-surface-id-name="surface",
                                         hb-choose-surface-elfin-form="elfinForm",
                                         hb-choose-surface-elfin-model="selected.surface",
@@ -122,7 +128,7 @@ div.row(style="padding-top: 8px;")
                             div.form-group.has-feedback(ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.PURCHASE", ng-class="getCssHasFeedback(elfinForm.groupe)")
                                 label.col-sm-4.control-label(for="code") Code CFC
                                 div.col-sm-8
-                                    div(ng-show="!isReadOnly",
+                                    div#code(ng-show="!isReadOnly",
                                         hb-choose-code,
                                         hb-choose-code-id-name="code",
                                         hb-choose-code-elfin-form="elfinForm",
@@ -179,15 +185,15 @@ div.row(style="padding-top: 8px;")
                             div.form-group.has-feedback(ng-if="elfin.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONFIRMATION", ng-class="getCssHasFeedback(elfinForm.signataire)")
                                 label.col-sm-2.control-label(for="signataire") Signataire
                                 div.col-sm-6
-                                    div(ng-show="!isReadOnly",
-                                    hb-choose-actor,
-                                    hb-choose-actor-id-name="signataireAct",
-                                    hb-choose-actor-elfin-form="elfinForm",
-                                    hb-choose-actor-model="signataireActorModel",
-                                    hb-choose-actor-elfin-model="signataireActorElfinModel",
-                                    hb-choose-actor-tooltip="Recherche du signataire",
-                                    hb-choose-actor-role="Collaborateur",
-                                    hb-choose-actor-editable="true")
+                                    div#signataire(ng-show="!isReadOnly",
+                                        hb-choose-actor,
+                                        hb-choose-actor-id-name="signataireAct",
+                                        hb-choose-actor-elfin-form="elfinForm",
+                                        hb-choose-actor-model="signataireActorModel",
+                                        hb-choose-actor-elfin-model="signataireActorElfinModel",
+                                        hb-choose-actor-tooltip="Recherche du signataire",
+                                        hb-choose-actor-role="Collaborateur",
+                                        hb-choose-actor-editable="true")
                                 div.col-sm-2(ng-show="isReadOnly", style="border: solid 1px white;")
                                     p.form-control-static {{ signataireActorElfinModel.IDENTIFIANT.NOM }} - {{ signataireActorElfinModel.GROUPE }}
 
