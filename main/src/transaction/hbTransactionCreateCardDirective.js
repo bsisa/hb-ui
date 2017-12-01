@@ -11,7 +11,7 @@
     	return {
 		    require: '^hbCardContainer',
 			restrict: 'A',
-		    templateUrl : "/assets/views/hbTransactionCreateCard.html",
+		    templateUrl : "/assets/views-compiled/hbTransactionCreateCard.html",
 			controller: 'HbTransactionCardController'
 		};
 	
