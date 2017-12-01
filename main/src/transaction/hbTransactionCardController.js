@@ -24,7 +24,7 @@
                           $timeout, hbAlertMessages, hbUtil,
                           HB_EVENTS, userDetails, hbQueryService) {
 
-                    $scope.reallocate = $routeParams.reallocate ? true : false;
+                    $scope.reallocate = !!$routeParams.reallocate;
                     $scope.prestationSelection = false;
                     //$log.debug("    >>>> Using HbTransactionCardController, reallocate = " + $scope.reallocate );
 
@@ -162,7 +162,7 @@
                                 //hbUtil.applyPaths(targetElfin, targetPath, sourceElfin, sourcePath);
 
                                 $scope.constatPrestation = selectedElfins[0];
-                                ;
+
                                 $scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
                                 $scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
                                 $scope.prestationStatus = null;
@@ -416,6 +416,7 @@
                                         //hbQueryService.getPrestations(xpathForPrestationByObjectif).then(
                                         hbQueryService.getPrestations(xpathForPrestationByIdAndID_G).then(
                                             function (prestations) {
+                                                var message;
                                                 if (prestations.length === 1) {
                                                     var prestation = prestations[0];
                                                     // Update OBJECTIF
@@ -442,12 +443,12 @@
                                                     // Year prestation
                                                     $scope.elfin.IDENTIFIANT.PAR = prestation.IDENTIFIANT.DE;
                                                 } else if (prestations.length > 1) {
-                                                    var message = "Le numéro d'objectif: " + $routeParams.sai + " fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
+                                                    message = "Le numéro d'objectif: " + $routeParams.sai + " fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
                                                     hbAlertMessages.addAlert(
                                                         "warning", message);
                                                     $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
                                                 } else if (prestations.length > 1) {
-                                                    var message = "Le numéro d'objectif: " + $routeParams.sai + " fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
+                                                    message = "Le numéro d'objectif: " + $routeParams.sai + " fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
                                                     hbAlertMessages.addAlert(
                                                         "warning", message);
                                                     $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
@@ -485,6 +486,7 @@
                                         hbQueryService.getPrestations(xpathForPrestationByObjectif).then(
                                             function (prestations) {
                                                 $log.debug(" >>>>>>>>>>>>>>>>>>> found " + prestations.length + " prestation for " + xpathForPrestationByObjectif);
+                                                var message;
                                                 if (prestations.length === 1) {
                                                     var prestation = prestations[0];
                                                     // Update OBJECTIF
@@ -502,12 +504,12 @@
                                                     // Year prestation
                                                     //$scope.elfin.IDENTIFIANT.PAR = prestation.IDENTIFIANT.DE;
                                                 } else if (prestations.length > 1) {
-                                                    var message = "Le numéro d'objectif: " + $scope.helper.constatSelectionSai + " fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
+                                                    message = "Le numéro d'objectif: " + $scope.helper.constatSelectionSai + " fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
                                                     hbAlertMessages.addAlert(
                                                         "warning", message);
                                                     $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
                                                 } else if (prestations.length < 1) {
-                                                    var message = "Le numéro d'objectif: " + $scope.helper.constatSelectionSai + " fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
+                                                    message = "Le numéro d'objectif: " + $scope.helper.constatSelectionSai + " fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
                                                     hbAlertMessages.addAlert(
                                                         "warning", message);
                                                     $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
@@ -541,7 +543,7 @@
                             // Get transaction types
                             // from catalogue
                             $scope.transactionTypes = hbUtil.buildArrayFromCatalogueDefault(transaction.GROUPE);
-                            $scope.repartitions = hbUtil.buildArrayFromCatalogueDefault(transaction.CARACTERISTIQUE.CAR3.VALEUR);
+                            $scope.repartitions = hbUtil.buildArrayFromCatalogueDefault(transaction.CARACTERISTIQUE["CAR3"]["VALEUR"]);
                         },
                         function (response) {
                             var message = "Les valeurs par défaut pour la CLASSE TRANSACTION n'ont pas pu être chargées. (statut de retour: "
