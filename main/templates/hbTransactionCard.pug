@@ -195,6 +195,63 @@ div.row(style="padding-top: 8px;")
                                 span.glyphicon.glyphicon-plus-sign
                                 | &nbsp;Quitter le mode réaffectation
 
+
+
+            tab
+                tab-heading Contrats/Commandes ({{ commandesContrats.length }})
+                div.hb-tab
+                    div.row
+                        div.col-sm-12
+                            // Table des contrats/commandes liées
+                            table.table.table-condensed.table-bordered.table-striped
+                                thead
+                                    tr
+                                        th(width="140px") Contrat/commande
+                                        th
+                                            a(href="", ng-click="commandePredicate = 'IDENTIFIANT.NOM'; commandeReverse = !commandeReverse") No
+                                        th
+                                            a(href="", ng-click="commandePredicate = 'IDENTIFIANT.QUALITE'; commandeReverse = !commandeReverse") Type
+                                        th
+                                            a(href="", ng-click="commandePredicate = 'PARTENAIRE.FOURNISSEUR.GROUPE'; commandeReverse = !commandeReverse") Fournisseur
+                                        th
+                                            a(href="", ng-click="commandePredicate = 'IDENTIFIANT.DE'; commandeReverse = !commandeReverse") Date
+                                        th
+                                            a(href="", ng-click="commandePredicate = 'IDENTIFIANT.A'; commandeReverse = !commandeReverse") Délai d'exécution
+                                        th
+                                            a(href="", ng-click="commandePredicate = 'GROUPE'; commandeReverse = !commandeReverse") Code CFC
+                                        th
+                                            a(href="", ng-click="commandePredicate = 'DIVERS.REMARQUE'; commandeReverse = !commandeReverse") Remarque
+
+                                tbody
+                                    tr(ng-repeat="commande in commandesContrats | orderBy:commandePredicate:commandeReverse")
+                                        td
+                                            div.col-sm-12
+                                                div(style="position:relative; float:left;", hb-card-view-link, hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}")
+                                                div(style="width: 38px; position:relative; float:left;")
+                                                    a.btn.btn-default.btn-xs.btn-block(href="", role="button", ng-click="removeCommande(commande)")
+                                                        i.glyphicon.glyphicon-remove-circle
+
+
+                                        td
+                                            span {{ commande.IDENTIFIANT.NOM }}
+                                        td
+                                            span {{ commande.IDENTIFIANT.QUALITE }}
+                                        td
+                                            span {{ commande.PARTENAIRE.FOURNISSEUR.GROUPE }}
+                                        td
+                                            span {{ commande.IDENTIFIANT.DE | date }}
+                                        td
+                                            span {{ commande.IDENTIFIANT.A | date }}
+                                        td
+                                            span {{ commande.GROUPE }}
+                                        td
+                                            span {{ commande.DIVERS.REMARQUE }}
+                    div.row
+                        div.col-sm-12
+                            button.btn.btn-primary(ng-click="allocateCommand()", ng-disabled="false", style="margin-right:10px;")
+                                span.glyphicon.glyphicon-plus-sign
+                                | &nbsp;Associer une Commande/Contrat
+
             // Annexes tab
             tab
                 tab-heading

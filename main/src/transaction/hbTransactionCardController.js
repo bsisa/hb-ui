@@ -41,9 +41,141 @@
                     // Available repartition codes list loaded asynchronously from catalogue
                     $scope.repartitions = null;
 
-                    // Benefit from server side cache...
-                    var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
+                    $scope.commandesContrats = [];
+                    $scope.commandeReverse = false;
+                    $scope.commandePredicate = "IDENTIFIANT.NOM";
 
+                    var loadCommandesContrats = function ($scope) {
+                        if (!!$scope.elfin.FILIATION && !!$scope.elfin.FILIATION.PARENT) {
+                            $scope.commandesContrats.length = 0;
+
+                            _.forEach($scope.elfin.FILIATION.PARENT, function (parent) {
+                                if (parent.CLASSE === "COMMANDE") {
+                                    GeoxmlService.getElfin(parent.ID_G, parent.Id).get().then(
+                                        function (parent) {
+                                            $scope.commandesContrats.push(parent);
+                                        },
+                                        function (response) {
+                                            var message = "Le chargement de la COMMANDE correspondant aux informations: ID_G / Id = " + ID_G + " / " + Id + " a échoué (statut de retour: " + response.status + ")";
+                                            hbAlertMessages.addAlert("danger", message);
+                                        });
+                                }
+                            });
+                        }
+                    };
+
+
+                    $scope.allocateCommand = function () {
+                        var source = $scope.selectedImmeuble.ID_G + "/" + $scope.selectedImmeuble.CLASSE + "/" + $scope.selectedImmeuble.Id;
+                        var commandeSourceXpath = "//ELFIN[@SOURCE='" + source + "' and @CLASSE='COMMANDE']";
+
+                        hbQueryService.getCommandes(commandeSourceXpath).then(
+                            function (commandes) {
+                                $scope.selectOneCommande(
+                                    commandes,
+                                    "IDENTIFIANT.NOM",
+                                    $scope.selectOneCommandeColumnsDefinition,
+                                    $scope.selectOneCommandeTemplate
+                                );
+                            },
+                            function (response) {
+                                var message = "L'obtention des COMMANDES pour la source: " + commandeSourceXpath + " a échoué. (statut: "
+                                    + response.status
+                                    + ")";
+                                hbAlertMessages.addAlert("danger", message);
+                            }
+                        );
+                    };
+
+                    // Parameters to selectOnePrestation function for PRESTATION selection
+                    $scope.selectOneCommandeColumnsDefinition = [
+                        {field: "IDENTIFIANT.NOM", displayName: "No"},
+                        {field: "IDENTIFIANT.QUALITE", displayName: "Type"},
+                        {field: "PARTENAIRE.FOURNISSEUR.GROUPE", displayName: "Fournisseur"},
+                        {field: "IDENTIFIANT.DE", displayName: "Date"},
+                        {field: "IDENTIFIANT.A", displayName: "Délai"}
+                    ];
+
+                    $scope.selectOneCommandeTemplate = '/assets/views/chooseOneCommande.html';
+
+                    $scope.selectOneCommande = function (elfins, sourcePath, columnsDefinition, template) {
+
+                        $log.debug(">>>> selectOneCommande = " + elfins.length);
+
+                        var modalInstance = $modal.open({
+                            templateUrl: template,
+                            scope: $scope,
+                            controller: 'HbChooseOneModalController',
+                            resolve: {
+                                elfins: function () {
+                                    return elfins;
+                                },
+                                columnsDefinition: function () {
+                                    return columnsDefinition;
+                                },
+                                sourcePath: function () {
+                                    return sourcePath;
+                                }
+                            },
+                            backdrop: 'static'
+                        });
+
+                        /**
+                         * Process modalInstance.close action
+                         */
+                        modalInstance.result.then(function (selectedElfins) {
+                            if (selectedElfins && selectedElfins.length > 0) {
+
+                                if (!$scope.elfin.FILIATION) {
+                                    $scope.elfin.FILIATION = {PARENT: []};
+                                }
+                                _.forEach(selectedElfins, function (elfin) {
+                                    $scope.elfin.FILIATION.PARENT.push({
+                                        ID_G: elfin.ID_G,
+                                        Id: elfin.Id,
+                                        CLASSE: elfin.CLASSE,
+                                        REMARQUE: "",
+                                        PROPRIETE: []
+                                    });
+                                    $scope.commandesContrats.push(elfin);
+                                });
+                                $scope.elfinForm.$setDirty();
+                            } else {
+                                $log.debug("No selection returned!!!");
+                            }
+
+                        }, function () {
+                            $log.debug('Choose params modal dismissed at: ' + new Date());
+                        });
+                    };
+
+                    var findFirstIndexCommandeInFiliation = function (commande, parentArray) {
+                        if (parentArray.length === 0) {
+                            return -1;
+                        }
+                        for (var i = 0; i < parentArray.length; i++) {
+                            if (parentArray[i].Id === commande.Id &&
+                                parentArray[i].ID_G === commande.ID_G &&
+                                parentArray[i].CLASSE === commande.CLASSE) {
+                                return i;
+                            }
+                        }
+                        return -1;
+                    };
+
+                    $scope.removeCommande = function (commande) {
+                        var index = $scope.commandesContrats.indexOf(commande);
+                        while (index !== -1) {
+                            $scope.commandesContrats.splice(index, 1);
+                            index = $scope.commandesContrats.indexOf(commande);
+                        }
+                        index = findFirstIndexCommandeInFiliation(commande, $scope.elfin.FILIATION.PARENT);
+                        while (index !== -1) {
+                            $scope.elfin.FILIATION.PARENT.splice(index, 1);
+                            index = findFirstIndexCommandeInFiliation(commande, $scope.elfin.FILIATION.PARENT);
+                        }
+                        $scope.elfinForm.$setDirty();
+                    };
 
 
                     $scope.$watch('searchOwner', function (newOwner, oldOwner) {
@@ -164,6 +296,10 @@
                         });
                     };
 
+
+                    // Benefit from server side cache...
+                    var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
+
                     // Parameters to selectOnePrestation function for PRESTATION selection
                     $scope.selectOneImmeubleColumnsDefinition = [
                         {field: "IDENTIFIANT.NOM", displayName: "No Construction"},
@@ -179,7 +315,7 @@
 
                         hbQueryService.getImmeubles(xpathForImmeubles).then(
                             function (immeubles) {
-                                _.forEach(immeubles, function(immeuble) {
+                                _.forEach(immeubles, function (immeuble) {
                                     immeuble.CARSET_CAR_POS_2 = hbUtil.getCARByPos(immeuble, 2);
                                 });
 
@@ -201,7 +337,7 @@
 
                     };
 
-                    $scope.selectImmeubleAndPrestation = function(elfins, sourcePath, columnsDefinition, template) {
+                    $scope.selectImmeubleAndPrestation = function (elfins, sourcePath, columnsDefinition, template) {
 
 
                         var modalInstance = $modal.open({
@@ -369,7 +505,6 @@
                     }, true);
 
 
-
                     /**
                      * TODO: disable when prestations.length > 1
                      * Listen to informations required to find out related PRESTATION
@@ -427,7 +562,7 @@
                         }
                     };
 
-                    $scope.loadSourceImmeuble = function(prestationElfin) {
+                    $scope.loadSourceImmeuble = function (prestationElfin) {
 
                         var immeubleAttrComponents = prestationElfin.SOURCE.split("/");
                         var immeubleSourceIDG = immeubleAttrComponents[0];
@@ -593,6 +728,7 @@
                                     $log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
                                 }
                             } else {
+                                loadCommandesContrats($scope);
                                 $scope.loadSourceElfin($scope.elfin.SOURCE);
                                 // Manage editing initialisation. Warning: $scope.elfin.PARTENAIRE.PROPRIETAIRE is not equal to the owner for TRANSACTION entities.
                                 $scope.searchOwner = undefined;
@@ -704,7 +840,6 @@
                         var redirUrl = '/elfin/create/TRANSACTION';
                         $location.path(redirUrl);
                     };
-
 
 
                     // Allow going back from special reallocate mode to standard edit mode
