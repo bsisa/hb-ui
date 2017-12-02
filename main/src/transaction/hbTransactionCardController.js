@@ -69,14 +69,13 @@
 
 
                     // Allow triggering reallocate mode to allow editing of sensitive fields.
-                    $scope.reallocateTransaction = function () {
-                        var xpathForPrestationBySOURCE = "//ELFIN[@SOURCE='" + $scope.sourcePrestation.SOURCE + "' and @ID_G='" + $scope.sourcePrestation.ID_G + "' and @CLASSE='" + $scope.sourcePrestation.CLASSE + "']";
+                    $scope.reallocateTransaction = function (prestationXpath) {
+
+                        var xpathForPrestationBySOURCE = prestationXpath || "//ELFIN[@SOURCE='" + $scope.sourcePrestation.SOURCE + "' and @ID_G='" + $scope.sourcePrestation.ID_G + "' and @CLASSE='" + $scope.sourcePrestation.CLASSE + "']";
 
                         hbQueryService.getPrestations(xpathForPrestationBySOURCE).then(
                             function (prestations) {
                                 $scope.selectOnePrestation(
-                                    $scope.elfin,
-                                    "SOURCE",
                                     prestations,
                                     "IDENTIFIANT.COMPTE",
                                     $scope.selectOnePrestationColumnsDefinition,
@@ -108,7 +107,7 @@
                     /**
                      * Modal panel to select a prestation when more than one is available.
                      */
-                    $scope.selectOnePrestation = function (targetElfin, targetPath, elfins, sourcePath, columnsDefinition, template) {
+                    $scope.selectOnePrestation = function (elfins, sourcePath, columnsDefinition, template) {
 
                         $log.debug(">>>> selectPrestation = " + elfins.length);
 
@@ -142,6 +141,19 @@
                                 $scope.elfin.IDENTIFIANT.COMPTE = $scope.sourcePrestation.IDENTIFIANT.COMPTE;
                                 $scope.elfin.IDENTIFIANT.OBJECTIF = $scope.sourcePrestation.IDENTIFIANT.OBJECTIF;
 
+                                // Update helper fields
+                                $scope.searchOwner = {
+                                    Id: $scope.sourcePrestation.PARTENAIRE.PROPRIETAIRE.Id,
+                                    ID_G: $scope.sourcePrestation.PARTENAIRE.PROPRIETAIRE.ID_G,
+                                    GROUPE: $scope.sourcePrestation.PARTENAIRE.PROPRIETAIRE.GROUPE,
+                                    NOM: $scope.sourcePrestation.PARTENAIRE.PROPRIETAIRE.NOM
+                                };
+                                $scope.helper.constatSelectionSai = $scope.sourcePrestation.IDENTIFIANT.OBJECTIF.split('.')[0];
+                                // Groupe prestation
+                                $scope.elfin.CARACTERISTIQUE.CAR1.UNITE = $scope.sourcePrestation.GROUPE;
+                                // Year prestation
+                                $scope.elfin.IDENTIFIANT.PAR = $scope.sourcePrestation.IDENTIFIANT.DE;
+
                                 $scope.elfinForm.$setDirty();
                             } else {
                                 $log.debug("No selection returned!!!");
@@ -149,6 +161,86 @@
 
                         }, function () {
                             $log.debug('Choose params modal dismissed at: ' + new Date());
+                        });
+                    };
+
+                    // Parameters to selectOnePrestation function for PRESTATION selection
+                    $scope.selectOneImmeubleColumnsDefinition = [
+                        {field: "IDENTIFIANT.NOM", displayName: "No Construction"},
+                        {field: "IDENTIFIANT.ALIAS", displayName: "Adresse"},
+                        {field: "CARSET_CAR_POS_2.VALEUR", displayName: "No AbaImmo"}
+                    ];
+
+                    $scope.selectOneImmeubleTemplate = '/assets/views/chooseOneImmeuble.html';
+
+
+                    // Allow triggering reallocate mode to allow editing of sensitive fields.
+                    $scope.allocateImmeuble = function () {
+
+                        hbQueryService.getImmeubles(xpathForImmeubles).then(
+                            function (immeubles) {
+                                _.forEach(immeubles, function(immeuble) {
+                                    immeuble.CARSET_CAR_POS_2 = hbUtil.getCARByPos(immeuble, 2);
+                                });
+
+                                $scope.selectImmeubleAndPrestation(
+                                    immeubles,
+                                    "IDENTIFIANT.ALIAS",
+                                    $scope.selectOneImmeubleColumnsDefinition,
+                                    $scope.selectOneImmeubleTemplate
+                                );
+                            },
+                            function (response) {
+                                var message = "L'obtention des IMMEUBLES pour la source: " + xpathForImmeubles + " a échoué. (statut: "
+                                    + response.status
+                                    + ")";
+                                hbAlertMessages.addAlert("danger", message);
+                                $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
+                            }
+                        );
+
+                    };
+
+                    $scope.selectImmeubleAndPrestation = function(elfins, sourcePath, columnsDefinition, template) {
+
+
+                        var modalInstance = $modal.open({
+                            templateUrl: template,
+                            scope: $scope,
+                            controller: 'HbChooseOneModalController',
+                            resolve: {
+                                elfins: function () {
+                                    return elfins;
+                                },
+                                columnsDefinition: function () {
+                                    return columnsDefinition;
+                                },
+                                sourcePath: function () {
+                                    return sourcePath;
+                                }
+                            },
+                            backdrop: 'static'
+                        });
+
+                        /**
+                         * Process modalInstance.close action
+                         */
+                        modalInstance.result.then(function (selectedElfins) {
+                            if (selectedElfins && selectedElfins.length > 0) {
+                                $scope.selectedImmeuble = selectedElfins[0];
+                                var source = $scope.selectedImmeuble.ID_G + "/" + $scope.selectedImmeuble.CLASSE + "/" + $scope.selectedImmeuble.Id;
+                                var prestationSourceXpath = "//ELFIN[@SOURCE='" + source + "' and @CLASSE='PRESTATION']";
+                                $scope.sourceAbaImmo = $scope.selectedImmeuble.CARSET_CAR_POS_2.VALEUR;
+                                $scope.reallocateTransaction(prestationSourceXpath);
+
+                            } else {
+                                $log.debug("No selection returned!!!");
+                                $scope.allocateImmeuble();
+                            }
+
+                        }, function () {
+                            $log.debug('Choose params modal dismissed at: ' + new Date());
+                            $scope.allocateImmeuble();
                         });
                     };
 
@@ -437,6 +529,7 @@
                                         });
                                 } else {
                                     $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
+                                    $scope.allocateImmeuble();
                                 }
 
                             } else if ($scope.reallocate) { // updates in reallocate mode

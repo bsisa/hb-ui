@@ -19,6 +19,10 @@ div.row(style="padding-top: 8px;")
                     div.row
                         <!-- 1st column -->
                         div.col-sm-6
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="abaimmo_source") No AbaIMMO Immeuble
+                                p#abaimmo_source.col-sm-8.form-control-static {{ sourceAbaImmo }}
+
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.manager)")
                                 label.col-sm-4.control-label(for="manager")
                                     em Propriétaire
@@ -32,25 +36,6 @@ div.row(style="padding-top: 8px;")
                                         hb-choose-actor-role="Propriétaire",
                                         hb-choose-actor-default-by-name="NE")
 
-
-                            div.form-group
-                                label.col-sm-4.control-label(for="objectifSearchHelper")
-                                    em No AbaIMMO
-                                div.col-sm-3
-                                    input.form-control(type="text", ng-model="sourceAbaImmo", disabled)
-
-                                label.col-sm-2.control-label(for="objectif") Prest.
-                                span#objectif.col-sm-2.form-control-static(ng-show="elfin.IDENTIFIANT.OBJECTIF")
-                                    span.label.label-success(style="font-size: 1em;", tooltip="{{ prestationStatusTooltips }}") {{elfin.IDENTIFIANT.OBJECTIF}}
-                                span#objectifStatus.col-sm-2.form-control-static(ng-show="!elfin.IDENTIFIANT.OBJECTIF")
-                                    span.label.label-danger(style="font-size: 1em;", tooltip="{{prestationStatusTooltips}}") {{prestationStatus}}
-
-                                <!-- This input field model is updated programatically by getPrestation = function(sai,groupePrestation,year,owner) -->
-                                <!-- and is never shown to the end-user. Its sole purpose is triggering required validation rule. -->
-                                input#objectif(name="objectif", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-required="true", ng-minlength="1", ng-show="false")
-                                div#prestationSelection.col-sm-1(style="border: none;text-align: left;", ng-show="prestationSelection")
-                                    button.btn.btn-default(style="float:right;", type="button", tooltip="Sélection de prestation", ng-click="selectOnePrestation(elfin, 'IDENTIFIANT.OBJECTIF', prestations, 'IDENTIFIANT.OBJECTIF', selectOnePrestationColumnsDefinition, selectOnePrestationTemplate);")
-                                        i.glyphicon.glyphicon-list-alt
 
                             div.form-group
                                 label.col-sm-4.control-label
