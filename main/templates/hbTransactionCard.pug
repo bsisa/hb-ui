@@ -170,12 +170,12 @@ div.row(style="padding-top: 8px;")
                             div.form-group.has-feedback
                                 label.col-sm-4.control-label(for="valeur_a_neuf") Facturé
                                 div.col-sm-3
-                                    input.form-control#valeur_a_neuf(name="valeur_a_neuf", type="text",
+                                    input.form-control#valeur_a_neuf(name="valeur_a_neuf", type="text", style="padding-right:0px",
                                         ng-blur="copyValeur_a_Neuf2Valeur(elfin.IDENTIFIANT.VALEUR_A_NEUF)",
-                                        ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF", format-currency)
+                                        ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF", format-currency-number)
                                 label.col-sm-2.control-label(for="valeur") Payé
                                 div.col-sm-3
-                                    input.form-control#valeur(name="valeur", ng-model="elfin.IDENTIFIANT.VALEUR", format-currency)
+                                    input.form-control#valeur(name="valeur", ng-model="elfin.IDENTIFIANT.VALEUR", type="text", format-currency-number, style="padding-right:0px",)
 
                         // Last line spanning two columns (col-sm-6)
                         div.col-sm-12
