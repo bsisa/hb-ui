@@ -38,12 +38,12 @@ div.row(style="padding-top: 8px;")
                         div.col-sm-6
                             div.form-group.has-feedback
                                 label.col-sm-4.control-label(for="abaimmo_source") No AbaIMMO Immeuble
-                                p#abaimmo_source.col-sm-8.form-control-static {{sourceAbaImmo}}
+                                p#abaimmo_source.col-sm-8.form-control-static {{ sourceAbaImmo }}
 
                             div.form-group.has-feedback(ng-if="reallocate", ng-class="getCssHasFeedback(elfinForm.manager)")
                                 label.col-sm-4.control-label(for="manager")
                                     em Propriétaire
-                                div.col-sm-8
+                                div#manager.col-sm-8
                                     div(hb-choose-actor,
                                     hb-choose-actor-id-name="manager",
                                     hb-choose-actor-elfin-form="elfinForm",
@@ -51,28 +51,31 @@ div.row(style="padding-top: 8px;")
                                     hb-choose-actor-tooltip="Recherche de propriétaire",
                                     hb-choose-actor-role="Propriétaire",
                                     hb-choose-actor-default-by-name="NE")
+
                             div.form-group(ng-show="!reallocate")
-                                label.col-sm-4.control-label(for="objectif") No SAI prestation
-                                p.col-sm-8.form-control-static {{elfin.IDENTIFIANT.OBJECTIF}}
+                                label.col-sm-4.control-label(for="objectif") No Prestation
+                                p.col-sm-8.form-control-static {{ elfin.IDENTIFIANT.OBJECTIF }}
 
                             div.form-group(ng-show="reallocate")
                                 label.col-sm-4.control-label(for="objectifSearchHelper")
                                     em No SAI
                                 div.col-sm-3
-                                    input.form-control#objectifSearchHelper(name="objectifSearchHelper", type="text", ng-model="helper.constatSelectionSai", hb-no-dirty-check)
+                                    input.form-control#objectifSearchHelper(name="objectifSearchHelper", type="text", ng-model="helper.constatSelectionSai")
 
                                 label.col-sm-2.control-label(for="objectif") Prest.
                                 span.col-sm-2.form-control-static#objectif(ng-show="elfin.IDENTIFIANT.OBJECTIF")
-                                    span.label.label-success(style="font-size: 1em;",tooltip="{{prestationStatusTooltips}}") {{elfin.IDENTIFIANT.OBJECTIF}}
+                                    span.label.label-success(style="font-size: 1em;", tooltip="{{ prestationStatusTooltips }}") {{ elfin.IDENTIFIANT.OBJECTIF }}
+
                                 div(ng-show="false")
                                     input(name="objectif", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-required="true", ng-minlength="1")
                                 span.col-sm-2.form-control-static#objectifStatus(ng-show="!elfin.IDENTIFIANT.OBJECTIF")
-                                    span.label.label-danger(style="font-size: 1em;", tooltip="{{prestationStatusTooltips}}") {{prestationStatus}}
+                                    span.label.label-danger(style="font-size: 1em;", tooltip="{{ prestationStatusTooltips }}") {{ prestationStatus }}
 
                                 div.col-sm-1#prestationSelection(style="border: none;text-align: left;", ng-show="prestationSelection")
                                     button.btn.btn-default(style="float:right;", type="button", tooltip="Sélection de prestation",
                                         ng-click="selectOnePrestation(elfin, 'IDENTIFIANT.OBJECTIF', prestations, 'IDENTIFIANT.OBJECTIF', selectOnePrestationColumnsDefinition, selectOnePrestationTemplate);")
                                         i.glyphicon.glyphicon-list-alt
+
                             div.form-group(ng-show="reallocate")
                                 label.col-sm-4.control-label
                                     em Adresse
@@ -95,20 +98,20 @@ div.row(style="padding-top: 8px;")
                                         option(value='')
 
                             div.form-group(ng-show="!reallocate")
-                                label.col-sm-4.control-label(for="groupe") Groupe Transaction
-                                div.col-sm-8.form-control-static {{elfin.GROUPE}}
+                                label.col-sm-4.control-label(for="groupe_transaction") Groupe Transaction
+                                div#groupe_transaction.col-sm-8.form-control-static {{elfin.GROUPE}}
 
                             div.form-group
-                                label.col-sm-4.control-label(for="groupe") Groupe Prestation
-                                p.col-sm-8.form-control-static {{elfin.CARACTERISTIQUE.CAR1.UNITE}}
+                                label.col-sm-4.control-label(for="groupe_prestation") Groupe Prestation
+                                p#groupe_prestation.col-sm-8.form-control-static {{elfin.CARACTERISTIQUE.CAR1.UNITE}}
 
                             div.form-group(ng-show="!reallocate")
                                 label.col-sm-4.control-label(for="annee") Année
-                                p.col-sm-8.form-control-static {{elfin.IDENTIFIANT.PAR}}
+                                p#annee.col-sm-8.form-control-static {{elfin.IDENTIFIANT.PAR}}
 
                             div.form-group(ng-show="!reallocate")
                                 label.col-sm-4.control-label(for="source") Compte
-                                p.col-sm-8.form-control-static {{elfin.IDENTIFIANT.COMPTE}}
+                                p#source.col-sm-8.form-control-static {{elfin.IDENTIFIANT.COMPTE}}
 
                             div.form-group.has-feedback(ng-show="reallocate", ng-class="getCssHasFeedback(elfinForm.year)")
                                 label.col-sm-4.control-label(for="year") Année
@@ -125,10 +128,10 @@ div.row(style="padding-top: 8px;")
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.date)")
                                 label.col-sm-4.control-label(for="date") Date
                                 div.col-sm-4
-                                    div#date(hb-date, name="date", ng-model="elfin.IDENTIFIANT.DE")
+                                    div#date(hb-date, ng-model="elfin.IDENTIFIANT.DE")
                                 label.col-sm-2.control-label(for="auteur") Auteur
                                 div.col-sm-2
-                                    p.form-control-static {{elfin.IDENTIFIANT.AUT}}
+                                    p#auteur.form-control-static {{elfin.IDENTIFIANT.AUT}}
 
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.resp)")
                                 label.col-sm-4.control-label(for="resp") Responsable visa de facture
@@ -182,15 +185,15 @@ div.row(style="padding-top: 8px;")
                                     input.form-control#remark(name="remark", autocomplete="off", ng-model="elfin.DIVERS.REMARQUE")
 
                         div.col-sm-12
-                            button.btn.btn-primary(ng-click="createNewTransaction()", ng-disabled="false")
+                            button.btn.btn-primary(ng-click="createNewTransaction()", ng-disabled="false", style="margin-right:10px;")
                                 span.glyphicon.glyphicon-plus-sign
                                 | &nbsp;Créer une nouvelle transaction
-                            button.btn.btn-primary(ng-click="reallocateTransaction()", ng-show="!reallocate")
+                            button.btn.btn-primary(ng-click="reallocateTransaction()", hb-choose-one)
                                 span.glyphicon.glyphicon-plus-sign
-                                | &nbsp;Réaffecter la transaction</button>
-                            button.btn.btn-primary(ng-click="editTransaction()", ng-show="reallocate")
+                                | &nbsp;Réaffecter la transaction
+                            button.btn.btn-primary(ng-click="editTransaction()", ng-show="false")
                                 span.glyphicon.glyphicon-plus-sign
-                                | &nbsp;Quitter le mode réaffectation</button>
+                                | &nbsp;Quitter le mode réaffectation
 
             // Annexes tab
             tab

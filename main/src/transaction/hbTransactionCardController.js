@@ -43,56 +43,8 @@
 
                     // Benefit from server side cache...
                     var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
-                    // Asychronous buildings preloading
-                    hbQueryService.getImmeubles(xpathForImmeubles)
-                        .then(
-                            function (immeubles) {
-                                $scope.immeubles = immeubles;
-                                $log.debug(">>> IMMEUBLES: " + immeubles.length);
-                                // Force selectedImmeuble update in case these were set before the current
-                                // immeubles list was loaded. This is the case in create mode with $routeParams.sai
-                                $scope.displayBuildingAddress($scope.helper.constatSelectionSai, $scope.searchOwner);
-                            },
-                            function (response) {
-                                var message = "Le chargement de la liste IMMEUBLE a échoué (statut de retour: "
-                                    + response.status
-                                    + ")";
-                                hbAlertMessages.addAlert("danger", message);
-                            }
-                        );
 
-                    /**
-                     * Updates $scope.selectedImmeuble for IMMEUBLE matching both No SAI and owner Id.
-                     * Note: This information is only used in hbTransactionCreateCard.html view while in create mode.
-                     */
-                    $scope.displayBuildingAddress = function (noSai, owner) {
-                        // Protect against null parameters values
-                        if (noSai !== null && owner !== null && owner !== undefined) {
-                            if ($attrs.hbMode === "create" || $scope.reallocate && owner.Id !== null && owner.Id.length > 0) {
-                                $log.debug("displayBuildingAddress = function(" + noSai + "," + owner.Id + ")");
-                                if ($scope.immeubles
-                                    && $scope.immeubles.length > 0 && owner !== null) {
-                                    var selectionFound = false;
-                                    for (var i = 0; i < $scope.immeubles.length; i++) {
-                                        var currImm = $scope.immeubles[i];
-                                        if (currImm.IDENTIFIANT.OBJECTIF === noSai && owner.Id === currImm.PARTENAIRE.PROPRIETAIRE.Id && owner.ID_G === currImm.PARTENAIRE.PROPRIETAIRE.ID_G) {
-                                            $scope.selectedImmeuble = currImm;
-                                            selectionFound = true;
-                                            break;
-                                        }
-                                    }
-                                    // Reset selecteImmeuble in case no matching was found.
-                                    if (!selectionFound) {
-                                        $scope.selectedImmeuble = null;
-                                    }
-                                }
-                            }
-                        } else {
-                            //$log.debug(">>>> Using HbTransactionCardController - displayBuildingAddress: NULL parameter value !)");
-                            // Reset selecteImmeuble in case no sai or owner is available.
-                            $scope.selectedImmeuble = null;
-                        }
-                    };
+
 
                     $scope.$watch('searchOwner', function (newOwner, oldOwner) {
                         $log.debug("searchOwner changed \nFrom : " + angular.toJson(oldOwner) + "\nTo   : " + angular.toJson(newOwner));
@@ -101,9 +53,11 @@
                     /**
                      * Refresh address found with helpers CONSTAT and ACTOR 'Propriétaire' information changes.
                      */
+                    /*
                     $scope.$watch('[helper.constatSelectionSai,searchOwner.Id]', function () {
                         $scope.displayBuildingAddress($scope.helper.constatSelectionSai, $scope.searchOwner);
                     }, true);
+                    */
 
                     // Copy VALEUR_A_NEUF to VALEUR only if VALEUR is 0
                     $scope.copyValeur_a_Neuf2Valeur = function (valneuf) {
@@ -114,15 +68,38 @@
                     };
 
 
-//                  $scope.selectPrestation = function (size) {
-//
+                    // Allow triggering reallocate mode to allow editing of sensitive fields.
+                    $scope.reallocateTransaction = function () {
+                        var xpathForPrestationBySOURCE = "//ELFIN[@SOURCE='" + $scope.sourcePrestation.SOURCE + "' and @ID_G='" + $scope.sourcePrestation.ID_G + "' and @CLASSE='" + $scope.sourcePrestation.CLASSE + "']";
+
+                        hbQueryService.getPrestations(xpathForPrestationBySOURCE).then(
+                            function (prestations) {
+                                $scope.selectOnePrestation(
+                                    $scope.elfin,
+                                    "SOURCE",
+                                    prestations,
+                                    "IDENTIFIANT.COMPTE",
+                                    $scope.selectOnePrestationColumnsDefinition,
+                                    $scope.selectOnePrestationTemplate
+                                );
+                            },
+                            function (response) {
+                                var message = "L'obtention des PRESTATIONs pour la source: " + xpathForPrestationBySOURCE + " a échoué. (statut: "
+                                    + response.status
+                                    + ")";
+                                hbAlertMessages.addAlert("danger", message);
+                                $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
+                            }
+                        );
+
+                    };
 
                     // Parameters to selectOnePrestation function for PRESTATION selection
                     $scope.selectOnePrestationColumnsDefinition = [
-                        {field: "IDENTIFIANT.OBJECTIF", displayName: "No SAI"},
-                        {field: "IDENTIFIANT.DE", displayName: "Année"},
+                        {field: "IDENTIFIANT.OBJECTIF", displayName: "No Prestation"},
                         {field: "GROUPE", displayName: "Groupe"},
-                        {field: "DIVERS.REMARQUE", displayName: "Remarque"}
+                        {field: "IDENTIFIANT.COMPTE", displayName: "Compte / Nature"},
+                        {field: "IDENTIFIANT.DE", displayName: "Année"}
                     ];
 
                     $scope.selectOnePrestationTemplate = '/assets/views/chooseOnePrestation.html';
@@ -136,9 +113,9 @@
                         $log.debug(">>>> selectPrestation = " + elfins.length);
 
                         var modalInstance = $modal.open({
-                            templateUrl: template, // TODO: define
+                            templateUrl: template,
                             scope: $scope,
-                            controller: 'HbChooseOneModalController', // should be available
+                            controller: 'HbChooseOneModalController',
                             resolve: {
                                 elfins: function () {
                                     return elfins;
@@ -158,14 +135,12 @@
                          */
                         modalInstance.result.then(function (selectedElfins) {
                             if (selectedElfins && selectedElfins.length > 0) {
-                                //var sourceElfin = selectedElfins[0];
-                                //hbUtil.applyPaths(targetElfin, targetPath, sourceElfin, sourcePath);
 
-                                $scope.constatPrestation = selectedElfins[0];
+                                $scope.sourcePrestation = selectedElfins[0];
+                                $scope.elfin.SOURCE = $scope.sourcePrestation.ID_G + "/" + $scope.sourcePrestation.CLASSE + "/" + $scope.sourcePrestation.Id;
 
-                                $scope.elfin.IDENTIFIANT.COMPTE = $scope.constatPrestation.IDENTIFIANT.COMPTE;
-                                $scope.elfin.IDENTIFIANT.OBJECTIF = $scope.constatPrestation.IDENTIFIANT.OBJECTIF;
-                                $scope.prestationStatus = null;
+                                $scope.elfin.IDENTIFIANT.COMPTE = $scope.sourcePrestation.IDENTIFIANT.COMPTE;
+                                $scope.elfin.IDENTIFIANT.OBJECTIF = $scope.sourcePrestation.IDENTIFIANT.OBJECTIF;
 
                                 $scope.elfinForm.$setDirty();
                             } else {
@@ -301,6 +276,8 @@
 
                     }, true);
 
+
+
                     /**
                      * TODO: disable when prestations.length > 1
                      * Listen to informations required to find out related PRESTATION
@@ -333,7 +310,7 @@
                     }, true);
 
                     $scope.sourceAbaImmo = "";
-
+                    $scope.sourcePrestation = null;
 
                     $scope.loadSourceElfin = function (sourceAttr) {
                         if (angular.isString(sourceAttr)) {
@@ -345,24 +322,12 @@
                                 GeoxmlService.getElfin(prestationSourceIDG, prestationSourceId).get()
                                     .then(
                                         function (prestationElfin) {
-                                            var immeubleAttrComponents = prestationElfin.SOURCE.split("/");
-                                            var immeubleSourceIDG = immeubleAttrComponents[0];
-                                            var immeubleSourceId = immeubleAttrComponents[2];
-                                            if (immeubleSourceIDG && immeubleSourceId) {
-                                                GeoxmlService.getElfin(immeubleSourceIDG, immeubleSourceId).get()
-                                                    .then(
-                                                        function (immeubleElfin) {
-                                                            that.sourceAbaImmo = hbUtil.getCARByPos(immeubleElfin, 2).VALEUR;
-                                                        },
-                                                        function (response) {
-                                                            that.sourceAbaImmo = "";
-                                                            var message = "Le chargement de l'Immeuble source a échoué (statut de retour: " + response.status + ")";
-                                                            hbAlertMessages.addAlert("danger", message);
-                                                        });
-                                            }
+                                            $scope.sourcePrestation = prestationElfin;
+                                            $scope.loadSourceImmeuble(prestationElfin);
                                         },
                                         function (response) {
                                             that.sourceAbaImmo = "";
+                                            $scope.sourcePrestation = null;
                                             var message = "Le chargement de la Prestation source a échoué (statut de retour: " + response.status + ")";
                                             hbAlertMessages.addAlert("danger", message);
                                         });
@@ -370,6 +335,25 @@
                         }
                     };
 
+                    $scope.loadSourceImmeuble = function(prestationElfin) {
+
+                        var immeubleAttrComponents = prestationElfin.SOURCE.split("/");
+                        var immeubleSourceIDG = immeubleAttrComponents[0];
+                        var immeubleSourceId = immeubleAttrComponents[2];
+                        if (immeubleSourceIDG && immeubleSourceId) {
+                            GeoxmlService.getElfin(immeubleSourceIDG, immeubleSourceId).get()
+                                .then(
+                                    function (immeubleElfin) {
+                                        $scope.sourceAbaImmo = hbUtil.getCARByPos(immeubleElfin, 2).VALEUR;
+                                        $scope.selectedImmeuble = immeubleElfin;
+                                    },
+                                    function (response) {
+                                        $scope.sourceAbaImmo = "";
+                                        var message = "Le chargement de l'Immeuble source a échoué (statut de retour: " + response.status + ")";
+                                        hbAlertMessages.addAlert("danger", message);
+                                    });
+                        }
+                    };
 
                     /**
                      * Perform operations once we are guaranteed to have access to $scope.elfin instance.
@@ -378,98 +362,83 @@
 
                         if (!!$scope.elfin) {
 
-                            $scope.loadSourceElfin($scope.elfin.SOURCE);
-
                             // Update elfin properties from catalogue while in create mode
-                            if ($attrs.hbMode === "create") {
+                            if ($attrs["hbMode"] === "create") {
 
-                                if ($scope.elfin) {
+                                var currentDate = new Date();
+                                $scope.elfin.IDENTIFIANT.DE = hbUtil
+                                    .getDateInHbTextFormat(currentDate);
+                                $scope.elfin.IDENTIFIANT.PAR = currentDate
+                                    .getFullYear()
+                                    .toString();
 
-                                    var currentDate = new Date();
-                                    $scope.elfin.IDENTIFIANT.DE = hbUtil
-                                        .getDateInHbTextFormat(currentDate);
-                                    $scope.elfin.IDENTIFIANT.PAR = currentDate
-                                        .getFullYear()
-                                        .toString();
+                                // Reset default value from catalogue is not relevant
+                                $scope.elfin.IDENTIFIANT.QUALITE = "";
+                                // Get user abbreviation from userDetails service
+                                $scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();
+                                // Default value from catalogue contains constatTypes list: Reset it.
+                                $scope.elfin.GROUPE = "";
+                                // Default value from catalogue contains repartition list: Reset it.
+                                $scope.elfin.CARACTERISTIQUE.CAR3.VALEUR = "";
 
-                                    // Reset default value from catalogue is not relevant
-                                    $scope.elfin.IDENTIFIANT.QUALITE = "";
-                                    // Get user abbreviation from userDetails service
-                                    $scope.elfin.IDENTIFIANT.AUT = userDetails.getAbbreviation();
-                                    // Default value from catalogue contains constatTypes list: Reset it.
-                                    $scope.elfin.GROUPE = "";
-                                    // Default value from catalogue contains repartition list: Reset it.
-                                    $scope.elfin.CARACTERISTIQUE.CAR3.VALEUR = "";
+                                // If a No SAI corresponding to an existing PRESTATION is provided
+                                // set it to elfin.IDENTIFIANT.OBJECTIF
+                                //if ($routeParams.sai) {
+                                if (!!$routeParams.Id && !!$routeParams.ID_G && !!$routeParams.classe) {
+                                    // Check the corresponding PRESTATION exists and if available, copy relevant information to
+                                    // current new TRANSACTION.
+                                    //var xpathForPrestationByObjectif = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$routeParams.sai+"']";
+                                    var xpathForPrestationByIdAndID_G = "//ELFIN[@Id='" + $routeParams.Id + "' and @ID_G='" + $routeParams.ID_G + "' and @CLASSE='" + $routeParams.classe + "']";
 
-                                    // If a No SAI corresponding to an existing PRESTATION is provided
-                                    // set it to elfin.IDENTIFIANT.OBJECTIF
-                                    //if ($routeParams.sai) {
-                                    if ($routeParams.Id && $routeParams.ID_G) {
-                                        // Check the corresponding PRESTATION exists and if available, copy relevant information to
-                                        // current new TRANSACTION.
-                                        //var xpathForPrestationByObjectif = "//ELFIN[IDENTIFIANT/OBJECTIF='"+$routeParams.sai+"']";
-                                        var xpathForPrestationByIdAndID_G = "//ELFIN[@Id='" + $routeParams.Id + "' and @ID_G='" + $routeParams.ID_G + "']";
+                                    // Prototype generic link to creation source/parent - done for SDS.
+                                    $scope.elfin.SOURCE = $routeParams.ID_G + "/" + $routeParams.classe + "/" + $routeParams.Id;
 
-                                        // Prototype generic link to creation source/parent - done for SDS.
-                                        $scope.elfin.SOURCE = $routeParams.ID_G + "/" + $routeParams.classe + "/" + $routeParams.Id;
+                                    //hbQueryService.getPrestations(xpathForPrestationByObjectif).then(
+                                    hbQueryService.getPrestations(xpathForPrestationByIdAndID_G).then(
+                                        function (prestations) {
+                                            var message;
+                                            if (prestations.length === 1) {
+                                                var prestation = prestations[0];
+                                                // Update OBJECTIF
+                                                $scope.elfin.IDENTIFIANT.OBJECTIF = prestation.IDENTIFIANT.OBJECTIF;
 
-                                        //hbQueryService.getPrestations(xpathForPrestationByObjectif).then(
-                                        hbQueryService.getPrestations(xpathForPrestationByIdAndID_G).then(
-                                            function (prestations) {
-                                                var message;
-                                                if (prestations.length === 1) {
-                                                    var prestation = prestations[0];
-                                                    // Update OBJECTIF
-                                                    $scope.elfin.IDENTIFIANT.OBJECTIF = prestation.IDENTIFIANT.OBJECTIF;
-                                                    // delay owner update waiting for default to be applied first, then overriden.
-//																$timeout(function() {
-//																	$log.debug(">>>>>>>>>>>>>>>>>>>>>>> delayed update... <<<<<<<<<<<<<<<<<<<<<<<<<<");
-//																	$log.debug(">>>>>>>>>>>>>>>>>>>>>>> delayed update to "+ prestation.PARTENAIRE.PROPRIETAIRE.NOM +" <<<<<<<<<<<<<<<<<<<<<<<<<<");
-//																	$log.debug(">>>>>>>>>>>>>>>>>>>>>>> delayed update... <<<<<<<<<<<<<<<<<<<<<<<<<<");
-//																	// Update helper fields
-//																	$scope.searchOwner = {Id : prestation.PARTENAIRE.PROPRIETAIRE.Id, ID_G : prestation.PARTENAIRE.PROPRIETAIRE.ID_G, GROUPE : prestation.PARTENAIRE.PROPRIETAIRE.GROUPE, NOM : prestation.PARTENAIRE.PROPRIETAIRE.NOM};
-//										                    	}, 4000, true);     
+                                                // Update helper fields
+                                                $scope.searchOwner = {
+                                                    Id: prestation.PARTENAIRE.PROPRIETAIRE.Id,
+                                                    ID_G: prestation.PARTENAIRE.PROPRIETAIRE.ID_G,
+                                                    GROUPE: prestation.PARTENAIRE.PROPRIETAIRE.GROUPE,
+                                                    NOM: prestation.PARTENAIRE.PROPRIETAIRE.NOM
+                                                };
+                                                $scope.helper.constatSelectionSai = prestation.IDENTIFIANT.OBJECTIF.split('.')[0];
+                                                // Groupe prestation
+                                                $scope.elfin.CARACTERISTIQUE.CAR1.UNITE = prestation.GROUPE;
+                                                // Year prestation
+                                                $scope.elfin.IDENTIFIANT.PAR = prestation.IDENTIFIANT.DE;
 
-                                                    // Update helper fields
-                                                    $scope.searchOwner = {
-                                                        Id: prestation.PARTENAIRE.PROPRIETAIRE.Id,
-                                                        ID_G: prestation.PARTENAIRE.PROPRIETAIRE.ID_G,
-                                                        GROUPE: prestation.PARTENAIRE.PROPRIETAIRE.GROUPE,
-                                                        NOM: prestation.PARTENAIRE.PROPRIETAIRE.NOM
-                                                    };
-                                                    $scope.helper.constatSelectionSai = prestation.IDENTIFIANT.OBJECTIF.split('.')[0];
-                                                    // Groupe prestation
-                                                    $scope.elfin.CARACTERISTIQUE.CAR1.UNITE = prestation.GROUPE;
-                                                    // Year prestation
-                                                    $scope.elfin.IDENTIFIANT.PAR = prestation.IDENTIFIANT.DE;
-                                                } else if (prestations.length > 1) {
-                                                    message = "Le numéro d'objectif: " + $routeParams.sai + " fourni correspond à plus d'une PRESTATION, cette information n'est pas prise en compte.";
-                                                    hbAlertMessages.addAlert(
-                                                        "warning", message);
-                                                    $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
-                                                } else if (prestations.length > 1) {
-                                                    message = "Le numéro d'objectif: " + $routeParams.sai + " fourni ne correspond à aucune PRESTATION, cette information n'est pas prise en compte.";
-                                                    hbAlertMessages.addAlert(
-                                                        "warning", message);
-                                                    $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
+                                                $scope.loadSourceImmeuble(prestation);
+
+                                            } else {
+                                                if (prestations.length === 0)
+                                                    message = "Pas de source trouvée pour:" + xpathForPrestationByIdAndID_G;
+                                                else {
+                                                    message = "Deux prestations trouvées pour la requête: " + xpathForPrestationByIdAndID_G;
                                                 }
-                                            },
-                                            function (response) {
-                                                var message = "L'obtention d'une PRESTATION pour le numéro d'objectif: " + $routeParams.sai + " a échoué. (statut: "
-                                                    + response.status
-                                                    + ")";
-                                                hbAlertMessages.addAlert(
-                                                    "danger", message);
+                                                hbAlertMessages.addAlert("warning", message);
                                                 $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
-                                            });
-                                    } else {
-                                        $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
-                                    }
-
-
+                                            }
+                                        },
+                                        function (response) {
+                                            var message = "L'obtention d'une PRESTATION pour le numéro d'objectif: " + $routeParams.sai + " a échoué. (statut: "
+                                                + response.status
+                                                + ")";
+                                            hbAlertMessages.addAlert(
+                                                "danger", message);
+                                            $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
+                                        });
                                 } else {
-                                    $log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
+                                    $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
                                 }
+
                             } else if ($scope.reallocate) { // updates in reallocate mode
                                 if ($scope.elfin) {
                                     $log.debug(">>>>>>>>>> REALLOCATING ...");
@@ -531,6 +500,7 @@
                                     $log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
                                 }
                             } else {
+                                $scope.loadSourceElfin($scope.elfin.SOURCE);
                                 // Manage editing initialisation. Warning: $scope.elfin.PARTENAIRE.PROPRIETAIRE is not equal to the owner for TRANSACTION entities.
                                 $scope.searchOwner = undefined;
                             }
@@ -642,10 +612,7 @@
                         $location.path(redirUrl);
                     };
 
-                    // Allow triggering reallocate mode to allow editing of sensitive fields.
-                    $scope.reallocateTransaction = function () {
-                        $location.search('reallocate', 'true');
-                    };
+
 
                     // Allow going back from special reallocate mode to standard edit mode
                     $scope.editTransaction = function () {
