@@ -163,8 +163,6 @@ div.row(style="padding-top: 8px;")
 
 
                         div.col-xs-12
-
-
                             div.form-group.has-feedback(ng-if="elfin.IDENTIFIANT.QUALITE==HB_ORDER_TYPE.CONTRACT", ng-class="getCssHasFeedback(elfinForm.objectTypeOrLocation)")
                                 label.col-sm-2.control-label(for="objectTypeOrLocation", tooltip="Objet ou type de bâtiment et localisation", tooltip-popup-delay="1000") Type / localisation
                                 div.col-sm-10
@@ -202,6 +200,18 @@ div.row(style="padding-top: 8px;")
                         div.col-xs-12(ng-if="elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE")
                             div(hb-order-spreadsheet, hb-order-elfin-form="elfinForm", hb-order-editable="!isReadOnly", ng-model="elfin")
 
+                        div.col-xs-12
+                            div.form-group.has-feedback
+                                label.col-sm-3.control-label(for="transactionsInvoicedSum") Montant des transactions facturées
+                                div.col-sm-3
+                                    p#transactionsInvoicedSum.form-control-static {{ transactionsInvoicedSum | currency:'CHF' }}
+                                label.col-sm-3.control-label(for="transactionsPaidSum") Montant des transactions payées
+                                div.col-sm-3
+                                    p#transactionsPaidSum.form-control-static {{ transactionsPaidSum | currency:'CHF' }}
+
+                        div.col-xs-12
+                            hr
+
                         div.col-xs-6.text-center
                             button.btn.btn-warning(ng-if="!isReadOnly" ng-click="validateEntry()")
                                 span Valider
@@ -236,6 +246,57 @@ div.row(style="padding-top: 8px;")
                                 i.glyphicon.glyphicon-print(style="padding-right:8px")
                                 span Confirmation de commande (Excel)
 
+
+
+            tab
+                tab-heading Transactions ({{ transactions.length }})
+                div.hb-tab
+                    div.row
+                        div.col-sm-12
+                            // Table des transactions
+                            table.table.table-condensed.table-bordered.table-striped
+                                thead
+                                    tr
+                                        th(width="140px") Transaction
+                                        th
+                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.OBJECTIF'; transactionReverse = !transactionReverse") No Prestation
+                                        th
+                                            a(href="", ng-click="transactionPredicate = 'GROUPE'; transactionReverse = !transactionReverse") Groupe Transaction
+                                        th
+                                            a(href="", ng-click="transactionPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; transactionReverse = !transactionReverse") Groupe Prestation
+                                        th
+                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.PAR'; transactionReverse = !transactionReverse") Année
+                                        th
+                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.COMPTE'; transactionReverse = !transactionReverse") Compte
+                                        th
+                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.DE'; transactionReverse = !transactionReverse") Date
+                                        th
+                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; transactionReverse = !transactionReverse") Facturé
+                                        th
+                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.VALEUR'; transactionReverse = !transactionReverse") Payé
+
+                                tbody
+                                    tr(ng-repeat="transaction in transactions | orderBy:transactionPredicate:transactionReverse")
+                                        td
+                                            div.col-sm-12
+                                                div(style="position:relative; float:left;", hb-card-view-link, hb-href="/elfin/{{transaction.ID_G}}/{{transaction.CLASSE}}/{{transaction.Id}}")
+
+                                        td
+                                            span {{ transaction.IDENTIFIANT.OBJECTIF }}
+                                        td
+                                            span {{ transaction.GROUPE }}
+                                        td
+                                            span {{ transaction.CARACTERISTIQUE.CAR1.UNITE }}
+                                        td
+                                            span {{ transaction.IDENTIFIANT.PAR }}
+                                        td
+                                            span {{ transaction.IDENTIFIANT.COMPTE }}
+                                        td
+                                            span {{ transaction.IDENTIFIANT.DE | date }}
+                                        td.number
+                                            span {{ transaction.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
+                                        td.number
+                                            span {{ transaction.IDENTIFIANT.VALEUR | currency:'CHF' }}
 
 
             <!-- Annexes tab -->

@@ -43,7 +43,36 @@
 
 								// Expose order type constants to scope
 								$scope.HB_ORDER_TYPE = HB_ORDER_TYPE;
-								
+
+								$scope.transactions = [];
+                                $scope.transactionsInvoicedSum = 0;
+                                $scope.transactionsPaidSum = 0;
+
+                                $scope.loadTransactions= function() {
+                                	var xpath = "//ELFIN[FILIATION/PARENT/@Id='" + $scope.elfin.Id +"'and FILIATION/PARENT/@ID_G='" + $scope.elfin.ID_G + "' and FILIATION/PARENT/@CLASSE='" + $scope.elfin.CLASSE + "']";
+
+                                    hbQueryService.getTransactions(xpath).then(
+                                        function (transactions) {
+                                            $scope.transactions = transactions;
+                                            var invoicedSum = 0;
+                                            var paidSum = 0;
+                                            _.forEach(transactions, function(transaction) {
+                                                invoicedSum += transaction.IDENTIFIANT.VALEUR_A_NEUF;
+                                                paidSum += transaction.IDENTIFIANT.VALEUR;
+                                            });
+                                            $scope.transactionsInvoicedSum = invoicedSum;
+                                            $scope.transactionsPaidSum = paidSum;
+                                        },
+                                        function (response) {
+                                            var message = "L'obtention des TRANSCTIONS pour la source: " + commandeSourceXpath + " a échoué. (statut: "
+                                                + response.status
+                                                + ")";
+                                            hbAlertMessages.addAlert("danger", message);
+                                        }
+                                    );
+								};
+
+
 						    	GeoxmlService.getNewElfin("COMMANDE").get()
 					            .then(function(order) {
 					            		// Get typeChoices from catalog default
@@ -535,15 +564,18 @@
 					             */
 						    	$scope.$watch('elfin.Id', function() { 
 
-						    		if ($scope.elfin!==null) {
+						    		if ($scope.elfin !== null) {
 
 						    		    // VAleur Executive
                                         $scope.CARSET_CAR_POS_4 = linkCARByPos(4);
                                         // Valeur Signataire
                                         $scope.CARSET_CAR_POS_5 = linkCARByPos(5);
 
+                                        $scope.loadTransactions();
+
 						    			updateIsReadOnlyStatus();
-						    			
+
+
 						    			/**
 						    			 * Delegate CARACTERISTIQUE.CAR data structure
 						    			 * check and extension to hbUtil.checkUpdateOrderCar
