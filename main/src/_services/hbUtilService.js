@@ -1068,10 +1068,9 @@
 				if (i < (catalogueDefaultValuesArray.length - 1)) {
 					jsonString += ',';
 				}
-			};
+			}
 			jsonString += ']';
-			var catalogueDefaultNameValueArray = angular.fromJson(jsonString);    
-			return catalogueDefaultNameValueArray;
+			return angular.fromJson(jsonString);
         };
         
         
