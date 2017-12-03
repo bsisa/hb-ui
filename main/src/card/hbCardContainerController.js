@@ -125,6 +125,12 @@
             // Proceed with initialisation tasks
             init();
 
+            $scope.$watch("elfin.Id", function() {
+                if (!!$scope.elfin) {
+                    document.title = "HB Gespatri - " + $scope.elfin.CLASSE + " [IDG: " + $scope.elfin.ID_G + ", Id: " + $scope.elfin.Id + "]"
+                }
+            });
+
             /**
              * Used by ui-keypress to provide save action upon user `ENTER` keypress.
              */
@@ -426,7 +432,7 @@
              */
             $scope.hasLabelsReport = function (elfin) {
                 return (elfin !== null) ? hbPrintService.hasReportDefinition(elfin.CLASSE, HB_REPORT.CLASSIFIER_LEVEL2_LABELS) : false;
-            }
+            };
 
             /**
              * Prints labels report designed for IMMEUBLE only.
