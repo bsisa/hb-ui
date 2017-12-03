@@ -546,6 +546,11 @@
              */
             function routeChange(event, nextUrl, currentUrl) {
 
+                if (currentUrl.split("?")[0] === nextUrl) {
+                    event.preventDefault();
+                    return false;
+                }
+
                 // Maintain tabState per URL
                 hbTabCacheService.setTabState(currentUrl, $scope.tabState);
 
