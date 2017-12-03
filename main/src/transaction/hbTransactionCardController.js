@@ -203,7 +203,9 @@
                     // Allow triggering reallocate mode to allow editing of sensitive fields.
                     $scope.reallocateTransaction = function (prestationXpath) {
 
-                        var xpathForPrestationBySOURCE = prestationXpath || "//ELFIN[@SOURCE='" + $scope.sourcePrestation.SOURCE + "' and @ID_G='" + $scope.sourcePrestation.ID_G + "' and @CLASSE='" + $scope.sourcePrestation.CLASSE + "']";
+                        var xpathForPrestationBySOURCE = prestationXpath ||
+                            // "//ELFIN[@SOURCE='" + $scope.sourcePrestation.SOURCE + "' and @ID_G='" + $scope.sourcePrestation.ID_G + "' and @CLASSE='" + $scope.sourcePrestation.CLASSE + "']";
+                            "//ELFIN[@ID_G='" + $scope.sourcePrestation.ID_G + "' and @CLASSE='" + $scope.sourcePrestation.CLASSE + "']";
 
                         hbQueryService.getPrestations(xpathForPrestationBySOURCE).then(
                             function (prestations) {
