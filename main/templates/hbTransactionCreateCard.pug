@@ -6,8 +6,8 @@ div(hb-card-header)
             != "<strong>L'année</strong> doit être composée de quatre positions."
         li(ng-show="elfinForm.objectif.$error.required")
             != "Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Transaction', 'Année'} est obligatoire!"
-        li(ng-show="elfinForm.annexlength.$error.min")
-            != "<strong>L'annexe</strong> est obligatoire!"
+        // li(ng-show="elfinForm.annexlength.$error.min")
+        //    != "<strong>L'annexe</strong> est obligatoire!"
 
 div.row(style="padding-top: 8px;")
     div.col-xs-12
@@ -134,12 +134,11 @@ div.row(style="padding-top: 8px;")
                                     input#remark.form-control(name="remark", type="text", autocomplete="off", ng-model="elfin.DIVERS.REMARQUE")
 
                         <!-- Last line spanning two columns (col-sm-6) -->
-                        div.col-sm-12
-                            div.form-group
-                                label.col-sm-2.control-label(for="remark")
-                                    span(hb-annexes-number)
-                                div.col-sm-10
-                                    div.col-sm-4
-                                        div(hb-annexes-component, hb-annexes-upload-annex-type="file", hb-annexes-upload-no-validation="true")
-
-                                    div.col-sm-8
+                        // div.col-sm-12
+                        //    div.form-group
+                        //        label.col-sm-2.control-label(for="remark")
+                        //            span(hb-annexes-number)
+                        //        div.col-sm-10
+                        //            div.col-sm-4
+                        //                div(hb-annexes-component, hb-annexes-upload-annex-type="file", hb-annexes-upload-no-validation="false")
+                        //            div.col-sm-8
