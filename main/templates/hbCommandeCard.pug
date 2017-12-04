@@ -56,8 +56,7 @@ div.row(style="padding-top: 8px;")
                             div.form-group
                                 label.col-sm-4.control-label(for="closeDate") Date de clôture
                                 div.col-sm-4
-                                    div#closeDate(ng-if="!isReadOnly", hb-date, name="closeDate", ng-model="elfin.IDENTIFIANT.PAR")
-                                    p(ng-if="isReadOnly", class="form-control-static") {{ elfin.IDENTIFIANT.PAR | date }}
+                                    div#closeDate(hb-date, name="closeDate", ng-model="elfin.IDENTIFIANT.PAR")
 
                             div.form-group.has-feedback(ng-if="(elfin.IDENTIFIANT.QUALITE!==HB_ORDER_TYPE.PURCHASE)", ng-class="getCssHasFeedback(elfinForm.resp)")
                                 div.row
