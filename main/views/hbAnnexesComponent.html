@@ -5,7 +5,8 @@
 			<tr>
 				<th class="col-md-1">Annexe</th>
 				<th ng-if="isMergeFeatureOn" class="col-md-1">Fusion</th>
-				<th class="col-md-11">Nom</th>
+				<th class="col-md-1">Type</th>
+				<th class="col-md-9">Nom</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -49,7 +50,8 @@
 						</tr>
 					</table>
 				</td>
-				<td>{{hbUtil.getLinkFileName(renvoi.LIEN)}}</td>
+				<td>{{ getAnnexeTypeLabel(renvoi.VALUE) }}</td>
+				<td>{{ hbUtil.getLinkFileName(renvoi.LIEN) }}</td>
 			</tr>
 		</tbody>
 	</table>

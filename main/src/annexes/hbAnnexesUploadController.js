@@ -29,8 +29,9 @@
             'hbAlertMessages',
             'hbUtil',
             '$modal',
+            'HB_ANNEXE_TYPE',
             function ($attrs, $scope, GeoxmlService, $log, hbAlertMessages,
-                      hbUtil, $modal) {
+                      hbUtil, $modal, HB_ANNEXE_TYPE) {
 
                 //$log.debug("    >>>> Using HbAnnexesUploadController");
 
@@ -42,14 +43,12 @@
 
                 // Annex types are annexes meta informations tagging annexes.
                 // They define business context, meaning. Not file media types.
-                var FILE_ANNEX_TYPE = {name: "Fichier", value: "file"};
-                var PHOTO_ANNEX_TYPE = {name: "Photo", value: "photo"};
 
                 // Available annexes types.
-                $scope.uploadFileTypes = [FILE_ANNEX_TYPE, PHOTO_ANNEX_TYPE];
+                $scope.uploadFileTypes = [HB_ANNEXE_TYPE.FILE, HB_ANNEXE_TYPE.PHOTO, HB_ANNEXE_TYPE.COMMAND];
 
                 // Note: update by reference. See doc: https://docs.angularjs.org/api/ng/directive/select
-                $scope.selectedUploadFileType = FILE_ANNEX_TYPE;
+                $scope.selectedUploadFileType = HB_ANNEXE_TYPE.FILE;
 
                 $scope.selectUploadFileType = function (uploadFileType) {
                     $scope.selectedUploadFileType = uploadFileType;
@@ -61,14 +60,19 @@
                 function init() {
                     // Check for optional annex-type attribute
                     if ($attrs['hbAnnexesUploadAnnexType']) {
-                        if ($attrs.hbAnnexesUploadAnnexType === FILE_ANNEX_TYPE.value) {
+                        if ($attrs.hbAnnexesUploadAnnexType === HB_ANNEXE_TYPE.FILE.value) {
                             // Configure parametrised annex type
-                            $scope.selectUploadFileType(FILE_ANNEX_TYPE);
+                            $scope.selectUploadFileType(HB_ANNEXE_TYPE.FILE);
                             // Do not let end-user choose annex type
                             canSelectAnnexTypeBool = false;
-                        } else if ($attrs['hbAnnexesUploadAnnexType'] === PHOTO_ANNEX_TYPE.value) {
+                        } else if ($attrs['hbAnnexesUploadAnnexType'] === HB_ANNEXE_TYPE.PHOTO.value) {
                             // Configure parametrised annex type
-                            $scope.selectUploadFileType(PHOTO_ANNEX_TYPE);
+                            $scope.selectUploadFileType(HB_ANNEXE_TYPE.PHOTO);
+                            // Do not let end-user choose annex type
+                            canSelectAnnexTypeBool = false;
+                        } else if ($attrs['hbAnnexesUploadAnnexType'] === HB_ANNEXE_TYPE.COMMAND.value) {
+                            // Configure parametrised annex type
+                            $scope.selectUploadFileType(HB_ANNEXE_TYPE.COMMAND);
                             // Do not let end-user choose annex type
                             canSelectAnnexTypeBool = false;
                         } else {

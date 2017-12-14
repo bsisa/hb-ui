@@ -171,3 +171,11 @@ angular.module('hb5').constant('HB_REPORT', {
 	CLASSIFIER_LEVEL2_LABELS : "labels"
 });
 
+/**
+ * Define constants related to annexe types.
+ */
+angular.module('hb5').constant('HB_ANNEXE_TYPE', {
+    FILE: {name: "Fichier", value: "file"},
+	PHOTO: {name: "Photo", value: "photo"},
+	COMMAND: {name: "Commande", value:"command"}
+});
