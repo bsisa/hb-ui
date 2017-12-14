@@ -86,7 +86,7 @@
 				<div class="form-group">
 					<label for="title" class="col-sm-2 control-label">Titre/Fonction</label>
 					<div class="col-sm-5">
-						<input id="title" name="title" type="title" class="form-control"
+						<input id="title" name="title" type="text" class="form-control"
 							ng-model="elfin.CARACTERISTIQUE.CAR6.VALEUR"
 							tooltip="elfin.CARACTERISTIQUE.CAR6.VALEUR" ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
 					</div>
@@ -98,6 +98,14 @@
 						<input id="title_signature" name="title_signature" type="text" class="form-control" ng-model="hbUtil.getOrCreateCARByPos(elfin, 11).VALEUR" >
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label for="title_distinction" class="col-sm-2 control-label">Marque de distinction</label>
+					<div class="col-sm-5">
+						<input id="title_distinction" name="title_distinction" type="text" class="form-control" ng-model="hbUtil.getOrCreateCARByPos(elfin, 12).VALEUR" >
+					</div>
+				</div>
+
 
 
 				<!-- Mailing abbreviated person greetings -->
