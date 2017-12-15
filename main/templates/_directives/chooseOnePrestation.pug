@@ -1,0 +1,32 @@
+div
+    div.modal-header
+        h3.modal-title Sélectionnez la PRESTATION de votre choix
+
+    div.modal-body(style="height: 480px;")
+
+        div.form-group(ng-show="!selectedElfins || selectedElfins.length === 0")
+            label.col-sm-12.control-label(style="padding-left: 0; padding-right: 0;padding-top: 5px;padding-bottom: 5px;")
+                | Aucune sélection effectuée
+
+        div.form-group(ng-show="selectedElfins && selectedElfins.length > 0")
+            label.col-sm-4(for="currentSelection", style="padding-left: 0; padding-right: 0;padding-top: 5px;padding-bottom: 5px;")
+                | Sélection courante:
+            div#currentSelection.col-sm-8(style="padding-left: 0; padding-right: 0;padding-top: 5px;padding-bottom: 5px;", ng-show="selectedElfins && selectedElfins.length > 0")
+                | {{currentSelection}}
+
+        div.clearfix
+        tabset
+            tab
+                tab-heading Année courante
+                div.hb-tab
+                    div.modalGridStyle(ui-grid="gridOptions", ui-grid-selection)
+
+            tab
+                tab-heading Année précédante
+                div.hb-tab
+                    div.modalGridStyle(ui-grid="gridOptions", ui-grid-selection)
+
+
+    div.modal-footer
+        button.btn.btn-warning(ng-click="cancel()") Annuler
+        button.btn.btn-primary(ng-click="ok()") OK

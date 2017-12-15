@@ -233,7 +233,7 @@
                         {field: "IDENTIFIANT.DE", displayName: "Année"}
                     ];
 
-                    $scope.selectOnePrestationTemplate = '/assets/views/chooseOnePrestation.html';
+                    $scope.selectOnePrestationTemplate = '/assets/views-compiled/_directives/chooseOnePrestation.html';
 
 
                     /**
