@@ -40,64 +40,14 @@ div.row(style="padding-top: 8px;")
                                 label.col-sm-4.control-label(for="abaimmo_source") No AbaIMMO Immeuble
                                 p#abaimmo_source.col-sm-8.form-control-static {{ sourceAbaImmo }}
 
-                            div.form-group.has-feedback(ng-if="reallocate", ng-class="getCssHasFeedback(elfinForm.manager)")
-                                label.col-sm-4.control-label(for="manager")
-                                    em Propriétaire
-                                div#manager.col-sm-8
-                                    div(hb-choose-actor,
-                                    hb-choose-actor-id-name="manager",
-                                    hb-choose-actor-elfin-form="elfinForm",
-                                    hb-choose-actor-model="searchOwner",
-                                    hb-choose-actor-tooltip="Recherche de propriétaire",
-                                    hb-choose-actor-role="Propriétaire",
-                                    hb-choose-actor-default-by-name="NE")
 
-                            div.form-group(ng-show="!reallocate")
+                            div.form-group
                                 label.col-sm-4.control-label(for="objectif") No Prestation
                                 p.col-sm-8.form-control-static {{ elfin.IDENTIFIANT.OBJECTIF }}
 
-                            div.form-group(ng-show="reallocate")
-                                label.col-sm-4.control-label(for="objectifSearchHelper")
-                                    em No SAI
-                                div.col-sm-3
-                                    input.form-control#objectifSearchHelper(name="objectifSearchHelper", type="text", ng-model="helper.constatSelectionSai")
 
-                                label.col-sm-2.control-label(for="objectif") Prest.
-                                span.col-sm-2.form-control-static#objectif(ng-show="elfin.IDENTIFIANT.OBJECTIF")
-                                    span.label.label-success(style="font-size: 1em;", tooltip="{{ prestationStatusTooltips }}") {{ elfin.IDENTIFIANT.OBJECTIF }}
 
-                                div(ng-show="false")
-                                    input(name="objectif", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-required="true", ng-minlength="1")
-                                span.col-sm-2.form-control-static#objectifStatus(ng-show="!elfin.IDENTIFIANT.OBJECTIF")
-                                    span.label.label-danger(style="font-size: 1em;", tooltip="{{ prestationStatusTooltips }}") {{ prestationStatus }}
-
-                                div.col-sm-1#prestationSelection(style="border: none;text-align: left;", ng-show="prestationSelection")
-                                    button.btn.btn-default(style="float:right;", type="button", tooltip="Sélection de prestation",
-                                        ng-click="selectOnePrestation(elfin, 'IDENTIFIANT.OBJECTIF', prestations, 'IDENTIFIANT.OBJECTIF', selectOnePrestationColumnsDefinition, selectOnePrestationTemplate);")
-                                        i.glyphicon.glyphicon-list-alt
-
-                            div.form-group(ng-show="reallocate")
-                                label.col-sm-4.control-label
-                                    em Adresse
-                                div.col-sm-8(ng-show="selectedImmeuble && selectedImmeuble.Id")
-                                    p.form-control-static
-                                        span(ng-bind="selectedImmeuble.IDENTIFIANT.ALIAS")
-                                div.col-sm-8(ng-show="!selectedImmeuble || !selectedImmeuble.Id")
-                                    p.form-control-static
-                                        span Pas d'immeuble pour Propriétaire/No SAI
-
-                            div.form-group.has-feedback(ng-show="reallocate", ng-class="getCssHasFeedback(elfinForm.groupeTrans)")
-                                label.col-sm-4.control-label(for="groupeTrans") Groupe Transaction
-                                div.col-sm-8
-                                    select.form-control#groupeTrans(name="groupeTrans", chosen,
-                                            data-placeholder=" ", disable-search="false",
-                                            allow-single-deselect="true",
-                                            ng-model="elfin.GROUPE",
-                                            ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes",
-                                            ng-required="true")
-                                        option(value='')
-
-                            div.form-group(ng-show="!reallocate")
+                            div.form-group
                                 label.col-sm-4.control-label(for="groupe_transaction") Groupe Transaction
                                 div#groupe_transaction.col-sm-8.form-control-static {{elfin.GROUPE}}
 
@@ -105,23 +55,14 @@ div.row(style="padding-top: 8px;")
                                 label.col-sm-4.control-label(for="groupe_prestation") Groupe Prestation
                                 p#groupe_prestation.col-sm-8.form-control-static {{elfin.CARACTERISTIQUE.CAR1.UNITE}}
 
-                            div.form-group(ng-show="!reallocate")
+                            div.form-group
                                 label.col-sm-4.control-label(for="annee") Année
                                 p#annee.col-sm-8.form-control-static {{elfin.IDENTIFIANT.PAR}}
 
-                            div.form-group(ng-show="!reallocate")
+                            div.form-group
                                 label.col-sm-4.control-label(for="source") Compte
                                 p#source.col-sm-8.form-control-static {{elfin.IDENTIFIANT.COMPTE}}
 
-                            div.form-group.has-feedback(ng-show="reallocate", ng-class="getCssHasFeedback(elfinForm.year)")
-                                label.col-sm-4.control-label(for="year") Année
-                                div.col-sm-3
-                                    input.form-control#year(name="year", type="text",
-                                        ng-model="elfin.IDENTIFIANT.PAR",
-                                        ng-maxlength="4" ng-minlength="4" ng-required="true")
-                                label.col-sm-2.control-label(for="compte", style="color: black;") Compte
-                                div.col-sm-3
-                                    p.form-control-static#compte {{elfin.IDENTIFIANT.COMPTE}}
 
                         // 2eme colonne
                         div.col-sm-6
