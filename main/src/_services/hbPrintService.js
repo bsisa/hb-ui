@@ -74,7 +74,7 @@
 				 */
 				var hasReportDefinition = function(level1,level2) {
 	        		var mrd = getReportMatchingReportDefinitionForClassifiers(level1,level2);
-	        		if (mrd == undefined) {
+	        		if (mrd === undefined) {
 	        			return false;
 	        		} else {
 	        			return true;
@@ -118,12 +118,12 @@
                  * Obtains report annexes only definition, builds corresponding URL to obtain report and returns it.
                  * If no report definition is found returns an empty string.
                  */
-                var buildReportAnnexesOnlyUrlForClassifiers = function(elfin, level1, level2, headerParam1, headerParam2, watermarkName) {
+                var buildReportAnnexesOnlyUrlForClassifiers = function(elfin, level1, level2, headerParam1, headerParam2, watermarkName, annexType) {
                     var mrd = getReportMatchingReportDefinitionForClassifiers(level1,level2);
                     if (mrd === undefined) {
                         return "";
                     } else {
-                        return "/api/melfin/report_annexes/" + mrd.ID_G + "/" + mrd.Id +
+                        return "/api/melfin/report_annexes/" + annexType + "/" + mrd.ID_G + "/" + mrd.Id +
                             "?col=" + elfin.ID_G +
                             "&id=" + elfin.Id +
                             (!!headerParam1 ? "&reportHeaderParam1=" + headerParam1 : "") +
@@ -139,7 +139,7 @@
 		        var getReportOrProvideFeedbackForMissingConfig = function (elfin, classifierLevel1, classifierLevel2, headerParam1, headerParam2, watermarkName) {
 		        	var reportUrl = buildReportUrlForClassifiers(elfin, classifierLevel1 , classifierLevel2, headerParam1, headerParam2, watermarkName);
 		        	if (reportUrl.length > 0) {
-		        		$window.open(reportUrl);	
+		        		$window.open(reportUrl, classifierLevel1+"`,`"+classifierLevel2);
 		        	} else {
 		        		hbAlertMessages.addAlert(
 								"danger", "Pas de rapport configuré pour (`"+classifierLevel1+"`,`"+classifierLevel2+"`) . Contactez s.v.p. l'administrateur du système.");
@@ -150,10 +150,10 @@
                  * Provides feedback to end-user if no report definition is available for provided parameters.
                  * Passes header parameters on to report building system.
                  */
-                var getReportAnnexesOnlyOrProvideFeedbackForMissingConfig = function (elfin, classifierLevel1, classifierLevel2, headerParam1, headerParam2, watermarkName) {
-                    var reportUrl = buildReportAnnexesOnlyUrlForClassifiers(elfin, classifierLevel1 , classifierLevel2, headerParam1, headerParam2, watermarkName);
+                var getReportAnnexesOnlyOrProvideFeedbackForMissingConfig = function (elfin, classifierLevel1, classifierLevel2, headerParam1, headerParam2, watermarkName, annexType) {
+                    var reportUrl = buildReportAnnexesOnlyUrlForClassifiers(elfin, classifierLevel1 , classifierLevel2, headerParam1, headerParam2, watermarkName, annexType);
                     if (reportUrl.length > 0) {
-                        $window.open(reportUrl);
+                        $window.open(reportUrl, classifierLevel1+"`,`"+classifierLevel2);
                     } else {
                         hbAlertMessages.addAlert(
                             "danger", "Pas de rapport configuré pour (`"+classifierLevel1+"`,`"+classifierLevel2+"`) . Contactez s.v.p. l'administrateur du système.");
@@ -261,8 +261,8 @@
 					getReportOrProvideFeedbackForMissingConfig : function(elfin, level1, level2, headerParam1, headerParam2, watermarkName) {
 						return getReportOrProvideFeedbackForMissingConfig(elfin, level1, level2, headerParam1, headerParam2, watermarkName);
 					},
-                    getReportAnnexesOnlyOrProvideFeedbackForMissingConfig : function(elfin, level1, level2, headerParam1, headerParam2, watermarkName) {
-                        return getReportAnnexesOnlyOrProvideFeedbackForMissingConfig(elfin, level1, level2, headerParam1, headerParam2, watermarkName);
+                    getReportAnnexesOnlyOrProvideFeedbackForMissingConfig : function(elfin, level1, level2, headerParam1, headerParam2, watermarkName, annexType) {
+                        return getReportAnnexesOnlyOrProvideFeedbackForMissingConfig(elfin, level1, level2, headerParam1, headerParam2, watermarkName, annexType);
                     }
 				};
 			} ]);

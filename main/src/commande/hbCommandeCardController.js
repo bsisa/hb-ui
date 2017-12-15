@@ -837,27 +837,27 @@
 						        /**
 						         * Prints entreprise contract with General Conditions.
 						         */
-						        $scope.printEntrepriseContractWithGCReport = function (elfin) {
+						        $scope.printEntrepriseContractAnnexesReport = function (elfin) {
 						        	hbPrintService.getReportAnnexesOnlyOrProvideFeedbackForMissingConfig(
 						        	    elfin,
 										HB_ORDER_REPORT_TYPE.CONTRACT,
                                         elfin.PARTENAIRE.PROPRIETAIRE.NOM,
                                         elfin.CARACTERISTIQUE["CAR5"]["VALEUR"],
                                         undefined,
-                                        $scope.isReadOnly ? undefined : "a_valider");
+                                        $scope.isReadOnly ? undefined : "a_valider", "file");
 						        };
 
                                 /**
                                  * Prints entreprise contract without General Conditions.
                                  */
-                                $scope.printEntrepriseContractWoGCReport = function (elfin) {
+                                $scope.printEntrepriseContractReport = function (elfin) {
                                     hbPrintService.getReportAnnexesOnlyOrProvideFeedbackForMissingConfig(
                                         elfin,
                                         HB_ORDER_REPORT_TYPE.CONTRACT_WO_GC,
                                         elfin.PARTENAIRE.PROPRIETAIRE.NOM,
                                         elfin.CARACTERISTIQUE["CAR5"]["VALEUR"],
                                         undefined,
-                                        $scope.isReadOnly ? undefined : "a_valider");
+                                        $scope.isReadOnly ? undefined : "a_valider", "command");
                                 };
 
 						        /**
