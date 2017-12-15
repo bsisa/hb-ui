@@ -43,7 +43,7 @@ div.row(style="padding-top: 8px;")
 
                             div.form-group
                                 label.col-sm-4.control-label(for="objectif") No Prestation
-                                p.col-sm-8.form-control-static {{ elfin.IDENTIFIANT.OBJECTIF }}
+                                p#objectif.col-sm-8.form-control-static {{ elfin.IDENTIFIANT.OBJECTIF }}
 
 
 
@@ -136,10 +136,15 @@ div.row(style="padding-top: 8px;")
                                 span.glyphicon.glyphicon-plus-sign
                                 | &nbsp;Quitter le mode réaffectation
 
-
+            // Annexes tab
+            tab
+                tab-heading
+                    div(hb-annexes-number)
+                div.hb-tab
+                    div(hb-annexes-component)
 
             tab
-                tab-heading Contrats/Commandes ({{ commandesContrats.length }})
+                tab-heading Commandes ({{ commandesContrats.length }})
                 div.hb-tab
                     div.row
                         div.col-sm-12
@@ -193,9 +198,3 @@ div.row(style="padding-top: 8px;")
                                 span.glyphicon.glyphicon-plus-sign
                                 | &nbsp;Associer une Commande/Contrat
 
-            // Annexes tab
-            tab
-                tab-heading
-                    div(hb-annexes-number)
-                div.hb-tab
-                    div(hb-annexes-component)
