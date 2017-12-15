@@ -54,10 +54,10 @@ div.row(style="padding-top: 8px;")
                                     select#groupeTrans.form-control(name="groupeTrans", chosen,
                                         data-placeholder=" ",
                                         disable-search="false",
-                                        allow-single-deselect="true"
+                                        allow-single-deselect="false"
                                         ng-model="elfin.GROUPE",
                                         ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes",
-                                        ng-required="true")
+                                        ng-required="elfin.CARACTERISTIQUE.CAR1.UNITE !== 'Fonctionnement'")
                                         option(value='')
 
                             div.form-group

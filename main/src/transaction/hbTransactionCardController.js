@@ -24,9 +24,7 @@
                           $timeout, hbAlertMessages, hbUtil,
                           HB_EVENTS, userDetails, hbQueryService) {
 
-                    $scope.reallocate = false;
                     $scope.prestationSelection = false;
-                    //$log.debug("    >>>> Using HbTransactionCardController, reallocate = " + $scope.reallocate );
 
 
                     // ===================================================================================
@@ -393,7 +391,8 @@
                                 { name: "Frais fixe", value: "Frais fixe" }
                                 ];
                         } else if (!!$scope.transactionTemplate) {
-                            $scope.transactionTypes = hbUtil.buildArrayFromCatalogueDefault($scope.transactionTemplate.GROUPE);
+                            $scope.transactionTypes = [{name: newValue, value: newValue}];
+                            $scope.elfin.GROUPE = newValue;
                         }
                     });
 
@@ -631,11 +630,6 @@
 
                     $scope.actorChooseOneTemplate = '/assets/views/chooseOneActor.html';
 
-
-                    // Allow going back from special reallocate mode to standard edit mode
-                    $scope.editTransaction = function () {
-                        // $location.search('reallocate', null);
-                    };
 
                 }]);
 
