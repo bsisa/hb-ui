@@ -94,7 +94,7 @@
                         {field: "IDENTIFIANT.A", displayName: "Délai"}
                     ];
 
-                    $scope.selectOneCommandeTemplate = '/assets/views/chooseOneCommande.html';
+                    $scope.selectOneCommandeTemplate = '/assets/views-compiled/_directives/chooseOneCommande.html';
 
                     $scope.selectOneCommande = function (elfins, sourcePath, columnsDefinition, template) {
 
