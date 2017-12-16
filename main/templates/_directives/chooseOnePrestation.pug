@@ -2,7 +2,11 @@ div
     div.modal-header
         h3.modal-title Sélectionnez la PRESTATION de votre choix
 
-    div.modal-body(style="height: 480px;")
+    div.modal-body(style="height: 540px;")
+
+        div.form-group
+            div.col-sm-12(style="padding-left: 0; padding-right: 0;padding-top: 0;")
+                input#searchTextInput.form-control(type="text", ng-model="search.text", placeholder="Critère de recherche...")
 
         div.form-group(ng-show="!selectedElfins || selectedElfins.length === 0")
             label.col-sm-12.control-label(style="padding-left: 0; padding-right: 0;padding-top: 5px;padding-bottom: 5px;")
@@ -21,10 +25,10 @@ div
                 div.hb-tab
                     div.modalGridStyle(ui-grid="gridOptions", ui-grid-selection)
 
-            tab
+            tab(select="$(window).resize()")
                 tab-heading Année précédante
                 div.hb-tab
-                    div.modalGridStyle(ui-grid="gridOptions", ui-grid-selection)
+                    div.modalGridStyle(ui-grid="secondGridOptions", ui-grid-selection)
 
 
     div.modal-footer

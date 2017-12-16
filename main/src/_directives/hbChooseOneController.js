@@ -16,7 +16,6 @@
 
                 //$log.debug("    >>>> Using HbChooseOneController");
 
-
                 /**
                  * Modal panel to update a target elfin property
                  * with a source elfin property whose elfin has
@@ -76,13 +75,17 @@
                 '$timeout',
                 'hbUtil',
                 'elfins',
+                'secondElfinList',
                 'columnsDefinition',
                 'sourcePath',
                 function ($scope, $modalInstance, $filter, $log,
-                          $timeout, hbUtil, elfins,
+                          $timeout, hbUtil, elfins, secondElfinList,
                           columnsDefinition, sourcePath) {
 
-                    // ============================================================
+                    $scope.elfins = elfins;
+                    $scope.secondElfinList = secondElfinList;
+
+                        // ============================================================
                     // Custom search field used to filter elfins
                     // ============================================================
                     // End user search field
@@ -129,6 +132,7 @@
                         // Use custom predicate function `matchAny` to achieve `OR` search on
                         // defined properties only.
                         $scope.elfins = $filter('filter')(elfins, matchAny);
+                        $scope.secondElfinList = $filter('filter')(secondElfinList, matchAny);
                     }, true);
                     // ============================================================
 
@@ -202,6 +206,23 @@
                             });
                         }
                     };
+
+                    if (angular.isArray(secondElfinList) && secondElfinList.length !== 0) {
+                        $scope.secondGridOptions = {
+                            data: 'secondElfinList',
+                            columnDefs: columnsDefinition,
+                            multiSelect: false,
+                            enableFullRowSelection: true,
+                            modifierKeysToMultiSelect: false,
+                            onRegisterApi: function (gridApi) {
+                                //set gridApi on scope
+                                $scope.secondGridApi = gridApi;
+                                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                                    $scope.selectedElfins = gridApi.selection.getSelectedRows();
+                                });
+                            }
+                        };
+                    }
 
                     $scope.ok = function () {
                         selectionConfirmed();
