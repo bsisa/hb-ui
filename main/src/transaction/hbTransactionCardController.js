@@ -326,7 +326,7 @@
                         {field: "CARSET_CAR_POS_2.VALEUR", displayName: "No AbaImmo"}
                     ];
 
-                    $scope.selectOneImmeubleTemplate = '/assets/views/chooseOneImmeuble.html';
+                    $scope.selectOneImmeubleTemplate =  "/assets/views-compiled/_directives/chooseOneImmeuble.html";
 
 
                     // Allow triggering reallocate mode to allow editing of sensitive fields.
@@ -598,7 +598,7 @@
                             field: "CARACTERISTIQUE.CARSET.CAR[0].VALEUR",
                             displayName: "Lieu-dit"
                         }];
-                    $scope.immeubleChooseOneTemplate = '/assets/views/chooseOneImmeuble.html';
+                    $scope.immeubleChooseOneTemplate =  "/assets/views-compiled/_directives/chooseOneImmeuble.html";
 
                     // TODO: FocusTimeout issue. Find a better
                     // solution ?

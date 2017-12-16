@@ -761,7 +761,7 @@
 											field : "CARACTERISTIQUE.CARSET.CAR[0].VALEUR",
 											displayName : "Lieu-dit"
 										} ];
-								$scope.immeubleChooseOneTemplate = '/assets/views/chooseOneImmeuble.html';
+								$scope.immeubleChooseOneTemplate = "/assets/views-compiled/_directives/chooseOneImmeuble.html";
 
 								// Load ACTEUR `Entreprise` list
 								$scope.entrepriseActors = null;
