@@ -41,6 +41,7 @@ module.exports = function (grunt) {
                     'src/_directives/hbDynamicNameDirective.js',
                     'src/_directives/hbEnterDirective.js',
                     'src/_directives/hbEqualsDirective.js',
+                    'src/_directives/hbExtendedChooseOneController.js',
                     'src/_directives/hbFormeComponentController.js',
                     'src/_directives/hbFormeComponentDirective.js',
                     'src/_directives/hbListContainerController.js',

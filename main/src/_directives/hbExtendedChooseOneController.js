@@ -1,72 +1,10 @@
 (function () {
 
 
-    angular.module('hb5').controller(
-        'HbChooseOneController',
-        [
-            '$scope',
-            '$modal',
-            '$routeParams',
-            '$location',
-            '$log',
-            'hbAlertMessages',
-            'hbUtil',
-            function ($scope, $modal, $routeParams,
-                      $location, $log, hbAlertMessages, hbUtil) {
-
-                //$log.debug("    >>>> Using HbChooseOneController");
-
-                /**
-                 * Modal panel to update a target elfin property
-                 * with a source elfin property whose elfin has
-                 * been selected from a list of elfins.
-                 */
-                $scope.hbChooseOne = function (targetElfin, targetPath, elfins, sourcePath, columnsDefinition, template) {
-
-                    $log.debug(">>>> ON CHOOSE :: targetElfin = : " + targetElfin.Id);
-
-                    var modalInstance = $modal.open({
-                        templateUrl: template,
-                        scope: $scope,
-                        controller: 'HbChooseOneModalController',
-                        resolve: {
-                            elfins: function () {
-                                return elfins;
-                            },
-                            columnsDefinition: function () {
-                                return columnsDefinition;
-                            },
-                            sourcePath: function () {
-                                return sourcePath;
-                            }
-                        },
-                        backdrop: 'static'
-                    });
-
-                    /**
-                     * Process modalInstance.close action
-                     */
-                    modalInstance.result.then(function (selectedElfins) {
-                        if (selectedElfins && selectedElfins.length > 0) {
-                            var sourceElfin = selectedElfins[0];
-                            hbUtil.applyPaths(targetElfin, targetPath, sourceElfin, sourcePath);
-                            $scope.elfinForm.$setDirty();
-                        } else {
-                            $log.debug("No selection returned!!!");
-                        }
-
-                    }, function () {
-                        $log.debug('Choose params modal dismissed at: ' + new Date());
-                    });
-                };
-
-            }]);
-
-
     angular
         .module('hb5')
         .controller(
-            'HbChooseOneModalController',
+            'HbExtendedChooseOneModalController',
             [
                 '$scope',
                 '$modalInstance',
@@ -75,14 +13,15 @@
                 '$timeout',
                 'hbUtil',
                 'elfins',
+                'secondElfinList',
                 'columnsDefinition',
                 'sourcePath',
-                'initalSelectedElfin',
                 function ($scope, $modalInstance, $filter, $log,
-                          $timeout, hbUtil, elfins,
-                          columnsDefinition, sourcePath, initalSelectedElfin) {
+                          $timeout, hbUtil, elfins, secondElfinList,
+                          columnsDefinition, sourcePath) {
 
                     $scope.elfins = elfins;
+                    $scope.secondElfinList = secondElfinList;
 
                         // ============================================================
                     // Custom search field used to filter elfins
@@ -131,6 +70,7 @@
                         // Use custom predicate function `matchAny` to achieve `OR` search on
                         // defined properties only.
                         $scope.elfins = $filter('filter')(elfins, matchAny);
+                        $scope.secondElfinList = $filter('filter')(secondElfinList, matchAny);
                     }, true);
                     // ============================================================
 
@@ -167,10 +107,10 @@
                     // Contains the result of user selection.
                     // While gridOptions multiSelect attribute equals false
                     // the array will only be zero or one element.
-                    $scope.selectedElfins = !!initalSelectedElfin ? [initalSelectedElfin] : [];
+                    $scope.selectedElfins = [];
 
                     // Used to display current selection value
-                    $scope.currentSelection = initalSelectedElfin;
+                    $scope.currentSelection = null;
 
                     // Listener maintaining currentSelection value
                     $scope.$watchCollection('selectedElfins', function (newSelectedElfins, oldSelectedElfins) {
@@ -204,6 +144,23 @@
                             });
                         }
                     };
+
+                    if (angular.isArray(secondElfinList) && secondElfinList.length !== 0) {
+                        $scope.secondGridOptions = {
+                            data: 'secondElfinList',
+                            columnDefs: columnsDefinition,
+                            multiSelect: false,
+                            enableFullRowSelection: true,
+                            modifierKeysToMultiSelect: false,
+                            onRegisterApi: function (gridApi) {
+                                //set gridApi on scope
+                                $scope.secondGridApi = gridApi;
+                                $scope.secondGridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                                    $scope.selectedElfins = $scope.secondGridApi.selection.getSelectedRows();
+                                });
+                            }
+                        };
+                    }
 
                     $scope.ok = function () {
                         selectionConfirmed();
