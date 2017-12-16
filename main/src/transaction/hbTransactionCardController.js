@@ -113,6 +113,9 @@
                                 },
                                 sourcePath: function () {
                                     return sourcePath;
+                                },
+                                initalSelectedElfin: function() {
+                                    return null;
                                 }
                             },
                             backdrop: 'static'
@@ -209,7 +212,7 @@
                             function (prestations) {
                                 $scope.selectOnePrestation(
                                     prestations,
-                                    "IDENTIFIANT.COMPTE",
+                                    "IDENTIFIANT.OBJECTIF",
                                     $scope.selectOnePrestationColumnsDefinition,
                                     $scope.selectOnePrestationTemplate
                                 );
@@ -260,7 +263,7 @@
                         var modalInstance = $modal.open({
                             templateUrl: template,
                             scope: $scope,
-                            controller: 'HbChooseOneModalController',
+                            controller: 'HbExtendedChooseOneModalController',
                             resolve: {
                                 elfins: function () {
                                     return currentYearElfins;
@@ -338,8 +341,12 @@
                                     immeuble.CARSET_CAR_POS_2 = hbUtil.getCARByPos(immeuble, 2);
                                 });
 
+                                var selectedImmeuble = $scope.selectedImmeuble;
+                                selectedImmeuble.CARSET_CAR_POS_2 = hbUtil.getCARByPos(selectedImmeuble, 2);
+
                                 $scope.selectImmeubleAndPrestation(
                                     immeubles,
+                                    selectedImmeuble,
                                     "IDENTIFIANT.ALIAS",
                                     $scope.selectOneImmeubleColumnsDefinition,
                                     $scope.selectOneImmeubleTemplate
@@ -353,11 +360,9 @@
                                 $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
                             }
                         );
-
                     };
 
-                    $scope.selectImmeubleAndPrestation = function (elfins, sourcePath, columnsDefinition, template) {
-
+                    $scope.selectImmeubleAndPrestation = function (elfins, selectedImmeuble, sourcePath, columnsDefinition, template) {
 
                         var modalInstance = $modal.open({
                             templateUrl: template,
@@ -372,6 +377,9 @@
                                 },
                                 sourcePath: function () {
                                     return sourcePath;
+                                },
+                                initalSelectedElfin: function() {
+                                    return selectedImmeuble;
                                 }
                             },
                             backdrop: 'static'
