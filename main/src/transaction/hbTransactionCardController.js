@@ -342,7 +342,9 @@
                                 });
 
                                 var selectedImmeuble = $scope.selectedImmeuble;
-                                selectedImmeuble.CARSET_CAR_POS_2 = hbUtil.getCARByPos(selectedImmeuble, 2);
+                                if (!!selectedImmeuble) {
+                                    selectedImmeuble.CARSET_CAR_POS_2 = hbUtil.getCARByPos(selectedImmeuble, 2);
+                                }
 
                                 $scope.selectImmeubleAndPrestation(
                                     immeubles,
