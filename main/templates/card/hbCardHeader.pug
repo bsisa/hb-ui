@@ -41,9 +41,9 @@ div.row(style="padding-top: 8px;", ng-if="canEditSource")
             input.form-control#use_source_for_deps(type="checkbox", ng-model="useSource.value")
 
 div.col-xs-1
-    span.text-danger(ng-show="elfinForm.$invalid && elfinForm.$dirty")
+    span.text-danger(ng-show="elfinForm.$invalid && elfinForm.$dirty", tooltip="{{elfinForm.$error}}")
         i.glyphicon.glyphicon-warning-sign(style="font-size: 1.2em;")
-    span.text-warning(ng-show="elfinForm.$invalid && elfinForm.$pristine")
+    span.text-warning(ng-show="elfinForm.$invalid && elfinForm.$pristine", tooltip="{{elfinForm.$error}}")
         i.glyphicon.glyphicon-warning-sign(style="font-size: 1.2em;")
 
 div.col-xs-7
