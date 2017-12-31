@@ -10,6 +10,9 @@ div(hb-card-header)
             != 'Le <strong>fournisseur</strong> doit être saisi à partir de la liste de sélection'
         li(ng-show="elfinForm.objectif.$error.required")
             != 'Le <strong>No AbaImmo</strong> est obligatoire!'
+        li(ng-show="elfinForm.annexlength.$error.required || elfinForm.annexlength.$error.$invalid")
+            != 'L&apos;<strong>annexe</strong> est obligatoire!'
+
 
 div.row(style="padding-top: 8px;")
     div.col-xs-12
@@ -17,6 +20,7 @@ div.row(style="padding-top: 8px;")
             tab
                 tab-heading Commande
                 div.hb-tab
+                    input#annexlength(style="display:none;", type="text", name="annexlength", ng-model="numberOfAnnexes", ng-required="true")
                     div.row(style="padding-right: 8px;")
                         <!-- 1st column -->
                         div.col-sm-6
@@ -338,4 +342,4 @@ div.row(style="padding-top: 8px;")
                 tab-heading
                     div(hb-annexes-number)
                 div.hb-tab
-                    div(hb-annexes-component, hb-annexes-merge="true")
+                    div(hb-annexes-component, hb-annexes-merge="true", hb-annexes-upload-no-validation="true")

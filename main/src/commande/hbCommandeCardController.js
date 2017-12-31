@@ -456,7 +456,7 @@
 										$log.debug("provider : " + angular.toJson($scope.selected.provider) + " ... WAITING for initialisation...");
 									}
 								}, true);
-								
+
 
 								// Select all IMMEUBLE
 								var xpathForImmeubles = "//ELFIN[@CLASSE='IMMEUBLE']";
@@ -541,6 +541,18 @@
 									}
 								}, true);
 
+                                $scope.$watch("elfin.ANNEXE.RENVOI", function(newRenvois) {
+									$scope.setAnnexlength();
+								});
+
+                                $scope.setAnnexlength = function() {
+                                    var nAnnexes= hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo').length;
+                                    if (nAnnexes === 0) {
+                                        $scope.numberOfAnnexes = null;
+                                    } else {
+                                        $scope.numberOfAnnexes = nAnnexes;
+                                    }
+								};
 
                                 /**
                                  * Helper function to link and if necessary create CAR elements by position.
@@ -558,6 +570,8 @@
                                     }
                                     return currentCAR;
                                 };
+
+
 
 					            /**
 					             * Perform operations once we are guaranteed to have access to $scope.elfin instance.
@@ -705,8 +719,8 @@
 												} else {
 													$scope.selected.objectsSelectionType = $scope.OBJECTS_SELECTION_TYPE_SURFACE;
 												}
-												
-											} else {
+
+                                            } else {
 												$log.debug("elfin should be available once $watch('elfin.Id') has been triggered.");
 											}
 										} else { // Not in create mode
@@ -744,7 +758,8 @@
 													);						    				
 						    			}// end of selected.code init										
 
-									}
+                                        $scope.setAnnexlength();
+                                    }
 						    	}, true);								
 
 						    	// TODO: check if used
