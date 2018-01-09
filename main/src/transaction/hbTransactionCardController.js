@@ -114,7 +114,7 @@
                                 sourcePath: function () {
                                     return sourcePath;
                                 },
-                                initalSelectedElfin: function() {
+                                initialSelectedElfin: function() {
                                     return null;
                                 }
                             },
@@ -148,6 +148,20 @@
                         }, function () {
                             $log.debug('Choose params modal dismissed at: ' + new Date());
                         });
+                    };
+
+
+                    $scope.$watch("elfin.ANNEXE.RENVOI", function(newRenvois) {
+                        $scope.setAnnexlength();
+                    });
+
+                    $scope.setAnnexlength = function() {
+                        var nAnnexes= hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo').length;
+                        if (nAnnexes === 0) {
+                            $scope.numberOfAnnexes = null;
+                        } else {
+                            $scope.numberOfAnnexes = nAnnexes;
+                        }
                     };
 
                     var findFirstIndexCommandeInFiliation = function (commande, parentArray) {
@@ -380,7 +394,7 @@
                                 sourcePath: function () {
                                     return sourcePath;
                                 },
-                                initalSelectedElfin: function() {
+                                initialSelectedElfin: function() {
                                     return selectedImmeuble;
                                 }
                             },
