@@ -21,7 +21,7 @@
                  * with a source elfin property whose elfin has
                  * been selected from a list of elfins.
                  */
-                $scope.hbChooseOne = function (targetElfin, targetPath, elfins, sourcePath, columnsDefinition, template) {
+                $scope.hbChooseOne = function (targetElfin, targetPath, elfins, sourcePath, columnsDefinition, template, initialSelectedElfin) {
 
                     $log.debug(">>>> ON CHOOSE :: targetElfin = : " + targetElfin.Id);
 
@@ -38,6 +38,9 @@
                             },
                             sourcePath: function () {
                                 return sourcePath;
+                            },
+                            initialSelectedElfin: function() {
+                                return initialSelectedElfin || null;
                             }
                         },
                         backdrop: 'static'
@@ -77,10 +80,10 @@
                 'elfins',
                 'columnsDefinition',
                 'sourcePath',
-                'initalSelectedElfin',
+                'initialSelectedElfin',
                 function ($scope, $modalInstance, $filter, $log,
                           $timeout, hbUtil, elfins,
-                          columnsDefinition, sourcePath, initalSelectedElfin) {
+                          columnsDefinition, sourcePath, initialSelectedElfin) {
 
                     $scope.elfins = elfins;
 
@@ -167,10 +170,10 @@
                     // Contains the result of user selection.
                     // While gridOptions multiSelect attribute equals false
                     // the array will only be zero or one element.
-                    $scope.selectedElfins = !!initalSelectedElfin ? [initalSelectedElfin] : [];
+                    $scope.selectedElfins = !!initialSelectedElfin ? [initialSelectedElfin] : [];
 
                     // Used to display current selection value
-                    $scope.currentSelection = initalSelectedElfin;
+                    $scope.currentSelection = initialSelectedElfin;
 
                     // Listener maintaining currentSelection value
                     $scope.$watchCollection('selectedElfins', function (newSelectedElfins, oldSelectedElfins) {
