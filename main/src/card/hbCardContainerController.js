@@ -94,6 +94,9 @@
 
             });
 
+            $scope.listInvalidFieldsAndErrors = function(elfinForm) {
+                $log.error(hbUtil.listInvalidFieldsAndErrors(elfinForm));
+            };
 
             // Provide dev access rights information to scope
             $scope.devRights = _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.DEV);
