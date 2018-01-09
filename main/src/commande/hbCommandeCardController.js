@@ -541,19 +541,6 @@
 									}
 								}, true);
 
-                                $scope.$watch("elfin.ANNEXE.RENVOI", function(newRenvois) {
-									$scope.setAnnexlength();
-								});
-
-                                $scope.setAnnexlength = function() {
-                                    var nAnnexes= hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo').length;
-                                    if (nAnnexes === 0) {
-                                        $scope.numberOfAnnexes = null;
-                                    } else {
-                                        $scope.numberOfAnnexes = nAnnexes;
-                                    }
-								};
-
                                 /**
                                  * Helper function to link and if necessary create CAR elements by position.
                                  */
@@ -758,7 +745,6 @@
 													);						    				
 						    			}// end of selected.code init										
 
-                                        $scope.setAnnexlength();
                                     }
 						    	}, true);								
 
