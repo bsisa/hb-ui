@@ -35,6 +35,10 @@
                         $scope.hbAnnexesUploadNoValidation = $attrs.hbAnnexesUploadNoValidation;
                     }
 
+                    $attrs.$observe('hbAnnexAutoTag', function(value) {
+                        $scope.hbAnnexAutoTag = $attrs.hbAnnexAutoTag;
+                    });
+
                     $scope.hbUtil = hbUtil;
 
                     $scope.$watchCollection('elfin.ANNEXE.RENVOI', function () {
@@ -49,7 +53,7 @@
                     });
 
 
-                    $scope.getAnnexeTypeLabel = function(type) {
+                    $scope.getAnnexeTypeLabel = function (type) {
                         var label = "-";
                         if (!!type) {
                             _.each(HB_ANNEXE_TYPE, function (fileType) {
