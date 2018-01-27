@@ -875,13 +875,13 @@
 						         * Prints order confirmation.
 						         */
 						        $scope.printOrderConfirmationReport = function (elfin) {
-						        	hbPrintService.getReportOrProvideFeedbackForMissingConfig(
+						        	hbPrintService.getReportAnnexesOnlyOrProvideFeedbackForMissingConfig(
 						        		elfin,
 										HB_ORDER_REPORT_TYPE.ORDER_CONFIRMATION,
 										elfin.PARTENAIRE.PROPRIETAIRE.NOM,
                                         undefined,
                                         undefined,
-                                        $scope.isReadOnly ? undefined : "a_valider");
+                                        $scope.isReadOnly ? undefined : "a_valider", "command");
 						        };
 						        
 						        
