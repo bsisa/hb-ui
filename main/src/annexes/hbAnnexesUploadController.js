@@ -58,6 +58,10 @@
                         $scope.hbAnnexAutoTag = $attrs.hbAnnexAutoTag;
                     });
 
+                    $scope.config = {};
+
+
+
                     /**
                      * Proceed to initialisation tasks
                      */
@@ -87,6 +91,20 @@
                         } else {
                             // No annex type attribute defintion. Let end user choose it.
                             canSelectAnnexTypeBool = true;
+                        }
+
+                        document.onpaste = function(event){
+                            if (!!$scope.config.ngflow) {
+                                var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+                                for (index in items) {
+                                    var item = items[index];
+                                    if (item.kind === 'file') {
+                                        // adds the file to your dropzone instance
+                                        var fileName = prompt("Merci de donner le nom du fichier collé : ", "nom_de_fichier.ext");
+                                        $scope.config.ngflow.addFile(new File([item.getAsFile()], fileName));
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -147,9 +165,11 @@
                     };
 
                     $scope.flowFileAdded = function (file, event, flow) {
-                        event.preventDefault(); //prevent file from uploading !?
+                        if (!!event) {
+                            event.preventDefault(); //prevent file from uploading !?
+                        }
 
-                        if (event.type === "drop") {
+                        if (!!event && event.type === "drop") {
                             if (!fileValidationRule.test(file.name)) {
                                 hbAlertMessages.addAlert("warning", "Le nom de votre fichier contient des caractères non permis (accents, espaces, caractères spéciaux autre que point) : " + file.name);
                                 // Reset file name to upload label CSS.
