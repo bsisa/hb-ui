@@ -99,9 +99,7 @@
                                 for (index in items) {
                                     var item = items[index];
                                     if (item.kind === 'file') {
-                                        // adds the file to your dropzone instance
-                                        var fileName = prompt("Merci de donner le nom du fichier collé : ", "nom_de_fichier.ext");
-                                        $scope.config.ngflow.addFile(new File([item.getAsFile()], fileName));
+                                        pasteFile(item.getAsFile(), $scope.config.ngflow);
                                     }
                                 }
                             }
@@ -110,6 +108,49 @@
 
                     // Proceed with initialisation tasks
                     init();
+
+                    var pasteFile = function(file, flow) {
+                        var filename = "";
+                        while (filename === "") {
+                            filename = prompt("Merci de bien vouloir donner le nom du fichier collé : ", "nom_de_fichier.ext");
+                        }
+
+                        var modalInstance = $modal.open({
+                            templateUrl: 'hbUploadFileTypeModal.html',
+                            controller: 'AnnexeFileTypeSelectionController',
+                            scope: $scope,
+                            backdrop: 'static',
+                            resolve: {
+                                items: function () {
+                                    return $scope.uploadFileTypes;
+                                }
+                            }
+                        });
+
+                        modalInstance.result.then(function (selectedItem) {
+                            $scope.selectedUploadFileType = selectedItem;
+
+                            GeoxmlService.getAnnex($scope.elfin.ID_G, $scope.elfin.Id, filename).head()
+                                .then(function () { // HTTP 200: warning file already exists
+                                        var message = "L'annexe " + filename + " existe déjà. Si vous ne désirez pas l'écraser par votre sélection courante, changer le nom de votre fichier et sélectionnez le à nouveau.";
+                                        hbAlertMessages.addAlert("danger", message);
+                                    },
+                                    // HTTP 701: custom file not found code. Expected situation
+                                    // every time a file to upload does not yet exist on the upload target: Ok.
+                                    function (response) {
+                                        // Do nothing
+                                        $log.debug("Ok, checked annex " + filename + " does not exist yet, custom HTTP status code = " + response.status);
+                                        flow.addFile(new File([file], filename));
+                                        $scope.flowUpload(flow);
+                                        // Reset file name to upload label CSS.
+                                        $scope.hbUploadStatusLabelCss = "label-info";
+                                    });
+
+                        }, function () {
+                            $scope.flowCancel(flow);
+                            return false;
+                        });
+                    };
 
 
                     // Triggers file upload after having set extra POST query parameters.
