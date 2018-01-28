@@ -307,13 +307,22 @@
                                     $scope.elfin.FILIATION = {PARENT: []};
                                 }
 
-                                $scope.elfin.FILIATION.PARENT.push({
-                                    ID_G: selectedElfins[0].ID_G,
-                                    Id: selectedElfins[0].Id,
-                                    CLASSE: selectedElfins[0].CLASSE,
-                                    REMARQUE: "",
-                                    PROPRIETE: []
-                                });
+                                var existingPrestation = _.findWhere($scope.elfin.FILIATION.PARENT, {CLASSE: "PRESTATION"});
+                                if (!!existingPrestation) {
+                                    existingPrestation.ID_G = selectedElfins[0].ID_G;
+                                    existingPrestation.Id = selectedElfins[0].Id;
+                                    existingPrestation.CLASSE = selectedElfins[0].CLASSE;
+                                    existingPrestation.REMARQUE = "";
+                                    existingPrestation.PROPRIETE = [];
+                                } else {
+                                    $scope.elfin.FILIATION.PARENT.push({
+                                        ID_G: selectedElfins[0].ID_G,
+                                        Id: selectedElfins[0].Id,
+                                        CLASSE: selectedElfins[0].CLASSE,
+                                        REMARQUE: "",
+                                        PROPRIETE: []
+                                    });
+                                }
 
                                 $scope.prestation = selectedElfins[0];
 
