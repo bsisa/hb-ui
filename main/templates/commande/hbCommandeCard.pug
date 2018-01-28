@@ -55,6 +55,10 @@ div.row(style="padding-top: 8px;")
                                     p(ng-if="isReadOnly", class="form-control-static") {{ elfin.IDENTIFIANT.A | date }}
 
                             div.form-group
+                                label.col-sm-4.control-label
+                                div.col-sm-4 &nbsp;
+
+                            div.form-group
                                 label.col-sm-4.control-label(for="closeDate") Date de clôture
                                 div.col-sm-4
                                     div#closeDate(hb-date, name="closeDate", ng-model="elfin.IDENTIFIANT.PAR")
@@ -124,6 +128,13 @@ div.row(style="padding-top: 8px;")
                                         hb-choose-surface-editable="{{!isReadOnly}}")
                                 div.col-sm-8(ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_SURFACE)")
                                     p.form-control-static {{selected.surface.CARSET_CAR_POS_2.VALEUR}} - {{selected.surface.PARTENAIRE.USAGER.VALUE}}
+
+                            div.form-group.has-feedback
+                                label.col-sm-4.control-label(for="prestation") Prestation
+                                    div.col-xs-1(style="padding-left: 4px;")
+                                        div(hb-card-view-link, hb-href="/elfin/{{prestation.ID_G}}/{{ prestation.CLASSE }}/{{ prestation.Id }}", hb-tooltip="Détails")
+                                div#prestation.col-sm-8
+                                    p.form-control-static No {{ prestation.IDENTIFIANT.OBJECTIF }}, Groupe: {{ prestation.IDENTIFIANT.OBJECTIF }}, Compte: {{ prestation.IDENTIFIANT.COMPTE}}, Année: {{ prestation.IDENTIFIANT.DE }}
 
                             div.form-group.has-feedback(ng-if="elfin.IDENTIFIANT.QUALITE !== HB_ORDER_TYPE.PURCHASE", ng-class="getCssHasFeedback(elfinForm.groupe)")
                                 label.col-sm-4.control-label(for="code") Code CFC
