@@ -349,10 +349,11 @@
                         }
                     });
 
-                    $scope.loadPrestations = function(xpathForPrestations, xpathForTransactionFn) {
+                    $scope.loadPrestations = function(xpathForPrestations, xpathForTransactionFn, target) {
+                        target = target || "prestations";
                         hbQueryService.getPrestations(xpathForPrestations)
                             .then(function (elfins) {
-                                    $scope.prestations = elfins;
+                                    $scope[target] = elfins;
 
                                     var prestationsBySource = {};
                                     _.each(elfins, function(elfin) {
@@ -362,35 +363,38 @@
 
 
                                     var filteredPrestations = $filter('prestationListFilter')($scope.prestations, $scope.currentYearAndFormerPrestationSearch, true);
-                                    // Store transactions for current year and previous year prestations.
-                                    $scope.transactions = [];
-                                    for (var i = 0; i < filteredPrestations.length; i++) {
-                                        var currPrestation = filteredPrestations[i];
-                                        var xpathForTransactions = xpathForTransactionFn(currPrestation);
-                                        hbQueryService.getTransactions(xpathForTransactions)
-                                            .then(function (transactionElfins) {
-                                                    // Kept following filter use as reminder for controller side usage.
-                                                    // var transactionElfinsMap = $filter('map')(transactionElfins,'IDENTIFIANT.VALEUR');
-                                                    // var transactionElfinsSum = $filter('sum')(transactionElfinsMap);
-                                                    // Currently the exact same computation is performed in hbImmeubleCard.html view as:
-                                                    // {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
 
-                                                    // Manually flatten $scope.transactions
-                                                    for (var j = 0; j < transactionElfins.length; j++) {
-                                                        var currTrans = transactionElfins[j];
-                                                        // Add single depth property copy of OBJECTIF to allow $filter usage (see: hbImmeubleCard.html)
-                                                        if (!$scope.useSource.value) {
-                                                            currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF;
-                                                        } else {
-                                                            currTrans.PRESTATION_ID = prestationsBySource[currTrans.SOURCE].Id;
+                                    if (!!xpathForTransactionFn) {
+                                        // Store transactions for current year and previous year prestations.
+                                        $scope.transactions = [];
+                                        for (var i = 0; i < filteredPrestations.length; i++) {
+                                            var currPrestation = filteredPrestations[i];
+                                            var xpathForTransactions = xpathForTransactionFn(currPrestation);
+                                            hbQueryService.getTransactions(xpathForTransactions)
+                                                .then(function (transactionElfins) {
+                                                        // Kept following filter use as reminder for controller side usage.
+                                                        // var transactionElfinsMap = $filter('map')(transactionElfins,'IDENTIFIANT.VALEUR');
+                                                        // var transactionElfinsSum = $filter('sum')(transactionElfinsMap);
+                                                        // Currently the exact same computation is performed in hbImmeubleCard.html view as:
+                                                        // {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
+
+                                                        // Manually flatten $scope.transactions
+                                                        for (var j = 0; j < transactionElfins.length; j++) {
+                                                            var currTrans = transactionElfins[j];
+                                                            // Add single depth property copy of OBJECTIF to allow $filter usage (see: hbImmeubleCard.html)
+                                                            if (!$scope.useSource.value) {
+                                                                currTrans.IDENTIFIANT_OBJECTIF = currTrans.IDENTIFIANT.OBJECTIF;
+                                                            } else {
+                                                                currTrans.PRESTATION_ID = prestationsBySource[currTrans.SOURCE].Id;
+                                                            }
+                                                            $scope.transactions.push(currTrans);
                                                         }
-                                                        $scope.transactions.push(currTrans);
-                                                    }
-                                                },
-                                                function (response) {
-                                                    var message = "Le chargement des TRANSACTIONs a échoué (statut de retour: " + response.status + ")";
-                                                    hbAlertMessages.addAlert("danger", message);
-                                                });
+                                                    },
+                                                    function (response) {
+                                                        var message = "Le chargement des TRANSACTIONs a échoué (statut de retour: " + response.status + ")";
+                                                        hbAlertMessages.addAlert("danger", message);
+                                                    });
+                                        }
                                     }
                                 },
                                 function (response) {
@@ -431,9 +435,13 @@
                             }
 
                             $scope.loadPrestations(xpathForPrestations, xpathForTransactionFn);
+                            // Charger les prestations historiques via No SAI
+                            $scope.loadPrestations(getXpathForPrestations($scope.elfin), null, "prestationsHistoriques");
+
                             $scope.loadContrats(xpathForContrats);
                             $scope.loadConstats(xpathForConstatsEnCours, "constatsEncours");
                             $scope.loadConstats(xpathForConstatsClos, "constatsClos");
+
                         }
                     };
 

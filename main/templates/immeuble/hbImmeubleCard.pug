@@ -508,7 +508,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 span(ng-if="useSource.value") {{transactions | filter:{ PRESTATION_ID : prestation.Id }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
                                                                 span(ng-if="!useSource.value") {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
 
-                                // PRESTATION 1st tab
+                                // PRESTATION 2nd tab
                                 tab(active="tabState.prestation_subtab_annee_plus1.active")
                                     tab-heading Prestations année+1
                                     div.hb-tab
@@ -538,7 +538,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 span {{prestation.IDENTIFIANT.ORIGINE}}
                                                             td.number
                                                                 span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
-                                // PRESTATION 1st tab
+                                // PRESTATION 3d tab
                                 tab(active="tabState.prestation_subtab_annee_toutes.active")
                                     tab-heading Prestations toutes
                                     div.hb-tab
@@ -567,6 +567,36 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 span {{prestation.IDENTIFIANT.ORIGINE}}
                                                             td.number
                                                                 span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
+
+                                tab(active="tabState.prestation_subtab_historiques.active")
+                                    tab-heading Prestations historiques (via SAI)
+                                    div.hb-tab
+                                        div.row
+                                            div.col-sm-12
+                                                table.table.table-condensed.table-bordered.table-striped
+                                                    thead
+                                                        tr
+                                                            th Prestation
+                                                            th No SAI
+                                                            th Année
+                                                            th Groupe / Remarque
+                                                            th Groupe comptable
+                                                            th Budget
+                                                    tbody(ng-show="prestations")
+                                                        tr(ng-repeat="prestation in prestationsHistoriques | orderBy:prestaPredicate")
+                                                            td
+                                                                div(hb-card-view-link, hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}")
+                                                            td
+                                                                span {{prestation.IDENTIFIANT.OBJECTIF}}
+                                                            td.date
+                                                                span {{prestation.IDENTIFIANT.DE}}
+                                                            td(ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}")
+                                                                span {{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}
+                                                            td
+                                                                span {{prestation.IDENTIFIANT.ORIGINE}}
+                                                            td.number
+                                                                span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
+
 
                                 tab(select="createNewPrestation()", ng-show="!createMode")
                                     tab-heading(tooltip="Créer une nouvelle prestation relative à l'objet courant", tooltip-popup-delay="1000")
