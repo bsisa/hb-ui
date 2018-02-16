@@ -464,10 +464,12 @@
                             if ($scope.selected.building) {
                                 $log.debug(">>>> selected.building listener: newBuilding = " + newBuilding.IDENTIFIANT.OBJECTIF);
 
-                                // If the building is really a nrw one not defined in the current elfin then choose a new Prestation accordingly
+                                // If the building is really a new one not defined in the current elfin then choose a new Prestation accordingly
+                                /*
                                 if ($scope.elfin.SOURCE !== hbUtil.getStandardSourceURI(newBuilding)) {
                                     $scope.choosePrestation($scope.selected.building);
                                 }
+                                */
 
                                 // COMMANDE SOURCE info update
                                 updateSource();
@@ -718,7 +720,10 @@
                             $scope.CARSET_CAR_POS_5 = linkCARByPos(5);
 
                             $scope.loadTransactions();
-                            loadPrestation($scope, $scope.elfin);
+                            if ($attrs["hbMode"] !== "create") {
+                                loadPrestation($scope, $scope.elfin);
+                            }
+
                             updateIsReadOnlyStatus();
 
 
