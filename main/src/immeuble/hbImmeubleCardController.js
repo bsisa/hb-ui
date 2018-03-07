@@ -404,8 +404,17 @@
                     };
 
                     var getXpathForPrestations = function(elfin) {
-                        return "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='" + elfin.IDENTIFIANT.OBJECTIF + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" + elfin.PARTENAIRE.PROPRIETAIRE.NOM + "' and @CLASSE='PRESTATION']";
+                        return "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='" +
+                            elfin.IDENTIFIANT.OBJECTIF + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" +
+                            elfin.PARTENAIRE.PROPRIETAIRE.NOM + "' and @CLASSE='PRESTATION']";
                     };
+
+                    var getXpathForPrestationsHistoriques = function(elfin) {
+                        return "//ELFIN[@CLASSE='PRESTATION'][substring-before(IDENTIFIANT/OBJECTIF,'.')='" +
+                            elfin.IDENTIFIANT.OBJECTIF + "'][PARTENAIRE/PROPRIETAIRE/@NOM='" +
+                            elfin.PARTENAIRE.PROPRIETAIRE.NOM + "'][IDENTIFIANT/DE != ''][max((number(substring(IDENTIFIANT/DE, 1, 4)), 2016))=2016]";
+                    };
+
 
                     var getXpathForTransactions = function(elfin) {
                         return  "//ELFIN[IDENTIFIANT/OBJECTIF='" + elfin.IDENTIFIANT.OBJECTIF + "']";
@@ -436,7 +445,7 @@
 
                             $scope.loadPrestations(xpathForPrestations, xpathForTransactionFn);
                             // Charger les prestations historiques via No SAI
-                            $scope.loadPrestations(getXpathForPrestations($scope.elfin), null, "prestationsHistoriques");
+                            $scope.loadPrestations(getXpathForPrestationsHistoriques($scope.elfin), null, "prestationsHistoriques");
 
                             $scope.loadContrats(xpathForContrats);
                             $scope.loadConstats(xpathForConstatsEnCours, "constatsEncours");
