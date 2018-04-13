@@ -296,9 +296,12 @@
                     };
 
                     var constats2YearsLimit = function(constat, after) {
-                        var date = moment(constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length-1].E_DATE);
-                        var in2Years = moment();
-                        return after === date.isAfter(in2Years);
+                        if (constat.ACTIVITE && constat.ACTIVITE.EVENEMENT && constat.ACTIVITE.EVENEMENT.ECHEANCE.length) {
+                            var date = moment(constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length - 1].E_DATE);
+                            var in2Years = moment();
+                            return after === date.isAfter(in2Years);
+                        }
+                        return !after;
                     };
 
                     $scope.constatsWithin2Years = function(constat) {
