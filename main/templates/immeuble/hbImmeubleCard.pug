@@ -635,7 +635,10 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             th.col-sm-2
                                                                 a(href="", ng-click="commandPredicate = 'totalRes.value'; commandReverse = !commandReverse") Montant
 
-                                                            th.col-sm-4
+                                                            th.col-sm-2
+                                                                a(href="") Transactions
+
+                                                            th.col-sm-2
                                                                 a(href="", ng-click="commandPredicate = 'PARTENAIRE.FOURNISSEUR.GROUPE'; commandReverse = !commandReverse") Fournisseur
                                                             th
 
@@ -657,6 +660,10 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 | {{ totalRes.value | currency:'CHF' }}
                                                             td.number(ng-show="!totalRes.exists")
                                                                 | -
+
+                                                            td.number
+                                                                a(href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}#transactions") {{ commande.transactionSummary }}
+
                                                             td
                                                                 | {{ commande.PARTENAIRE.FOURNISSEUR.GROUPE }}
                                                             td.center

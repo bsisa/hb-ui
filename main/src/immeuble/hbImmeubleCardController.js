@@ -113,7 +113,9 @@
                     };
 
                     // Current time in text format
-                    var currentHbTextDate = function() { return hbUtil.getDateInHbTextFormat(new Date())};
+                    var currentHbTextDate = function () {
+                        return hbUtil.getDateInHbTextFormat(new Date())
+                    };
 
                     computeEquipementsCount();
 
@@ -284,7 +286,7 @@
                     };
 
 
-                    $scope.loadConstats = function(xpath, scopeTarget) {
+                    $scope.loadConstats = function (xpath, scopeTarget) {
                         hbQueryService.getConstats(xpath)
                             .then(function (elfins) {
                                     $scope[scopeTarget] = elfins;
@@ -295,7 +297,7 @@
                                 });
                     };
 
-                    var constats2YearsLimit = function(constat, after) {
+                    var constats2YearsLimit = function (constat, after) {
                         if (constat.ACTIVITE && constat.ACTIVITE.EVENEMENT && constat.ACTIVITE.EVENEMENT.ECHEANCE.length) {
                             var date = moment(constat.ACTIVITE.EVENEMENT.ECHEANCE[constat.ACTIVITE.EVENEMENT.ECHEANCE.length - 1].E_DATE);
                             var in2Years = moment();
@@ -304,19 +306,19 @@
                         return !after;
                     };
 
-                    $scope.constatsWithin2Years = function(constat) {
+                    $scope.constatsWithin2Years = function (constat) {
                         return constats2YearsLimit(constat, false);
                     };
 
-                    $scope.constatsAfter2Years = function(constat) {
+                    $scope.constatsAfter2Years = function (constat) {
                         return constats2YearsLimit(constat, true);
                     };
 
-                    var getXpathForConstatsEnCours = function(elfin) {
+                    var getXpathForConstatsEnCours = function (elfin) {
                         return "//ELFIN[IDENTIFIANT/COMPTE='" + elfin.IDENTIFIANT.NOM + "'][not(IDENTIFIANT/A) or IDENTIFIANT/A='']";
                     };
 
-                    var getXpathForConstatsClos = function(elfin) {
+                    var getXpathForConstatsClos = function (elfin) {
                         return "//ELFIN[IDENTIFIANT/COMPTE='" + elfin.IDENTIFIANT.NOM + "'][(IDENTIFIANT/A) and not(IDENTIFIANT/A='')]";
                     };
 
@@ -352,15 +354,15 @@
                         }
                     });
 
-                    $scope.loadPrestations = function(xpathForPrestations, xpathForTransactionFn, target) {
+                    $scope.loadPrestations = function (xpathForPrestations, xpathForTransactionFn, target) {
                         target = target || "prestations";
                         hbQueryService.getPrestations(xpathForPrestations)
                             .then(function (elfins) {
                                     $scope[target] = elfins;
 
                                     var prestationsBySource = {};
-                                    _.each(elfins, function(elfin) {
-                                        var source =  elfin.ID_G + "/" + elfin.CLASSE + "/" + elfin.Id;
+                                    _.each(elfins, function (elfin) {
+                                        var source = elfin.ID_G + "/" + elfin.CLASSE + "/" + elfin.Id;
                                         prestationsBySource[source] = elfin;
                                     });
 
@@ -406,24 +408,24 @@
                                 });
                     };
 
-                    var getXpathForPrestations = function(elfin) {
+                    var getXpathForPrestations = function (elfin) {
                         return "//ELFIN[substring-before(IDENTIFIANT/OBJECTIF,'.')='" +
                             elfin.IDENTIFIANT.OBJECTIF + "' and PARTENAIRE/PROPRIETAIRE/@NOM='" +
                             elfin.PARTENAIRE.PROPRIETAIRE.NOM + "' and @CLASSE='PRESTATION']";
                     };
 
-                    var getXpathForPrestationsHistoriques = function(elfin) {
+                    var getXpathForPrestationsHistoriques = function (elfin) {
                         return "//ELFIN[@CLASSE='PRESTATION'][substring-before(IDENTIFIANT/OBJECTIF,'.')='" +
                             elfin.IDENTIFIANT.OBJECTIF + "'][PARTENAIRE/PROPRIETAIRE/@NOM='" +
                             elfin.PARTENAIRE.PROPRIETAIRE.NOM + "'][IDENTIFIANT/DE != ''][max((number(substring(IDENTIFIANT/DE, 1, 4)), 2016))=2016]";
                     };
 
 
-                    var getXpathForTransactions = function(elfin) {
-                        return  "//ELFIN[IDENTIFIANT/OBJECTIF='" + elfin.IDENTIFIANT.OBJECTIF + "']";
+                    var getXpathForTransactions = function (elfin) {
+                        return "//ELFIN[IDENTIFIANT/OBJECTIF='" + elfin.IDENTIFIANT.OBJECTIF + "']";
                     };
 
-                    $scope.loadLinkedData = function(newUseSourceValue) {
+                    $scope.loadLinkedData = function (newUseSourceValue) {
                         if ($scope.elfin && $attrs["hbMode"] !== "create") {
                             var xpathForPrestations = getXpathForPrestations($scope.elfin);
                             var xpathForTransactionFn = getXpathForTransactions;
@@ -435,7 +437,7 @@
                             if (newUseSourceValue) {
                                 var source = $scope.elfin.ID_G + "/" + $scope.elfin.CLASSE + "/" + $scope.elfin.Id;
                                 xpathForPrestations = "//ELFIN[@CLASSE='PRESTATION'][@SOURCE='" + source + "']";
-                                xpathForTransactionFn = function(elfin) {
+                                xpathForTransactionFn = function (elfin) {
                                     var source = elfin.ID_G + "/" + elfin.CLASSE + "/" + elfin.Id;
                                     return "//ELFIN[@CLASSE='TRANSACTION'][@SOURCE='" + source + "']";
                                 };
@@ -457,15 +459,15 @@
                         }
                     };
 
-                    $scope.$watch("useSource.value", function(newValue) {
+                    $scope.$watch("useSource.value", function (newValue) {
                         $scope.loadLinkedData(newValue);
                     });
 
-                    var getXpathForContrats = function(elfin) {
+                    var getXpathForContrats = function (elfin) {
                         return "//ELFIN[IDENTIFIANT/OBJECTIF='" + elfin.IDENTIFIANT.OBJECTIF + "']";
                     };
 
-                    $scope.loadContrats = function(xpathForContrats) {
+                    $scope.loadContrats = function (xpathForContrats) {
                         hbQueryService.getContrats(xpathForContrats)
                             .then(function (elfins) {
                                     $scope.contrats = elfins;
@@ -673,8 +675,28 @@
 
                                 // Only load orders if user as rights to see them
                                 if ($scope.canManageOrders) {
+
                                     hbQueryService.getCommandesForSource($scope.elfin.ID_G + "/" + $scope.elfin.CLASSE + "/" + $scope.elfin.Id).then(function (elfins) {
                                             $scope.commandes = elfins;
+
+                                            $scope.commandes.forEach(function (commande) {
+                                                var xpath = "//ELFIN[FILIATION/PARENT/@Id='" + commande.Id + "'and FILIATION/PARENT/@ID_G='" + commande.ID_G + "' and FILIATION/PARENT/@CLASSE='" + commande.CLASSE + "']";
+
+                                                hbQueryService.getTransactions(xpath).then(
+                                                    function (transactions) {
+                                                        var nbTransactions = transactions.length;
+                                                        var total = 0;
+                                                        transactions.forEach(function(transaction) {
+                                                           total += transaction.IDENTIFIANT.VALEUR || 0;
+                                                        });
+                                                        commande.transactionSummary = total + " CHF (" + nbTransactions + ")";
+                                                    },
+                                                    function (response) {
+                                                        var message = "L'obtention des TRANSACTIONS pour la source: " + xpath + " a échoué. (statut: " + response.status + ")";
+                                                        hbAlertMessages.addAlert("danger", message);
+                                                    }
+                                                )
+                                            });
                                         },
                                         function (response) {
                                             var message = "Le chargement des COMMANDES a échoué (statut de retour: " + response.status + ")";
@@ -688,8 +710,8 @@
 
                                 hbQueryService.getLocationUnits(xpathForSurfaces)
                                     .then(function (elfins) {
-                                            elfins.forEach(function(elfin) {
-                                                 elfin.CARSET_CAR_POS_2 = hbUtil.getCARByPos(elfin, 2);
+                                            elfins.forEach(function (elfin) {
+                                                elfin.CARSET_CAR_POS_2 = hbUtil.getCARByPos(elfin, 2);
                                             });
                                             $scope.locationUnits = elfins;
                                         },
@@ -727,7 +749,6 @@
                                 };
                                 $scope.elfinForm.$setDirty();
                             }
-
 
 
                             // Make IMMEUBLE photo available

@@ -29,6 +29,8 @@
                           $timeout, hbAlertMessages, hbUtil,
                           HB_EVENTS, HB_ORDER_TYPE, HB_ORDER_REPORT_TYPE, HB_ROLE_FONCTION, userDetails, hbQueryService, hbPrintService, $window) {
 
+                    $scope.transactionTabActive = ($location.hash() === "transactions");
+
                     $scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";
                     $scope.OBJECTS_SELECTION_TYPE_SURFACE = "SURFACE";
                     $scope.READ_ONLY_STATUS_KEYWORD = "status::readonly";
