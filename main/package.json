@@ -2,13 +2,16 @@
     "name": "hb5",
     "version": "0.1.1",
     "devDependencies": {
-        "grunt": "~0.4.2",
+        "grunt": "^0.4.5",
+        "grunt-contrib-concat": "^0.3.0",
+        "grunt-contrib-cssmin": "^0.7.0",
         "grunt-contrib-jshint": "~0.6.0",
         "grunt-contrib-nodeunit": "~0.2.0",
-        "grunt-contrib-uglify": "~0.2.7",
-        "grunt-contrib-concat": "~0.3.0",
-        "grunt-contrib-cssmin": "~0.7.0",
         "grunt-contrib-pug": "^1.0.0",
+        "grunt-contrib-uglify": "^0.2.7",
         "grunt-contrib-watch": "^1.0.0"
+    },
+    "dependencies": {
+        "grunt-html2js": "^0.5.1"
     }
 }
