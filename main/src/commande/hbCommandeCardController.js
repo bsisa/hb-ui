@@ -221,21 +221,23 @@
 
                     $scope.selectOnePrestationTemplate = '/assets/views-compiled/_directives/chooseOnePrestation.html';
 
-                    var loadPrestation = function(scope, elfin) {
-                        var prestationFiliation = _.findWhere(elfin.FILIATION.PARENT, {CLASSE: "PRESTATION"});
-                        GeoxmlService.getElfin(prestationFiliation.ID_G, prestationFiliation.Id).get()
-                            .then(
-                                function(prestationElfin) {
-                                    scope.prestation = prestationElfin;
-                                },
-                                function(response) {
-                                    var message = "Aucun object PRESTATION disponible pour la collection: " + ID_G + " et l'identifiant: " + Id + ".";
-                                    $log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
-                                }
-                            );
+                    var loadPrestation = function (scope, elfin) {
+                        if (elfin.FILIATION && elfin.FILIATION.PARENT) {
+                            var prestationFiliation = _.findWhere(elfin.FILIATION.PARENT, {CLASSE: "PRESTATION"});
+                            GeoxmlService.getElfin(prestationFiliation.ID_G, prestationFiliation.Id).get()
+                                .then(
+                                    function (prestationElfin) {
+                                        scope.prestation = prestationElfin;
+                                    },
+                                    function (response) {
+                                        var message = "Aucun object PRESTATION disponible pour la collection: " + ID_G + " et l'identifiant: " + Id + ".";
+                                        $log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
+                                    }
+                                );
+                        }
                     };
 
-                    $scope.choosePrestation = function(buildingElfin) {
+                    $scope.choosePrestation = function (buildingElfin) {
                         var prestationSourceXpath = "//ELFIN[@SOURCE='" + hbUtil.getStandardSourceURI(buildingElfin) + "' and @CLASSE='PRESTATION']";
 
                         hbQueryService.getPrestations(prestationSourceXpath).then(
@@ -479,7 +481,6 @@
                                 // Set order (COMMANDE) OBJECTIF to building (IMMEUBLE) OBJECTIF (no SAI)
                                 // $scope.elfin.IDENTIFIANT.OBJECTIF = $scope.selected.building.IDENTIFIANT.OBJECTIF;
                                 // $scope.elfin.IDENTIFIANT.OBJECTIF = hbUtil.getCARByPos($scope.selected.building, "2");
-
 
 
                                 // Set order ORIGINE to building (IMMEUBLE) NOM (No construction)
