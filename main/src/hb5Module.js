@@ -197,7 +197,7 @@
                         $timeout(function () {
                             //$log.debug(">>>> businessDashboardLoadWaitTimeMillisec = "+businessDashboardLoadWaitTimeMillisec+" <<<<");
                             activeJob = hbPrintService.getActiveJob();
-                            if (activeJob['CARACTERISTIQUE']['CARSET'] && activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR) {
+                            if (activeJob && activeJob['CARACTERISTIQUE']['CARSET'] && activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR) {
                                 $location.path('/' + activeJob['CARACTERISTIQUE']['CARSET']['CAR'][0].VALEUR);
                             } else {
                                 $location.path('/SBAT');
