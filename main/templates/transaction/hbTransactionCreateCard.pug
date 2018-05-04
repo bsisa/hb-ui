@@ -6,8 +6,6 @@ div(hb-card-header)
             != "<strong>L'année</strong> doit être composée de quatre positions."
         li(ng-show="elfinForm.objectif.$error.required")
             != "Le <strong>numéro de prestation {SAI}.{index}</strong> défini par la combinaison {'Propriétaire','No SAI', 'Groupe Transaction', 'Année'} est obligatoire!"
-        li(ng-show="elfinForm.annexlength.$error.required || elfinForm.annexlength.$error.$invalid")
-            != 'L&apos;<strong>annexe</strong> est obligatoire!'
 
 div.row(style="padding-top: 8px;")
     div.col-xs-12
@@ -16,7 +14,6 @@ div.row(style="padding-top: 8px;")
             tab
                 tab-heading Transaction
                 div.hb-tab
-                    input#annexlength(style="display:none;", type="text", name="annexlength", ng-model="numberOfAnnexes", ng-required="true")
                     div.row
                         <!-- 1st column -->
                         div.col-sm-6
@@ -24,8 +21,8 @@ div.row(style="padding-top: 8px;")
                                 label.col-sm-4.control-label(for="abaimmo_source") No AbaIMMO Immeuble
                                 p#abaimmo_source.col-sm-8.form-control-static {{ sourceAbaImmo }}
 
-                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.manager)")
-                                label.col-sm-4.control-label(for="manager")
+                            div#owner.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.manager)")
+                                label.col-sm-4.control-label(for="owner")
                                     em Propriétaire
                                 div.col-sm-8
                                     div(
@@ -61,7 +58,7 @@ div.row(style="padding-top: 8px;")
                                         ng-required="elfin.CARACTERISTIQUE.CAR1.UNITE !== 'Fonctionnement'")
                                         option(value='')
 
-                            div.form-group
+                            div#groupe-prest.form-group
                                 label.col-sm-4.control-label(for="groupe-prest") Groupe Prestation
                                 div.col-sm-8
                                     p.form-control-static
@@ -97,7 +94,7 @@ div.row(style="padding-top: 8px;")
 
                                 label.col-sm-2.control-label(for="auteur") Auteur
                                 div.col-sm-2
-                                    p.form-control-static {{ elfin.IDENTIFIANT.AUT }}
+                                    p#auteur.form-control-static {{ elfin.IDENTIFIANT.AUT }}
 
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.repartition)")
                                 label.col-sm-4.control-label(for="repartition") Répartition
@@ -134,12 +131,3 @@ div.row(style="padding-top: 8px;")
                                 div.col-sm-10
                                     input#remark.form-control(name="remark", type="text", autocomplete="off", ng-model="elfin.DIVERS.REMARQUE")
 
-                        <!-- Last line spanning two columns (col-sm-6) -->
-                        div.col-sm-12
-                            div.form-group
-                                label.col-sm-2.control-label(for="nAnnexes")
-                                    span#nAnnexes(hb-annexes-number)
-                                div.col-sm-10
-                                    div.col-sm-4
-                                        div(hb-annexes-component, hb-annexes-upload-annex-type="file", hb-annexes-upload-no-validation="true")
-                                    div.col-sm-8
