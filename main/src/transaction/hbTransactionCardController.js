@@ -65,7 +65,7 @@
 
                     $scope.allocateCommand = function () {
                         var source = $scope.selectedImmeuble.ID_G + "/" + $scope.selectedImmeuble.CLASSE + "/" + $scope.selectedImmeuble.Id;
-                        var commandeSourceXpath = "//ELFIN[@SOURCE='" + source + "' and @CLASSE='COMMANDE']";
+                        var commandeSourceXpath = "//ELFIN[@SOURCE='" + source + "' and @CLASSE='COMMANDE'][FILIATION/PARENT/@Id='" + $scope.sourcePrestation.Id + "']";
 
                         hbQueryService.getCommandes(commandeSourceXpath).then(
                             function (commandes) {
