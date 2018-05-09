@@ -226,8 +226,13 @@ div.row(style="padding-top: 8px;")
                         div.col-xs-6.text-center
                             button.btn.btn-warning(ng-if="!isReadOnly" ng-click="validateEntry()")
                                 span Valider
+
                             button.btn.btn-danger(ng-if="(isReadOnly && canUnlockValidatedOrders)" ng-click="unsetIsReadOnlyStatus()")
                                 span Modifier une commande validée
+
+                            button.btn.btn-danger(ng-if="(!isReadOnly && canUnlockValidatedOrders)" ng-click="choosePrestation(selected.building)")
+                                span Affecter à une prestation
+
 
                         div.col-xs-6.text-center
                             // Bon de commandes
