@@ -274,7 +274,8 @@
                         });
 
                         var nextYearElfins = _.filter(elfins, function (elfin) {
-                            return elfin.IDENTIFIANT.DE === strNextYear || elfin.IDENTIFIANT.DE === strPreviousYear;
+                            return elfin.IDENTIFIANT.DE === strNextYear ||
+                                (elfin.IDENTIFIANT.DE === strPreviousYear && elfin.GROUPE === "Construction");
                         });
 
                         var modalInstance = $modal.open({
