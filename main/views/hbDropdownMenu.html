@@ -1,10 +1,10 @@
-<li class="dropdown has-menu">
+<li class="dropdown has-menu" dropdown>
 	<!-- 
 	ui.bootstrap: dropdown, dropdown-toggle, dropdown-menu
 	htmlkickstart: has-menu, arrow
 	custom: onhoveropen
 	-->
-    <a class="dropdown-toggle" href="#"><i class="{{menuIconClass}}"></i> {{menuLabel}}<span class="arrow">&nbsp;</span></a>
+    <a class="dropdown-toggle" href="#" dropdown-toggle><i class="{{menuIconClass}}"></i> {{menuLabel}}<span class="arrow">&nbsp;</span></a>
     <ul class="dropdown-menu">
         <li ng-repeat="menuItem in menuItems" ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]">
             
