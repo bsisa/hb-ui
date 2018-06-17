@@ -264,9 +264,9 @@
                         $log.debug(">>>> selectPrestation = " + elfins.length);
 
                         var thisYear = moment().year();
-                        var nextYear = thisYear + 1;
                         var strThisYear = String(thisYear);
-                        var strNextYear = String(nextYear);
+                        var strNextYear = String(thisYear + 1);
+                        var strPreviousYear = String(thisYear - 1);
 
 
                         var currentYearElfins = _.filter(elfins, function (elfin) {
@@ -274,13 +274,14 @@
                         });
 
                         var nextYearElfins = _.filter(elfins, function (elfin) {
-                            return elfin.IDENTIFIANT.DE === strNextYear;
+                            return elfin.IDENTIFIANT.DE === strNextYear || elfin.IDENTIFIANT.DE === strPreviousYear;
                         });
 
                         var modalInstance = $modal.open({
                             templateUrl: $scope.selectOnePrestationTemplate,
                             scope: $scope,
                             controller: 'HbExtendedChooseOneModalController',
+                            size:"lg",
                             resolve: {
                                 elfins: function () {
                                     return currentYearElfins;
