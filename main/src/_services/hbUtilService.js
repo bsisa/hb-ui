@@ -14,7 +14,7 @@
 
         var isActionAuthorised = function (menuAction) {
             if (angular.isDefined(menuAction) && angular.isDefined(menuAction.actionRights)) {
-                return _.contains(userDetails.getRoles(), menuAction.actionRights);
+                return _.includes(userDetails.getRoles(), menuAction.actionRights);
             } else {
                 return true;
             }

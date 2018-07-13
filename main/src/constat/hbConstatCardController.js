@@ -201,7 +201,7 @@
 								currentEvent.PAR_QUI = 'A VALIDER';
 							} else if (currentEvent.PAR_QUI === "A VALIDER") {
 								// Only users with validation role can set status to VALIDE
-								if (_.contains(userDetails.getRoles(),HB_ROLE_FONCTION.VALIDATION)) {
+								if (_.includes(userDetails.getRoles(),HB_ROLE_FONCTION.VALIDATION)) {
 									currentEvent.PAR_QUI = 'VALIDE';	
 								} else {
 									currentEvent.PAR_QUI = 'EN COURS';	

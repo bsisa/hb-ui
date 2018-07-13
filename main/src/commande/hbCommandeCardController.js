@@ -39,8 +39,8 @@
                     // orders-statistics function. This action should not be performed after an
                     // order has been sent, printed.
                     $scope.canUnlockValidatedOrders = (
-                        _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.ORDERS_STATISTICS) &&
-                        _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.ADMIN)
+                        _.includes(userDetails.getRoles(), HB_ROLE_FONCTION.ORDERS_STATISTICS) &&
+                        _.includes(userDetails.getRoles(), HB_ROLE_FONCTION.ADMIN)
                     );
 
                     // Expose order type constants to scope
@@ -882,7 +882,7 @@
                                 }
                             } else { // Not in create mode
                                 // Check whether the COMMANDE.SOURCE points to a SURFACE or IMMEUBLE
-                                if (_.contains($scope.elfin.SOURCE, 'IMMEUBLE')) {
+                                if (_.includes($scope.elfin.SOURCE, 'IMMEUBLE')) {
                                     $scope.selected.objectsSelectionType = $scope.OBJECTS_SELECTION_TYPE_IMMEUBLE;
                                 } else {
                                     $scope.selected.objectsSelectionType = $scope.OBJECTS_SELECTION_TYPE_SURFACE;

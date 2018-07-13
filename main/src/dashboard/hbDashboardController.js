@@ -5,7 +5,7 @@
     	//$log.debug("    >>>> HbDashboardController called at " + new Date());
     	
     	
-		$scope.canManageOrders = _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.ORDERS_STATISTICS);
+		$scope.canManageOrders = _.includes(userDetails.getRoles(), HB_ROLE_FONCTION.ORDERS_STATISTICS);
     	
     	
     	// ============================================================

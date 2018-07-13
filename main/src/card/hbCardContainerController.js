@@ -99,8 +99,8 @@
             };
 
             // Provide dev access rights information to scope
-            $scope.devRights = _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.DEV);
-            $scope.canEditSource = _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.EDIT_SOURCE);
+            $scope.devRights = _.includes(userDetails.getRoles(), HB_ROLE_FONCTION.DEV);
+            $scope.canEditSource = _.includes(userDetails.getRoles(), HB_ROLE_FONCTION.EDIT_SOURCE);
 
             // See https://stackoverflow.com/questions/18642371/checkbox-not-binding-to-scope-in-angularjs#23943930
             // To understand why we cannot use a simple primitive here
@@ -231,7 +231,7 @@
              */
             $scope.canDelete = function () {
                 // Only users with global delete role can delete data
-                return _.contains(userDetails.getRoles(), HB_ROLE_FONCTION.DELETE);
+                return _.includes(userDetails.getRoles(), HB_ROLE_FONCTION.DELETE);
             };
 
             /**
