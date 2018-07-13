@@ -1000,11 +1000,8 @@
 							<div class="form-group has-feedback" ng-class="getCssHasFeedback(elfinForm.ecapValue)">
 								<label for="ecapValue" class="col-md-4 control-label">Valeur ECAP</label>
 								<div class="col-md-8">
-									<input id="ecapValue" name="ecapValue" type="text" ng-if="canEdit"
+									<input id="ecapValue" name="ecapValue" type="text" ng-readonly="!canEdit"
 										   class="form-control" ng-model="CARSET_CAR_POS_5.VALEUR" format-currency>
-
-									<input id="ecapValueView" type="text" ng-if="!canEdit" readonly
-										   class="form-control" value="{{ CARSET_CAR_POS_5.VALEUR | currency:'CHF' }}">
 								</div>
 							</div>
 						</div>

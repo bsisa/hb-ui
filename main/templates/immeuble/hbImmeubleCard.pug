@@ -917,9 +917,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapValue)")
                                 label.col-md-4.control-label(for="ecapValue") Valeur ECAP
                                 div.col-md-8
-                                    input#ecapValue.form-control(name="ecapValue", type="text", ng-model="CARSET_CAR_POS_5.VALEUR", ng-if="canEdit", format-currency)
-                                    input#ecapValueView.form-control(name="ecapValueView", type="text", value="{{ CARSET_CAR_POS_5.VALEUR | currency:'CHF' }}", ng-if="!canEdit", readonly)
-
+                                    input#ecapValue.form-control(name="ecapValue", type="text", ng-model="CARSET_CAR_POS_5.VALEUR", format-currency, ng-readonly="!canEdit")
                         div.col-md-6
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.ecapEstimYear)")
                                 label.col-md-4.control-label(for="ecapEstimYear") Année estimation ECAP
