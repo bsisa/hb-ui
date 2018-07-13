@@ -20,12 +20,12 @@ ul.hb-menu-bar.menu
             li(ng-repeat="job in jobs")
                 a(ng-click="activateJob(job)")
                     span.icon(data-icon="G")
-                    span {{ job.IDENTIFIANT.NOM }}
+                    span &nbsp;{{ job.IDENTIFIANT.NOM }}
 
     li.dropdown.has-menu
         a.dropdown-toggle(href="#")
-            i.glyphicon.glyphicon-user(style="font-size: 1em;")
-            | {{userDetails.username}} - {{userDetails.name}} {{userDetails.surname}}
+            i.glyphicon.glyphicon-user(style="font-size: 1em;") &nbsp;
+            | {{ userDetails.username }} - {{ userDetails.name }} {{ userDetails.surname }}
             span.arrow
             ul.dropdown-menu
                 li
