@@ -9,7 +9,7 @@
 			'HbChooseSurfaceController',
 			[ 		'$attrs',
 					'$scope',
-					'$modal',
+					'$uibModal',
 					'$routeParams',
 					'$location',
 					'$log',

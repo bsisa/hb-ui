@@ -6,7 +6,7 @@
 					'$scope',
 					'GeoxmlService',
 					'hbQueryService',
-					'$modal',
+					'$uibModal',
 					'$routeParams',
 					'$location',
 					'$log',

@@ -5,7 +5,7 @@
         'HbChooseOneController',
         [
             '$scope',
-            '$modal',
+            '$uibModal',
             '$routeParams',
             '$location',
             '$log',

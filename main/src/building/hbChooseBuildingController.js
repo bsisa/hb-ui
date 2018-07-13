@@ -9,7 +9,7 @@
 			'HbChooseBuildingController',
 			[ 		'$attrs',
 					'$scope',
-					'$modal',
+					'$uibModal',
 					'$routeParams',
 					'$location',
 					'$log',

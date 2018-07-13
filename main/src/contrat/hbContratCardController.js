@@ -8,7 +8,7 @@
 							'$scope',
 							'$attrs',
 							'GeoxmlService',
-							'$modal',
+							'$uibModal',
 							'$routeParams',
 							'$location',
 							'$log',

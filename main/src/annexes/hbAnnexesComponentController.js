@@ -8,7 +8,7 @@
                 '$attrs',
                 '$scope',
                 '$log',
-                '$modal',
+                '$uibModal',
                 'hbUtil',
                 'HB_ANNEXE_TYPE',
                 function ($attrs, $scope, $log, $modal, hbUtil, HB_ANNEXE_TYPE) {

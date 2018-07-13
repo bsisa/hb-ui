@@ -1,6 +1,6 @@
 (function () {
 
-    angular.module('hb5').controller('MapController', ['$scope', '$modal', '$rootScope', '$timeout', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline', 'hbUtil',
+    angular.module('hb5').controller('MapController', ['$scope', '$uibModal', '$rootScope', '$timeout', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline', 'hbUtil',
         function ($scope, $modal, $rootScope, $timeout, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline, hbUtil) {
 
     	// Get controller reference as "view model" var. 

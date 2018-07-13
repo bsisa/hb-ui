@@ -28,7 +28,7 @@
                 '$log',
                 'hbAlertMessages',
                 'hbUtil',
-                '$modal',
+                '$uibModal',
                 'HB_ANNEXE_TYPE',
                 function ($attrs, $scope, GeoxmlService, $log, hbAlertMessages,
                           hbUtil, $modal, HB_ANNEXE_TYPE) {

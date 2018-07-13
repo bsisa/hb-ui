@@ -10,7 +10,7 @@
                 '$scope',
                 '$rootScope',
                 'GeoxmlService',
-                '$modal',
+                '$uibModal',
                 '$routeParams',
                 '$location',
                 '$log',

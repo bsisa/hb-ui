@@ -94,8 +94,8 @@
     
     
     angular.module('hb5').controller('MenuController', [
-        '$scope', 'GeoxmlService', '$modal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS', 'userDetails','hbPrintService',
-        function($scope, GeoxmlService, $modal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS, userDetails, hbPrintService) {
+        '$scope', 'GeoxmlService', '$uibModal', 'hbAlertMessages', 'hbUtil', '$timeout', '$location', '$log', '$window', 'MapService', 'HB_EVENTS', 'userDetails','hbPrintService',
+        function($scope, GeoxmlService, $uibModal, hbAlertMessages, hbUtil, $timeout, $location, $log, $window, MapService, HB_EVENTS, userDetails, hbPrintService) {
         	
       	// Force service initialisation 
         // Check $$activeConfiguration watch for actual initialisation).
