@@ -1,171 +1,190 @@
-	<div hb-card-header >
-		<!-- Custom validation message to be defined here -->
-		<span ng-show="elfinForm.name.$error.required">Le champs <strong>Nom de famille</strong> est obligatoire pour les collaborateurs</span>
-		<span ng-show="elfinForm.surname.$error.required">Le champs <strong>Prénom</strong> est obligatoire pour les collaborateurs</span>
-		<span ng-show="elfinForm.email.$error.email">Le champs <strong>Email</strong> n'est pas valide</span>
-		<span ng-show="elfinForm.email.$error.required">Le champs <strong>Email</strong> est obligatoire pour les collaborateurs</span>
-		<span ng-show="elfinForm.title.$error.required">Le champs <strong>Titre/Fonction</strong> est obligatoire pour les collaborateurs</span>		
-		<span ng-show="elfinForm.societe.$error.required">Le champs <strong><span ng-show="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'" >Société</span><span ng-show="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'" >Abréviation</span></strong> est obligatoire</span>
-		<span ng-show="elfinForm.role.$error.required">Le champs <strong>Rôle</strong> est obligatoire</span>
-	</div>
-	<div class="row" style="padding-top: 8px;">
-		<div class="col-xs-12">
-			<tabset> <!-- CONSTAT tab --> <tab> <tab-heading>Identifications</tab-heading>
-			<div class="hb-tab">
-				<div class="form-group">
-					<label for="name" class="col-sm-2 control-label">Nom de
-						famille</label>
-					<div class="col-sm-5">
-						<input id="name" name="name" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.NOM" ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="surname" class="col-sm-2 control-label">Prénom</label>
-					<div class="col-sm-5">
-						<input id="surname" name="surname" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.ALIAS"
-							ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="role" class="col-sm-2 control-label">Rôle</label>
-					<div class="col-sm-5">
-						<div hb-single-select hb-single-select-options="actorRoles" ng-model="elfin.IDENTIFIANT.QUALITE" ></div>
-					</div>
-					
-				</div>
-				<div class="form-group">
-					<label for="societe" class="col-sm-2 control-label"><span ng-show="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'" >Société</span><span ng-show="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'" >Abréviation</span></label>
-					<div class="col-sm-5">
-						<input id="societe" name="societe" type="text" class="form-control"
-							ng-model="elfin.GROUPE" tooltip="elfin.GROUPE" ng-required="elfin.IDENTIFIANT.QUALITE != ''">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="tel" class="col-sm-2 control-label">Téléphone</label>
-					<div class="col-sm-5">
-						<input id="tel" name="tel" type="text" class="form-control"
-							ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"
-							tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR">
-					</div>
-				</div>
+<div hb-card-header>
+    <!-- Custom validation message to be defined here -->
+    <span ng-show="elfinForm.name.$error.required">Le champs <strong>Nom de famille</strong> est obligatoire pour les collaborateurs</span>
+    <span ng-show="elfinForm.surname.$error.required">Le champs <strong>Prénom</strong> est obligatoire pour les collaborateurs</span>
+    <span ng-show="elfinForm.email.$error.email">Le champs <strong>Email</strong> n'est pas valide</span>
+    <span ng-show="elfinForm.email.$error.required">Le champs <strong>Email</strong> est obligatoire pour les collaborateurs</span>
+    <span ng-show="elfinForm.title.$error.required">Le champs <strong>Titre/Fonction</strong> est obligatoire pour les collaborateurs</span>
+    <span ng-show="elfinForm.societe.$error.required">Le champs <strong><span
+            ng-show="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'">Société</span><span
+            ng-show="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">Abréviation</span></strong> est obligatoire</span>
+    <span ng-show="elfinForm.role.$error.required">Le champs <strong>Rôle</strong> est obligatoire</span>
+</div>
+<div class="row" style="padding-top: 8px;">
+    <div class="col-xs-12">
+        <uib-tabset> <!-- CONSTAT tab -->
+            <uib-tab>
+                <uib-tab-heading>Identifications</uib-tab-heading>
+                <div class="hb-tab">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Nom de
+                            famille</label>
+                        <div class="col-sm-5">
+                            <input id="name" name="name" type="text" class="form-control"
+                                   ng-model="elfin.IDENTIFIANT.NOM"
+                                   ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="surname" class="col-sm-2 control-label">Prénom</label>
+                        <div class="col-sm-5">
+                            <input id="surname" name="surname" type="text" class="form-control"
+                                   ng-model="elfin.IDENTIFIANT.ALIAS"
+                                   ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="role" class="col-sm-2 control-label">Rôle</label>
+                        <div class="col-sm-5">
+                            <div hb-single-select hb-single-select-options="actorRoles"
+                                 ng-model="elfin.IDENTIFIANT.QUALITE"></div>
+                        </div>
 
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="cellphone" class="col-sm-2 control-label">{{elfin.CARACTERISTIQUE.CARSET.CAR[0].NOM}}</label> -->
-<!-- 					<div class="col-sm-5"> -->
-<!-- 						<input id="cellphone" name="cellphone" type="text" class="form-control" -->
-<!-- 							ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" -->
-<!-- 							> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-				<div class="form-group">
-					<label for="cellphone" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,1).NOM}}</label>
-					<div class="col-sm-5">
-						<input id="cellphone" name="cellphone" type="text" class="form-control"
-							ng-model="hbUtil.getCARByPos(elfin,1).VALEUR"
-							>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="fax" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,2).NOM}}</label>
-					<div class="col-sm-5">
-						<input id="fax" name="fax" type="text" class="form-control"
-							ng-model="hbUtil.getCARByPos(elfin,2).VALEUR"
-							>
-					</div>
-				</div>				
-				<div class="form-group">
-					<label for="email" class="col-sm-2 control-label">Email</label>
-					<div class="col-sm-5">
-						<input id="email" name="email" type="email" class="form-control"
-							ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR"
-							tooltip="elfin.CARACTERISTIQUE.CAR5.VALEUR" ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="title" class="col-sm-2 control-label">Titre/Fonction</label>
-					<div class="col-sm-5">
-						<input id="title" name="title" type="text" class="form-control"
-							ng-model="elfin.CARACTERISTIQUE.CAR6.VALEUR"
-							tooltip="elfin.CARACTERISTIQUE.CAR6.VALEUR" ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
-					</div>
-				</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="societe" class="col-sm-2 control-label"><span
+                                ng-show="elfin.IDENTIFIANT.QUALITE != 'Collaborateur'">Société</span><span
+                                ng-show="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">Abréviation</span></label>
+                        <div class="col-sm-5">
+                            <input id="societe" name="societe" type="text" class="form-control"
+                                   ng-model="elfin.GROUPE" tooltip="elfin.GROUPE"
+                                   ng-required="elfin.IDENTIFIANT.QUALITE != ''">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tel" class="col-sm-2 control-label">Téléphone</label>
+                        <div class="col-sm-5">
+                            <input id="tel" name="tel" type="text" class="form-control"
+                                   ng-model="elfin.CARACTERISTIQUE.CAR4.VALEUR"
+                                   tooltip="elfin.CARACTERISTIQUE.CAR4.VALEUR">
+                        </div>
+                    </div>
 
-				<div class="form-group">
-					<label for="title_signature" class="col-sm-2 control-label">Titre de Signature</label>
-					<div class="col-sm-5">
-						<input id="title_signature" name="title_signature" type="text" class="form-control" ng-model="hbUtil.getOrCreateCARByPos(elfin, 11).VALEUR" >
-					</div>
-				</div>
+                    <!-- 				<div class="form-group"> -->
+                    <!-- 					<label for="cellphone" class="col-sm-2 control-label">{{elfin.CARACTERISTIQUE.CARSET.CAR[0].NOM}}</label> -->
+                    <!-- 					<div class="col-sm-5"> -->
+                    <!-- 						<input id="cellphone" name="cellphone" type="text" class="form-control" -->
+                    <!-- 							ng-model="elfin.CARACTERISTIQUE.CARSET.CAR[0].VALEUR" -->
+                    <!-- 							> -->
+                    <!-- 					</div> -->
+                    <!-- 				</div> -->
+                    <div class="form-group">
+                        <label for="cellphone"
+                               class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,1).NOM}}</label>
+                        <div class="col-sm-5">
+                            <input id="cellphone" name="cellphone" type="text" class="form-control"
+                                   ng-model="hbUtil.getCARByPos(elfin,1).VALEUR"
+                            >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fax" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,2).NOM}}</label>
+                        <div class="col-sm-5">
+                            <input id="fax" name="fax" type="text" class="form-control"
+                                   ng-model="hbUtil.getCARByPos(elfin,2).VALEUR"
+                            >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-5">
+                            <input id="email" name="email" type="email" class="form-control"
+                                   ng-model="elfin.CARACTERISTIQUE.CAR5.VALEUR"
+                                   tooltip="elfin.CARACTERISTIQUE.CAR5.VALEUR"
+                                   ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">Titre/Fonction</label>
+                        <div class="col-sm-5">
+                            <input id="title" name="title" type="text" class="form-control"
+                                   ng-model="elfin.CARACTERISTIQUE.CAR6.VALEUR"
+                                   tooltip="elfin.CARACTERISTIQUE.CAR6.VALEUR"
+                                   ng-required="elfin.IDENTIFIANT.QUALITE == 'Collaborateur'">
+                        </div>
+                    </div>
 
-				<div class="form-group">
-					<label for="title_distinction" class="col-sm-2 control-label">Marque de distinction</label>
-					<div class="col-sm-5">
-						<input id="title_distinction" name="title_distinction" type="text" class="form-control" ng-model="hbUtil.getOrCreateCARByPos(elfin, 12).VALEUR" >
-					</div>
-				</div>
+                    <div class="form-group">
+                        <label for="title_signature" class="col-sm-2 control-label">Titre de Signature</label>
+                        <div class="col-sm-5">
+                            <input id="title_signature" name="title_signature" type="text" class="form-control"
+                                   ng-model="hbUtil.getOrCreateCARByPos(elfin, 11).VALEUR">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title_distinction" class="col-sm-2 control-label">Marque de distinction</label>
+                        <div class="col-sm-5">
+                            <input id="title_distinction" name="title_distinction" type="text" class="form-control"
+                                   ng-model="hbUtil.getOrCreateCARByPos(elfin, 12).VALEUR">
+                        </div>
+                    </div>
 
 
-
-				<!-- Mailing abbreviated person greetings -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="letterSalutation" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,3).NOM}}</label> -->
-<!-- 					<div class="col-sm-2"> -->
-<!-- 						<input id="letterSalutationUnite" name="letterSalutationUnite" type="text" class="form-control" -->
-<!-- 							ng-model="hbUtil.getCARByPos(elfin,3).UNITE" -->
-<!-- 							> -->
-<!-- 					</div>					 -->
-<!-- 					<div class="col-sm-3"> -->
-<!-- 						<input id="letterSalutationValue" name="letterSalutationValue" type="text" class="form-control" -->
-<!-- 							ng-model="hbUtil.getCARByPos(elfin,3).VALEUR" -->
-<!-- 							> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-				<!-- Full text person greetings -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="salutation" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,4).NOM}}</label> -->
-<!-- 					<div class="col-sm-2"> -->
-<!-- 						<input id="salutationUnite" name="salutationUnite" type="text" class="form-control" -->
-<!-- 							ng-model="hbUtil.getCARByPos(elfin,4).UNITE" -->
-<!-- 							> -->
-<!-- 					</div>					 -->
-<!-- 					<div class="col-sm-3"> -->
-<!-- 						<input id="salutationValue" name="salutationValue" type="text" class="form-control" -->
-<!-- 							ng-model="hbUtil.getCARByPos(elfin,4).VALEUR" -->
-<!-- 							> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-				<!-- Web site URL -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="webSite" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,5).NOM}}</label> -->
-<!-- 					<div class="col-sm-5"> -->
-<!-- 						<input id="webSite" name="webSite" type="text" class="form-control" -->
-<!-- 							ng-model="hbUtil.getCARByPos(elfin,5).VALEUR" -->
-<!-- 							> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-				<div class="form-group">
-					<label for="address" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,6).NOM}}</label>
-					<div class="col-sm-5">
-						<input id="address" name="address" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,6).VALEUR" >
-						<input id="addressLine2" name="addressLine2" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,7).VALEUR" >
-						<input id="addressLine2" name="addressLine2" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,8).VALEUR" >
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="zipcode" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,9).NOM}}</label>
-					<div class="col-sm-5">
-						<input id="zipcode" name="zipcode" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,9).VALEUR" >
-					</div>
-				</div>		
-				<div class="form-group">
-					<label for="country" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,10).NOM}}</label>
-					<div class="col-sm-5">
-						<input id="country" name="country" type="text" class="form-control" ng-model="hbUtil.getCARByPos(elfin,10).VALEUR" >
-					</div>
-				</div>
-			</div>
-			</tab> </tabset>
-		</div>
-	</div>
+                    <!-- Mailing abbreviated person greetings -->
+                    <!-- 				<div class="form-group"> -->
+                    <!-- 					<label for="letterSalutation" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,3).NOM}}</label> -->
+                    <!-- 					<div class="col-sm-2"> -->
+                    <!-- 						<input id="letterSalutationUnite" name="letterSalutationUnite" type="text" class="form-control" -->
+                    <!-- 							ng-model="hbUtil.getCARByPos(elfin,3).UNITE" -->
+                    <!-- 							> -->
+                    <!-- 					</div>					 -->
+                    <!-- 					<div class="col-sm-3"> -->
+                    <!-- 						<input id="letterSalutationValue" name="letterSalutationValue" type="text" class="form-control" -->
+                    <!-- 							ng-model="hbUtil.getCARByPos(elfin,3).VALEUR" -->
+                    <!-- 							> -->
+                    <!-- 					</div> -->
+                    <!-- 				</div> -->
+                    <!-- Full text person greetings -->
+                    <!-- 				<div class="form-group"> -->
+                    <!-- 					<label for="salutation" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,4).NOM}}</label> -->
+                    <!-- 					<div class="col-sm-2"> -->
+                    <!-- 						<input id="salutationUnite" name="salutationUnite" type="text" class="form-control" -->
+                    <!-- 							ng-model="hbUtil.getCARByPos(elfin,4).UNITE" -->
+                    <!-- 							> -->
+                    <!-- 					</div>					 -->
+                    <!-- 					<div class="col-sm-3"> -->
+                    <!-- 						<input id="salutationValue" name="salutationValue" type="text" class="form-control" -->
+                    <!-- 							ng-model="hbUtil.getCARByPos(elfin,4).VALEUR" -->
+                    <!-- 							> -->
+                    <!-- 					</div> -->
+                    <!-- 				</div> -->
+                    <!-- Web site URL -->
+                    <!-- 				<div class="form-group"> -->
+                    <!-- 					<label for="webSite" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,5).NOM}}</label> -->
+                    <!-- 					<div class="col-sm-5"> -->
+                    <!-- 						<input id="webSite" name="webSite" type="text" class="form-control" -->
+                    <!-- 							ng-model="hbUtil.getCARByPos(elfin,5).VALEUR" -->
+                    <!-- 							> -->
+                    <!-- 					</div> -->
+                    <!-- 				</div> -->
+                    <div class="form-group">
+                        <label for="address" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,6).NOM}}</label>
+                        <div class="col-sm-5">
+                            <input id="address" name="address" type="text" class="form-control"
+                                   ng-model="hbUtil.getCARByPos(elfin,6).VALEUR">
+                            <input id="addressLine2" name="addressLine2" type="text" class="form-control"
+                                   ng-model="hbUtil.getCARByPos(elfin,7).VALEUR">
+                            <input id="addressLine2" name="addressLine2" type="text" class="form-control"
+                                   ng-model="hbUtil.getCARByPos(elfin,8).VALEUR">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipcode" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,9).NOM}}</label>
+                        <div class="col-sm-5">
+                            <input id="zipcode" name="zipcode" type="text" class="form-control"
+                                   ng-model="hbUtil.getCARByPos(elfin,9).VALEUR">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="country" class="col-sm-2 control-label">{{hbUtil.getCARByPos(elfin,10).NOM}}</label>
+                        <div class="col-sm-5">
+                            <input id="country" name="country" type="text" class="form-control"
+                                   ng-model="hbUtil.getCARByPos(elfin,10).VALEUR">
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

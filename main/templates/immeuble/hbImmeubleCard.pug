@@ -140,9 +140,9 @@ div.row.summary(ng-if="isMapToggled() && mapDisplayType === 'SPLIT'")
 
 div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
     div.col-xs-12
-        tabset
-            tab(active="tabState.immeuble.active")
-                tab-heading Immeuble
+        uib-tabset
+            uib-tab(active="tabState.immeuble.active")
+                uib-tab-heading Immeuble
                 // 1st tab 1st row 
                 div.hb-tab
                     // 1st col first tab first row start
@@ -274,9 +274,9 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                     // Keywords are currently unused.
                     // 4e bloc 
                     // Constats en cours tab 
-                    tabset
-                        tab
-                            tab-heading Constats en cours (<= 2 ans)
+                    uib-tabset
+                        uib-tab
+                            uib-tab-heading Constats en cours (<= 2 ans)
                             div.hb-tab
                                 div.row
                                     div.col-sm-12(ng-show="constatsEncours")
@@ -307,8 +307,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                     td
                                                         span {{constat.FILIATION.PARENT[constat.FILIATION.PARENT.length-1].Id}}
 
-                        tab
-                            tab-heading Constats en cours (> 2 ans)
+                        uib-tab
+                            uib-tab-heading Constats en cours (> 2 ans)
                             div.hb-tab
                                 div.row
                                     div.col-sm-12(ng-show="constatsEncours")
@@ -339,8 +339,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                     td
                                                         span {{constat.FILIATION.PARENT[constat.FILIATION.PARENT.length-1].Id}}
 
-                        tab
-                            tab-heading Constats traités
+                        uib-tab
+                            uib-tab-heading Constats traités
                             div.hb-tab
                                 div.row
                                     div.col-sm-12(ng-show="constatsClos")
@@ -371,22 +371,22 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                     td
                                                         span {{constat.FILIATION.PARENT[constat.FILIATION.PARENT.length-1].Id}}
 
-                        tab(select="createNewConstat()", ng-show="!createMode")
-                            tab-heading(tooltip="Créer un nouveau constat relatif à l'objet courant", tooltip-popup-delay="1000")
+                        uib-tab(select="createNewConstat()", ng-show="!createMode")
+                            uib-tab-heading(tooltip="Créer un nouveau constat relatif à l'objet courant", tooltip-popup-delay="1000")
                                 | Créer un nouveau constat&nbsp;
                                 i.glyphicon.glyphicon-plus-sign
                             div.hb-tab
 
             // SURFACE tab 
-            tab(active="tabState.unite_locative.active")
-                tab-heading Unités locatives ({{locationUnits.length}})
+            uib-tab(active="tabState.unite_locative.active")
+                uib-tab-heading Unités locatives ({{locationUnits.length}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
-                            tabset
+                            uib-tabset
                                 // UNITE_LOCATIVE 1st sub tab 
-                                tab(active="tabState.unite_locative_subtab_current.active")
-                                    tab-heading Unités locatives courantes
+                                uib-tab(active="tabState.unite_locative_subtab_current.active")
+                                    uib-tab-heading Unités locatives courantes
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -426,8 +426,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 span {{locationUnit.DIVERS.REMARQUE}}
 
                                 // UNITE_LOCATIVE 2nd sub tab
-                                tab(active="tabState.unite_locative_subtab_archived.active")
-                                    tab-heading Unités locatives archivées
+                                uib-tab(active="tabState.unite_locative_subtab_archived.active")
+                                    uib-tab-heading Unités locatives archivées
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -462,21 +462,21 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td
                                                                 span {{locationUnit.DIVERS.REMARQUE}}
 
-                                tab(select="createNewUniteLocative()", ng-show="!createMode")
-                                    tab-heading(tooltip="Créer une nouvelle unité locative relative à l'objet courant", tooltip-popup-delay="1000")
+                                uib-tab(select="createNewUniteLocative()", ng-show="!createMode")
+                                    uib-tab-heading(tooltip="Créer une nouvelle unité locative relative à l'objet courant", tooltip-popup-delay="1000")
                                         | Créer une nouvelle unité locative&nbsp;
                                         i.glyphicon.glyphicon-plus-sign
                                     div.hb-tab
             // PRESTATION tab
-            tab(active="tabState.prestation.active")
-                tab-heading Prestations({{prestations.length}})
+            uib-tab(active="tabState.prestation.active")
+                uib-tab-heading Prestations({{prestations.length}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
-                            tabset
+                            uib-tabset
                                 // PRESTATION 1st tab
-                                tab(active="tabState.prestation_subtab_annee_moins1.active")
-                                    tab-heading Prestations en cours, année-1
+                                uib-tab(active="tabState.prestation_subtab_annee_moins1.active")
+                                    uib-tab-heading Prestations en cours, année-1
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -509,8 +509,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 span(ng-if="!useSource.value") {{transactions | filter:{ IDENTIFIANT_OBJECTIF : prestation.IDENTIFIANT.OBJECTIF }:true | map: 'IDENTIFIANT.VALEUR' | sum  | currency:'CHF' }}
 
                                 // PRESTATION 2nd tab
-                                tab(active="tabState.prestation_subtab_annee_plus1.active")
-                                    tab-heading Prestations année+1
+                                uib-tab(active="tabState.prestation_subtab_annee_plus1.active")
+                                    uib-tab-heading Prestations année+1
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -539,8 +539,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td.number
                                                                 span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
                                 // PRESTATION 3d tab
-                                tab(active="tabState.prestation_subtab_annee_toutes.active")
-                                    tab-heading Prestations toutes
+                                uib-tab(active="tabState.prestation_subtab_annee_toutes.active")
+                                    uib-tab-heading Prestations toutes
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -568,8 +568,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td.number
                                                                 span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
 
-                                tab(active="tabState.prestation_subtab_historiques.active")
-                                    tab-heading Prestations historiques (via SAI)
+                                uib-tab(active="tabState.prestation_subtab_historiques.active")
+                                    uib-tab-heading Prestations historiques (via SAI)
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -598,8 +598,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 span {{prestation.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
 
 
-                                tab(select="createNewPrestation()", ng-show="!createMode")
-                                    tab-heading(tooltip="Créer une nouvelle prestation relative à l'objet courant", tooltip-popup-delay="1000")
+                                uib-tab(select="createNewPrestation()", ng-show="!createMode")
+                                    uib-tab-heading(tooltip="Créer une nouvelle prestation relative à l'objet courant", tooltip-popup-delay="1000")
                                         | Créer une nouvelle prestation&nbsp;
                                         i.glyphicon.glyphicon-plus-sign
                                     div.hb-tab
@@ -608,15 +608,15 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                 // Prestation 1st level hb-tab container END
 
             // COMMANDE tab
-            tab(ng-if="canManageOrders" active="tabState.commande.active")
-                tab-heading Commandes ({{commandes.length}})
+            uib-tab(ng-if="canManageOrders" active="tabState.commande.active")
+                uib-tab-heading Commandes ({{commandes.length}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
-                            tabset
+                            uib-tabset
                                 // COMMANDES 1st sub tab
-                                tab(active="tabState.commande_subtab_ouvertes.active")
-                                    tab-heading Commandes
+                                uib-tab(active="tabState.commande_subtab_ouvertes.active")
+                                    uib-tab-heading Commandes
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -671,22 +671,22 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                 // COMMANDES 2nd sub tab
                                 // COMMANDES 3rd sub tab
 
-                                tab(select="createNewCommande()" ng-show="!createMode")
-                                    tab-heading(tooltip="Créer une nouvelle commande relative à l'objet courant", tooltip-popup-delay="1000")
+                                uib-tab(select="createNewCommande()" ng-show="!createMode")
+                                    uib-tab-heading(tooltip="Créer une nouvelle commande relative à l'objet courant", tooltip-popup-delay="1000")
                                         | Créer une nouvelle commande&nbsp;
                                         i.glyphicon.glyphicon-plus-sign
                                     div.hb-tab
 
             // CONTRAT tab
-            tab(active="tabState.contrat.active")
-                tab-heading Contrats ({{contrats.length}})
+            uib-tab(active="tabState.contrat.active")
+                uib-tab-heading Contrats ({{contrats.length}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
-                            tabset
+                            uib-tabset
                                 // CONTRAT 1st sub tab
-                                tab(active="tabState.contrat_subtab_actifs.active")
-                                    tab-heading Contrats actifs
+                                uib-tab(active="tabState.contrat_subtab_actifs.active")
+                                    uib-tab-heading Contrats actifs
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -730,8 +730,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 i.icon.icon-info-sign(tooltip="{{contrat.DIVERS.REMARQUE}}", tooltip-placement="left")
 
                                 // CONTRAT 2nd sub tab
-                                tab(active="tabState.contrat_subtab_denonces.active")
-                                    tab-heading Contrats dénoncés
+                                uib-tab(active="tabState.contrat_subtab_denonces.active")
+                                    uib-tab-heading Contrats dénoncés
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -773,8 +773,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 span {{contrat.GROUPE}}
 
                                 // CONTRAT 3rd sub tab
-                                tab(active="tabState.contrat_subtab_tous.active")
-                                    tab-heading Contrats tous
+                                uib-tab(active="tabState.contrat_subtab_tous.active")
+                                    uib-tab-heading Contrats tous
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -815,15 +815,15 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             td
                                                                 span {{contrat.GROUPE}}
 
-                                tab(select="createNewContract()", ng-show="!createMode")
-                                    tab-heading(tooltip="Créer un nouveau contrat relatif à l'objet courant", tooltip-popup-delay="1000")
+                                uib-tab(select="createNewContract()", ng-show="!createMode")
+                                    uib-tab-heading(tooltip="Créer un nouveau contrat relatif à l'objet courant", tooltip-popup-delay="1000")
                                         | Créer un nouveau contrat&nbsp;
                                         i.glyphicon.glyphicon-plus-sign
                                     div.hb-tab
 
             // CARACTERISTIQUE tab
-            tab(active="tabState.caracteristique.active")
-                tab-heading Caractéristiques
+            uib-tab(active="tabState.caracteristique.active")
+                uib-tab-heading Caractéristiques
                 div.hb-tab
                     div.row
                         div.col-xs-12
@@ -875,8 +875,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                     input#workplaceNb.form-control(name="workplaceNb", type="text", ng-model="CARSET_CAR_POS_10.VALEUR", ng-readonly="!canEdit")
 
             // VALEUR tab
-            tab(active="tabState.valeur.active")
-                tab-heading Valeur ECAP
+            uib-tab(active="tabState.valeur.active")
+                uib-tab-heading Valeur ECAP
                 div.hb-tab
                     div.row
                         div.col-sm-12
@@ -1013,8 +1013,8 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                     input#ecapPeculiarities.form-control(name="ecapPeculiarities", type="text", ng-model="CARSET_CAR_POS_20.VALEUR", ng-readonly="!canEdit")
 
             // EQUIPEMENT technique tab
-            tab(active="tabState.equipements_tech.active")
-                tab-heading Equipement{{equipementsCount | plural}} technique{{equipementsCount | plural}} ({{equipementsCount}})
+            uib-tab(active="tabState.equipements_tech.active")
+                uib-tab-heading Equipement{{equipementsCount | plural}} technique{{equipementsCount | plural}} ({{equipementsCount}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
@@ -1171,14 +1171,14 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                             span {{citerne.PARTENAIRE.FOURNISSEUR.VALUE}}
 
             // FORME tab
-            tab(active="tabState.forme.active", select="eagerDomCreation.FORM = true")
-                tab-heading Forme
+            uib-tab(active="tabState.forme.active", select="eagerDomCreation.FORM = true")
+                uib-tab-heading Forme
                 div.hb-tab
                     div(hb-forme-component)
 
             // Annexes tab
-            tab(active="tabState.annexe.active")
-                tab-heading
+            uib-tab(active="tabState.annexe.active")
+                uib-tab-heading
                     div(hb-annexes-number)
                 div.hb-tab
                     div(hb-annexes-component)

@@ -1,170 +1,185 @@
 <div hb-card-header>
-	<!-- Custom validation message to be defined here -->
-	<span ng-show="elfinForm.username.$error.hbUniqueUser" >Le champs <strong>Nom d'utilisateur</strong> doit être unique!</span>
-	<span ng-show="elfinForm.username.$error.required" >Le champs <strong>Nom d'utilisateur</strong> est obligatoire!</span>
-	<span ng-show="elfinForm.collaborator_name.$error.required" >Un <strong>collaborateur</strong> doit obligatoirement être associé à un compte utilisateur</span>
+    <!-- Custom validation message to be defined here -->
+    <span ng-show="elfinForm.username.$error.hbUniqueUser">Le champs <strong>Nom d'utilisateur</strong> doit être unique!</span>
+    <span ng-show="elfinForm.username.$error.required">Le champs <strong>Nom d'utilisateur</strong> est obligatoire!</span>
+    <span ng-show="elfinForm.collaborator_name.$error.required">Un <strong>collaborateur</strong> doit obligatoirement être associé à un compte utilisateur</span>
 </div>
 <div class="row" style="padding-top: 8px;">
-	<div class="col-xs-12">
-		<tabset> <!-- USER tab --> <tab> <tab-heading>Identifications</tab-heading>
-		<div class="hb-tab">
-			<div class="form-group" >
+    <div class="col-xs-12">
+        <uib-tabset> <!-- USER tab -->
+            <uib-tab>
+                <uib-tab-heading>Identifications</uib-tab-heading>
+                <div class="hb-tab">
+                    <div class="form-group">
 			
 				<span class="has-feedback"
-						ng-class="getCssHasFeedback(elfinForm.nom)">
+                      ng-class="getCssHasFeedback(elfinForm.nom)">
 					<label for="username" class="col-md-2 control-label">Nom d'utilisateur</label>
 					<div class="col-md-2">
 						<input id="username" name="username" type="text" class="form-control"
-							ng-model="elfin.IDENTIFIANT.NOM" ng-required="true"
-							tooltip="elfin.IDENTIFIANT.NOM" hb-unique-user >
+                               ng-model="elfin.IDENTIFIANT.NOM" ng-required="true"
+                               tooltip="elfin.IDENTIFIANT.NOM" hb-unique-user>
 					</div>
-				</span>			
-				<span class="has-feedback"
-					ng-class="getCssHasFeedback(elfinForm.dateFrom)">
+				</span>
+                        <span class="has-feedback"
+                              ng-class="getCssHasFeedback(elfinForm.dateFrom)">
 					<label for="date_valid_from" class="col-md-2 control-label">Valide du</label>
 					<div class="col-md-2">
 						<div hb-date id="date_valid_from" name="dateFrom"
-							ng-model="elfin.IDENTIFIANT.DE" ></div>
+                             ng-model="elfin.IDENTIFIANT.DE"></div>
 					</div>
 				</span>
-				<span class="has-feedback"
-					ng-class="getCssHasFeedback(elfinForm.dateTo)">
+                        <span class="has-feedback"
+                              ng-class="getCssHasFeedback(elfinForm.dateTo)">
 					<label for="date_valid_to" class="col-md-2 control-label">au</label>
 					<div class="col-md-2">
 						<div hb-date id="date_valid_to" name="dateTo"
-							ng-model="elfin.IDENTIFIANT.A"></div>
+                             ng-model="elfin.IDENTIFIANT.A"></div>
 					</div>
 				</span>
-					
-				<div class="col-md-4 col-xs-12">
-					<br />
-					<div class="panel panel-default clearfix">
-					  <div class="panel-heading">
-					    <h3 class="panel-title">Roles de type CLASSE</h3>
-					  </div>
-					  <div class="panel-body">
-						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'CLASSE'} | orderBy: 'name'">
-							<div class="form-group">
+
+                        <div class="col-md-4 col-xs-12">
+                            <br/>
+                            <div class="panel panel-default clearfix">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Roles de type CLASSE</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'CLASSE'} | orderBy: 'name'">
+                                        <div class="form-group">
 								<span class="has-feedback">
 									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
-								 	<div class="col-sm-2" >
-								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  ng-click="updateUserRoles(availableRole)" >
+								 	<div class="col-sm-2">
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox"
+                                               ng-model="availableRole.state" ng-click="updateUserRoles(availableRole)">
 								 	</div>
 								</span>
-							</div>
-						</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col-md-4 col-xs-12" >
-					<br />
-					<div class="panel panel-default clearfix">
-					  <div class="panel-heading">
-					    <h3 class="panel-title">Roles de type FONCTIONNALITE</h3>
-					  </div>
-					  <div class="panel-body">
-						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'FONCTIONNALITE'} | orderBy: 'name'">
-							<div class="form-group">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <br/>
+                            <div class="panel panel-default clearfix">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Roles de type FONCTIONNALITE</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'FONCTIONNALITE'} | orderBy: 'name'">
+                                        <div class="form-group">
 								<span class="has-feedback">
 									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
-								 	<div class="col-sm-2" >
-								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  ng-click="updateUserRoles(availableRole)" >
+								 	<div class="col-sm-2">
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox"
+                                               ng-model="availableRole.state" ng-click="updateUserRoles(availableRole)">
 								 	</div>
 								</span>
-							</div>
-						</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col-md-4 col-xs-12" >
-					<br />
-					<div class="panel panel-default clearfix">
-					  <div class="panel-heading">
-					    <h3 class="panel-title">Roles de type METIER</h3>
-					  </div>
-					  <div class="panel-body">
-						<div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'METIER'} | orderBy: 'name'">
-							<div class="form-group">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <br/>
+                            <div class="panel panel-default clearfix">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Roles de type METIER</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div ng-repeat="availableRole in availableRolesCheckboxModel | filter:{group: 'METIER'} | orderBy: 'name'">
+                                        <div class="form-group">
 								<span class="has-feedback">
 									<label for="classe_role_{{availableRole.id}}" class="col-sm-8 control-label">{{availableRole.name}}</label>
-								 	<div class="col-sm-2" >
-								 		<input name="classe_role_{{availableRole.id}}" type="checkbox" ng-model="availableRole.state"  ng-click="updateUserRoles(availableRole)" >
+								 	<div class="col-sm-2">
+								 		<input name="classe_role_{{availableRole.id}}" type="checkbox"
+                                               ng-model="availableRole.state" ng-click="updateUserRoles(availableRole)">
 								 	</div>
 								</span>
-							</div>
-						</div>
-					  </div>
-					</div>
-				</div>
-			</div>
-		</div>
-		</tab> 
-		<tab>
-			<tab-heading>Collaborateur</tab-heading>
-			<div class="hb-tab" >
-				<div class="form-group">
-					<label for="nom" class="col-sm-2 control-label">Nom de
-						famille</label>
-					<div class="col-sm-3">
-						<div 
-							hb-choose-actor 
-							hb-choose-actor-id-name="collaborator_name" 
-							hb-choose-actor-elfin-form="elfinForm"
-							hb-choose-actor-model="elfin.PARTENAIRE.USAGER"
-							hb-choose-actor-elfin-model="selectedCollaboratorElfin"
-							hb-choose-actor-tooltip="Recherche de collaborateur"
-							hb-choose-actor-role="Collaborateur"
-							></div>					
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="collaborator_surname" class="col-sm-2 control-label">Prénom</label>
-					<div class="col-sm-3"><div class="form-control-static">{{selectedCollaboratorElfin.IDENTIFIANT.ALIAS}}</div></div>
-				</div>
-				<div class="form-group">
-					<label for="collaborator_group" class="col-sm-2 control-label">Abréviation</label>
-					<div class="col-sm-3"><div class="form-control-static">{{selectedCollaboratorElfin.GROUPE}}</div></div>
-				</div>
-				<div class="form-group">
-					<label for="collaborator_tel" class="col-sm-2 control-label">Téléphone</label>
-					<div class="col-sm-3"><div class="form-control-static">{{selectedCollaboratorElfin.CARACTERISTIQUE.CAR4.VALEUR}}</div></div>
-				</div>
-				<div class="form-group">
-					<label for="collaborator_email" class="col-sm-2 control-label">Email</label>
-					<div class="col-sm-3"><div class="form-control-static">{{selectedCollaboratorElfin.CARACTERISTIQUE.CAR5.VALEUR}}</div></div>
-				</div>			
-			</div>		
-		</tab>
-		<tab>
-			<tab-heading>Modifier le mot de passe</tab-heading>
-			<div class="hb-tab">
-				<!-- Password change must be done in a popup and only upon user request.  -->				 
-				<div class="form-group">
-					<label for="pwd1" class="col-sm-2 control-label">Mot de
-						passe</label>
-					<div class="col-sm-3">
-						<input id="pwd1" type="password" class="form-control"
-							ng-model="pwd1" hb-no-dirty-check>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="pwd2" class="col-sm-2 control-label">Répétez le
-						mot de passe</label>
-					<div class="col-sm-3">
-						<input id="pwd2" type="password" class="form-control"
-							ng-model="pwd2" hb-no-dirty-check>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-4">
-						<button class="btn btn-default" ng-click="hash(pwd1)">
-							<span>Mettre à jour</span>
-<!-- 							<i class="icon-save"></i> -->
-						</button>
-					</div>
-				</div>			
-			</div>		
-		</tab>		
-		</tabset>
-	</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>Collaborateur</uib-tab-heading>
+                <div class="hb-tab">
+                    <div class="form-group">
+                        <label for="nom" class="col-sm-2 control-label">Nom de
+                            famille</label>
+                        <div class="col-sm-3">
+                            <div
+                                    hb-choose-actor
+                                    hb-choose-actor-id-name="collaborator_name"
+                                    hb-choose-actor-elfin-form="elfinForm"
+                                    hb-choose-actor-model="elfin.PARTENAIRE.USAGER"
+                                    hb-choose-actor-elfin-model="selectedCollaboratorElfin"
+                                    hb-choose-actor-tooltip="Recherche de collaborateur"
+                                    hb-choose-actor-role="Collaborateur"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="collaborator_surname" class="col-sm-2 control-label">Prénom</label>
+                        <div class="col-sm-3">
+                            <div class="form-control-static">{{selectedCollaboratorElfin.IDENTIFIANT.ALIAS}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="collaborator_group" class="col-sm-2 control-label">Abréviation</label>
+                        <div class="col-sm-3">
+                            <div class="form-control-static">{{selectedCollaboratorElfin.GROUPE}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="collaborator_tel" class="col-sm-2 control-label">Téléphone</label>
+                        <div class="col-sm-3">
+                            <div class="form-control-static">{{selectedCollaboratorElfin.CARACTERISTIQUE.CAR4.VALEUR}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="collaborator_email" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-3">
+                            <div class="form-control-static">{{selectedCollaboratorElfin.CARACTERISTIQUE.CAR5.VALEUR}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>Modifier le mot de passe</uib-tab-heading>
+                <div class="hb-tab">
+                    <!-- Password change must be done in a popup and only upon user request.  -->
+                    <div class="form-group">
+                        <label for="pwd1" class="col-sm-2 control-label">Mot de
+                            passe</label>
+                        <div class="col-sm-3">
+                            <input id="pwd1" type="password" class="form-control"
+                                   ng-model="pwd1" hb-no-dirty-check>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd2" class="col-sm-2 control-label">Répétez le
+                            mot de passe</label>
+                        <div class="col-sm-3">
+                            <input id="pwd2" type="password" class="form-control"
+                                   ng-model="pwd2" hb-no-dirty-check>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <button class="btn btn-default" ng-click="hash(pwd1)">
+                                <span>Mettre à jour</span>
+                                <!-- 							<i class="icon-save"></i> -->
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
 </div>

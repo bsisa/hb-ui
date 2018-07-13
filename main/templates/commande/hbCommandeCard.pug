@@ -14,9 +14,9 @@ div(hb-card-header)
 
 div.row(style="padding-top: 8px;")
     div.col-xs-12
-        tabset
-            tab
-                tab-heading Commande
+        uib-tabset
+            uib-tab
+                uib-tab-heading Commande
                 div.hb-tab
                     div.row(style="padding-right: 8px;")
                         <!-- 1st column -->
@@ -299,8 +299,8 @@ div.row(style="padding-top: 8px;")
 
 
 
-            tab(active="transactionTabActive")
-                tab-heading Transactions ({{ transactions.length }})
+            uib-tab(active="transactionTabActive")
+                uib-tab-heading Transactions ({{ transactions.length }})
                 div.hb-tab
                     div.row
                         div.col-sm-12
@@ -351,8 +351,8 @@ div.row(style="padding-top: 8px;")
 
 
             <!-- Annexes tab -->
-            tab
-                tab-heading
+            uib-tab
+                uib-tab-heading
                     div(hb-annexes-number)
                 div.hb-tab
                     div(hb-annexes-component, hb-annexes-merge="true", hb-annexes-upload-no-validation="false", hb-annex-auto-tag="action::merge::before")

@@ -19,14 +19,14 @@ div
                 | {{currentSelection}}
 
         div.clearfix
-        tabset
-            tab
-                tab-heading Année courante
+        uib-tabset
+            uib-tab
+                uib-tab-heading Année courante
                 div.hb-tab
                     div.modalGridStyle(ui-grid="gridOptions", ui-grid-selection)
 
-            tab(select="$(window).resize()")
-                tab-heading Année précédente/suivante
+            uib-tab(select="$(window).resize()")
+                uib-tab-heading Année précédente/suivante
                 div.hb-tab
                     div.modalGridStyle(ui-grid="secondGridOptions", ui-grid-selection)
 

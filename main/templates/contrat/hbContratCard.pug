@@ -13,11 +13,11 @@ div(hb-card-header)
 
 div.row(style="padding-top: 8px;")
     div.col-xs-12
-        tabset
+        uib-tabset
             // ui.bootstrap AngularJS UI tabset
             // ATTRIBUTS tab
-            tab
-                tab-heading Contrat
+            uib-tab
+                uib-tab-heading Contrat
                 div.hb-tab
                     div.row
                         div.form-group.has-feedback.col-sm-6(ng-class="getCssHasFeedback(elfinForm.nom)")
@@ -109,8 +109,8 @@ div.row(style="padding-top: 8px;")
                             div.col-sm-9
                                 input.form-control#remarque(name="remarque", type="text", ng-model="elfin.DIVERS.REMARQUE")
 
-            tab
-                tab-heading
+            uib-tab
+                uib-tab-heading
                     div(hb-annexes-number)
                 div(hb-tab)
                     div(hb-annexes-component)

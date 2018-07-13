@@ -5,9 +5,9 @@ div(hb-card-header)
 
 div.row(style="padding-top: 8px;")
     div.col-xs-12
-        tabset
-            tab(active="tabState.surface.active")
-                tab-heading Unité locative
+        uib-tabset
+            uib-tab(active="tabState.surface.active")
+                uib-tab-heading Unité locative
                 div.hb-tab
                     div.row
                         div.col-sm-6
@@ -88,15 +88,15 @@ div.row(style="padding-top: 8px;")
                                 | &nbsp;Résilier
 
             // COMMANDE tab
-            tab(ng-if="canManageOrders", active="tabState.commande.active")
-                tab-heading Commandes ({{commandes.length}})
+            uib-tab(ng-if="canManageOrders", active="tabState.commande.active")
+                uib-tab-heading Commandes ({{commandes.length}})
                 div.hb-tab
                     div.row
                         div.col-sm-12
-                            tabset
+                            uib-tabset
                                 // COMMANDES 1st sub tab
-                                tab(active="tabState.commande_subtab_ouvertes.active")
-                                    tab-heading Commandes
+                                uib-tab(active="tabState.commande_subtab_ouvertes.active")
+                                    uib-tab-heading Commandes
                                     div.hb-tab
                                         div.row
                                             div.col-sm-12
@@ -132,13 +132,13 @@ div.row(style="padding-top: 8px;")
                                                             // Order description...
                                                             // td {{commande.DIVERS.REMARQUE}}
 
-                                tab(select="createNewCommande()", ng-show="!createMode")
-                                    tab-heading(tooltip="Créer une nouvelle commande relative à l'objet courant", tooltip-popup-delay="1000")
+                                uib-tab(select="createNewCommande()", ng-show="!createMode")
+                                    uib-tab-heading(tooltip="Créer une nouvelle commande relative à l'objet courant", tooltip-popup-delay="1000")
                                         | Créer une nouvelle commande&nbsp;
                                         i.glyphicon.glyphicon-plus-sign
                                     div.hb-tab
-            tab(active="tabState.annexe.active")
-                tab-heading
+            uib-tab(active="tabState.annexe.active")
+                uib-tab-heading
                     div(hb-annexes-number)
                 div.hb-tab
                     div(hb-annexes-component)

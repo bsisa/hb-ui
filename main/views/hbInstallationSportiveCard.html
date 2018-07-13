@@ -1,387 +1,411 @@
 <div hb-card-header>
-	<!-- Custom validation message to be defined here -->
+    <!-- Custom validation message to be defined here -->
 </div>
 <div class="row" style="padding-top: 8px;">
-	<div class="col-xs-12">
-		<tabset>
-		<!-- IDENTIFIANT tab -->
-		<tab active="tabState.identifiant.active"> <tab-heading>Identifiant</tab-heading>
-		<div class="hb-tab">
+    <div class="col-xs-12">
+        <uib-tabset>
+            <!-- IDENTIFIANT tab -->
+            <uib-tab active="tabState.identifiant.active">
+                <uib-tab-heading>Identifiant</uib-tab-heading>
+                <div class="hb-tab">
 
-			<div class="panel panel-default">
-				<div class="panel-body">
-
-
-					<div class="col-sm-8" >
+                    <div class="panel panel-default">
+                        <div class="panel-body">
 
 
-
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="name" class="col-sm-4 control-label">Nom</label>
-							<div class="col-sm-8">
-								<input id="name" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.NOM">
-							</div>
-						</div>
-					</div>
-					
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="alias" class="col-sm-4 control-label">Alias</label>
-							<div class="col-sm-8">
-								<input id="alias" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.ALIAS">
-							</div>
-						</div>
-					</div>
-										
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="goal" class="col-sm-4 control-label">Objectif</label>
-							<div class="col-sm-8">
-								<input id="goal" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.OBJECTIF">
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="account" class="col-sm-4 control-label">Compte</label>
-							<div class="col-sm-8">
-								<input id="account" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.COMPTE">
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="origin" class="col-sm-4 control-label">Origine</label>
-							<div class="col-sm-8">
-								<input id="origin" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.ORIGINE">
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="quality" class="col-sm-4 control-label">Qualité</label>
-							<div class="col-sm-8">
-								<input id="quality" type="text" class="form-control"
-									ng-model="elfin.IDENTIFIANT.QUALITE">
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="dateFrom" class="col-sm-4 control-label">De</label>
-							<div class="col-sm-8">
-								<div hb-date id="dateFrom" name="dateFrom"	ng-model="elfin.IDENTIFIANT.DE"></div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-6">
-						<div class="form-group">
-							<label for="dateBy" class="col-sm-4 control-label">Par</label>
-							<div class="col-sm-8">
-								<div hb-date id="dateBy" name="dateBy" ng-model="elfin.IDENTIFIANT.PAR"></div>						
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-12">
-						<div class="form-group">
-							<label for="dateTo" class="col-sm-2 control-label">A</label>
-							<div class="col-sm-4">
-								<div hb-date id="dateTo" name="dateTo" ng-model="elfin.IDENTIFIANT.A"></div>							
-							</div>
-						</div>
-					</div>
-<!-- 						<div class="col-sm-offset-6 col-sm-6"> -->
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label for="value" class="col-sm-4 control-label">Valeur</label>
-								<div class="col-sm-8">
-									<input id="value" type="number" class="form-control"
-										ng-model="elfin.IDENTIFIANT.VALEUR">
-								</div>
-							</div>
-						</div>		
-	
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label for="value_new" class="col-sm-4 control-label">Valeur
-									à neuf</label>
-								<div class="col-sm-8">
-									<input id="value_new" type="number" class="form-control"
-										ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-sm-12">
-							<div class="form-group">
-								<label for="remark" class="col-sm-2 control-label">Remarque</label>
-								<div class="col-sm-10">
-									<textarea id="remark" rows="4" class="form-control" ng-model="elfin.DIVERS.REMARQUE" ></textarea>
-								</div>
-							</div>
-						</div>						
-						
-					</div>
-
-					
-					<div class="col-sm-4">
-					
-						<div class="col-sm-12">
-							<div class="panel panel-default">
-								<div class="panel-body">
-				
-									<div class="col-sm-12  ">
-										<div class="form-group">
-											<label for="manager" class="col-sm-4 control-label">Gérant</label>
-											<div class="col-sm-8">
-												<div class="form-control-static" >{{elfin.IDENTIFIANT.GER}}</div>
-											</div>
-										</div>
-									</div>
-								
-									<div class="col-sm-12">
-										<div class="form-group">
-											<label for="responsible" class="col-sm-4 control-label">Responsable</label>
-											<div class="col-sm-8">
-												<input id="responsible" type="text" class="form-control"
-													ng-model="elfin.IDENTIFIANT.RES">
-											</div>
-										</div>
-									</div>
-				
-									<div class="col-sm-12">
-										<div class="form-group">
-											<label for="author" class="col-sm-4 control-label">Auteur</label>
-											<div class="col-sm-8">
-												<div class="form-control-static">{{elfin.IDENTIFIANT.AUT}}</div>
-				<!-- 							<input id="author" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.AUT"> -->
-											</div>
-										</div>
-									</div>
-				
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-12" style="text-align: center; height: 100%">	
-							<!-- If no photo is available show upload function while using room left empty with fixed size table. -->
-							<table ng-if="!photoSrc"
-								style="border: solid 4px #F0F0F0; width: 180px; height: 198px; margin: 0 auto;">
-								<tr>
-									<td style="vertical-align: middle; text-align: center"><i
-										class="glyphicon glyphicon-upload" style="font-size: 4em;"></i></td>
-								</tr>
-							</table> 
-							<!-- If a photo is available show it forcing width ratio. -->
-		<!-- 					<div ng-if="photoSrc" style="height:198px; border:solid red 1px;">					 -->
-							<div ng-if="photoSrc" >
-								<a href="{{photoSrc}}" data-lightbox="image-1">
-									<img ng-src="{{photoSrc}}" width="180px" class="img-thumbnail" />
-								</a>
-							</div>
-							
-							<p>
-		<!-- 						<div ng-if="canEdit" hb-annexes-upload hb-annexes-upload-annex-type="photo"></div> -->
-								<div hb-annexes-upload hb-annexes-upload-annex-type="photo"></div>
-							</p>
-						</div>
-						
-					</div>
+                            <div class="col-sm-8">
 
 
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="name" class="col-sm-4 control-label">Nom</label>
+                                        <div class="col-sm-8">
+                                            <input id="name" type="text" class="form-control"
+                                                   ng-model="elfin.IDENTIFIANT.NOM">
+                                        </div>
+                                    </div>
+                                </div>
 
-				</div>
-			</div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="alias" class="col-sm-4 control-label">Alias</label>
+                                        <div class="col-sm-8">
+                                            <input id="alias" type="text" class="form-control"
+                                                   ng-model="elfin.IDENTIFIANT.ALIAS">
+                                        </div>
+                                    </div>
+                                </div>
 
-			<div class="panel panel-default">
-				<div class="panel-body">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="goal" class="col-sm-4 control-label">Objectif</label>
+                                        <div class="col-sm-8">
+                                            <input id="goal" type="text" class="form-control"
+                                                   ng-model="elfin.IDENTIFIANT.OBJECTIF">
+                                        </div>
+                                    </div>
+                                </div>
 
-					<div class="col-sm-12">
-						<table class="table table-condensed table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>
-										<div class="input-group">
-											<div>Mots clés</div>
-											<span class="input-group-btn">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="account" class="col-sm-4 control-label">Compte</label>
+                                        <div class="col-sm-8">
+                                            <input id="account" type="text" class="form-control"
+                                                   ng-model="elfin.IDENTIFIANT.COMPTE">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="origin" class="col-sm-4 control-label">Origine</label>
+                                        <div class="col-sm-8">
+                                            <input id="origin" type="text" class="form-control"
+                                                   ng-model="elfin.IDENTIFIANT.ORIGINE">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="quality" class="col-sm-4 control-label">Qualité</label>
+                                        <div class="col-sm-8">
+                                            <input id="quality" type="text" class="form-control"
+                                                   ng-model="elfin.IDENTIFIANT.QUALITE">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="dateFrom" class="col-sm-4 control-label">De</label>
+                                        <div class="col-sm-8">
+                                            <div hb-date id="dateFrom" name="dateFrom"
+                                                 ng-model="elfin.IDENTIFIANT.DE"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="dateBy" class="col-sm-4 control-label">Par</label>
+                                        <div class="col-sm-8">
+                                            <div hb-date id="dateBy" name="dateBy"
+                                                 ng-model="elfin.IDENTIFIANT.PAR"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="dateTo" class="col-sm-2 control-label">A</label>
+                                        <div class="col-sm-4">
+                                            <div hb-date id="dateTo" name="dateTo" ng-model="elfin.IDENTIFIANT.A"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 						<div class="col-sm-offset-6 col-sm-6"> -->
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="value" class="col-sm-4 control-label">Valeur</label>
+                                        <div class="col-sm-8">
+                                            <input id="value" type="number" class="form-control"
+                                                   ng-model="elfin.IDENTIFIANT.VALEUR">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="value_new" class="col-sm-4 control-label">Valeur
+                                            à neuf</label>
+                                        <div class="col-sm-8">
+                                            <input id="value_new" type="number" class="form-control"
+                                                   ng-model="elfin.IDENTIFIANT.VALEUR_A_NEUF">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="remark" class="col-sm-2 control-label">Remarque</label>
+                                        <div class="col-sm-10">
+                                            <textarea id="remark" rows="4" class="form-control"
+                                                      ng-model="elfin.DIVERS.REMARQUE"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-sm-4">
+
+                                <div class="col-sm-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+
+                                            <div class="col-sm-12  ">
+                                                <div class="form-group">
+                                                    <label for="manager" class="col-sm-4 control-label">Gérant</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="form-control-static">{{elfin.IDENTIFIANT.GER}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="responsible"
+                                                           class="col-sm-4 control-label">Responsable</label>
+                                                    <div class="col-sm-8">
+                                                        <input id="responsible" type="text" class="form-control"
+                                                               ng-model="elfin.IDENTIFIANT.RES">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="author" class="col-sm-4 control-label">Auteur</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="form-control-static">{{elfin.IDENTIFIANT.AUT}}</div>
+                                                        <!-- 							<input id="author" type="text" class="form-control" ng-model="elfin.IDENTIFIANT.AUT"> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" style="text-align: center; height: 100%">
+                                    <!-- If no photo is available show upload function while using room left empty with fixed size table. -->
+                                    <table ng-if="!photoSrc"
+                                           style="border: solid 4px #F0F0F0; width: 180px; height: 198px; margin: 0 auto;">
+                                        <tr>
+                                            <td style="vertical-align: middle; text-align: center"><i
+                                                    class="glyphicon glyphicon-upload" style="font-size: 4em;"></i></td>
+                                        </tr>
+                                    </table>
+                                    <!-- If a photo is available show it forcing width ratio. -->
+                                    <!-- 					<div ng-if="photoSrc" style="height:198px; border:solid red 1px;">					 -->
+                                    <div ng-if="photoSrc">
+                                        <a href="{{photoSrc}}" data-lightbox="image-1">
+                                            <img ng-src="{{photoSrc}}" width="180px" class="img-thumbnail"/>
+                                        </a>
+                                    </div>
+
+                                    <p>
+                                        <!-- 						<div ng-if="canEdit" hb-annexes-upload hb-annexes-upload-annex-type="photo"></div> -->
+                                    <div hb-annexes-upload hb-annexes-upload-annex-type="photo"></div>
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <div class="col-sm-12">
+                                <table class="table table-condensed table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="input-group">
+                                                <div>Mots clés</div>
+                                                <span class="input-group-btn">
 												<button class="btn btn-default" type="button"
-													ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: '' })">
+                                                        ng-click="addRow(elfin, 'IDENTIFIANT.MOTCLE', { VALUE: '' })">
 													<i class="icon-plus-sign"></i> Nouveau
 												</button>
 											</span>
-										</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody ng-show="elfin.IDENTIFIANT.MOTCLE.length > 0">
-								<tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
-									<td>
-										<div class="input-group">
-											<input type="text" name="keyword{$index}"
-												class="form-control" ng-model="motcle.VALUE"
-												tooltip="elfin.IDENTIFIANT.MOTCLE"
-												placeholder="Saisissez un nouveau mot clé"> <span
-												class="input-group-btn">
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-show="elfin.IDENTIFIANT.MOTCLE.length > 0">
+                                    <tr ng-repeat="motcle in elfin.IDENTIFIANT.MOTCLE">
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" name="keyword{$index}"
+                                                       class="form-control" ng-model="motcle.VALUE"
+                                                       tooltip="elfin.IDENTIFIANT.MOTCLE"
+                                                       placeholder="Saisissez un nouveau mot clé"> <span
+                                                    class="input-group-btn">
 												<button class="btn btn-default"
-													ng-click="removeKeyword($index)">
+                                                        ng-click="removeKeyword($index)">
 													<i class="icon-remove-sign"></i> Supprimer
 												</button>
 											</span>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-				</div>
-			</div>
-		</div>
-		</tab> 
-		<!-- CARACTERISTIQUE tab --> 
-		<tab active="tabState.characteristics.active" > <tab-heading>Caractéristiques</tab-heading>
-		<div class="hb-tab">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="col-sm-12">
-						<div class="container-fluid" ng-init="carIndexes = [1, 2, 3, 4, 5, 6]">
-							<div class="row" ng-repeat="carIndex in carIndexes">
-								<div class="form-group" >
-									<label class="col-sm-2 control-label" >{{elfin.CARACTERISTIQUE['CAR' + carIndex].NOM}}</label>
-									<div ng-if="(elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE).length === 0" class="col-sm-8">
-									  <input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR">									      
-									</div>									
-									<div ng-if="(elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE).length > 0" class="col-sm-8">
-										<div class="input-group">
-										  <input type="text" class="form-control" ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR">									      
-									      <div class="input-group-addon">{{elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE}}</div>
-										</div>					
-									</div>				
-								</div>							
-							</div>
-						</div>
-					</div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <!-- CARACTERISTIQUE tab -->
+            <uib-tab active="tabState.characteristics.active">
+                <uib-tab-heading>Caractéristiques</uib-tab-heading>
+                <div class="hb-tab">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-sm-12">
+                                <div class="container-fluid" ng-init="carIndexes = [1, 2, 3, 4, 5, 6]">
+                                    <div class="row" ng-repeat="carIndex in carIndexes">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">{{elfin.CARACTERISTIQUE['CAR' +
+                                                carIndex].NOM}}</label>
+                                            <div ng-if="(elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE).length === 0"
+                                                 class="col-sm-8">
+                                                <input type="text" class="form-control"
+                                                       ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR">
+                                            </div>
+                                            <div ng-if="(elfin.CARACTERISTIQUE['CAR' + carIndex].UNITE).length > 0"
+                                                 class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                           ng-model="elfin.CARACTERISTIQUE['CAR' + carIndex].VALEUR">
+                                                    <div class="input-group-addon">{{elfin.CARACTERISTIQUE['CAR' +
+                                                        carIndex].UNITE}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-				</div>
-			</div>
-		</div>
-		</tab> 
-		<!-- ATTRIBUTS tab --> 
-		<tab active="tabState.attributes.active" > 
-			<tab-heading>Attributs<!-- <i class="icon-tag"></i> <b>Attributs</b> --></tab-heading>
-			<div class="hb-tab">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label for="groupe" class="col-sm-4 control-label">Groupe</label>
-								<div class="col-sm-8">
-									<input id="groupe" type="text" class="form-control"
-										ng-model="elfin.GROUPE">
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label for="type" class="col-sm-4 control-label">Type</label>
-								<!-- angular-chosen-localytics -->
-								<div class="col-sm-8">
-									<select id="type" class="form-control" chosen
-										data-placeholder="Choisir un type" ng-model="elfin.TYPE"
-										ng-options="value as label for (value, label) in elfinTypes">
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label for="nature" class="col-sm-4 control-label">Nature</label>
-								<div class="col-sm-8">
-									<input id="nature" type="text" class="form-control"
-										ng-model="elfin.NATURE">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</tab> 
-		<!-- EQUIPEMENT_SPORTIF tab --> 
-		<tab active="tabState.equipementsSportifs.active" > 
-			<tab-heading>Equipement{{equipementsSportifs.length | plural}} sportif{{equipementsSportifs.length | plural}} ({{equipementsSportifs.length}})</tab-heading>
-			<div class="hb-tab">
-				<div class="row">
-					<div class="col-sm-12">			
-					<tabset>  
-						<tab active="tabState.prestation_subtab_annee_moins1.active"><!-- INSTALLATION_SPORTIVE 1st tab -->
-							<tab-heading>Equipement{{equipementsSportifs.length | plural}} sportif{{equipementsSportifs.length | plural}}</tab-heading>
-							<div class="hb-tab">
-								<div class="row">
-									<div class="col-sm-12">
-										<table class="table table-condensed table-bordered table-striped">
-											<thead>
-												<tr>
-													<th></th>
-													<th>Objectif</th>
-													<th>Année de</th>
-													<th>Groupe / Remarque</th>
-													<th>Origine</th>
-													<th>Valeur à neuf</th>														
-												</tr>
-											</thead>
-											<tbody ng-show="equipementsSportifs">
-												<tr 
-													ng-repeat="equipementSportif in equipementsSportifs">
-													<td>
-														<div hb-card-view-link hb-href="/elfin/{{equipementSportif.ID_G}}/{{equipementSportif.CLASSE}}/{{equipementSportif.Id}}"></div>													
-													</td>
-													<td><span >{{equipementSportif.IDENTIFIANT.OBJECTIF}}</span></td>
-													<td class="date"><span >{{equipementSportif.IDENTIFIANT.DE}}</span></td>
-													<td><span >{{equipementSportif.GROUPE}} / {{equipementSportif.DIVERS.REMARQUE}}</span></td>
-													<td><span >{{equipementSportif.IDENTIFIANT.ORIGINE}}</span></td>
-													<td class="number"><span >{{equipementSportif.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-			
-							</div>
-						</tab>
-						<tab select="createNewEquipementSportif()" ng-show="!createMode"> 
-							<tab-heading tooltip="Créer un nouvel équipement sportif relatif à l'objet courant" tooltip-popup-delay="1000">Créer un nouvel équipement sportif <i class="glyphicon glyphicon-plus-sign"></i></tab-heading>
-							<div class="hb-tab">
-							</div>
-						</tab>						
-							
-				</tabset>						
-			</div><!-- Installation sportive 12 col div END -->
-			</div><!-- Installation sportive 1st level row div END -->
-			</div><!-- Installation sportive 1st level hb-tab container END -->
-		</tab>
-		<tab active="tabState.annexe.active"> <tab-heading>
-		<div hb-annexes-number></div>
-		</tab-heading>
-		<div class="hb-tab">
-			<div hb-annexes-component></div>
-		</div>
-		</tab> 
-		<!-- FORME tab --> 
-		<tab active="tabState.forme.active"> <tab-heading>Forme</tab-heading>
-		<div class="hb-tab">
-			<div hb-forme-component></div>
-		</div>
-		</tab>
-	</div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <!-- ATTRIBUTS tab -->
+            <uib-tab active="tabState.attributes.active">
+                <uib-tab-heading>Attributs<!-- <i class="icon-tag"></i> <b>Attributs</b> --></uib-tab-heading>
+                <div class="hb-tab">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="groupe" class="col-sm-4 control-label">Groupe</label>
+                                    <div class="col-sm-8">
+                                        <input id="groupe" type="text" class="form-control"
+                                               ng-model="elfin.GROUPE">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="type" class="col-sm-4 control-label">Type</label>
+                                    <!-- angular-chosen-localytics -->
+                                    <div class="col-sm-8">
+                                        <select id="type" class="form-control" chosen
+                                                data-placeholder="Choisir un type" ng-model="elfin.TYPE"
+                                                ng-options="value as label for (value, label) in elfinTypes">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="nature" class="col-sm-4 control-label">Nature</label>
+                                    <div class="col-sm-8">
+                                        <input id="nature" type="text" class="form-control"
+                                               ng-model="elfin.NATURE">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <!-- EQUIPEMENT_SPORTIF tab -->
+            <uib-tab active="tabState.equipementsSportifs.active">
+                <uib-tab-heading>Equipement{{equipementsSportifs.length | plural}} sportif{{equipementsSportifs.length |
+                    plural}} ({{equipementsSportifs.length}})
+                </uib-tab-heading>
+                <div class="hb-tab">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <uib-tabset>
+                                <uib-tab active="tabState.prestation_subtab_annee_moins1.active">
+                                    <!-- INSTALLATION_SPORTIVE 1st tab -->
+                                    <uib-tab-heading>Equipement{{equipementsSportifs.length | plural}}
+                                        sportif{{equipementsSportifs.length | plural}}
+                                    </uib-tab-heading>
+                                    <div class="hb-tab">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <table class="table table-condensed table-bordered table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Objectif</th>
+                                                        <th>Année de</th>
+                                                        <th>Groupe / Remarque</th>
+                                                        <th>Origine</th>
+                                                        <th>Valeur à neuf</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody ng-show="equipementsSportifs">
+                                                    <tr
+                                                            ng-repeat="equipementSportif in equipementsSportifs">
+                                                        <td>
+                                                            <div hb-card-view-link
+                                                                 hb-href="/elfin/{{equipementSportif.ID_G}}/{{equipementSportif.CLASSE}}/{{equipementSportif.Id}}"></div>
+                                                        </td>
+                                                        <td><span>{{equipementSportif.IDENTIFIANT.OBJECTIF}}</span></td>
+                                                        <td class="date">
+                                                            <span>{{equipementSportif.IDENTIFIANT.DE}}</span></td>
+                                                        <td><span>{{equipementSportif.GROUPE}} / {{equipementSportif.DIVERS.REMARQUE}}</span>
+                                                        </td>
+                                                        <td><span>{{equipementSportif.IDENTIFIANT.ORIGINE}}</span></td>
+                                                        <td class="number"><span>{{equipementSportif.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </uib-tab>
+                                <uib-tab select="createNewEquipementSportif()" ng-show="!createMode">
+                                    <uib-tab-heading tooltip="Créer un nouvel équipement sportif relatif à l'objet courant"
+                                                 tooltip-popup-delay="1000">Créer un nouvel équipement sportif <i
+                                            class="glyphicon glyphicon-plus-sign"></i></uib-tab-heading>
+                                    <div class="hb-tab">
+                                    </div>
+                                </uib-tab>
+
+                            </uib-tabset>
+                        </div><!-- Installation sportive 12 col div END -->
+                    </div><!-- Installation sportive 1st level row div END -->
+                </div><!-- Installation sportive 1st level hb-tab container END -->
+            </uib-tab>
+            <uib-tab active="tabState.annexe.active">
+                <uib-tab-heading>
+                    <div hb-annexes-number></div>
+                </uib-tab-heading>
+                <div class="hb-tab">
+                    <div hb-annexes-component></div>
+                </div>
+            </uib-tab>
+            <!-- FORME tab -->
+            <uib-tab active="tabState.forme.active">
+                <uib-tab-heading>Forme</uib-tab-heading>
+                <div class="hb-tab">
+                    <div hb-forme-component></div>
+                </div>
+            </uib-tab>
+    </div>
 </div>
