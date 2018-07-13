@@ -11,7 +11,7 @@
 			require: ['hbSingleSelect', 'ngModel'],
 		    restrict: 'A',
 		    priority: 1,
-			templateUrl : "/assets/views/hbSingleSelect.html",
+			templateUrl : "/assets/views-compiled/_directives/hbSingleSelect.html",
 			controller: 'HbSingleSelectController',
 			scope : {
 				'options' : '=hbSingleSelectOptions' ,

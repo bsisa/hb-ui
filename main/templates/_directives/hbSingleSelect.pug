@@ -1,0 +1,16 @@
+div.dropdown
+    button.btn.btn-default.dropdown-toggle(type="button", style="width: 100%; padding-left: 0.5em;", data-toggle="dropdown")
+        div.col-sm-10(style="text-align: left", ng-show="ngModelCtrl.$viewValue")
+            | {{getOptionName(ngModelCtrl.$viewValue)}}
+        div.col-sm-10(style="text-align: left", ng-show="!ngModelCtrl.$viewValue")
+            em Sélectionnez
+        div.col-sm-2
+            span.caret
+            span.sr-only (Toggle hb-select-single dropdown)
+    ul.dropdown-menu(style="width: 100%;", role="menu")
+        li(ng-show="emptyOption", ng-click="selectOption(emptyOption)")
+            a(role="menuitem", style="color: grey; font-style: italic; font-weight: bold;", tabindex="-1", href="#")
+                | {{getOptionName(emptyOption.value)}}
+        li(ng-repeat="option in options", ng-click="selectOption(option)")
+            a(role="menuitem", tabindex="-1", href="#")
+                | {{option.name}}
