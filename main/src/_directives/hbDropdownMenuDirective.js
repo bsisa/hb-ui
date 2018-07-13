@@ -12,7 +12,7 @@
 
 		return {
 		    restrict: 'A',
-			templateUrl : "/assets/views/hbDropdownMenu.html",
+			templateUrl : "/assets/views-compiled/_directives/hbDropdownMenu.html",
 			replace : true,
 			scope : {
 				'menuIconClass' : '@hbDropdownMenuIconClass',
