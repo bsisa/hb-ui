@@ -483,7 +483,7 @@
 			            	for (var i = 0; i < jobAccessRights.length; i++) {
 			            		var jobAccessRight = jobAccessRights[i];
 			            		// If user allowed add menu and break out of this menu item loop
-			            		if (_.contains(userDetails.roles,jobAccessRight) ) {
+			            		if (_.includes(userDetails.roles, jobAccessRight) ) {
 				            		allowedJobReferences.push(job);
 				    	            // Test whether the default job is available. Indeed it might be that the 
 				    	            // user is not granted the right to access job at defaultJobPos at all. 
