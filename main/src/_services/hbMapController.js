@@ -174,10 +174,10 @@
                 	                        var objectLayerStyle = {};
                                         	var objectLayer = null;
                 	                        
-                                        	if ($scope.elfin && $scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() == 'marker') {
+                                        	if ($scope.elfin && $scope.elfin.Id === elfin.Id && hbLayer.representationType.toLowerCase() === 'marker') {
                                         		currentObjectMarkerLayer = hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, hbGeoLeafletService.getSelectedObjectMarkerStyle());
                                         	} else {
-                                        		if (hbLayer.representationType.toLowerCase() == 'marker') {
+                                        		if (hbLayer.representationType.toLowerCase() === 'marker') {
                                         			objectLayerStyle = hbGeoLeafletService.getStandardObjectMarkerStyle();
                                         		} else {
                                         			objectLayerStyle = hbLayer.representationStyle;
@@ -276,7 +276,7 @@
 //					                    	$scope.drawControl.removeFrom(overlay);
 //					                    	$scope.drawControl.addTo(elfinUpdatedMarkerLayer);
 //		                            		$scope.drawControl.addTo(overlay);
-	                            	};		                            	
+	                            	}
 	                            });
                             // Handle snapping facilities
 	                        // TODO: make it inside loop above where overlay is directly accessible
@@ -379,7 +379,7 @@
             					$log.debug("REMOTE: FAILURE WITH response = " + angular.toJson(response));
             				}
             			);               		
-            	};            	
+            	}
             	
             	
 //            	// TODO: review hardcoded WIP for raster layer based on a single image.
@@ -566,7 +566,7 @@
     	            };
     	        }
             }
-        };
+        }
 
         // ================================================================
         // ====                    Elfin Card Events                   ====
@@ -864,7 +864,7 @@
                 resolve: {
                 	itemDefinition: function () {
                 		
-                		var itDef = {
+                		return {
                                 "type": "modal",
                                 "functionName": "findById",
                                 "newWindow": "false",
@@ -881,8 +881,6 @@
                                     }                                    
                                 ]
                             };
-                		
-                    	return itDef;
                     }               
                 },                
                 backdrop: 'static'
@@ -894,8 +892,8 @@
             modalInstance.result.then(function (modalModel) {
 
             	// Get end-user submitted parameters back
-            	var xEastingLng = new Number(modalModel[0].value);
-            	var yNorthingLat = new Number(modalModel[1].value);
+            	var xEastingLng = Number(modalModel[0].value);
+            	var yNorthingLat = Number(modalModel[1].value);
             	// Build new record with x,y click event position and end user entered coordinates.
             	var record = vm.getNewEmptyPixelsCoordinates(offsetX,offsetY,xEastingLng, yNorthingLat);
             	$log.debug("record = " + angular.toJson(record));
@@ -935,8 +933,7 @@
         	var hbLayerDef = getHbLayerDefLine(updatefleetLayerConf.posNb, updatefleetLayerConf.label, updatefleetLayerConf.collectionId, updatefleetLayerConf.xpath, updatefleetLayerConf.type, updatefleetLayerConf.styleColor, updatefleetLayerConf.styleOpacity, 
         			updatefleetLayerConf.styleWeight, updatefleetLayerConf.styleDashArray, updatefleetLayerConf.styleFillColor, updatefleetLayerConf.styleFillOpacity, updatefleetLayerConf.styleRadius);					        		
 		
-			var hbLayer = buildHbLayer(hbLayerDef);            	
-        	return hbLayer;
+			return buildHbLayer(hbLayerDef);
         }; 
         
         var getLayerForElfin = function(elfin, state) {
@@ -945,8 +942,7 @@
         	// Builds hb layer customising styles.
         	var hbLayer = getHbLayerForStyle(color, opacity);
         	// Builds leaflet layer for hbLayer representation type and style and sets position and popup information using elfin data. 
-        	var elfinUpdatedLeafletLayer = hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
-        	return elfinUpdatedLeafletLayer;
+        	return hbGeoLeafletService.getObjectLayer(elfin, hbLayer.representationType, hbLayer.representationStyle);
         };
 
 
@@ -991,14 +987,14 @@
     				$scope.sseMessage = JSON.parse(event.data);
     				$scope.sseLastCheck = new Date();
     			});
-    		}
+    		};
     		
 			statusEventSource.onopen = function(event) {
 				$log.debug("onopen: Connected to server. Waiting for data...");
 				$scope.$apply(function () {
 					$scope.sseConnected = false;
 				});
-			}
+			};
 
 			statusEventSource.onerror = function(event) {
 				var txt;
