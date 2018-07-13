@@ -11,3 +11,4 @@ rsync_ui_to_api_to_789.sh
 
 .idea
 main/package-lock.json
+main/index.html

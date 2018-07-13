@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html ng-app="hb5">
+<head>
+    <!-- META -->
+    <title>Hyperbird 5.4 - GesPatri</title>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+
+    <!-- CSS -->
+    <!-- Chosen -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/chosen/chosen.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/chosen/chosen-spinner.css"/>
+
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/bower_components/bootstrap/dist/css/bootstrap.css" /> -->
+    <link rel="stylesheet" type="text/css" href="/assets/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+
+    <!-- Kickstart -->
+    <!--
+    TODO: try removing dependency on HTMLKickstart in favour of Bootstrap only
+    to avoid CSS conflicts and benefit from AngularJS tigther integration.
+    Nice icons could be kept by preserving font-awesome. -->
+    <!-- TODO: To remove -->
+    <!--     <link rel="stylesheet" type="text/css" href="/assets/css/kickstart/kickstart.css" media="all"/> -->
+    <!-- TODO: Evaluate if worth keeping for menus only (currently imported by above kickstart.css) -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/kickstart/kickstart-menus.css" media="all"/>
+    <!-- TODO: Migrate fontawesome to its own bower location -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/kickstart/fonts/fontawesome/css/font-awesome.min.css"
+          media="all"/>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" type="text/css" href="/assets/bower_components/leaflet-dist/leaflet.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/leaflet/Leaflet.Coordinates-0.1.4.css"/>
+
+    <!-- Angular motion: https://github.com/mgcrea/angular-motion -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/angular-motion/angular-motion.min.css"/>
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/assets/css/leaflet/Leaflet.Coordinates-0.1.4.ie.css"/>
+    <![endif]-->
+
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="/assets/dist/hb5-0.1.1.css" media="all"/>
+    <!-- Added ui-grid for enhanced data tables -->
+    <link rel="stylesheet" type="text/css" href="/assets/bower_components/angular-ui-grid/ui-grid.css" media="all"/>
+
+    <link rel="stylesheet" type="text/css" href="/assets/bower_components/leaflet.draw/dist/leaflet.draw.css"
+          media="all"/>
+
+
+    <!-- lightbox -->
+    <link rel="stylesheet" type="text/css" href="/assets/bower_components/lightbox2/dist/css/lightbox.css"
+          media="all"/>
+
+    <!-- Javascript -->
+
+    <!-- MomentJS Parse, validate, manipulate, and display dates in javascript. -->
+    <script type="text/javascript" src="/assets/bower_components/moment/min/moment.min.js"></script>
+
+    <!-- <script type="text/javascript" src="/assets/bower_components/jquery/dist/jquery.js"></script> -->
+    <script type="text/javascript" src="/assets/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/assets/bower_components/angular/angular.js"></script>
+    <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_fr-ch.js"></script> -->
+    <script type="text/javascript" src="/assets/lib/custom/angular-i18n/angular-locale_fr-ch.js"></script>
+
+    <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_de-ch.js"></script> -->
+    <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_it-ch.js"></script> -->
+    <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_fr.js"></script> -->
+    <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_en_gb.js"></script> -->
+    <!--     <script type="text/javascript" src="/assets/bower_components/angular-i18n/angular-locale_en_us.js"></script> -->
+
+    <script type="text/javascript" src="/assets/bower_components/angular-route/angular-route.js"></script>
+    <!--     <script type="text/javascript" src="/assets/bower_components/angular-cookies/angular-cookies.min.js"></script> -->
+
+    <!-- Added ngAnimate module to provide animations to Angular directives like ng-dirty... -->
+    <script type="text/javascript" src="/assets/bower_components/angular-animate/angular-animate.min.js"></script>
+    <!-- Added ui-grid for enhanced data tables -->
+    <script type="text/javascript" src="/assets/bower_components/angular-ui-grid/ui-grid.min.js"></script>
+
+    <!-- Added all angular-ui-utils modules -->
+    <!-- <script type="text/javascript" src="/assets/bower_components/angular-ui-utils/ui-utils.min.js"></script>-->
+    <script type="text/javascript" src="/assets/bower_components/angular-ui-validate/dist/validate.min.js"></script>
+    <script type="text/javascript"
+            src="/assets/bower_components/angular-ui-indeterminate/dist/indeterminate.min.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/angular-ui-mask/dist/mask.min.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/angular-ui-event/dist/event.min.js"></script>
+    <script type="text/javascript"
+            src="/assets/bower_components/angular-ui-scrollpoint/dist/scrollpoint.min.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/angular-ui-scroll/dist/ui-scroll.min.js"></script>
+    <script type="text/javascript"
+            src="/assets/bower_components/angular-ui-scroll/dist/ui-scroll-grid.min.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/angular-ui-uploader/dist/uploader.min.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/angular-ui-utils/index.js"></script>
+
+
+    <!-- Added angular-filter. It provides i.e. groupBy filter -->
+    <script type="text/javascript"
+            src="/assets/bower_components/angular-filter/dist/angular-filter.min.js"></script>
+
+    <script type="text/javascript" src="/assets/bower_components/lodash/dist/lodash.min.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/restangular/dist/restangular.js"></script>
+
+    <script type="text/javascript"
+            src="/assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+    <!--	<script type="text/javascript" src="/assets/lib/ui-bootstrap/ui-bootstrap-tpls-0.10.0.js"></script> -->
+    <!-- Requires menus and dates refactoring. Check hb-eehive project -->
+    <!-- Requires Angular 1.3.x -->
+    <!-- 	<script type="text/javascript" src="/assets/lib/ui-bootstrap/ui-bootstrap-tpls-0.13.4.min.js"></script> -->
+    <!-- <script type="text/javascript" src="/assets/bower_components/ui-bootstrap/dist/ui-bootstrap-custom-tpls-0.11.0.js"></script> -->
+    <!-- ui-bootstrap version 0.11.0 test -->
+    <!--     <script type="text/javascript" src="/assets/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script> -->
+    <!-- ui.bootstrap upgrade from 0.10.0 to 0.11.0 requires testing (menus, datepicker). -->
+
+    <!-- hbUi.geo -->
+    <script type="text/javascript" src="/assets/lib/hbUi.geo/hbUi.geo-0.0.1.min.js"></script>
+    <!--     <script type="text/javascript" src="/assets/lib/hbUi.geo/hbUi.geo-0.0.1.js"></script> -->
+    <!-- hbUi.sse -->
+    <script type="text/javascript" src="/assets/lib/hbUi.sse/hbUi.sse-0.0.1.min.js"></script>
+
+    <!-- Chosen -->
+    <script type="text/javascript" src="/assets/bower_components/chosen/chosen.jquery.js"></script>
+    <script type="text/javascript"
+            src="/assets/bower_components/angular-chosen-localytics/dist/angular-chosen.min.js"></script>
+
+    <!-- ngUpload -->
+    <!--     <script type="text/javascript" src="/assets/bower_components/ngUpload/ng-upload.js"></script> -->
+    <!-- ng-flow for file upload -->
+    <script type="text/javascript" src="/assets/bower_components/flow.js/dist/flow.min.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/ng-flow/dist/ng-flow.min.js"></script>
+
+    <!-- Leaflet -->
+    <script type="text/javascript" src="/assets/bower_components/leaflet-dist/leaflet.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/leaflet-providers/leaflet-providers.js"></script>
+    <script type="text/javascript" src="/assets/bower_components/leaflet.draw/dist/leaflet.draw.js"></script>
+    <script type="text/javascript" src="/assets/lib/leaflet/leaflet.geometryutil.js"></script>
+    <script type="text/javascript" src="/assets/lib/leaflet/leaflet.snap.js"></script>
+    <script type="text/javascript" src="/assets/lib/leaflet/Leaflet.Coordinates-0.1.4.src.js"></script>
+    <script type="text/javascript"
+            src="/assets/bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+
+    <!-- Lightbox2 -->
+    <script type="text/javascript" src="/assets/bower_components/lightbox2/dist/js/lightbox.min.js"></script>
+
+    <!-- HyperBird -->
+    <!--
+    To allow single configuration point on the server side conf.js
+    file is dynamically created providing hb5-x.x.x.js with hb-api
+    REST service baseURL.
+      -->
+    <script src="/conf.js"></script>
+    <!--     <script src="/assets/dist/hb5-0.1.1.min.js"></script> -->
+    <script src="/assets/dist/hb5-0.1.1.js"></script>
+
+
+</head>
+
+<body>
+<div ng-include="'/assets/views/menu.html'" ng-controller="MenuController"></div>
+
+<div class="col-xs-12 visible-xs hb-menu-bar-xs-height"></div>
+<div class="col-sm-12 visible-sm hb-menu-bar-sm-height"></div>
+<div class="col-md-12 visible-md hb-menu-bar-md-height"></div>
+<div class="col-lg-12 visible-lg hb-menu-bar-lg-height"></div>
+
+<!-- container-fluid for full-width layout (otherwise: container) -->
+<div class="container-fluid">
+    <div class="row" id="views-wrapper">
+        <div class="col-xs-1 margin"></div>
+        <div class="col-lg-10 col-xs-11 card-view">
+            <div ng-view></div>
+        </div>
+        <div style="display: none;" class="col-xs-10 map-view splitViewMargin"
+             ng-include="'/assets/views/hbMap.html'"></div>
+        <div class="col-lg-1 margin"></div>
+    </div>
+</div>
+<!-- 	<div class="footer" ><a <a href="mailto:mail@bsisa.ch">Contacter BSI SA</a></div> -->
+<div wc-overlay wc-overlay-delay="300">
+    Chargement des données
+</div>
+
+</body>
+</html>

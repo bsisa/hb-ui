@@ -229,7 +229,8 @@ module.exports = function (grunt) {
             }
         },
         pug: {
-            compile: {
+
+            templates: {
                 options: {
                     data: {
                         debug: false
@@ -244,7 +245,18 @@ module.exports = function (grunt) {
                         ext: ".html"
                     }
                 ]
+            },
+            index: {
+                options: {
+                    data: {
+                        debug: false
+                    }
+                },
+                files: {
+                    'index.html': 'index/index.pug'
+                }
             }
+
         },
 
         watch: {
