@@ -72,7 +72,7 @@
             'HbChooseOneModalController',
             [
                 '$scope',
-                '$modalInstance',
+                '$uibModalInstance',
                 '$filter',
                 '$log',
                 '$timeout',
@@ -81,7 +81,7 @@
                 'columnsDefinition',
                 'sourcePath',
                 'initialSelectedElfin',
-                function ($scope, $modalInstance, $filter, $log,
+                function ($scope, $uibModalInstance, $filter, $log,
                           $timeout, hbUtil, elfins,
                           columnsDefinition, sourcePath, initialSelectedElfin) {
 
@@ -188,7 +188,7 @@
 
 
                     var selectionConfirmed = function () {
-                        $modalInstance.close($scope.selectedElfins);
+                        $uibModalInstance.close($scope.selectedElfins);
                     };
 
 
@@ -212,7 +212,7 @@
                         selectionConfirmed();
                     };
                     $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
+                        $uibModalInstance.dismiss('cancel');
                     };
 
                     var focusOnSearchField = function () {

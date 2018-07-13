@@ -359,7 +359,7 @@
 				'HbChooseActorModalController',
 				[
 						'$scope',
-						'$modalInstance',
+						'$uibModalInstance',
 						'$filter',
 						'$log',
 						'$timeout',
@@ -367,7 +367,7 @@
 						'elfins',
 						'columnsDefinition',
 						'role',
-						function($scope, $modalInstance, $filter, $log,
+						function($scope, $uibModalInstance, $filter, $log,
 								$timeout, hbUtil, elfins,
 								columnsDefinition, role) {
 							
@@ -412,7 +412,7 @@
 							
 							
 							var selectionConfirmed = function() {
-								$modalInstance.close($scope.selectedElfins);
+                                $uibModalInstance.close($scope.selectedElfins);
 							};
 							
 							// ui-grid options. See ui-grid API Documentation for details.
@@ -434,7 +434,7 @@
 								selectionConfirmed();
 							};
 							$scope.cancel = function () {
-							    $modalInstance.dismiss('cancel');
+                                $uibModalInstance.dismiss('cancel');
 							};
 							
 							var focusOnSearchField = function() {

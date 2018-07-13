@@ -3,13 +3,14 @@
     /**
      * Modal dialog for ELFIN delete operation
      */
-    angular.module('hb5').controller('DeleteConfirmController', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    angular.module('hb5').controller('DeleteConfirmController', ['$scope', '$uibModalInstance',
+        function ($scope, $uibModalInstance) {
 
         $scope.ok = function () {
-            $modalInstance.close();
+            $uibModalInstance.close();
         };
         $scope.cancel = function () {
-            $modalInstance.dismiss();
+            $uibModalInstance.dismiss();
         };
 
     }]);
@@ -17,13 +18,14 @@
     /**
      * Modal dialog to warn user of possibly unsaved change while quitting the current edit context
      */
-    angular.module('hb5').controller('UnsavedWarnDialogController', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    angular.module('hb5').controller('UnsavedWarnDialogController', ['$scope', '$uibModalInstance',
+        function ($scope, $uibModalInstance) {
 
         $scope.ok = function () {
-            $modalInstance.close();
+            $uibModalInstance.close();
         };
         $scope.cancel = function () {
-            $modalInstance.dismiss();
+            $uibModalInstance.dismiss();
         };
 
     }]);

@@ -1,16 +1,17 @@
 (function() {
 
-    var ChooseConfigInstanceCtrl = function ($scope, $modalInstance, $$configurations) {
+    var ChooseConfigInstanceCtrl = function ($scope, $uibModalInstance, $$configurations) {
 
         $scope.$$configurations = $$configurations;
         $scope.selected = {item: $scope.$$configurations[0]};
 
         $scope.ok = function () {
-            $modalInstance.close($scope.selected.item);
+            $uibModalInstance.close($scope.selected.item);
         };
     };
 
-    angular.module('hb5').controller('HbResetPwdController', ['$scope', '$modalInstance', '$timeout', '$log', function($scope, $modalInstance, $timeout, $log) {
+    angular.module('hb5').controller('HbResetPwdController', ['$scope', '$uibModalInstance', '$timeout', '$log',
+		function($scope, $uibModalInstance, $timeout, $log) {
 
     	$scope.model = {
     			pwd1: "",
@@ -31,7 +32,7 @@
     	
     	// User ok submission
         $scope.ok = function () {
-        	$modalInstance.close($scope.model);
+            $uibModalInstance.close($scope.model);
         };
         
     	// Trigger ok submission upon ENTER keystroke
@@ -42,7 +43,7 @@
         
         // User cancel 
         $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
         
         // Force focus to first parameters list field
@@ -52,7 +53,8 @@
         
     }]);    
 
-    angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$modalInstance', '$timeout', '$log', 'itemDefinition', function($scope, $modalInstance, $timeout, $log, itemDefinition) {
+    angular.module('hb5').controller('ChooseParamsCtrl', ['$scope', '$uibModalInstance', '$timeout', '$log', 'itemDefinition',
+		function($scope, $uibModalInstance, $timeout, $log, itemDefinition) {
     	var i;
     	$scope.modalModel = [];
     	// /!\ _.clone performs shallow copy, see: http://underscorejs.org/#clone
@@ -68,7 +70,7 @@
     	
     	// User ok submission
         $scope.ok = function () {
-        	$modalInstance.close($scope.modalModel);
+            $uibModalInstance.close($scope.modalModel);
         };
         
     	// Trigger ok submission upon ENTER keystroke
@@ -79,7 +81,7 @@
         
         // User cancel 
         $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
         
         // Force focus to first parameters list field

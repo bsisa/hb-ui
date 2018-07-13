@@ -201,14 +201,14 @@
 				'HbChooseCodeModalController',
 				[
 						'$scope',
-						'$modalInstance',
+						'$uibModalInstance',
 						'$filter',
 						'$log',
 						'$timeout',
 						'hbUtil',
 						'elfins',
 						'columnsDefinition',
-						function($scope, $modalInstance, $filter, $log,
+						function($scope, $uibModalInstance, $filter, $log,
 								$timeout, hbUtil, elfins,
 								columnsDefinition) {
 							
@@ -251,7 +251,7 @@
 							
 							
 							var selectionConfirmed = function() {
-								$modalInstance.close($scope.selectedElfins);
+                                $uibModalInstance.close($scope.selectedElfins);
 							};
 							
 							$scope.doubleClickListener = function(rowItem) {
@@ -277,7 +277,7 @@
 								selectionConfirmed();
 							};
 							$scope.cancel = function () {
-							    $modalInstance.dismiss('cancel');
+                                $uibModalInstance.dismiss('cancel');
 							};
 							
 							var focusOnSearchField = function() {

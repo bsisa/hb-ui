@@ -1,6 +1,7 @@
 (function () {
 
-    angular.module('hb5').controller('AnnexeFileTypeSelectionController', ['$scope', '$modalInstance', 'items', function ($scope, $modalInstance, items) {
+    angular.module('hb5').controller('AnnexeFileTypeSelectionController', ['$scope', '$uibModalInstance', 'items',
+        function ($scope, $uibModalInstance, items) {
 
         $scope.items = items;
         $scope.selected = {
@@ -9,10 +10,10 @@
 
 
         $scope.ok = function () {
-            $modalInstance.close($scope.selected.item);
+            $uibModalInstance.close($scope.selected.item);
         };
         $scope.cancel = function () {
-            $modalInstance.dismiss();
+            $uibModalInstance.dismiss();
         };
 
     }]);
