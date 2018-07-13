@@ -482,17 +482,19 @@
 
         Restangular.setErrorInterceptor(
             function (response) {
-                if (response.status == 401) {
+                var errMsg, userErrMsg;
+
+                if (response.status === 401) {
                     $log.debug("Login required... ");
                     $window.location.href = '/login';
                     //TODO: we might use the following once we create an new custom AngularJS integrated login form
                     //$location.path('/login');
-                } else if (response.status == 403) {
-                    var errMsg = "Droits d'accès insuffisants pour cette operation. ";
+                } else if (response.status === 403) {
+                    errMsg = "Droits d'accès insuffisants pour cette operation. ";
                     $log.error(errMsg + " ( " + response.data.DESCRIPTION + " )");
                     hbAlertMessages.addAlert("danger", errMsg);
                 }
-                else if (response.status == 404) {
+                else if (response.status === 404) {
 //    	        		for (var property in response) {
 //   	        			   console.log("Property name: " + property + ", value: " + response[property]);
 //    	        		}
@@ -502,8 +504,8 @@
                     $log.debug("404 - let flow resource not found to application level: Response status (" + response.status + ").");
                     return response;
                 }
-                else if (response.status == 500) {
-                    var errMsg = "Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. ";
+                else if (response.status === 500) {
+                    errMsg = "Erreur du serveur, veuillez s.v.p. prendre contact avec votre administrateur. ";
                     if (response.data.DESCRIPTION) {
                         errMsg += "( " + response.data.DESCRIPTION + " )";
                     }
@@ -522,26 +524,26 @@
 //    	        		hbAlertMessages.addAlert("danger",errMsg);
                     return response;
                 }
-                else if (response.status == 566) { // 566 - Custom code for connect exception
-                    var errMsg = "La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur. ( " + response.data.DESCRIPTION + " )";
+                else if (response.status === 566) { // 566 - Custom code for connect exception
+                    errMsg = "La connection avec le serveur de base de donnée n'a pas pu être établie. Veuillez s.v.p. prendre contact avec votre administrateur. ( " + response.data.DESCRIPTION + " )";
                     $log.error(errMsg);
                     hbAlertMessages.addAlert("danger", errMsg);
-                } else if (response.status == 567) { // 567 - Custom code for ElfinFormatException
-                    var userErrMsg = "La conversion de l' objet ELFIN.Id = " + response.data.ELFIN_Id + ", ELFIN.ID_G = " + response.data.ELFIN_ID_G + " a échoué. Veuillez s.v.p. prendre contact avec votre administrateur système.";
+                } else if (response.status === 567) { // 567 - Custom code for ElfinFormatException
+                    userErrMsg = "La conversion de l' objet ELFIN.Id = " + response.data.ELFIN_Id + ", ELFIN.ID_G = " + response.data.ELFIN_ID_G + " a échoué. Veuillez s.v.p. prendre contact avec votre administrateur système.";
                     $log.error("ElfinFormatException (" + response.status + "): ERROR = " + response.data.ERROR + ", DESCRIPTION = " + response.data.DESCRIPTION + ", User message = " + userErrMsg);
                     hbAlertMessages.addAlert("danger", userErrMsg);
-                } else if (response.status == 568) { // 568 - Custom code for PasswordHashException
-                    var userErrMsg = "L'obtention du hachage encrypté du mot de passe a échoué. Veuillez s.v.p. prendre contact avec votre administrateur système.";
+                } else if (response.status === 568) { // 568 - Custom code for PasswordHashException
+                    userErrMsg = "L'obtention du hachage encrypté du mot de passe a échoué. Veuillez s.v.p. prendre contact avec votre administrateur système.";
                     $log.error("PasswordHashException (" + response.status + "): ERROR = " + response.data.ERROR + ", DESCRIPTION = " + response.data.DESCRIPTION + ", User message = " + userErrMsg);
                     hbAlertMessages.addAlert("danger", userErrMsg);
-                } else if (response.status == 701) { // 701 - Custom success code for HEAD not found tests
+                } else if (response.status === 701) { // 701 - Custom success code for HEAD not found tests
                     $log.debug("701 - Custom success code for HEAD not found tests (" + response.status + ").");
                     return response;
                 }
                 // General 404 processing forbids ability to use HEAD for resource existence check.
                 // Indeed a 404 is a perfectly correct status when testing a resource does not yet exists.
                 else {
-                    var errMsg = "Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status;
+                    errMsg = "Une erreur s'est produite, veuillez s.v.p. prendre contact avec votre administrateur et lui communiquer le statut suivant: HTTP ERROR: " + response.status;
                     $log.error(errMsg);
                     hbAlertMessages.addAlert("danger", errMsg);
                 }
