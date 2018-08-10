@@ -18,7 +18,7 @@
 					'hbUtil',
 					'GeoxmlService',
 					'hbQueryService',
-					function($attrs, $scope, $modal, $routeParams,
+					function($attrs, $scope, $uibModal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
 						// Protects against load latency.
@@ -129,7 +129,7 @@
 				         */
 				        $scope.hbChooseCode = function () {
 				        	
-				            var modalInstance = $modal.open({
+				            var modalInstance = $uibModal.open({
 				                templateUrl: '/assets/views/hbChooseCodeModalDialog.html',
 				                scope: $scope,
 				                controller: 'HbChooseCodeModalController',

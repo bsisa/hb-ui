@@ -32,7 +32,7 @@
                 '$uibModal',
                 'HB_ANNEXE_TYPE',
                 function ($attrs, $scope, GeoxmlService, $log, hbAlertMessages,
-                          hbUtil, $modal, HB_ANNEXE_TYPE) {
+                          hbUtil, $uibModal, HB_ANNEXE_TYPE) {
 
                     //$log.debug("    >>>> Using HbAnnexesUploadController");
 
@@ -116,7 +116,7 @@
                             filename = prompt("Merci de bien vouloir donner le nom du fichier collé : ", "nom_de_fichier.ext");
                         }
 
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             templateUrl: 'hbUploadFileTypeModal.html',
                             controller: 'AnnexeFileTypeSelectionController',
                             scope: $scope,
@@ -229,7 +229,7 @@
 
                     $scope.flowFileDropped = function (file, event, flow) {
 
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             templateUrl: 'hbUploadFileTypeModal.html',
                             controller: 'AnnexeFileTypeSelectionController',
                             scope: $scope,

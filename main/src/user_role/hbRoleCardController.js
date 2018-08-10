@@ -11,7 +11,7 @@
 					'hbAlertMessages',
 					'hbUtil',
 					'hbQueryService',
-					function($scope, $attrs, GeoxmlService, $modal, 
+					function($scope, $attrs, GeoxmlService, $uibModal,
 							$log, hbAlertMessages, hbUtil, hbQueryService) {
 
 						//$log.debug("    >>>> Using HbRoleCardController ");

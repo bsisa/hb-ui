@@ -11,7 +11,7 @@
             '$log',
             'hbAlertMessages',
             'hbUtil',
-            function ($scope, $modal, $routeParams,
+            function ($scope, $uibModal, $routeParams,
                       $location, $log, hbAlertMessages, hbUtil) {
 
                 //$log.debug("    >>>> Using HbChooseOneController");
@@ -25,7 +25,7 @@
 
                     $log.debug(">>>> ON CHOOSE :: targetElfin = : " + targetElfin.Id);
 
-                    var modalInstance = $modal.open({
+                    var modalInstance = $uibModal.open({
                         templateUrl: template,
                         scope: $scope,
                         controller: 'HbChooseOneModalController',

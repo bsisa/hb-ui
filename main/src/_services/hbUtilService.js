@@ -904,7 +904,7 @@
          * encodeURI() can be used on URL instead.
          */
         var encodeUriParameter = function (uriParameter) {
-            return $window.encodeURIComponent(uriParameter);
+            return $window.encodeURIComponent(_.replace(uriParameter, "'", "%27"));
         };
 
         /**

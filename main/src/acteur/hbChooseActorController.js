@@ -35,7 +35,7 @@
 					'hbUtil',
 					'GeoxmlService',
 					'hbQueryService',
-					function($attrs, $scope, $modal, $routeParams,
+					function($attrs, $scope, $uibModal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
 						//$log.debug("    >>>> Using HbChooseActorController");
@@ -233,7 +233,7 @@
 				         */
 				        $scope.hbChooseActor = function () {
 				        	
-				            var modalInstance = $modal.open({
+				            var modalInstance = $uibModal.open({
 				                templateUrl: '/assets/views/hbChooseActorModalDialog.html',
 				                scope: $scope,
 				                controller: 'HbChooseActorModalController',

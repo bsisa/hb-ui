@@ -19,7 +19,7 @@
             'HB_COLLECTIONS',
             'HB_ROLE_FONCTION',
             'HB_ORDER_TYPE',
-            function($scope, $attrs, GeoxmlService, $modal,
+            function($scope, $attrs, GeoxmlService, $uibModal,
                      $routeParams, $location, $log, $timeout,
                      hbAlertMessages, hbUtil, hbQueryService, hbTabCacheService, userDetails, HB_COLLECTIONS, HB_ROLE_FONCTION, HB_ORDER_TYPE) {
 

@@ -12,7 +12,7 @@
 					'$log',
 					'hbAlertMessages',
 					'hbUtil',
-					function($attrs, $scope, GeoxmlService, $modal, $routeParams,
+					function($attrs, $scope, GeoxmlService, $uibModal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil) {
 
 						//$log.debug("    >>>> Using HbActeurCardController ");

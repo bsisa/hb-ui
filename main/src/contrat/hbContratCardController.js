@@ -17,7 +17,7 @@
 							'hbUtil',
 							'hbQueryService',
 							'uiGridConstants',
-							function($scope, $attrs, GeoxmlService, $modal,
+							function($scope, $attrs, GeoxmlService, $uibModal,
 									$routeParams, $location, $log, $timeout,
 									hbAlertMessages, hbUtil, hbQueryService, uiGridConstants) {
 

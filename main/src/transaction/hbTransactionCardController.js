@@ -20,7 +20,7 @@
                 'userDetails',
                 'hbQueryService',
                 function ($attrs, $scope, $rootScope, GeoxmlService,
-                          $modal, $routeParams, $location, $log,
+                          $uibModal, $routeParams, $location, $log,
                           $timeout, hbAlertMessages, hbUtil,
                           HB_EVENTS, userDetails, hbQueryService) {
 
@@ -100,7 +100,7 @@
 
                         $log.debug(">>>> selectOneCommande = " + elfins.length);
 
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             templateUrl: template,
                             scope: $scope,
                             controller: 'HbChooseOneModalController',
@@ -274,7 +274,7 @@
                             return elfin.IDENTIFIANT.DE === strPreviousYear;
                         });
 
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             templateUrl: template,
                             scope: $scope,
                             controller: 'HbExtendedChooseOneModalController',
@@ -380,7 +380,7 @@
 
                     $scope.selectImmeubleAndPrestation = function (elfins, selectedImmeuble, sourcePath, columnsDefinition, template) {
 
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             templateUrl: template,
                             scope: $scope,
                             controller: 'HbChooseOneModalController',

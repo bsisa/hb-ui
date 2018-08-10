@@ -15,7 +15,7 @@
 					'hbUtil',
 					'userDetails',
 					'hbTabCacheService',
-					function($attrs, $scope, GeoxmlService, $modal, $routeParams,
+					function($attrs, $scope, GeoxmlService, $uibModal, $routeParams,
 							$location, $log, hbAlertMessages, hbQueryService, hbUtil, userDetails, hbTabCacheService) {
 
 						//$log.debug("    >>>> Using HbInstallationSportiveCardController ");

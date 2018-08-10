@@ -11,7 +11,7 @@
                 '$uibModal',
                 'hbUtil',
                 'HB_ANNEXE_TYPE',
-                function ($attrs, $scope, $log, $modal, hbUtil, HB_ANNEXE_TYPE) {
+                function ($attrs, $scope, $log, $uibModal, hbUtil, HB_ANNEXE_TYPE) {
 
                     //$log.debug("    >>>> Using HbAnnexesComponentController");
 
@@ -230,7 +230,7 @@
                     $scope.deleteRenvoi = function (renvoi) {
                         $log.debug("Perform RENVOI deletion.");
 
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             templateUrl: '/assets/views/deleteAnnexeConfirmModalPanel.html',
                             controller: 'DeleteConfirmController',
                             scope: $scope,

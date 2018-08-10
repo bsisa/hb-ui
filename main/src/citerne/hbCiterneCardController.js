@@ -13,7 +13,7 @@
 					'hbAlertMessages',
 					'hbUtil',
 					'hbQueryService',
-					function($attrs, $scope, GeoxmlService, $modal, $routeParams,
+					function($attrs, $scope, GeoxmlService, $uibModal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil, hbQueryService) {
 
 						//$log.debug("    >>>> Using HbCiterneCardController ");

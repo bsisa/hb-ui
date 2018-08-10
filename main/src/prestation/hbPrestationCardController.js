@@ -14,7 +14,7 @@
             'hbAlertMessages',
             'hbUtil',
             'hbQueryService',
-            function ($attrs, $scope, GeoxmlService, $modal,
+            function ($attrs, $scope, GeoxmlService, $uibModal,
                       $routeParams, $location, $log, $timeout,
                       hbAlertMessages, hbUtil, hbQueryService) {
 

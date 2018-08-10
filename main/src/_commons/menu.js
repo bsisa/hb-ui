@@ -127,7 +127,7 @@
 
         $scope.chooseConfiguration = function () {
 
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
             	templateUrl: '/assets/views/chooseConfiguration.html',
                 controller: ChooseConfigInstanceCtrl,
                 resolve: {
@@ -192,7 +192,7 @@
          */
         $scope.findById = function (itemDefinition) {
         	
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                 templateUrl: '/assets/views/chooseParams.html',
                 scope: $scope,
                 controller: 'ChooseParamsCtrl',
@@ -283,7 +283,7 @@
          */
         $scope.chooseParams = function (itemDefinition) {
         	
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                 templateUrl: '/assets/views/chooseParams.html',
                 scope: $scope,
                 controller: 'ChooseParamsCtrl',
@@ -323,7 +323,7 @@
          */
         $scope.resetPwd = function () {
         	
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                 templateUrl: '/assets/views/password.html',
                 controller: 'HbResetPwdController',       
                 backdrop: 'static'

@@ -11,7 +11,7 @@
 					'$log',
 					'hbAlertMessages',
 					'hbUtil',
-					function($scope, GeoxmlService, $modal, $routeParams,
+					function($scope, GeoxmlService, $uibModal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil) {
 
 						//$log.debug("    >>>> Using HbFontaineCardController ");

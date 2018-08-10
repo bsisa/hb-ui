@@ -63,7 +63,7 @@
                   $scope,
                   $rootScope,
                   GeoxmlService,
-                  $modal,
+                  $uibModal,
                   $routeParams,
                   $location,
                   $log,
@@ -382,7 +382,7 @@
             $scope.delElfin = function (elfin) {
                 if ($scope.canDelete()) {
 
-                    var modalInstance = $modal.open({
+                    var modalInstance = $uibModal.open({
                         templateUrl: '/assets/views/deleteConfirmModalPanel.html',
                         controller: 'DeleteConfirmController',
                         scope: $scope,
@@ -578,7 +578,7 @@
 //        		// Prevent default navigation to nextUrl to let end user decision happen
 //    			if (event.preventDefault) {	event.preventDefault(); }
 //
-//            	var modalInstance = $modal.open({
+//            	var modalInstance = $uibModal.open({
 //                    templateUrl: '/assets/views/unsavedWarnDialog.html',
 //                    controller: 'UnsavedWarnDialogController',
 //                    scope: $scope,

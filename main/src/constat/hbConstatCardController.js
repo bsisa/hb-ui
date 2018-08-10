@@ -20,7 +20,7 @@
 					'userDetails',
 					'hbQueryService',
 					'uiGridConstants',
-					function($attrs, $rootScope, $scope, GeoxmlService, $modal, $routeParams,
+					function($attrs, $rootScope, $scope, GeoxmlService, $uibModal, $routeParams,
 							$location, $log, $filter, hbAlertMessages, hbUtil, HB_EVENTS, HB_REGEXP, HB_ROLE_FONCTION, userDetails, hbQueryService, uiGridConstants) {
 
 						//$log.debug("    >>>> Using ConstatCardController ");

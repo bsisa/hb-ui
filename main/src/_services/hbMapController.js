@@ -1,7 +1,7 @@
 (function () {
 
     angular.module('hb5').controller('MapController', ['$scope', '$uibModal', '$rootScope', '$timeout', '$log', 'leafletData', 'MapService', 'hbGeoService', 'hbGeoSwissCoordinatesService', 'hbGeoLeafletService', '$location', 'GeoxmlService', 'HB_EVENTS','hbOffline', 'hbUtil',
-        function ($scope, $modal, $rootScope, $timeout, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline, hbUtil) {
+        function ($scope, $uibModal, $rootScope, $timeout, $log, leafletData, MapService, hbGeoService, hbGeoSwissCoordinatesService, hbGeoLeafletService, $location, GeoxmlService, HB_EVENTS, hbOffline, hbUtil) {
 
     	// Get controller reference as "view model" var. 
         var vm = this;
@@ -857,7 +857,7 @@
 
             $log.debug("(offsetX,offsetY)=("+offsetX+"," +offsetY+ ")");
             
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                 templateUrl: '/assets/views/chooseParams.html',
                 scope: $scope,
                 controller: 'ChooseParamsCtrl',

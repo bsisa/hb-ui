@@ -26,7 +26,7 @@
                 'HB_API',
                 'HB_ROLE_FONCTION',
                 'hbTabCacheService',
-                function ($attrs, $scope, $rootScope, GeoxmlService, $modal,
+                function ($attrs, $scope, $rootScope, GeoxmlService, $uibModal,
                           $routeParams, $location, $log, $timeout, $filter, $locale, hbAlertMessages,
                           hbUtil, hbQueryService, userDetails, HB_EVENTS, HB_ORDER_TYPE, HB_API, HB_ROLE_FONCTION, hbTabCacheService) {
 

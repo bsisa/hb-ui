@@ -18,7 +18,7 @@
 					'hbUtil',
 					'GeoxmlService',
 					'hbQueryService',
-					function($attrs, $scope, $modal, $routeParams,
+					function($attrs, $scope, $uibModal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService) {
 
 						// Check if optional editable property is available

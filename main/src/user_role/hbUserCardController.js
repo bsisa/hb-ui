@@ -14,7 +14,7 @@
 					'hbUtil', 
 					'$rootScope',
 					'$timeout',
-					function($scope, GeoxmlService, hbQueryService, $modal, $routeParams,
+					function($scope, GeoxmlService, hbQueryService, $uibModal, $routeParams,
 							$location, $log, hbAlertMessages, hbUtil, $rootScope, $timeout) {
 
 						//$log.debug("    >>>> Using HbUserCardController ");

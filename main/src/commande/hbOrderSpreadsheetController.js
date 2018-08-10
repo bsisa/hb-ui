@@ -20,7 +20,7 @@
 					'hbQueryService',
 					'HB_REGEXP',
 					'HB_ORDER_LINE_TYPE',
-					function($attrs, $scope, $modal, $routeParams,
+					function($attrs, $scope, $uibModal, $routeParams,
 							$location, $log, $timeout, hbAlertMessages, hbUtil, GeoxmlService, hbQueryService, HB_REGEXP, HB_ORDER_LINE_TYPE) {
 
 				//$log.debug(">>>> HbOrderSpreadsheetController...");				

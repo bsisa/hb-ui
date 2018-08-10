@@ -25,7 +25,7 @@
                 'hbPrintService',
                 '$window',
                 function ($attrs, $scope, $rootScope, GeoxmlService,
-                          $modal, $routeParams, $location, $log,
+                          $uibModal, $routeParams, $location, $log,
                           $timeout, hbAlertMessages, hbUtil,
                           HB_EVENTS, HB_ORDER_TYPE, HB_ORDER_REPORT_TYPE, HB_ROLE_FONCTION, userDetails, hbQueryService, hbPrintService, $window) {
 
@@ -278,7 +278,7 @@
                                 (elfin.IDENTIFIANT.DE === strPreviousYear && elfin.GROUPE === "Construction");
                         });
 
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             templateUrl: $scope.selectOnePrestationTemplate,
                             scope: $scope,
                             controller: 'HbExtendedChooseOneModalController',
