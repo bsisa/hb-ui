@@ -110,32 +110,36 @@
 		var getAugmentedConstats = function(xpath){
             var deferred = $q.defer();
 
-            getConstats(xpath)
-                .then(function(constatsElfins) {
-                    $log.debug(">>>> getAugmentedConstats - constatsElfins.length = " + constatsElfins.length);
-                    var augmentedConstats = [];
+            getImmeubles().then(function(immeubles) {
 
-                    // Augment with source immeuble
-                    constatsElfins.forEach(function(constat) {
-                        if (!!constat.SOURCE) {
-                            loadSourceElfin(constat.SOURCE,
-                                function (immeuble) {
-                                    constat.immeuble = immeuble;
-                                },
-                                function () {
-                                    constat.immeuble = null;
-                                });
-                        } else {
-                            constat.immeuble = null;
-                        }
-                        augmentedConstats.push(constat);
-                        deferred.resolve(augmentedConstats);
+            	var immeublesBySOURCE = _.keyBy(immeubles, function(i) {
+            		return _.join([i.ID_G, i.CLASSE, i.Id], "/");
+				});
+
+                getConstats(xpath)
+                    .then(function(constatsElfins) {
+                        $log.debug(">>>> getAugmentedConstats - constatsElfins.length = " + constatsElfins.length);
+                        var augmentedConstats = [];
+
+                        // Augment with source immeuble
+                        constatsElfins.forEach(function(constat) {
+                            constat.immeuble = immeublesBySOURCE[constat.SOURCE] || null;
+                            augmentedConstats.push(constat);
+                            deferred.resolve(augmentedConstats);
+                        });
+                    }, function(response) {
+                        var message = "Le chargement des constats a échoué (statut de retour: " + response.status + ")";
+                        // Return error message as a promise
+                        deferred.reject(message);
                     });
-                }, function(response) {
-                    var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
-                    // Return error message as a promise
-                    deferred.reject(message);
-                });
+
+
+            }, function(errorResponse) {
+                var message = "Le chargement des immeubles a échoué (statut de retour: " + response.status + ")";
+                // Return error message as a promise
+                deferred.reject(message);
+			});
+
 
             return deferred.promise;
 		};
