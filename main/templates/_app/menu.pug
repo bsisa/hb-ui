@@ -34,5 +34,4 @@ ul.hb-menu-bar.menu
 div.container.hb-alert-panel-fixed-top(ng-show="getAlerts.length > 0")
     div.hb-alert-panel-center
         div.hb-card.col-sm-12
-            div
-                alert(ng-repeat="alert in getAlerts", type="alert.type", close="removeAlert($index)") {{ alert.message }}
+            div(uib-alert, ng-repeat="alert in getAlerts", type="alert.type", close="removeAlert($index)", ng-class="'alert-' + (alert.type || 'warning')") {{ alert.message }}
