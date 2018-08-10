@@ -1,29 +1,32 @@
-li.uib-dropdown.has-menu(uib-dropdown)
-    a.uib-dropdown-toggle(href="#", uib-dropdown-toggle)
+li.has-menu(uib-dropdown)
+    a(href, uib-dropdown-toggle)
         i(class="{{ menuIconClass }}")
         | {{ menuLabel }}
         span.arrow
 
-    ul.uib-dropdown-menu(uib-dropdown-menu)
-        li(ng-repeat="menuItem in menuItems", ng-class="{true: 'dropdown onhoveropen has-menu'}[menuItem.subItems!=null]")
-            a.dropdown-toggle(ng-if="menuItem.subItems", href="#", uib-dropdown-toggle)
-                span.icon(data-icon="G")
-                span {{ menuItem.label }}
-                span.arrow
+    ul(uib-dropdown-menu, role="menu", aria-labelledby="split-button")
+        li(ng-repeat="menuItem in menuItems", ng-class="{true: 'onhoveropen has-menu'}[menuItem.subItems != null]")
 
             a(ng-if="!menuItem.subItems && !menuItem.action.functionRef", ng-href="{{menuItem.action.url}}")
                 span.icon(data-icon="G")
                 span {{ menuItem.label }}
 
-            a(ng-if="!menuItem.subItems && menuItem.action.functionRef", ng-click="menuItem.action.functionRef(menuItem.action)", href="")
+            a(ng-if="!menuItem.subItems && menuItem.action.functionRef", ng-click="menuItem.action.functionRef(menuItem.action)", href)
                 span.icon(data-icon="G")
                 span {{ menuItem.label }}
 
-            ul.dropdown-menu(uib-dropdown-men, ng-if="menuItem.subItems")
+
+            a(ng-if="menuItem.subItems", href)
+                span.icon(data-icon="G")
+                span {{ menuItem.label }}
+                span.arrow
+
+            ul(class="dropdown-menu", ng-if="menuItem.subItems", role="menu", aria-labelledby="split-button")
                 li(ng-repeat="menuSubItem in menuItem.subItems")
                     a(ng-if="!menuSubItem.action.functionRef", ng-href="{{menuSubItem.action.url}}", ng-class="menuSubItem.label ? '' : 'separator'")
                         span.icon(data-icon="G")
                         span {{ menuSubItem.label }}
+
 
                     a(ng-if="menuSubItem.action.functionRef", ng-click="menuSubItem.action.functionRef(menuSubItem.action)", ng-class="menuSubItem.label ? '' : 'separator'")
                         span.icon(data-icon="G")
