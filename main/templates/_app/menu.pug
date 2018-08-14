@@ -11,25 +11,25 @@ ul.hb-menu-bar.menu
     li(hb-dropdown-menu-items="menuItems.data.elements", hb-dropdown-menu-label="menuItems.data.label", hb-dropdown-menu-icon-class="icon-hdd", hb-dropdown-menu)
     li(hb-dropdown-menu-items="menuItems.manager.elements", hb-dropdown-menu-label="menuItems.manager.label", hb-dropdown-menu-icon-class="icon-cogs", hb-dropdown-menu)
 
-    li.dropdown.has-menu
-        a.dropdown-toggle(href="#")
+    li.has-menu(uib-dropdown)
+        a(href, uib-dropdown-toggle)
             i.icon-briefcase
             | {{activeJob.IDENTIFIANT.NOM}}
             span.arrow
-        ul.dropdown-menu
+        ul(uib-dropdown-menu, role="menu", aria-labelledby="split-button")
             li(ng-repeat="job in jobs")
                 a(ng-click="activateJob(job)")
                     span.icon(data-icon="G")
                     span &nbsp;{{ job.IDENTIFIANT.NOM }}
 
-    li.dropdown.has-menu
-        a.dropdown-toggle(href="#")
+    li.has-menu(uib-dropdown)
+        a(href, uib-dropdown-toggle)
             i.glyphicon.glyphicon-user(style="font-size: 1em;") &nbsp;
             | {{ userDetails.username }} - {{ userDetails.name }} {{ userDetails.surname }}
             span.arrow
-            ul.dropdown-menu
-                li
-                    a(target="_self", href="/logout") Logout
+        ul(uib-dropdown-menu, role="menu", aria-labelledby="split-button")
+            li
+                a(target="_self", href="/logout") Logout
 
 div.container.hb-alert-panel-fixed-top(ng-show="getAlerts.length > 0")
     div.hb-alert-panel-center
