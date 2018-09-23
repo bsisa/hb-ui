@@ -1019,6 +1019,8 @@
                             $scope.isReadOnly ? undefined : "a_valider", "file");
                     };
 
+
+
                     /**
                      * Prints entreprise contract without General Conditions.
                      */
@@ -1042,6 +1044,15 @@
                         var reportUrl = "/api/melfin/spreadsheet/" + reportModel + "?Id=" + elfin.Id;
                         $window.open(reportUrl);
                     };
+
+                    /**
+                     * Prints enterprise contract accompanying letter
+                     */
+                    $scope.printEntrepriseContractLetter = function (letterType, elfin) {
+                        var reportUrl = "/api/melfin/document/" + letterType + "_Contrat.docx" + "?Id=" + elfin.Id;
+                        $window.open(reportUrl);
+                    };
+
                     /**
                      * Prints order confirmation.
                      */

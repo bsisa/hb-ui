@@ -279,6 +279,20 @@ div.row(style="padding-top: 8px;")
                                 span Annexes du contrat d'entreprise (PDF)
 
 
+                            button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONTRACT",
+                                ng-click="printEntrepriseContractLetter('LE', elfin)",
+                                tooltip="Lettre d'accompagnement 'En Annexe' (DOCX)",
+                                tooltip-popup-delay="1000", tooltip-placement="right")
+                                i.glyphicon.glyphicon-print(style="padding-right:8px")
+                                span Lettre 'En Annexe' (DOCX)
+
+                            button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONTRACT",
+                            ng-click="printEntrepriseContractLetter('LR', elfin)",
+                            tooltip="Lettre d'accompagnement 'Retour signé' (DOCX)",
+                            tooltip-popup-delay="1000", tooltip-placement="right")
+                                i.glyphicon.glyphicon-print(style="padding-right:8px")
+                                span Lettre 'Retour pour Dossier' (DOCX)
+
 
                             // Confirmation de commande
                             button.btn.btn-default(ng-if="elfin.IDENTIFIANT.QUALITE === HB_ORDER_TYPE.CONFIRMATION",
