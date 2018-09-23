@@ -22,16 +22,16 @@
 <!-- 		</ul> -->
 	
 <!-- 		<ul class="nav navbar-nav navbar-right" > -->
-	    <li class="dropdown has-menu">
-	        <a class="dropdown-toggle" href="#"><i class="icon-briefcase"></i> {{activeJob.IDENTIFIANT.NOM}}<span class="arrow">&nbsp;</span></a>
-	        <ul class="dropdown-menu">
+	    <li class="dropdown has-menu" dropdown>
+	        <a class="dropdown-toggle" dropdown-toggle href="#"><i class="icon-briefcase"></i> {{activeJob.IDENTIFIANT.NOM}}<span class="arrow">&nbsp;</span></a>
+	        <ul class="dropdown-menu" dropdown-menu>
 	            <li ng-repeat="job in jobs" ><a ng-click="activateJob(job)" ><span class="icon" data-icon="G"></span><span>{{job.IDENTIFIANT.NOM}}</span></a></li>
 	        </ul>
 	    </li>
 	    
-	    <li class="dropdown has-menu">
-			<a class="dropdown-toggle"  href="#" ><i class="glyphicon glyphicon-user" style="font-size: 1em;"></i>&nbsp;{{userDetails.username}} - {{userDetails.name}} {{userDetails.surname}}<span class="arrow">&nbsp;</span></a>
-	        <ul class="dropdown-menu">
+	    <li class="dropdown has-menu" dropdown>
+			<a class="dropdown-toggle" dropdown-toggle href="#" ><i class="glyphicon glyphicon-user" style="font-size: 1em;"></i>&nbsp;{{userDetails.username}} - {{userDetails.name}} {{userDetails.surname}}<span class="arrow">&nbsp;</span></a>
+	        <ul class="dropdown-menu" dropdown-menu>
 	        	<li ><a target="_self" href="/logout" >Logout</a></li>
 	        	<!-- TODO: implement own password update -->
 <!-- 	        	<li ><a ng-click="resetPwd()" href="#">Mettre à jour mon mot de passe</a></li> -->
