@@ -141,11 +141,11 @@
                             $scope.elfin.SOURCE = $scope.selected.surface.ID_G + "/" + $scope.selected.surface.CLASSE + "/" + $scope.selected.surface.Id;
                             // Set order (COMMANDE) ALIAS to SURFACE OBJECTIF (no SAI - no object)
                             $scope.elfin.IDENTIFIANT.ALIAS = $scope.selected.surface.IDENTIFIANT.OBJECTIF;
-                            $scope.elfin.IDENTIFIANT.OBJECTIF = hbUtil.getCARByPos($scope.selected.surface, 2).VALEUR;
+                            $scope.elfin.IDENTIFIANT.OBJECTIF = (hbUtil.getCARByPos($scope.selected.surface, 2) || {VALEUR:""}).VALEUR;
                         } else if ($scope.selected.building !== null && $scope.selected.building.Id) {
                             $log.debug("/!\ updateSource NO selected.surface.Id /!\ ");
                             $scope.elfin.SOURCE = $scope.selected.building.ID_G + "/" + $scope.selected.building.CLASSE + "/" + $scope.selected.building.Id;
-                            $scope.elfin.IDENTIFIANT.OBJECTIF = hbUtil.getCARByPos($scope.selected.building, 2).VALEUR;
+                            $scope.elfin.IDENTIFIANT.OBJECTIF = (hbUtil.getCARByPos($scope.selected.building, 2) || {VALEUR:""}).VALEUR;
 
                             // TODO: review if it is the best place to reset ALIAS ?
                         } else {
