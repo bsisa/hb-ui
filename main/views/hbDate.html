@@ -1,4 +1,5 @@
-<input  
+<!--
+<input
 	type="text" 
 	class="form-control {{dateCss}}" 
 	datepicker-popup="{{dateFormat}}" 
@@ -10,20 +11,21 @@
        clear-text="Annuler"
 	ng-model="date"
 	>
+-->
 <!-- ui.bootstrap 0.11.0 test (above is 0.10.0) -->		
-<!-- <p class="input-group"> -->
-<!-- 	<input  -->
-<!-- 		type="text"  -->
-<!-- 		class="form-control"  -->
-<!-- 		datepicker-popup="{{dateFormat}}"  -->
-<!-- 		ng-model="date"  -->
-<!-- 	        current-text="Aujourd'hui" -->
-<!--         	clear-text="Annuler" -->
-<!-- 	        close-text="Fermer" -->
-<!-- 		starting-day="1"	 -->
-<!-- 		is-open="opened"  -->
-<!-- 		/> -->
-<!-- 		<span class="input-group-btn"> -->
-<!-- 		  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button> -->
-<!-- 		</span> -->
-<!-- </p> -->
+ <p class="input-group">
+ 	<input
+ 		type="text"
+ 		class="form-control"
+ 		datepicker-popup="{{dateFormat}}"
+ 		ng-model="date"
+ 	        current-text="Aujourd'hui"
+         	clear-text="Annuler"
+ 	        close-text="Fermer"
+ 		starting-day="1"
+ 		is-open="opened"
+ 		/>
+ 		<span class="input-group-btn">
+ 		  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+ 		</span>
+ </p>
