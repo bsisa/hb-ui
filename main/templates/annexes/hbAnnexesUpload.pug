@@ -32,12 +32,12 @@ div.col-sm-12.hb-upload-progressbar-container(
         div.btn.btn-default.btn-xs(flow-btn, ng-disabled="$flow.isUploading() || !$flow.support")
             i.glyphicon.glyphicon-folder-open
 
-        div.btn-group(ng-show="{{ canSelectAnnexType() }}", style="padding: 0;")
-            button.btn.btn-default.btn-xs.dropdown-toggle(type="button", data-toggle="dropdown")
-                | {{selectedUploadFileType.name}}
-                span.caret
+        div.btn-group(dropdown, ng-show="{{ canSelectAnnexType() }}", style="padding: 0;")
+            button.btn.btn-default.btn-xs.dropdown-toggle(style="min-width:120px", dropdown-toggle, type="button", data-toggle="dropdown", width="150%")
+                | {{selectedUploadFileType.name}} &nbsp;
+                i.glyphicon.glyphicon-chevron-down
 
-            ul.dropdown-menu(role="menu")
+            ul.dropdown-menu(dropdown-menu, role="menu")
                 li.dropdown-header(role="presentation") Type de téléversement
                 li(ng-repeat="uploadFileType in uploadFileTypes", ng-click="selectUploadFileType(uploadFileType)")
                     a(role="menuitem", tabindex="-1", href="#") {{ uploadFileType.name }}
