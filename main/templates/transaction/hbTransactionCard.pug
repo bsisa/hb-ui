@@ -47,9 +47,17 @@ div.row(style="padding-top: 8px;")
 
 
 
-                            div.form-group
-                                label.col-sm-4.control-label(for="groupe_transaction") Groupe Transaction
-                                div#groupe_transaction.col-sm-8.form-control-static {{elfin.GROUPE}}
+                            div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.groupeTrans)")
+                                label.col-sm-4.control-label(for="groupeTrans") Groupe Transaction
+                                div.col-sm-8
+                                    select#groupeTrans.form-control(name="groupeTrans", chosen,
+                                    data-placeholder=" ",
+                                    disable-search="false",
+                                    allow-single-deselect="false"
+                                    ng-model="elfin.GROUPE",
+                                    ng-options="transactionType.name as transactionType.value for transactionType in transactionTypes",
+                                    ng-required="elfin.CARACTERISTIQUE.CAR1.UNITE !== 'Fonctionnement'")
+                                        option(value='')
 
                             div.form-group
                                 label.col-sm-4.control-label(for="groupe_prestation") Groupe Prestation
