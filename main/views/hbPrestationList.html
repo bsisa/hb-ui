@@ -10,16 +10,16 @@
 							<td style="vertical-align: middle; text-align: center;">
 								<div class="col-sm-12">
 									<div
-									   pagination 
-									   total-items="filteredElfins.length" 
-									   page="currentPage" 
+									   pagination
+									   total-items="filteredElfins.length"
+									   ng-model="currentPage"
 									   max-size="10" 
 									   items-per-page="maxItemsPerPage" 
 									   class="pagination-sm" 
 									   boundary-links="true" 
 									   rotate="false" 
 									   num-pages="numPages"
-									   on-select-page="pageChanged(page)"
+									   ng-change="pageChanged()"
 									   previous-text="&lsaquo;"
 									   next-text="&rsaquo;"
 									   first-text="&laquo;"

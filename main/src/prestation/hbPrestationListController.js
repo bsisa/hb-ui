@@ -92,8 +92,8 @@
 								* Thus we need to pass page parameter to pageChanged function. 
 								*/
 								$scope.pageChanged = function(page) {
-									$log.debug("pageChanged from " + $scope.currentPage + " to " + page);
-									$scope.currentPage = page;
+									// $log.debug("pageChanged from " + $scope.currentPage + " to " + page);
+									// $scope.currentPage = page;
 									$scope.currentFilteredElfinPage = updateCurrentFilteredElfinPage($scope.maxItemsPerPage, $scope.filteredElfins);
 								};								
 								
