@@ -229,7 +229,7 @@
 	        	
 	        	// Get all current year PRESTATIONs at once (most efficient)
 	        	var currentYear = moment().year();
-	        	var prestationsXpath = "//ELFIN[@CLASSE='PRESTATION' and IDENTIFIANT/DE='"+currentYear+"']";
+	        	var prestationsXpath = "//ELFIN[@CLASSE='PRESTATION' and (IDENTIFIANT/DE='" + currentYear + "' or IDENTIFIANT/DE='" + (currentYear - 1) + "' )]";
 	        	getPrestations(prestationsXpath).then(function(prestationElfins) {
 	        		$log.debug(">>>> getAugmentedImmeubles - prestationElfins.length = " + prestationElfins.length);
 					var augmentedImmeubles = new Array();
