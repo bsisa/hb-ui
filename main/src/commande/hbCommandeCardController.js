@@ -32,7 +32,7 @@
                     $scope.transactionTabActive = ($location.hash() === "transactions");
 
                     $scope.OBJECTS_SELECTION_TYPE_IMMEUBLE = "IMMEUBLE";
-                    $scope.OBJECTS_SELECTION_TYPE_SURFACE = "SURFACE";
+                    $scope.OBJECTS_SELECTION_TYPE_SURFACE = "OBJET";
                     $scope.READ_ONLY_STATUS_KEYWORD = "status::readonly";
 
                     // Modifying an order after its validation requires admin role in addition to
@@ -171,7 +171,7 @@
                                 $scope.selected.surface.CARSET_CAR_POS_2 = hbUtil.getCARByPos($scope.selected.surface, 2);
                                 var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI(surfaceElfin.SOURCE);
                                 // Also manages $scope.selected.initialised state
-                                setSelectedBuilding(selectedParentIds.ID_G, selectedParentIds.Id);
+                                setSelectedBuilding(selectedParentIds.ID_G, selectedParentIds.Id, true);
                             }, function (response) {
                                 var message = "Aucun object IMMEUBLE disponible pour la collection: " + ID_G + " et l'identifiant: " + Id + ".";
                                 $log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
@@ -719,7 +719,7 @@
 
                         if ($scope.elfin !== null) {
 
-                            // VAleur Executive
+                            // Valeur Executive
                             $scope.CARSET_CAR_POS_4 = linkCARByPos(4);
                             // Valeur Signataire
                             $scope.CARSET_CAR_POS_5 = linkCARByPos(5);

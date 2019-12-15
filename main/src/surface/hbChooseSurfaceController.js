@@ -112,7 +112,9 @@
 			            // TODO: REPLACE WITH SURFACE CALLS...
 			        	hbQueryService.getLocationUnits("//ELFIN[@CLASSE='SURFACE']")		
 						.then(function(surfaces) {
-
+								surfaces.forEach(function(surface) {
+									surface.CARSET_CAR_POS_2 = hbUtil.getCARByPos(surface, 2);
+								});
 								// order surfaces by IDENTIFIANT.OBJECTIF, IDENTIFIANT.ALIAS, IDENTIFIANT.NOM, PARTENAIRE.PROPRIETAIRE.NOM
 								surfaces.sort(function(a, b) {
 									return a.IDENTIFIANT.OBJECTIF < b.IDENTIFIANT.OBJECTIF ? -1 :
@@ -145,7 +147,7 @@
 				                    	return $scope.surfaces;
 				                    },
 				                    columnsDefinition: function() {
-				                    	return [ { field:"IDENTIFIANT.OBJECTIF", displayName: "No objet"}, { field:"PARTENAIRE.USAGER.VALUE", displayName: "Locataire"} ];
+				                    	return [ { field:"CARSET_CAR_POS_2.VALEUR", displayName: "No objet"}, { field:"PARTENAIRE.USAGER.VALUE", displayName: "Locataire"} ];
 				                    }
 				                },                
 				                backdrop: 'static'
@@ -192,7 +194,7 @@
 				        	$scope.selected.surface = selectedSurface;
 				        	// Update selected surface display string
 				        	if (selectedSurface !== null && angular.isDefined($scope.selected.surface) ) {
-				        		$scope.selected.surfaceDisplay = $scope.selected.surface.IDENTIFIANT.OBJECTIF + " - " + $scope.selected.surface.PARTENAIRE.USAGER.VALUE;
+				        		$scope.selected.surfaceDisplay =  $scope.selected.surface.CARSET_CAR_POS_2.VALEUR;
 				        	} else {
 				        		$scope.selected.surfaceDisplay = " - "
 				        	}

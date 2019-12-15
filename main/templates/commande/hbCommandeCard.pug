@@ -115,10 +115,10 @@ div.row(style="padding-top: 8px;")
                                         hb-choose-building-editable="{{!isReadOnly}}")
                                 div.col-sm-8(ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_IMMEUBLE)")
                                     p.form-control-static {{selected.building.CARSET_CAR_POS_2.VALEUR}} - {{selected.building.IDENTIFIANT.ALIAS}} - {{selected.building.PARTENAIRE.PROPRIETAIRE.NOM}}
-                                input.form-control#objectif(ng-show="false", name="objectif", autocomplete="off", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-required="validate")
+                                <!-- input.form-control#objectif(ng-show="false", name="objectif", autocomplete="off", ng-model="elfin.IDENTIFIANT.OBJECTIF", ng-required="validate") -->
 
                             div.form-group.has-feedback(ng-class="getCssHasFeedback(elfinForm.surface)")
-                                label.col-sm-4.control-label(for="surface")
+                                label.col-sm-4.control-label(for="surface") No Objet
                                 div.col-sm-8(ng-show="!isReadOnly && (selected.objectsSelectionType === OBJECTS_SELECTION_TYPE_SURFACE)")
                                     div#surface(hb-choose-surface,
                                         hb-choose-surface-id-name="surface",
@@ -127,7 +127,7 @@ div.row(style="padding-top: 8px;")
                                         hb-choose-surface-tooltip="Recherche d'unité locative",
                                         hb-choose-surface-editable="{{!isReadOnly}}")
                                 div.col-sm-8(ng-show="isReadOnly || (selected.objectsSelectionType !== OBJECTS_SELECTION_TYPE_SURFACE)")
-                                    p.form-control-static {{selected.surface.CARSET_CAR_POS_2.VALEUR}} - {{selected.surface.PARTENAIRE.USAGER.VALUE}}
+                                    p.form-control-static {{selected.surface.CARSET_CAR_POS_2.VALEUR}}
 
                             div.form-group.has-feedback
                                 label.col-sm-4.control-label(for="prestation") Prestation
