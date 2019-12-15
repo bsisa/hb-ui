@@ -155,7 +155,7 @@
                     };
 
 
-                    var setSelectedSurface = function (ID_G, Id) {
+                    var setSelectedSurface = function (ID_G, Id, createPrestation) {
                         GeoxmlService.getElfin(ID_G, Id).get()
                             .then(function (surfaceElfin) {
                                 // Force CAR array sorting by POS attribute
@@ -171,7 +171,7 @@
                                 $scope.selected.surface.CARSET_CAR_POS_2 = hbUtil.getCARByPos($scope.selected.surface, 2);
                                 var selectedParentIds = hbUtil.getIdentifiersFromStandardSourceURI(surfaceElfin.SOURCE);
                                 // Also manages $scope.selected.initialised state
-                                setSelectedBuilding(selectedParentIds.ID_G, selectedParentIds.Id, true);
+                                setSelectedBuilding(selectedParentIds.ID_G, selectedParentIds.Id, createPrestation);
                             }, function (response) {
                                 var message = "Aucun object IMMEUBLE disponible pour la collection: " + ID_G + " et l'identifiant: " + Id + ".";
                                 $log.warn("HbCommandeCardController - statut de retour: " + response.status + ". Message utilisateur: " + message);
@@ -871,7 +871,7 @@
                                             setSelectedBuilding($routeParams.idg, $routeParams.id, true);
                                         } else if ($routeParams.classe === 'SURFACE') {
                                             $scope.selected.objectsSelectionType = $scope.OBJECTS_SELECTION_TYPE_SURFACE;
-                                            setSelectedSurface($routeParams.idg, $routeParams.id);
+                                            setSelectedSurface($routeParams.idg, $routeParams.id, true);
                                         }
                                     } else {
                                         $scope.selected.objectsSelectionType = $scope.OBJECTS_SELECTION_TYPE_SURFACE;
