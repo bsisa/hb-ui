@@ -105,14 +105,18 @@ div.row(style="padding-top: 8px;")
                                                     thead
                                                         tr
                                                             th(colspan="2") Commande
-                                                            th.col-sm-2 N° commande
-                                                                th.col-sm-1 Code CFC
-                                                            th.col-sm-1 Date
+                                                            th.col-sm-2
+                                                                a(href="", ng-click="commandPredicate = 'IDENTIFIANT.NOM'; commandReverse = !commandReverse") N° commande
+                                                            th.col-sm-1
+                                                                a(href="", ng-click="commandPredicate = 'GROUPE'; commandReverse = !commandReverse") Code CFC
+                                                            th.col-sm-1
+                                                                a(href="", ng-click="commandPredicate = 'IDENTIFIANT.DE'; commandReverse = !commandReverse") Date
                                                             th.col-sm-2 Montant
-                                                            th.col-sm-4 Fournisseur
+                                                            th.col-sm-4
+                                                                a(href="", ng-click="commandPredicate = 'PARTENAIRE.FOURNISSEUR.GROUPE'; commandReverse = !commandReverse") Fournisseur
                                                             // th.col-sm-2 Description
                                                     tbody(ng-show="commandes")
-                                                        tr(ng-repeat="commande in commandes")
+                                                        tr(ng-repeat="commande in commandes | orderBy:commandPredicate:commandReverse")
                                                             td
                                                                 div(hb-card-view-link, hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}")
                                                             td

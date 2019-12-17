@@ -34,6 +34,10 @@
                 // Expose order type constants to scope
                 $scope.HB_ORDER_TYPE = HB_ORDER_TYPE;
 
+                $scope.commandPredicate = 'IDENTIFIANT.DE';
+                $scope.commandReverse = true;
+
+
                 /** Create tabState object if not already available in cache,
                  */
                 if (cachedTab === undefined) {
