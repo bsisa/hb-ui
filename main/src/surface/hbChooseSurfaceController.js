@@ -110,7 +110,7 @@
 
 			            // Asychronous surfaces preloading and sorting
 			            // TODO: REPLACE WITH SURFACE CALLS...
-			        	hbQueryService.getLocationUnits("//ELFIN[@CLASSE='SURFACE']")		
+			        	hbQueryService.getLocationUnits("//ELFIN[@CLASSE='SURFACE']")
 						.then(function(surfaces) {
 								surfaces.forEach(function(surface) {
 									surface.CARSET_CAR_POS_2 = hbUtil.getCARByPos(surface, 2);
@@ -137,14 +137,14 @@
 				         * Modal panel to update an elfin reference with the selection from a list of surfaces.
 				         */
 				        $scope.hbChooseSurface = function () {
-				        	
 				            var modalInstance = $modal.open({
 				                templateUrl: '/assets/views/hbChooseSurfaceModalDialog.html',
 				                scope: $scope,
 				                controller: 'HbChooseSurfaceModalController',
 				                resolve: {
 				                	elfins: function () {
-				                    	return $scope.surfaces;
+				                		// filter on source
+				                    	return $scope.surfaces.filter(function (s) { return s.SOURCE === $scope.selected.surface.SOURCE; });
 				                    },
 				                    columnsDefinition: function() {
 				                    	return [ { field:"CARSET_CAR_POS_2.VALEUR", displayName: "No objet"}, { field:"PARTENAIRE.USAGER.VALUE", displayName: "Locataire"} ];
