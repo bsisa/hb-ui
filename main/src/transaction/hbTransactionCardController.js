@@ -71,8 +71,8 @@
                             function (surfaces) {
                                 var sourcePredicate = "@SOURCE='" + source + "'";
                                 if (surfaces.length !== 0) {
-                                    sourcePredicate = "(@SOURCE='" + source + "' or " + surfaces.map(function(s) {
-                                        return ( "@SOURCE='" + s.ID_G + "/" + s.CLASSE + "/" + s.Id + "'");
+                                    sourcePredicate = "(@SOURCE='" + source + "' or " + surfaces.map(function (s) {
+                                        return ("@SOURCE='" + s.ID_G + "/" + s.CLASSE + "/" + s.Id + "'");
                                     }).join(" or ") + ")";
                                 }
 
@@ -95,7 +95,7 @@
                                     }
                                 );
                             },
-                            function(response) {
+                            function (response) {
                                 var message = "L'obtention des SURFACES pour la source: " + surfacesQuery + " a échoué. (statut: "
                                     + response.status
                                     + ")";
@@ -133,7 +133,7 @@
                                 sourcePath: function () {
                                     return sourcePath;
                                 },
-                                initialSelectedElfin: function() {
+                                initialSelectedElfin: function () {
                                     return null;
                                 }
                             },
@@ -170,12 +170,12 @@
                     };
 
 
-                    $scope.$watch("elfin.ANNEXE.RENVOI", function(newRenvois) {
+                    $scope.$watch("elfin.ANNEXE.RENVOI", function (newRenvois) {
                         $scope.setAnnexlength();
                     });
 
-                    $scope.setAnnexlength = function() {
-                        var nAnnexes= hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo').length;
+                    $scope.setAnnexlength = function () {
+                        var nAnnexes = hbUtil.getAnnexesExcludingTag($scope.elfin, 'photo').length;
                         if (nAnnexes === 0) {
                             $scope.numberOfAnnexes = null;
                         } else {
@@ -285,11 +285,11 @@
                         var strPreviousYear = String(previousYear);
 
 
-                        var currentYearElfins = _.filter(elfins, function(elfin) {
+                        var currentYearElfins = _.filter(elfins, function (elfin) {
                             return elfin.IDENTIFIANT.DE === strThisYear;
                         });
 
-                        var previousYearElfins = _.filter(elfins, function(elfin) {
+                        var previousYearElfins = _.filter(elfins, function (elfin) {
                             return elfin.IDENTIFIANT.DE === strPreviousYear;
                         });
 
@@ -362,7 +362,7 @@
                         {field: "CARSET_CAR_POS_2.VALEUR", displayName: "No AbaImmo"}
                     ];
 
-                    $scope.selectOneImmeubleTemplate =  "/assets/views-compiled/_directives/chooseOneImmeuble.html";
+                    $scope.selectOneImmeubleTemplate = "/assets/views-compiled/_directives/chooseOneImmeuble.html";
 
 
                     // Allow triggering reallocate mode to allow editing of sensitive fields.
@@ -413,7 +413,7 @@
                                 sourcePath: function () {
                                     return sourcePath;
                                 },
-                                initialSelectedElfin: function() {
+                                initialSelectedElfin: function () {
                                     return selectedImmeuble;
                                 }
                             },
@@ -443,15 +443,15 @@
                     };
 
 
-                    $scope.$watch("elfin.CARACTERISTIQUE.CAR1.UNITE", function(newValue) {
+                    $scope.$watch("elfin.CARACTERISTIQUE.CAR1.UNITE", function (newValue) {
                         if (!$scope.elfin) {
                             return;
                         }
                         if (newValue === "Fonctionnement") {
                             $scope.transactionTypes = [
-                                { name: "Petite réparation", value: "Petite réparation" },
-                                { name: "Frais fixe", value: "Frais fixe" }
-                                ];
+                                {name: "Petite réparation", value: "Petite réparation"},
+                                {name: "Frais fixe", value: "Frais fixe"}
+                            ];
                         } else if (!!$scope.transactionTemplate) {
                             $scope.transactionTypes = [{name: newValue, value: newValue}];
                             $scope.elfin.GROUPE = newValue;
@@ -583,6 +583,19 @@
                                     $scope.searchOwner = {Id: "", ID_G: "", GROUPE: "", NOM: ""};
                                     $scope.allocateImmeuble();
                                 }
+                                if (!!$routeParams.commandeId && !!$routeParams.commandeID_G && !!$routeParams.commandeCLASSE) {
+                                    $scope.elfin.FILIATION = {PARENT: []};
+
+                                    $scope.elfin.FILIATION.PARENT.push({
+                                        ID_G: $routeParams.commandeID_G,
+                                        Id: $routeParams.commandeId,
+                                        CLASSE: $routeParams.commandeCLASSE,
+                                        REMARQUE: "",
+                                        PROPRIETE: []
+                                    });
+                                    loadCommandesContrats($scope);
+                                }
+
                             } else {
                                 loadCommandesContrats($scope);
                                 $scope.loadSourceElfin($scope.elfin.SOURCE);
@@ -641,7 +654,7 @@
                             field: "CARACTERISTIQUE.CARSET.CAR[0].VALEUR",
                             displayName: "Lieu-dit"
                         }];
-                    $scope.immeubleChooseOneTemplate =  "/assets/views-compiled/_directives/chooseOneImmeuble.html";
+                    $scope.immeubleChooseOneTemplate = "/assets/views-compiled/_directives/chooseOneImmeuble.html";
 
                     // TODO: FocusTimeout issue. Find a better
                     // solution ?

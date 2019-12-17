@@ -318,50 +318,57 @@ div.row(style="padding-top: 8px;")
                 div.hb-tab
                     div.row
                         div.col-sm-12
-                            // Table des transactions
-                            table.table.table-condensed.table-bordered.table-striped
-                                thead
-                                    tr
-                                        th(width="140px") Transaction
-                                        th
-                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.OBJECTIF'; transactionReverse = !transactionReverse") No Prestation
-                                        th
-                                            a(href="", ng-click="transactionPredicate = 'GROUPE'; transactionReverse = !transactionReverse") Groupe Transaction
-                                        th
-                                            a(href="", ng-click="transactionPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; transactionReverse = !transactionReverse") Groupe Prestation
-                                        th
-                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.PAR'; transactionReverse = !transactionReverse") Année
-                                        th
-                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.COMPTE'; transactionReverse = !transactionReverse") Compte
-                                        th
-                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.DE'; transactionReverse = !transactionReverse") Date
-                                        th
-                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; transactionReverse = !transactionReverse") Facturé
-                                        th
-                                            a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.VALEUR'; transactionReverse = !transactionReverse") Payé
+                            div.panel.panel-default
+                                div.panel-heading
+                                    a.btn.btn-default(type="button", tooltip="Créer une nouvelle transaction relative à la prestation de la commande courante"
+                                        ng-href="/elfin/create/TRANSACTION?&sai={{prestation.IDENTIFIANT.OBJECTIF}}&Id={{prestation.Id}}&ID_G={{prestation.ID_G}}&classe=PRESTATION&commandeId={{elfin.Id}}&commandeID_G={{elfin.ID_G}}&commandeCLASSE=COMMANDE")
+                                        i.icon-plus-sign
+                                    | Transactions
+                                div.panel-body
+                                    // Table des transactions
+                                    table.table.table-condensed.table-bordered.table-striped
+                                        thead
+                                            tr
+                                                th(width="140px") Transaction
+                                                th
+                                                    a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.OBJECTIF'; transactionReverse = !transactionReverse") No Prestation
+                                                th
+                                                    a(href="", ng-click="transactionPredicate = 'GROUPE'; transactionReverse = !transactionReverse") Groupe Transaction
+                                                th
+                                                    a(href="", ng-click="transactionPredicate = 'CARACTERISTIQUE.CAR1.UNITE'; transactionReverse = !transactionReverse") Groupe Prestation
+                                                th
+                                                    a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.PAR'; transactionReverse = !transactionReverse") Année
+                                                th
+                                                    a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.COMPTE'; transactionReverse = !transactionReverse") Compte
+                                                th
+                                                    a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.DE'; transactionReverse = !transactionReverse") Date
+                                                th
+                                                    a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; transactionReverse = !transactionReverse") Facturé
+                                                th
+                                                    a(href="", ng-click="transactionPredicate = 'IDENTIFIANT.VALEUR'; transactionReverse = !transactionReverse") Payé
 
-                                tbody
-                                    tr(ng-repeat="transaction in transactions | orderBy:transactionPredicate:transactionReverse")
-                                        td
-                                            div.col-sm-12
-                                                div(style="position:relative; float:left;", hb-card-view-link, hb-href="/elfin/{{transaction.ID_G}}/{{transaction.CLASSE}}/{{transaction.Id}}")
+                                        tbody
+                                            tr(ng-repeat="transaction in transactions | orderBy:transactionPredicate:transactionReverse")
+                                                td
+                                                    div.col-sm-12
+                                                        div(style="position:relative; float:left;", hb-card-view-link, hb-href="/elfin/{{transaction.ID_G}}/{{transaction.CLASSE}}/{{transaction.Id}}")
 
-                                        td
-                                            span {{ transaction.IDENTIFIANT.OBJECTIF }}
-                                        td
-                                            span {{ transaction.GROUPE }}
-                                        td
-                                            span {{ transaction.CARACTERISTIQUE.CAR1.UNITE }}
-                                        td
-                                            span {{ transaction.IDENTIFIANT.PAR }}
-                                        td
-                                            span {{ transaction.IDENTIFIANT.COMPTE }}
-                                        td
-                                            span {{ transaction.IDENTIFIANT.DE | date }}
-                                        td.number
-                                            span {{ transaction.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
-                                        td.number
-                                            span {{ transaction.IDENTIFIANT.VALEUR | currency:'CHF' }}
+                                                td
+                                                    span {{ transaction.IDENTIFIANT.OBJECTIF }}
+                                                td
+                                                    span {{ transaction.GROUPE }}
+                                                td
+                                                    span {{ transaction.CARACTERISTIQUE.CAR1.UNITE }}
+                                                td
+                                                    span {{ transaction.IDENTIFIANT.PAR }}
+                                                td
+                                                    span {{ transaction.IDENTIFIANT.COMPTE }}
+                                                td
+                                                    span {{ transaction.IDENTIFIANT.DE | date }}
+                                                td.number
+                                                    span {{ transaction.IDENTIFIANT.VALEUR_A_NEUF | currency:'CHF' }}
+                                                td.number
+                                                    span {{ transaction.IDENTIFIANT.VALEUR | currency:'CHF' }}
 
 
             <!-- Annexes tab -->
