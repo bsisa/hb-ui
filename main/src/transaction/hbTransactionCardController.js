@@ -65,19 +65,38 @@
 
                     $scope.allocateCommand = function () {
                         var source = $scope.selectedImmeuble.ID_G + "/" + $scope.selectedImmeuble.CLASSE + "/" + $scope.selectedImmeuble.Id;
-                        var commandeSourceXpath = "//ELFIN[@SOURCE='" + source + "' and @CLASSE='COMMANDE'][FILIATION/PARENT/@Id='" + $scope.sourcePrestation.Id + "']";
+                        var surfacesQuery = "//ELFIN[@SOURCE='" + source + "' and @CLASSE='SURFACE']";
 
-                        hbQueryService.getCommandes(commandeSourceXpath).then(
-                            function (commandes) {
-                                $scope.selectOneCommande(
-                                    commandes,
-                                    "IDENTIFIANT.NOM",
-                                    $scope.selectOneCommandeColumnsDefinition,
-                                    $scope.selectOneCommandeTemplate
+                        hbQueryService.getLocationUnits(surfacesQuery).then(
+                            function (surfaces) {
+                                var sourcePredicate = "@SOURCE='" + source + "'";
+                                if (surfaces.length !== 0) {
+                                    sourcePredicate = "(@SOURCE='" + source + "' or " + surfaces.map(function(s) {
+                                        return ( "@SOURCE='" + s.ID_G + "/" + s.CLASSE + "/" + s.Id + "'");
+                                    }).join(" or ") + ")";
+                                }
+
+                                var commandeSourceXpath = "//ELFIN[" + sourcePredicate + " and @CLASSE='COMMANDE'][FILIATION/PARENT/@Id='" + $scope.sourcePrestation.Id + "']";
+
+                                hbQueryService.getCommandes(commandeSourceXpath).then(
+                                    function (commandes) {
+                                        $scope.selectOneCommande(
+                                            commandes,
+                                            "IDENTIFIANT.NOM",
+                                            $scope.selectOneCommandeColumnsDefinition,
+                                            $scope.selectOneCommandeTemplate
+                                        );
+                                    },
+                                    function (response) {
+                                        var message = "L'obtention des COMMANDES pour la source: " + commandeSourceXpath + " a échoué. (statut: "
+                                            + response.status
+                                            + ")";
+                                        hbAlertMessages.addAlert("danger", message);
+                                    }
                                 );
                             },
-                            function (response) {
-                                var message = "L'obtention des COMMANDES pour la source: " + commandeSourceXpath + " a échoué. (statut: "
+                            function(response) {
+                                var message = "L'obtention des SURFACES pour la source: " + surfacesQuery + " a échoué. (statut: "
                                     + response.status
                                     + ")";
                                 hbAlertMessages.addAlert("danger", message);
