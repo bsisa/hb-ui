@@ -163,8 +163,8 @@
                     $scope.contractPredicate = 'PARTENAIRE.FOURNISSEUR.VALUE';
                     $scope.contractReverse = false;
 
-                    $scope.commandPredicate = 'IDENTIFIANT.NOM';
-                    $scope.commandReverse = false;
+                    $scope.commandPredicate = 'IDENTIFIANT.DE';
+                    $scope.commandReverse = true;
 
 
                     $scope.createNewCommande = function () {
