@@ -111,12 +111,16 @@ div.row(style="padding-top: 8px;")
                                                                 a(href="", ng-click="commandPredicate = 'GROUPE'; commandReverse = !commandReverse") Code CFC
                                                             th.col-sm-1
                                                                 a(href="", ng-click="commandPredicate = 'IDENTIFIANT.DE'; commandReverse = !commandReverse") Date
-                                                            th.col-sm-2 Montant
-                                                            th.col-sm-4
+                                                            th.col-sm-2
+                                                                a(href="", ng-click="commandPredicate = 'totalRes.value'; commandReverse = !commandReverse") Montant
+                                                            th.col-sm-2
+                                                                a(href="") Transactions
+                                                            th.col-sm-2
                                                                 a(href="", ng-click="commandPredicate = 'PARTENAIRE.FOURNISSEUR.GROUPE'; commandReverse = !commandReverse") Fournisseur
+                                                            th
                                                             // th.col-sm-2 Description
                                                     tbody(ng-show="commandes")
-                                                        tr(ng-repeat="commande in commandes | orderBy:commandPredicate:commandReverse")
+                                                        tr(ng-repeat="commande in commandes | orderBy:commandPredicate:commandReverse", ng-init="totalRes = hbUtil.getOrderTotalNetInclTaxes(commande)")
                                                             td
                                                                 div(hb-card-view-link, hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}")
                                                             td
@@ -130,11 +134,19 @@ div.row(style="padding-top: 8px;")
                                                             // Estimation/Quote date
                                                             td.date {{commande.IDENTIFIANT.DE}}
                                                             // Amount
-                                                            td.number {{commande.IDENTIFIANT.VALEUR | currency:'CHF'}}
+                                                            td.number(ng-show="totalRes.exists")
+                                                                | {{ totalRes.value | currency:'CHF' }}
+                                                            td.number(ng-show="!totalRes.exists")
+                                                                | -
+                                                            // Transactions
+                                                            td.number
+                                                                a(href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}#transactions") {{ commande.transactionSummary }}
                                                             // Enterprise name
-                                                            td {{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}
+                                                            td
+                                                                | {{commande.PARTENAIRE.FOURNISSEUR.GROUPE}}
                                                             // Order description...
-                                                            // td {{commande.DIVERS.REMARQUE}}
+                                                            td.center
+                                                                i.icon.icon-info-sign(tooltip="{{commande.CARACTERISTIQUE.CAR1.VALEUR}}", tooltip-placement="left")
 
                                 tab(select="createNewCommande()", ng-show="!createMode")
                                     tab-heading(tooltip="Créer une nouvelle commande relative à l'objet courant", tooltip-popup-delay="1000")

@@ -202,6 +202,26 @@
                             if ($scope.canManageOrders) {
                                 hbQueryService.getCommandesForSource($scope.elfin.ID_G+ "/" +$scope.elfin.CLASSE + "/" +  $scope.elfin.Id).then(function(elfins) {
                                         $scope.commandes = elfins;
+
+                                        $scope.commandes.forEach(function (commande) {
+                                            var xpath = "//ELFIN[FILIATION/PARENT/@Id='" + commande.Id + "'and FILIATION/PARENT/@ID_G='" + commande.ID_G + "' and FILIATION/PARENT/@CLASSE='" + commande.CLASSE + "']";
+
+                                            hbQueryService.getTransactions(xpath).then(
+                                                function (transactions) {
+                                                    var nbTransactions = transactions.length;
+                                                    var total = 0;
+                                                    transactions.forEach(function(transaction) {
+                                                        total += transaction.IDENTIFIANT.VALEUR || 0;
+                                                    });
+                                                    commande.transactionSummary = total + " CHF (" + nbTransactions + ")";
+                                                },
+                                                function (response) {
+                                                    var message = "L'obtention des TRANSACTIONS pour la source: " + xpath + " a échoué. (statut: " + response.status + ")";
+                                                    hbAlertMessages.addAlert("danger", message);
+                                                }
+                                            )
+                                        });
+
                                     },
                                     function(response) {
                                         var message = "Le chargement des COMMANDES a échoué (statut de retour: "+ response.status+ ")";
