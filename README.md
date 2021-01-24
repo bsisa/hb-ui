@@ -39,6 +39,7 @@ Additional project dependencies require installing further grunt plugins in loca
 	npm install grunt-contrib-cssmin
 	npm install grunt-html2js
 	npm install grunt-karma
+    npm install grunt-contrib-pug
 
 
 #### Bower installation ####
