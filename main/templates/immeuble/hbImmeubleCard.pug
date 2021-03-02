@@ -436,8 +436,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                     thead
                                                         tr
                                                             th Unité locative
-                                                            th
-                                                                a(href="", ng-click="locUnitArchivedPredicate = 'IDENTIFIANT.OBJECTIF'; locUnitArchivedReverse=!locUnitArchivedReverse") No SAI
+
                                                             th
                                                                 a(href="", ng-click="locUnitArchivedPredicate = 'GROUPE'; locUnitArchivedReverse=!locUnitArchivedReverse") Groupe
                                                             th
@@ -451,8 +450,7 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                         tr(ng-repeat="locationUnit in locationUnitsArchived | orderBy:locUnitArchivedPredicate:locUnitArchivedReverse")
                                                             td
                                                                 div(hb-card-view-link, hb-href="/elfin/{{locationUnit.ID_G}}/SURFACE/{{locationUnit.Id}}")
-                                                            td
-                                                                span {{locationUnit.IDENTIFIANT.OBJECTIF}}
+
                                                             td
                                                                 span {{locationUnit.GROUPE}}
                                                             td

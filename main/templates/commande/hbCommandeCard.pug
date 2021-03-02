@@ -221,6 +221,12 @@ div.row(style="padding-top: 8px;")
                                     p#transactionsPaidSum.form-control-static {{ transactionsPaidSum | currency:'CHF' }}
 
                         div.col-xs-12
+                            div.form-group.has-feedback
+                                label.col-sm-3.control-label(for="remainingToBeInvoiced") Solde
+                                div.col-sm-3
+                                    p#remainingToBeInvoiced.form-control-static {{ remainingToBeInvoiced | currency:'CHF' }}
+
+                        div.col-xs-12
                             hr
 
                         div.col-xs-6.text-center

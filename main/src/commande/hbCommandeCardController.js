@@ -64,6 +64,8 @@
                                 });
                                 $scope.transactionsInvoicedSum = invoicedSum;
                                 $scope.transactionsPaidSum = paidSum;
+                                $scope.remainingToBeInvoiced = parseFloat($scope.elfin.CARACTERISTIQUE.FRACTION.L[6].C[4].VALUE) - $scope.transactionsInvoicedSum;
+
                             },
                             function (response) {
                                 var message = "L'obtention des TRANSCTIONS pour la source: " + commandeSourceXpath + " a échoué. (statut: "
@@ -73,6 +75,8 @@
                             }
                         );
                     };
+
+
 
 
                     GeoxmlService.getNewElfin("COMMANDE").get()

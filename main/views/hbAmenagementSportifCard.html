@@ -492,9 +492,7 @@
 							<div class="row hb-row-header">
 								<div class="col-sm-2 hb-cell-header"></div>
 								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">Propriétaire</div>
-								<div class="col-sm-1 hb-cell-header" style="font-weight: bold;">No SAI</div>
 								<div class="col-sm-3 hb-cell-header" style="font-weight: bold;">Adresse</div>
-								<div class="col-sm-2 hb-cell-header" style="font-weight: bold;">No construction</div>
 								<div class="col-sm-3 hb-cell-header" style="font-weight: bold;">Lieu-dit</div>
 							</div>
 							<div class="row hb-row-{{ ($index % 2) === 0 ? 'even' : 'odd' }}" ng-repeat="buildingRefLine in elfin.CARACTERISTIQUE.FRACTION.L | fractionElfinRefFilter:'IMMEUBLE'">
@@ -504,9 +502,7 @@
 										<div class="col-xs-6 btn btn-default btn-xs" style="width: 38px;" ng-click="removeBuilding($index)" tooltip="Supprimer"><i class="glyphicon glyphicon-remove-circle"></i></div>
 									</div>
 									<div class="col-sm-1 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{buildingElfin.PARTENAIRE.PROPRIETAIRE.NOM}}</div>
-									<div class="col-sm-1 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{buildingElfin.IDENTIFIANT.OBJECTIF}}</div>
 									<div class="col-sm-3 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{buildingElfin.IDENTIFIANT.ALIAS}}</div>
-									<div class="col-sm-2 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{buildingElfin.IDENTIFIANT.NOM}}</div>
 									<div class="col-sm-3 hb-cell-row {{ isSelectedImmeuble(buildingElfin) ? 'hb-dirty' : ''}}">{{getPlace(buildingElfin).VALEUR}}</div>
 								</div>
 							</div>
@@ -570,7 +566,6 @@
 <!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th> -->
 <!-- 													<th><a href="" -->
 <!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th> -->
-													<th>No SAI</th>
 													<th>Année</th>
 													<th>Groupe / Remarque</th>
 													<th>Groupe comptable</th>
@@ -585,7 +580,6 @@
 														<div hb-card-view-link hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}"></div>													
 <!-- 														<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a> -->
 													</td>
-													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 													<td ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}"><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
@@ -621,7 +615,6 @@
 <!-- 													<th><a href="" -->
 <!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th> -->
 <!-- 													<th>Total payé</th> -->
-													<th>No SAI</th>
 													<th>Année</th>
 													<th>Groupe / Remarque</th>
 													<th>Groupe comptable</th>
@@ -637,7 +630,6 @@
 														<div hb-card-view-link hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}"></div>
 <!-- 														<a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a> -->
 													</td>
-													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 													<td ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}"><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>
@@ -673,7 +665,6 @@
 <!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.ORIGINE'; prestaReverse=!prestaReverse">Groupe comptable</a></th> -->
 <!-- 													<th><a href="" -->
 <!-- 														ng-click="prestaPredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; prestaReverse=!prestaReverse">Budget</a></th> -->
-													<th>No SAI</th>
 													<th>Année</th>
 													<th>Groupe / Remarque</th>
 													<th>Groupe comptable</th>
@@ -689,7 +680,6 @@
 														<div hb-card-view-link hb-href="/elfin/{{prestation.ID_G}}/PRESTATION/{{prestation.Id}}"></div>  
 														<!-- <a target="_self" ng-href="/api/melfin/report/G20050101000012345/G20140822163500000?sai={{prestation.IDENTIFIANT.OBJECTIF}}" tooltip="Rapport PDF"><i class="glyphicon glyphicon-print"></i></a>  -->
 													</td>
-													<td><span >{{prestation.IDENTIFIANT.OBJECTIF}}</span></td>
 													<td class="date"><span >{{prestation.IDENTIFIANT.DE}}</span></td>
 													<td ng-class="{invst: prestation.GROUPE === 'Investissement',fctmt: prestation.GROUPE === 'Fonctionnement'}"><span >{{prestation.GROUPE}} / {{prestation.DIVERS.REMARQUE}}</span></td>
 													<td><span >{{prestation.IDENTIFIANT.ORIGINE}}</span></td>

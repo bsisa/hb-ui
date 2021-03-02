@@ -40,7 +40,7 @@
 							} else if ($scope.emptyOption && ($scope.emptyOption.value === value)) {
 								return $scope.emptyOption.name;
 							} else {
-								return undefined;
+								return value;
 							}
 						};
 						

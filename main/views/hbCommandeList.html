@@ -92,12 +92,7 @@
 			<th class="col-sm-1">
 				<a href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse">N° commande</a>
 			</th>
-			<th class="col-sm-1">
-				<a href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse">N° SAI</a>
-			</th>
-			<th class="col-sm-1">
-				<a href="" ng-click="predicate = 'IDENTIFIANT.ORIGINE'; reverse=!reverse">N° constr.</a>
-			</th>
+
 			<th class="col-sm-1">
 				<a href="" ng-click="predicate = 'GROUPE'; reverse=!reverse">Code CFC</a>
 			</th>
@@ -128,10 +123,6 @@
 			</td> 
 			<!-- Order nb -->
 			<td class="number">{{elfin.IDENTIFIANT.NOM}}</td>
-			<!-- SAI nb -->
-			<td class="number">{{elfin.IDENTIFIANT.OBJECTIF}}</td>
-			<!-- Building nb -->
-			<td class="number">{{elfin.IDENTIFIANT.ORIGINE}}</td>
 			<!-- CFC code -->
 			<td>{{elfin.GROUPE}}</td>
 			<!-- Order type  -->

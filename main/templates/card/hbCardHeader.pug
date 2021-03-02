@@ -14,7 +14,8 @@ div.row(style="padding-top: 8px;")
                     | &nbsp;
                     span(ng-bind="elfin.CLASSE")
                     | &nbsp;-&nbsp;
-                    span(ng-bind="elfin.IDENTIFIANT.OBJECTIF")
+                    span(ng-if="elfin.CLASSE==='IMMEUBLE'" ng-bind="CARSET_CAR_POS_2.VALEUR")
+                    span(ng-if="elfin.CLASSE!=='IMMEUBLE'" ng-bind="elfin.IDENTIFIANT.OBJECTIF")
                     button.btn.btn-primary.btn-xs(ng-if="devRights", ng-click="displayJson(elfin)") JS
                     button.btn.btn-primary.btn-xs(ng-if="devRights", ng-click="displayXml(elfin)") XML
             span(ng-if="elfin.CLASSE==='IMMEUBLE' || elfin.CLASSE==='WC'") &nbsp;{{elfin.IDENTIFIANT.ALIAS}}

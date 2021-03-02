@@ -40,12 +40,10 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
         tr
             th.col-sm-1
                 a(href="" ng-click="predicate = 'GROUPE'; reverse=!reverse") Groupe
-            th.col-sm-1
-                a(href="" ng-click="predicate = 'IDENTIFIANT.OBJECTIF'; reverse=!reverse") No SAI
+
             th.col-sm-1
                 a(href="" ng-click="predicate = 'IDENTIFIANT.ALIAS'; reverse=!reverse") Adresse
-            th.col-sm-1
-                a(href="" ng-click="predicate = 'IDENTIFIANT.NOM'; reverse=!reverse") No construction
+
             th.col-sm-1
                 a(href="" ng-click="predicate = 'CARACTERISTIQUE.CARSET.CAR[0].VALEUR'; reverse=!reverse") Lieu-dit
 
@@ -63,8 +61,6 @@ table.table.table-condensed.table-bordered.table-striped(ng-show="elfins")
                                     a.btn.btn-default.btn-xs.btn-block(href="/elfin/{{source}}?selectionImmeuble={{elfin.ID_G}}/{{elfin.CLASSE}}/{{elfin.Id}}", role="button")
                                         i.glyphicon.glyphicon-plus-sign
             td {{elfin.GROUPE}}
-            td {{elfin.IDENTIFIANT.OBJECTIF}}
             td {{elfin.IDENTIFIANT.ALIAS}}
-            td {{elfin.IDENTIFIANT.NOM}}
             td {{getPlace(elfin).VALEUR}}
 
