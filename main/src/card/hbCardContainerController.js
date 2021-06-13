@@ -441,7 +441,10 @@
              * Prints labels report designed for IMMEUBLE only.
              */
             $scope.printLabelsReport = function (elfin) {
-                hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin, elfin.CLASSE, HB_REPORT.CLASSIFIER_LEVEL2_LABELS);
+                /* hbPrintService.getReportOrProvideFeedbackForMissingConfig(elfin, elfin.CLASSE, HB_REPORT.CLASSIFIER_LEVEL2_LABELS); */
+                var reportModel = "Etiquettes_classeurs_2021.xls";
+                var reportUrl = "/api/melfin/spreadsheet/" + reportModel + "?Id=" + elfin.Id;
+                $window.open(reportUrl)
             }
 
             /**
