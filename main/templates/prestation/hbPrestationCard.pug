@@ -111,15 +111,15 @@ div.row(style="padding-top: 8px;")
                                             tr
                                                 th(colspan="2") {{key}}
                                                 th.col-sm-1
-                                                    a(href="", ng-click="deadlinePredicate='IDENTIFIANT.DE'; deadlineReverse=!deadlineReverse") Date
+                                                    a(href="", ng-click="deadlinePredicate='IDENTIFIANT.DE'; deadlineReverse = !deadlineReverse") Date
                                                 th.col-sm-3
-                                                    a(href="", ng-click="deadlinePredicate = 'PARTENAIRE.FOURNISSEUR.VALUE'; deadlineReverse=!deadlineReverse") Fournisseur
+                                                    a(href="", ng-click="deadlinePredicate = 'PARTENAIRE.PROPRIETAIRE.VALUE'; deadlineReverse = !deadlineReverse") Fournisseur
                                                 th.col-sm-4
-                                                    a(href="", ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse=!deadlineReverse") Remarque
+                                                    a(href="", ng-click="deadlinePredicate = 'DIVERS.REMARQUE'; deadlineReverse = !deadlineReverse") Remarque
                                                 th.col-sm-1
-                                                    a(href="", ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; deadlineReverse=!deadlineReverse") Facturé
+                                                    a(href="", ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR_A_NEUF'; deadlineReverse = !deadlineReverse") Facturé
                                                 th.col-sm-1
-                                                    a(href="", ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse=!deadlineReverse") Payé
+                                                    a(href="", ng-click="deadlinePredicate = 'IDENTIFIANT.VALEUR'; deadlineReverse = !deadlineReverse") Payé
 
                                         tbody(ng-repeat-end)
                                             tr(ng-repeat="transaction in value | orderBy:deadlinePredicate:deadlineReverse")
