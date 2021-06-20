@@ -689,7 +689,8 @@
                                                         transactions.forEach(function(transaction) {
                                                            total += transaction.IDENTIFIANT.VALEUR || 0;
                                                         });
-                                                        commande.transactionSummary = total + " CHF (" + nbTransactions + ")";
+                                                        commande.totalTransactions = total;
+                                                        commande.nbTransactions = nbTransactions;
                                                     },
                                                     function (response) {
                                                         var message = "L'obtention des TRANSACTIONS pour la source: " + xpath + " a échoué. (statut: " + response.status + ")";

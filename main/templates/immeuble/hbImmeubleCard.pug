@@ -630,11 +630,17 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                             th.col-sm-1
                                                                 a(href="", ng-click="commandPredicate = 'IDENTIFIANT.DE'; commandReverse = !commandReverse") Date
 
-                                                            th.col-sm-2
+                                                            th.col-sm-1
                                                                 a(href="", ng-click="commandPredicate = 'totalRes.value'; commandReverse = !commandReverse") Montant
 
-                                                            th.col-sm-2
+                                                            th.col-sm-1
                                                                 a(href="") Transactions
+
+                                                            th.col-sm-1
+                                                                a(href="") Solde
+
+                                                            th.col-sm-1
+                                                                a(href="") Date de clôture
 
                                                             th.col-sm-2
                                                                 a(href="", ng-click="commandPredicate = 'PARTENAIRE.FOURNISSEUR.GROUPE'; commandReverse = !commandReverse") Fournisseur
@@ -644,8 +650,10 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                         tr(ng-repeat="commande in commandes | orderBy:commandPredicate:commandReverse", ng-init="totalRes = hbUtil.getOrderTotalNetInclTaxes(commande)")
                                                             td
                                                                 div(hb-card-view-link, hb-href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}")
+
                                                             td
                                                                 div(hb-annexes-link, hb-annexes-link-elfin="commande")
+
                                                             td.number
                                                                 span(ng-if="commande.IDENTIFIANT.QUALITE===HB_ORDER_TYPE.CONTRACT") {{ commande.CARACTERISTIQUE.CAR5.VALEUR }} /&nbsp;
                                                                 | {{ commande.IDENTIFIANT.NOM }}
@@ -660,7 +668,15 @@ div.row(ng-show="!isMapToggled()", style="padding-top: 8px;")
                                                                 | -
 
                                                             td.number
-                                                                a(href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}#transactions") {{ commande.transactionSummary }}
+                                                                a(href="/elfin/{{commande.ID_G}}/COMMANDE/{{commande.Id}}#transactions") {{ commande.totalTransactions | currency:'CHF' }} &nbsp;({{ commande.nbTransactions }})
+
+                                                            td.number(ng-show="totalRes.exists")
+                                                                | {{ (totalRes.value - commande.totalTransactions) | currency:'CHF' }}
+                                                            td.number(ng-show="_totalRes.exists")
+                                                                | -
+
+                                                            td.date
+                                                                | {{ commande.IDENTIFIANT.A }}
 
                                                             td
                                                                 | {{ commande.PARTENAIRE.FOURNISSEUR.GROUPE }}
