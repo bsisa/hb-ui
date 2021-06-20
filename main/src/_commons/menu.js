@@ -287,6 +287,11 @@
                 controller: 'ChooseParamsCtrl',
                 resolve: {
                 	itemDefinition: function () {
+                		itemDefinition.parameters.forEach(function(param) {
+                			if (param.name === "ANNEE") {
+                				param.value = moment().year();
+							}
+						});
                     	return itemDefinition;
                     }               
                 },                
