@@ -302,7 +302,13 @@
              * Process modalInstance.close action
              */
             modalInstance.result.then(function (modalModel) {
-                
+
+            	modalModel.forEach(function(param) {
+					if (param.name.indexOf("OWNER") > -1 || param.name.indexOf("PROPRIETAIRE") > -1) {
+						param.value = param.value.toUpperCase();
+					}
+				})
+
             	if (itemDefinition.newWindow && itemDefinition.newWindow === 'true') {
             		var queryString = hbUtil.buildUrlQueryString(modalModel);
             		var urlWithQuery = itemDefinition.url + queryString;
