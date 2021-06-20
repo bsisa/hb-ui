@@ -288,7 +288,7 @@
                 resolve: {
                 	itemDefinition: function () {
                 		itemDefinition.parameters.forEach(function(param) {
-                			if (param.name === "ANNEE") {
+                			if (param.name.indexOf("ANNEE") > -1 || param.name.indexOf("YEAR") > -1) {
                 				param.value = moment().year();
 							}
 						});
